@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9150dcd_c21ad31a",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:20:19Z",
+      "side": 1,
+      "message": "nit: align in the same way as L166",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b4c6a3_6ecd1021",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:20:19Z",
+      "side": 1,
+      "message": "Variables should be declared as close to the first use location as possible.",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 44
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072dad04_abc98436",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:20:19Z",
+      "side": 1,
+      "message": "maybe\n\nbool visible_only \u003d type \u003d\u003d mojom::GetNetworksRequestType::VISIBLE_ONLY;\n\nand then below\n\n  std::unique_ptr\u003cbase::ListValue\u003e network_properties_list \u003d\n      chromeos::network_util::TranslateNetworkListToONC(\n          network_pattern, !visible_only /*configured_only*/, visible_only,\n          kGetNetworksListLimit);",
+      "range": {
+        "startLine": 414,
+        "startChar": 22,
+        "endLine": 414,
+        "endChar": 27
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c23a8a_5a537ba4",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:20:19Z",
+      "side": 1,
+      "message": "Keep capitalization consistent with the rest of the file.",
+      "range": {
+        "startLine": 420,
+        "startChar": 29,
+        "endLine": 420,
+        "endChar": 33
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744f1659_cd0e857b",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:20:19Z",
+      "side": 1,
+      "message": "Where\u0027s the explicitly-sized New() constructor? Also, it\u0027s impossible to have a null std::vector, since it\u0027s not optional, so that bit of comment is also maybe outdated.",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 431,
+        "endChar": 14
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
