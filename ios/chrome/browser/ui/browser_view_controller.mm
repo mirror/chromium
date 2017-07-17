@@ -1208,7 +1208,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // |chromeExecuteCommand:|.
   NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
   BOOL offTheRecord = self.isOffTheRecord;
+  ProceduralBlock oldForegroundTabWasAddedCompletionBlock =
+      self.foregroundTabWasAddedCompletionBlock;
   self.foregroundTabWasAddedCompletionBlock = ^{
+    if (oldForegroundTabWasAddedCompletionBlock) {
+      oldForegroundTabWasAddedCompletionBlock();
+    }
     double duration = [NSDate timeIntervalSinceReferenceDate] - startTime;
     base::TimeDelta timeDelta = base::TimeDelta::FromSecondsD(duration);
     if (offTheRecord) {
@@ -2082,7 +2087,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return [self addSelectedTabWithURL:url
                             postData:postData
                              atIndex:[_model count]
-                          transition:transition];
+                          transition:transition
+                  tabAddedCompletion:nil];
 }
 
 - (Tab*)addSelectedTabWithURL:(const GURL&)url
@@ -2096,15 +2102,27 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                       atIndex:(NSUInteger)position
                    transition:(ui::PageTransition)transition {
   return [self addSelectedTabWithURL:url
+                             atIndex:position
+                          transition:transition
+                  tabAddedCompletion:nil];
+}
+
+- (Tab*)addSelectedTabWithURL:(const GURL&)url
+                      atIndex:(NSUInteger)position
+                   transition:(ui::PageTransition)transition
+           tabAddedCompletion:(ProceduralBlock)tabAddedCompletion {
+  return [self addSelectedTabWithURL:url
                             postData:NULL
                              atIndex:position
-                          transition:transition];
+                          transition:transition
+                  tabAddedCompletion:tabAddedCompletion];
 }
 
 - (Tab*)addSelectedTabWithURL:(const GURL&)URL
                      postData:(TemplateURLRef::PostContent*)postData
                       atIndex:(NSUInteger)position
-                   transition:(ui::PageTransition)transition {
+                   transition:(ui::PageTransition)transition
+           tabAddedCompletion:(ProceduralBlock)tabAddedCompletion {
   if (position == NSNotFound)
     position = [_model count];
   DCHECK(position <= [_model count]);
@@ -2120,6 +2138,20 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     params.post_data.reset(data);
     params.extra_headers.reset(@{ @"Content-Type" : contentType });
   }
+
+  if (tabAddedCompletion) {
+    ProceduralBlock oldForegroundTabWasAddedCompletionBlock =
+        self.foregroundTabWasAddedCompletionBlock;
+    self.foregroundTabWasAddedCompletionBlock = ^{
+      if (oldForegroundTabWasAddedCompletionBlock) {
+        oldForegroundTabWasAddedCompletionBlock();
+      }
+      if (tabAddedCompletion) {
+        tabAddedCompletion();
+      }
+    };
+  }
+
   Tab* tab = [_model insertTabWithLoadParams:params
                                       opener:nil
                                  openedByDOM:NO
