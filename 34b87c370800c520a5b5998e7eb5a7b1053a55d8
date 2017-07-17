@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eec04b9_6af3316e",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-17T22:25:12Z",
+      "side": 1,
+      "message": "Do you want this to be part of the TODO above?",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "34b87c370800c520a5b5998e7eb5a7b1053a55d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd1ba6a_e8527dc4",
+        "filename": "chrome/browser/resources/media/media_engagement.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-17T22:25:12Z",
+      "side": 1,
+      "message": "I think you\u0027re missing an opening \u003chtml\u003e. Cant recall the latest guidance - perhaps you don\u0027t need either opening nor closing",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 6
+      },
+      "revId": "34b87c370800c520a5b5998e7eb5a7b1053a55d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72d1e09_11a40a55",
+        "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-17T22:25:12Z",
+      "side": 1,
+      "message": "Is this expensive? Should we cache the svc ptr?",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 60
+      },
+      "revId": "34b87c370800c520a5b5998e7eb5a7b1053a55d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
