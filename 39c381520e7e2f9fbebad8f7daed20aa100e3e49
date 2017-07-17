@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0580a7b4_76242579",
+        "filename": "chrome/browser/supervised_user/supervised_user_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Done, good point. I originally wanted to make these protected and non-virtual to discourage implementers from exposing the method publically but I agree it\u0027s weird.",
+      "parentUuid": "2d3e4aeb_035332fa",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a490b7e_22df6e14",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9e68fe_a6b90d0c",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Ok done. Is this the preferred style for all //content changes? It\u0027s what I normally do except in these cases where the private / public methods are so simiarl.",
+      "parentUuid": "1a490b7e_22df6e14",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7c780578_d33ead56",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3cd05d_0dc984ff",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d823d45c_9b177027",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e99741d_1c82d285",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Added \"|resuming_throttle| and |cancelling_throttle| are the throttles calling these methods.\"",
+      "parentUuid": "d823d45c_9b177027",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b84963e6_c85e99de",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa048da_02814497",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8e6db7e_6d9007d8",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eddb6a9_610664ec",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T21:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8e6db7e_6d9007d8",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
