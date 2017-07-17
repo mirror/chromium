@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f55424a_f51eb241",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:00:10Z",
+      "side": 1,
+      "message": "Not related to this CL but is it okay to make the |this| pointer weak? Then NotifyReading might not be called.",
+      "revId": "40b0bdf098a0b35f73550b7b0293a85ceed7ee47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
