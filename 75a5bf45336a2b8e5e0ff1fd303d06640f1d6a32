@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ca512b13_87617931",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2695,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-17T15:36:29Z",
+      "side": 1,
+      "message": "What about this condition here? I think this was intended to handle root layer scrolling, is it obsolete? It seems to me that with root layer scrolling you actually want to prefer painting in the scrolling contents layer (as this is the default for the viewport w/o root layer scrolling) which is different than calling GetBackgroundPaintLocation which prefers the graphics layer as a safe fallback (i.e. I think this function might need to change for the root layer).",
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c6cc4c_c4dc962a",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
         "patchSetId": 5
