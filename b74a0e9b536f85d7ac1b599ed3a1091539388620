@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4fe0ac5_13d62ee8",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T18:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5709044_f2e883aa",
+      "revId": "b74a0e9b536f85d7ac1b599ed3a1091539388620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c6c352d_d0986009",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "b74a0e9b536f85d7ac1b599ed3a1091539388620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a5cd1d_975b3c4e",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T18:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c6c352d_d0986009",
+      "range": {
+        "startLine": 815,
+        "startChar": 48,
+        "endLine": 815,
+        "endChar": 52
+      },
+      "revId": "b74a0e9b536f85d7ac1b599ed3a1091539388620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
