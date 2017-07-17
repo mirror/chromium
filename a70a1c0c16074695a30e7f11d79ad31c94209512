@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cc13569_7f5b9f50",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-17T23:58:35Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about adding differences between the debug and release bot here. What\u0027s the intention for enable_vr going forward? Would it be something we eventually add to Linux Builder and linux_chromium_rel_ng? Would it be enabled by default on Linux?",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
