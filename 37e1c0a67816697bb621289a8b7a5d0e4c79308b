@@ -22,6 +22,30 @@
       "revId": "37e1c0a67816697bb621289a8b7a5d0e4c79308b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e31f270_4df3938d",
+        "filename": "chrome/browser/chromeos/arc/process/arc_process_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-17T17:19:01Z",
+      "side": 1,
+      "message": "The important thing I wanted to say is something like, using (or choosing intentionally) the browser context which is always allowed to use ARC, rather than lifetime.\nSo, I listed two items. WDYT?",
+      "parentUuid": "a7a0958f_34ae8520",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 257,
+        "endChar": 62
+      },
+      "revId": "37e1c0a67816697bb621289a8b7a5d0e4c79308b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
