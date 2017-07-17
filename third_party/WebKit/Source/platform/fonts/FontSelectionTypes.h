@@ -95,12 +95,10 @@ class FontSelectionValue {
 
 // Temporary types until we move from CSSPrimitiveValueMappings to
 // StyleBuilderConverter for those types.
-class FontSelectionValueStretch : public FontSelectionValue {
-  using FontSelectionValue::FontSelectionValue;
-};
 class FontSelectionValueStyle : public FontSelectionValue {
   using FontSelectionValue::FontSelectionValue;
 };
+
 inline FontSelectionValue FontSelectionValue::operator+(
     const FontSelectionValue other) const {
   return FontSelectionValue(m_backing + other.m_backing, RawTag::RawTag);
@@ -212,54 +210,48 @@ static inline FontSelectionValue WeightSearchThreshold() {
   return weightSearchThreshold;
 }
 
-static inline FontSelectionValueStretch UltraCondensedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, ultraCondensedWidthValue,
-                      (50));
+static inline FontSelectionValue UltraCondensedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, ultraCondensedWidthValue, (50));
   return ultraCondensedWidthValue;
 }
 
-static inline FontSelectionValueStretch ExtraCondensedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, extraCondensedWidthValue,
-                      (62.5f));
+static inline FontSelectionValue ExtraCondensedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, extraCondensedWidthValue, (62.5f));
   return extraCondensedWidthValue;
 }
 
-static inline FontSelectionValueStretch CondensedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, condensedWidthValue, (75));
+static inline FontSelectionValue CondensedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, condensedWidthValue, (75));
   return condensedWidthValue;
 }
 
-static inline FontSelectionValueStretch SemiCondensedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, semiCondensedWidthValue,
-                      (87.5f));
+static inline FontSelectionValue SemiCondensedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, semiCondensedWidthValue, (87.5f));
   return semiCondensedWidthValue;
 }
 
-static inline FontSelectionValueStretch NormalWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, normalWidthValue, (100.0f));
+static inline FontSelectionValue NormalWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, normalWidthValue, (100.0f));
   return normalWidthValue;
 }
 
-static inline FontSelectionValueStretch SemiExpandedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, semiExpandedWidthValue,
-                      (112.5f));
+static inline FontSelectionValue SemiExpandedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, semiExpandedWidthValue, (112.5f));
   return semiExpandedWidthValue;
 }
 
-static inline FontSelectionValueStretch ExpandedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, expandedWidthValue, (125));
+static inline FontSelectionValue ExpandedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, expandedWidthValue, (125));
   return expandedWidthValue;
 }
 
-static inline FontSelectionValueStretch ExtraExpandedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, extraExpandedWidthValue,
-                      (150));
+static inline FontSelectionValue ExtraExpandedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, extraExpandedWidthValue, (150));
   return extraExpandedWidthValue;
 }
 
-static inline FontSelectionValueStretch UltraExpandedWidthValue() {
-  DEFINE_STATIC_LOCAL(FontSelectionValueStretch, ultraExpandedWidthValue,
-                      (200));
+static inline FontSelectionValue UltraExpandedWidthValue() {
+  DEFINE_STATIC_LOCAL(FontSelectionValue, ultraExpandedWidthValue, (200));
   return ultraExpandedWidthValue;
 }
 

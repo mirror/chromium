@@ -590,10 +590,6 @@ bool CSSParserFastPaths::IsValidKeywordPropertyAndValue(
     case CSSPropertyFontStyle:
       return value_id == CSSValueNormal || value_id == CSSValueItalic ||
              value_id == CSSValueOblique;
-    case CSSPropertyFontStretch:
-      return value_id == CSSValueNormal ||
-             (value_id >= CSSValueUltraCondensed &&
-              value_id <= CSSValueUltraExpanded);
     case CSSPropertyImageRendering:
       return value_id == CSSValueAuto ||
              value_id == CSSValueWebkitOptimizeContrast ||
@@ -898,7 +894,6 @@ bool CSSParserFastPaths::IsKeywordPropertyID(CSSPropertyID property_id) {
     case CSSPropertyFillRule:
     case CSSPropertyFloat:
     case CSSPropertyFontStyle:
-    case CSSPropertyFontStretch:
     case CSSPropertyHyphens:
     case CSSPropertyImageRendering:
     case CSSPropertyListStylePosition:

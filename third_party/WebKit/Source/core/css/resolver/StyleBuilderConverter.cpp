@@ -384,6 +384,23 @@ double StyleBuilderConverter::ConvertValueToNumber(
   }
 }
 
+FontSelectionValue StyleBuilderConverterBase::ConvertFontStretch(
+    const blink::CSSValue& value) {
+  if (value.IsPrimitiveValue()) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+    if (primitive_value.IsPercentage())
+      return clampTo<FontSelectionValue>(primitive_value.GetFloatValue());
+  }
+  NOTREACHED();
+  return NormalWidthValue();
+}
+
+FontSelectionValue StyleBuilderConverter::ConvertFontStretch(
+    blink::StyleResolverState& state,
+    const blink::CSSValue& value) {
+  return StyleBuilderConverterBase::ConvertFontStretch(value);
+}
+
 FontSelectionValue StyleBuilderConverterBase::ConvertFontWeight(
     const CSSValue& value,
     FontSelectionValue parent_weight) {

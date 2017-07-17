@@ -97,7 +97,7 @@ bool ConsumeFont(bool important,
   CSSIdentifierValue* font_style = nullptr;
   CSSIdentifierValue* font_variant_caps = nullptr;
   CSSValue* font_weight = nullptr;
-  CSSIdentifierValue* font_stretch = nullptr;
+  CSSValue* font_stretch = nullptr;
   while (!range.AtEnd()) {
     CSSValueID id = range.Peek().Id();
     if (!font_style && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
@@ -119,11 +119,16 @@ bool ConsumeFont(bool important,
       if (font_weight)
         continue;
     }
-    if (!font_stretch && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-                             CSSPropertyFontStretch, id, context.Mode()))
-      font_stretch = CSSPropertyParserHelpers::ConsumeIdent(range);
-    else
+    if (!font_stretch &&
+        (id == CSSValueNormal ||
+         (id >= CSSValueUltraCondensed && id <= CSSValueUltraExpanded))) {
+      // Stretch in the font shorthand can only take the CSS Fonts Level 3
+      // keywords, not arbitrary values, compare
+      // https://drafts.csswg.org/css-fonts-4/#font-prop
+      font_stretch = CSSPropertyFontUtils::ConsumeFontStretch(range);
+    } else {
       break;
+    }
   }
 
   if (range.AtEnd())
