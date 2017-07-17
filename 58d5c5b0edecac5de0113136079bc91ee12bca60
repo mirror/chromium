@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c68d15d_897e9843",
+        "filename": "ipc/ipc_mojo_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-17T14:53:48Z",
+      "side": 1,
+      "message": "These lines all look weird in gerrit. Maybe just a gerrit bug but please double check line endings, I guess",
+      "revId": "58d5c5b0edecac5de0113136079bc91ee12bca60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
