@@ -3123,6 +3123,14 @@
     "test_policy": { "DeviceEcryptfsMigrationStrategy": 1 }
   },
 
+  "NoteTakingAppsAllowedOnLockScreen": {
+    "os": ["chromeos"],
+    "test_policy": { "NoteTakingAppsAllowedOnLockScreen": [] },
+    "pref_mappings": [
+      {"pref": "settings.note_taking_apps_allowed_on_lock_screen"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
