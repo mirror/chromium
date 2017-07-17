@@ -46,6 +46,30 @@
       "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3519e20c_b481165a",
+        "filename": "components/filesystem/lock_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-17T19:53:17Z",
+      "side": 1,
+      "message": "File locking is used in lebeldb for consistency reasons. leveldb wants to lock files and this passes from the leveldb service to the filesystem service. I\u0027m sorta uncomfortable with effectively stubbing out a consistency measure in a datastore...",
+      "parentUuid": "50e0d350_f8efc058",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
