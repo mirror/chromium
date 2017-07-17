@@ -156,10 +156,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureScrollUpdate,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureScrollUpdate, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.x = 10;
     web_gesture_event.y = 12;
     web_gesture_event.global_x = 20;
@@ -192,10 +191,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureScrollEnd,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureScrollEnd, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.x = 10;
     web_gesture_event.y = 12;
     web_gesture_event.global_x = 20;
@@ -214,10 +212,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTap,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap.width = 10;
     web_gesture_event.data.tap.height = 10;
 
@@ -229,10 +226,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTapUnconfirmed,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTapUnconfirmed, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap.width = 10;
     web_gesture_event.data.tap.height = 10;
 
@@ -244,10 +240,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTapDown,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTapDown, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap_down.width = 10;
     web_gesture_event.data.tap_down.height = 10;
 
@@ -259,10 +254,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureShowPress,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.show_press.width = 10;
     web_gesture_event.data.show_press.height = 10;
 
@@ -274,10 +268,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureLongPress,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.long_press.width = 10;
     web_gesture_event.data.long_press.height = 10;
 
@@ -289,10 +282,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTwoFingerTap,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTwoFingerTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.two_finger_tap.first_finger_width = 10;
     web_gesture_event.data.two_finger_tap.first_finger_height = 10;
 
@@ -431,10 +423,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureScrollUpdate,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureScrollUpdate, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.x = 100;
     web_gesture_event.y = 110;
     web_gesture_event.global_x = 100;
@@ -455,10 +446,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTap,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap.width = 30;
     web_gesture_event.data.tap.height = 30;
 
@@ -470,10 +460,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTapUnconfirmed,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTapUnconfirmed, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap.width = 30;
     web_gesture_event.data.tap.height = 30;
 
@@ -485,10 +474,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTapDown,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTapDown, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.tap_down.width = 30;
     web_gesture_event.data.tap_down.height = 30;
 
@@ -500,10 +488,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureShowPress,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.show_press.width = 30;
     web_gesture_event.data.show_press.height = 30;
 
@@ -515,10 +502,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureLongPress,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.long_press.width = 30;
     web_gesture_event.data.long_press.height = 30;
 
@@ -530,10 +516,9 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTwoFingerTap,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTwoFingerTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.data.two_finger_tap.first_finger_width = 30;
     web_gesture_event.data.two_finger_tap.first_finger_height = 30;
 
@@ -626,10 +611,9 @@ TEST(WebInputEventConversionTest, InputEventsConversions) {
 
   LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureTap,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.x = 10;
     web_gesture_event.y = 10;
     web_gesture_event.global_x = 10;
@@ -705,10 +689,9 @@ TEST(WebInputEventConversionTest, VisualViewportOffset) {
   }
 
   {
-    WebGestureEvent web_gesture_event(WebInputEvent::kGestureScrollUpdate,
-                                      WebInputEvent::kNoModifiers,
-                                      WebInputEvent::kTimeStampForTesting);
-    web_gesture_event.source_device = kWebGestureDeviceTouchscreen;
+    WebGestureEvent web_gesture_event(
+        WebInputEvent::kGestureScrollUpdate, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     web_gesture_event.x = 10;
     web_gesture_event.y = 10;
     web_gesture_event.global_x = 10;

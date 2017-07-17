@@ -176,11 +176,11 @@ WebGestureEvent WebGestureEventBuilder::Build(WebInputEvent::Type type,
                                               int x,
                                               int y) {
   DCHECK(WebInputEvent::IsGestureEventType(type));
-  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time_sec);
+  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time_sec,
+                         blink::kWebGestureDeviceTouchscreen);
 
   result.x = x;
   result.y = y;
-  result.source_device = blink::kWebGestureDeviceTouchscreen;
 
   return result;
 }
