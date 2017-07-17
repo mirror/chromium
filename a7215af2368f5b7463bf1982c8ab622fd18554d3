@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "dffecb8c_3c1a8a63",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "At the top of this file, there is a comment that says \"3. Do not remove any enums.  Only mark them as deprecated.\"  I would expect that to apply to this enum as well.  Is this enum actually used in a different way, such that the comment actually doesn\u0027t apply to it?",
+      "parentUuid": "e42ed6eb_1e8dc1b3",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ea9ee06_d4218fed",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "bdd47488_6bc0dfd9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15074,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92bba551_1e9cca8b",
+      "range": {
+        "startLine": 15074,
+        "startChar": 42,
+        "endLine": 15074,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea25ebf_f70fabd0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -375,6 +423,30 @@
       "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bb4447_dc7fe941",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15148,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aea6b4b8_6e38068d",
+      "range": {
+        "startLine": 15147,
+        "startChar": 74,
+        "endLine": 15148,
+        "endChar": 43
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -610,6 +682,30 @@
       "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2afd8da_f741daef",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 89182,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e953052_46fa197b",
+      "range": {
+        "startLine": 89182,
+        "startChar": 28,
+        "endLine": 89182,
+        "endChar": 66
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

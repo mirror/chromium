@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a31216_bbdcf981",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 15013,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "Please document when this is recorded.",
+      "range": {
+        "startLine": 15013,
+        "startChar": 64,
+        "endLine": 15013,
+        "endChar": 0
+      },
+      "revId": "a96539074293886884cd4269c954da029a07bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debeb652_a4d9bb47",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 15019,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-17T23:24:39Z",
+      "side": 1,
+      "message": "Please document when this is recorded.",
+      "range": {
+        "startLine": 15019,
+        "startChar": 75,
+        "endLine": 15019,
+        "endChar": 0
+      },
+      "revId": "a96539074293886884cd4269c954da029a07bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
