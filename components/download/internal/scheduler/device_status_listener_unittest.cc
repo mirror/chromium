@@ -38,7 +38,6 @@ class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
     conn_type_ = type;
     net::NetworkChangeNotifier::NotifyObserversOfConnectionTypeChangeForTests(
         type);
-    base::RunLoop().RunUntilIdle();
   }
 
  private:
@@ -58,7 +57,8 @@ class DeviceStatusListenerTest : public testing::Test {
     power_monitor_ = base::MakeUnique<base::PowerMonitor>(
         base::MakeUnique<base::PowerMonitorTestSource>());
 
-    listener_ = base::MakeUnique<DeviceStatusListener>();
+    listener_ =
+        base::MakeUnique<DeviceStatusListener>(base::TimeDelta::FromSeconds(0));
   }
 
   void TearDown() override { listener_.reset(); }
@@ -102,6 +102,10 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
   ChangeNetworkType(ConnectionType::CONNECTION_4G);
   ChangeNetworkType(ConnectionType::CONNECTION_3G);
   ChangeNetworkType(ConnectionType::CONNECTION_2G);
+
+  EXPECT_EQ(NetworkStatus::DISCONNECTED,
+            listener_->CurrentDeviceStatus().network_status);
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(NetworkStatus::METERED,
             listener_->CurrentDeviceStatus().network_status);
 
@@ -114,6 +118,11 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
 
   ChangeNetworkType(ConnectionType::CONNECTION_WIFI);
   ChangeNetworkType(ConnectionType::CONNECTION_ETHERNET);
+  EXPECT_EQ(NetworkStatus::METERED,
+            listener_->CurrentDeviceStatus().network_status);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(NetworkStatus::UNMETERED,
+            listener_->CurrentDeviceStatus().network_status);
 }
 
 // Ensures the observer is notified when battery condition changes.
