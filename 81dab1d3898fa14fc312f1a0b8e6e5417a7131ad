@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30aa5757_69d1105a",
+        "filename": "remoting/ios/domain/host_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-17T19:00:36Z",
+      "side": 1,
+      "message": "It seems the Objective-C convention for naming enum is EnumType+enum, e.g. ClientInputModeUndefined?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9214207f_b9276030",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-17T19:00:36Z",
+      "side": 1,
+      "message": "This logic doesn\u0027t help with RemotingSSOAuthentication. It doesn\u0027t store the userEmail directly and instead it stores the ClientId and retrieves the userEmail from it.\n\nThe old way to access the userEmail is to use authentication.userInfo and now we also have remotingPreference.activeUserEmail. This will force the SSOAuthentication to implement and make sure the activeUserEmail logic works.\n\nRather than having a public activeUserEmail, could we just provide the setObject:forKey: method and use kUserEmailKey here?",
+      "range": {
+        "startLine": 186,
+        "startChar": 35,
+        "endLine": 186,
+        "endChar": 50
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4c7e88_2cabc2e0",
+        "filename": "remoting/ios/persistence/remoting_preferences.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-17T19:00:36Z",
+      "side": 1,
+      "message": "There is also a src/remoting/ios/host_preferences_persistence.h. Is it no longer used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
