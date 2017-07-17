@@ -16,6 +16,24 @@
       "revId": "55edfdc72d371d7896b4559e73405d2dccbae351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2089936_898bb8fd",
+        "filename": "chrome/browser/extensions/external_install_error.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-17T19:10:57Z",
+      "side": 1,
+      "message": "Makes sense. Done. \nRegarding 1), I haven\u0027t seen advise regarding weak pointer being implementation details. Doesn\u0027t it also solve the case where an object A which doesn\u0027t own B, wants to be \"aware\" of the lifetime of B?\n\nAlso, regarding the comment, I can\u0027t see how this can cause the Extension object to be deleted, so I didn\u0027t add that to the comment.",
+      "parentUuid": "2b214ace_931b20c9",
+      "revId": "55edfdc72d371d7896b4559e73405d2dccbae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
