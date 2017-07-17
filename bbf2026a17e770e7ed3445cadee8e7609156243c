@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9878f45_8e5299d8",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-objects-tracking.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-17T22:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06341b2a_f692be7f",
+      "revId": "bbf2026a17e770e7ed3445cadee8e7609156243c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2b39be3_d7e46709",
         "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-active-dom-object.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "bbf2026a17e770e7ed3445cadee8e7609156243c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2273cd_ae33a9bf",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-active-dom-object.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-17T22:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2b39be3_d7e46709",
+      "revId": "bbf2026a17e770e7ed3445cadee8e7609156243c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

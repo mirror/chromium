@@ -16,6 +16,24 @@
       "revId": "d1fee60d6261d4a1016dd5a574abbca43d84a4d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8267b772_f555ea0d",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-active-dom-object-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-17T22:44:48Z",
+      "side": 0,
+      "message": "We are not adding console messages from inspected page to test results anymore.",
+      "parentUuid": "f08d5f14_b78cf034",
+      "revId": "d1fee60d6261d4a1016dd5a574abbca43d84a4d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
