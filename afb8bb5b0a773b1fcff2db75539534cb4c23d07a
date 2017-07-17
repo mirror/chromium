@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "de0fa9f7_ee206f16",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-17T22:46:05Z",
+      "side": 1,
+      "message": "per in-person discussion: i\u0027m going to leave it like this because i am paranoid and don\u0027t want to friend the test class",
+      "parentUuid": "0e6069c3_bfa63e58",
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eda01a2_e7ee77a4",
         "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
         "patchSetId": 1
