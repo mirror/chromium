@@ -46,6 +46,30 @@
       "revId": "11c7ff3150220af205c2f3dfaf4ade8666a248a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46adf03_7682f6ca",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-17T19:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b854bc8e_40be958b",
+      "range": {
+        "startLine": 619,
+        "startChar": 11,
+        "endLine": 619,
+        "endChar": 12
+      },
+      "revId": "11c7ff3150220af205c2f3dfaf4ade8666a248a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
