@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5541639_35ad7249",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T17:32:04Z",
+      "side": 1,
+      "message": "The same comment about SequencedTaskRunnerHandles applies here too.\n\nhttps://chromium-review.googlesource.com/c/570509/1/components%252Ffeature_engagement_tracker%252Ftest%252Ftest_feature_engagement_tracker.cc#31",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "4772f6067f7aef09e42340058543dc68168de200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
