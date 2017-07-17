@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a0958f_34ae8520",
+        "filename": "chrome/browser/chromeos/arc/process/arc_process_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:33:21Z",
+      "side": 1,
+      "message": "How about \"Use ArcServiceManager\u0027s BrowserContext instance, since the rest of the ARC services\u0027 lifetimes are tied to it.\"?",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 257,
+        "endChar": 62
+      },
+      "revId": "37e1c0a67816697bb621289a8b7a5d0e4c79308b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

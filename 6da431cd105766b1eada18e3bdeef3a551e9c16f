@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78804945_7fb9a06e",
+        "filename": "chrome/browser/chromeos/arc/process/arc_process_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:33:21Z",
+      "side": 0,
+      "message": "nice!",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "6da431cd105766b1eada18e3bdeef3a551e9c16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
