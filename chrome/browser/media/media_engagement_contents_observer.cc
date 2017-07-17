@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/media/media_engagement_service.h"
@@ -24,6 +25,21 @@ const gfx::Size MediaEngagementContentsObserver::kSignificantSize =
 
 const char* MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName =
     "Media.Engagement.ScoreAtPlayback";
+
+const char* MediaEngagementContentsObserver::
+    kHistogramSignificantNotAddedFirstTimeName =
+        "Media.Engagement.SignificantPlayers.PlayerNotAdded.FirstTime";
+
+const char* MediaEngagementContentsObserver::
+    kHistogramSignificantNotAddedSubsequentName =
+        "Media.Engagement.SignificantPlayers.PlayerNotAdded.Subsequent";
+
+const char* MediaEngagementContentsObserver::kHistogramSignificantRemovedName =
+    "Media.Engagement.SignificantPlayers.PlayerRemoved";
+
+constexpr int MediaEngagementContentsObserver::kMaxInsignificantPlaybackReason =
+    static_cast<int>(MediaEngagementContentsObserver::
+                         InsignificantPlaybackReason::kReasonMax);
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -82,6 +98,8 @@ void MediaEngagementContentsObserver::WasHidden() {
   UpdateTimer();
 }
 
+MediaEngagementContentsObserver::PlayerState::PlayerState() = default;
+
 MediaEngagementContentsObserver::PlayerState*
 MediaEngagementContentsObserver::GetPlayerState(const MediaPlayerId& id) {
   auto state = player_states_.find(id);
@@ -100,7 +118,7 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
   state->playing = true;
   state->has_audio = media_player_info.has_audio;
 
-  MaybeInsertSignificantPlayer(media_player_id);
+  MaybeInsertRemoveSignificantPlayer(media_player_id);
   UpdateTimer();
   RecordEngagementScoreToHistogramAtPlayback(media_player_id);
 }
@@ -112,8 +130,8 @@ void MediaEngagementContentsObserver::
     return;
 
   PlayerState* state = GetPlayerState(id);
-  if (!state->playing || state->muted || !state->has_audio ||
-      state->score_recorded)
+  if (!state->playing.value_or(false) || state->muted.value_or(true) ||
+      !state->has_audio.value_or(false) || state->score_recorded)
     return;
 
   int percentage = round(service_->GetEngagementScore(url) * 100);
@@ -127,27 +145,17 @@ void MediaEngagementContentsObserver::MediaMutedStatusChanged(
     const MediaPlayerId& id,
     bool muted) {
   GetPlayerState(id)->muted = muted;
-
-  if (muted)
-    MaybeRemoveSignificantPlayer(id);
-  else
-    MaybeInsertSignificantPlayer(id);
-
+  MaybeInsertRemoveSignificantPlayer(id);
   UpdateTimer();
   RecordEngagementScoreToHistogramAtPlayback(id);
 }
 
 void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
                                                    const MediaPlayerId& id) {
-  if (size.width() >= kSignificantSize.width() &&
-      size.height() >= kSignificantSize.height()) {
-    GetPlayerState(id)->significant_size = true;
-    MaybeInsertSignificantPlayer(id);
-  } else {
-    GetPlayerState(id)->significant_size = false;
-    MaybeRemoveSignificantPlayer(id);
-  }
-
+  GetPlayerState(id)->significant_size =
+      (size.width() >= kSignificantSize.width() &&
+       size.height() >= kSignificantSize.height());
+  MaybeInsertRemoveSignificantPlayer(id);
   UpdateTimer();
 }
 
@@ -155,7 +163,7 @@ void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerInfo& media_player_info,
     const MediaPlayerId& media_player_id) {
   GetPlayerState(media_player_id)->playing = false;
-  MaybeRemoveSignificantPlayer(media_player_id);
+  MaybeInsertRemoveSignificantPlayer(media_player_id);
   UpdateTimer();
 }
 
@@ -163,10 +171,35 @@ void MediaEngagementContentsObserver::DidUpdateAudioMutingState(bool muted) {
   UpdateTimer();
 }
 
-bool MediaEngagementContentsObserver::IsSignificantPlayer(
-    const MediaPlayerId& id) {
-  PlayerState* state = GetPlayerState(id);
-  return !state->muted && state->playing && state->significant_size;
+std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
+MediaEngagementContentsObserver::GetInsignificantPlayerReason(
+    PlayerState* state) {
+  std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
+      reasons;
+
+  if (state->muted.value_or(true))
+    reasons.push_back(MediaEngagementContentsObserver::
+                          InsignificantPlaybackReason::kAudioMuted);
+
+  if (!state->playing.value_or(false))
+    reasons.push_back(MediaEngagementContentsObserver::
+                          InsignificantPlaybackReason::kMediaPaused);
+
+  if (!state->significant_size.value_or(false))
+    reasons.push_back(MediaEngagementContentsObserver::
+                          InsignificantPlaybackReason::kFrameSizeTooSmall);
+
+  if (!state->has_audio.value_or(false))
+    reasons.push_back(MediaEngagementContentsObserver::
+                          InsignificantPlaybackReason::kNoAudioTrack);
+
+  return reasons;
+}
+
+bool MediaEngagementContentsObserver::IsPlayerStateComplete(
+    PlayerState* state) {
+  return state->muted.has_value() && state->playing.has_value() &&
+         state->significant_size.has_value() && state->has_audio.has_value();
 }
 
 void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
@@ -189,22 +222,88 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
   service_->RecordPlayback(committed_origin_.GetURL());
 }
 
-void MediaEngagementContentsObserver::MaybeInsertSignificantPlayer(
-    const MediaPlayerId& id) {
-  if (significant_players_.find(id) != significant_players_.end())
-    return;
+void MediaEngagementContentsObserver::RecordInsignificantReasons(
+    std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
+        reasons,
+    PlayerState* state,
+    MediaEngagementContentsObserver::InsignificantHistogram histogram) {
+  DCHECK(IsPlayerStateComplete(state));
 
-  if (IsSignificantPlayer(id))
-    significant_players_.insert(id);
+  std::string histogram_name;
+  switch (histogram) {
+    case MediaEngagementContentsObserver::InsignificantHistogram::
+        kPlayerRemoved:
+      histogram_name =
+          MediaEngagementContentsObserver::kHistogramSignificantRemovedName;
+      break;
+    case MediaEngagementContentsObserver::InsignificantHistogram::
+        kPlayerNotAddedFirstTime:
+      histogram_name = MediaEngagementContentsObserver::
+          kHistogramSignificantNotAddedFirstTimeName;
+      break;
+    case MediaEngagementContentsObserver::InsignificantHistogram::
+        kPlayerNotAddedSubsequent:
+      histogram_name = MediaEngagementContentsObserver::
+          kHistogramSignificantNotAddedSubsequentName;
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+
+  base::HistogramBase* base_histogram = base::LinearHistogram::FactoryGet(
+      histogram_name, 1,
+      MediaEngagementContentsObserver::kMaxInsignificantPlaybackReason,
+      MediaEngagementContentsObserver::kMaxInsignificantPlaybackReason + 1,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+
+  for (auto reason : reasons)
+    base_histogram->Add(static_cast<int>(reason));
+
+  base_histogram->Add(static_cast<int>(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount));
 }
 
-void MediaEngagementContentsObserver::MaybeRemoveSignificantPlayer(
+void MediaEngagementContentsObserver::MaybeInsertRemoveSignificantPlayer(
     const MediaPlayerId& id) {
-  if (significant_players_.find(id) == significant_players_.end())
+  // If we have not received the whole player state yet then we can't be
+  // significant and therefore we don't want to make a decision yet.
+  PlayerState* state = GetPlayerState(id);
+  if (!IsPlayerStateComplete(state))
     return;
 
-  if (!IsSignificantPlayer(id))
-    significant_players_.erase(id);
+  bool is_currently_significant =
+      significant_players_.find(id) != significant_players_.end();
+  std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
+      reasons = GetInsignificantPlayerReason(state);
+
+  if (is_currently_significant) {
+    if (!reasons.empty()) {
+      // We are considered significant and we have reasons why we shouldn't
+      // be, so we should make the player not significant.
+      significant_players_.erase(id);
+      RecordInsignificantReasons(reasons, state,
+                                 MediaEngagementContentsObserver::
+                                     InsignificantHistogram::kPlayerRemoved);
+    }
+  } else {
+    if (reasons.empty()) {
+      // We are not considered significant but we don't have any reasons
+      // why we shouldn't be. Make the player significant.
+      significant_players_.insert(id);
+    } else if (state->reasons_recorded) {
+      RecordInsignificantReasons(
+          reasons, state,
+          MediaEngagementContentsObserver::InsignificantHistogram::
+              kPlayerNotAddedSubsequent);
+    } else {
+      RecordInsignificantReasons(
+          reasons, state,
+          MediaEngagementContentsObserver::InsignificantHistogram::
+              kPlayerNotAddedFirstTime);
+      state->reasons_recorded = true;
+    }
+  }
 }
 
 bool MediaEngagementContentsObserver::AreConditionsMet() const {

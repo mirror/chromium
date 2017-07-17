@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/optional.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/timer/mock_timer.h"
@@ -53,8 +54,8 @@ class MediaEngagementContentsObserverTest
     return contents_observer_->player_states_.size();
   }
 
-  void SimulatePlaybackStarted(int id) {
-    content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
+  void SimulatePlaybackStarted(int id, bool has_audio) {
+    content::WebContentsObserver::MediaPlayerInfo player_info(true, has_audio);
     SimulatePlaybackStarted(player_info, id, false);
   }
 
@@ -63,6 +64,8 @@ class MediaEngagementContentsObserverTest
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaResized(size, player_id);
   }
+
+  void SimulatePlaybackStarted(int id) { SimulatePlaybackStarted(id, true); }
 
   void SimulateResizeEventSignificantSize(int id) {
     SimulateResizeEvent(id, MediaEngagementContentsObserver::kSignificantSize);
@@ -166,6 +169,32 @@ class MediaEngagementContentsObserverTest
 
   void ForceUpdateTimer() { contents_observer_->UpdateTimer(); }
 
+  void ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
+      int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::
+            kHistogramSignificantNotAddedFirstTimeName,
+        static_cast<int>(reason), count);
+  }
+
+  void ExpectNotAddedSubsequentBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
+      int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::
+            kHistogramSignificantNotAddedSubsequentName,
+        static_cast<int>(reason), count);
+  }
+
+  void ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
+      int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::kHistogramSignificantRemovedName,
+        static_cast<int>(reason), count);
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -173,6 +202,8 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
+
+  base::HistogramTester histogram_tester_;
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -245,6 +276,119 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulateSignificantPlayer(1);
   EXPECT_TRUE(AreConditionsMet());
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordInsignificantReason) {
+  // Play the media.
+  SimulatePlaybackStarted(0);
+  SimulateResizeEvent(0, gfx::Size(1, 1));
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kFrameSizeTooSmall,
+      1);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
+
+  // Resize the frame to full size.
+  SimulateResizeEventSignificantSize(0);
+
+  // Resize the frame size.
+  SimulateResizeEvent(0, gfx::Size(1, 1));
+  SimulateResizeEventSignificantSize(0);
+  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
+                               InsignificantPlaybackReason::kFrameSizeTooSmall,
+                           1);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
+
+  // Pause the player.
+  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
+                               InsignificantPlaybackReason::kMediaPaused,
+                           0);
+  SimulatePlaybackStopped(0);
+  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
+                               InsignificantPlaybackReason::kMediaPaused,
+                           1);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
+  SimulatePlaybackStarted(0);
+
+  // Mute the player.
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
+      0);
+  SimulateMutedStateChange(0, true);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
+      1);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
+
+  // Start a video only player.
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kNoAudioTrack,
+      0);
+  SimulatePlaybackStarted(2, false);
+  SimulateResizeEventSignificantSize(2);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kNoAudioTrack,
+      1);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
+
+  // Make sure we only record not added when we have the full state.
+  SimulatePlaybackStarted(3);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
+  SimulateResizeEvent(3, gfx::Size(1, 1));
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
+
+  // Make sure we only record removed when we have the full state.
+  SimulatePlaybackStarted(4);
+  SimulateMutedStateChange(4, true);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
+  SimulateResizeEventSignificantSize(4);
+  SimulateMutedStateChange(4, false);
+  SimulateMutedStateChange(4, true);
+  ExpectRemovedBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 4);
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       RecordInsignificantReason_NotAdded_Subsequent) {
+  SimulatePlaybackStarted(0, false);
+  SimulateMutedStateChange(0, true);
+  SimulateResizeEventSignificantSize(0);
+
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kNoAudioTrack,
+      1);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
+      1);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
+
+  SimulateMutedStateChange(0, false);
+
+  ExpectNotAddedSubsequentBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kNoAudioTrack,
+      1);
+  ExpectNotAddedSubsequentBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
+
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::
+          kNoAudioTrack,
+      1);
+  ExpectNotAddedFirstTimeBucketCount(
+      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, EnsureCleanupAfterNavigation) {
