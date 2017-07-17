@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36a7c21e_8b74956c",
+        "filename": "remoting/ios/domain/host_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-17T20:59:16Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "30aa5757_69d1105a",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9214207f_b9276030",
         "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T19:00:36Z",
       "side": 1,
       "message": "This logic doesn\u0027t help with RemotingSSOAuthentication. It doesn\u0027t store the userEmail directly and instead it stores the ClientId and retrieves the userEmail from it.\n\nThe old way to access the userEmail is to use authentication.userInfo and now we also have remotingPreference.activeUserEmail. This will force the SSOAuthentication to implement and make sure the activeUserEmail logic works.\n\nRather than having a public activeUserEmail, could we just provide the setObject:forKey: method and use kUserEmailKey here?",
+      "range": {
+        "startLine": 186,
+        "startChar": 35,
+        "endLine": 186,
+        "endChar": 50
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78659aa_3c657a13",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-17T20:59:16Z",
+      "side": 1,
+      "message": "It is not a good idea to expose setObject:forKey in the RemotingPreferences object, the point is to provide a specific api that clients use to avoid hard to debug key clashing. \n\nHow about renaming activeUserEmail to activeUserKey and in the chromium impl it means email and in the private, it means clientId.",
+      "parentUuid": "9214207f_b9276030",
       "range": {
         "startLine": 186,
         "startChar": 35,
@@ -68,6 +116,30 @@
       "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80b18fe_8ead59e2",
+        "filename": "remoting/ios/persistence/remoting_preferences.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-17T20:59:16Z",
+      "side": 1,
+      "message": "That stores data to the keychain, this stores to defaults.\n\nhost_preferences_persistence is only needed for chromium builds, SSO does the same job.",
+      "parentUuid": "7b4c7e88_2cabc2e0",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
