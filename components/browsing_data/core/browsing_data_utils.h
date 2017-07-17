@@ -7,16 +7,20 @@
 
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "components/browsing_data/core/clear_browsing_data_tab.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
 
 namespace browsing_data {
 
-// Browsing data types as seen in the Android UI.
-// TODO(msramek): Reuse this enum as the canonical representation of the
-// user-facing browsing data types in the Desktop UI as well.
+// Browsing data types as seen in the Android and Desktop UI.
+// TODO: I would like to use #ifdefs to restrict the enum to types that are
+// applicable to the specific platform but java_cpp_enum.py doesn't like
+// preprocessor statements :( As a workaround I duplicated the whole enum and
+// put each section into an #ifdef?
 //
 // A Java counterpart will be generated for this enum.
+#if defined(OS_ANDROID)
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.browsing_data
 enum class BrowsingDataType {
   HISTORY,
@@ -24,10 +28,25 @@ enum class BrowsingDataType {
   COOKIES,
   PASSWORDS,
   FORM_DATA,
+  // Only for Android:
   BOOKMARKS,
   SITE_SETTINGS,
   NUM_TYPES
 };
+#else
+enum class BrowsingDataType {
+  HISTORY,
+  CACHE,
+  COOKIES,
+  PASSWORDS,
+  FORM_DATA,
+  // Only for Desktop:
+  DOWNLOADS,
+  MEDIA_LICENSES,
+  HOSTED_APPS_DATA,
+  NUM_TYPES
+};
+#endif
 
 // Time period ranges available when doing browsing data removals.
 //
@@ -70,6 +89,9 @@ bool GetDeletionPreferenceFromDataType(
     BrowsingDataType data_type,
     ClearBrowsingDataTab clear_browsing_data_tab,
     std::string* out_pref);
+
+BrowsingDataType GetDataTypeFromDeletionPreference(
+    const std::string& pref_name);
 
 // Copies the deletion preferences for timeperiod, cache, history and cookies
 // to a separate preferences that are used to on the basic CBD tab.
