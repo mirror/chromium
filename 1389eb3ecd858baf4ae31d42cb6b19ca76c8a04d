@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf9ea34_71a2d47e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-17T14:07:31Z",
+      "side": 1,
+      "message": "It is better to have a protected function like createLoadUrlParams() and move line 117 to WebApkActivty, since this is WebAPK-specific behavior.",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 44
+      },
+      "revId": "1389eb3ecd858baf4ae31d42cb6b19ca76c8a04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
