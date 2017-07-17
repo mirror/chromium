@@ -456,6 +456,8 @@ class BLINK_PLATFORM_EXPORT Platform {
   // renderer was created with threaded rendering desabled.
   virtual WebThread* CompositorThread() const { return 0; }
 
+  virtual WebThread* FileThread() const { return 0; }
+
   // Testing -------------------------------------------------------------
 
   // Gets a pointer to URLLoaderMockFactory for testing. Will not be available

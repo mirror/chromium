@@ -1289,6 +1289,11 @@ void RenderThreadImpl::InitializeWebKit(
         command_line.GetSwitchValueASCII(switches::kExplicitlyAllowedPorts);
     net::SetExplicitlyAllowedPorts(allowed_ports);
   }
+
+  file_thread_ = blink::scheduler::WebThreadBase::CreateWorkerThread(
+      "File", base::Thread::Options());
+  file_thread_->Init();
+  blink_platform_impl_->SetFileThread(file_thread_.get());
 }
 
 void RenderThreadImpl::RegisterSchemes() {
@@ -2363,11 +2368,7 @@ void RenderThreadImpl::ClearMemory() {
 scoped_refptr<base::SingleThreadTaskRunner>
 RenderThreadImpl::GetFileThreadTaskRunner() {
   DCHECK(message_loop()->task_runner()->BelongsToCurrentThread());
-  if (!file_thread_) {
-    file_thread_.reset(new base::Thread("Renderer::FILE"));
-    file_thread_->Start();
-  }
-  return file_thread_->task_runner();
+  return file_thread_->GetSingleThreadTaskRunner();
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
