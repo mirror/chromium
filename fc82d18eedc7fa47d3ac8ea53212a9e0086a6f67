@@ -22,6 +22,30 @@
       "revId": "fc82d18eedc7fa47d3ac8ea53212a9e0086a6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993d840a_68535ec0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T17:07:51Z",
+      "side": 1,
+      "message": "Done. I was trying to avoid using names of the UI elements and actions in the coordinator. But I agree with you that this may be confusing.",
+      "parentUuid": "3be49f04_2513531f",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 345,
+        "endChar": 33
+      },
+      "revId": "fc82d18eedc7fa47d3ac8ea53212a9e0086a6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
