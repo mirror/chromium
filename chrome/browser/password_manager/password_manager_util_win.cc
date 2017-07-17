@@ -223,23 +223,21 @@ bool AuthenticateUser(gfx::NativeWindow window) {
   bool retval = false;
   CREDUI_INFO cui = {};
   WCHAR username[CREDUI_MAX_USERNAME_LENGTH+1] = {};
-  WCHAR displayname[CREDUI_MAX_USERNAME_LENGTH+1] = {};
   WCHAR password[CREDUI_MAX_PASSWORD_LENGTH+1] = {};
+  WCHAR domain[CREDUI_MAX_USERNAME_LENGTH+1] = {};
   DWORD username_length = CREDUI_MAX_USERNAME_LENGTH;
+  DWORD domain_length = CREDUI_MAX_USERNAME_LENGTH;
+  DWORD password_length = CREDUI_MAX_USERNAME_LENGTH;
   base::string16 product_name = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
   base::string16 password_prompt =
       l10n_util::GetStringUTF16(IDS_PASSWORDS_PAGE_AUTHENTICATION_PROMPT);
   HANDLE handle = INVALID_HANDLE_VALUE;
   size_t tries = 0;
-  bool use_displayname = false;
-  bool use_principalname = false;
   DWORD logon_result = 0;
 
   // On a domain, we obtain the User Principal Name
   // for domain authentication.
-  if (GetUserNameEx(NameUserPrincipal, username, &username_length)) {
-    use_principalname = true;
-  } else {
+  if (!GetUserNameEx(NameUserPrincipal, username, &username_length)) {
     username_length = CREDUI_MAX_USERNAME_LENGTH;
     // Otherwise, we're a workstation, use the plain local username.
     if (!GetUserName(username, &username_length)) {
@@ -253,11 +251,6 @@ bool AuthenticateUser(gfx::NativeWindow window) {
     }
   }
 
-  // Try and obtain a friendly display name.
-  username_length = CREDUI_MAX_USERNAME_LENGTH;
-  if (GetUserNameEx(NameDisplay, displayname, &username_length))
-    use_displayname = true;
-
   cui.cbSize = sizeof(CREDUI_INFO);
   cui.hwndParent = NULL;
   cui.hwndParent = window->GetHost()->GetAcceleratedWidget();
@@ -268,28 +261,41 @@ bool AuthenticateUser(gfx::NativeWindow window) {
   cui.hbmBanner = NULL;
   BOOL save_password = FALSE;
   DWORD credErr = NO_ERROR;
+  ULONG authPackage = 0;
+  LPVOID outCredBuffer = nullptr;
+  ULONG outCredSize = 0;
+
 
   do {
     tries++;
 
     // TODO(wfh) Make sure we support smart cards here.
-    credErr = CredUIPromptForCredentials(
+    credErr = CredUIPromptForWindowsCredentials(
         &cui,
-        product_name.c_str(),
-        NULL,
         0,
-        use_displayname ? displayname : username,
-        CREDUI_MAX_USERNAME_LENGTH+1,
-        password,
-        CREDUI_MAX_PASSWORD_LENGTH+1,
+        &authPackage,
+        NULL, 0,
+        &outCredBuffer, &outCredSize,
         &save_password,
-        kCredUiDefaultFlags |
-        (tries > 1 ? CREDUI_FLAGS_INCORRECT_PASSWORD : 0));
+        CREDUIWIN_GENERIC);
+    LOG(ERROR) << "@@@@@@@@@ " << credErr << " " << outCredSize << " "
+               << authPackage;
+
+    username_length = CREDUI_MAX_USERNAME_LENGTH;
+    if(!CredUnPackAuthenticationBuffer(
+        CRED_PACK_PROTECTED_CREDENTIALS,
+        outCredBuffer,
+        outCredSize,
+        username, &username_length,
+        domain, &domain_length,
+        password, &password_length)) {
+      credErr = GetLastError();
+      LOG(ERROR) << "@@@@@@@@@@@@@@@@ " << credErr;
+    }
+    LOG(ERROR) << "@@@@@@@@@@@@@@@@@@@@@@@@ " << username << " " << domain;
 
     if (credErr == NO_ERROR) {
-      logon_result = LogonUser(username,
-                               use_principalname ? NULL : L".",
-                               password,
+      logon_result = LogonUser(username, domain, password,
                                LOGON32_LOGON_INTERACTIVE,
                                LOGON32_PROVIDER_DEFAULT,
                                &handle);
