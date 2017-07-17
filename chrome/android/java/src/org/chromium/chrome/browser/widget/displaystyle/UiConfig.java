@@ -59,6 +59,15 @@ public class UiConfig {
     }
 
     /**
+     * Unregisters a previously registered {@link DisplayStyleObserver}.
+     * @param observer The {@link DisplayStyleObserver} to be unregistered.
+     */
+    public void removeObserver(DisplayStyleObserver observer) {
+        boolean success = mObservers.remove(observer);
+        assert success;
+    }
+
+    /**
      * Refresh the display style, notify observers of changes.
      */
     public void updateDisplayStyle() {
