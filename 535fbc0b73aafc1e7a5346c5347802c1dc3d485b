@@ -22,6 +22,30 @@
       "revId": "535fbc0b73aafc1e7a5346c5347802c1dc3d485b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20620814_88af3343",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-17T18:40:09Z",
+      "side": 0,
+      "message": "Good catch! We just spotted the same issue.",
+      "parentUuid": "1d7377e3_b9ac539d",
+      "range": {
+        "startLine": 2629,
+        "startChar": 15,
+        "endLine": 2629,
+        "endChar": 35
+      },
+      "revId": "535fbc0b73aafc1e7a5346c5347802c1dc3d485b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
