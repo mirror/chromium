@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fae68f92_96ef3de0",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-07-17T17:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b4c6a3_6ecd1021",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 44
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072dad04_abc98436",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3ce65c_067c93d1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-07-17T17:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "072dad04_abc98436",
+      "range": {
+        "startLine": 414,
+        "startChar": 22,
+        "endLine": 414,
+        "endChar": 27
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7e4aa98d_13745f86",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-07-17T17:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c23a8a_5a537ba4",
+      "range": {
+        "startLine": 420,
+        "startChar": 29,
+        "endLine": 420,
+        "endChar": 33
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "744f1659_cd0e857b",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2017-07-17T15:20:19Z",
       "side": 1,
       "message": "Where\u0027s the explicitly-sized New() constructor? Also, it\u0027s impossible to have a null std::vector, since it\u0027s not optional, so that bit of comment is also maybe outdated.",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 431,
+        "endChar": 14
+      },
+      "revId": "5af48306c8bb497248984a30368dc50f921bb09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce0dcb7_c29d2f7c",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-07-17T17:10:47Z",
+      "side": 1,
+      "message": "Ugh, this was copy-pasta-refactor old code. Fixing everything.",
+      "parentUuid": "744f1659_cd0e857b",
       "range": {
         "startLine": 430,
         "startChar": 14,
