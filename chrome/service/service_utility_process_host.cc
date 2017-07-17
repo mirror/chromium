@@ -81,6 +81,10 @@ class ServiceSandboxedProcessLauncherDelegate
     return true;
   }
 
+  content::SandboxType GetSandboxType() override {
+    return content::SANDBOX_TYPE_NO_SANDBOX;
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ServiceSandboxedProcessLauncherDelegate);
 };
