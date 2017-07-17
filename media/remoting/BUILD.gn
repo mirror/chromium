@@ -65,6 +65,7 @@ source_set("remoting") {
     ":rpc",
     "//base",
     "//media",
+    "//media/blink",
     "//media/mojo/interfaces:remoting",
     "//mojo/public/cpp/bindings",
     "//ui/gfx",
