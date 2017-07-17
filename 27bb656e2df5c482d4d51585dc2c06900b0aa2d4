@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33c9eda8_abc67c4b",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:12:34Z",
+      "side": 1,
+      "message": "Payment method identifiers should not include the \"/\" after the hostname.",
+      "range": {
+        "startLine": 400,
+        "startChar": 33,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a97d63_36d16cdb",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:12:34Z",
+      "side": 1,
+      "message": "Elaborate in this comment on what \"valid\" means. Link to the spec, as well.",
+      "range": {
+        "startLine": 162,
+        "startChar": 52,
+        "endLine": 162,
+        "endChar": 57
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fae113f_3d705a8a",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:12:34Z",
+      "side": 1,
+      "message": "Why change from \"method\" to \"url.spec()\"?",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
