@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b214ace_931b20c9",
+        "filename": "chrome/browser/extensions/external_install_error.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T14:50:26Z",
+      "side": 1,
+      "message": "Hmm... I wonder if this is the best fix.  Two potential issues:\n1) At some point, it would be nice to remove the external-facing weak ptr usage in ExtensionService (weak pointers should generally be implementation details, rather than public APIs), and this adds another usage of it.  It\u0027d be nice to keep any weak ptr knowledge contained in the implementation (so using weak ptrs for external install errors, if any are needed).\n2) This is a pretty subtle fix, and is fairly far removed from where the UAF actually occurred.  If any new code were to call RemoveError() here synchronously, we\u0027d have the same UAF issue (because the only thing that makes a copy of |extension_id| here is the callback storage).  I wonder if a clearer solution would be to change ExternalInstallManager::RemoveExternalInstallError() to make a copy of the extension_id before removing the error, with a comment like:\n// The extension id may be owned by either the Extension object or an\n// ExternalInstallError, either one of which may be deleted after removal\n// from the set. To avoid any UAFs, make a safe copy of |extension_id| now.\nstd::string extension_id_copy \u003d extension_id;\n\nWDYT?",
+      "revId": "55edfdc72d371d7896b4559e73405d2dccbae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
