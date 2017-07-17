@@ -78,6 +78,13 @@ class FileTypePolicies {
   DownloadFileType::PlatformSettings SettingsForFile(
       const base::FilePath& file) const;
 
+  // Return max size for which unpacking and/or binary feature extration is
+  // supported for the file extension from the given path.
+  uint64_t GetMaxFileSizeToAnalyze(const base::FilePath& file) const;
+
+  // Takes in only the extension instead of entire file path.
+  uint64_t GetMaxFileSizeToAnalyze(const std::string& ext) const;
+
  protected:
   // Creator must call one of Populate* before calling other methods.
   FileTypePolicies();
