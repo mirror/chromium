@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2b0145cc_1b0579eb",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T18:19:42Z",
+      "side": 1,
+      "message": "\u003e What process are those log consumers using right now to load the files? (Since they will presumably need to run a step to stitch the files as chrome://net-internals/ doesn\u0027t support loading directory-based logs).\n\nThere are currently only two Cronet consumers use the bounded versions. I have been pointing them to net/log/stitch_net_log_files.py (The file should probably be moved to net/tools/ if we are keeping it for the long run).\n\n\u003e OK, so what I think I can do is restore the \"constants.json\" and \"end_netlog.json\" files, this way the \".inprogress\" directory contains the complete log data. While logging is in progress, I can make \u003clogpath.json\u003e be a  dummy file that contains a message\n\nThat sounds great. As long as we have a way for the user to know where that temp .inprogress directory is, I am not worried about unclean shutdown.",
+      "parentUuid": "6e001056_b7456ae1",
+      "range": {
+        "startLine": 1048,
+        "startChar": 22,
+        "endLine": 1048,
+        "endChar": 26
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c590884b_796f8881",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 7
