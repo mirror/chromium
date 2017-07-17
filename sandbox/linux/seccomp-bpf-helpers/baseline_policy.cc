@@ -147,7 +147,7 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
   if (sysno == __NR_fcntl)
     return RestrictFcntlCommands();
 
-#if defined(__i386__) || defined(__arm__) || defined(__mips__)
+#if defined(__i386__) || defined(__arm__) || (defined(__mips__) && (_MIPS_SIM == _MIPS_SIM_ABI32))
   if (sysno == __NR_fcntl64)
     return RestrictFcntlCommands();
 #endif
@@ -191,7 +191,7 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
     return RestrictMmapFlags();
 #endif
 
-#if defined(__i386__) || defined(__arm__) || defined(__mips__)
+#if defined(__i386__) || defined(__arm__) || (defined(__mips__) && (_MIPS_SIM == _MIPS_SIM_ABI32))
   if (sysno == __NR_mmap2)
     return RestrictMmapFlags();
 #endif

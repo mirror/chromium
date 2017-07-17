@@ -17,6 +17,9 @@ namespace {
 #if defined(__mips__) && (_MIPS_SIM == _MIPS_SIM_ABI32)
 // This is true for Mips O32 ABI.
 static_assert(MIN_SYSCALL == __NR_Linux, "min syscall number should be 4000");
+#elif defined(__mips__) && (_MIPS_SIM == _MIPS_SIM_ABI64)
+// This is true for Mips n64 ABI.
+static_assert(MIN_SYSCALL == __NR_Linux, "min syscall number should be 4000");
 #else
 // This true for supported architectures (Intel and ARM EABI).
 static_assert(MIN_SYSCALL == 0u,
