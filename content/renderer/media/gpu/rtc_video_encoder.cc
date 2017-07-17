@@ -20,8 +20,10 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "content/renderer/media/webrtc/webrtc_video_frame_adapter.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/bitstream_buffer.h"
@@ -821,6 +823,22 @@ int32_t RTCVideoEncoder::InitEncode(const webrtc::VideoCodec* codec_settings,
            << ", startBitrate=" << codec_settings->startBitrate;
   if (impl_)
     Release();
+
+#if defined(OS_CHROMEOS)
+  // Blacklist screencast with temporal layers on "guado" that can handle the
+  // CPU load of encoding screencast but does not support temporal layers. While
+  // support for temporal layers are not available on other hardware either we
+  // don't want to disable hardware encoding on devices that cannot handle the
+  // CPU load of software encoding screencast.
+  // TODO(pbos): Support temporal layers on guado and other VEA encoders. See
+  // crbug.com/702017.
+  if (codec_settings->mode == webrtc::kScreensharing &&
+      codec_settings->codecType == webrtc::kVideoCodecVP8 &&
+      codec_settings->VP8().numberOfTemporalLayers > 1) {
+    if (base::SysInfo::GetStrippedReleaseBoard() == "guado")
+      return WEBRTC_VIDEO_CODEC_FALLBACK_SOFTWARE;
+  }
+#endif  // defined(OS_CHROMEOS)
 
   impl_ = new Impl(gpu_factories_, video_codec_type_);
   const media::VideoCodecProfile profile = WebRTCVideoCodecToVideoCodecProfile(
