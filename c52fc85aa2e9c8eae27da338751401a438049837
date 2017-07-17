@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af94a48_c1be6bbb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-17T19:06:43Z",
+      "side": 1,
+      "message": "Let\u0027s not do this. Keys in pie color map generally have little to do with clearing storage.",
+      "revId": "c52fc85aa2e9c8eae27da338751401a438049837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
