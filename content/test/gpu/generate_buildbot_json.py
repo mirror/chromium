@@ -1952,13 +1952,13 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
       'shards': 15,
     },
   },
-  'webgl2_conformance_angle_tests': {
+  'webgl2_conformance_gl_passthrough_tests': {
     'tester_configs': [
       {
          # The WebGL 2.0 conformance tests take over an hour to run on
          # the Debug bots, which is too long.
         'build_configs': ['Release'],
-        'predicate': Predicates.FYI_ONLY,
+        'predicate': Predicates.FYI_AND_OPTIONAL,
         # Only run on the NVIDIA Release and Intel Release Linux bots.
         'swarming_dimension_sets': [
           {
@@ -1987,6 +1987,8 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
     'target_name': 'webgl_conformance',
     'extra_browser_args': [
       '--use-gl=angle',
+      '--use-angle=gl',
+      '--use-passthrough-cmd-decoder',
     ],
     'args': [
       '--webgl-conformance-version=2.0.1',
