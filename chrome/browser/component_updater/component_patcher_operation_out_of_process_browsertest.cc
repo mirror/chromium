@@ -98,13 +98,10 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
                                      const base::FilePath& patch,
                                      const base::FilePath& output,
                                      int expected_result) {
-    scoped_refptr<base::SequencedTaskRunner> task_runner =
-        base::SequencedTaskRunnerHandle::Get();
-
     scoped_refptr<update_client::OutOfProcessPatcher> patcher =
         make_scoped_refptr(new component_updater::ChromeOutOfProcessPatcher);
 
-    patcher->Patch(operation, task_runner, input, patch, output,
+    patcher->Patch(operation, input, patch, output,
                    base::Bind(&OutOfProcessPatchTest::PatchDone,
                               base::Unretained(this), expected_result));
   }

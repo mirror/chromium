@@ -12,9 +12,10 @@
 #include "base/files/file_path.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/update_client/component_patcher_operation.h"
-#include "content/public/browser/browser_thread.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace component_updater {
@@ -25,15 +26,14 @@ ChromeOutOfProcessPatcher::~ChromeOutOfProcessPatcher() = default;
 
 void ChromeOutOfProcessPatcher::Patch(
     const std::string& operation,
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
     const base::FilePath& input_path,
     const base::FilePath& patch_path,
     const base::FilePath& output_path,
     const base::Callback<void(int result)>& callback) {
-  DCHECK(task_runner);
   DCHECK(!callback.is_null());
 
-  task_runner_ = task_runner;
+  task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
   callback_ = callback;
 
   base::File input_file(input_path,

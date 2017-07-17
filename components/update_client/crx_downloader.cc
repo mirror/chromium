@@ -11,12 +11,14 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/sequenced_task_runner.h"
+#include "base/memory/ptr_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #if defined(OS_WIN)
 #include "components/update_client/background_downloader_win.h"
 #endif
+#include "components/update_client/task_traits.h"
 #include "components/update_client/update_client_errors.h"
 #include "components/update_client/url_fetcher_downloader.h"
 #include "components/update_client/utils.h"
@@ -39,26 +41,22 @@ CrxDownloader::DownloadMetrics::DownloadMetrics()
 // which uses the BITS service.
 std::unique_ptr<CrxDownloader> CrxDownloader::Create(
     bool is_background_download,
-    net::URLRequestContextGetter* context_getter,
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner) {
+    net::URLRequestContextGetter* context_getter) {
   std::unique_ptr<CrxDownloader> url_fetcher_downloader(
-      std::unique_ptr<CrxDownloader>(new UrlFetcherDownloader(
-          std::unique_ptr<CrxDownloader>(), context_getter, task_runner)));
+      std::unique_ptr<CrxDownloader>(
+          new UrlFetcherDownloader(nullptr, context_getter)));
 #if defined(OS_WIN)
   if (is_background_download) {
     return std::unique_ptr<CrxDownloader>(new BackgroundDownloader(
-        std::move(url_fetcher_downloader), context_getter, task_runner));
+        std::move(url_fetcher_downloader), context_getter));
   }
 #endif
 
   return url_fetcher_downloader;
 }
 
-CrxDownloader::CrxDownloader(
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-    std::unique_ptr<CrxDownloader> successor)
-    : task_runner_(task_runner),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+CrxDownloader::CrxDownloader(std::unique_ptr<CrxDownloader> successor)
+    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       successor_(std::move(successor)) {}
 
 CrxDownloader::~CrxDownloader() {}
@@ -107,8 +105,8 @@ void CrxDownloader::StartDownload(const std::vector<GURL>& urls,
   if (error != CrxDownloaderError::NONE) {
     Result result;
     result.error = static_cast<int>(error);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(download_callback, result));
+    main_task_runner()->PostTask(FROM_HERE,
+                                 base::BindOnce(download_callback, result));
     return;
   }
 
@@ -127,15 +125,15 @@ void CrxDownloader::OnDownloadComplete(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!result.error)
-    task_runner()->PostTask(
-        FROM_HERE,
-        base::Bind(&CrxDownloader::VerifyResponse, base::Unretained(this),
-                   is_handled, result, download_metrics));
+    base::PostTaskWithTraits(
+        FROM_HERE, kTaskTraits,
+        base::BindOnce(&CrxDownloader::VerifyResponse, base::Unretained(this),
+                       is_handled, result, download_metrics));
   else
     main_task_runner()->PostTask(
-        FROM_HERE,
-        base::Bind(&CrxDownloader::HandleDownloadError, base::Unretained(this),
-                   is_handled, result, download_metrics));
+        FROM_HERE, base::BindOnce(&CrxDownloader::HandleDownloadError,
+                                  base::Unretained(this), is_handled, result,
+                                  download_metrics));
 }
 
 void CrxDownloader::OnDownloadProgress(const Result& result) {
@@ -152,7 +150,6 @@ void CrxDownloader::OnDownloadProgress(const Result& result) {
 void CrxDownloader::VerifyResponse(bool is_handled,
                                    Result result,
                                    DownloadMetrics download_metrics) {
-  DCHECK(task_runner()->RunsTasksInCurrentSequence());
   DCHECK_EQ(0, result.error);
   DCHECK_EQ(0, download_metrics.error);
   DCHECK(is_handled);
@@ -160,7 +157,7 @@ void CrxDownloader::VerifyResponse(bool is_handled,
   if (VerifyFileHash256(result.response, expected_hash_)) {
     download_metrics_.push_back(download_metrics);
     main_task_runner()->PostTask(FROM_HERE,
-                                 base::Bind(download_callback_, result));
+                                 base::BindOnce(download_callback_, result));
     return;
   }
 
@@ -173,9 +170,9 @@ void CrxDownloader::VerifyResponse(bool is_handled,
   result.response.clear();
 
   main_task_runner()->PostTask(
-      FROM_HERE,
-      base::Bind(&CrxDownloader::HandleDownloadError, base::Unretained(this),
-                 is_handled, result, download_metrics));
+      FROM_HERE, base::BindOnce(&CrxDownloader::HandleDownloadError,
+                                base::Unretained(this), is_handled, result,
+                                download_metrics));
 }
 
 void CrxDownloader::HandleDownloadError(
@@ -214,7 +211,7 @@ void CrxDownloader::HandleDownloadError(
   // The download ends here since there is no url nor downloader to handle this
   // download request further.
   main_task_runner()->PostTask(FROM_HERE,
-                               base::Bind(download_callback_, result));
+                               base::BindOnce(download_callback_, result));
 }
 
 }  // namespace update_client

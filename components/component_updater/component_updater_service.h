@@ -129,9 +129,6 @@ class ComponentUpdateService {
   virtual void MaybeThrottle(const std::string& id,
                              const base::Closure& callback) = 0;
 
-  // Returns a task runner suitable for use by component installers.
-  virtual scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner() = 0;
-
   virtual ~ComponentUpdateService() {}
 
  private:
