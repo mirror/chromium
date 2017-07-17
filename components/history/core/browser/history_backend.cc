@@ -490,6 +490,8 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
   }
 
+  RedirectList extended_redirect_chain;
+
   if (!has_redirects) {
     // The single entry is both a chain start and end.
     ui::PageTransition t = ui::PageTransitionFromInt(
@@ -554,6 +556,8 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
               visit_row.transition & ~ui::PAGE_TRANSITION_CHAIN_END);
           db_->UpdateVisitRow(visit_row);
         }
+
+        GetCachedRecentRedirects(request.referrer, &extended_redirect_chain);
       }
     }
 
@@ -588,8 +592,17 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
 
     // Last, save this redirect chain for later so we can set titles & favicons
-    // on the redirected pages properly.
-    recent_redirects_.Put(request.url, redirects);
+    // on the redirected pages properly. For this we use the extended redirect
+    // chain, which includes URLs from concatenated redirects.
+    if (extended_redirect_chain.empty()) {
+      extended_redirect_chain = std::move(redirects);
+    } else {
+      extended_redirect_chain.reserve(extended_redirect_chain.size() +
+                                      redirects.size());
+      for (GURL& redirect : redirects)
+        extended_redirect_chain.push_back(std::move(redirect));
+    }
+    recent_redirects_.Put(request.url, extended_redirect_chain);
   }
 
   // TODO(brettw) bug 1140015: Add an "add page" notification so the history
