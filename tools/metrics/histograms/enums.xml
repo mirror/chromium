@@ -15776,6 +15776,7 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="GetUserMediaCameraDisallowedByFeaturePolicyInCrossOriginIframe"/>
   <int value="2059"
       label="RequestMIDIAccessDisallowedByFeaturePolicyInCrossOriginIframe"/>
+  <int value="2060" label="PersistentClientHintHeader"/>
 </enum>
 
 <enum name="FeedbackSource">
