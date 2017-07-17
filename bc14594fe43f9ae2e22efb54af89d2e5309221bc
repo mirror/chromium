@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77ec4fee_868ced59",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T22:41:04Z",
+      "side": 1,
+      "message": "I moved UpdateSourceURL to `public` because this is actually `public` in UkmRecorder. Do you suggest that I should downcast in order to access the method publicly?",
+      "parentUuid": "f8b06c16_e6277a28",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "270df45b_21160081",
         "filename": "third_party/WebKit/Source/core/DEPS",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c1947794_806cc519",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T22:41:04Z",
+      "side": 1,
+      "message": "Forgot to the cleanup. Thanks for noticing :)",
+      "parentUuid": "270df45b_21160081",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9aba03d_dbdad99c",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb426eb_14c23c42",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T22:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9aba03d_dbdad99c",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f56c9ebe_5d82f7cb",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T22:41:04Z",
+      "side": 1,
+      "message": "I\u0027ve attempted something.",
+      "parentUuid": "26c48002_16c4ae49",
+      "range": {
+        "startLine": 512,
+        "startChar": 2,
+        "endLine": 512,
+        "endChar": 54
+      },
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbf23559_09ebf470",
         "filename": "third_party/WebKit/Source/platform/weborigin/KURL.h",
         "patchSetId": 6
@@ -96,6 +180,24 @@
       "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053363f5_ed2464e1",
+        "filename": "third_party/WebKit/Source/platform/weborigin/KURL.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T22:41:04Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "dbf23559_09ebf470",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
