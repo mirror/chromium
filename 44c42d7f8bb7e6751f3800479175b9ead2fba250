@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "655a2346_8b9343c3",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T23:25:41Z",
+      "side": 1,
+      "message": "IsBox is definitively needed as IsBox code calls are already sprinkled all over the paint code:\n\n$ grep -Hrn \"IsBox()\" Source/core/paint | wc  -l\n33\n\nThe IsLayoutNG one can most likely be removed if we fix the FIXME, I\u0027ll add a TODO about it.",
+      "parentUuid": "01a977d6_4da3ca91",
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd1a76fb_dec50d33",
         "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
         "patchSetId": 1
@@ -82,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "8d476b39_b580b5a5",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T23:25:41Z",
+      "side": 1,
+      "message": "(replied to the other comment around this)",
+      "parentUuid": "c5c011c9_8dae4185",
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d05c589f_e2a817a2",
         "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
         "patchSetId": 1
@@ -116,6 +152,24 @@
       "writtenOn": "2017-07-17T23:14:37Z",
       "side": 1,
       "message": "It was a mistake when the paint team renamed PaintLayer to DeprecatedPaintLayer. WDYT of using \"Layout\" instead of \"Legacy\"?",
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90e8bcd_15fe2bce",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T23:25:41Z",
+      "side": 1,
+      "message": "Sure. LayoutBoxModelObjectPaintInterface etc?",
+      "parentUuid": "e35707d5_27010f8e",
       "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
