@@ -13,6 +13,10 @@
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "services/video_capture/public/interfaces/device_factory.mojom.h"
 
+namespace media {
+  class ServiceConnectorProvider;
+}
+
 namespace video_capture {
 
 class DeviceMediaToMojoAdapter;
@@ -26,8 +30,7 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
   DeviceFactoryMediaToMojoAdapter(
       std::unique_ptr<service_manager::ServiceContextRef> service_ref,
       std::unique_ptr<media::VideoCaptureSystem> capture_system,
-      const media::VideoCaptureJpegDecoderFactoryCB&
-          jpeg_decoder_factory_callback);
+      base::WeakPtr<media::ServiceConnectorProvider> connector_provider);
   ~DeviceFactoryMediaToMojoAdapter() override;
 
   // mojom::DeviceFactory implementation.
@@ -57,7 +60,7 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
 
   const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
   const std::unique_ptr<media::VideoCaptureSystem> capture_system_;
-  const media::VideoCaptureJpegDecoderFactoryCB jpeg_decoder_factory_callback_;
+  base::WeakPtr<media::ServiceConnectorProvider> connector_provider_;
   std::map<std::string, ActiveDeviceEntry> active_devices_by_id_;
   bool has_called_get_device_infos_;
 

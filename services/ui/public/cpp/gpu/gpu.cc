@@ -31,9 +31,9 @@ mojom::GpuPtr DefaultFactory(service_manager::Connector* connector,
 }  // namespace
 
 Gpu::Gpu(GpuPtrFactory factory,
-         scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+         scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner)
     : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      io_task_runner_(std::move(task_runner)),
+      io_task_runner_(std::move(ipc_task_runner)),
       factory_(std::move(factory)),
       shutdown_event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                       base::WaitableEvent::InitialState::NOT_SIGNALED) {
@@ -60,10 +60,10 @@ Gpu::~Gpu() {
 std::unique_ptr<Gpu> Gpu::Create(
     service_manager::Connector* connector,
     const std::string& service_name,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner) {
   GpuPtrFactory factory =
       base::BindRepeating(&DefaultFactory, connector, service_name);
-  return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
+  return base::WrapUnique(new Gpu(std::move(factory), std::move(ipc_task_runner)));
 }
 
 scoped_refptr<cc::ContextProvider> Gpu::CreateContextProvider(

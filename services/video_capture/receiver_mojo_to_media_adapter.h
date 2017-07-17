@@ -11,7 +11,8 @@
 
 namespace video_capture {
 
-class ReceiverOnTaskRunner : public media::VideoFrameReceiver {
+class ReceiverOnTaskRunner
+    : public media::VideoFrameReceiver {
  public:
   ReceiverOnTaskRunner(std::unique_ptr<media::VideoFrameReceiver> receiver,
                        scoped_refptr<base::SingleThreadTaskRunner> task_runner);

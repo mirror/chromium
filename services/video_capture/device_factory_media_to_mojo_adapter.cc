@@ -12,6 +12,7 @@
 #include "base/strings/stringprintf.h"
 #include "media/capture/video/fake_video_capture_device.h"
 #include "media/capture/video/video_capture_device_info.h"
+#include "media/capture/video/video_capture_jpeg_decoder.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/video_capture/device_media_to_mojo_adapter.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
@@ -81,11 +82,10 @@ DeviceFactoryMediaToMojoAdapter::ActiveDeviceEntry::operator=(
 DeviceFactoryMediaToMojoAdapter::DeviceFactoryMediaToMojoAdapter(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref,
     std::unique_ptr<media::VideoCaptureSystem> capture_system,
-    const media::VideoCaptureJpegDecoderFactoryCB&
-        jpeg_decoder_factory_callback)
+    base::WeakPtr<media::ServiceConnectorProvider> connector_provider)
     : service_ref_(std::move(service_ref)),
       capture_system_(std::move(capture_system)),
-      jpeg_decoder_factory_callback_(jpeg_decoder_factory_callback),
+      connector_provider_(std::move(connector_provider)),
       has_called_get_device_infos_(false),
       weak_factory_(this) {}
 
@@ -145,8 +145,7 @@ void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
   // Add entry to active_devices to keep track of it
   ActiveDeviceEntry device_entry;
   device_entry.device = base::MakeUnique<DeviceMediaToMojoAdapter>(
-      service_ref_->Clone(), std::move(media_device),
-      jpeg_decoder_factory_callback_);
+      service_ref_->Clone(), std::move(media_device), connector_provider_);
   device_entry.binding = base::MakeUnique<mojo::Binding<mojom::Device>>(
       device_entry.device.get(), std::move(device_request));
   device_entry.binding->set_connection_error_handler(base::Bind(

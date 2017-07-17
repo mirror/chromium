@@ -11,6 +11,9 @@
         "memory_instrumentation": [
           "memory_instrumentation::mojom::Coordinator"
         ],
+        "gpu_client": [
+          "ui::mojom::Gpu"
+        ],
         "plugin": [
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "ui::mojom::Gpu"
@@ -63,6 +66,7 @@
         "content_browser": [
           "ash",
           "display",
+          "gpu_client",
           "memory_instrumentation",
           "url_keyed_metrics",
           "geolocation_config"

@@ -8,9 +8,14 @@
 #include <memory>
 
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+
+namespace media {
+  class ServiceConnectorProvider;
+}
 
 namespace video_capture {
 
@@ -20,7 +25,8 @@ class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
  public:
   DeviceFactoryProviderImpl(
       std::unique_ptr<service_manager::ServiceContextRef> service_ref,
-      base::Callback<void(float)> set_shutdown_delay_cb);
+      base::Callback<void(float)> set_shutdown_delay_cb,
+      base::WeakPtr<media::ServiceConnectorProvider> connector_provider);
   ~DeviceFactoryProviderImpl() override;
 
   // mojom::DeviceFactoryProvider implementation.
@@ -35,6 +41,7 @@ class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
 
   const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
   base::Callback<void(float)> set_shutdown_delay_cb_;
+  base::WeakPtr<media::ServiceConnectorProvider> connector_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceFactoryProviderImpl);
 };

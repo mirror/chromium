@@ -49,6 +49,8 @@ source_set("lib") {
     "//media/mojo/common:common",
     "//mojo/common:common_base",
     "//services/service_manager/public/cpp",
+    "//services/ui",
+    "//services/ui/public/cpp/gpu:gpu",
     "//services/video_capture/public/cpp",
     "//services/video_capture/public/interfaces",
     "//services/video_capture/public/interfaces:constants",
@@ -82,6 +84,7 @@ source_set("tests") {
     ":lib",
     ":video_capture",
     "//base/test:test_support",
+    "//media/capture",
     "//media/capture/mojo:capture_types",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
@@ -92,6 +95,7 @@ source_set("tests") {
 
   data_deps = [
     ":video_capture",
+    "//services/ui",
   ]
 }
 
@@ -102,5 +106,8 @@ service_manifest("unittest_manifest") {
 
 catalog("tests_catalog") {
   embedded_services = [ ":unittest_manifest" ]
-  standalone_services = [ ":manifest" ]
+  standalone_services = [
+      ":manifest",
+      "//services/ui:manifest"
+  ]
 }

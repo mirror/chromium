@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include "base/single_thread_task_runner.h"
+#include "base/memory/weak_ptr.h"
 #include "media/base/bitstream_buffer.h"
 #include "media/base/media_export.h"
 #include "media/base/video_frame.h"
@@ -55,6 +57,8 @@ class MEDIA_EXPORT JpegDecodeAccelerator {
 
   class MEDIA_EXPORT Client {
    public:
+    virtual ~Client() {}
+
     // Callback called after each successful Decode().
     // Parameters:
     //  |bitstream_buffer_id| is the id of BitstreamBuffer corresponding to
@@ -72,16 +76,27 @@ class MEDIA_EXPORT JpegDecodeAccelerator {
     //  kInvalidBitstreamBufferId if the error was not related to any
     //  particular buffer being processed.
     virtual void NotifyError(int32_t bitstream_buffer_id, Error error) = 0;
+  };
 
-   protected:
-    virtual ~Client() {}
+  class MEDIA_EXPORT ClientOnTaskRunner : public Client {
+    public:
+      ClientOnTaskRunner(std::unique_ptr<Client> client,
+        scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+      ~ClientOnTaskRunner() override;
+      void VideoFrameReady(int32_t bitstream_buffer_id) override;
+      void NotifyError(int32_t bitstream_buffer_id, Error error) override;
+
+    private:
+      std::unique_ptr<Client> client_;
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+      base::WeakPtrFactory<ClientOnTaskRunner> weak_factory_;
   };
 
   // Destroys the decoder: all pending inputs are dropped immediately. This
   // call may asynchronously free system resources, but its client-visible
   // effects are synchronous. After destructor returns, no more callbacks
   // will be made on the client.
-  virtual ~JpegDecodeAccelerator() = 0;
+  virtual ~JpegDecodeAccelerator() {};
 
   // JPEG decoder functions.
 

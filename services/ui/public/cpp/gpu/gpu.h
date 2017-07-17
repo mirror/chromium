@@ -33,13 +33,15 @@ class Gpu : public gpu::GpuChannelHostFactory,
     return gpu_memory_buffer_manager_.get();
   }
 
-  // The Gpu has to be initialized in the main thread before establishing
-  // the gpu channel. If no |task_runner| is provided, then a new thread is
-  // created and used.
+  // Creates and initializes a new Gpu instance.
+  // This has to be called on the main thread. |ipc_task_runner| must be
+  // different from the main thread task runner to prevent deadlocks when
+  // sending synchronous messages via class IPC::SynchChannel. If no
+  // |ipc_task_runner| is provided, then a new thread is created and used.
   static std::unique_ptr<Gpu> Create(
       service_manager::Connector* connector,
       const std::string& service_name,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner = nullptr);
+      scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner = nullptr);
 
   scoped_refptr<cc::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);

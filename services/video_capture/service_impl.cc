@@ -55,6 +55,11 @@ bool ServiceImpl::OnServiceManagerConnectionLost() {
   return true;
 }
 
+void ServiceImpl::GetConnectorAsync(
+    base::Callback<void(service_manager::Connector*)> callback) {
+  callback.Run(context()->connector());
+}
+
 void ServiceImpl::OnDeviceFactoryProviderRequest(
     const service_manager::BindSourceInfo& source_info,
     mojom::DeviceFactoryProviderRequest request) {
@@ -66,7 +71,8 @@ void ServiceImpl::OnDeviceFactoryProviderRequest(
           // VideoCaptureServiceImpl has shared ownership of |this| via the
           // reference created by ref_factory->CreateRef().
           base::Bind(&ServiceImpl::SetShutdownDelayInSeconds,
-                     base::Unretained(this))),
+                     base::Unretained(this)),
+          weak_factory_.GetWeakPtr()),
       std::move(request));
 }
 

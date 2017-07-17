@@ -16,14 +16,13 @@
 #include "base/threading/thread_collision_warner.h"
 #include "media/capture/capture_export.h"
 #include "media/capture/video/video_capture_device.h"
+#include "media/capture/video/video_capture_jpeg_decoder.h"
+#include "media/capture/video/video_frame_receiver.h"
 
 namespace media {
 class VideoCaptureBufferPool;
 class VideoFrameReceiver;
 class VideoCaptureJpegDecoder;
-
-using VideoCaptureJpegDecoderFactoryCB =
-    base::Callback<std::unique_ptr<VideoCaptureJpegDecoder>()>;
 
 // Implementation of media::VideoCaptureDevice::Client that uses a buffer pool
 // to provide buffers and converts incoming data to the I420 format for
@@ -38,10 +37,10 @@ using VideoCaptureJpegDecoderFactoryCB =
 class CAPTURE_EXPORT VideoCaptureDeviceClient
     : public media::VideoCaptureDevice::Client {
  public:
-  VideoCaptureDeviceClient(
-      std::unique_ptr<VideoFrameReceiver> receiver,
-      scoped_refptr<VideoCaptureBufferPool> buffer_pool,
-      const VideoCaptureJpegDecoderFactoryCB& jpeg_decoder_factory);
+  VideoCaptureDeviceClient(std::unique_ptr<VideoFrameReceiver> receiver,
+                           scoped_refptr<VideoCaptureBufferPool> buffer_pool,
+                           std::unique_ptr<VideoCaptureJpegDecoderFactory>
+                               optional_jpeg_decoder_factory = nullptr);
   ~VideoCaptureDeviceClient() override;
 
   static Buffer MakeBufferStruct(
@@ -83,6 +82,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceClient
   double GetBufferPoolUtilization() const override;
 
  private:
+  void OnJpegDecoderCreated(std::unique_ptr<VideoCaptureJpegDecoder> decoder);
+
   // A branch of OnIncomingCapturedData for Y16 frame_format.pixel_format.
   void OnIncomingCapturedY16Data(const uint8_t* data,
                                  int length,
@@ -91,15 +92,23 @@ class CAPTURE_EXPORT VideoCaptureDeviceClient
                                  base::TimeDelta timestamp,
                                  int frame_feedback_id);
 
+  // Callback for |external_jpeg_decoder_|
+  void OnDecodedFrameReadyInBuffer(
+      int buffer_id,
+      int frame_feedback_id,
+      std::unique_ptr<
+          VideoCaptureDevice::Client::Buffer::ScopedAccessPermission>
+          buffer_read_permission,
+      mojom::VideoFrameInfoPtr frame_info);
+
   // The receiver to which we post events.
   const std::unique_ptr<VideoFrameReceiver> receiver_;
   std::vector<int> buffer_ids_known_by_receiver_;
 
-  const VideoCaptureJpegDecoderFactoryCB jpeg_decoder_factory_callback_;
+  std::unique_ptr<VideoCaptureJpegDecoderFactory>
+      optional_jpeg_decoder_factory_;
   std::unique_ptr<VideoCaptureJpegDecoder> external_jpeg_decoder_;
-
-  // Whether |external_jpeg_decoder_| has been initialized.
-  bool external_jpeg_decoder_initialized_;
+  bool external_jpeg_decoder_creation_kicked_off_;
   base::OnceClosure on_started_using_gpu_cb_;
 
   // The pool of shared-memory buffers used for capturing.
@@ -119,6 +128,10 @@ class CAPTURE_EXPORT VideoCaptureDeviceClient
   // concurrently. Producers are allowed to call from multiple threads, but not
   // concurrently.
   DFAKE_MUTEX(call_from_producer_);
+
+  base::ThreadChecker data_delivery_thread_checker_;
+
+  base::WeakPtrFactory<VideoCaptureDeviceClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceClient);
 };
