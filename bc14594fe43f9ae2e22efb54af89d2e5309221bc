@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "683a2df1_29aefccf",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-17T22:55:12Z",
+      "side": 1,
+      "message": "Ah, just reread the state of UkmRecorder.  I thought this was private there.  If it\u0027s public in UkmRecorder, it\u0027s fine to make it public here.",
+      "parentUuid": "77ec4fee_868ced59",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "270df45b_21160081",
         "filename": "third_party/WebKit/Source/core/DEPS",
         "patchSetId": 6
