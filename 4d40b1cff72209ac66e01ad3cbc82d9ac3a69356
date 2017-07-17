@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9bfb6c69_79c5d0f7",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:24:54Z",
+      "side": 1,
+      "message": "I am not sure if we can change that API to just pass a file path. Some Cronet consumers might not explicitly call StopNetLog(). An example usage is cl/161846784, where the cronet consumer only calls StartNetLog() but not StopNetLog(). For the old implementation, it is okay because NetLog import can handle truncated .json file and we write to output incrementally.\nFor the bounded implementation, if we hide the event directory from API user and only stitch files in StopNetLog(), we won\u0027t have any useful data if user doesn\u0027t call StopNetLog() (e.g. when user just uses \"adb pull path/to/netlog\" without calling StopNetLog() or when app crashes before StopNetLog() is called).",
+      "range": {
+        "startLine": 1048,
+        "startChar": 22,
+        "endLine": 1048,
+        "endChar": 26
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c590884b_796f8881",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 7
@@ -16,6 +39,24 @@
       "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6815fc60_35c6181e",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:24:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c590884b_796f8881",
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
