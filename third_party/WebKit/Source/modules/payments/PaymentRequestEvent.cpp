@@ -8,7 +8,7 @@
 #include "core/dom/DOMException.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerLocation.h"
-#include "modules/serviceworkers/RespondWithObserver.h"
+#include "modules/payments/PaymentRequestRespondWithObserver.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerWindowClientCallback.h"
 #include "platform/bindings/ScriptState.h"
@@ -26,7 +26,7 @@ PaymentRequestEvent* PaymentRequestEvent::Create(
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
-    RespondWithObserver* respond_with_observer,
+    PaymentRequestRespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer) {
   return new PaymentRequestEvent(type, initializer, respond_with_observer,
                                  wait_until_observer);
@@ -71,17 +71,36 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
                                               const String& url) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
+
+  if (observer_) {
+    observer_->IsPaymentRequestCancelled(ConvertToBaseCallback(WTF::Bind(
+        &PaymentRequestEvent::IsPaymentRequestCancelled, WrapPersistent(this),
+        RefPtr<ScriptState>(script_state), url, WrapPersistent(resolver))));
+    return promise;
+  }
+
+  IsPaymentRequestCancelled(script_state, url, resolver, false);
+  return promise;
+}
+
+void PaymentRequestEvent::IsPaymentRequestCancelled(
+    ScriptState* script_state,
+    const String& url,
+    ScriptPromiseResolver* resolver,
+    bool is_cancelled) {
+  if (is_cancelled) {
+    resolver->Reject(DOMException::Create(
+        kInvalidStateError,
+        "payment request from '" + payment_request_origin_ + "' is cancelled"));
+    return;
+  }
+
   ExecutionContext* context = ExecutionContext::From(script_state);
-
-  // TODO(gogerald): Check payment request state so as to reject promise with
-  // "InvalidStateError" appropriately (refer
-  // https://w3c.github.io/payment-handler/#dfn-open-window-algorithm).
-
   KURL parsed_url_to_open = context->CompleteURL(url);
   if (!parsed_url_to_open.IsValid()) {
     resolver->Reject(V8ThrowException::CreateTypeError(
         script_state->GetIsolate(), "'" + url + "' is not a valid URL."));
-    return promise;
+    return;
   }
 
   // TODO(gogerald): Once the issue of the spec is resolved, we should apply the
@@ -91,7 +110,7 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
     resolver->Reject(DOMException::Create(
         kSecurityError,
         "'" + parsed_url_to_open.ElidedString() + "' is not allowed."));
-    return promise;
+    return;
   }
 
   // TODO(gogerald): Once the issue of the spec is resolved, we should apply the
@@ -99,13 +118,12 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   if (!context->IsWindowInteractionAllowed()) {
     resolver->Reject(DOMException::Create(kInvalidAccessError,
                                           "Not allowed to open a window."));
-    return promise;
+    return;
   }
   context->ConsumeWindowInteraction();
 
   ServiceWorkerGlobalScopeClient::From(context)->OpenWindowForPaymentHandler(
       parsed_url_to_open, WTF::MakeUnique<NavigateClientCallback>(resolver));
-  return promise;
 }
 
 void PaymentRequestEvent::respondWith(ScriptState* script_state,
@@ -127,7 +145,7 @@ DEFINE_TRACE(PaymentRequestEvent) {
 PaymentRequestEvent::PaymentRequestEvent(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
-    RespondWithObserver* respond_with_observer,
+    PaymentRequestRespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer)
     : ExtendableEvent(type, initializer, wait_until_observer),
       top_level_origin_(initializer.topLevelOrigin()),

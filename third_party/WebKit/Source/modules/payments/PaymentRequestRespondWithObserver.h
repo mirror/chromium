@@ -7,6 +7,7 @@
 
 #include "modules/ModulesExport.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
+#include "public/platform/modules/payments/payment_app.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 
 namespace blink {
@@ -18,6 +19,8 @@ class WaitUntilObserver;
 // Implementation for PaymentRequestEvent.respondWith(), which is used by the
 // payment handler to provide a payment response when the payment successfully
 // completes.
+// It also provides an asynchronous interface to check whether the payment
+// request is cancelled.
 class MODULES_EXPORT PaymentRequestRespondWithObserver final
     : public RespondWithObserver {
  public:
@@ -30,6 +33,10 @@ class MODULES_EXPORT PaymentRequestRespondWithObserver final
   void OnResponseRejected(WebServiceWorkerResponseError) override;
   void OnResponseFulfilled(const ScriptValue&) override;
   void OnNoResponse() override;
+
+  using WebIsPaymentRequestCancelledCallback =
+      payments::mojom::blink::PaymentHandlerInvokeCallback::IsCancelledCallback;
+  void IsPaymentRequestCancelled(WebIsPaymentRequestCancelledCallback);
 
   DECLARE_VIRTUAL_TRACE();
 

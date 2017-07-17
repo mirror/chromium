@@ -70,6 +70,12 @@ void PaymentRequestRespondWithObserver::OnNoResponse() {
                                      event_dispatch_time_);
 }
 
+void PaymentRequestRespondWithObserver::IsPaymentRequestCancelled(
+    WebIsPaymentRequestCancelledCallback callback) {
+  ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
+      ->IsPaymentRequestCancelled(event_id_, std::move(callback));
+}
+
 PaymentRequestRespondWithObserver::PaymentRequestRespondWithObserver(
     ExecutionContext* context,
     int event_id,
