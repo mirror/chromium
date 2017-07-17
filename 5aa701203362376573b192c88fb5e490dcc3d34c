@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e31abc0e_368b5643",
+        "filename": "chrome/browser/chromeos/printing/printer_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-17T20:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a589449_bcb845c3",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a8d774_94b5b09e",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "3c6dbcbd_f545c628",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-17T20:29:18Z",
+      "side": 1,
+      "message": "This particular field is not expected to be localized as it reflects what is reported by the printer.",
+      "parentUuid": "c3dd8a3a_def8881c",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "1094f398_76e54e78",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17b21aa0_e8ab377e",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-17T20:29:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccf921b2_44db214b",
       "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -172,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "b42e0b7e_28fb0b94",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-17T20:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73405b62_6f180b61",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ffc1b3_73125f76",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
         "patchSetId": 1
@@ -192,6 +270,30 @@
       "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4584dc5c_898f9553",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-17T20:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27ffc1b3_73125f76",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 12
+      },
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
