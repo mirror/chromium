@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1ba4d66_a71e09c2",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-17T07:43:44Z",
+      "side": 1,
+      "message": "s/}/| ?",
+      "revId": "c77b976ba65a4493b896f7c3308a70dbaab0f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4477a45_767afdb3",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
         "patchSetId": 1
