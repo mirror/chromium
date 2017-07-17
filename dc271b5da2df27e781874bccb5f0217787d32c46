@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8593839_d5ff1af4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T12:36:20Z",
+      "side": 1,
+      "message": "I think this will introduce a static initializer, which are forbidden. Just make it an int kTokenValidationPeriodHours.",
+      "revId": "dc271b5da2df27e781874bccb5f0217787d32c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058b40a4_0111f3c9",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T12:36:20Z",
+      "side": 1,
+      "message": "next_validation_time",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "dc271b5da2df27e781874bccb5f0217787d32c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9c6f56_0425df37",
+        "filename": "components/ntp_snippets/pref_names.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T12:36:20Z",
+      "side": 1,
+      "message": "I\u0027d store the last time it was validated instead. That\u0027s more robust in case we decide to change the interval etc.",
+      "revId": "dc271b5da2df27e781874bccb5f0217787d32c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
