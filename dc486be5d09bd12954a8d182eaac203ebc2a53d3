@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb742f04_740b99b8",
+        "filename": "chrome/browser/browsing_data/browsing_data_database_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-17T21:46:45Z",
+      "side": 1,
+      "message": "Yes, with a dose of base::IgnoreResult(). Done!",
+      "parentUuid": "fd37595f_3198a6da",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be3364d6_62bd5098",
         "filename": "storage/browser/database/database_quota_client.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f381567c_19828d8e",
+        "filename": "storage/browser/database/database_quota_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-17T21:46:45Z",
+      "side": 1,
+      "message": "It\u0027s safe - a RepeatingCallback can be cast to a OnceCallback. It produces a OnceCallback that can be moved about and calls the underlying RepeatingCallback.\n\nThe cast usage here is recommended by tzik@ because PostTaskAndReplyWithResult() must take either both Repeating or both Once. It will only call its arguments once anyway, so Once is correct but accepts Repeating since most callers aren\u0027t updated yet. This could also be written with line 131 having base::Bind() so both are repeating for now, but that\u0027s just putting off work for the future. Once GetUsageCallback is updated to be a OnceCallback this cast can go away.\n\n(Eventually PostTaskAndReplyWithResult will take just OnceCallbacks and passing a RepeatingCallback will automatically convert.)",
+      "parentUuid": "be3364d6_62bd5098",
+      "range": {
+        "startLine": 133,
+        "startChar": 50,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b07f3d36_548c2c6d",
         "filename": "storage/browser/database/database_quota_client.cc",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-14T01:00:18Z",
       "side": 1,
       "message": "This is confusing, we create a repeating binding and then cast it to once here? Does this cast produce a new binding for one-time-use given a repeating binding as input?",
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5729e312_b42cae7f",
+        "filename": "storage/browser/database/database_quota_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-17T21:46:45Z",
+      "side": 1,
+      "message": "Exactly. See previous comment about PostTaskAndReplyWithResult - logically, both arguments are Once anyway. The use of BindRepeating/BindOnce/OnceCallback here is just making the previous behavior explicit. (And this is a nontrivial use of callbacks anyway, hence the added comment.)",
+      "parentUuid": "b07f3d36_548c2c6d",
       "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f3b8d5a6_206d0c46",
+        "filename": "storage/browser/database/database_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-17T21:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "020448cd_b43412fc",
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20d27ad5_679f084c",
         "filename": "storage/browser/database/database_tracker.h",
         "patchSetId": 9
@@ -125,6 +209,30 @@
       "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ca5db0_60c585fb",
+        "filename": "storage/browser/database/database_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-17T21:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d27ad5_679f084c",
+      "range": {
+        "startLine": 315,
+        "startChar": 6,
+        "endLine": 315,
+        "endChar": 45
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
