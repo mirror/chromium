@@ -26,7 +26,6 @@
 #include "ui/gl/test/gl_surface_test_support.h"
 
 namespace ash {
-namespace test {
 namespace {
 
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
@@ -130,7 +129,7 @@ void AshTestSuite::Initialize() {
   const bool is_mus = base::CommandLine::ForCurrentProcess()->HasSwitch("mus");
   const bool is_mash =
       base::CommandLine::ForCurrentProcess()->HasSwitch("mash");
-  ash::test::AshTestHelper::config_ =
+  AshTestHelper::config_ =
       is_mus ? Config::MUS : is_mash ? Config::MASH : Config::CLASSIC;
 
   base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
@@ -150,5 +149,4 @@ void AshTestSuite::Shutdown() {
   base::TestSuite::Shutdown();
 }
 
-}  // namespace test
 }  // namespace ash
