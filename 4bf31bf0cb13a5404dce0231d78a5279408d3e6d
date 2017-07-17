@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a0b433_759a51a5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "nit: I think we should change this to ...ForPattern",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65d23c0_cb1d8a1f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "nit: I think we should change this to ...ForPattern",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df0ec94_aa30ae58",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "This should use SetContentSettingDefaultScope",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a7912a_d1aed4ed",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "This might not be changing to DEFAULT, right?",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92201842_76f0e746",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "nit: Get and sets?",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3833e107_31f5e803",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "nit: what does this comment mean?",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2027f3e7_4ec0cdab",
+        "filename": "components/content_settings/core/browser/content_settings_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T03:14:06Z",
+      "side": 1,
+      "message": "Changing this is going to indirectly have an impact on the extensions API. See https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/content_settings/content_settings_api.cc\n\nWe will need to add an additional check to that callsite and maybe also to https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/content_settings/content_settings_store.cc?sq\u003dpackage:chromium\u0026l\u003d339",
+      "revId": "4bf31bf0cb13a5404dce0231d78a5279408d3e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
