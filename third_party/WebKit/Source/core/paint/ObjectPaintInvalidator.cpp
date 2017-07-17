@@ -261,11 +261,11 @@ void ObjectPaintInvalidator::InvalidateDisplayItemClient(
 
 template <typename T>
 void AddJsonObjectForRect(TracedValue* value, const char* name, const T& rect) {
-  value->BeginDictionary(name);
-  value->SetDouble("x", rect.X());
-  value->SetDouble("y", rect.Y());
-  value->SetDouble("width", rect.Width());
-  value->SetDouble("height", rect.Height());
+  value->BeginDictionaryWithCopiedName(name);
+  value->SetDoubleWithCopiedName("x", rect.X());
+  value->SetDoubleWithCopiedName("y", rect.Y());
+  value->SetDoubleWithCopiedName("width", rect.Width());
+  value->SetDoubleWithCopiedName("height", rect.Height());
   value->EndDictionary();
 }
 
@@ -274,7 +274,7 @@ static std::unique_ptr<TracedValue> JsonObjectForPaintInvalidationInfo(
     const String& invalidation_reason) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
   AddJsonObjectForRect(value.get(), "rect", rect);
-  value->SetString("invalidation_reason", invalidation_reason);
+  value->SetStringWithCopiedName("invalidation_reason", invalidation_reason);
   return value;
 }
 

@@ -250,42 +250,43 @@ void InvalidationSet::SetWholeSubtreeInvalid() {
 void InvalidationSet::ToTracedValue(TracedValue* value) const {
   value->BeginDictionary();
 
-  value->SetString("id", DescendantInvalidationSetToIdString(*this));
+  value->SetStringWithCopiedName("id",
+                                 DescendantInvalidationSetToIdString(*this));
 
   if (all_descendants_might_be_invalid_)
-    value->SetBoolean("allDescendantsMightBeInvalid", true);
+    value->SetBooleanWithCopiedName("allDescendantsMightBeInvalid", true);
   if (custom_pseudo_invalid_)
-    value->SetBoolean("customPseudoInvalid", true);
+    value->SetBooleanWithCopiedName("customPseudoInvalid", true);
   if (tree_boundary_crossing_)
-    value->SetBoolean("treeBoundaryCrossing", true);
+    value->SetBooleanWithCopiedName("treeBoundaryCrossing", true);
   if (insertion_point_crossing_)
-    value->SetBoolean("insertionPointCrossing", true);
+    value->SetBooleanWithCopiedName("insertionPointCrossing", true);
   if (invalidates_slotted_)
-    value->SetBoolean("invalidatesSlotted", true);
+    value->SetBooleanWithCopiedName("invalidatesSlotted", true);
 
   if (ids_) {
-    value->BeginArray("ids");
+    value->BeginArrayWithCopiedName("ids");
     for (const auto& id : *ids_)
       value->PushString(id);
     value->EndArray();
   }
 
   if (classes_) {
-    value->BeginArray("classes");
+    value->BeginArrayWithCopiedName("classes");
     for (const auto& class_name : *classes_)
       value->PushString(class_name);
     value->EndArray();
   }
 
   if (tag_names_) {
-    value->BeginArray("tagNames");
+    value->BeginArrayWithCopiedName("tagNames");
     for (const auto& tag_name : *tag_names_)
       value->PushString(tag_name);
     value->EndArray();
   }
 
   if (attributes_) {
-    value->BeginArray("attributes");
+    value->BeginArrayWithCopiedName("attributes");
     for (const auto& attribute : *attributes_)
       value->PushString(attribute);
     value->EndArray();

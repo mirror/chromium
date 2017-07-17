@@ -173,14 +173,17 @@ SourceLocation::~SourceLocation() {}
 void SourceLocation::ToTracedValue(TracedValue* value, const char* name) const {
   if (!stack_trace_ || stack_trace_->isEmpty())
     return;
-  value->BeginArray(name);
+  value->BeginArrayWithCopiedName(name);
   value->BeginDictionary();
-  value->SetString("functionName",
-                   ToCoreString(stack_trace_->topFunctionName()));
-  value->SetString("scriptId", ToCoreString(stack_trace_->topScriptId()));
-  value->SetString("url", ToCoreString(stack_trace_->topSourceURL()));
-  value->SetInteger("lineNumber", stack_trace_->topLineNumber());
-  value->SetInteger("columnNumber", stack_trace_->topColumnNumber());
+  value->SetStringWithCopiedName("functionName",
+                                 ToCoreString(stack_trace_->topFunctionName()));
+  value->SetStringWithCopiedName("scriptId",
+                                 ToCoreString(stack_trace_->topScriptId()));
+  value->SetStringWithCopiedName("url",
+                                 ToCoreString(stack_trace_->topSourceURL()));
+  value->SetIntegerWithCopiedName("lineNumber", stack_trace_->topLineNumber());
+  value->SetIntegerWithCopiedName("columnNumber",
+                                  stack_trace_->topColumnNumber());
   value->EndDictionary();
   value->EndArray();
 }
