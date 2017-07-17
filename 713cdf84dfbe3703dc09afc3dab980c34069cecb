@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638de8e1_ce32399b",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T22:23:32Z",
+      "side": 1,
+      "message": "Can you do this right after the early return?",
+      "range": {
+        "startLine": 613,
+        "startChar": 6,
+        "endLine": 613,
+        "endChar": 25
+      },
+      "revId": "713cdf84dfbe3703dc09afc3dab980c34069cecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
