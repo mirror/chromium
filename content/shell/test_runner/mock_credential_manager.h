@@ -13,17 +13,17 @@
 #include "third_party/WebKit/public/platform/WebCredentialManagerError.h"
 #include "third_party/WebKit/public/platform/WebCredentialMediationRequirement.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
-#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager_v2.mojom.h"
 
 namespace test_runner {
 
 class TEST_RUNNER_EXPORT MockCredentialManager
-    : public NON_EXPORTED_BASE(password_manager::mojom::CredentialManager) {
+    : public NON_EXPORTED_BASE(credential_manager::mojom::CredentialManager) {
  public:
   MockCredentialManager();
   ~MockCredentialManager() override;
 
-  void BindRequest(password_manager::mojom::CredentialManagerRequest request);
+  void BindRequest(credential_manager::mojom::CredentialManagerRequest request);
 
   void SetResponse(const std::string& id,
                    const std::string& name,
@@ -32,7 +32,7 @@ class TEST_RUNNER_EXPORT MockCredentialManager
   void ClearResponse();
   void SetError(const std::string& error);
 
-  // password_manager::mojom::CredentialManager:
+  // credential_manager::mojom::CredentialManager:
   void Store(const password_manager::CredentialInfo& credential,
              StoreCallback callback) override;
   void PreventSilentAccess(PreventSilentAccessCallback callback) override;
@@ -42,10 +42,10 @@ class TEST_RUNNER_EXPORT MockCredentialManager
            GetCallback callback) override;
 
  private:
-  mojo::BindingSet<password_manager::mojom::CredentialManager> bindings_;
+  mojo::BindingSet<credential_manager::mojom::CredentialManager> bindings_;
 
   password_manager::CredentialInfo credential_;
-  password_manager::mojom::CredentialManagerError error_;
+  credential_manager::mojom::CredentialManagerError error_;
 
   DISALLOW_COPY_AND_ASSIGN(MockCredentialManager);
 };

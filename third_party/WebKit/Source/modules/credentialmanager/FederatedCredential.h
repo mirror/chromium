@@ -11,6 +11,7 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {
 
@@ -21,6 +22,10 @@ class MODULES_EXPORT FederatedCredential final : public Credential {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  static FederatedCredential* Create(const String& id,
+                                     RefPtr<SecurityOrigin> provider,
+                                     const String& name,
+                                     const KURL& icon);
   static FederatedCredential* Create(const FederatedCredentialInit&,
                                      ExceptionState&);
   static FederatedCredential* Create(WebFederatedCredential*);
@@ -37,7 +42,7 @@ class MODULES_EXPORT FederatedCredential final : public Credential {
  private:
   FederatedCredential(WebFederatedCredential*);
   FederatedCredential(const String& id,
-                      const KURL& provider,
+                      RefPtr<SecurityOrigin> provider,
                       const String& name,
                       const KURL& icon);
 };

@@ -132,7 +132,7 @@ class ChromePasswordManagerClient
 
   static void BindCredentialManager(
       const service_manager::BindSourceInfo& source_info,
-      password_manager::mojom::CredentialManagerRequest request,
+      credential_manager::mojom::CredentialManagerRequest request,
       content::RenderFrameHost* render_frame_host);
 
   // A helper method to determine whether a save/update bubble can be shown

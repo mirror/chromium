@@ -67,7 +67,7 @@ TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
   V8GCController::CollectAllGarbageForTesting(v8::Isolate::GetCurrent());
 
   // Invoking the callback shouldn't crash.
-  get_callback->OnSuccess(std::unique_ptr<WebCredential>());
+  get_callback->OnSuccess(nullptr);
 }
 
 }  // namespace blink
