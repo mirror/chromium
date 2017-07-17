@@ -95,7 +95,7 @@ LayoutTestBrowserContext::CreateURLRequestContextGetter(
     ProtocolHandlerMap* protocol_handlers,
     URLRequestInterceptorScopedVector request_interceptors) {
   protocol_handlers->insert(std::make_pair(
-      "layout-test-mojom", make_linked_ptr(new MojomProtocolHandler)));
+      "layout-test-mojom", base::MakeUnique<MojomProtocolHandler>()));
   return new LayoutTestURLRequestContextGetter(
       ignore_certificate_errors(), GetPath(),
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),

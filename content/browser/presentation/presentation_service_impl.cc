@@ -179,8 +179,8 @@ void PresentationServiceImpl::StartPresentation(
   }
 
   start_presentation_request_id_ = GetNextRequestId();
-  pending_start_presentation_cb_.reset(
-      new NewPresentationCallbackWrapper(std::move(callback)));
+  pending_start_presentation_cb_ =
+      base::MakeUnique<NewPresentationCallbackWrapper>(std::move(callback));
   controller_delegate_->StartPresentation(
       render_process_id_, render_frame_id_, presentation_urls,
       base::Bind(&PresentationServiceImpl::OnStartPresentationSucceeded,
@@ -222,8 +222,8 @@ int PresentationServiceImpl::RegisterReconnectPresentationCallback(
     return kInvalidRequestId;
 
   int request_id = GetNextRequestId();
-  pending_reconnect_presentation_cbs_[request_id].reset(
-      new NewPresentationCallbackWrapper(std::move(*callback)));
+  pending_reconnect_presentation_cbs_[request_id] =
+      base::MakeUnique<NewPresentationCallbackWrapper>(std::move(*callback));
   DCHECK_NE(kInvalidRequestId, request_id);
   return request_id;
 }
