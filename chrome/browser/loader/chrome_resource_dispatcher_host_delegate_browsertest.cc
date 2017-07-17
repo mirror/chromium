@@ -21,6 +21,7 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/scoped_command_line.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_browsertest.h"
@@ -419,8 +420,18 @@ void ReportRequestHeaders(std::map<std::string, std::string>* request_headers,
                           const std::string& url,
                           const std::string& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // TODO (rhalavati@): To be removed after investigating crbug.com/739433.
+  std::string all_requests_for_url =
+      base::StringPrintf("ALL_REQS[%s]", url.c_str());
+  if (!base::ContainsKey(*request_headers, all_requests_for_url))
+    (*request_headers)[all_requests_for_url] = "";
+  (*request_headers)[all_requests_for_url] =
+      (*request_headers)[all_requests_for_url] +
+      base::StringPrintf("[%s|%s]", url.c_str(), headers.c_str());
   // Ensure that a previous value is not overwritten.
-  EXPECT_FALSE(base::ContainsKey(*request_headers, url));
+  EXPECT_FALSE(base::ContainsKey(*request_headers, url))
+      << (*request_headers)[all_requests_for_url];
   (*request_headers)[url] = headers;
 }
 
