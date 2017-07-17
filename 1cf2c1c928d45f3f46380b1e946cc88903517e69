@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bab98f7_78d1a2d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-17T21:31:05Z",
+      "side": 1,
+      "message": "nit: add prefix \"device/bluetooth: \"",
+      "revId": "1cf2c1c928d45f3f46380b1e946cc88903517e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af210fc1_0d122273",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-17T21:31:05Z",
+      "side": 1,
+      "message": "nit: The source of the number should also be mentioned here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 67
+      },
+      "revId": "1cf2c1c928d45f3f46380b1e946cc88903517e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9d83bf_adb827a5",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-17T21:31:05Z",
+      "side": 1,
+      "message": "nit: s/Copies/Copy",
+      "range": {
+        "startLine": 513,
+        "startChar": 5,
+        "endLine": 513,
+        "endChar": 11
+      },
+      "revId": "1cf2c1c928d45f3f46380b1e946cc88903517e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1c68fd_fe71e9a4",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-17T21:31:05Z",
+      "side": 1,
+      "message": "Another approach would be making |advertisements_| a queue where the limit is enforced so that the removal of an advertisement can be done by removing the node in the queue. The adapter implementation can also provide a call for an advertisement to notify adapter on its unregistration so that the clean-up can be done whenever an advertisement is unregistered instead of cleaning up |advertisments_| on GetNumRegisteredAdvertisements call.",
+      "range": {
+        "startLine": 514,
+        "startChar": 2,
+        "endLine": 522,
+        "endChar": 3
+      },
+      "revId": "1cf2c1c928d45f3f46380b1e946cc88903517e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315e82c7_7eb24ee0",
+        "filename": "device/bluetooth/bluez/bluetooth_advertisement_bluez.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-17T21:31:05Z",
+      "side": 1,
+      "message": "What does the bluetooth_advertising_manager::kErrorFailed go?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 71
+      },
+      "revId": "1cf2c1c928d45f3f46380b1e946cc88903517e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
