@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47c902dc_2b259f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T20:49:11Z",
+      "side": 1,
+      "message": "No, because we send the navigateBack request from the GL thread, and by the time the request hits the UI thread we could have disabled back, so this handles the possible race.",
+      "parentUuid": "a16ee623_58af4948",
+      "revId": "9d03dc194273ba778c6a9dcc59d8f2dddcc9b2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34347ea_81d00077",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "76a790c8_f85ae898",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T20:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34347ea_81d00077",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 13
+      },
+      "revId": "9d03dc194273ba778c6a9dcc59d8f2dddcc9b2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a104a08_80e81c9f",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestCommon.java",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "9d03dc194273ba778c6a9dcc59d8f2dddcc9b2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22594e68_70bd974f",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestCommon.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T20:49:11Z",
+      "side": 1,
+      "message": "I prefer overloading, FROM_LINK is a very reasonable default for callers that don\u0027t care.",
+      "parentUuid": "5a104a08_80e81c9f",
+      "range": {
+        "startLine": 308,
+        "startChar": 15,
+        "endLine": 308,
+        "endChar": 30
+      },
+      "revId": "9d03dc194273ba778c6a9dcc59d8f2dddcc9b2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
