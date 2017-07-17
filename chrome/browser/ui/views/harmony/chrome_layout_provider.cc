@@ -46,8 +46,6 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 8;
     case DISTANCE_RELATED_CONTROL_VERTICAL_SMALL:
       return 4;
-    case DISTANCE_RELATED_LABEL_HORIZONTAL:
-      return 10;
     case DISTANCE_RELATED_LABEL_HORIZONTAL_LIST:
       return 8;
     case DISTANCE_SUBSECTION_HORIZONTAL_INDENT:
