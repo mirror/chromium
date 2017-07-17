@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a18582bf_d2ee5f14",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "Just to double-check - is this going to change your statistics in a way you care about?",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08be9d89_3f9a5931",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t seem to need to be a closure. Put it as a utility function in the anonymous namespace in this file.",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df8dd94_7b71a301",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "Just to double-check: Does this change tab-key behavior when navigating with keyboard and/or spoken feedback?",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9cde3e_69194278",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "This is fine since Jacob told you to do it.\n\nGoing forward, though, I prefer test api code in a separate header file, which can sit next to the class under test (e.g. ash/shelf/shelf_view_test_api.h). I\u0027m about to move all the existing _test_api.h files to sit next to the code under test.",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabb3811_6d2804c0",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "FYI - I have a CL in-flight that moves test::AshTestBase to just AshTestBase. You might need to rebase if I land first.",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f34ce2c_12aeac7b",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "nit: comment why you have to spin the message loop",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80120940_9f7c0a69",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T22:59:29Z",
+      "side": 1,
+      "message": "Thanks for adding tests! Also, I like the comment/action/expectation pattern you used.",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
