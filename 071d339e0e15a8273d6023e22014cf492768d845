@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5deccbe_21dea9a3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T04:08:06Z",
+      "side": 1,
+      "message": "Please use resource_coordinator::IsResourceCoordinatorEnabled for the check instead",
+      "revId": "071d339e0e15a8273d6023e22014cf492768d845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35eb2635_dfa143ca",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorInterface.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T04:08:06Z",
+      "side": 1,
+      "message": "Please use resource_coordinator::IsResourceCoordinatorEnabled",
+      "revId": "071d339e0e15a8273d6023e22014cf492768d845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
