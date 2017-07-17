@@ -323,7 +323,10 @@ void ReportInitializationAttemptsSpent(int attempts_spent) {
 
 // protected
 OfflinePageModelImpl::OfflinePageModelImpl()
-    : OfflinePageModel(), is_loaded_(false), weak_ptr_factory_(this) {}
+    : OfflinePageModel(),
+      is_loaded_(false),
+      skip_clearing_original_url_for_testing_(false),
+      weak_ptr_factory_(this) {}
 
 OfflinePageModelImpl::OfflinePageModelImpl(
     std::unique_ptr<OfflinePageMetadataStore> store,
@@ -731,7 +734,15 @@ void OfflinePageModelImpl::OnCreateArchiveDone(
                                     save_page_params.client_id, file_path,
                                     file_size, start_time);
   offline_page_item.title = title;
-  offline_page_item.original_url = save_page_params.original_url;
+
+  // Don't record the original URL if it is identical to the final URL. This is
+  // because some websites might route the redirect finally back to itself upon
+  // the completion of certain action, i.e., authentication, in the middle.
+  if (skip_clearing_original_url_for_testing_ ||
+      save_page_params.original_url != offline_page_item.url) {
+    offline_page_item.original_url = save_page_params.original_url;
+  }
+
   offline_page_item.request_origin = save_page_params.request_origin;
   store_->AddOfflinePage(offline_page_item,
                          base::Bind(&OfflinePageModelImpl::OnAddOfflinePageDone,
