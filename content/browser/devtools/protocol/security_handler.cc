@@ -144,15 +144,6 @@ void SecurityHandler::DidChangeVisibleSecurityState() {
 
   std::unique_ptr<Security::InsecureContentStatus> insecure_status =
       Security::InsecureContentStatus::Create()
-          .SetRanMixedContent(security_style_explanations.ran_mixed_content)
-          .SetDisplayedMixedContent(
-              security_style_explanations.displayed_mixed_content)
-          .SetContainedMixedForm(
-              security_style_explanations.contained_mixed_form)
-          .SetRanContentWithCertErrors(
-              security_style_explanations.ran_content_with_cert_errors)
-          .SetDisplayedContentWithCertErrors(
-              security_style_explanations.displayed_content_with_cert_errors)
           .SetRanInsecureContentStyle(SecurityStyleToProtocolSecurityState(
               security_style_explanations.ran_insecure_content_style))
           .SetDisplayedInsecureContentStyle(
