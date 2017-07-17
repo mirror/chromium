@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "18964ed6_b3906f61",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T14:00:07Z",
+      "side": 1,
+      "message": "Sure, cleanup CLs to make the edges less prickly should be fine (and encouraged).",
+      "parentUuid": "d7282014_b49fc02a",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8699e4b0_c5c5f6f5",
         "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h",
         "patchSetId": 1
@@ -442,6 +466,24 @@
     },
     {
       "key": {
+        "uuid": "b43d742a_5ed7df5c",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T14:00:07Z",
+      "side": 1,
+      "message": "Added snackbar and errorAlerter to our component list.",
+      "parentUuid": "76560d3e_ee875947",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4adf4b2c_0c7c9367",
         "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
         "patchSetId": 1
@@ -477,6 +519,30 @@
       "side": 1,
       "message": "I was trying to make the smallest possible change while hacking \u003d)\n\n- BVC registers with the dispatcher as a protocol, so we need some sort of \"BVCCommands\" protocol for that.\n- We pass around a single id\u003cBrowserCommands\u003e that acts as the dispatcher for everything.  In the old architecture, that seems better than passing around an object that conforms to a dozen different protocol.\n\nSo I renamed the old protocol to BVCCommands and created a new BrowserCommands protocol that can act as a dumping ground for everything that\u0027s handled by not-BVC.\n\nAs we refactor components, they will get their own protocols.  For the sake of the old app, maybe BrowserCommands will publicly conform to all of them.",
       "parentUuid": "4adf4b2c_0c7c9367",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1453e574_3788ec61",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T14:00:07Z",
+      "side": 1,
+      "message": "This is basically the approach I took for the stuff handled in the settings view controller; it\u0027s in a subprotocol of ApplicationCommands.\n\nMaybe keep BrowserCommands, but then define a \u003cShareCommands\u003e subprotocol?",
+      "parentUuid": "5cad1e86_44ba491a",
       "range": {
         "startLine": 37,
         "startChar": 10,
