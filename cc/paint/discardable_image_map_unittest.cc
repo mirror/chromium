@@ -649,10 +649,10 @@ TEST_F(DiscardableImageMapTest, ClipsImageRects) {
 
   scoped_refptr<DisplayItemList> display_list = new DisplayItemList;
 
-  PaintOpBuffer* buffer = display_list->StartPaint();
-  buffer->push<ClipRectOp>(gfx::RectToSkRect(gfx::Rect(250, 250)),
-                           SkClipOp::kIntersect, false);
-  buffer->push<DrawRecordOp>(std::move(record));
+  display_list->StartPaint();
+  display_list->push<ClipRectOp>(gfx::RectToSkRect(gfx::Rect(250, 250)),
+                                 SkClipOp::kIntersect, false);
+  display_list->push<DrawRecordOp>(std::move(record));
   display_list->EndPaintOfUnpaired(gfx::Rect(250, 250));
 
   display_list->Finalize();
@@ -681,9 +681,10 @@ TEST_F(DiscardableImageMapTest, GathersDiscardableImagesFromNestedOps) {
   PaintImage discardable_image2 =
       CreateDiscardablePaintImage(gfx::Size(100, 100));
 
-  scoped_refptr<DisplayItemList> display_list = new DisplayItemList;
-  PaintOpBuffer* buffer = display_list->StartPaint();
-  buffer->push<DrawImageOp>(discardable_image2, 100.f, 100.f, nullptr);
+  scoped_refptr<DisplayItemList> display_list =
+      new DisplayItemList(DisplayItemList::kToBeReleasedAsPaintOpBuffer);
+  display_list->StartPaint();
+  display_list->push<DrawImageOp>(discardable_image2, 100.f, 100.f, nullptr);
   display_list->EndPaintOfUnpaired(gfx::Rect(100, 100, 100, 100));
   display_list->Finalize();
 
