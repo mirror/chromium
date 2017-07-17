@@ -108,6 +108,10 @@ static void ClearBrowsingData(
         remove_mask |=
             ChromeBrowsingDataRemoverDelegate::DATA_TYPE_CONTENT_SETTINGS;
         break;
+      case browsing_data::BrowsingDataType::DOWNLOADS:
+      case browsing_data::BrowsingDataType::MEDIA_LICENSES:
+      case browsing_data::BrowsingDataType::HOSTED_APPS_DATA:
+        NOTREACHED();  // Not supported on Android
       case browsing_data::BrowsingDataType::NUM_TYPES:
         NOTREACHED();
     }

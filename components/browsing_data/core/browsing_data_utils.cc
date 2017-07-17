@@ -16,6 +16,28 @@
 
 namespace browsing_data {
 
+// clang-format bug filed: http://b/63693604
+static const base::flat_map<std::string, BrowsingDataType> preferenceToDatatype(
+    {
+      {prefs::kDeleteBrowsingHistory, BrowsingDataType::HISTORY},
+          {prefs::kDeleteBrowsingHistoryBasic, BrowsingDataType::HISTORY},
+          {prefs::kDeleteCache, BrowsingDataType::CACHE},
+          {prefs::kDeleteCacheBasic, BrowsingDataType::CACHE},
+          {prefs::kDeleteCookies, BrowsingDataType::COOKIES},
+          {prefs::kDeleteCookiesBasic, BrowsingDataType::COOKIES},
+          {prefs::kDeletePasswords, BrowsingDataType::PASSWORDS},
+          {prefs::kDeleteFormData, BrowsingDataType::FORM_DATA},
+#if defined(OS_ANDROID)
+          {prefs::kDeleteSiteSettings, BrowsingDataType::SITE_SETTINGS},
+#endif
+#if !defined(OS_ANDROID)
+          {prefs::kDeleteDownloadHistory, BrowsingDataType::DOWNLOADS},
+          {prefs::kDeleteMediaLicenses, BrowsingDataType::MEDIA_LICENSES},
+          {prefs::kDeleteHostedAppsData, BrowsingDataType::HOSTED_APPS_DATA},
+#endif
+    },
+    base::KEEP_FIRST_OF_DUPES);
+
 base::Time CalculateBeginDeleteTime(TimePeriod time_period) {
   base::TimeDelta diff;
   base::Time delete_begin_time = base::Time::Now();
@@ -255,11 +277,30 @@ bool GetDeletionPreferenceFromDataType(
       return true;
     case BrowsingDataType::BOOKMARKS:
       // Bookmarks are deleted on the Android side. No corresponding deletion
-      // preference.
+      // preference. Desktop doesn't support Bookmarks deletion.
       return false;
+#if defined(OS_ANDROID)
     case BrowsingDataType::SITE_SETTINGS:
       *out_pref = prefs::kDeleteSiteSettings;
       return true;
+    case BrowsingDataType::DOWNLOADS:
+    case BrowsingDataType::MEDIA_LICENSES:
+    case BrowsingDataType::HOSTED_APPS_DATA:
+      NOTREACHED();  // Not supported on Android
+#endif
+#if !defined(OS_ANDROID)
+    case BrowsingDataType::SITE_SETTINGS:
+      NOTREACHED();  // Not supported on Desktop
+    case BrowsingDataType::DOWNLOADS:
+      *out_pref = prefs::kDeleteDownloadHistory;
+      return true;
+    case BrowsingDataType::MEDIA_LICENSES:
+      *out_pref = prefs::kDeleteMediaLicenses;
+      return true;
+    case BrowsingDataType::HOSTED_APPS_DATA:
+      *out_pref = prefs::kDeleteHostedAppsData;
+      return true;
+#endif
     case BrowsingDataType::NUM_TYPES:
       // This is not an actual type.
       NOTREACHED();
@@ -267,6 +308,13 @@ bool GetDeletionPreferenceFromDataType(
   }
   NOTREACHED();
   return false;
+}
+
+BrowsingDataType GetDataTypeFromDeletionPreference(
+    const std::string& pref_name) {
+  auto iter = preferenceToDatatype.find(pref_name);
+  DCHECK(iter != preferenceToDatatype.end());
+  return iter->second;
 }
 
 void MigratePreferencesToBasic(PrefService* prefs) {

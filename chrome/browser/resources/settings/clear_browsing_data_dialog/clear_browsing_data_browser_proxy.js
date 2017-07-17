@@ -28,11 +28,13 @@ cr.define('settings', function() {
   /** @interface */
   class ClearBrowsingDataBrowserProxy {
     /**
+     * @param {!Array<!string>} dataTypes
+     * @param {!Array<!int>} timePeriod
      * @param {!Array<!ImportantSite>} importantSites
      * @return {!Promise<void>}
      *     A promise resolved when data clearing has completed.
      */
-    clearBrowsingData(importantSites) {}
+    clearBrowsingData(dataTypes, timePeriod, importantSites) {}
 
     /**
      * @return {!Promise<!Array<!ImportantSite>>}
@@ -52,8 +54,9 @@ cr.define('settings', function() {
    */
   class ClearBrowsingDataBrowserProxyImpl {
     /** @override */
-    clearBrowsingData(importantSites) {
-      return cr.sendWithPromise('clearBrowsingData', importantSites);
+    clearBrowsingData(dataTypes, timePeriod, importantSites) {
+      return cr.sendWithPromise(
+          'clearBrowsingData', dataTypes, timePeriod, importantSites);
     }
 
     /** @override */
