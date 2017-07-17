@@ -19,6 +19,7 @@
 #include "net/cert/signed_certificate_timestamp_and_status.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/test_data_directory.h"
 #include "net/test/url_request/url_request_failed_job.h"
@@ -338,14 +339,15 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
   std::unique_ptr<net::test_server::HttpResponse> HandleReportPreflight(
       const net::test_server::HttpRequest& request) {
     num_requests_++;
-    if (!requests_callback_.is_null()) {
-      requests_callback_.Run();
-    }
     std::unique_ptr<net::test_server::BasicHttpResponse> http_response(
         new net::test_server::BasicHttpResponse());
     http_response->set_code(net::HTTP_OK);
     for (const auto& cors_header : cors_headers_) {
       http_response->AddCustomHeader(cors_header.first, cors_header.second);
+    }
+
+    if (!requests_callback_.is_null()) {
+      requests_callback_.Run();
     }
     return http_response;
   }
