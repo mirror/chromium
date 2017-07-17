@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2f93bcb_19e81b5a",
+        "filename": "chrome/browser/exo_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T15:31:47Z",
+      "side": 1,
+      "message": "How about renaming this to CreateIfNecessary?",
+      "parentUuid": "ae2783b2_74b34032",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a6e14cf_b0aff43f",
         "filename": "chrome/browser/exo_init.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-16T17:06:15Z",
       "side": 1,
       "message": "ExoInit is ubiquitous name. Would ChromeBrowserMainExoParts better describe what this is?",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d0fa9b_4607c35b",
+        "filename": "chrome/browser/exo_init.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T15:31:47Z",
+      "side": 1,
+      "message": "ChromeBrowserMainExoParts is confusing given this class no longer extends ChromeBrowserMainExtraParts.\n\nI\u0027m open to a different name though. Is ChromeExoInit any better?",
+      "parentUuid": "8a6e14cf_b0aff43f",
       "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
