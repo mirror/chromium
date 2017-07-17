@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88c1a4d6_85c4d13e",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T15:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46bf09bb_5ece2f28",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "d5293a5c1245f4491f3577fb102981484d872a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c31070b_272ad517",
         "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "d5293a5c1245f4491f3577fb102981484d872a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c470c5_85c33085",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T15:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c31070b_272ad517",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "d5293a5c1245f4491f3577fb102981484d872a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
