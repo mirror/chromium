@@ -215,4 +215,6 @@ void SurfacesInstance::ReclaimResources(
   CHECK(resources.empty());
 }
 
+void SurfacesInstance::OnBeginFrameSourcePausedChanged(bool paused) {}
+
 }  // namespace android_webview
