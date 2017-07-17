@@ -34,6 +34,69 @@
       "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5984c22_4809b79a",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-17T20:07:19Z",
+      "side": 1,
+      "message": "I have no idea what this area of code does, but this line looks very suspicious to me. Can you add a comment why touch_action_filter_.allowed_touch_action() is the \"EffectiveTouchAction\"?",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 73
+      },
+      "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebaa3d2_2f04c942",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 79761,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-17T20:07:19Z",
+      "side": 1,
+      "message": "nit: for some reason I\u0027m not a big fan of \"hit\" here. Maybe \"used\"?",
+      "range": {
+        "startLine": 79761,
+        "startChar": 49,
+        "endLine": 79761,
+        "endChar": 53
+      },
+      "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c43e65e_319d3982",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 79761,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-17T20:07:19Z",
+      "side": 1,
+      "message": "Nit: add \"Recorded at end of a touch-action sequence.\" to the summary (assuming that sentence made sense)\n\nCan you also mention something about what \"Effective\" means?",
+      "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
