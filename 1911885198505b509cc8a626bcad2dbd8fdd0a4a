@@ -1,0 +1,463 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f9902fb_1e99c2a9",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit 1: #include \"components/policy/proto/cloud_policy.pb.h\"\nNit 2: Pointer to const.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde2ceb1_bc625194",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "This should never happen. If the server sends us an IntegerPolicyProto, it should contain a valid value. The UNSET flag is used internally by the server and is never sent to the device.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd85ecc2_5d01ac16",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit 1: const pointer.\nNit 2: #include \"components/policy/core/common/cloud/device_management_service.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33495c54_1493c77c",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit 1: const pointer.\nNit 2: #include \"net/url_request/url_request_context_getter.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06cdd77_e3c8e1cc",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: #include \"chrome/browser/profiles/profile.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b411c7a9_267384db",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: #include \"base/memory/ptr_util.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdedf608_fc25d44b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Do we normally supply this information to the server? If so, why are we leaving it out here?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42faef89_41320dee",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629015f2_fc2b43f6",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit 1: #include \"chromeos/cryptohome/cryptohome_parameters.h\"\nNit 2: #include \"chromeos/login/auth/key.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0939fd_ad456f7b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Why not do this at the top of the file?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b64e8ef_26bce69f",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Are you sure these are all the possible values? NOTREACHED() is a pretty strong statement.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2b2e86_f9ae6e81",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit 1: Can you move this one down to the end? It feels very surprising to encounter a \"default\" close anywhere but at the end of a switch statement.\nNit 2: Document the explicit fall-through.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220cdf59_5be24a15",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Why not a const reference to a UserContext?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464a36b2_752605ad",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Forward-declare CloudPolicySettings.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e647873_0e9a2ac1",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: #include \"third_party/cros_system_api/dbus/cryptohome/dbus-constants.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23d5381_d803fca1",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Where is this ued?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3203afc_d4914eb8",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbd0555_03937a3a",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Already included by header.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8f5ee2_c6c720e9",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Should this be kept in sync with another file (presumably the one that holds the key size limit in the regular policy stack)? If so, document this in both files.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72be0f5_6e62c1e6",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: Add a note that the order must not be changed as this is used in an UMA stat.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2ba2a8_d657fd21",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "When is this value used? Should it not be used when the key size 0 or \u003e 16k?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5982b3f_3855f42e",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Can you add some thread checking to this class? It hops to a background task runner and back. It is important to ensure that all access to member variables happens on the main thread.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f7bc02_b075da3c",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "cached_policy_key_load_attempted_ is set only after the key was loaded successfully. This means that as long as the first load is in progress, you can start arbitrarily many additional, concurrent loads.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ec159d_c5c8bcce",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: s/Bind/BindOnce/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8e5231_dd2fefbc",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: #include \"base/callback_forward.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6524c956_3eb51bf1",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab71452d_99374a31",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

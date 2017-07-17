@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a09fc4dc_a3a11903",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "If UserWithoutSession is (a) and UserPreSignin is (b), I choose (c) :). Ther user is starting a session and sign-in has completed already. I would go for something along the lines of UserPreMount, UserOnLoginScreen or UserDuringLogin.",
+      "parentUuid": "174435a3_1b4fdd7d",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2bac3e8_13245f29",
         "filename": "chromeos/dbus/session_manager_client.h",
         "patchSetId": 10
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "Can\u0027t use const pointer here, as I\u0027m invoking the set_force_online_signin member function which is not const. Also, moved up before the IsUserNonCryptohomeDataEphemeral check to be consistent with SaveUserOAuthStatus and because this should take effect on the current sign-in screen session, no matter if anything gets persisted to Local State or not.",
       "parentUuid": "14fe87ea_a4713d92",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19378ee_5b9569d9",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T12:57:09Z",
+      "side": 1,
+      "message": "const pointer, not pointer to const.",
+      "parentUuid": "3d158506_e698b5dc",
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
