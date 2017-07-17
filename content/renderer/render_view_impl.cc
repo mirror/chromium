@@ -156,6 +156,7 @@
 #include "third_party/WebKit/public/web/WebPageImportanceSignals.h"
 #include "third_party/WebKit/public/web/WebPlugin.h"
 #include "third_party/WebKit/public/web/WebPluginAction.h"
+#include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "third_party/WebKit/public/web/WebRange.h"
 #include "third_party/WebKit/public/web/WebRenderTheme.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"

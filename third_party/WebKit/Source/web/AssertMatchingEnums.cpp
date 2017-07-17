@@ -418,6 +418,9 @@ STATIC_ASSERT_ENUM(WebSandboxFlags::kOrientationLock, kSandboxOrientationLock);
 STATIC_ASSERT_ENUM(WebSandboxFlags::kPropagatesToAuxiliaryBrowsingContexts,
                    kSandboxPropagatesToAuxiliaryBrowsingContexts);
 STATIC_ASSERT_ENUM(WebSandboxFlags::kModals, kSandboxModals);
+STATIC_ASSERT_ENUM(WebSandboxFlags::kPresentation, kSandboxPresentation);
+STATIC_ASSERT_ENUM(WebSandboxFlags::kTopNavigationByUserActivation,
+                   kSandboxTopNavigationByUserActivation);
 
 STATIC_ASSERT_ENUM(LocalFrameClient::kBeforeUnloadHandler,
                    WebFrameClient::kBeforeUnloadHandler);
