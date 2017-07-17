@@ -16,6 +16,24 @@
       "revId": "f92daee350c49df9ded1fae34ba0213193c02c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2634017f_17c1dc91",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 8
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 0,
+      "message": "Removed.",
+      "parentUuid": "deb0ba00_9d458643",
+      "revId": "f92daee350c49df9ded1fae34ba0213193c02c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

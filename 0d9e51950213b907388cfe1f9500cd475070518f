@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0951436_67a0d495",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-align-3/default-alignment/place-items-shorthand-002.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "I moved the auto part to place-items-shorthand-004.html.",
+      "parentUuid": "1a74b8f8_9fc9a337",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48f66cda_a616e147",
         "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b10f6a1_f7114da3",
+        "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48f66cda_a616e147",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7fb831a_9a3b06e4",
+        "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3372f4ca_eae437a9",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae29c0d4_c92ac9d1",
         "filename": "third_party/WebKit/Source/core/css/CSSGradientValue.cpp",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-13T09:56:04Z",
       "side": 1,
       "message": "I don\u0027t get why this change has anything to do with alignment.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9032e25e_1b77c901",
+        "filename": "third_party/WebKit/Source/core/css/CSSGradientValue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Sorry, I havent dealt with upstream for a while, messed it up! Fixed now.",
+      "parentUuid": "ae29c0d4_c92ac9d1",
       "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b6a3f91e_6283d49a",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValueMappings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "085eb504_728fdca2",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89eaf3dd_71708826",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f047fd_8639ad50",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89eaf3dd_71708826",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f76c015d_bb516b59",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2307,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f5b3e51_db9e1c2c",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df0345c_16be39d7",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAlignmentUtils.cpp",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b326fc_aa899c18",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAlignmentUtils.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df0345c_16be39d7",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ef465b20_485a877d",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAlignmentUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57652ed5_90941889",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93178c1c_1d3eed62",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentOptions.idl",
         "patchSetId": 8
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "e29f705e_2490b1a7",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentOptions.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "93178c1c_1d3eed62",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffb91aa6_8522c80f",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentResponse.idl",
         "patchSetId": 8
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-13T09:56:04Z",
       "side": 1,
       "message": "Unrelated change as well.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379580b5_58b82926",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentResponse.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-17T15:35:20Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ffb91aa6_8522c80f",
       "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
