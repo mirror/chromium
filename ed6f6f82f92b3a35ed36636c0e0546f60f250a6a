@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df28362_e46d9e1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:19:44Z",
+      "side": 1,
+      "message": "FWIW, not sure what \"the contract with GVR is\". Maybe drop this if it can\u0027t be explained in more details?",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf053cbb_360b8a0c",
+        "filename": "content/browser/screen_orientation/screen_orientation_delegate_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:19:44Z",
+      "side": 1,
+      "message": "Feel free to assign this to me so there is a name on the TODO :)",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
