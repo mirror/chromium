@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a492c4_246f09f3",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T23:36:10Z",
+      "side": 1,
+      "message": "nit: Shall we just do if check here?\n\nSince this function is also called in OnDownloadFailed, which may be in another closure in the task queue. So the state of controller may change and then OnDownloadFailed is called.",
+      "range": {
+        "startLine": 683,
+        "startChar": 2,
+        "endLine": 683,
+        "endChar": 11
+      },
+      "revId": "a2436fca084f47a4c321ccd1afa94cbbd4c78291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
