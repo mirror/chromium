@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e0d350_f8efc058",
+        "filename": "components/filesystem/lock_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T19:40:03Z",
+      "side": 1,
+      "message": "Not an owner here, but having a LockTable::LockFile() function that then basically just returns \"success\" without doing any actual locking on fuchsia seems pretty weird. Can we instead remove callers of this on fuchsia? What\u0027s this used for?",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
