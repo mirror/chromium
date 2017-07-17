@@ -36,7 +36,7 @@ group("test_support") {
 }
 
 group("all_blink") {
-  # This includes some test targets. Don't link into production!
+  #This includes some test targets.Don't link into production!
   testonly = true
 
   public_deps = [
@@ -160,7 +160,6 @@ source_set("blink_headers") {
     "platform/WebContentSettingCallbacks.h",
     "platform/WebContentSettingsClient.h",
     "platform/WebCookieJar.h",
-    "platform/WebCredential.h",
     "platform/WebCredentialManagerError.h",
     "platform/WebCredentialMediationRequirement.h",
     "platform/WebCrypto.h",
@@ -191,7 +190,6 @@ source_set("blink_headers") {
     "platform/WebExternalTextureLayer.h",
     "platform/WebFallbackThemeEngine.h",
     "platform/WebFeaturePolicy.h",
-    "platform/WebFederatedCredential.h",
     "platform/WebFileError.h",
     "platform/WebFileInfo.h",
     "platform/WebFileSystem.h",
@@ -270,7 +268,6 @@ source_set("blink_headers") {
     "platform/WebNonCopyable.h",
     "platform/WebOriginTrialTokenStatus.h",
     "platform/WebPageVisibilityState.h",
-    "platform/WebPasswordCredential.h",
     "platform/WebPlatformEventListener.h",
     "platform/WebPlatformEventType.h",
     "platform/WebPluginListBuilder.h",
@@ -709,6 +706,16 @@ grit("image_resources") {
   ]
 }
 
+# Fun part here. We currently cannot add these as deps of `mojom` targets due
+# to sanity checks that verify all flavors of bindings are there (they aren't).
+group("forwarder_for_mojo_bindings_in_modules") {
+  visibility = [ "//content/*" ]
+  public_deps = [
+    # Only the vanilla C++ bindings.
+    "//third_party/WebKit/Source/modules:mojo_bindings",
+  ]
+}
+
 mojom("mojo_bindings") {
   visibility = [ "//content/*" ]
   visibility_blink = [
@@ -724,7 +731,6 @@ mojom("mojo_bindings") {
     "platform/modules/bluetooth/web_bluetooth.mojom",
     "platform/modules/broadcastchannel/broadcast_channel.mojom",
     "platform/modules/budget_service/budget_service.mojom",
-    "platform/modules/credentialmanager/credential_manager.mojom",
     "platform/modules/fetch/fetch_api_request.mojom",
     "platform/modules/hyphenation/hyphenation.mojom",
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
@@ -845,6 +851,7 @@ group("generate_mojo_bindings") {
     ":mojo_bindings__generator",
     ":mojo_bindings_blink__generator",
     ":offscreen_canvas_mojo_bindings_blink__generator",
+    "//third_party/WebKit/Source/modules:mojo_bindings__generator",
   ]
 }
 
