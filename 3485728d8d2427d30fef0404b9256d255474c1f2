@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "28bc8bcd_e236a760",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T17:14:25Z",
+      "side": 1,
+      "message": "NetworkHostScanCache doesn\u0027t have any additional public API functions that could be overridden. The only reason why we needed a PersistentHostScanCache interface is because it exposes an additional method - GetStoredCacheEntries(). See https://cs.chromium.org/chromium/src/chromeos/components/tether/persistent_host_scan_cache.h.",
+      "parentUuid": "7953e110_9bf73939",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "3485728d8d2427d30fef0404b9256d255474c1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a0b159_96f4c22a",
         "filename": "chromeos/components/tether/master_host_scan_cache.h",
         "patchSetId": 5
