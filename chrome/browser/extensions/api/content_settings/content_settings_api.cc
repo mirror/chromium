@@ -161,6 +161,7 @@ ContentSettingsContentSettingGetFunction::Run() {
   }
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
+  DCHECK_NE(CONTENT_SETTING_DEFAULT, setting);
   std::string setting_string =
       content_settings::ContentSettingToString(setting);
   DCHECK(!setting_string.empty());
