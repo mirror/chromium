@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4654d0c2_9fc01e61",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3562bbf0_ba6aaa85",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c42ab8d7_ddbd732a",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T12:42:36Z",
       "side": 1,
       "message": "Will the BackgroundFetchJobController continue to maintain the state?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7b3f88_9508b646",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Are you referring to https://cs.chromium.org/chromium/src/content/browser/background_fetch/background_fetch_job_controller.cc?l\u003d223\u0026rcl\u003d9f083254423a38d00132f803f9e9617b6b531e2f ? If so then that state now lives in the proxy to be ultimately migrated to the Delegate.\n\nWe may have to augment that structure so it\u0027s capable of looking up all the jobs owned by a particular JobController, but that\u0027s not necessary yet since we haven\u0027t implement Abort.",
+      "parentUuid": "c42ab8d7_ddbd732a",
       "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c8402b4c_cd9adec7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9423f3_6a0caa78",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd757c58_9db448d7",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-14T12:42:36Z",
       "side": 1,
       "message": "What is the ownership model you have in mind? We have N BackgroundFetchJobControllers that\u0027ll have to talk to 1 OfflineContentProvider. Is the idea that each BGFetchJobController owns a BGFetchDelegateProxy that talks to the same BGFetchDelegate that\u0027s provided by the BrowserContext?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d384f51d_5950bff6",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Having discussed offline, I will change this to a model where is just a single DelegateProxy and Delegate. The DelegateProxy can use the RegistrationId to look up the JobController when it needs to talk back to it.",
+      "parentUuid": "fd757c58_9db448d7",
       "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "120f9128_6e1b5b31",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Not sure what you mean. Move as in std::move? Move NetworkTrafficAnnotation to a different namespace?",
+      "parentUuid": "d64afab1_33d48fd3",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7fb38d9_4aa6281d",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-14T12:42:36Z",
       "side": 1,
       "message": "nit: detail ownership (\"owns |this|\" or similar)",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e645de_26950acf",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:02:41Z",
+      "side": 1,
+      "message": "Due to the previously discussed change, this member is no longer necessary.",
+      "parentUuid": "d7fb38d9_4aa6281d",
       "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
