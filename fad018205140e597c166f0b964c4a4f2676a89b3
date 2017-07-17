@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "003ae7f1_d89eafc2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:43:44Z",
+      "side": 1,
+      "message": "This was mostly for the Zine folks to know where to make changes. Removed.",
+      "parentUuid": "ae31d449_9a330c57",
+      "range": {
+        "startLine": 792,
+        "startChar": 11,
+        "endLine": 792,
+        "endChar": 20
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac7201d2_fd953f3a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T17:26:13Z",
       "side": 1,
       "message": "Is mToolbarHeight not updated by the time this is run? If not, do you think we should use this instead of mToolbarHeight everywhere else?",
+      "range": {
+        "startLine": 944,
+        "startChar": 65,
+        "endLine": 944,
+        "endChar": 91
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb752cc_cb2e36b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:43:44Z",
+      "side": 1,
+      "message": "mToolbarHeight is different than mToolbarHolder.getHeight() by mToolbarShadowHeight. We shouldn\u0027t use this instead of toolbar height everywhere. We could use (mToolbarHeight - mToolbarShadowHeight here) here to achieve the same visual effect, but I think conceptually using mToolbarHolder.getHeight() makes sense because the content container top padding should be equal to the space dedicated to the toolbar holder.",
+      "parentUuid": "ac7201d2_fd953f3a",
       "range": {
         "startLine": 944,
         "startChar": 65,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "50180f2b_f83087d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c1078a5_141193e3",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c4df778_e2a92c6a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2123b3e7_339a309b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c4df778_e2a92c6a",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32159995_e2a154ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e500ce_173296a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32159995_e2a154ea",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
