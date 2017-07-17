@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/insets.h"
@@ -31,11 +32,15 @@ constexpr base::TimeDelta kBubbleCloseDelayShort =
 }  // namespace
 
 // static
-NewTabPromo* NewTabPromo::CreateSelfOwned(const gfx::Rect& anchor_rect) {
-  return new NewTabPromo(anchor_rect);
+NewTabPromo* NewTabPromo::CreateSelfOwned(const gfx::Rect& anchor_rect,
+                                          base::string16 promo_string) {
+  return new NewTabPromo(anchor_rect, promo_string);
 }
 
-NewTabPromo::NewTabPromo(const gfx::Rect& anchor_rect) {
+NewTabPromo::NewTabPromo(const gfx::Rect& anchor_rect,
+                         base::string16 promo_string)
+    : promo_string_(promo_string) {
+  promo_string_ = promo_string;
   SetAnchorRect(anchor_rect);
   set_arrow(views::BubbleBorder::LEFT_TOP);
   views::Widget* new_tab_promo_widget =
@@ -65,6 +70,7 @@ void NewTabPromo::OnMouseExited(const ui::MouseEvent& event) {
 }
 
 void NewTabPromo::Init() {
+  // Set up the layout of the promo bubble.
   auto box_layout = base::MakeUnique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(), 0);
   box_layout->set_main_axis_alignment(
@@ -72,7 +78,7 @@ void NewTabPromo::Init() {
   box_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   SetLayoutManager(box_layout.release());
-  AddChildView(new views::Label(l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO)));
+  AddChildView(new views::Label(promo_string_));
 }
 
 void NewTabPromo::CloseBubble() {
