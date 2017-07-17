@@ -253,4 +253,10 @@ DownloadFileType::DangerLevel FileTypePolicies::GetFileDangerLevel(
   return PolicyForExtension(ext).platform_settings(0).danger_level();
 }
 
+uint64_t FileTypePolicies::GetMaxFileSizeToAnalyze(const base::FilePath& file) const {
+  const std::string ext = CanonicalizedExtension(file);
+  AutoLock lock(lock_);
+  return PolicyForExtension(ext).platform_settings(0).max_file_size_to_analyze();
+}
+
 }  // namespace safe_browsing
