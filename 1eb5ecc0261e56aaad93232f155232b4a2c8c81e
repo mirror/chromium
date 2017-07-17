@@ -45,6 +45,57 @@
       "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f6ba9b_65569ba3",
+        "filename": "chrome/browser/net/net_error_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:25:28Z",
+      "side": 1,
+      "message": "This is already included in net_error_tab_helper.h. Do we still need to include it here?",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db550cf_52adeb90",
+        "filename": "chrome/browser/offline_pages/android/offline_page_utils_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:25:28Z",
+      "side": 1,
+      "message": "nit: include logging.h",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cabab12_6327980e",
+        "filename": "chrome/browser/offline_pages/offline_page_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:25:28Z",
+      "side": 1,
+      "message": "\"will be downloaded soon\" is a bit confusing. How about changing it to\" has already been scheduled to download soon\"?",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
