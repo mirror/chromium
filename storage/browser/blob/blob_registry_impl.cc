@@ -85,7 +85,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
                     const std::string& bad_message_reason = "") {
     DCHECK(BlobStatusIsError(reason));
     DCHECK_EQ(bad_message_reason.empty(), !BlobStatusIsBadIPC(reason));
-    // The blob might no longer have any references, in which case it may no
+    // The blob might have been dereferenced already, in which case it may no
     // longer exist. If that happens just skip calling cancel.
     if (context()->registry().HasEntry(uuid()))
       context()->CancelBuildingBlob(uuid(), reason);
@@ -175,6 +175,12 @@ void BlobRegistryImpl::BlobUnderConstruction::StartTransportation() {
   for (size_t i = 0; i < elements_.size(); ++i) {
     const auto& element = elements_[i];
     if (element->is_blob()) {
+      if (element->get_blob()->blob.encountered_error()) {
+        // Will delete |this|.
+        MarkAsBroken(BlobStatus::ERR_REFERENCED_BLOB_BROKEN);
+        return;
+      }
+
       // If connection to blob is broken, something bad happened, so mark this
       // new blob as broken, which will delete |this| and keep it from doing
       // unneeded extra work.
@@ -186,6 +192,12 @@ void BlobRegistryImpl::BlobUnderConstruction::StartTransportation() {
           base::BindOnce(&BlobUnderConstruction::ReceivedBlobUUID,
                          weak_ptr_factory_.GetWeakPtr(), blob_count++));
     } else if (element->is_bytes()) {
+      if (element->get_bytes()->data.encountered_error()) {
+        // Will delete |this|.
+        MarkAsBroken(BlobStatus::ERR_SOURCE_DIED_IN_TRANSIT);
+        return;
+      }
+
       element->get_bytes()->data.set_connection_error_handler(base::BindOnce(
           &BlobUnderConstruction::MarkAsBroken, weak_ptr_factory_.GetWeakPtr(),
           BlobStatus::ERR_SOURCE_DIED_IN_TRANSIT, ""));
@@ -339,7 +351,7 @@ void BlobRegistryImpl::BlobUnderConstruction::OnReadyForTransport(
 
 void BlobRegistryImpl::BlobUnderConstruction::TransportComplete(
     BlobStatus result) {
-  // The blob might no longer have any references, in which case it may no
+  // The blob might have been dereferenced already, in which case it may no
   // longer exist. If that happens just skip calling Complete.
   // TODO(mek): Stop building sooner if a blob is no longer referenced.
   if (context()->registry().HasEntry(uuid())) {
