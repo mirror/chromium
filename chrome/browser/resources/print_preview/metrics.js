@@ -97,14 +97,19 @@ cr.define('print_preview', function() {
    * A context for recording a value in a specific UMA histogram.
    * @param {string} histogram The name of the histogram to be recorded in.
    * @param {number} maxBucket The max value for the last histogram bucket.
+   * @param {!print_preview.NativeLayer} nativeLayer Native layer used to send
+   *     metrics to C++ metrics handler.
    * @constructor
    */
-  function MetricsContext(histogram, maxBucket) {
+  function MetricsContext(histogram, maxBucket, nativeLayer) {
     /** @private {string} */
     this.histogram_ = histogram;
 
     /** @private {number} */
     this.maxBucket_ = maxBucket;
+
+    /** @private {!print_preview.NativeLayer} */
+    this.nativeLayer_ = nativeLayer;
   }
 
   MetricsContext.prototype = {
@@ -114,22 +119,25 @@ cr.define('print_preview', function() {
      * @param {number} bucket Value to record.
      */
     record: function(bucket) {
-      chrome.send('metricsHandler:recordInHistogram', [
-        this.histogram_,
-        ((bucket > this.maxBucket_) ? this.maxBucket_ : bucket), this.maxBucket_
-      ]);
+      this.nativeLayer_.recordInHistogram(
+          this.histogram_,
+          (bucket > this.maxBucket_) ? this.maxBucket_ : bucket,
+          this.maxBucket_);
     }
   };
 
   /**
    * Destination Search specific usage statistics context.
+   * @param {!print_preview.NativeLayer} nativeLayer Native layer used to send
+   *     metrics to C++ metrics handler.
    * @constructor
    * @extends {print_preview.MetricsContext}
    */
-  function DestinationSearchMetricsContext() {
+  function DestinationSearchMetricsContext(nativeLayer) {
     MetricsContext.call(
         this, 'PrintPreview.DestinationAction',
-        Metrics.DestinationSearchBucket.DESTINATION_SEARCH_MAX_BUCKET);
+        Metrics.DestinationSearchBucket.DESTINATION_SEARCH_MAX_BUCKET,
+        nativeLayer);
   }
 
   DestinationSearchMetricsContext.prototype = {
@@ -138,26 +146,31 @@ cr.define('print_preview', function() {
 
   /**
    * GCP promotion specific usage statistics context.
+   * @param {!print_preview.NativeLayer} nativeLayer Native layer used to send
+   *     metrics to C++ metrics handler.
    * @constructor
    * @extends {print_preview.MetricsContext}
    */
-  function GcpPromoMetricsContext() {
+  function GcpPromoMetricsContext(nativeLayer) {
     MetricsContext.call(
         this, 'PrintPreview.GcpPromo',
-        Metrics.GcpPromoBucket.GCP_PROMO_MAX_BUCKET);
+        Metrics.GcpPromoBucket.GCP_PROMO_MAX_BUCKET, nativeLayer);
   }
 
   GcpPromoMetricsContext.prototype = {__proto__: MetricsContext.prototype};
 
   /**
    * Print settings UI specific usage statistics context.
+   * @param {!print_preview.NativeLayer} nativeLayer Native layer used to send
+   *     metrics to C++ metrics handler.
    * @constructor
    * @extends {print_preview.MetricsContext}
    */
-  function PrintSettingsUiMetricsContext() {
+  function PrintSettingsUiMetricsContext(nativeLayer) {
     MetricsContext.call(
         this, 'PrintPreview.PrintSettingsUi',
-        Metrics.PrintSettingsUiBucket.PRINT_SETTINGS_UI_MAX_BUCKET);
+        Metrics.PrintSettingsUiBucket.PRINT_SETTINGS_UI_MAX_BUCKET,
+        nativeLayer);
   }
 
   PrintSettingsUiMetricsContext.prototype = {

@@ -9,10 +9,12 @@ cr.define('print_preview', function() {
    * Modal dialog for print destination's advanced settings.
    * @param {!print_preview.PrintTicketStore} printTicketStore Contains the
    *     print ticket to print.
+   * @param {!print_preview.NativeLayer} nativeLayer Instance of native layer,
+   *     used to send metrics to the C++ metrics handler.
    * @constructor
    * @extends {print_preview.Overlay}
    */
-  function AdvancedSettings(printTicketStore) {
+  function AdvancedSettings(printTicketStore, nativeLayer) {
     print_preview.Overlay.call(this);
 
     /**
@@ -25,7 +27,8 @@ cr.define('print_preview', function() {
      * Used to record usage statistics.
      * @private {!print_preview.PrintSettingsUiMetricsContext}
      */
-    this.metrics_ = new print_preview.PrintSettingsUiMetricsContext();
+    this.metrics_ =
+        new print_preview.PrintSettingsUiMetricsContext(nativeLayer);
 
     /** @private {!print_preview.SearchBox} */
     this.searchBox_ = new print_preview.SearchBox(
