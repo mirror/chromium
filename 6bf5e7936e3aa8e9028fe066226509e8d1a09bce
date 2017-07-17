@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "001d1e82_63f49489",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "passing a unique_ptr by const \u0026 is pretty rare.  Usually, prefer to pass by either pointer or reference of the type (so in this case, const TestRenderViewContextMenu\u0026 or TestRenderViewContextMenu*).",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cf92f3_c826e633",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "hmm... is this different than model-\u003eGetItemCount()?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5436a40_a9445edb",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "This method seems to do more than just get the top level menu model.  Could we maybe split this into a CreateContextMenu() method and then another method to actually get the menu (or just use the menu directly)?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f57c7da_f4e63e97",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "There\u0027s a lot of different test files here, and it makes knowing what each test does quite difficult (because you need to bounce back and forth between the different files).  What do you think of instead loading up a stub extension, and then driving the test from C++?\n\ne.g., something like:\n\nvoid CallAPI(const std::string\u0026 script) {\n  content::WebContents* background_page \u003d GetBackgroundPage(extension());\n  bool success \u003d false;\n  ASSERT_TRUE(content::ExecuteScriptAndExtractBool(\n      background_page, script, \u0026success));\n  ASSERT_TRUE(success);\n}\n\nvoid SetUp() {\n  extension_ \u003d LoadExtension(\"context_menus_tester\");\n}\n\nTEST_F(...) {\n  // NOTE: Just a demonstration; not an implementation of a real test.\n  // Create 5 menu items.\n  for (int i \u003d 0; i \u003c 5; ++i) {\n    CallAPI(\"create({visible: true});\");\n  }\n\n  EXPECT_EQ(5, NumExtensionItems(extension));\n}\n\nAnd then in the test extension:\n// background.js\n\nfunction create(createProperties) {\n  chrome.contextMenus.create(createProperties, function() {\n    var success \u003d !!chrome.runtime.lastError;\n    domAutomationController.send(success);\n  });\n}\n\nfunction update(updateProperties) {\n  chrome.contextMenus.create(updateProperties, function() {\n    var success \u003d !!chrome.runtime.lastError;\n    domAutomationController.send(success);\n  });\n}\n\nThis way, we only need a single test extension, which save us a lot of effort in knowing what\u0027s going on, and we also are able to have more-or-less self-descriptive tests, where the body of the test describes everything that\u0027s happening.  Additionally, this has the bonus of waiting for each API call to complete before continuing on, without needing to nest n-levels deep.\n\nWDYT?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe87a13b_839c2794",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "Is 0 invalid?  If so, can we just do one check,\nASSERT_GT(top_level_index, 0)?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab0770c_1efa73df",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "This will result in a lot of dependency on other content, and will be prone to breaking if other context menus change.  Can we limit the tests to the extension items?  For instance, instead of checking the total number of items, just check the number of extension items (1).",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9eef272_d0f3da54",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "Continuing the example, with the framework from above, we could get rid of the visible_parent_and_some_visible_children extension, and instead do:\n\nCallAPI(\"create({title: \u0027item1\u0027});\");\nCallAPI(\"create({title: \u0027item2\u0027});\");\nCallAPI(\"create({title: \u0027item3\u0027, id: \u0027item3\u0027, visible: false});\");\nCallAPI(\"create({title: \u0027child1\u0027, visible: true, parentId: \u0027item3\u0027});\");\nCallAPI(\"create({title: \u0027child2\u0027, visible: true, parentId: \u0027item3\u0027});\");\n\nI think this would be a lot shorter overall and make it a lot more transparent what the end state of the items is.",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0860524f_3692c299",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "This variable\u0027s use is confusing to me.  It\u0027s not clear why whether the top level item is the extension name impacts whether it has submenu items, etc.  Could we rename this?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4cb894_75a7005c",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "Is this called with a null item?  If so, when and why?  If not, can we make it a const \u0026?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bb3dc3_0f26bf5a",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "Do we ever want to append the item if it\u0027s not visible?  If not, could we just skip this item?  If so, when?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a96f5b_13530008",
+        "filename": "chrome/browser/extensions/context_menu_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "This seems counter to the description - does this method check if some children are visible, or all children are visible?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307f6fa6_2f07abd0",
+        "filename": "chrome/browser/extensions/context_menu_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "typo: \"should labeled\" -\u003e \"should be labeled\"?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcac2eb_b66c87d8",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "These can be EXPECT*s.",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6343adb3_2cf5f6ed",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/extension_items_container/all_items_hidden/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "notifyPass() ends the entire set of tests when it\u0027s reached.  Instead, we should do something like:\n\nchrome.test.runTests([\n  function createMenuItems() {\n    chrome.contextMenus.create({title: \"item1\", visible: false}, callbackPass());\n  chrome.contextMenus.create({title: \"item2\", visible: false}, callbackPass());\n  chrome.contextMenus.create({title: \"item3\", visible: false}, callbackPass());\n    // The test suite will end when all callbacks have been run.\n  }\n]);",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0d7e82_facf7b09",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/extension_items_container/item_limit/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "This makes the assumption that ACTION_MENU_TOP_LEVEL_LIMIT is \u003e\u003d 5.  There\u0027s also the assumption that you can update an item before the result of creating it has returned.",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759ad663_ff498874",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/one_top_level_menu_item/visible_item_no_children/Untitled",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:24:01Z",
+      "side": 1,
+      "message": "?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
