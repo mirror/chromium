@@ -39,8 +39,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
  public:
   DedicatedWorkerThreadForTest(InProcessWorkerObjectProxy& worker_object_proxy)
       : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
-                              worker_object_proxy,
-                              MonotonicallyIncreasingTime()) {
+                              worker_object_proxy) {
     worker_backing_thread_ = WorkerBackingThread::CreateForTest("Test thread");
   }
 
@@ -48,7 +47,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
       std::unique_ptr<WorkerThreadStartupData> startup_data) override {
     return new DedicatedWorkerGlobalScope(
         startup_data->script_url_, startup_data->user_agent_, this,
-        time_origin_, std::move(startup_data->starter_origin_privilege_data_),
+        std::move(startup_data->starter_origin_privilege_data_),
         std::move(startup_data->worker_clients_));
   }
 

@@ -50,8 +50,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
  public:
   static DedicatedWorkerGlobalScope* Create(
       DedicatedWorkerThread*,
-      std::unique_ptr<WorkerThreadStartupData>,
-      double time_origin);
+      std::unique_ptr<WorkerThreadStartupData>);
   ~DedicatedWorkerGlobalScope() override;
 
   bool IsDedicatedWorkerGlobalScope() const override { return true; }
@@ -77,7 +76,6 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   DedicatedWorkerGlobalScope(const KURL&,
                              const String& user_agent,
                              DedicatedWorkerThread*,
-                             double time_origin,
                              std::unique_ptr<SecurityOrigin::PrivilegeData>,
                              WorkerClients*);
 
