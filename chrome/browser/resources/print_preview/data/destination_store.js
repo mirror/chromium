@@ -42,7 +42,8 @@ cr.define('print_preview', function() {
      * Used to track metrics.
      * @private {!print_preview.DestinationSearchMetricsContext}
      */
-    this.metrics_ = new print_preview.DestinationSearchMetricsContext();
+    this.metrics_ =
+        new print_preview.DestinationSearchMetricsContext(nativeLayer);
 
     /**
      * Internal backing store for the data store.

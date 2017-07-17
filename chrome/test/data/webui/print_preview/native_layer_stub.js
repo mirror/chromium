@@ -153,8 +153,8 @@ cr.define('print_preview', function() {
     },
 
     /** @override */
-    startHideDialog: function () {
-      this.methodCalled('startHideDialog');
+    hidePreview: function () {
+      this.methodCalled('hidePreview');
     },
 
     /**

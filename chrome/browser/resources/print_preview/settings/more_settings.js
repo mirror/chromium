@@ -11,10 +11,12 @@ cr.define('print_preview', function() {
    *     destination changes.
    * @param {!Array<print_preview.SettingsSection>} settingsSections Sections
    *     to toggle by this component.
+   * @param {!print_preview.NativeLayer} nativeLayer To send metrics back to
+   *     C++ handler.
    * @constructor
    * @extends {print_preview.Component}
    */
-  function MoreSettings(destinationStore, settingsSections) {
+  function MoreSettings(destinationStore, settingsSections, nativeLayer) {
     print_preview.Component.call(this);
 
     /** @private {!print_preview.DestinationStore} */
@@ -36,7 +38,8 @@ cr.define('print_preview', function() {
      * Used to record usage statistics.
      * @private {!print_preview.PrintSettingsUiMetricsContext}
      */
-    this.metrics_ = new print_preview.PrintSettingsUiMetricsContext();
+    this.metrics_ =
+        new print_preview.PrintSettingsUiMetricsContext(nativeLayer);
   }
 
   MoreSettings.prototype = {
