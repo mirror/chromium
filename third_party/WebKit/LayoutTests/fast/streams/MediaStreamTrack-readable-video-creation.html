@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script src=../../resources/testharness.js></script>
+<script src=../../resources/testharnessreport.js></script>
+<body>
+</body>
+<script>
+
+var t = async_test(function(test) {
+  const canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  const context = canvas.getContext("2d");
+  context.fillStyle = "red";
+  context.fillRect(0, 0, 10, 10);
+
+  let track = canvas.captureStream().getVideoTracks()[0];
+  let reader = track.readable.getReader();
+
+  //  var b; reader.read().then((b1)=> { console.log('read'); b=b1;}).catch((e)=>{console.error('uh oh ' + e);})
+
+  const ReadableStreamDefaultReader =
+      new ReadableStream().getReader().constructor;
+  assert_true(reader instanceof ReadableStreamDefaultReader);
+
+  test.done();
+}, 'exercises the MediaStreamTrack Streams API.');
+
+</script>

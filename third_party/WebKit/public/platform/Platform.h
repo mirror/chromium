@@ -139,6 +139,7 @@ class WebTrialTokenValidator;
 class WebURLLoaderMockFactory;
 class WebURLResponse;
 class WebURLResponse;
+class WebVideoFrameReader;
 struct WebSize;
 
 class BLINK_PLATFORM_EXPORT Platform {
@@ -589,6 +590,9 @@ class BLINK_PLATFORM_EXPORT Platform {
   // May return null if the functionality is not available.
   virtual std::unique_ptr<WebImageCaptureFrameGrabber>
   CreateImageCaptureFrameGrabber();
+
+  // blabla
+  virtual std::unique_ptr<WebVideoFrameReader> CreateVideoFrameReader();
 
   // WebSocket ----------------------------------------------------------
 

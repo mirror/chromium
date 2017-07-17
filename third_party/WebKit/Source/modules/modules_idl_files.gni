@@ -665,6 +665,7 @@ modules_dependency_idl_files =
           "speech/WindowSpeechSynthesis.idl",
           "srcobject/HTMLMediaElementSrcObject.idl",
           "storage/WindowStorage.idl",
+          "streams/MediaStreamTrackReadable.idl",
           "vibration/NavigatorVibration.idl",
           "vr/NavigatorVR.idl",
           "wake_lock/ScreenWakeLock.idl",

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<script src=../../resources/testharness.js></script>
+<script src=../../resources/testharnessreport.js></script>
+<body>
+</body>
+<script>
+
+var t = async_test(function(test) {
+  const canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  const context = canvas.getContext("2d");
+  context.fillStyle = "red";
+  context.fillRect(0, 0, 10, 10);
+
+  let track = canvas.captureStream().getVideoTracks()[0];
+
+  track.readable.pipeTo(new WritableStream({
+    write(chunk) {
+      assert_equals(chunk.width, canvas.width, 'captured width');
+      assert_equals(chunk.height, canvas.height, 'captured height');
+      test.done();
+    }
+    , close() {
+      console.log("All data successfully read!");
+      test.done();
+    }
+    , abort(e) {
+     assert_unreached("Something went wrong! ", e);
+    }
+  }));
+}, 'exercises reading from a MediaStreamTrack\'s Stream.');
+
+</script>
+
+<!--
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+const context = canvas.getContext("2d");
+context.fillStyle = "red";
+context.fillRect(0, 0, 10, 10);
+
+var canvas2 = document.createElement("canvas");
+document.body.appendChild(canvas2);
+var context2 = canvas2.getContext("2d");
+
+let track = canvas.captureStream().getVideoTracks()[0];
+const ws = new WritableStream({
+  write(img) {
+    canvas2.width  = img.width;
+    canvas2.height = img.height;
+    context2.drawImage(img, 0, 0);
+  }
+});
+track.readable.pipeTo(ws);
+
+-->
