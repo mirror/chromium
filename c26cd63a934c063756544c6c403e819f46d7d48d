@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15b7b94_b4d34da5",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-07-17T17:55:04Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 968,
+        "startChar": 76,
+        "endLine": 968,
+        "endChar": 0
+      },
+      "revId": "c26cd63a934c063756544c6c403e819f46d7d48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
