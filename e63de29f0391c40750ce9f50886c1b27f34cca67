@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d808b11_13ec421b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AutofillActionModeCallback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1232179
+      },
+      "writtenOn": "2017-07-17T16:45:51Z",
+      "side": 1,
+      "message": "So, if this is running on Android O (or less), it will return false and the menu option will be disabled, right?\n\nIf so, it would disable the feature on O, even though the feature is available - can\u0027t we fall back to a private String in the Chrome APK for this case? Or perhaps using reflection or other trick to get the internal string, and only disabling if that doesn\u0027t work?",
+      "revId": "e63de29f0391c40750ce9f50886c1b27f34cca67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
