@@ -4294,12 +4294,12 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle",
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-passthrough-cmd-decoder",
           "--webgl-conformance-version=2.0.1",
           "--read-abbreviated-json-results-from=../../content/test/data/gpu/webgl2_conformance_tests_output.json"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl2_conformance_angle_tests",
+        "name": "webgl2_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -5817,12 +5817,12 @@
           "--browser=release",
           "--passthrough",
           "-v",
-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle",
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-passthrough-cmd-decoder",
           "--webgl-conformance-version=2.0.1",
           "--read-abbreviated-json-results-from=../../content/test/data/gpu/webgl2_conformance_tests_output.json"
         ],
         "isolate_name": "telemetry_gpu_integration_test",
-        "name": "webgl2_conformance_angle_tests",
+        "name": "webgl2_conformance_gl_passthrough_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
@@ -11288,6 +11288,33 @@
               "os": "Ubuntu"
             }
           ]
+        }
+      },
+      {
+        "args": [
+          "webgl_conformance",
+          "--show-stdout",
+          "--browser=release",
+          "--passthrough",
+          "-v",
+          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --use-gl=angle --use-angle=gl --use-passthrough-cmd-decoder",
+          "--webgl-conformance-version=2.0.1",
+          "--read-abbreviated-json-results-from=../../content/test/data/gpu/webgl2_conformance_tests_output.json"
+        ],
+        "isolate_name": "telemetry_gpu_integration_test",
+        "name": "webgl2_conformance_gl_passthrough_tests",
+        "override_compile_targets": [
+          "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ],
+          "shards": 15
         }
       },
       {
