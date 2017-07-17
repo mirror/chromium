@@ -22,6 +22,30 @@
       "revId": "5dedbec66d69652327ee2c86d7c99e5f2289ee71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ddc89a_c7961460",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T13:52:35Z",
+      "side": 1,
+      "message": "Sorry, the CL description was out of date. After moving things to components/payments/test/data I noticed there\u0027s already a components/test/data directory which seemed like where these file should go to. Why is components/payments/test/data/ preferred?",
+      "parentUuid": "65a266f1_fd00789a",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 535,
+        "endChar": 36
+      },
+      "revId": "5dedbec66d69652327ee2c86d7c99e5f2289ee71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
