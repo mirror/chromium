@@ -253,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "5288b6d8_b814ecb2",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-17T23:56:01Z",
+      "side": 1,
+      "message": "Thanks for the context. So it looks like the Chrome OS kernel cherrypicked a CL from the 4.11 vanilla kernel. https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id\u003dc87d1655\n\nLet\u0027s check with Douglas and get an answer to the question of whether it is safe to assume all ChromeOS 3.18 kernels have the cherrypicked CL or not.",
+      "parentUuid": "6f80e748_85f8bfef",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3e7f9aa_b403f3e8",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 5
