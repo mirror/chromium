@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9dd55d6d_ea50d9a9",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-17T06:27:25Z",
+      "side": 1,
+      "message": "Thanks for the explanation. \nBut, it seems the number of frames is \u0027not equal\u0027 to input_params_.frames_per_buffer().\n\nAlso, with the suggested changes, AudioTrackRecorderTest unittests crash with below callstack:\n[ RUN      ] AudioTrackRecorderTest.OnData/0\n[5789:5795:0717/115927.238575:4265257161:INFO:audio_track_recorder.cc(230)] EncodeAudio, input_bus-\u003eframes(): 480 | input_params_.frames_per_buffer(): 2880\nReceived signal 11 SEGV_MAPERR 00000000000c\n#0 0x7eff8e76e75d base::debug::StackTrace::StackTrace()\n#1 0x7eff8e76cd9c base::debug::StackTrace::StackTrace()\n#2 0x7eff8e76e21f base::debug::(anonymous namespace)::StackDumpSignalHandler()\n#3 0x7eff92406330 \u003cunknown\u003e\n#4 0x000002e60501 opus_decode_native\n#5 0x000002e62421 opus_decode_float\n#6 0x000002145335 content::AudioTrackRecorderTest::OnEncodedAudio()\n#7 0x000002148a5a _ZN4base8internal13FunctorTraitsIMN7content22AudioTrackRecorderTestEFvRKN5media15AudioParametersENSt3__110unique_ptrINS8_12basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEENS8_14default_deleteISF_EEEENS_9TimeTicksEEvE6InvokeIPS3_JS7_SI_SJ_EEEvSL_OT_DpOT0_",
+      "parentUuid": "ba1d97f9_ffb0553c",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad7a96d_32c2e1b2",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
