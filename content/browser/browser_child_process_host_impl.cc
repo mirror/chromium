@@ -312,7 +312,7 @@ void BrowserChildProcessHostImpl::BindInterface(
 }
 
 void BrowserChildProcessHostImpl::HistogramBadMessageTerminated(
-    int process_type) {
+    ProcessType process_type) {
   UMA_HISTOGRAM_ENUMERATION("ChildProcess.BadMessgeTerminated", process_type,
                             PROCESS_TYPE_MAX);
 }

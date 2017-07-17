@@ -139,15 +139,9 @@ void AppLauncherLoginHandler::HandleShowSyncLoginUI(
   RecordInHistogram(NTP_SIGN_IN_PROMO_CLICKED);
 }
 
-void AppLauncherLoginHandler::RecordInHistogram(int type) {
-  // Invalid type to record.
-  if (type < NTP_SIGN_IN_PROMO_VIEWED ||
-      type > NTP_SIGN_IN_PROMO_CLICKED) {
-    NOTREACHED();
-  } else {
-    UMA_HISTOGRAM_ENUMERATION("SyncPromo.NTPPromo", type,
-                              NTP_SIGN_IN_PROMO_BUCKET_BOUNDARY);
-  }
+void AppLauncherLoginHandler::RecordInHistogram(NTPSignInPromoBuckets type) {
+  UMA_HISTOGRAM_ENUMERATION("SyncPromo.NTPPromo", type,
+                            NTP_SIGN_IN_PROMO_BUCKET_BOUNDARY);
 }
 
 void AppLauncherLoginHandler::HandleLoginMessageSeen(
