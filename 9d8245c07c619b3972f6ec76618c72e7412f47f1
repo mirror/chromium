@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "72ff47c0_d47ed51b",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-17T20:41:19Z",
+      "side": 1,
+      "message": "I agree that when sizeof(T) * 8 - 7 \u003c sh \u003c sizeof(T) * 8, it is still ok because some bits are still affecting the result.\nAlso, I changed \u003e for \u003e\u003d. It doesn\u0027t change anything with 32/64 bits, but a shift of sizeof(T) * 8 would definitely be an overflow.",
+      "parentUuid": "95ceeb6a_450f3aab",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "656b441c_b73e5aae",
         "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
         "patchSetId": 2
