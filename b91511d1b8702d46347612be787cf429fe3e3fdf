@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "47d8d29f_71dcf1c9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4755,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T13:44:29Z",
+      "side": 1,
+      "message": "I think RFO observers would already be notified of the navigation stop, since we will destroy the dummy provisional DocumentLoader. This should lead to them receiving a DidFailProvisionalLoad (with an err aborted). It seems wrong that RFO observers that care about navigation would listen to OnStop instead of OnDidFailProvisionalLoad.\n\nThe race I was trying to solve with ids was the following one:\n- the renderer asks the browser to navigate to foo\n- the browser drops the navigation and sends the OnDroppedNavigation IPC\n- the renderer asks the browser to navigate to bar\n- the renderer receives the OnDroppedNavigation IPC for foo, and deletes it\u0027s provisional DocumenLoader (which was created for the navigation to bar)\n- now the renderer no longer thinks it has a document-initiated navigation going on in the browser, when it is going on -\u003e in particular this may lead the renderer to reset it\u0027s loading state to no longer loading, which in the case of a subframe might lead to the OnLoad event being fired too early in the parent frame.\n\nThe need for ids came from the fact that the previous scenario can happen with foo and bar being the same urls, so just relying on urls is not enough.",
+      "parentUuid": "b93e8767_6666323d",
+      "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5a4bfbc_7c8abbb5",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 9
@@ -47,6 +65,30 @@
       "writtenOn": "2017-07-13T21:01:55Z",
       "side": 1,
       "message": "Sorry, one thing that wasn\u0027t clear to me: why do we want to early return if DidStart() is true?",
+      "range": {
+        "startLine": 1394,
+        "startChar": 39,
+        "endLine": 1394,
+        "endChar": 79
+      },
+      "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc44d99e_9cab2d5d",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T13:44:29Z",
+      "side": 1,
+      "message": "Because this is no longer a dummy provisional DocumentLoader. At that point, the provisional DocumentLoader is trying to commit the navigation, which is no longer handled by the browser but by the renderer. So the renderer should not delete it.",
+      "parentUuid": "c5a4bfbc_7c8abbb5",
       "range": {
         "startLine": 1394,
         "startChar": 39,
