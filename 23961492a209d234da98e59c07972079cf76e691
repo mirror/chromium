@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34604d6_0e397f92",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T21:04:17Z",
+      "side": 1,
+      "message": "My bad: to be clear: \"overflow when computing |value|\". Same below.",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "23961492a209d234da98e59c07972079cf76e691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01b165d_85323c24",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T21:04:17Z",
+      "side": 1,
+      "message": "TYPO",
+      "range": {
+        "startLine": 131,
+        "startChar": 38,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "23961492a209d234da98e59c07972079cf76e691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

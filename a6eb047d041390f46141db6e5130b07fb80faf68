@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "21a02440_ac7994ae",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T21:04:17Z",
+      "side": 1,
+      "message": "Ah okay. I thought you wanted kMagic to be stored as part of struct.",
+      "parentUuid": "26bac9cc_c4379fb8",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "a6eb047d041390f46141db6e5130b07fb80faf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ae13a1a_a5bfd7b4",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 3
@@ -433,6 +457,42 @@
       "revId": "a6eb047d041390f46141db6e5130b07fb80faf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b56d0626_50ad63bf",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T21:04:17Z",
+      "side": 1,
+      "message": "NIT: I meant to have it before the \"for\" statement. But your choice.",
+      "parentUuid": "14b8f782_18078e98",
+      "revId": "a6eb047d041390f46141db6e5130b07fb80faf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c754e32_ccad4f0e",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T21:04:17Z",
+      "side": 1,
+      "message": "NIT: I meant to have it before the \"for\" statement. But your choice. Same below.",
+      "parentUuid": "14b8f782_18078e98",
+      "revId": "a6eb047d041390f46141db6e5130b07fb80faf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
