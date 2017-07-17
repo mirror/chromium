@@ -151,6 +151,8 @@ class GPU_EXPORT GpuChannelManager {
 #if defined(OS_ANDROID)
   void ScheduleWakeUpGpu();
   void DoWakeUpGpu();
+
+  void OnApplicationBackgrounded();
 #endif
 
   void HandleMemoryPressure(
