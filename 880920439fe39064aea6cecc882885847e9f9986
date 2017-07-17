@@ -22,6 +22,30 @@
       "revId": "880920439fe39064aea6cecc882885847e9f9986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "896199c3_d8d27e81",
+        "filename": "third_party/sqlite/src/src/vdbeapi.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-17T17:21:02Z",
+      "side": 1,
+      "message": "I agree with you on keeping the original code\u0027s formatting!\n\nAs far as I can see, https://www.sqlite.org/src/info/d6a44b352d432d52 has the braces. I had to scroll horizontally inside the text to see the brace at the end of line 203. Can you please check again? (Also, sorry if I misunderstood the feedback.)",
+      "parentUuid": "68628909_6f6d5337",
+      "range": {
+        "startLine": 203,
+        "startChar": 62,
+        "endLine": 203,
+        "endChar": 70
+      },
+      "revId": "880920439fe39064aea6cecc882885847e9f9986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
