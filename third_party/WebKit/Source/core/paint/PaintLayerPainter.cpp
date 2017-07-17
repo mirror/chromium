@@ -24,6 +24,7 @@
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
+#include "platform/graphics/paint/ScrollHitTestDisplayItem.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
 #include "platform/graphics/paint/Transform3DDisplayItem.h"
 #include "platform/wtf/Optional.h"
@@ -258,6 +259,24 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
   if (paint_layer_.GetLayoutObject().GetFrameView()->ShouldThrottleRendering())
     return result;
+
+  Optional<ScopedPaintChunkProperties> scroll_scoped_paint_chunk_properties;
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    const auto* local_border_box_properties =
+        paint_layer_.GetLayoutObject().LocalBorderBoxProperties();
+    DCHECK(local_border_box_properties);
+    PaintChunkProperties properties(
+        context.GetPaintController().CurrentPaintChunkProperties());
+    properties.property_tree_state = *local_border_box_properties;
+    properties.backface_hidden =
+        paint_layer_.GetLayoutObject().HasHiddenBackface();
+    scroll_scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                                 paint_layer_, properties);
+
+    // TODO(pdr): Only do this for composited scrolling.
+    RecordScrollHitTest(context, paint_layer_.GetLayoutObject(),
+                        DisplayItem::kScrollHitTest);
+  }
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
