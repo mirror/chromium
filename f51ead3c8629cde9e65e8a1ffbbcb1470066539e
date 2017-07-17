@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b97cd9e_6aa271a1",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-17T19:33:17Z",
+      "side": 1,
+      "message": "My bad... The test failure was real one. Fixed.",
+      "revId": "f51ead3c8629cde9e65e8a1ffbbcb1470066539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
