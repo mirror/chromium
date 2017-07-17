@@ -763,6 +763,7 @@ test("content_browsertests") {
     "//components/discardable_memory/common",
     "//components/discardable_memory/service",
     "//components/network_session_configurator/common",
+    "//components/url_log",
     "//content:resources",
     "//content/app:both_for_content_tests",
     "//content/browser:for_content_tests",
@@ -933,7 +934,9 @@ test("content_browsertests") {
       "../browser/host_zoom_map_impl_browsertest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
       "../browser/zoom_browsertest.cc",
+      "../shell/browser/shell_network_delegate_browsertest.cc",
     ]
+    data += [ "//component/url_log/test_data/" ]
   }
 
   if (is_mac) {
