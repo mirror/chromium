@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50107e26_4298ec16",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T21:20:26Z",
+      "side": 1,
+      "message": "WhiteList -\u003e Whitelist (here and other spots)",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 69
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
