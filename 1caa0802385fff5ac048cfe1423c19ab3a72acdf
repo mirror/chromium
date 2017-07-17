@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c0981a3b_b59ec17d",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1131485
+      },
+      "writtenOn": "2017-07-17T08:20:59Z",
+      "side": 0,
+      "message": "I still don\u0027t understand why the calls can happen out of order though. It seems like StopOngoingDumps will just repost itself until the state is STOPPED, and the state is changed to STOPPED just when OnStopDumpFinished is called from StopDump.\n\nI\u0027ll leave it up to you to decide whether this is important enough to investigate further.",
+      "parentUuid": "9630b5bd_00581b43",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 24
+      },
+      "revId": "1caa0802385fff5ac048cfe1423c19ab3a72acdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d45438_e2f19645",
         "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer_unittest.cc",
         "patchSetId": 1
