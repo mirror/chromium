@@ -34,6 +34,24 @@
       "revId": "5643b08761036c4aa472e681d37d78543b828b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02d51fc_a627b5c4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-17T20:09:50Z",
+      "side": 1,
+      "message": "Oh... I see, I didn\u0027t realize we create those in addition to the line box fragment. Makes sense  now!",
+      "parentUuid": "d7b1529d_82af51ad",
+      "revId": "5643b08761036c4aa472e681d37d78543b828b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
