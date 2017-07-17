@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32f9d861_6130e302",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-17T22:17:02Z",
+      "side": 1,
+      "message": "nit: May be OnModelHardRecoveryComplete just like OnFileMonitorRecoveryComplete?\nSimilarly OnDriverHardRecoveryComplete.",
+      "range": {
+        "startLine": 422,
+        "startChar": 21,
+        "endLine": 422,
+        "endChar": 42
+      },
+      "revId": "bdfdb633d3e8c7ff69a910991214521bb089ce15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
