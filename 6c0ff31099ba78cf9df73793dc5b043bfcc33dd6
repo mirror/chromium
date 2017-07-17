@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0117a3bf_f9eeeb1d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-17T09:46:52Z",
+      "side": 1,
+      "message": "nit: Exactly speaking, this is the global proxy (aka outer global) and this is not a global object (aka inner global or an instance object of Window).  The global proxy behaves as if it\u0027s an instance object, so nothing is wrong.  But it\u0027d be better to call this |global_proxy| to avoid future confusion.  |instance_object| can be misinterpreted as a global object.",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab3385f_312e0725",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-17T09:46:52Z",
+      "side": 1,
+      "message": "nit: s/constructor_attributes/constructors/\n\nThere have been a historical? confusion that the bindings code has been saying \"constructor attribute\", but it\u0027s wrong in many ways.  \"constructor\", i.e. an interface object that supports constructor call, is NOT an IDL attribute.",
+      "range": {
+        "startLine": 397,
+        "startChar": 4,
+        "endLine": 397,
+        "endChar": 52
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebc556c_ff357d56",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-17T09:46:52Z",
+      "side": 1,
+      "message": "AFAIK, a V8 context never gets reused even when navigating.  Navigation creates a new window object, a new document object and a new V8 context.  Everything is new ones except for the global proxy (aka outer global).\n\nBefore navigation:\n    global_proxy --\u003e window1, which is associated with context1\nAfter navigation:\n                     window1, which is associated with context1\n    global_proxy --\u003e window2, which is associated with context2\nwhere |global_proxy| no longer points to |window1|.\n\nThrough a navigation, the global proxy doesn\u0027t change, but the global proxy itself is not directly associated with any context while a window object is associated with a context.\n\n\nAs long as I can see, the reason seems that you only want to install them only in the main world and don\u0027t want Chrome extensions to use them.  Not related to navigation, I guess?",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
