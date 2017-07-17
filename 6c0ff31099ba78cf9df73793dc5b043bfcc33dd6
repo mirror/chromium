@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ffaa1236_193e2138",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:45:18Z",
+      "side": 1,
+      "message": "Here you support only Window because Blink does not yet support [SecureContext] in Blink?",
+      "parentUuid": "87a414eb_b4d84f55",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2971947a_7044fc42",
         "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
         "patchSetId": 12
@@ -228,6 +252,30 @@
       "side": 1,
       "message": "Yuki, that was historically not the case -- we had bugs where navigating to a new page within the same origin would create a new window object, but would reuse the context object.\n\nSo when navigating from a page with no origin trial to a page with a trial, in the same renderer, the context would already be initialized, and our normal code path wouldn\u0027t be run. This method was added so that we could specifically add trials to the new window object. This was https://bugs.chromium.org/p/chromium/issues/detail?id\u003d653671",
       "parentUuid": "6ebc556c_ff357d56",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904564c2_6065dce4",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:45:18Z",
+      "side": 1,
+      "message": "You\u0027re basically right but the phrasing is a bit confusing.\n\n\u003e we had bugs where navigating to a new page within the same origin would create a new window object, but would reuse the context object.\n\nWhen we navigate from an initial empty document to another same-origin document, we reuse the window object (i.e., the V8 context, the inner window, the global object) for the new document. The document is recreated but the window is reused.",
+      "parentUuid": "c92c3f7e_90baeda0",
       "range": {
         "startLine": 68,
         "startChar": 15,
