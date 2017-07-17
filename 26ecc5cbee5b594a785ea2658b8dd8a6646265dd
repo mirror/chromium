@@ -16,6 +16,24 @@
       "revId": "26ecc5cbee5b594a785ea2658b8dd8a6646265dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673417c7_b1d6a5b3",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-17T14:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b9f724c_d38df682",
+      "revId": "26ecc5cbee5b594a785ea2658b8dd8a6646265dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
