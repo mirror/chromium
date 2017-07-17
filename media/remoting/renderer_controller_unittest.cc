@@ -24,9 +24,6 @@ namespace remoting {
 
 namespace {
 
-constexpr mojom::RemotingSinkCapabilities kAllCapabilities =
-    mojom::RemotingSinkCapabilities::CONTENT_DECRYPTION_AND_RENDERING;
-
 PipelineMetadata DefaultMetadata() {
   PipelineMetadata data;
   data.has_audio = true;
@@ -41,6 +38,22 @@ PipelineMetadata EncryptedMetadata() {
   data.has_video = true;
   data.video_decoder_config = TestVideoConfig::NormalEncrypted();
   return data;
+}
+
+mojom::RemotingSinkMetadataPtr GetDefaultSinkMetadata(bool enable) {
+  mojom::RemotingSinkMetadataPtr metadata = mojom::RemotingSinkMetadata::New();
+  if (enable) {
+    metadata->features.push_back(mojom::RemotingSinkFeature::RENDERING);
+    metadata->features.push_back(
+        mojom::RemotingSinkFeature::CONTENT_DECRYPTION);
+  } else {
+    metadata->features.clear();
+  }
+  metadata->video_capabilities.push_back(
+      mojom::RemotingSinkVideoCapability::CODEC_VP8);
+  metadata->audio_capabilities.push_back(
+      mojom::RemotingSinkAudioCapability::CODEC_AAC);
+  return metadata;
 }
 
 }  // namespace
@@ -90,7 +103,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
-  shared_session->OnSinkAvailable(kAllCapabilities);
+  shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -141,7 +154,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   EXPECT_FALSE(disable_pipeline_suspend_);
   // An available sink that does not support remote rendering should not cause
   // the controller to toggle remote rendering on.
-  shared_session->OnSinkAvailable(mojom::RemotingSinkCapabilities::NONE);
+  shared_session->OnSinkAvailable(GetDefaultSinkMetadata(false));
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   shared_session->OnSinkGone();  // Bye-bye useless sink!
@@ -151,7 +164,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   EXPECT_FALSE(disable_pipeline_suspend_);
   // A sink that *does* support remote rendering *does* cause the controller to
   // toggle remote rendering on.
-  shared_session->OnSinkAvailable(kAllCapabilities);
+  shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -174,7 +187,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   controller_->OnRemotePlaybackDisabled(true);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  shared_session->OnSinkAvailable(kAllCapabilities);
+  shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -211,7 +224,7 @@ TEST_F(RendererControllerTest, StartFailed) {
   controller_->SetClient(this);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  shared_session->OnSinkAvailable(kAllCapabilities);
+  shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -247,7 +260,7 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
       FakeRemoterFactory::CreateSharedSession(false);
   std::unique_ptr<RemotingCdmController> cdm_controller =
       base::MakeUnique<RemotingCdmController>(cdm_shared_session);
-  cdm_shared_session->OnSinkAvailable(kAllCapabilities);
+  cdm_shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   cdm_controller->ShouldCreateRemotingCdm(
       base::Bind(&RendererControllerTest::CreateCdm, base::Unretained(this)));
   RunUntilIdle();
@@ -292,7 +305,7 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
   controller_->SetClient(this);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  initial_shared_session->OnSinkAvailable(kAllCapabilities);
+  initial_shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnEnteredFullscreen();
@@ -312,7 +325,7 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
       FakeRemoterFactory::CreateSharedSession(true);
   std::unique_ptr<RemotingCdmController> cdm_controller =
       base::MakeUnique<RemotingCdmController>(cdm_shared_session);
-  cdm_shared_session->OnSinkAvailable(kAllCapabilities);
+  cdm_shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   cdm_controller->ShouldCreateRemotingCdm(
       base::Bind(&RendererControllerTest::CreateCdm, base::Unretained(this)));
   RunUntilIdle();
@@ -344,7 +357,7 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
       FakeRemoterFactory::CreateSharedSession(false);
   std::unique_ptr<RemotingCdmController> cdm_controller =
       base::MakeUnique<RemotingCdmController>(cdm_shared_session);
-  cdm_shared_session->OnSinkAvailable(kAllCapabilities);
+  cdm_shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true));
   cdm_controller->ShouldCreateRemotingCdm(
       base::Bind(&RendererControllerTest::CreateCdm, base::Unretained(this)));
   RunUntilIdle();
