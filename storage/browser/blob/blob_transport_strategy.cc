@@ -101,7 +101,7 @@ class DataPipeTransportStrategy : public BlobTransportStrategy {
 
   void AddBytesElement(mojom::DataElementBytes* bytes) override {
     // Split up the data in |max_bytes_data_item_size| sized chunks.
-    for (uint64_t source_offset = 0; source_offset < bytes->length;
+    for (size_t source_offset = 0; source_offset < bytes->length;
          source_offset += limits_.max_bytes_data_item_size) {
       size_t builder_element_index =
           builder_->AppendFutureData(std::min<size_t>(
@@ -181,7 +181,7 @@ class DataPipeTransportStrategy : public BlobTransportStrategy {
           mojo::BeginReadDataRaw(consumer_handle_.get(), &source_buffer,
                                  &num_bytes, MOJO_READ_DATA_FLAG_NONE);
       if (read_result == MOJO_RESULT_SHOULD_WAIT)
-        return;
+        break;
       if (read_result != MOJO_RESULT_OK) {
         // Data pipe broke before we received all the data.
         std::move(result_callback_).Run(BlobStatus::ERR_SOURCE_DIED_IN_TRANSIT);
