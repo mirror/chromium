@@ -52,9 +52,9 @@ class SupervisedUserNavigationThrottle : public content::NavigationThrottle {
 
   void OnInterstitialResult(bool continue_request);
 
-  void Resume();
-
-  void Cancel();
+  // content::NavigationThrottle:
+  void Resume() override;
+  void CancelDeferredNavigation(ThrottleCheckResult result) override;
 
   const SupervisedUserURLFilter* url_filter_;
   bool deferred_;
