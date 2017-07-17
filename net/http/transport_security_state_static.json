@@ -29361,6 +29361,18 @@
     { "name": "ipv6only.network", "include_subdomains": true, "mode": "force-https" },
     // END OF MANUAL ENTRIES
 
+    // eTLD owners who are working towards wide HSTS adoption can request to
+    // preload entries at registration time.
+    // START OF ETLD-OWNER REQUESTED ENTRIES
+    { "name": "digital.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "cdcpartners.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "smarterskies.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "atcreform.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "myfdic.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "innovation.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "trainingproviderresults.gov", "include_subdomains": true, "mode": "force-https" },
+    // END OF ETLD-OWNER REQUESTED ENTRIES
+
     // To avoid trailing comma changes from showing up in diffs, we place a
     // single entry at the end.
     { "name": "hstspreload.org", "include_subdomains": true, "mode": "force-https" }
