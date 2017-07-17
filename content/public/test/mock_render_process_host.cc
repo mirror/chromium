@@ -290,11 +290,6 @@ const service_manager::Identity& MockRenderProcessHost::GetChildIdentity()
   return child_identity_;
 }
 
-std::unique_ptr<base::SharedPersistentMemoryAllocator>
-MockRenderProcessHost::TakeMetricsAllocator() {
-  return nullptr;
-}
-
 const base::TimeTicks& MockRenderProcessHost::GetInitTimeForNavigationMetrics()
     const {
   static base::TimeTicks dummy_time = base::TimeTicks::Now();

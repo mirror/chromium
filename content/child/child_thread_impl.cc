@@ -36,7 +36,6 @@
 #include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "components/tracing/child/child_trace_message_filter.h"
-#include "content/child/child_histogram_message_filter.h"
 #include "content/child/child_process.h"
 #include "content/child/child_resource_message_filter.h"
 #include "content/child/fileapi/file_system_dispatcher.h"
@@ -67,6 +66,7 @@
 #include "mojo/public/cpp/system/buffer.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/device/public/cpp/power_monitor/power_monitor_broadcast_source.h"
+#include "services/metrics/public/cpp/histogram_collector_client.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -94,6 +94,28 @@ const int kConnectionTimeoutS = 15;
 
 base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl>>::DestructorAtExit
     g_lazy_tls = LAZY_INSTANCE_INITIALIZER;
+
+// Convert the string passed on the command line to a Mojo enum.
+metrics::CallStackProfileParams::Process ProcessTypeStringToEnum(
+    const std::string& process_type) {
+  if (process_type == switches::kRendererProcess)
+    return metrics::CallStackProfileParams::Process::RENDERER_PROCESS;
+  if (process_type == switches::kGpuProcess)
+    return metrics::CallStackProfileParams::Process::GPU_PROCESS;
+  if (process_type == switches::kUtilityProcess)
+    return metrics::CallStackProfileParams::Process::UTILITY_PROCESS;
+  if (process_type == switches::kZygoteProcess)
+    return metrics::CallStackProfileParams::Process::ZYGOTE_PROCESS;
+  if (process_type == switches::kSandboxIPCProcess)
+    return metrics::CallStackProfileParams::Process::SANDBOX_HELPER_PROCESS;
+  if (process_type == switches::kPpapiPluginProcess)
+    return metrics::CallStackProfileParams::Process::PPAPI_PLUGIN_PROCESS;
+  if (process_type == switches::kPpapiBrokerProcess)
+    return metrics::CallStackProfileParams::Process::PPAPI_BROKER_PROCESS;
+
+  NOTREACHED() << "This process type not supported! " << process_type;
+  return metrics::CallStackProfileParams::Process::UNKNOWN_PROCESS;
+}
 
 // This isn't needed on Windows because there the sandbox's job object
 // terminates child processes automatically. For unsandboxed processes (i.e.
@@ -472,7 +494,6 @@ void ChildThreadImpl::Init(const Options& options) {
       this, message_loop()->task_runner()));
   file_system_dispatcher_.reset(new FileSystemDispatcher());
 
-  histogram_message_filter_ = new ChildHistogramMessageFilter();
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher());
 
@@ -486,11 +507,14 @@ void ChildThreadImpl::Init(const Options& options) {
   notification_dispatcher_ =
       new NotificationDispatcher(thread_safe_sender_.get());
 
-  channel_->AddFilter(histogram_message_filter_.get());
   channel_->AddFilter(resource_message_filter_.get());
   channel_->AddFilter(quota_message_filter_->GetFilter());
   channel_->AddFilter(notification_dispatcher_->GetFilter());
   channel_->AddFilter(service_worker_message_filter_->GetFilter());
+
+  std::string process_type_str =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kProcessType);
 
   if (!IsInBrowserProcess()) {
     // In single process mode, browser-side tracing and memory will cover the
@@ -499,9 +523,6 @@ void ChildThreadImpl::Init(const Options& options) {
         ChildProcess::current()->io_task_runner()));
 
     if (service_manager_connection_) {
-      std::string process_type_str =
-          base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-              switches::kProcessType);
       auto process_type = memory_instrumentation::mojom::ProcessType::OTHER;
       if (process_type_str == switches::kRendererProcess)
         process_type = memory_instrumentation::mojom::ProcessType::RENDERER;
@@ -559,6 +580,12 @@ void ChildThreadImpl::Init(const Options& options) {
       connection_timeout = temp;
   }
 
+  if (service_manager_connection_) {
+    histogram_collector_client_ =
+        base::MakeUnique<metrics::HistogramCollectorClient>(
+            GetConnector(), ProcessTypeStringToEnum(process_type_str));
+  }
+
 #if defined(OS_MACOSX)
   if (base::CommandLine::InitializedForCurrentProcess() &&
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -586,7 +613,6 @@ ChildThreadImpl::~ChildThreadImpl() {
   IPC::Logging::GetInstance()->SetIPCSender(NULL);
 #endif
 
-  channel_->RemoveFilter(histogram_message_filter_.get());
   channel_->RemoveFilter(sync_message_filter_.get());
 
   // The ChannelProxy object caches a pointer to the IPC thread, so need to

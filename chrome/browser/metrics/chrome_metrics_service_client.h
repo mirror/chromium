@@ -28,6 +28,7 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "ppapi/features/features.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
 
 class AntiVirusMetricsProvider;
 class ChromeOSMetricsProvider;
@@ -142,7 +143,7 @@ class ChromeMetricsServiceClient : public metrics::MetricsServiceClient,
   // these directly.
   void CollectFinalHistograms();
   void OnMemoryDetailCollectionDone();
-  void OnHistogramSynchronizationDone();
+  void OnHistogramSynchronizationDone(bool complete);
 
   // Records metrics about the switches present on the command line.
   void RecordCommandLineMetrics();
@@ -245,6 +246,10 @@ class ChromeMetricsServiceClient : public metrics::MetricsServiceClient,
   // omnibox.
   std::unique_ptr<base::CallbackList<void(OmniboxLog*)>::Subscription>
       omnibox_url_opened_subscription_;
+
+  // The interface pointer to the HistogramCollector hosted in the metrics
+  // process.
+  metrics::mojom::HistogramCollectorPtr histogram_collector_;
 
   // Whether this client has already uploaded profiler data during this session.
   // Profiler data is uploaded at most once per session.

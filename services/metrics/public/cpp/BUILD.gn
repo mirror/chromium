@@ -4,8 +4,14 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
-component("metrics_cpp") {
+source_set("metrics_cpp") {
   sources = [
+    "histogram_collector.cc",
+    "histogram_collector.h",
+    "histogram_collector_client.cc",
+    "histogram_collector_client.h",
+    "histogram_provider.cc",
+    "histogram_provider.h",
     "metrics_export.h",
     "mojo_ukm_recorder.cc",
     "mojo_ukm_recorder.h",
@@ -19,7 +25,9 @@ component("metrics_cpp") {
 
   public_deps = [
     "//base",
+    "//services/metrics/histograms",
     "//services/metrics/public/interfaces",
+    "//services/service_manager/public/cpp",
     "//url",
   ]
 

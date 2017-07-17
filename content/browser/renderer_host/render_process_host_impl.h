@@ -58,7 +58,6 @@
 namespace base {
 class CommandLine;
 class MessageLoop;
-class SharedPersistentMemoryAllocator;
 }
 
 namespace content {
@@ -174,8 +173,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void BindInterface(const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe) override;
   const service_manager::Identity& GetChildIdentity() const override;
-  std::unique_ptr<base::SharedPersistentMemoryAllocator> TakeMetricsAllocator()
-      override;
   const base::TimeTicks& GetInitTimeForNavigationMetrics() const override;
   bool IsProcessBackgrounded() const override;
   size_t GetWorkerRefCount() const override;
@@ -430,12 +427,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // change.
   void UpdateProcessPriority();
 
-  // Creates a PersistentMemoryAllocator and shares it with the renderer
-  // process for it to store histograms from that process. The allocator is
-  // available for extraction by a SubprocesMetricsProvider in order to
-  // report those histograms to UMA.
-  void CreateSharedRendererHistogramAllocator();
-
   // Handle termination of our process.
   void ProcessDied(bool already_dead, RendererClosedDetails* known_details);
 
@@ -669,9 +660,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // Context shared for each mojom::PermissionService instance created for this
   // RPH.
   std::unique_ptr<PermissionServiceContext> permission_service_context_;
-
-  // The memory allocator, if any, in which the renderer will write its metrics.
-  std::unique_ptr<base::SharedPersistentMemoryAllocator> metrics_allocator_;
 
   std::unique_ptr<IndexedDBDispatcherHost, BrowserThread::DeleteOnIOThread>
       indexed_db_factory_;
