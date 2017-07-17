@@ -78,12 +78,8 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
   DCHECK(IsParentContextThread());
 
   Document* document = ToDocument(GetExecutionContext());
-  double origin_time =
-      document->Loader()
-          ? document->Loader()->GetTiming().ReferenceMonotonicTime()
-          : MonotonicallyIncreasingTime();
 
-  worker_thread_ = CreateWorkerThread(origin_time);
+  worker_thread_ = CreateWorkerThread();
   worker_thread_->Start(std::move(startup_data), GetParentFrameTaskRunners());
   WorkerThreadCreated();
   GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),

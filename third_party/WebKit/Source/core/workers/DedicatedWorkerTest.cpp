@@ -39,8 +39,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
  public:
   DedicatedWorkerThreadForTest(InProcessWorkerObjectProxy& worker_object_proxy)
       : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
-                              worker_object_proxy,
-                              MonotonicallyIncreasingTime()) {
+                              worker_object_proxy) {
     worker_backing_thread_ = WorkerBackingThread::CreateForTest("Test thread");
   }
 
@@ -204,8 +203,7 @@ class InProcessWorkerMessagingProxyForTest
   }
 
  private:
-  std::unique_ptr<WorkerThread> CreateWorkerThread(
-      double origin_time) override {
+  std::unique_ptr<WorkerThread> CreateWorkerThread() override {
     auto worker_thread =
         WTF::MakeUnique<DedicatedWorkerThreadForTest>(WorkerObjectProxy());
     mock_worker_thread_lifecycle_observer_ =

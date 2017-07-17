@@ -21,10 +21,10 @@ bool DedicatedWorkerMessagingProxy::IsAtomicsWaitAllowed() {
   return true;
 }
 
-std::unique_ptr<WorkerThread> DedicatedWorkerMessagingProxy::CreateWorkerThread(
-    double origin_time) {
+std::unique_ptr<WorkerThread>
+DedicatedWorkerMessagingProxy::CreateWorkerThread() {
   return DedicatedWorkerThread::Create(CreateThreadableLoadingContext(),
-                                       WorkerObjectProxy(), origin_time);
+                                       WorkerObjectProxy());
 }
 
 }  // namespace blink

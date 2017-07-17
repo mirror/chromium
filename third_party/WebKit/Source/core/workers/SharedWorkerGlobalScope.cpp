@@ -54,13 +54,14 @@ MessageEvent* CreateConnectEvent(MessagePort* port) {
 SharedWorkerGlobalScope* SharedWorkerGlobalScope::Create(
     const String& name,
     SharedWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<WorkerThreadStartupData> startup_data,
+    double time_origin) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.
   SharedWorkerGlobalScope* context = new SharedWorkerGlobalScope(
       name, startup_data->script_url_, startup_data->user_agent_, thread,
       std::move(startup_data->starter_origin_privilege_data_),
-      startup_data->worker_clients_);
+      startup_data->worker_clients_, time_origin);
   context->ApplyContentSecurityPolicyFromVector(
       *startup_data->content_security_policy_headers_);
   context->SetWorkerSettings(std::move(startup_data->worker_settings_));
@@ -79,11 +80,12 @@ SharedWorkerGlobalScope::SharedWorkerGlobalScope(
     SharedWorkerThread* thread,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilege_data,
-    WorkerClients* worker_clients)
+    WorkerClients* worker_clients,
+    double time_origin)
     : WorkerGlobalScope(url,
                         user_agent,
                         thread,
-                        MonotonicallyIncreasingTime(),
+                        time_origin,
                         std::move(starter_origin_privilege_data),
                         worker_clients),
       name_(name) {}
