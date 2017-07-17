@@ -429,6 +429,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
     WebURLRequest::RequestContext request_context,
     Resource* resource,
     ResourceResponseType response_type) {
+  ParseAndPersistClientHints(response);
   if (IsDetached())
     return;
 
@@ -1090,6 +1091,25 @@ bool FrameFetchContext::ShouldSendClientHint(
     const ClientHintsPreferences& hints_preferences) const {
   return GetClientHintsPreferences().ShouldSend(type) ||
          hints_preferences.ShouldSend(type);
+}
+
+void FrameFetchContext::ParseAndPersistClientHints(
+    const ResourceResponse& response) {
+  if (response.WasCached())
+    return;
+  bool enabled_types[kWebClientHintsTypeLast + 1] = {};
+  int64_t persist_duration_seconds = -1;
+  FrameClientHintsPreferencesContext hints_context(GetFrame());
+  ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
+      response.HttpHeaderField(HTTPNames::Accept_CH),
+      response.HttpHeaderField(HTTPNames::Accept_CH_Lifetime), response.Url(),
+      &hints_context, enabled_types, &persist_duration_seconds);
+
+  if (persist_duration_seconds <= 0)
+    return;
+
+  GetContentSettingsClient()->PersistClientHints(
+      enabled_types, persist_duration_seconds, response.Url());
 }
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(

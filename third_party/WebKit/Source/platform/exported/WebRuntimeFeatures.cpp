@@ -430,4 +430,8 @@ void WebRuntimeFeatures::EnableClientPlaceholdersForServerLoFi(bool enable) {
   RuntimeEnabledFeatures::SetClientPlaceholdersForServerLoFiEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableClientHintsPersistent(bool enable) {
+  RuntimeEnabledFeatures::SetClientHintsPersistentEnabled(enable);
+}
+
 }  // namespace blink
