@@ -12,6 +12,7 @@ import("//chrome/chrome_paks.gni")
 import("//chrome/common/features.gni")
 import("//chrome/process_version_rc_template.gni")  # For branding_file_path.
 import("//device/vr/features/features.gni")
+import("//sandbox/features.gni")
 import("//testing/test.gni")
 import("//third_party/icu/config.gni")
 import("//third_party/protobuf/proto_library.gni")
@@ -159,6 +160,21 @@ android_library("app_hooks_java") {
   deps = [
     ":chrome_java",
   ]
+}
+
+shared_library("photo_picker_sandbox") {
+  sources = [
+    "../browser/android/photo_picker_entry_point.cc",
+  ]
+  deps = [
+    "//base",
+    "//sandbox",
+  ]
+
+  configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+  configs += [ "//build/config/android:hide_all_but_jni" ]
+
+  public_configs = extra_chrome_shared_library_configs
 }
 
 android_aidl("photo_picker_aidl") {
@@ -673,6 +689,7 @@ shared_library("chrome") {
   ]
   deps = [
     ":chrome_jni_registration($default_toolchain)",
+    ":photo_picker_sandbox",
     "//build/config:exe_and_shlib_deps",
     "//chrome:chrome_android_core",
   ]

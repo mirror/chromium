@@ -35,6 +35,7 @@ public class DecoderService extends Service {
 
     @Override
     public void onCreate() {
+        System.loadLibrary("photo_picker_sandbox.cr");
         super.onCreate();
     }
 
