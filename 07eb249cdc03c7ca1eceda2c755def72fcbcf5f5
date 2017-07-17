@@ -22,6 +22,30 @@
       "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2548ece8_9b33ed43",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T22:04:26Z",
+      "side": 0,
+      "message": "I don\u0027t know how to make the mock method work with the mojo::StructPtr. So changed it to an overridden function. Is there a way to make the mock method work in the way as it was?",
+      "parentUuid": "8b29b009_2df50eaa",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
