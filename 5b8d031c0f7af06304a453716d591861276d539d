@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7fff95_42ac8f5d",
+        "filename": "components/download/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:02:34Z",
+      "side": 1,
+      "message": "Hmm I didn\u0027t expect you to move both targets into test.  If you\u0027re doing this, I guess just keep it all in components/download/BUILD.gn: unit_test and get rid of test.  I thought you were just going to move \"components_unittests_gtest_filter\" in there.  I actually like pulling the various components/download/...:unit_tests targets into one inside components/download though.  Good idea, just move it back up a directory.  Sorry for all of the churn/back and forth while we figure this out.  Thanks!",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "5b8d031c0f7af06304a453716d591861276d539d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
