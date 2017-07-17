@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5709044_f2e883aa",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T18:31:25Z",
+      "side": 1,
+      "message": "No need to list the parameters anymore since they are not referenced. You still need them in the HTML so that the data binding triggers correctly, but no need to declare them here (you can remove the @param at lines 168-169 too).",
+      "revId": "b74a0e9b536f85d7ac1b599ed3a1091539388620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6c352d_d0986009",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T18:31:25Z",
+      "side": 1,
+      "message": "Similar to chromeCleanupLearnMoreUrl a few lines above, shouldn\u0027t this be chromeCleanupPoweredByHtml ?",
+      "range": {
+        "startLine": 815,
+        "startChar": 48,
+        "endLine": 815,
+        "endChar": 52
+      },
+      "revId": "b74a0e9b536f85d7ac1b599ed3a1091539388620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
