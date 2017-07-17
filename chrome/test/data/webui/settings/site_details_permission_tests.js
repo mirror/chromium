@@ -59,25 +59,16 @@ suite('SiteDetailsPermission', function() {
   };
 
   function validatePermissionFlipWorks(origin, expectedContentSetting) {
-    // Flipping a permission typically calls setCategoryPermissionForOrigin, but
-    // clearing it should call resetCategoryPermissionForOrigin.
-    var isReset = expectedContentSetting == settings.ContentSetting.DEFAULT;
-    var expectedMethodCalled = isReset ? 'resetCategoryPermissionForOrigin' :
-                                         'setCategoryPermissionForOrigin';
-    browserProxy.resetResolver(expectedMethodCalled);
+    browserProxy.resetResolver('setOriginPermissions');
 
     // Simulate permission change initiated by the user.
     testElement.$.permission.value = expectedContentSetting;
     testElement.$.permission.dispatchEvent(new CustomEvent('change'));
 
-    return browserProxy.whenCalled(expectedMethodCalled).then(function(args) {
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
       assertEquals(origin, args[0]);
-      assertEquals('', args[1]);
-      assertEquals(testElement.category, args[2]);
-      // Since resetting the permission doesn't return its new value, don't
-      // test it here - checking that the correct method was called is fine.
-      if (!isReset)
-        assertEquals(expectedContentSetting, args[3]);
+      assertDeepEquals([testElement.category], args[1]);
+      assertEquals(expectedContentSetting, args[2]);
     });
   };
 

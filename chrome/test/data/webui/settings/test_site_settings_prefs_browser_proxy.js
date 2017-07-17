@@ -79,6 +79,7 @@ var TestSiteSettingsPrefsBrowserProxy = function() {
     'resetCategoryPermissionForOrigin',
     'setCategoryPermissionForOrigin',
     'setDefaultValueForContentType',
+    'setOriginPermissions',
     'setProtocolDefault',
     'updateIncognitoStatus',
   ]);
@@ -163,6 +164,12 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   setDefaultValueForContentType: function(contentType, defaultValue) {
     this.methodCalled(
         'setDefaultValueForContentType', [contentType, defaultValue]);
+  },
+
+  /** @override */
+  setOriginPermissions: function(origin, contentTypes, blanketSetting) {
+    this.methodCalled(
+        'setOriginPermissions', [origin, contentTypes, blanketSetting]);
   },
 
   /** @override */
