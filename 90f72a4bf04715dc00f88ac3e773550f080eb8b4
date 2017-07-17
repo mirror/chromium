@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f47723_d9a03338",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T20:56:42Z",
+      "side": 1,
+      "message": "Let\u0027s call this \"private void setHeaders()\" and make it responsible for calling super.setHeaders() (as well as determining which items to call super.setHeaders() with).",
+      "range": {
+        "startLine": 389,
+        "startChar": 30,
+        "endLine": 389,
+        "endChar": 34
+      },
+      "revId": "90f72a4bf04715dc00f88ac3e773550f080eb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becc524e_2fd23041",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T20:56:42Z",
+      "side": 1,
+      "message": "new HeaderItem[0] is going to create an Array of size 0. You should be able to call args.toArray() with no arguments, or #toArray(new HeaderItem[args.size()]).",
+      "range": {
+        "startLine": 392,
+        "startChar": 32,
+        "endLine": 392,
+        "endChar": 42
+      },
+      "revId": "90f72a4bf04715dc00f88ac3e773550f080eb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c48a9a_699d51da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T20:56:42Z",
+      "side": 1,
+      "message": "nit: s/has no item/has no items",
+      "revId": "90f72a4bf04715dc00f88ac3e773550f080eb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0562ea80_91541e37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T20:56:42Z",
+      "side": 1,
+      "message": "Ideally we wouldn\u0027t set group positions twice and notify that the data set has changed twice. Can we do something like:\n\nif (headerItems \u003d\u003d null || headerItems.length \u003d\u003d 0) {\n    removeHeader();\n    return;\n}\n\nItemGroup header;\n\nif (mHasListHeader) {\n    header \u003d mGroups.first();\n    // decrement mSize\n    // remove old HeaderItems from header ItemGroup\n} else {\n    header \u003d newItemGroup(Long.MAX_VALUE);\n    header.mIsListHeader \u003d true;\n    mGroups.add(header);\n}\n\n// Add HeaderItems to header, etc.",
+      "range": {
+        "startLine": 486,
+        "startChar": 8,
+        "endLine": 486,
+        "endChar": 20
+      },
+      "revId": "90f72a4bf04715dc00f88ac3e773550f080eb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
