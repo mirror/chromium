@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0878111_9746dea7",
+        "filename": "ui/touch_selection/touch_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-17T19:39:07Z",
+      "side": 1,
+      "message": "Isn\u0027t it going to be break animation when the handle is becoming invisible?",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84426a5_42614183",
+        "filename": "ui/touch_selection/touch_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-17T19:39:07Z",
+      "side": 1,
+      "message": "Since \"GetAlpha()\" is a simple accessor, it should be spelled as \"alpha()\".",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0141eb_a312c9cd",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-17T19:39:07Z",
+      "side": 1,
+      "message": "Since you\u0027re returning in each if case, you don\u0027t need the \"else\" keyword. (Removing them helps reduce indentation)",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5d8563_c3cdf277",
+        "filename": "ui/touch_selection/touch_selection_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-17T19:39:07Z",
+      "side": 1,
+      "message": "It seems that these are only used in tests. In this case, TouchSelectionControllerTestApi class is already having access to the internal state of this class and these functions are no necessary. In other words, you can remove these functions and put their implementation directly in the TestApi class.",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
