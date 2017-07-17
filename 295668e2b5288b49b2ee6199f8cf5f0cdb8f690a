@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c75b65_b9d51636",
+        "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-17T20:35:44Z",
+      "side": 1,
+      "message": "If we do this, we should make Init() a private method. Otherwise, clients may call Init() from the outside at some time after the construction, but it would have no effect on the |initialized_| variable.\n\nAlternatively, we can keep Init() public, and require clients to call it and check its return value before proceeding to call any of the other methods.",
+      "revId": "295668e2b5288b49b2ee6199f8cf5f0cdb8f690a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
