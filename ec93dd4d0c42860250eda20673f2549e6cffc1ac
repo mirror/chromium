@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef38495f_e6ec5104",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "All of these will create static initializers, which are forbidden. (At least in \"real\" code, I\u0027m not completely sure about tests. Still, best to avoid them.)\n\nSolution: Make constants of built-in types (const char[] etc), and construct the std::string, GURL, etc on demand.",
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5680d323_1fc4dda8",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "Looks like this doesn\u0027t need to be a pointer?",
+      "range": {
+        "startLine": 57,
+        "startChar": 67,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9046fd91_2ed3dca6",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 60,
+        "startChar": 69,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35e0b76_022f708a",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "database_ is null at this point, so this won\u0027t do anything.",
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927c9ee2_1c417476",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "Hrm, we should really have a Fake version of the database. Do you mind adding a TODO there?",
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57209661_56df6f72",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "base::WrapUnique\n\nOr alternatively:\nauto decoder \u003d base::MakeUnique\u003c...\u003e();\nmock_image_decoder_ \u003d decoder.get();\ncached_image_fetcher \u003d ... std::move(decoder) ... ;\n(I like this variant, because the object is never in a \"raw\"/\"unowned\" state.)",
+      "range": {
+        "startLine": 75,
+        "startChar": 78,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634ff0ea_e3586414",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "Why is this a MOCK_METHOD?\nAs a rule of thumb: Only use MOCK_METHODs when you want to EXPECT_CALL (or make sure things aren\u0027t called).",
+      "range": {
+        "startLine": 93,
+        "startChar": 56,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93af4259_390631b4",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "The constructor already checks this.\nIt also seems unrelated to the image fetcher, so IMO not worth a separate test here.",
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8014055_44cf3264",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-17T17:07:32Z",
+      "side": 1,
+      "message": "This is a bit unclear: Nothing below actually verifies this.\n\nAlso, nit: End comments with a \".\"",
+      "revId": "ec93dd4d0c42860250eda20673f2549e6cffc1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
