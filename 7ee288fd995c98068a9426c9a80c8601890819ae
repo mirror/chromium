@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fce2d35_37990448",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-17T20:03:44Z",
+      "side": 1,
+      "message": "Although I have raised the issue, you might have to rush this patch as soon as possible. If so, please ignore my previous comment at this time. (But we should fix it later before shipping at least)\n\nBTW, adding isCancelled() here seems a bit strange.\nThis callback is a response to the request from browser to renderer.\nOn the other hand, this function looks requesting from renderer to browser.\n\nWe already have a mojo IPC connection to request from the renderer to browser, so I recommend using it. As I remember, it was defined in PaymentManager.\n\nSyncing the status to PaymentManager in browser side when the associated payment request is cancelled. Then, we can query the status after adding this function to PaymentManager.",
+      "revId": "7ee288fd995c98068a9426c9a80c8601890819ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
