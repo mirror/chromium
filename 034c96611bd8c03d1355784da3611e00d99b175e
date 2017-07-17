@@ -98,6 +98,40 @@
       "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86dfc863_6d5512fb",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-17T21:22:37Z",
+      "side": 1,
+      "message": "Is the handling for if |size| is bigger than |maxFrame.size| supposed to be done elsewhere?",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d25aa14_fb5ecb1c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-17T21:22:37Z",
+      "side": 1,
+      "message": "These CGRect functions can help simplify the arithmetic.",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
