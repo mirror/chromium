@@ -21,6 +21,13 @@
 
 namespace blink {
 
+PasswordCredential* PasswordCredential::Create(const String& id,
+                                               const String& password,
+                                               const String& name,
+                                               const KURL& icon_url) {
+  return new PasswordCredential(id, password, name, icon_url);
+}
+
 PasswordCredential* PasswordCredential::Create(
     WebPasswordCredential* web_password_credential) {
   return new PasswordCredential(web_password_credential);

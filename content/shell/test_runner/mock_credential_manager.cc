@@ -13,12 +13,12 @@
 namespace test_runner {
 
 MockCredentialManager::MockCredentialManager()
-    : error_(password_manager::mojom::CredentialManagerError::SUCCESS) {}
+    : error_(credential_manager::mojom::CredentialManagerError::SUCCESS) {}
 
 MockCredentialManager::~MockCredentialManager() {}
 
 void MockCredentialManager::BindRequest(
-    password_manager::mojom::CredentialManagerRequest request) {
+    credential_manager::mojom::CredentialManagerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
@@ -39,13 +39,13 @@ void MockCredentialManager::ClearResponse() {
 
 void MockCredentialManager::SetError(const std::string& error) {
   if (error == "pending")
-    error_ = password_manager::mojom::CredentialManagerError::PENDINGREQUEST;
+    error_ = credential_manager::mojom::CredentialManagerError::PENDINGREQUEST;
   if (error == "disabled")
-    error_ = password_manager::mojom::CredentialManagerError::DISABLED;
+    error_ = credential_manager::mojom::CredentialManagerError::DISABLED;
   if (error == "unknown")
-    error_ = password_manager::mojom::CredentialManagerError::UNKNOWN;
+    error_ = credential_manager::mojom::CredentialManagerError::UNKNOWN;
   if (error.empty())
-    error_ = password_manager::mojom::CredentialManagerError::SUCCESS;
+    error_ = credential_manager::mojom::CredentialManagerError::SUCCESS;
 }
 
 void MockCredentialManager::Store(
@@ -64,7 +64,7 @@ void MockCredentialManager::Get(
     bool include_passwords,
     const std::vector<GURL>& federations,
     GetCallback callback) {
-  if (error_ != password_manager::mojom::CredentialManagerError::SUCCESS) {
+  if (error_ != credential_manager::mojom::CredentialManagerError::SUCCESS) {
     std::move(callback).Run(error_, password_manager::CredentialInfo());
   } else {
     std::move(callback).Run(error_, credential_);
