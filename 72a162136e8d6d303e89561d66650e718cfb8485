@@ -22,6 +22,30 @@
       "revId": "72a162136e8d6d303e89561d66650e718cfb8485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cd963e_abaedbe5",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:33:19Z",
+      "side": 1,
+      "message": "Done. Pinged the bugs.",
+      "parentUuid": "a43e5593_52450cb7",
+      "range": {
+        "startLine": 196,
+        "startChar": 26,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "72a162136e8d6d303e89561d66650e718cfb8485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
