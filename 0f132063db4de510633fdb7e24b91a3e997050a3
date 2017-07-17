@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8573d632_064cbf96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-17T18:25:55Z",
+      "side": 1,
+      "message": "If this is a correctness issue, shouldn\u0027t there be some test that is capable of distinguishing between the right/wrong behavior?",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f327044a_c324c75f",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-17T18:25:55Z",
+      "side": 1,
+      "message": "If we cannot detect that it\u0027s a runtime constant, don\u0027t we need to use FastRuntimeNegate()?\n\nEither that, or this function is misnamed.",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7201824f_75fc620d",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-17T18:25:55Z",
+      "side": 1,
+      "message": "This logic is a bit tricky to follow. Do you think it would make sense to handle these cases separately, with more comments, and use early returns?\n\ne.g.\n// Negation of unsigned types is always valid.\nif (!std::is_signed\u003cT\u003e::value) {\n  return NegateWrapper(state_.value(), IsValid());\n}\n\n...",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd5778a_01955bb2",
+        "filename": "base/numerics/clamped_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-17T18:25:55Z",
+      "side": 1,
+      "message": "This seems look another good place to use early returns to separate out the logic paths.",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
