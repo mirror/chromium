@@ -11,31 +11,34 @@
 #endif
 
 @interface BubbleViewController ()
+@property(nonatomic) BubbleView* bubbleView;
 @property(nonatomic, readonly) NSString* text;
 @property(nonatomic, readonly) BubbleArrowDirection arrowDirection;
-@property(nonatomic, readonly) BubbleAlignment alignment;
 @end
 
 @implementation BubbleViewController
 
+@synthesize bubbleView = _bubbleView;
 @synthesize text = _text;
 @synthesize arrowDirection = _arrowDirection;
-@synthesize alignment = _alignment;
 
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
-                   alignment:(BubbleAlignment)alignment {
+              arrowDirection:(BubbleArrowDirection)direction {
   self = [super initWithNibName:nil bundle:nil];
   _text = text;
-  _arrowDirection = arrowDirection;
-  _alignment = alignment;
+  _arrowDirection = direction;
   return self;
 }
 
 - (void)loadView {
-  self.view = [[BubbleView alloc] initWithText:self.text
-                                     direction:self.arrowDirection
-                                     alignment:self.alignment];
+  self.bubbleView = [[BubbleView alloc] initWithText:self.text
+                                      arrowDirection:self.arrowDirection];
+  self.view = self.bubbleView;
+}
+
+- (void)anchorOnPoint:(CGPoint)anchorPoint {
+  [self.bubbleView anchorOnPoint:anchorPoint
+                  arrowDirection:self.arrowDirection];
 }
 
 - (void)animateContentIn {

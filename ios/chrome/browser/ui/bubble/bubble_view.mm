@@ -20,10 +20,14 @@
 @synthesize label = _label;
 
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
-                   alignment:(BubbleAlignment)alignment {
+              arrowDirection:(BubbleArrowDirection)direction {
   self = [super initWithFrame:CGRectZero];
   return self;
+}
+
+- (void)anchorOnPoint:(CGPoint)anchorPoint
+       arrowDirection:(BubbleArrowDirection)direction {
+  NOTIMPLEMENTED();
 }
 
 #pragma mark - UIView overrides
