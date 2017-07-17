@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c12cb8_08a175ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T23:25:29Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just add an ItemGroup#removeAllItems() method that clears ItemGroup#mItems.",
+      "range": {
+        "startLine": 496,
+        "startChar": 23,
+        "endLine": 496,
+        "endChar": 33
+      },
+      "revId": "3936edf2f9e25c269b83162841e271e3f1d06d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
