@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42855429_bb4d2069",
+        "filename": "chrome/browser/password_manager/password_store_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-17T14:30:20Z",
+      "side": 1,
+      "message": "The data comes from LoginsTable::GetIE7Login, which looks up by a hash of the form origin. So I think we do filter the results by the observed form\u0027s origin, and would thus not be measuring the total number of passwords importable from IE7.\n\nI understand you comment that in that case you are OK with keeping this a qualitative (present vs. absent) metric. Is that correct?",
+      "parentUuid": "e238bb4d_2ca114f1",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e411d7_d9901819",
         "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0c769f0b_ca5f2d0e",
+        "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-17T14:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e411d7_d9901819",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "116973d4_a49c37fc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483c69ec_be646889",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 52562,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-17T14:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "116973d4_a49c37fc",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
