@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "072ee4e8_004d07b3",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:31:08Z",
+      "side": 1,
+      "message": "Excellent use of `value_or()`! \\o/",
+      "revId": "c7155a4b04447f587b34dfb6e5bc61f937b9659d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220bd57e_0fb20602",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:31:08Z",
+      "side": 1,
+      "message": "Should we DCHECK() that `IsPlayerStateComplete()` returns true?",
+      "revId": "c7155a4b04447f587b34dfb6e5bc61f937b9659d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d763ce51_7acf9806",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:31:08Z",
+      "side": 1,
+      "message": "As discussed offline, I think there would be a need to know why something wasn\u0027t added the first time. We might want to split in two histograms?",
+      "revId": "c7155a4b04447f587b34dfb6e5bc61f937b9659d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b9980b_0fe60b5e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:31:08Z",
+      "side": 1,
+      "message": "For visibility, could you have each of these methods separated by an empty line. Especially, the `GetInsignificantPlayerReason()` is hard to parse for me. You might want to add a quick comment explaining what each of them is doing while you are at it :)",
+      "revId": "c7155a4b04447f587b34dfb6e5bc61f937b9659d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
