@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad6fb828_230a73a7",
+        "filename": "chromeos/cryptohome/mock_homedir_methods.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Accident - reverted.",
+      "parentUuid": "d6bc6111_215c558e",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41179d63_c57413c7",
         "filename": "chromeos/cryptohome/mock_homedir_methods.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e4f8e3b3_cb53bcf9",
+        "filename": "chromeos/cryptohome/mock_homedir_methods.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Whoops, this was a remnant from an old version where MountEx returned the temporary mount path, which was then passed to session_manager. Because of the discussion on CL:562137, the path is now not passed through chrome anymore (instead, session_manager asks libbrillo for the path for the username). Removing this.",
+      "parentUuid": "41179d63_c57413c7",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb26bff_149988ab",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-14T16:14:10Z",
       "side": 1,
       "message": "Maybe we should log this in UMA. The server does not distinguish between regular policy fetches and these session-less fetches. If load spikes at some point, it will be hard to reason which of the two code paths is responsible for it.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174435a3_1b4fdd7d",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done - do you think we should call this UserWithoutSession or rather something like UserPreSignin? I don\u0027t have a good idea.",
+      "parentUuid": "4fb26bff_149988ab",
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "eded7149_3a96464e",
+        "filename": "chromeos/dbus/session_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2bac3e8_13245f29",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6af5ee44_2afb2f26",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2edf90_a24c705b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9760,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af5ee44_2afb2f26",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bbb66920_3f63dca8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9772,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d7a6475_f0e0e6ea",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79055b10_a0ed2ec6",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 10
@@ -118,6 +226,24 @@
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95030a2d_a9705ae8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9780,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done (sticking to \"home directory\")",
+      "parentUuid": "79055b10_a0ed2ec6",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "4a70a72b_7c2b89bc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9786,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Good point, removed that part of the sentence, as the introductory sentence already says that:\nSpecficies the action that should be taken when the user\u0027s profile ... needs to transition to ext4 encryption.",
+      "parentUuid": "fb89996e_c318688a",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14fe87ea_a4713d92",
         "filename": "components/user_manager/user_manager_base.cc",
         "patchSetId": 10
@@ -149,6 +293,24 @@
       "writtenOn": "2017-07-14T16:14:10Z",
       "side": 1,
       "message": "Nit: Const pointer.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d158506_e698b5dc",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Can\u0027t use const pointer here, as I\u0027m invoking the set_force_online_signin member function which is not const. Also, moved up before the IsUserNonCryptohomeDataEphemeral check to be consistent with SaveUserOAuthStatus and because this should take effect on the current sign-in screen session, no matter if anything gets persisted to Local State or not.",
+      "parentUuid": "14fe87ea_a4713d92",
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c2365e7e_c85e0aad",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 10828,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b349f2d1_a51e5ccf",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6807973b_19188ee4",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 10
@@ -186,6 +366,24 @@
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efce076_ca6f9c13",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 10831,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-17T11:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6807973b_19188ee4",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
