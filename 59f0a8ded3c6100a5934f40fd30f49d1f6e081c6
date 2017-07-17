@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4708ed_b983a596",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-17T11:14:36Z",
+      "side": 1,
+      "message": "Nit: add new line below.",
+      "revId": "59f0a8ded3c6100a5934f40fd30f49d1f6e081c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
