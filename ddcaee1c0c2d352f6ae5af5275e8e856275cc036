@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f16e7900_dbf4531b",
+        "filename": "chrome/browser/resources/settings/controls/controlled_button.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-17T17:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd3e088_e0943605",
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05c3a00b_ac9ae3ad",
         "filename": "ui/webui/resources/cr_elements/paper_button_style_css.html",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07138d8d_48368ef5",
+        "filename": "ui/webui/resources/cr_elements/paper_button_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-17T17:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4887bad2_63464a94",
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +176,30 @@
       "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c3d87b_80797763",
+        "filename": "ui/webui/resources/cr_elements_resources.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-17T17:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d971659e_d7b4661e",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 59
+      },
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
