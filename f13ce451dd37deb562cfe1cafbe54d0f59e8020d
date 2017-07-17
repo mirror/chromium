@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0822365b_099aa900",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-17T12:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e4c7249_9f27ec14",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "f13ce451dd37deb562cfe1cafbe54d0f59e8020d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa7fac55_e8d6c790",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "45006a0e_eae40013",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-17T12:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7fac55_e8d6c790",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 13
+      },
+      "revId": "f13ce451dd37deb562cfe1cafbe54d0f59e8020d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5b55c9_06104b04",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-14T23:39:06Z",
       "side": 1,
       "message": "It\u0027d be great if you could hash out the protocol with some comments\na la video_capture.mojom [1]. That\u0027d point out a few strange\nconstructions that are now addressed via |label|s, e.g. seems like\nMediaStreamMsg_DeviceStopped is sent to Renderer not as a response\nto MediaStreamHostMsg_StopStreamDevice; that way we can line up\na series of TODO()+bugs for further work after the migration.\n\n\n[1] https://cs.chromium.org/chromium/src/content/common/video_capture.mojom?q\u003dvideo_capture.mojom\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d21",
+      "revId": "f13ce451dd37deb562cfe1cafbe54d0f59e8020d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9798bed9_3baf41bc",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-17T12:35:21Z",
+      "side": 1,
+      "message": "Sure. I will add the necessary comments as I proceed further with the migration.",
+      "parentUuid": "fe5b55c9_06104b04",
       "revId": "f13ce451dd37deb562cfe1cafbe54d0f59e8020d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
