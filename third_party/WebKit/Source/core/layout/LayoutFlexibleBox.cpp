@@ -1574,6 +1574,7 @@ static LayoutUnit AlignmentOffset(LayoutUnit available_free_space,
                                   bool is_wrap_reverse) {
   switch (position) {
     case kItemPositionAuto:
+    case kItemPositionLegacy:
     case kItemPositionNormal:
       NOTREACHED();
       break;
@@ -1712,6 +1713,7 @@ ItemPosition LayoutFlexibleBox::AlignmentForChild(
           .ResolvedAlignSelf(SelfAlignmentNormalBehavior(), Style())
           .GetPosition();
   DCHECK_NE(align, kItemPositionAuto);
+  DCHECK_NE(align, kItemPositionLegacy);
   DCHECK_NE(align, kItemPositionNormal);
 
   if (align == kItemPositionBaseline && HasOrthogonalFlow(child))

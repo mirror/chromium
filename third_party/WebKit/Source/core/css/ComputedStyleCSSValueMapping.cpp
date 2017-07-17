@@ -2651,7 +2651,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(style.Isolation());
     case CSSPropertyJustifyItems:
       return ValueForItemPositionWithOverflowAlignment(
-          style.JustifyItems().GetPosition() == kItemPositionAuto
+          style.JustifyItems().GetPosition() == kItemPositionLegacy
               ? ComputedStyle::InitialDefaultAlignment()
               : style.JustifyItems());
     case CSSPropertyJustifySelf:
