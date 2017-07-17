@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afeecdca_2b369a02",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:43:39Z",
+      "side": 1,
+      "message": "On the other hand, given that NetLog is a debugging/diagnostics tool, we could enforce the API contract that StopNetLog() has to be called. That\u0027s a cleaner API contract to maintain in the long run and allows us to get rid of having to do manual file stitching.\n\nMisha, any thought?",
+      "parentUuid": "9bfb6c69_79c5d0f7",
+      "range": {
+        "startLine": 1048,
+        "startChar": 22,
+        "endLine": 1048,
+        "endChar": 26
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c590884b_796f8881",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 7
