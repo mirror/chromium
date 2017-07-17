@@ -1165,7 +1165,8 @@ public class NewTabPageAdapterTest {
     private void reloadNtp() {
         mAdapter = new NewTabPageAdapter(mUiDelegate, mock(View.class), makeUiConfig(),
                 mOfflinePageBridge, mock(ContextMenuManager.class), /* tileGroupDelegate =
-                */ null);
+                */ null,
+                /* suggestionsCarousel = */ null);
         mAdapter.refreshSuggestions();
     }
 
