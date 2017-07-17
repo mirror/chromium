@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f730279_0ae960ce",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-17T21:24:32Z",
+      "side": 1,
+      "message": "So, without this code, is the problem that the event type is kRawKeyDown and thus the original block here returns NOT_HANDLED_IS_SHORTCUT, huh?\n\nIf so I might tweak the existing code by doing something like:\n\n  if (id !\u003d -1) {\n    // \"Raw\" events don\u0027t produce a character and should be treated as\n    // shortcuts, except for backspace, which merely shows some explanatory UI\n    // and should be treated as a normal keypress.\n    bool is_shortcut \u003d (event.GetType() \u003d\u003d blink::WebInputEvent::kRawKeyDown) \u0026\u0026\n                       (id !\u003d IDC_BACKSPACE_BACK);\n    return is_shortcut\n               ? content::KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT\n               : content::KeyboardEventProcessingResult::NOT_HANDLED;\n  }",
+      "revId": "6cba3a71d86d0e63ca3803f71df9b9a9e3b2f6cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
