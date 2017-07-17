@@ -408,7 +408,8 @@ void SubscribeForGCMPushUpdates(
   auto handler = base::MakeUnique<BreakingNewsGCMAppHandler>(
       gcm_driver, instance_id_profile_service->driver(), pref_service,
       std::move(subscription_manager),
-      base::Bind(&safe_json::SafeJsonParser::Parse));
+      base::Bind(&safe_json::SafeJsonParser::Parse),
+      base::MakeUnique<base::DefaultClock>());
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
