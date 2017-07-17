@@ -19,7 +19,10 @@
 
 PermissionPromptAndroid::PermissionPromptAndroid(
     content::WebContents* web_contents)
-    : web_contents_(web_contents), delegate_(nullptr), persist_(true) {
+    : web_contents_(web_contents),
+      delegate_(nullptr),
+      persist_(true),
+      weak_factory_(this) {
   DCHECK(web_contents);
 }
 
@@ -36,7 +39,7 @@ void PermissionPromptAndroid::Show() {
         request->GetGestureType() == PermissionRequestGestureType::GESTURE;
   }
   if (PermissionDialogDelegate::ShouldShowDialog(has_gesture)) {
-    PermissionDialogDelegate::Create(web_contents_, this);
+    PermissionDialogDelegate::Create(web_contents_, weak_factory_.GetWeakPtr());
     return;
   }
 
@@ -46,7 +49,8 @@ void PermissionPromptAndroid::Show() {
     return;
 
   GroupedPermissionInfoBarDelegate::Create(
-      this, infobar_service, delegate_->Requests()[0]->GetOrigin());
+      weak_factory_.GetWeakPtr(), infobar_service,
+      delegate_->Requests()[0]->GetOrigin());
 }
 
 bool PermissionPromptAndroid::CanAcceptRequestUpdate() {
