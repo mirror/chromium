@@ -257,6 +257,7 @@ class StyleChange {
 // CSSStyleDeclaration directly.
 CSSValueID GetIdentifierValue(CSSStyleDeclaration*, CSSPropertyID);
 CSSValueID GetIdentifierValue(StylePropertySet*, CSSPropertyID);
+bool GetPrimitiveValueNumber(StylePropertySet*, CSSPropertyID, float& number);
 
 }  // namespace blink
 
