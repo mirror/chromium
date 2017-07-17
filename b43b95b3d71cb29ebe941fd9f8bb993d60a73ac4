@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f443d83f_fa944e1f",
+        "filename": "net/http/bidirectional_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T21:32:33Z",
+      "side": 1,
+      "message": "Would it make sense to add DCHECK(details) here?",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 24
+      },
+      "revId": "b43b95b3d71cb29ebe941fd9f8bb993d60a73ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946a0836_664e902d",
+        "filename": "net/quic/chromium/bidirectional_stream_quic_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T21:32:33Z",
+      "side": 1,
+      "message": "Maybe add DCHECK(details)?",
+      "range": {
+        "startLine": 232,
+        "startChar": 11,
+        "endLine": 232,
+        "endChar": 26
+      },
+      "revId": "b43b95b3d71cb29ebe941fd9f8bb993d60a73ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55d23e6_ac0339f3",
+        "filename": "net/quic/chromium/bidirectional_stream_quic_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T21:32:33Z",
+      "side": 1,
+      "message": "It seems that PopulateNetErrorDetails is not guaranteed to populate details-\u003equic_connection_error, should we default it to something meaningful in case if handshake is not confirmed?.",
+      "range": {
+        "startLine": 234,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 35
+      },
+      "revId": "b43b95b3d71cb29ebe941fd9f8bb993d60a73ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
