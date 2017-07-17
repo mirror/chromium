@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2145e00d_f4244a05",
+        "filename": "base/mojom/values.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-17T03:50:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be necessary. Using map\u003cstring, Value\u003e directly should just work if dictionary_value() returns a const DictionaryValue\u0026; the bindings will use the MapTraits\u003cDictionaryValue\u003e.\n\nIs there going to be a replacement for interfaces that only want a DictionaryValue?",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "2cb010d34a9f14952a28e9f4a9ca63cf37171ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa0f1d5_1ea04a3a",
+        "filename": "base/mojom/values.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-17T03:50:36Z",
+      "side": 1,
+      "message": "I think you want copyable_pass_by_value.",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "2cb010d34a9f14952a28e9f4a9ca63cf37171ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c4cfcd_5b02b901",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-17T03:50:36Z",
+      "side": 1,
+      "message": "If InternalDictValueDoNotUse is removed, this can be inlined to Read() below (or changed to a standalone helper function).",
+      "revId": "2cb010d34a9f14952a28e9f4a9ca63cf37171ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adaa3b49_b15d556e",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-17T03:50:36Z",
+      "side": 1,
+      "message": "return data.ReadDictionaryValue(value_out);",
+      "revId": "2cb010d34a9f14952a28e9f4a9ca63cf37171ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

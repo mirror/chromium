@@ -91,6 +91,30 @@
       "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd4ebe9_e953e43d",
+        "filename": "base/mojo/values_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-17T03:50:36Z",
+      "side": 1,
+      "message": "\u003e It also saves some wire bytes, since list and dictionary values don\u0027t need an additional bool to indicate nullability for each element.\n\nI don\u0027t think this is true. See https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/lib/bindings_internal.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d50.",
+      "parentUuid": "10312f7a_2c762d01",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
