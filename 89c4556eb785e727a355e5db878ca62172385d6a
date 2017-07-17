@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a59aa92a_5839be1f",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-17T16:48:24Z",
+      "side": 1,
+      "message": "OK, this makes sense. Thanks for explaining.",
+      "parentUuid": "170562f1_f3133be5",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 23
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9197b0a_18271bb2",
         "filename": "cc/layers/heads_up_display_layer_impl.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Let me know your thoughts on above, i will take care of this accordingly.",
       "parentUuid": "b9197b0a_18271bb2",
+      "range": {
+        "startLine": 826,
+        "startChar": 30,
+        "endLine": 826,
+        "endChar": 42
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49545251_4deffd01",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-17T16:48:24Z",
+      "side": 1,
+      "message": "It looks like eviction is necessary here... can you fold this in to the above function? Thanks!",
+      "parentUuid": "7a4c2a50_0763c90d",
       "range": {
         "startLine": 826,
         "startChar": 30,
