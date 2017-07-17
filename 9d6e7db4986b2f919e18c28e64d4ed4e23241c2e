@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55543c36_2afd287e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchRankerLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T23:00:06Z",
+      "side": 1,
+      "message": "It sounds like this feature may not be approved by UMA folks yet?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "9d6e7db4986b2f919e18c28e64d4ed4e23241c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1e443f_15970919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/TapWordLengthSuppression.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T23:00:06Z",
+      "side": 1,
+      "message": "mIsNotLongWordConditionSatisfied \u003d word \u003c 10, right?",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "9d6e7db4986b2f919e18c28e64d4ed4e23241c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
