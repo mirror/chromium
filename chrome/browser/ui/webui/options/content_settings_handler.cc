@@ -729,7 +729,7 @@ void ContentSettingsHandler::UpdateSettingDefaultFromModel(
     UpdateMediaSettingsFromPrefs(type);
     if (media_settings_->forType(type).policy_disable) {
       default_setting = CONTENT_SETTING_BLOCK;
-      provider_id = site_settings::kPolicyProviderId;
+      provider_id = site_settings::kPolicySource;
     }
   }
 
@@ -833,8 +833,7 @@ void ContentSettingsHandler::UpdateGeolocationExceptionsView() {
     // Don't add default settings.
     if (i->primary_pattern == ContentSettingsPattern::Wildcard() &&
         i->secondary_pattern == ContentSettingsPattern::Wildcard() &&
-        i
-          ->source != site_settings::kPreferencesSource) {
+        i->source != site_settings::kPreferenceSource) {
       continue;
     }
     all_patterns_settings[std::make_pair(i->primary_pattern, i->source)]
@@ -904,8 +903,7 @@ void ContentSettingsHandler::UpdateNotificationExceptionsView() {
     // Don't add default settings.
     if (i->primary_pattern == ContentSettingsPattern::Wildcard() &&
         i->secondary_pattern == ContentSettingsPattern::Wildcard() &&
-        i
-          ->source != site_settings::kPreferencesSource) {
+        i->source != site_settings::kPreferenceSource) {
       continue;
     }
 
@@ -1062,8 +1060,8 @@ void ContentSettingsHandler::UpdateZoomLevelsExceptionsView() {
     int zoom_percent = static_cast<int>(
         content::ZoomLevelToZoomFactor(i->zoom_level) * 100 + 0.5);
     exception->SetString(kZoom, base::FormatPercent(zoom_percent));
-    exception->SetString(
-        site_settings::kSource, site_settings::kPreferencesSource);
+    exception->SetString(site_settings::kSource,
+                         site_settings::kPreferenceSource);
     // Append the new entry to the list and map.
     zoom_levels_exceptions.Append(std::move(exception));
   }
