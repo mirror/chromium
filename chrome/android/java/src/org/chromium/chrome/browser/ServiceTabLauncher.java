@@ -131,6 +131,7 @@ public class ServiceTabLauncher {
                     intent.putExtra(ShortcutHelper.EXTRA_URL, url);
                     intent.putExtra(ShortcutHelper.EXTRA_SOURCE,
                             ShortcutSource.NOTIFICATION);
+                    intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, true);
                     tabDelegate.createNewStandaloneFrame(intent);
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

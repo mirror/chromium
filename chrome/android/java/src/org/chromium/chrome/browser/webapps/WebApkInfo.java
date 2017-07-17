@@ -35,7 +35,6 @@ public class WebApkInfo extends WebappInfo {
 
     private static final String TAG = "WebApkInfo";
 
-    private boolean mForceNavigation;
     private Icon mBadgeIcon;
     private String mWebApkPackageName;
     private int mShellApkVersion;
@@ -63,10 +62,10 @@ public class WebApkInfo extends WebappInfo {
         int source = sourceFromIntent(intent);
 
         // Force navigation if the extra is not specified to avoid breaking deep linking for old
-        // WebAPKs which don't specify the {@link WebApkConstants#EXTRA_WEBAPK_FORCE_NAVIGATION}
-        // intent extra.
+        // WebAPKs which don't specify the {@link ShortcutHelper#EXTRA_FORCE_NAVIGATION} intent
+        // extra. The default is intentionally different than it is for webapps.
         boolean forceNavigation = IntentUtils.safeGetBooleanExtra(
-                intent, WebApkConstants.EXTRA_WEBAPK_FORCE_NAVIGATION, true);
+                intent, ShortcutHelper.EXTRA_FORCE_NAVIGATION, true);
 
         return create(webApkPackageName, url, source, forceNavigation);
     }
@@ -197,10 +196,8 @@ public class WebApkInfo extends WebappInfo {
             int orientation, int source, long themeColor, long backgroundColor,
             String webApkPackageName, int shellApkVersion, String manifestUrl,
             String manifestStartUrl, Map<String, String> iconUrlToMurmur2HashMap) {
-        super(id, url, scope, primaryIcon, name, shortName, displayMode, orientation, source,
-                themeColor,
-                backgroundColor, false);
-        mForceNavigation = forceNavigation;
+        super(id, url, forceNavigation, scope, primaryIcon, name, shortName, displayMode,
+                orientation, source, themeColor, backgroundColor, false);
         mBadgeIcon = badgeIcon;
         mWebApkPackageName = webApkPackageName;
         mShellApkVersion = shellApkVersion;
@@ -210,11 +207,6 @@ public class WebApkInfo extends WebappInfo {
     }
 
     protected WebApkInfo() {}
-
-    @Override
-    public boolean shouldForceNavigation() {
-        return mForceNavigation;
-    }
 
     /**
      * Returns the badge icon in Bitmap form.
@@ -250,7 +242,7 @@ public class WebApkInfo extends WebappInfo {
         intent.putExtra(ShortcutHelper.EXTRA_URL, uri().toString());
         intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName());
-        intent.putExtra(WebApkConstants.EXTRA_WEBAPK_FORCE_NAVIGATION, mForceNavigation);
+        intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, shouldForceNavigation());
     }
 
     /**

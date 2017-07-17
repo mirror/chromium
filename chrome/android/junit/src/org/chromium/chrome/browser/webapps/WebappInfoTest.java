@@ -30,7 +30,7 @@ public class WebappInfoTest {
         String shortName = "name";
         String url = "about:blank";
 
-        WebappInfo info = WebappInfo.create(id, url, null, null, name, shortName,
+        WebappInfo info = WebappInfo.create(id, url, false, null, null, name, shortName,
                 WebDisplayMode.STANDALONE, ScreenOrientationValues.DEFAULT, ShortcutSource.UNKNOWN,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false);
@@ -44,7 +44,7 @@ public class WebappInfoTest {
         String shortName = "name";
         String url = "http://google.com";
 
-        WebappInfo info = WebappInfo.create(id, url, null, null, name, shortName,
+        WebappInfo info = WebappInfo.create(id, url, false, null, null, name, shortName,
                 WebDisplayMode.STANDALONE, ScreenOrientationValues.DEFAULT, ShortcutSource.UNKNOWN,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false);
@@ -127,7 +127,7 @@ public class WebappInfoTest {
         String shortName = "name";
         String url = "http://money.cnn.com";
 
-        WebappInfo info = WebappInfo.create(id, url, null, null, name, shortName,
+        WebappInfo info = WebappInfo.create(id, url, false, null, null, name, shortName,
                 WebDisplayMode.FULLSCREEN, ScreenOrientationValues.DEFAULT, ShortcutSource.UNKNOWN,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false);
@@ -145,7 +145,7 @@ public class WebappInfoTest {
         long themeColor = 0xFF00FF00L;
         long backgroundColor = 0xFF0000FFL;
 
-        WebappInfo info = WebappInfo.create(id, url, null, null, name, shortName,
+        WebappInfo info = WebappInfo.create(id, url, false, null, null, name, shortName,
                 WebDisplayMode.STANDALONE, ScreenOrientationValues.DEFAULT, ShortcutSource.UNKNOWN,
                 themeColor, backgroundColor, false);
         Assert.assertEquals(themeColor, info.themeColor());
@@ -159,7 +159,7 @@ public class WebappInfoTest {
         String shortName = "name";
         String url = "http://money.cnn.com";
 
-        WebappInfo info = WebappInfo.create(id, url, null, null, name, shortName,
+        WebappInfo info = WebappInfo.create(id, url, false, null, null, name, shortName,
                 WebDisplayMode.STANDALONE, ScreenOrientationValues.DEFAULT, ShortcutSource.UNKNOWN,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false);
@@ -269,6 +269,18 @@ public class WebappInfoTest {
 
             Assert.assertFalse(name, WebappInfo.create(intent).isIconGenerated());
         }
+    }
+
+    /**
+     * Test that {@link WebappInfo#shouldForceNavigation()} defaults to false when the
+     * {@link ShortcutHelper#EXTRA_FORCE_NAVIGATION} intent extra is not specified.
+     */
+    @Test
+    public void testForceNavigationNotSpecified() {
+        Intent intent = new Intent();
+        intent.putExtra(ShortcutHelper.EXTRA_ID, "webapp_id");
+        intent.putExtra(ShortcutHelper.EXTRA_URL, "about:blank");
+        Assert.assertFalse(WebappInfo.create(intent).shouldForceNavigation());
     }
 
     /**
