@@ -54,10 +54,10 @@ void FieldsetPainter::PaintBoxDecorationBackground(
   BoxPainter::PaintNormalBoxShadow(paint_info, paint_rect,
                                    layout_fieldset_.StyleRef());
   BackgroundImageGeometry geometry(layout_fieldset_);
-  BoxModelObjectPainter(layout_fieldset_)
-      .PaintFillLayers(paint_info, box_decoration_data.background_color,
-                       layout_fieldset_.Style()->BackgroundLayers(), paint_rect,
-                       geometry);
+  LegacyBoxModelObjectPainterInterface interface(layout_fieldset_);
+  BoxModelObjectPainter(interface).PaintFillLayers(
+      paint_info, box_decoration_data.background_color,
+      layout_fieldset_.Style()->BackgroundLayers(), paint_rect, geometry);
   BoxPainter::PaintInsetBoxShadow(paint_info, paint_rect,
                                   layout_fieldset_.StyleRef());
 

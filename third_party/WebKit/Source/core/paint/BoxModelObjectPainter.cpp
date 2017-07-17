@@ -19,6 +19,75 @@
 
 namespace blink {
 
+LayoutRectOutsets LegacyBoxModelObjectPainterInterface::BorderOutsets(
+    const BoxPainterBase::FillLayerInfo& info) const {
+  return LayoutRectOutsets(
+      box_model_.BorderTop(),
+      info.include_right_edge ? box_model_.BorderRight() : LayoutUnit(),
+      box_model_.BorderBottom(),
+      info.include_left_edge ? box_model_.BorderLeft() : LayoutUnit());
+}
+
+LayoutRectOutsets LegacyBoxModelObjectPainterInterface::PaddingOutsets(
+    const BoxPainterBase::FillLayerInfo& info) const {
+  return LayoutRectOutsets(
+      box_model_.PaddingTop(),
+      info.include_right_edge ? box_model_.PaddingRight() : LayoutUnit(),
+      box_model_.PaddingBottom(),
+      info.include_left_edge ? box_model_.PaddingLeft() : LayoutUnit());
+}
+
+const Document& LegacyBoxModelObjectPainterInterface::GetDocument() const {
+  return box_model_.GetDocument();
+}
+
+const ComputedStyle& LegacyBoxModelObjectPainterInterface::Style() const {
+  return box_model_.StyleRef();
+}
+
+LayoutRectOutsets LegacyBoxModelObjectPainterInterface::BorderPaddingInsets()
+    const {
+  return box_model_.BorderPaddingInsets();
+}
+
+bool LegacyBoxModelObjectPainterInterface::HasOverflowClip() const {
+  return box_model_.HasOverflowClip();
+}
+
+Node* LegacyBoxModelObjectPainterInterface::GeneratingNode() const {
+  Node* node = nullptr;
+  const LayoutObject* layout_object = &box_model_;
+  for (; layout_object && !node; layout_object = layout_object->Parent()) {
+    node = layout_object->GeneratingNode();
+  }
+  return node;
+}
+
+LegacyBoxModelObjectPainterInterface::operator const DisplayItemClient&()
+    const {
+  return box_model_;
+}
+
+LegacyBoxPainterInterface::LegacyBoxPainterInterface(const LayoutBox& box)
+    : LegacyBoxModelObjectPainterInterface(box), layout_box_(box) {}
+
+LayoutSize LegacyBoxPainterInterface::LocationOffset() const {
+  return layout_box_.LocationOffset();
+}
+
+IntSize LegacyBoxPainterInterface::ScrollOffset() const {
+  return layout_box_.ScrolledContentOffset();
+}
+
+LayoutSize LegacyBoxPainterInterface::ScrollSize() const {
+  return LayoutSize(layout_box_.ScrollWidth(), layout_box_.ScrollHeight());
+}
+
+LayoutRect LegacyBoxPainterInterface::OverflowClipRect(
+    const LayoutPoint& location) const {
+  return layout_box_.OverflowClipRect(location);
+}
+
 bool BoxModelObjectPainter::
     IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
         const LayoutBoxModelObject* box_model_,
@@ -27,6 +96,15 @@ bool BoxModelObjectPainter::
          !(paint_info.PaintFlags() &
            kPaintLayerPaintingCompositingBackgroundPhase) &&
          box_model_ == paint_info.PaintContainer();
+}
+
+bool BoxModelObjectPainter::
+    IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
+        const PaintInfo& paint_info) {
+  return paint_info.PaintFlags() & kPaintLayerPaintingOverflowContents &&
+         !(paint_info.PaintFlags() &
+           kPaintLayerPaintingCompositingBackgroundPhase);  // &&
+  // box_model_ == paint_info.PaintContainer();
 }
 
 void BoxModelObjectPainter::PaintFillLayers(const PaintInfo& paint_info,
@@ -40,7 +118,7 @@ void BoxModelObjectPainter::PaintFillLayers(const PaintInfo& paint_info,
   bool should_draw_background_in_separate_buffer =
       CalculateFillLayerOcclusionCulling(reversed_paint_list, fill_layer,
                                          box_model_.GetDocument(),
-                                         box_model_.StyleRef());
+                                         box_model_.Style());
 
   // TODO(trchen): We can optimize out isolation group if we have a
   // non-transparent background color and the bottom layer encloses all other
@@ -203,7 +281,7 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
                                Node* node,
                                const LayoutRect& rect,
                                LayoutRect scrolled_paint_rect,
-                               const LayoutBoxModelObject& box_model_,
+                               const BoxModelPainterInterface& box_model,
                                const InlineFlowBox* box) {
   // First figure out how big the mask has to be. It should be no bigger
   // than what we need to actually render, so we should intersect the dirty
@@ -218,7 +296,7 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
   context.BeginLayer();
 
   PaintFillLayerBackground(context, info, image, composite_op, geometry,
-                           box_model_.GeneratingNode(), scrolled_paint_rect);
+                           box_model.GeneratingNode(), scrolled_paint_rect);
 
   // Create the text mask layer and draw the text into the mask. We do this by
   // painting using a special paint phase that signals to InlineTextBoxes that
@@ -226,7 +304,10 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
   context.BeginLayer(1, SkBlendMode::kDstIn);
   PaintInfo paint_info(context, mask_rect, kPaintPhaseTextClip,
                        kGlobalPaintNormalPhase, 0);
-  if (box) {
+  if (box_model.IsLayoutNG()) {
+    // TODO(eae): Implement for NG. This can probably be merged with the third
+    // case (the else statement below) once we create the painter directly.
+  } else if (box) {
     const RootInlineBox& root = box->Root();
     box->Paint(paint_info,
                LayoutPoint(scrolled_paint_rect.X() - box->X(),
@@ -234,11 +315,17 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
                root.LineTop(), root.LineBottom());
   } else {
     // FIXME: this should only have an effect for the line box list within
-    // |box_model_|. Change this to create a LineBoxListPainter directly.
-    LayoutSize local_offset = box_model_.IsBox()
-                                  ? ToLayoutBox(&box_model_)->LocationOffset()
-                                  : LayoutSize();
-    box_model_.Paint(paint_info, scrolled_paint_rect.Location() - local_offset);
+    // |box_model|. Change this to create a LineBoxListPainter directly.
+    LayoutSize local_offset =
+        box_model.IsBox()
+            ? static_cast<const LegacyBoxPainterInterface&>(box_model)
+                  .LocationOffset()
+            : LayoutSize();
+    // TODO(eae): This is really uggly and a hack until we we fix the FIXME
+    // above.
+    static_cast<const LegacyBoxPainterInterface&>(box_model)
+        .GetLayoutBox()
+        .Paint(paint_info, scrolled_paint_rect.Location() - local_offset);
   }
 
   context.EndLayer();  // Text mask layer.
@@ -246,24 +333,6 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
 }
 
 }  // anonymous namespace
-
-LayoutRectOutsets BoxModelObjectPainter::BorderOutsets(
-    const BoxPainterBase::FillLayerInfo& info) const {
-  return LayoutRectOutsets(
-      box_model_.BorderTop(),
-      info.include_right_edge ? box_model_.BorderRight() : LayoutUnit(),
-      box_model_.BorderBottom(),
-      info.include_left_edge ? box_model_.BorderLeft() : LayoutUnit());
-}
-
-LayoutRectOutsets BoxModelObjectPainter::PaddingOutsets(
-    const BoxPainterBase::FillLayerInfo& info) const {
-  return LayoutRectOutsets(
-      box_model_.PaddingTop(),
-      info.include_right_edge ? box_model_.PaddingRight() : LayoutUnit(),
-      box_model_.PaddingBottom(),
-      info.include_left_edge ? box_model_.PaddingLeft() : LayoutUnit());
-}
 
 void BoxModelObjectPainter::PaintFillLayer(
     const PaintInfo& paint_info,
@@ -280,34 +349,34 @@ void BoxModelObjectPainter::PaintFillLayer(
     return;
 
   const BoxPainterBase::FillLayerInfo info(
-      box_model_.GetDocument(), box_model_.StyleRef(),
+      box_model_.GetDocument(), box_model_.Style(),
       box_model_.HasOverflowClip(), color, bg_layer, bleed_avoidance,
       (box ? box->IncludeLogicalLeftEdge() : true),
       (box ? box->IncludeLogicalRightEdge() : true));
 
   bool has_line_box_sibling = box && (box->NextLineBox() || box->PrevLineBox());
-  LayoutRectOutsets border = BorderOutsets(info);
+  LayoutRectOutsets border = box_model_.BorderOutsets(info);
 
   GraphicsContextStateSaver clip_with_scrolling_state_saver(
       context, info.is_clipped_with_local_scrolling);
   LayoutRect scrolled_paint_rect = rect;
   if (info.is_clipped_with_local_scrolling &&
       !IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
-          &box_model_, paint_info)) {
+          paint_info)) {
     // Clip to the overflow area.
-    const LayoutBox& this_box = ToLayoutBox(box_model_);
+    const LegacyBoxPainterInterface& box =
+        static_cast<const LegacyBoxPainterInterface&>(box_model_);
     // TODO(chrishtr): this should be pixel-snapped.
-    context.Clip(FloatRect(this_box.OverflowClipRect(rect.Location())));
+    context.Clip(FloatRect(box.OverflowClipRect(rect.Location())));
 
     // Adjust the paint rect to reflect a scrolled content box with borders at
     // the ends.
-    IntSize offset = this_box.ScrolledContentOffset();
+    IntSize offset = box.ScrollOffset();
     scrolled_paint_rect.Move(-offset);
-    scrolled_paint_rect.SetWidth(border.Left() + this_box.ScrollWidth() +
+    scrolled_paint_rect.SetWidth(border.Left() + box.ScrollSize().Width() +
                                  border.Right());
-    scrolled_paint_rect.SetHeight(this_box.BorderTop() +
-                                  this_box.ScrollHeight() +
-                                  this_box.BorderBottom());
+    scrolled_paint_rect.SetHeight(border.Top() + box.ScrollSize().Height() +
+                                  border.Bottom());
   }
 
   RefPtr<Image> image;
@@ -332,7 +401,7 @@ void BoxModelObjectPainter::PaintFillLayer(
   }
 
   FloatRoundedRect border_rect = RoundedBorderRectForClip(
-      box_model_.StyleRef(), info, bg_layer, rect, bleed_avoidance,
+      box_model_.Style(), info, bg_layer, rect, bleed_avoidance,
       has_line_box_sibling, box_size, box_model_.BorderPaddingInsets());
 
   // Fast path for drawing simple color backgrounds.
@@ -365,7 +434,7 @@ void BoxModelObjectPainter::PaintFillLayer(
       LayoutRect clip_rect = scrolled_paint_rect;
       clip_rect.Contract(border);
       if (bg_layer.Clip() == kContentFillBox)
-        clip_rect.Contract(PaddingOutsets(info));
+        clip_rect.Contract(box_model_.PaddingOutsets(info));
       background_clip_state_saver.Save();
       // TODO(chrishtr): this should be pixel-snapped.
       context.Clip(FloatRect(clip_rect));
@@ -381,15 +450,6 @@ void BoxModelObjectPainter::PaintFillLayer(
 
   PaintFillLayerBackground(context, info, image.Get(), composite_op, geometry,
                            box_model_.GeneratingNode(), scrolled_paint_rect);
-}
-
-Node* BoxModelObjectPainter::GetNode() const {
-  Node* node = nullptr;
-  const LayoutObject* layout_object = &box_model_;
-  for (; layout_object && !node; layout_object = layout_object->Parent()) {
-    node = layout_object->GeneratingNode();
-  }
-  return node;
 }
 
 }  // namespace blink

@@ -193,7 +193,8 @@ void BoxPainter::PaintBackground(const PaintInfo& paint_info,
   if (layout_box_.BackgroundIsKnownToBeObscured())
     return;
   BackgroundImageGeometry geometry(layout_box_);
-  BoxModelObjectPainter box_model_painter(layout_box_);
+  LegacyBoxModelObjectPainterInterface interface(layout_box_);
+  BoxModelObjectPainter box_model_painter(interface);
   box_model_painter.PaintFillLayers(paint_info, background_color,
                                     layout_box_.Style()->BackgroundLayers(),
                                     paint_rect, geometry, bleed_avoidance);
@@ -247,7 +248,8 @@ void BoxPainter::PaintMaskImages(const PaintInfo& paint_info,
 
   if (all_mask_images_loaded) {
     BackgroundImageGeometry geometry(layout_box_);
-    BoxModelObjectPainter box_model_painter(layout_box_);
+    LegacyBoxModelObjectPainterInterface interface(layout_box_);
+    BoxModelObjectPainter box_model_painter(interface);
     box_model_painter.PaintFillLayers(paint_info, Color::kTransparent,
                                       layout_box_.Style()->MaskLayers(),
                                       paint_rect, geometry);
