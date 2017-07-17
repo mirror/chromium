@@ -1146,7 +1146,8 @@ void DownloadItemImpl::OnDownloadedFileRemoved() {
 
 base::WeakPtr<DownloadDestinationObserver>
 DownloadItemImpl::DestinationObserverAsWeakPtr() {
-  return weak_ptr_factory_.GetWeakPtr();
+  return job_ ? job_->DestinationObserverAsWeakPtr()
+              : base::WeakPtr<DownloadDestinationObserver>();
 }
 
 const net::NetLogWithSource& DownloadItemImpl::GetNetLogWithSource() const {
@@ -1652,6 +1653,7 @@ void DownloadItemImpl::OnDownloadRenamedToFinalName(
   // Complete the download and release the DownloadFile.
   DCHECK(download_file_);
   ReleaseDownloadFile(false);
+  job_->Cancel(false);
 
   // We're not completely done with the download item yet, but at this
   // point we're committed to complete the download.  Cancels (or Interrupts,
@@ -1826,8 +1828,11 @@ void DownloadItemImpl::InterruptWithPartialState(
     SetHashState(std::move(hash_state));
   }
 
-  if (job_)
+  bool is_parallelizable = false;
+  if (job_) {
+    is_parallelizable = job_->IsParallelizable();
     job_->Cancel(false);
+  }
 
   if (IsCancellation(reason)) {
     if (IsDangerous()) {
@@ -1839,7 +1844,7 @@ void DownloadItemImpl::InterruptWithPartialState(
     }
 
     RecordDownloadCount(CANCELLED_COUNT);
-    if (job_ && job_->IsParallelizable()) {
+    if (is_parallelizable) {
       RecordParallelizableDownloadCount(CANCELLED_COUNT,
                                         IsParallelDownloadEnabled());
     }
@@ -1849,8 +1854,7 @@ void DownloadItemImpl::InterruptWithPartialState(
   }
 
   RecordDownloadInterrupted(reason, GetReceivedBytes(), total_bytes_,
-                            job_ && job_->IsParallelizable(),
-                            IsParallelDownloadEnabled());
+                            is_parallelizable, IsParallelDownloadEnabled());
   if (reason == DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH)
     received_bytes_at_length_mismatch = GetReceivedBytes();
 

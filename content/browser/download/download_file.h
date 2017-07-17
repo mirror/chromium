@@ -12,6 +12,7 @@
 
 #include "base/callback_forward.h"
 #include "base/files/file_path.h"
+#include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
@@ -21,6 +22,7 @@ class GURL;
 namespace content {
 
 class ByteStreamReader;
+class DownloadDestinationObserver;
 
 // These objects live exclusively on the file thread and handle the writing
 // operations for one download. These objects live only for the duration that
@@ -54,6 +56,7 @@ class CONTENT_EXPORT DownloadFile {
   virtual void Initialize(const InitializeCallback& initialize_callback,
                           const CancelRequestCallback& cancel_request_callback,
                           const DownloadItem::ReceivedSlices& received_slices,
+                          base::WeakPtr<DownloadDestinationObserver> observer,
                           bool is_parallelizable) = 0;
 
   // Add a byte stream reader to write into a slice of the file, used for

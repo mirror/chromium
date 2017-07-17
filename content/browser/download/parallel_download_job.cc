@@ -98,7 +98,8 @@ int ParallelDownloadJob::GetMinRemainingTimeInSeconds() const {
 
 void ParallelDownloadJob::CancelRequestWithOffset(int64_t offset) {
   if (initial_request_offset_ == offset) {
-    DownloadJobImpl::Cancel(false);
+    if (request_handle_)
+      request_handle_->CancelRequest(false);
     return;
   }
 

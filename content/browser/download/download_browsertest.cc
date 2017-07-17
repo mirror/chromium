@@ -149,7 +149,6 @@ class DownloadFileWithDelay : public DownloadFileImpl {
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> stream,
       const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer,
       base::WeakPtr<DownloadFileWithDelayFactory> owner);
 
   ~DownloadFileWithDelay() override;
@@ -189,12 +188,10 @@ class DownloadFileWithDelayFactory : public DownloadFileFactory {
   ~DownloadFileWithDelayFactory() override;
 
   // DownloadFileFactory interface.
-  DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_download_directory,
-      std::unique_ptr<ByteStreamReader> stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer) override;
+  DownloadFile* CreateFile(std::unique_ptr<DownloadSaveInfo> save_info,
+                           const base::FilePath& default_download_directory,
+                           std::unique_ptr<ByteStreamReader> stream,
+                           const net::NetLogWithSource& net_log) override;
 
   void AddRenameCallback(base::Closure callback);
   void GetAllRenameCallbacks(std::vector<base::Closure>* results);
@@ -215,13 +212,11 @@ DownloadFileWithDelay::DownloadFileWithDelay(
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> stream,
     const net::NetLogWithSource& net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer,
     base::WeakPtr<DownloadFileWithDelayFactory> owner)
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
                        std::move(stream),
-                       net_log,
-                       observer),
+                       net_log),
       owner_(owner) {}
 
 DownloadFileWithDelay::~DownloadFileWithDelay() {}
@@ -273,13 +268,11 @@ DownloadFile* DownloadFileWithDelayFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> stream,
-    const net::NetLogWithSource& net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer) {
+    const net::NetLogWithSource& net_log) {
   return new DownloadFileWithDelay(std::move(save_info),
                                    default_download_directory,
                                    std::move(stream),
                                    net_log,
-                                   observer,
                                    weak_ptr_factory_.GetWeakPtr());
 }
 
@@ -308,32 +301,29 @@ void DownloadFileWithDelayFactory::WaitForSomeCallback() {
 
 class CountingDownloadFile : public DownloadFileImpl {
  public:
-  CountingDownloadFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_downloads_directory,
-      std::unique_ptr<ByteStreamReader> stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer)
+  CountingDownloadFile(std::unique_ptr<DownloadSaveInfo> save_info,
+                       const base::FilePath& default_downloads_directory,
+                       std::unique_ptr<ByteStreamReader> stream,
+                       const net::NetLogWithSource& net_log)
       : DownloadFileImpl(std::move(save_info),
                          default_downloads_directory,
                          std::move(stream),
-                         net_log,
-                         observer) {}
+                         net_log) {}
 
   ~CountingDownloadFile() override {
     DCHECK_CURRENTLY_ON(BrowserThread::FILE);
     active_files_--;
   }
 
-  void Initialize(
-      const InitializeCallback& callback,
-      const CancelRequestCallback& cancel_request_callback,
-      const DownloadItem::ReceivedSlices& received_slices,
-      bool is_parallelizable) override {
+  void Initialize(const InitializeCallback& callback,
+                  const CancelRequestCallback& cancel_request_callback,
+                  const DownloadItem::ReceivedSlices& received_slices,
+                  base::WeakPtr<DownloadDestinationObserver> observer,
+                  bool is_parallelizable) override {
     DCHECK_CURRENTLY_ON(BrowserThread::FILE);
     active_files_++;
     DownloadFileImpl::Initialize(callback, cancel_request_callback,
-                                 received_slices, is_parallelizable);
+                                 received_slices, observer, is_parallelizable);
   }
 
   static void GetNumberActiveFiles(int* result) {
@@ -366,17 +356,13 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
   ~CountingDownloadFileFactory() override {}
 
   // DownloadFileFactory interface.
-  DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_downloads_directory,
-      std::unique_ptr<ByteStreamReader> stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer) override {
+  DownloadFile* CreateFile(std::unique_ptr<DownloadSaveInfo> save_info,
+                           const base::FilePath& default_downloads_directory,
+                           std::unique_ptr<ByteStreamReader> stream,
+                           const net::NetLogWithSource& net_log) override {
     return new CountingDownloadFile(std::move(save_info),
                                     default_downloads_directory,
-                                    std::move(stream),
-                                    net_log,
-                                    observer);
+                                    std::move(stream), net_log);
   }
 };
 
