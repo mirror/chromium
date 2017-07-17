@@ -36,6 +36,10 @@ class NET_EXPORT_PRIVATE SocketPerformanceWatcher {
   // to a different transport layer connection. Note: The new connection shares
   // the same protocol as the previously watched socket.
   virtual void OnConnectionChanged() = 0;
+
+  virtual void SetAllowPrivateSocketsForTesting(){};
+
+  virtual bool AllowPrivateSockets();
 };
 
 }  // namespace net

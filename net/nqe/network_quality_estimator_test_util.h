@@ -230,6 +230,9 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
   // changed to |network_quality|.
   void NotifyObserversOfEffectiveConnectionType(EffectiveConnectionType type);
 
+  std::unique_ptr<SocketPerformanceWatcherFactory> CreateSocketWatcherFactory()
+      override;
+
   using NetworkQualityEstimator::SetTickClockForTesting;
   using NetworkQualityEstimator::OnConnectionTypeChanged;
   using NetworkQualityEstimator::OnUpdatedRTTAvailable;
@@ -244,6 +247,8 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
   // network
   // id (instead of invoking platform APIs).
   nqe::internal::NetworkID GetCurrentNetworkID() const override;
+
+  const bool allow_local_host_requests_for_tests_;
 
   // If set, GetEffectiveConnectionType() and GetRecentEffectiveConnectionType()
   // would return the set values, respectively.

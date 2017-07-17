@@ -229,6 +229,9 @@ class NET_EXPORT NetworkQualityEstimator
       bool add_default_platform_observations,
       const NetLogWithSource& net_log);
 
+  virtual std::unique_ptr<SocketPerformanceWatcherFactory>
+  CreateSocketWatcherFactory();
+
   // Different experimental statistic algorithms that can be used for computing
   // the predictions.
   enum Statistic {

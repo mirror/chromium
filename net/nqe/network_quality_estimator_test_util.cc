@@ -11,6 +11,8 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/nqe/network_quality_estimator_params.h"
+#include "net/nqe/socket_watcher_factory_test_util.h"
+#include "net/nqe/socket_watcher_test_util.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -74,7 +76,7 @@ TestNetworkQualityEstimator::TestNetworkQualityEstimator(
           allow_smaller_responses_for_tests,
           add_default_platform_observations,
           net_log->bound()),
-
+      allow_local_host_requests_for_tests_(allow_local_host_requests_for_tests),
       current_network_type_(NetworkChangeNotifier::CONNECTION_UNKNOWN),
       accuracy_recording_intervals_set_(false),
       rand_double_(0.0),
@@ -327,6 +329,18 @@ void TestNetworkQualityEstimator::
 
   NetworkQualityEstimator::NotifyRTTAndThroughputEstimatesObserverIfPresent(
       observer);
+}
+
+std::unique_ptr<SocketPerformanceWatcherFactory>
+TestNetworkQualityEstimator::CreateSocketWatcherFactory() {
+  std::unique_ptr<nqe::internal::TestSocketWatcherFactory> factory;
+  std::unique_ptr<SocketPerformanceWatcherFactory> performance_factory =
+      NetworkQualityEstimator::CreateSocketWatcherFactory();
+
+  // factory.reset
+  if (allow_local_host_requests_for_tests_)
+    factory->SetAllowPrivateSocketsForTesting();
+  return factory;
 }
 
 }  // namespace net
