@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01867b96_f8b07df9",
+        "filename": "third_party/WebKit/Source/core/paint/MediaControlsPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002875
+      },
+      "writtenOn": "2017-07-17T23:30:43Z",
+      "side": 1,
+      "message": "Typo on this line",
+      "revId": "49b2e1c02da7073c6c86e7e591928fc58fd5de34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
