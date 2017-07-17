@@ -16,6 +16,24 @@
       "revId": "91622f2f56eb285e9993d0ee43cad4be899a56ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8fe4a8_6905f8ee",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-17T17:24:08Z",
+      "side": 1,
+      "message": "Done\n\n- Add submit time as uint with function call.\n- Removed submit time from metadata.\n- Use local surface id for tracing.",
+      "parentUuid": "682428b9_c6e34a57",
+      "revId": "91622f2f56eb285e9993d0ee43cad4be899a56ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
