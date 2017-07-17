@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae31d449_9a330c57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-17T17:26:13Z",
+      "side": 1,
+      "message": "Do we want to keep this or was it just for debugging?",
+      "range": {
+        "startLine": 792,
+        "startChar": 11,
+        "endLine": 792,
+        "endChar": 20
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7201d2_fd953f3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-17T17:26:13Z",
+      "side": 1,
+      "message": "Is mToolbarHeight not updated by the time this is run? If not, do you think we should use this instead of mToolbarHeight everywhere else?",
+      "range": {
+        "startLine": 944,
+        "startChar": 65,
+        "endLine": 944,
+        "endChar": 91
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c1078a5_141193e3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 2
@@ -41,6 +87,29 @@
         "startChar": 47,
         "endLine": 69,
         "endChar": 49
+      },
+      "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32159995_e2a154ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-17T17:26:13Z",
+      "side": 1,
+      "message": "nit: This can be inlined. Same below.",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 20
       },
       "revId": "fad018205140e597c166f0b964c4a4f2676a89b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
