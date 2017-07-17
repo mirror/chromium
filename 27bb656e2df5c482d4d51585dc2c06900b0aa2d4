@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4986b5a4_0dc837b6",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:55:13Z",
+      "side": 1,
+      "message": "String equality is the simplest method that\u0027s hard to mess up. Why complicate things? :-)",
+      "parentUuid": "c0ac85da_7c42ab30",
+      "range": {
+        "startLine": 400,
+        "startChar": 33,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a97d63_36d16cdb",
         "filename": "components/payments/core/payment_request_data_util.cc",
         "patchSetId": 2
@@ -164,6 +188,30 @@
       "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41da563a_5f210362",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:55:13Z",
+      "side": 1,
+      "message": "I don\u0027t see a particular reason to use a canonical URL at this point of the algorithm. When there\u0027s a need, we\u0027ll use it.",
+      "parentUuid": "378275b2_20ad7c17",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

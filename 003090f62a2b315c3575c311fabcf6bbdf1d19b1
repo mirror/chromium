@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a420ce8a_2fb34282",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:55:13Z",
+      "side": 1,
+      "message": "Just a nit: to facilitate copy-paste of this URL, please don\u0027t surround it with () and don\u0027t follow it with a period.",
+      "range": {
+        "startLine": 164,
+        "startChar": 12,
+        "endLine": 164,
+        "endChar": 105
+      },
+      "revId": "003090f62a2b315c3575c311fabcf6bbdf1d19b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
