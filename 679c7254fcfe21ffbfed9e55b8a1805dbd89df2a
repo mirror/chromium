@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99de59c_adb42055",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-07-17T18:44:00Z",
+      "side": 1,
+      "message": "This test can be removed now.",
+      "revId": "679c7254fcfe21ffbfed9e55b8a1805dbd89df2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
