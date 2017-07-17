@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db4542e_bd2f046f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-17T07:16:17Z",
+      "side": 1,
+      "message": "Name the bool parameter.",
+      "revId": "3fafc45006e602fc31faf2cca0a9c716aefabe7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f9e689_25c329ae",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-17T07:16:17Z",
+      "side": 1,
+      "message": "Optional: Name the bool parameter.",
+      "revId": "3fafc45006e602fc31faf2cca0a9c716aefabe7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
