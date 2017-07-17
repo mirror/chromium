@@ -65,6 +65,13 @@ struct PPP_Pdf_1_1 {
       PP_PdfPrintPresetOptions_Dev* options);
 
   void (*EnableAccessibility)(PP_Instance instance);
+
+  void (*SetCaretPosition)(PP_Instance instance, struct PP_FloatPoint position);
+  void (*MoveRangeSelectionExtent)(PP_Instance instance,
+                                   struct PP_FloatPoint extent);
+  void (*SetSelectionBounds)(PP_Instance instance,
+                             struct PP_FloatPoint base,
+                             struct PP_FloatPoint extent);
 };
 
 typedef PPP_Pdf_1_1 PPP_Pdf;
