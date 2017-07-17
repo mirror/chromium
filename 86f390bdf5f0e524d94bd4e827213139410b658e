@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae84168_b8bae2e8",
+        "filename": "components/download/internal/test/mock_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-17T22:12:46Z",
+      "side": 1,
+      "message": "leave a blank line between the 2",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83981e4_3c6711f1",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-17T22:12:46Z",
+      "side": 1,
+      "message": "just return base::TimeDelata() and remove the private member variable?",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c2c53a_b9181c5f",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-17T22:12:46Z",
+      "side": 1,
+      "message": "You can also move this into the initializer list",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1921343_53c73ad7",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-17T22:12:46Z",
+      "side": 1,
+      "message": "you need {} for if/else statement that spans multiple lines",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
