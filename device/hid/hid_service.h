@@ -77,19 +77,29 @@ class HidService {
   friend class HidConnectionTest;
 
   typedef std::map<HidDeviceId, scoped_refptr<HidDeviceInfo>> DeviceMap;
+  typedef std::map<HidDeviceId, HidPlatformDeviceId> DeviceIdMap;
 
   HidService();
 
-  void AddDevice(scoped_refptr<HidDeviceInfo> info);
-  void RemoveDevice(const HidDeviceId& device_id);
+  void AddDevice(scoped_refptr<HidDeviceInfo> info,
+                 const HidPlatformDeviceId& platform_device_id);
+  void RemoveDevice(const HidPlatformDeviceId& platform_device_id);
   void FirstEnumerationComplete();
 
   const DeviceMap& devices() const { return devices_; }
+
+  HidDeviceId AddDeviceIdMapping(const HidPlatformDeviceId& platform_device_id);
+  HidDeviceId FindDeviceIdByPlatformDeviceId(
+      const HidPlatformDeviceId& platform_device_id);
+  HidPlatformDeviceId FindPlatformDeviceIdByDeviceId(
+      const HidDeviceId& device_id);
 
   base::ThreadChecker thread_checker_;
 
  private:
   DeviceMap devices_;
+  DeviceIdMap device_id_map_;
+
   bool enumeration_ready_ = false;
   std::vector<GetDevicesCallback> pending_enumerations_;
   base::ObserverList<Observer, true> observer_list_;

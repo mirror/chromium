@@ -5,6 +5,7 @@
 #include "device/hid/hid_service.h"
 
 #include "base/at_exit.h"
+#include "base/atomic_sequence_num.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -23,6 +24,10 @@
 #endif
 
 namespace device {
+
+namespace {
+base::StaticAtomicSequenceNumber device_id_generator;
+}  // namespace
 
 void HidService::Observer::OnDeviceAdded(
     scoped_refptr<HidDeviceInfo> device_info) {
@@ -84,16 +89,24 @@ scoped_refptr<HidDeviceInfo> HidService::GetDeviceInfo(
   return it->second;
 }
 
-HidService::HidService() = default;
+HidService::HidService() {
+  // kInvalidHidDeviceId = 0, so let the HidDeviceID start from 1.
+  device_id_generator.GetNext();
+}
 
 HidService::~HidService() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
+void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info,
+                           const HidPlatformDeviceId& platform_device_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (!base::ContainsKey(devices_, device_info->device_id())) {
-    devices_[device_info->device_id()] = device_info;
+
+  HidDeviceId device_id = AddDeviceIdMapping(platform_device_id);
+  device_info->set_device_id(device_id);
+
+  if (!base::ContainsKey(devices_, device_id)) {
+    devices_[device_id] = device_info;
 
     HID_LOG(USER) << "HID device "
                   << (enumeration_ready_ ? "added" : "detected")
@@ -101,7 +114,7 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
                   << ", productId=" << device_info->product_id() << ", name='"
                   << device_info->product_name() << "', serial='"
                   << device_info->serial_number() << "', deviceId='"
-                  << device_info->device_id() << "'";
+                  << platform_device_id << "'";
 
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
@@ -110,11 +123,17 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   }
 }
 
-void HidService::RemoveDevice(const HidDeviceId& device_id) {
+void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  HidDeviceId device_id = FindDeviceIdByPlatformDeviceId(platform_device_id);
+  if (device_id == kInvalidHidDeviceId)
+    return;
+  device_id_map_.erase(device_id);
+
   DeviceMap::iterator it = devices_.find(device_id);
   if (it != devices_.end()) {
-    HID_LOG(USER) << "HID device removed: deviceId='" << device_id << "'";
+    HID_LOG(USER) << "HID device removed: deviceId='" << platform_device_id
+                  << "'";
 
     scoped_refptr<HidDeviceInfo> device = it->second;
     if (enumeration_ready_) {
@@ -143,6 +162,33 @@ void HidService::FirstEnumerationComplete() {
     }
     pending_enumerations_.clear();
   }
+}
+
+HidDeviceId HidService::AddDeviceIdMapping(
+    const HidPlatformDeviceId& platform_device_id) {
+  HidDeviceId device_id = FindDeviceIdByPlatformDeviceId(platform_device_id);
+  // Only add the |platform_device_id| into map if it is not found.
+  if (device_id == kInvalidHidDeviceId) {
+    device_id = device_id_generator.GetNext();
+    device_id_map_[device_id] = platform_device_id;
+  }
+  return device_id;
+}
+
+HidPlatformDeviceId HidService::FindPlatformDeviceIdByDeviceId(
+    const HidDeviceId& device_id) {
+  auto it = device_id_map_.find(device_id);
+  return it != device_id_map_.end() ? it->second : kInvalidHidPlatformDeviceId;
+}
+
+HidDeviceId HidService::FindDeviceIdByPlatformDeviceId(
+    const HidPlatformDeviceId& platform_device_id) {
+  for (auto it = device_id_map_.begin(); it != device_id_map_.end(); ++it) {
+    if (it->second == platform_device_id) {
+      return it->first;
+    }
+  }
+  return kInvalidHidDeviceId;
 }
 
 }  // namespace device

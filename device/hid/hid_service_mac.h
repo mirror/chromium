@@ -31,7 +31,7 @@ class HidServiceMac : public HidService {
 
  private:
   static base::ScopedCFTypeRef<IOHIDDeviceRef> OpenOnBlockingThread(
-      scoped_refptr<HidDeviceInfo> device_info);
+      const HidPlatformDeviceId& entry_id);
   void DeviceOpened(scoped_refptr<HidDeviceInfo> device_info,
                     const ConnectCallback& callback,
                     base::ScopedCFTypeRef<IOHIDDeviceRef> hid_device);

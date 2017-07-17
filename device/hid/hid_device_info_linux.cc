@@ -7,7 +7,6 @@
 namespace device {
 
 HidDeviceInfoLinux::HidDeviceInfoLinux(
-    const HidDeviceId& device_id,
     const std::string& device_node,
     uint16_t vendor_id,
     uint16_t product_id,
@@ -15,8 +14,7 @@ HidDeviceInfoLinux::HidDeviceInfoLinux(
     const std::string& serial_number,
     HidBusType bus_type,
     const std::vector<uint8_t> report_descriptor)
-    : HidDeviceInfo(device_id,
-                    vendor_id,
+    : HidDeviceInfo(vendor_id,
                     product_id,
                     product_name,
                     serial_number,

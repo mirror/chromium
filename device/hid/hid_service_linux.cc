@@ -99,7 +99,6 @@ class HidServiceLinux::BlockingTaskHelper : public UdevWatcher::Observer {
     const char* device_path = udev_device_get_syspath(device.get());
     if (!device_path)
       return;
-    HidDeviceId device_id = device_path;
 
     const char* subsystem = udev_device_get_subsystem(device.get());
     if (!subsystem || strcmp(subsystem, kHidrawSubsystem) != 0)
@@ -156,14 +155,14 @@ class HidServiceLinux::BlockingTaskHelper : public UdevWatcher::Observer {
       return;
 
     scoped_refptr<HidDeviceInfo> device_info(new HidDeviceInfoLinux(
-        device_id, device_node, vendor_id, product_id, product_name,
-        serial_number,
+        device_node, vendor_id, product_id, product_name, serial_number,
         kHIDBusTypeUSB,  // TODO(reillyg): Detect Bluetooth. crbug.com/443335
         std::vector<uint8_t>(report_descriptor_str.begin(),
                              report_descriptor_str.end())));
 
-    task_runner_->PostTask(FROM_HERE, base::Bind(&HidServiceLinux::AddDevice,
-                                                 service_, device_info));
+    task_runner_->PostTask(FROM_HERE,
+                           base::Bind(&HidServiceLinux::AddDevice, service_,
+                                      device_info, device_path));
   }
 
   void OnDeviceRemoved(ScopedUdevDevicePtr device) override {
@@ -171,8 +170,8 @@ class HidServiceLinux::BlockingTaskHelper : public UdevWatcher::Observer {
     const char* device_path = udev_device_get_syspath(device.get());
     if (device_path) {
       task_runner_->PostTask(
-          FROM_HERE, base::Bind(&HidServiceLinux::RemoveDevice, service_,
-                                std::string(device_path)));
+          FROM_HERE,
+          base::Bind(&HidServiceLinux::RemoveDevice, service_, device_path));
     }
   }
 

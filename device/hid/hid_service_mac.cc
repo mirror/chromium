@@ -66,14 +66,6 @@ bool TryGetHidDataProperty(io_service_t service,
 
 scoped_refptr<HidDeviceInfo> CreateDeviceInfo(
     base::mac::ScopedIOObject<io_service_t> service) {
-  uint64_t entry_id;
-  IOReturn result = IORegistryEntryGetRegistryEntryID(service, &entry_id);
-  if (result != kIOReturnSuccess) {
-    HID_LOG(EVENT) << "Failed to get IORegistryEntry ID: "
-                   << HexErrorCode(result);
-    return nullptr;
-  }
-
   std::vector<uint8_t> report_descriptor;
   if (!TryGetHidDataProperty(service, CFSTR(kIOHIDReportDescriptorKey),
                              &report_descriptor)) {
@@ -81,7 +73,7 @@ scoped_refptr<HidDeviceInfo> CreateDeviceInfo(
   }
 
   return new HidDeviceInfo(
-      entry_id, GetIntProperty(service, CFSTR(kIOHIDVendorIDKey)),
+      GetIntProperty(service, CFSTR(kIOHIDVendorIDKey)),
       GetIntProperty(service, CFSTR(kIOHIDProductIDKey)),
       GetStringProperty(service, CFSTR(kIOHIDProductKey)),
       GetStringProperty(service, CFSTR(kIOHIDSerialNumberKey)),
@@ -138,21 +130,24 @@ void HidServiceMac::Connect(const HidDeviceId& device_id,
     return;
   }
 
+  HidPlatformDeviceId entry_id = FindPlatformDeviceIdByDeviceId(device_id);
+  DCHECK_NE(entry_id, kInvalidHidPlatformDeviceId);
+
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, kBlockingTaskTraits,
-      base::Bind(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
+      base::Bind(&HidServiceMac::OpenOnBlockingThread, entry_id),
       base::Bind(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
                  map_entry->second, callback));
 }
 
 // static
 base::ScopedCFTypeRef<IOHIDDeviceRef> HidServiceMac::OpenOnBlockingThread(
-    scoped_refptr<HidDeviceInfo> device_info) {
+    const HidPlatformDeviceId& entry_id) {
   base::ScopedCFTypeRef<CFDictionaryRef> matching_dict(
-      IORegistryEntryIDMatching(device_info->device_id()));
+      IORegistryEntryIDMatching(entry_id));
   if (!matching_dict.get()) {
     HID_LOG(EVENT) << "Failed to create matching dictionary for ID: "
-                   << device_info->device_id();
+                   << entry_id;
     return base::ScopedCFTypeRef<IOHIDDeviceRef>();
   }
 
@@ -161,8 +156,7 @@ base::ScopedCFTypeRef<IOHIDDeviceRef> HidServiceMac::OpenOnBlockingThread(
   base::mac::ScopedIOObject<io_service_t> service(IOServiceGetMatchingService(
       kIOMasterPortDefault, matching_dict.release()));
   if (!service.get()) {
-    HID_LOG(EVENT) << "IOService not found for ID: "
-                   << device_info->device_id();
+    HID_LOG(EVENT) << "IOService not found for ID: " << entry_id;
     return base::ScopedCFTypeRef<IOHIDDeviceRef>();
   }
 
@@ -215,10 +209,18 @@ void HidServiceMac::AddDevices() {
 
   base::mac::ScopedIOObject<io_service_t> device;
   while (device.reset(IOIteratorNext(devices_added_iterator_)), device) {
+    HidPlatformDeviceId entry_id;
+    IOReturn result = IORegistryEntryGetRegistryEntryID(device, &entry_id);
+    if (result != kIOReturnSuccess) {
+      HID_LOG(EVENT) << "Failed to get IORegistryEntry ID: "
+                     << HexErrorCode(result);
+      continue;
+    }
+
     scoped_refptr<HidDeviceInfo> device_info =
         CreateDeviceInfo(std::move(device));
     if (device_info)
-      AddDevice(device_info);
+      AddDevice(device_info, entry_id);
   }
 }
 
@@ -227,7 +229,7 @@ void HidServiceMac::RemoveDevices() {
 
   base::mac::ScopedIOObject<io_service_t> device;
   while (device.reset(IOIteratorNext(devices_removed_iterator_)), device) {
-    uint64_t entry_id;
+    HidPlatformDeviceId entry_id;
     IOReturn result = IORegistryEntryGetRegistryEntryID(device, &entry_id);
     if (result == kIOReturnSuccess)
       RemoveDevice(entry_id);

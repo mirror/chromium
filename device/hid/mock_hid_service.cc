@@ -10,12 +10,14 @@ MockHidService::MockHidService() = default;
 
 MockHidService::~MockHidService() = default;
 
-void MockHidService::AddDevice(scoped_refptr<HidDeviceInfo> info) {
-  HidService::AddDevice(info);
+void MockHidService::AddDevice(scoped_refptr<HidDeviceInfo> info,
+                               const HidPlatformDeviceId& platform_device_id) {
+  HidService::AddDevice(info, platform_device_id);
 }
 
-void MockHidService::RemoveDevice(const HidDeviceId& device_id) {
-  HidService::RemoveDevice(device_id);
+void MockHidService::RemoveDevice(
+    const HidPlatformDeviceId& platform_device_id) {
+  HidService::RemoveDevice(platform_device_id);
 }
 
 void MockHidService::FirstEnumerationComplete() {

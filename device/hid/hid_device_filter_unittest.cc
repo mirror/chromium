@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 
-#include "build/build_config.h"
 #include "device/hid/hid_device_filter.h"
 #include "device/hid/hid_device_info.h"
 #include "device/hid/test_report_descriptors.h"
@@ -12,22 +11,11 @@
 
 namespace device {
 
-namespace {
-
-#if defined(OS_MACOSX)
-const uint64_t kTestDeviceId = 42;
-#else
-const char* kTestDeviceId = "device1";
-#endif
-
-}  // namespace
-
 class HidFilterTest : public testing::Test {
  public:
   void SetUp() override {
     device_info_ = new HidDeviceInfo(
-        kTestDeviceId, 0x046d, 0xc31c, "Test Keyboard", "123ABC",
-        kHIDBusTypeUSB,
+        0x046d, 0xc31c, "Test Keyboard", "123ABC", kHIDBusTypeUSB,
         std::vector<uint8_t>(kKeyboard, kKeyboard + kKeyboardSize));
   }
 
