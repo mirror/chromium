@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77c3f4f3_c32d8407",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T19:14:02Z",
+      "side": 1,
+      "message": "Yeah, you either need to know the ctor/dtor ordering for each observer relative to the MaximizeModeController (to avoid checks) or you need to check for a null controller on remove (and even possibly on add). This is just a trade-off between connecting individual components with less straightforward lifetimes, or using the \u0027always-valid\u0027 Shell owner object (but that shouldn\u0027t be a dumping ground).\n\nI\u0027m not sure there\u0027s a great solution here, but I have a couple ideas: (1) Add a static MaximizeModeObserver::RemoveObserver method that bails if the Shell\u0027s instance is null (presumably it\u0027s okay to no-op there, but a similar AddObserver helper would need to [D]CHECK for non-null). (2) A crazy idea: base::ScopedObserver (or similiar/subclass) could handle destruction of observed objects itself by implementing a new DestructionObserver interface and making observed classes call back when destroyed... (that\u0027s probably too crazy)",
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8024e375_5200f3b4",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T19:14:02Z",
+      "side": 1,
+      "message": "Please remove this TODO now, thanks!",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786456a7_ebc8824a",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T19:14:02Z",
+      "side": 1,
+      "message": "nit: I might name these simply AddObserver and RemoveObserver",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a26c40_0a7d38b1",
+        "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T19:14:02Z",
+      "side": 1,
+      "message": "nit: fix the header guard\u0027s spelling of MAXIMIZE here and elsewhere",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
