@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641d9e32_aa6f1263",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-17T09:44:38Z",
+      "side": 1,
+      "message": "FYI this can be weak because it\u0027s retained by the view hierarchy.\nIn fact, in your case you don\u0027t even need |loadingSpinnerBackgroundView|. This allows simplifying the code a bit:\n\n- (void)showLoadingSpinnerBackground {\n  BookmarkHomeWaitingView* spinnerView \u003d\n        [[BookmarkHomeWaitingView alloc] self.collectionView.bounds];\n  [spinnerView startWaiting];\n  self.collectionView.backgroundView \u003d spinnerView;\n  [self setEmptyBackgroundVisible:NO];\n}\n\n// Hides loading spinner background view\n- (void)hideLoadingSpinnerBackground {\n self.collectionView.backgroundView \u003d self.emptyCollectionBackgroundView;\n}",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 27
+      },
+      "revId": "dd827ae06e5d935e9ca41de853ccc73480c60307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
