@@ -170,7 +170,7 @@ gpu::SharedMemoryLimits GetCompositorContextSharedMemoryLimits(
 
 gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
     const gfx::ColorSpace& display_color_space,
-    bool has_transparent_background) {
+    bool requires_alpha_channel) {
   // This is used for the browser compositor (offscreen) and for the display
   // compositor (onscreen), so ask for capabilities needed by either one.
   // The default framebuffer for an offscreen context is not used, so it does
@@ -197,7 +197,7 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
     }
   }
 
-  if (has_transparent_background) {
+  if (requires_alpha_channel) {
     attributes.alpha_size = 8;
   } else if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512) {
     // In this case we prefer to use RGB565 format instead of RGBA8888 if
@@ -632,6 +632,10 @@ void CompositorImpl::SetHasTransparentBackground(bool transparent) {
   }
 }
 
+void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
+  requires_alpha_channel_ = flag;
+}
+
 void CompositorImpl::SetBackgroundColor(int color) {
   host_->set_background_color(color);
 }
@@ -779,7 +783,7 @@ void CompositorImpl::OnGpuChannelEstablished(
           automatic_flushes, support_locking,
           GetCompositorContextSharedMemoryLimits(root_window_),
           GetCompositorContextAttributes(display_color_space_,
-                                         has_transparent_background_),
+                                         requires_alpha_channel_),
           shared_context,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
   if (!context_provider->BindToCurrentThread()) {

@@ -1204,6 +1204,7 @@ void RenderWidgetHostViewAndroid::EvictFrameIfNecessary() {
     // When we're in a fullscreen and the frame size doesn't match the view
     // size (e.g. during a fullscreen rotation), we show black instead of the
     // incorrectly-sized frame.
+    LOG(ERROR) << "AVDA: evicting frame";
     EvictDelegatedFrame();
     UpdateBackgroundColor(SK_ColorBLACK);
   }
