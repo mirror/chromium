@@ -53,8 +53,7 @@ std::unique_ptr<base::ProcessMetrics> CreateProcessMetrics(
   return base::ProcessMetrics::CreateProcessMetrics(pid);
 }
 
-bool ParseSmapsHeader(const char* header_line,
-                      base::trace_event::ProcessMemoryMaps::VMRegion* region) {
+bool ParseSmapsHeader(const char* header_line, mojom::VmRegion* region) {
   // e.g., "00400000-00421000 r-xp 00000000 fc:01 1234  /foo.so\n"
   bool res = true;  // Whether this region should be appended or skipped.
   uint64_t end_addr = 0;
@@ -105,9 +104,7 @@ uint64_t ReadCounterBytes(char* counter_line) {
   return res == 1 ? counter_value * 1024 : 0;
 }
 
-uint32_t ParseSmapsCounter(
-    char* counter_line,
-    base::trace_event::ProcessMemoryMaps::VMRegion* region) {
+uint32_t ParseSmapsCounter(char* counter_line, mojom::VmRegion* region) {
   // A smaps counter lines looks as follows: "RSS:  0 Kb\n"
   uint32_t res = 1;
   char counter_name[20];
@@ -135,7 +132,7 @@ uint32_t ParseSmapsCounter(
 }
 
 uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
-                                base::trace_event::ProcessMemoryMaps* pmm) {
+                                std::vector<mojom::VmRegionPtr>* maps) {
   if (!smaps_file)
     return 0;
 
@@ -145,14 +142,14 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
   const uint32_t kNumExpectedCountersPerRegion = 6;
   uint32_t counters_parsed_for_current_region = 0;
   uint32_t num_valid_regions = 0;
-  base::trace_event::ProcessMemoryMaps::VMRegion region;
   bool should_add_current_region = false;
+  mojom::VmRegion region;
   for (;;) {
     line[0] = '\0';
     if (fgets(line, kMaxLineSize, smaps_file) == nullptr || !strlen(line))
       break;
     if (isxdigit(line[0]) && !isupper(line[0])) {
-      region = base::trace_event::ProcessMemoryMaps::VMRegion();
+      region = mojom::VmRegion();
       counters_parsed_for_current_region = 0;
       should_add_current_region = ParseSmapsHeader(line, &region);
     } else {
@@ -161,7 +158,9 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
                 kNumExpectedCountersPerRegion);
       if (counters_parsed_for_current_region == kNumExpectedCountersPerRegion) {
         if (should_add_current_region) {
-          pmm->AddVMRegion(region);
+          mojom::VmRegionPtr ptr = mojom::VmRegion::New();
+          *ptr = region;
+          maps->push_back(std::move(ptr));
           ++num_valid_regions;
           should_add_current_region = false;
         }
@@ -211,25 +210,56 @@ bool OSMetrics::FillOSMemoryDump(base::ProcessId pid,
 }
 
 // static
-bool OSMetrics::FillProcessMemoryMaps(
-    base::ProcessId pid,
-    base::trace_event::ProcessMemoryDump* pmd) {
+std::unique_ptr<std::vector<mojom::VmRegionPtr>>
+OSMetrics::GetProcessMemoryMaps(base::ProcessId pid) {
+  auto maps = base::MakeUnique<std::vector<mojom::VmRegionPtr>>();
   uint32_t res = 0;
   if (g_proc_smaps_for_testing) {
-    res =
-        ReadLinuxProcSmapsFile(g_proc_smaps_for_testing, pmd->process_mmaps());
+    res = ReadLinuxProcSmapsFile(g_proc_smaps_for_testing, maps.get());
   } else {
     std::string file_name =
         "/proc/" +
         (pid == base::kNullProcessId ? "self" : base::IntToString(pid)) +
         "/smaps";
     base::ScopedFILE smaps_file(fopen(file_name.c_str(), "r"));
-    res = ReadLinuxProcSmapsFile(smaps_file.get(), pmd->process_mmaps());
+    res = ReadLinuxProcSmapsFile(smaps_file.get(), maps.get());
   }
 
   if (!res)
+    return nullptr;
+
+  return maps;
+}
+
+// static
+bool OSMetrics::FillProcessMemoryMaps(
+    base::ProcessId pid,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  auto maps = GetProcessMemoryMaps(pid);
+  if (!maps)
     return false;
 
+  for (const mojom::VmRegionPtr& map : *maps) {
+    base::trace_event::ProcessMemoryMaps::VMRegion region;
+    region.start_address = map->start_address;
+    region.size_in_bytes = map->size_in_bytes;
+    region.module_timestamp = map->module_timestamp;
+    region.protection_flags = map->protection_flags;
+    region.mapped_file = map->mapped_file;
+    region.byte_stats_swapped = map->byte_stats_swapped;
+    region.byte_stats_private_dirty_resident =
+        map->byte_stats_private_dirty_resident;
+    region.byte_stats_private_clean_resident =
+        map->byte_stats_private_clean_resident;
+    region.byte_stats_shared_dirty_resident =
+        map->byte_stats_shared_dirty_resident;
+    region.byte_stats_shared_clean_resident =
+        map->byte_stats_shared_clean_resident;
+    region.byte_stats_proportional_resident =
+        map->byte_stats_proportional_resident;
+
+    pmd->process_mmaps()->AddVMRegion(region);
+  }
   pmd->set_has_process_mmaps();
   return true;
 }
