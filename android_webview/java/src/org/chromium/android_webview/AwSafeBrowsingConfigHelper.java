@@ -22,13 +22,13 @@ public class AwSafeBrowsingConfigHelper {
     private static final String OPT_IN_META_DATA_STR = "android.webkit.WebView.EnableSafeBrowsing";
 
     public static void maybeInitSafeBrowsingFromSettings(final Context appContext) {
-        if (CommandLine.getInstance().hasSwitch(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-                || appHasOptedIn(appContext)) {
-            // Assume safebrowsing on by default initially. If GMS is available, we later use
-            // isVerifyAppsEnabled() to check if "Scan device for security threats" has been checked
-            // by the user.
-            AwContentsStatics.setSafeBrowsingEnabled(true);
-        }
+        AwContentsStatics.setSafeBrowsingEnabledByManifest(
+                CommandLine.getInstance().hasSwitch(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+                || appHasOptedIn(appContext));
+        // Assume safebrowsing on by default initially. If GMS is available, we later use
+        // isVerifyAppsEnabled() to check if "Scan device for security threats" has been checked by
+        // the user.
+        AwContentsStatics.setSafeBrowsingUserOptIn(true);
     }
 
     private static boolean appHasOptedIn(Context appContext) {

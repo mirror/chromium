@@ -30,6 +30,8 @@ public class AwContentsStatics {
     private static final String sSafeBrowsingWarmUpHelper =
             "com.android.webview.chromium.SafeBrowsingWarmUpHelper";
 
+    private static boolean sSafeBrowsingUserOptIn;
+
     /**
      * Return the client certificate lookup table.
      */
@@ -89,12 +91,31 @@ public class AwContentsStatics {
     }
 
     // Can be called from any thread.
-    public static boolean getSafeBrowsingEnabled() {
-        return nativeGetSafeBrowsingEnabled();
+    public static boolean getSafeBrowsingEnabledByManifest() {
+        return nativeGetSafeBrowsingEnabledByManifest();
     }
 
+    public static void setSafeBrowsingEnabledByManifest(boolean enable) {
+        nativeSetSafeBrowsingEnabledByManifest(enable);
+    }
+
+    // TODO(ntfschr): remove this when downstream no longer depends on it
+    public static boolean getSafeBrowsingEnabled() {
+        return getSafeBrowsingEnabledByManifest();
+    }
+
+    // TODO(ntfschr): remove this when downstream no longer depends on it
     public static void setSafeBrowsingEnabled(boolean enable) {
-        nativeSetSafeBrowsingEnabled(enable);
+        setSafeBrowsingEnabledByManifest(enable);
+    }
+
+    // Can be called from any thread.
+    public static boolean getSafeBrowsingUserOptIn() {
+        return sSafeBrowsingUserOptIn;
+    }
+
+    public static void setSafeBrowsingUserOptIn(boolean optin) {
+        sSafeBrowsingUserOptIn = optin;
     }
 
     @SuppressWarnings("unchecked")
@@ -157,8 +178,8 @@ public class AwContentsStatics {
     private static native String nativeGetProductVersion();
     private static native void nativeSetServiceWorkerIoThreadClient(
             AwContentsIoThreadClient ioThreadClient, AwBrowserContext browserContext);
-    private static native boolean nativeGetSafeBrowsingEnabled();
-    private static native void nativeSetSafeBrowsingEnabled(boolean enable);
+    private static native boolean nativeGetSafeBrowsingEnabledByManifest();
+    private static native void nativeSetSafeBrowsingEnabledByManifest(boolean enable);
     private static native void nativeSetCheckClearTextPermitted(boolean permitted);
     private static native String nativeFindAddress(String addr);
 }
