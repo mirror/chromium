@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dcaf2ca5_0a818a47",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T23:46:16Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly either way. Anonymous utility functions are much more common in chromium code, but I agree there is some readability benefit.",
+      "parentUuid": "796b5a49_a8986b51",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df8dd94_7b71a301",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 4
