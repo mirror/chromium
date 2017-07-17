@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fee7979_89be2efe",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-17T19:53:10Z",
+      "side": 1,
+      "message": "I prefer to try to get the lifetimes right and do the if() checks only where needed. The existence of one of these checks provides useful information to the reader of the class.\n\nAsh startup and shutdown code is generally pretty well exercised by tests -- things should blow up immediately. However, in general I\u0027m OK with being conservative about if() checks in destructors, since it\u0027s really hard to find shutdown crashes in the field.",
+      "parentUuid": "77c3f4f3_c32d8407",
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8024e375_5200f3b4",
         "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
         "patchSetId": 2
