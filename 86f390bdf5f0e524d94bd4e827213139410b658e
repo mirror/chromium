@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cac42e0_4e0d9753",
+        "filename": "components/download/internal/test/mock_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae84168_b8bae2e8",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f0a491e_1d51d1b2",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2782b1_1c736f25",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0a491e_1d51d1b2",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bab0eef0_c0bf2d7e",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "I am getting an error of returning a reference to a local temporary object, I\u0027m going to keep it for now unless you see another way of doing it?",
+      "parentUuid": "c83981e4_3c6711f1",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fed3b0_b708dfc1",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018c5c80_27851814",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53fed3b0_b708dfc1",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a4864703_60fc36b2",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c2c53a_b9181c5f",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1921343_53c73ad7",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b27bff_7a0d3b6d",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1921343_53c73ad7",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a3719e56_4360780b",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Yes, because xingliu@ commented that it would be more appropriate to handle using the StartCallback rather than the OnDownloadSuccess/Failure (see comment: https://chromium-review.googlesource.com/c/567585/6/components%252Fdownload%252Finternal%252Ftest%252Ftest_download_service.cc#61). This still returns both success and failure events based on the different StartResults.\n\nPlease let me know if, as a customer, this still makes sense (and xingliu@\u0027s comment holds) or if it would be better to maintain the OnDownloadSuccess/Failure calls to the client.",
+      "parentUuid": "0bfeac73_b327dc8c",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40405713_59069b4a",
         "filename": "components/download/internal/test/test_download_service.h",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96781113_b7a89f8d",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-17T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40405713_59069b4a",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
