@@ -141,11 +141,8 @@ bool ContainsWorker(const std::vector<scoped_refptr<SchedulerWorker>>& workers,
 class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
     : public SchedulerWorker::Delegate {
  public:
-  // |outer| owns the worker for which this delegate is constructed. |index|
-  // will be appended to the pool name to label the underlying worker threads.
-  SchedulerWorkerDelegateImpl(
-      SchedulerWorkerPoolImpl* outer,
-      int index);
+  // |outer| owns the worker for which this delegate is constructed.
+  SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer);
   ~SchedulerWorkerDelegateImpl() override;
 
   // SchedulerWorker::Delegate:
@@ -180,8 +177,6 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // Number of tasks executed since the last time the
   // TaskScheduler.NumTasksBeforeDetach histogram was recorded.
   size_t num_tasks_since_last_detach_ = 0;
-
-  const int index_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -251,11 +246,9 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
            ? 1
            : 0);
 
-  // Create workers in reverse order of index so that the worker with the
-  // highest index is at the bottom of the idle stack.
-  for (int index = params.max_threads() - 1; index >= 0; --index) {
+  for (int index = 0; index < params.max_threads(); ++index) {
     workers_[index] = make_scoped_refptr(new SchedulerWorker(
-        priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this, index),
+        priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this),
         task_tracker_, &lock_, params.backward_compatibility(),
         index < num_alive_workers ? SchedulerWorker::InitialState::ALIVE
                                   : SchedulerWorker::InitialState::DETACHED));
@@ -435,11 +428,8 @@ size_t SchedulerWorkerPoolImpl::NumberOfAliveWorkersForTesting() {
 }
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    SchedulerWorkerDelegateImpl(
-        SchedulerWorkerPoolImpl* outer,
-        int index)
-    : outer_(outer),
-      index_(index) {}
+    SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
+    : outer_(outer) {}
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     ~SchedulerWorkerDelegateImpl() = default;
@@ -462,7 +452,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
   }
 
   PlatformThread::SetName(
-      StringPrintf("TaskScheduler%sWorker%d", outer_->name_.c_str(), index_));
+      StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
   DCHECK(!tls_current_worker_pool.Get().Get());
   tls_current_worker_pool.Get().Set(outer_);
