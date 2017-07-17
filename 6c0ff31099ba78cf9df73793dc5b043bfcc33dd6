@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0573c8dc_fba48cce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-17T15:13:17Z",
+      "side": 1,
+      "message": "In Blink, yes, WorkerGlobalScope, etc. follow the same way as Window, and we have the global proxy and actual global object of worker/worklet.\n\nHowever, the spec does NOT expect a global proxy for worker/worklet AFAIK.  But it should be okay because the global proxy is unobservable from author script.\n\nHaving the global proxy for worker/worklet simplifies bindings a little because we have the same structure in window and worker/worklet.",
+      "parentUuid": "241f8acb_f7d61a00",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87a414eb_b4d84f55",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
         "patchSetId": 12
