@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a05268_bd08d867",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T22:04:48Z",
+      "side": 1,
+      "message": "Just a thought - Does it make sense to limit single file to something like 1mb, and calculate number of files based on max_total_size? \nThis would make memory requirements of stitching more deterministic.",
+      "range": {
+        "startLine": 322,
+        "startChar": 46,
+        "endLine": 322,
+        "endChar": 50
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b098300_10a8ea92",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T22:04:48Z",
+      "side": 1,
+      "message": "nit: Any particular reason why this \u0027if\u0027 is separated from the next? Would it make sense to do early exit for unbounded case?\n\nif (!IsBounded()) {\n  WriteConstantsToFile(std::move(constants_value), final_log_file_.get());\n  return;\n}",
+      "range": {
+        "startLine": 513,
+        "startChar": 6,
+        "endLine": 513,
+        "endChar": 15
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dd0ee7_dc380263",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T22:04:48Z",
+      "side": 1,
+      "message": "nit: It seems like nifty 3-string WriteToFile may work here: \n             \"Log data is being written to the \", GetInprogressDirectory().value(), \" directory\");",
+      "range": {
+        "startLine": 561,
+        "startChar": 33,
+        "endLine": 561,
+        "endChar": 40
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
