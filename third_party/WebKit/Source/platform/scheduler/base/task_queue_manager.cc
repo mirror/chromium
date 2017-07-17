@@ -535,13 +535,13 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   currently_executing_task_queue_ = prev_executing_task_queue;
 
-
   if (queue->GetShouldNotifyObservers()) {
     if (task_start_time) {
       *time_after_task = real_time_domain()->Now();
       double task_end_time = MonotonicTimeInSeconds(*time_after_task);
 
       queue->OnTaskCompleted(
+          pending_task,
           base::TimeTicks() + base::TimeDelta::FromSecondsD(task_start_time),
           base::TimeTicks() + base::TimeDelta::FromSecondsD(task_end_time));
 
