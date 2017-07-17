@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc241496_07952ee3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T20:12:51Z",
+      "side": 1,
+      "message": "I don\u0027t see a change in the current patchset.",
+      "parentUuid": "68b25cdb_f03e60b4",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 134
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a92395_911b6fea",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 4
