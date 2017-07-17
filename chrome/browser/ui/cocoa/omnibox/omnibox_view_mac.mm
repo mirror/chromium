@@ -248,11 +248,8 @@ void OmniboxViewMac::ResetTabState(WebContents* web_contents) {
 
 void OmniboxViewMac::Update() {
   if (model()->UpdatePermanentText()) {
-    const bool was_select_all = IsSelectAll();
     NSTextView* text_view =
         base::mac::ObjCCastStrict<NSTextView>([field_ currentEditor]);
-    const bool was_reversed =
-        [text_view selectionAffinity] == NSSelectionAffinityUpstream;
 
     // Restore everything to the baseline look.
     RevertAll();
@@ -265,8 +262,8 @@ void OmniboxViewMac::Update() {
     // trailing portion of a long URL being scrolled into view.  We could try
     // and address cases like this, but it seems better to just not muck with
     // things when the omnibox isn't focused to begin with.
-    if (was_select_all && model()->has_focus())
-      SelectAll(was_reversed);
+    if (model()->has_focus())
+      SelectAll(true);
   } else {
     // TODO(shess): This corresponds to _win and _gtk, except those
     // guard it with a test for whether the security level changed.
