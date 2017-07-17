@@ -38,7 +38,7 @@ class PasswordStore;
 struct CredentialInfo;
 
 class CredentialManagerImpl
-    : public mojom::CredentialManager,
+    : public password_manager::mojom::CredentialManager,
       public content::WebContentsObserver,
       public CredentialManagerPasswordFormManagerDelegate,
       public CredentialManagerPendingRequestTaskDelegate,
@@ -48,7 +48,7 @@ class CredentialManagerImpl
                         PasswordManagerClient* client);
   ~CredentialManagerImpl() override;
 
-  void BindRequest(mojom::CredentialManagerRequest request);
+  void BindRequest(password_manager::mojom::CredentialManagerRequest request);
   bool HasBinding() const;
   void DisconnectBinding();
 
@@ -99,7 +99,7 @@ class CredentialManagerImpl
   std::unique_ptr<CredentialManagerPendingPreventSilentAccessTask>
       pending_require_user_mediation_;
 
-  mojo::Binding<mojom::CredentialManager> binding_;
+  mojo::Binding<password_manager::mojom::CredentialManager> binding_;
 
   base::WeakPtrFactory<CredentialManagerImpl> weak_factory_;
 
