@@ -287,7 +287,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         setSearchProviderHasLogo(searchProviderHasLogo);
         mSearchProviderLogoView.showSearchProviderInitialView();
 
-        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
+        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo), getMaxTileColumns());
 
         mRecyclerView.init(mUiConfig, mContextMenuManager);
 
