@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2345dd2_b9d981f1",
+        "filename": "build/write_build_date_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-17T19:38:33Z",
+      "side": 1,
+      "message": "Hi! Thanks for the change. I\u0027m fine with leveraging SOURCE_DATE_EPOCH as I\u0027m a fan of the reproducible effort.\n\nI searched through the code and failed to find any usage (?!) of --build_date_override. I looked back in the initial review adding this file and I fail to remember why we added it in the first place.\n\nThe main issue with --build_date_override is that it allows arbitrary dates and this is just too easy to misuse. In practice, this date is used for various time bombs in the code base, like certificate pinning (HPKP).\n\nI\u0027m thinking that a good addition would be to somehow surface a warning when the delta between today and --build_date_override is too large. I won\u0027t block this patch on this idea but as this flag will be used in practice, it\u0027s probably worth.\n\nI\u0027d like the current patch to be tweaked and I see the following options:\n\n1) Use default\u003dos.environ.get(\u0027SOURCE_DATE_EPOCH\u0027) here and update the help string accordingly. I prefer that to the change proposed.\n\n2) Update GN files to set a default from the environment variable, and pass --build_date_override if set. That\u0027s not something that is done often, I only see 3 uses of this function in the code base.\nhttps://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#getenv\n\n3) Remove the flag altogether since I can\u0027t find known usage and document accordingly that the build date can be overridden via the environment variable.",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "490c9ac8a337e76bca0281fa23e0226ac1eef1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
