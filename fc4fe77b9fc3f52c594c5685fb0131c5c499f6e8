@@ -2,6 +2,154 @@
   "comments": [
     {
       "key": {
+        "uuid": "56e6b857_66af29de",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "should have an example, like \".google.com\" matches all subdomains (no need for tree graphic)",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c8ed94_afc47833",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "it\u0027s not clear from this comment whether this optimization is actually implemented",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25601c1b_72943ee3",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "could put a DCHECK(!node-\u003ematch_prefix)",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0dfb33a_4191221d",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "move this above if check",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2035d76_0dbad60a",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "const\u0026",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 35
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5603f408_c52fc139",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "should check for node-\u003ematch_prefix before calling find, reads a little better and reduces code duplication",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de387d27_208092b4",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "DCHECK(node)",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3e963b_c6688796",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T21:45:57Z",
+      "side": 1,
+      "message": "this is still an unncessary bounce on the IO thread here?",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50107e26_4298ec16",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 9
