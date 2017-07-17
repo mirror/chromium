@@ -16,6 +16,24 @@
       "revId": "938fce50b4ce9b0d5d7c1f213293a932dcec6ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d476ff48_e137b1f7",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-17T21:54:20Z",
+      "side": 1,
+      "message": "What this call does is generate an exception (on x86-64, an int3) with a magic value that is handled by the system exception handler (crashlogger). The crashlogger daemon recognizes the magic value and walks the stack of the thread that generated the exception, then restores execution.",
+      "parentUuid": "240ca2ba_4d5c6a7b",
+      "revId": "938fce50b4ce9b0d5d7c1f213293a932dcec6ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
