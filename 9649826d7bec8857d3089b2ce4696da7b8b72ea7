@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d90f28_84966679",
+        "filename": "components/feature_engagement_tracker/test/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Nit: Remove trailing /",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb344c0b_89ebb55d",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Could this just be availability_model.h?",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 82
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8caff44_8aaca7da",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "You have feature_config_storage_validator.h. Do you also need this now that you don\u0027t need the StoreEverythingStorageValidator class below?",
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ae48a_e4d1a889",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Optional nit: Typically, this shouldn\u0027t be |true| until after Initialize() has been called, but I think in practice, it doesn\u0027t really matter that much. Also, it\u0027s true that this class is ready :-)\nI\u0027m OK with keeping it as is to keep this AvailabilityModel super simple.",
+      "range": {
+        "startLine": 38,
+        "startChar": 41,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810f0c4b_86c58cf9",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Since availabilities_ are never populated, you can simplify this method by just returning base::nullopt.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88722516_63490059",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Unused. Remove.",
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f446f22a_007f7089",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Unused. Remove.",
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b091dbc0_3c411a48",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Even though this compiles and is OK style, would you mind changing this to std::move(events_) while you\u0027re anyway editing this file?",
+      "range": {
+        "startLine": 67,
+        "startChar": 59,
+        "endLine": 67,
+        "endChar": 67
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f99df9_e0ca9988",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "This class is unused.",
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27fe1c9_060949ce",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T18:06:58Z",
+      "side": 1,
+      "message": "Maybe something JSON-y here? Like:\n\n  Your feature configuration must have: |\"availability\": \"ANY\"|,",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 72
+      },
+      "revId": "9649826d7bec8857d3089b2ce4696da7b8b72ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
