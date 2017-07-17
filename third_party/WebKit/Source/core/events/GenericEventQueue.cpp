@@ -31,13 +31,16 @@
 
 namespace blink {
 
-GenericEventQueue* GenericEventQueue::Create(EventTarget* owner) {
-  return new GenericEventQueue(owner);
+GenericEventQueue* GenericEventQueue::Create(TaskType task_type,
+                                             EventTarget* owner) {
+  return new GenericEventQueue(task_type, owner);
 }
 
-GenericEventQueue::GenericEventQueue(EventTarget* owner)
+GenericEventQueue::GenericEventQueue(TaskType task_type, EventTarget* owner)
     : owner_(owner),
-      timer_(this, &GenericEventQueue::TimerFired),
+      timer_(TaskRunnerHelper::Get(task_type, owner->GetExecutionContext()),
+             this,
+             &GenericEventQueue::TimerFired),
       is_closed_(false) {}
 
 GenericEventQueue::~GenericEventQueue() {}

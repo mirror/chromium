@@ -27,6 +27,7 @@
 #define GenericEventQueue_h
 
 #include "core/CoreExport.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/EventQueue.h"
 #include "core/events/EventTarget.h"
 #include "platform/Timer.h"
@@ -37,7 +38,7 @@ namespace blink {
 
 class CORE_EXPORT GenericEventQueue final : public EventQueue {
  public:
-  static GenericEventQueue* Create(EventTarget*);
+  static GenericEventQueue* Create(TaskType, EventTarget*);
   ~GenericEventQueue() override;
 
   // EventQueue
@@ -50,12 +51,12 @@ class CORE_EXPORT GenericEventQueue final : public EventQueue {
   bool HasPendingEvents() const;
 
  private:
-  explicit GenericEventQueue(EventTarget*);
+  explicit GenericEventQueue(TaskType, EventTarget*);
   void TimerFired(TimerBase*);
 
   Member<EventTarget> owner_;
   HeapVector<Member<Event>> pending_events_;
-  Timer<GenericEventQueue> timer_;
+  TaskRunnerTimer<GenericEventQueue> timer_;
 
   bool is_closed_;
 };
