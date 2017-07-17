@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f878afe7_63a1342e",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_chip.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T04:25:24Z",
+      "side": 1,
+      "message": "Changed \u0027\u0027 to null to make this a bit more obvious, both here and in item.js",
+      "parentUuid": "26de3971_ee396f3a",
+      "revId": "437b16c9efbe76c19ba0975c58dc23c8b08a49ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7489828e_5d4e07ad",
         "filename": "chrome/browser/resources/md_bookmarks/item.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "437b16c9efbe76c19ba0975c58dc23c8b08a49ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fa2394_1b60be61",
+        "filename": "chrome/browser/resources/md_bookmarks/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T04:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7489828e_5d4e07ad",
+      "revId": "437b16c9efbe76c19ba0975c58dc23c8b08a49ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
