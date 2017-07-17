@@ -1005,15 +1005,15 @@ std::unique_ptr<TracedValue> LocalFrameView::AnalyzerCounters() {
   if (!analyzer_)
     return TracedValue::Create();
   std::unique_ptr<TracedValue> value = analyzer_->ToTracedValue();
-  value->SetString("host",
-                   GetLayoutViewItem().GetDocument().location()->host());
-  value->SetString(
+  value->SetStringWithCopiedName(
+      "host", GetLayoutViewItem().GetDocument().location()->host());
+  value->SetStringWithCopiedName(
       "frame",
       String::Format("0x%" PRIxPTR, reinterpret_cast<uintptr_t>(frame_.Get())));
-  value->SetInteger("contentsHeightAfterLayout",
-                    GetLayoutViewItem().DocumentRect().Height());
-  value->SetInteger("visibleHeight", VisibleHeight());
-  value->SetInteger(
+  value->SetIntegerWithCopiedName("contentsHeightAfterLayout",
+                                  GetLayoutViewItem().DocumentRect().Height());
+  value->SetIntegerWithCopiedName("visibleHeight", VisibleHeight());
+  value->SetIntegerWithCopiedName(
       "approximateBlankCharacterCount",
       FontFaceSet::ApproximateBlankCharacterCount(*frame_->GetDocument()));
   return value;

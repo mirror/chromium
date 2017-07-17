@@ -16,11 +16,11 @@ std::unique_ptr<TracedValue> InspectorWebSocketCreateEvent::Data(
     const KURL& url,
     const String& protocol) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  value->SetInteger("identifier", identifier);
-  value->SetString("url", url.GetString());
-  value->SetString("frame", ToHexString(document->GetFrame()));
+  value->SetIntegerWithCopiedName("identifier", identifier);
+  value->SetStringWithCopiedName("url", url.GetString());
+  value->SetStringWithCopiedName("frame", ToHexString(document->GetFrame()));
   if (!protocol.IsNull())
-    value->SetString("webSocketProtocol", protocol);
+    value->SetStringWithCopiedName("webSocketProtocol", protocol);
   SetCallStack(value.get());
   return value;
 }
@@ -29,8 +29,8 @@ std::unique_ptr<TracedValue> InspectorWebSocketEvent::Data(
     Document* document,
     unsigned long identifier) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  value->SetInteger("identifier", identifier);
-  value->SetString("frame", ToHexString(document->GetFrame()));
+  value->SetIntegerWithCopiedName("identifier", identifier);
+  value->SetStringWithCopiedName("frame", ToHexString(document->GetFrame()));
   SetCallStack(value.get());
   return value;
 }

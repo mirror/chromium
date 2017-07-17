@@ -62,10 +62,12 @@ std::unique_ptr<TracedValue> GetTraceArgsForScriptElement(
     const TextPosition& text_position) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
   ScriptLoader* script_loader = element->Loader();
-  if (script_loader && script_loader->GetResource())
-    value->SetString("url", script_loader->GetResource()->Url().GetString());
+  if (script_loader && script_loader->GetResource()) {
+    value->SetStringWithCopiedName(
+        "url", script_loader->GetResource()->Url().GetString());
+  }
   if (element->GetDocument().GetFrame()) {
-    value->SetString(
+    value->SetStringWithCopiedName(
         "frame",
         String::Format("0x%" PRIx64,
                        static_cast<uint64_t>(reinterpret_cast<intptr_t>(
@@ -73,8 +75,10 @@ std::unique_ptr<TracedValue> GetTraceArgsForScriptElement(
   }
   if (text_position.line_.ZeroBasedInt() > 0 ||
       text_position.column_.ZeroBasedInt() > 0) {
-    value->SetInteger("lineNumber", text_position.line_.OneBasedInt());
-    value->SetInteger("columnNumber", text_position.column_.OneBasedInt());
+    value->SetIntegerWithCopiedName("lineNumber",
+                                    text_position.line_.OneBasedInt());
+    value->SetIntegerWithCopiedName("columnNumber",
+                                    text_position.column_.OneBasedInt());
   }
   return value;
 }
