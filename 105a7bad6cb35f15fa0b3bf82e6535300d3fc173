@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ed53bd_957d3c3b",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-17T15:07:49Z",
+      "side": 1,
+      "message": "I see there was some discussion of this earlier in the review, but I\u0027m not sure I understand why the declaration of tmp_list should survive the if block below. As is, this is always allocating a list but only using it if firstMatch isn\u0027t present.",
+      "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
