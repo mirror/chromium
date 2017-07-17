@@ -62,21 +62,21 @@ class DevicePermissionsManagerTest : public testing::Test {
         new MockUsbDevice(0, 0, "Test Manufacturer", "Test Product", "12345");
     device3_ = new MockUsbDevice(0, 0, "Test Manufacturer", "Test Product", "");
     device4_ =
-        new HidDeviceInfo(kTestDeviceIds[0], 0, 0, "Test HID Device", "abcde",
+        new HidDeviceInfo(0, 0, "Test HID Device", "abcde",
                           device::kHIDBusTypeUSB, std::vector<uint8_t>());
-    device_client_.hid_service()->AddDevice(device4_);
+    device_client_.hid_service()->AddDevice(device4_, kTestDeviceIds[0]);
     device5_ =
-        new HidDeviceInfo(kTestDeviceIds[1], 0, 0, "Test HID Device", "",
-                          device::kHIDBusTypeUSB, std::vector<uint8_t>());
-    device_client_.hid_service()->AddDevice(device5_);
+        new HidDeviceInfo(0, 0, "Test HID Device", "", device::kHIDBusTypeUSB,
+                          std::vector<uint8_t>());
+    device_client_.hid_service()->AddDevice(device5_, kTestDeviceIds[1]);
     device6_ =
-        new HidDeviceInfo(kTestDeviceIds[2], 0, 0, "Test HID Device", "67890",
+        new HidDeviceInfo(0, 0, "Test HID Device", "67890",
                           device::kHIDBusTypeUSB, std::vector<uint8_t>());
-    device_client_.hid_service()->AddDevice(device6_);
+    device_client_.hid_service()->AddDevice(device6_, kTestDeviceIds[2]);
     device7_ =
-        new HidDeviceInfo(kTestDeviceIds[3], 0, 0, "Test HID Device", "",
-                          device::kHIDBusTypeUSB, std::vector<uint8_t>());
-    device_client_.hid_service()->AddDevice(device7_);
+        new HidDeviceInfo(0, 0, "Test HID Device", "", device::kHIDBusTypeUSB,
+                          std::vector<uint8_t>());
+    device_client_.hid_service()->AddDevice(device7_, kTestDeviceIds[3]);
     device_client_.hid_service()->FirstEnumerationComplete();
   }
 
@@ -184,8 +184,8 @@ TEST_F(DevicePermissionsManagerTest, DisconnectDevice) {
 
   device_client_.usb_service()->RemoveDevice(device0_);
   device_client_.usb_service()->RemoveDevice(device1_);
-  device_client_.hid_service()->RemoveDevice(device4_->device_id());
-  device_client_.hid_service()->RemoveDevice(device5_->device_id());
+  device_client_.hid_service()->RemoveDevice(kTestDeviceIds[0] /* device4_ */);
+  device_client_.hid_service()->RemoveDevice(kTestDeviceIds[1] /* device5_ */);
 
   // Device 0 will be accessible when it is reconnected because it can be
   // recognized by its serial number.

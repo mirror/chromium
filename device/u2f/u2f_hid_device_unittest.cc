@@ -220,10 +220,9 @@ TEST_F(U2fHidDeviceTest, TestConnectionFailure) {
   MockHidService* hid_service = client->hid_service();
   HidCollectionInfo c_info;
   c_info.usage = HidUsageAndPage(1, static_cast<HidUsageAndPage::Page>(0xf1d0));
-  scoped_refptr<HidDeviceInfo> device0 =
-      new HidDeviceInfo(kTestDeviceId, 0, 0, "Test Fido Device", "123FIDO",
-                        kHIDBusTypeUSB, c_info, 64, 64, 0);
-  hid_service->AddDevice(device0);
+  scoped_refptr<HidDeviceInfo> device0 = new HidDeviceInfo(
+      0, 0, "Test Fido Device", "123FIDO", kHIDBusTypeUSB, c_info, 64, 64, 0);
+  hid_service->AddDevice(device0, kTestDeviceId);
   hid_service->FirstEnumerationComplete();
   hid_service->GetDevices(callback.callback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
@@ -265,10 +264,9 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
   MockHidService* hid_service = client->hid_service();
   HidCollectionInfo c_info;
   c_info.usage = HidUsageAndPage(1, static_cast<HidUsageAndPage::Page>(0xf1d0));
-  scoped_refptr<HidDeviceInfo> device0 =
-      new HidDeviceInfo(kTestDeviceId, 0, 0, "Test Fido Device", "123FIDO",
-                        kHIDBusTypeUSB, c_info, 64, 64, 0);
-  hid_service->AddDevice(device0);
+  scoped_refptr<HidDeviceInfo> device0 = new HidDeviceInfo(
+      0, 0, "Test Fido Device", "123FIDO", kHIDBusTypeUSB, c_info, 64, 64, 0);
+  hid_service->AddDevice(device0, kTestDeviceId);
   hid_service->FirstEnumerationComplete();
   hid_service->GetDevices(callback.callback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =

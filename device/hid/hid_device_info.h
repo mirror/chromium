@@ -23,26 +23,27 @@ enum HidBusType {
   kHIDBusTypeBluetooth = 1,
 };
 
-#if defined(OS_MACOSX)
 typedef uint64_t HidDeviceId;
-const uint64_t kInvalidHidDeviceId = -1;
+const uint64_t kInvalidHidDeviceId = 0;
+
+#if defined(OS_MACOSX)
+typedef uint64_t HidPlatformDeviceId;
+const uint64_t kInvalidHidPlatformDeviceId = -1;
 #else
-typedef std::string HidDeviceId;
-extern const char kInvalidHidDeviceId[];
+typedef std::string HidPlatformDeviceId;
+extern const char kInvalidHidPlatformDeviceId[];
 #endif
 
 class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
  public:
-  HidDeviceInfo(const HidDeviceId& device_id,
-                uint16_t vendor_id,
+  HidDeviceInfo(uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
                 const std::string& serial_number,
                 HidBusType bus_type,
                 const std::vector<uint8_t> report_descriptor);
 
-  HidDeviceInfo(const HidDeviceId& device_id,
-                uint16_t vendor_id,
+  HidDeviceInfo(uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
                 const std::string& serial_number,
@@ -54,6 +55,7 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
 
   // Device identification.
   const HidDeviceId& device_id() const { return device_id_; }
+  void set_device_id(const HidDeviceId& device_id) { device_id_ = device_id; }
   uint16_t vendor_id() const { return vendor_id_; }
   uint16_t product_id() const { return product_id_; }
   const std::string& product_name() const { return product_name_; }

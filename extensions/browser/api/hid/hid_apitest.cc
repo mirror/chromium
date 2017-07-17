@@ -26,6 +26,7 @@ using base::ThreadTaskRunnerHandle;
 using device::HidCollectionInfo;
 using device::HidDeviceId;
 using device::HidDeviceInfo;
+using device::HidPlatformDeviceId;
 using device::HidUsageAndPage;
 using device::MockDeviceClient;
 using net::IOBuffer;
@@ -199,7 +200,7 @@ class HidApiTest : public ShellApiTest {
     device_client_->hid_service()->FirstEnumerationComplete();
   }
 
-  void AddDevice(const HidDeviceId& device_id,
+  void AddDevice(const HidPlatformDeviceId& platform_device_id,
                  int vendor_id,
                  int product_id,
                  bool report_id) {
@@ -213,8 +214,9 @@ class HidApiTest : public ShellApiTest {
                                kReportDescriptor + sizeof(kReportDescriptor));
     }
     device_client_->hid_service()->AddDevice(
-        new HidDeviceInfo(device_id, vendor_id, product_id, "Test Device", "A",
-                          device::kHIDBusTypeUSB, report_descriptor));
+        new HidDeviceInfo(vendor_id, product_id, "Test Device", "A",
+                          device::kHIDBusTypeUSB, report_descriptor),
+        platform_device_id);
   }
 
  protected:

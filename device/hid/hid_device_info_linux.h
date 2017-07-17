@@ -13,8 +13,7 @@ namespace device {
 
 class HidDeviceInfoLinux : public HidDeviceInfo {
  public:
-  HidDeviceInfoLinux(const HidDeviceId& device_id,
-                     const std::string& device_node,
+  HidDeviceInfoLinux(const std::string& device_node,
                      uint16_t vendor_id,
                      uint16_t product_id,
                      const std::string& product_name,

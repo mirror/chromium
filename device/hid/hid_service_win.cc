@@ -59,7 +59,11 @@ void HidServiceWin::Connect(const HidDeviceId& device_id,
   }
   scoped_refptr<HidDeviceInfo> device_info = map_entry->second;
 
-  base::win::ScopedHandle file(OpenDevice(device_info->device_id()));
+  HidPlatformDeviceId platform_device_id =
+      FindPlatformDeviceIdByDeviceId(device_id);
+  DCHECK_NE(platform_device_id, kInvalidHidPlatformDeviceId);
+
+  base::win::ScopedHandle file(OpenDevice(platform_device_id));
   if (!file.IsValid()) {
     HID_PLOG(EVENT) << "Failed to open device";
     task_runner_->PostTask(FROM_HERE, base::Bind(callback, nullptr));
@@ -254,15 +258,15 @@ void HidServiceWin::AddDeviceBlocking(
   // The descriptor is unavailable on Windows because HID devices are exposed to
   // user-space as individual top-level collections.
   scoped_refptr<HidDeviceInfo> device_info(new HidDeviceInfo(
-      device_path, attrib.VendorID, attrib.ProductID, product_name,
-      serial_number,
+      attrib.VendorID, attrib.ProductID, product_name, serial_number,
       kHIDBusTypeUSB,  // TODO(reillyg): Detect Bluetooth. crbug.com/443335
       collection_info, max_input_report_size, max_output_report_size,
       max_feature_report_size));
 
   HidD_FreePreparsedData(preparsed_data);
   task_runner->PostTask(
-      FROM_HERE, base::Bind(&HidServiceWin::AddDevice, service, device_info));
+      FROM_HERE,
+      base::Bind(&HidServiceWin::AddDevice, service, device_info, device_path));
 }
 
 void HidServiceWin::OnDeviceAdded(const GUID& class_guid,
