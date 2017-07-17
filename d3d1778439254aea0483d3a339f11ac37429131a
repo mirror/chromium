@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fee708c_a5e1231d",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-17T20:17:28Z",
+      "side": 1,
+      "message": "isn\u0027t this info redundant with the color space of the returned SkImage?  If not, that\u0027a a bug IMHO.",
+      "range": {
+        "startLine": 356,
+        "startChar": 25,
+        "endLine": 356,
+        "endChar": 44
+      },
+      "revId": "d3d1778439254aea0483d3a339f11ac37429131a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab3cebb_56ff4d59",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-17T20:17:28Z",
+      "side": 1,
+      "message": "-\u003eSwizzleImageDataIfNeeded",
+      "range": {
+        "startLine": 597,
+        "startChar": 12,
+        "endLine": 597,
+        "endChar": 28
+      },
+      "revId": "d3d1778439254aea0483d3a339f11ac37429131a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad4d529_ada69b7f",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-17T20:17:28Z",
+      "side": 1,
+      "message": "can\u0027t this be static_cast?",
+      "range": {
+        "startLine": 604,
+        "startChar": 11,
+        "endLine": 604,
+        "endChar": 37
+      },
+      "revId": "d3d1778439254aea0483d3a339f11ac37429131a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1fb5a4_e5185893",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-17T20:17:28Z",
+      "side": 1,
+      "message": "comment not useful",
+      "range": {
+        "startLine": 635,
+        "startChar": 16,
+        "endLine": 635,
+        "endChar": 22
+      },
+      "revId": "d3d1778439254aea0483d3a339f11ac37429131a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fb52da_efe1166d",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-17T20:17:28Z",
+      "side": 1,
+      "message": "comment adds no info",
+      "range": {
+        "startLine": 638,
+        "startChar": 5,
+        "endLine": 638,
+        "endChar": 11
+      },
+      "revId": "d3d1778439254aea0483d3a339f11ac37429131a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
