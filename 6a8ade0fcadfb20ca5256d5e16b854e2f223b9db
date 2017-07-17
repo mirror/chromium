@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "13272dcd_0f625c33",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T19:04:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1bde7831_5587634a",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d812cb_002fc40c",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 4
@@ -60,6 +84,24 @@
       "writtenOn": "2017-07-17T15:39:58Z",
       "side": 1,
       "message": "But it\u0027s still in your CL, so please just add that it owns |this| or something :).",
+      "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9946dd50_140b12da",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T19:04:44Z",
+      "side": 1,
+      "message": "Oops, I wrote that comment before I decided to do it in a later CL.",
+      "parentUuid": "e6d812cb_002fc40c",
       "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
