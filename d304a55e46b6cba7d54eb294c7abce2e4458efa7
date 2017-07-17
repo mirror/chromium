@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "44c2f072_714786ac",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T20:29:50Z",
+      "side": 1,
+      "message": "I don\u0027t think removing the template parameter would work (max_bytes_data_item_size is a size_t, so the compiler can\u0027t otherwise figure out what the template parameter should be without explicitly specifying it or casting one of the arguments), but yeah, changing it to uint64_t would be more correct (the result will still get turned into a size_t, but with max_bytes_data_item_size being a size_t, it should always fit in one, so that is no problem as long as the min comparison itself gets done with uint64_t).",
+      "parentUuid": "b1c362be_d1d99da4",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b93b6a8_5a810cb0",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 16
