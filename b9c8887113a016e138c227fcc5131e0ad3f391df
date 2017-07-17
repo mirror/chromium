@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f8a5897_c8629ec5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T16:58:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6c90844b_1d235edb",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "822d90c8_2d983c01",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 14
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-12T18:43:37Z",
       "side": 1,
       "message": "I guess the purpose of this virtual function is purely for testing? Although it is working, I just don\u0027t feel it is the best way. \n\nSo this function would send metrics to GRC. In test, this would just terminate, or quit the RunLoop. How about using a delegate pattern. In production code, this delegate send metrics to GRC. In test, you can have a different delegate, which does the termination for you.",
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f975ecd_8a1999b6",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T16:58:12Z",
+      "side": 1,
+      "message": "Done. Let me know if this was the right way to implement the delegation.",
+      "parentUuid": "822d90c8_2d983c01",
       "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "78c65585_c4a04b67",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T16:58:12Z",
+      "side": 1,
+      "message": "Does it matter whether or not the site is loaded from disk or the embedded web server? I think what is actually loaded is beyond the scope of the test.\n\nWhen choosing what to load the tab, I was following the convention I observed in:\nhttps://cs.chromium.org/chromium//src/chrome/browser/resource_coordinator/tab_manager_browsertest.cc?l\u003d61",
+      "parentUuid": "868cc72c_c12bcdca",
+      "range": {
+        "startLine": 85,
+        "startChar": 38,
+        "endLine": 85,
+        "endChar": 55
+      },
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a930b82b_386dc7f1",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 14
@@ -105,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "110fb50e_55982f15",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T16:58:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a930b82b_386dc7f1",
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77e70752_6527423c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 14
@@ -116,6 +200,24 @@
       "writtenOn": "2017-07-12T18:43:37Z",
       "side": 1,
       "message": "Where does this come from? ToT does not have this.",
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511b02ce_4ecbed43",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T16:58:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "77e70752_6527423c",
       "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
