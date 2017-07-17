@@ -22,6 +22,47 @@
       "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bde7831_5587634a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-17T15:39:58Z",
+      "side": 1,
+      "message": "+1 if they can be private, but that\u0027s largely orthogonal to this CL which primarily is moving responsibilities.",
+      "parentUuid": "cba3c381_09542760",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d812cb_002fc40c",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-17T15:39:58Z",
+      "side": 1,
+      "message": "But it\u0027s still in your CL, so please just add that it owns |this| or something :).",
+      "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

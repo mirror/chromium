@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "964b2787_d4f50d60",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-17T15:39:58Z",
+      "side": 1,
+      "message": "Yeah exactly, no need to pass it around anymore :).",
+      "parentUuid": "e504d708_ce571741",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7fb38d9_4aa6281d",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 3
