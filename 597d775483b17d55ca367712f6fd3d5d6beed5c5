@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c56f7f8_876e1e25",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1935,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-07-17T18:16:11Z",
+      "side": 1,
+      "message": "optional nit: since the method already implies it will only load the view if needed, maybe replace if() and DCHECK with a simple [self loadViewIfNeeded], WDYT?",
+      "range": {
+        "startLine": 1935,
+        "startChar": 7,
+        "endLine": 1935,
+        "endChar": 19
+      },
+      "revId": "597d775483b17d55ca367712f6fd3d5d6beed5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
