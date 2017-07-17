@@ -45,12 +45,7 @@ final class MultiActivityTestCommon {
     }
 
     void waitForFullLoad(final ChromeActivity activity, final String expectedTitle) {
-        waitForFullLoad(activity, expectedTitle, false);
-    }
-
-    void waitForFullLoad(
-            final ChromeActivity activity, final String expectedTitle, boolean waitLongerForLoad) {
-        ApplicationTestUtils.assertWaitForPageScaleFactorMatch(activity, 0.5f, waitLongerForLoad);
+        ApplicationTestUtils.assertWaitForPageScaleFactorMatch(activity, 0.5f);
         final Tab tab = activity.getActivityTab();
         assert tab != null;
 
