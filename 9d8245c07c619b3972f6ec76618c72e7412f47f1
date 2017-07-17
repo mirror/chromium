@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "95ceeb6a_450f3aab",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-17T19:26:30Z",
+      "side": 1,
+      "message": "Should keep the way it is.  I presume motivation for -7 is that e.g., 0x7F \u003c\u003c 30 will cause 5 bits to shift beyond the end. However, for 32-bit varint, the 32-bits are laid out by:\n\n[eeeedddd dddccccc ccbbbbbb baaaaaaa]\n ^MSB                           LSB^\n\nNote that eeee got in when we shifted 0000eeee \u003c\u003c 28, and 28 \u003e 4 * 8 - 7. I suppose we can check the upper bits -- but I don\u0027t think it\u0027s worthwhile.",
+      "parentUuid": "479b9807_7a9ee1db",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "656b441c_b73e5aae",
         "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
         "patchSetId": 2
