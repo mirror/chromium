@@ -105,6 +105,30 @@
       "revId": "c77b976ba65a4493b896f7c3308a70dbaab0f751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb68cfc_d98e7614",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-07-17T18:28:33Z",
+      "side": 1,
+      "message": "No reason. dispatch_async() would be clearer.",
+      "parentUuid": "52baffa0_0d723232",
+      "range": {
+        "startLine": 295,
+        "startChar": 21,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "c77b976ba65a4493b896f7c3308a70dbaab0f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
