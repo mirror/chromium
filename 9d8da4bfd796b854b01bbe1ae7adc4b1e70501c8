@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23525edd_cbf1fd9c",
+        "filename": "chrome/browser/permissions/permission_dialog_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T01:18:32Z",
+      "side": 1,
+      "message": "Some people might not class the \"for safety\" as a good reason. Maybe we can say that it\u0027s because the true lifetime of the dialog is out of our control and it may outlast the permission prompt. Is that true?\n\nWe also don\u0027t currently check if (permission_prompt_) anywhere in the code so is there a benefit to using the weak ptr?",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9498157c_c15f8a31",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T01:18:32Z",
+      "side": 1,
+      "message": "nit: I wonder if we should make this more generic, like:\ntab_can_show_prompts_",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12df98df_5ce5aae9",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T01:18:32Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b0b23c_6e585432",
+        "filename": "chrome/browser/permissions/permission_request_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T01:18:32Z",
+      "side": 1,
+      "message": "+1 :) We should maybe rename DisplayPendingRequests too to be symmetric.",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
