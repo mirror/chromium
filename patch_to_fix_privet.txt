@@ -1,0 +1,80 @@
+diff --git a/chrome/browser/ui/webui/print_preview/print_preview_handler.cc b/chrome/browser/ui/webui/print_preview/print_preview_handler.cc
+index 04beed4..1bcb33a 100644
+--- a/chrome/browser/ui/webui/print_preview/print_preview_handler.cc
++++ b/chrome/browser/ui/webui/print_preview/print_preview_handler.cc
+@@ -682,7 +682,7 @@ void PrintPreviewHandler::HandleGetPrivetPrinters(const base::ListValue* args) {
+   AllowJavascript();
+ 
+   if (!PrivetPrintingEnabled()) {
+-    RejectJavascriptCallback(base::Value(callback_id), base::Value(false));
++    RejectJavascriptCallback(base::Value(callback_id), base::Value());
+   }
+ #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+   using local_discovery::ServiceDiscoverySharedClient;
+@@ -701,6 +701,7 @@ void PrintPreviewHandler::StopPrivetLister() {
+     printer_lister_->Stop();
+   }
+   ResolveJavascriptCallback(base::Value(privet_callback_id_), base::Value());
++  privet_callback_id_ = "";
+ #endif
+ }
+ 
+@@ -1611,8 +1612,7 @@ bool PrintPreviewHandler::PrivetUpdateClient(
+       web_ui()->CallJavascriptFunctionUnsafe("onPrivetPrintFailed",
+                                              http_code_value);
+     } else {  // Capabilities update failed
+-      RejectJavascriptCallback(base::Value(callback_id),
+-                               base::Value(privet_http_resolution_->GetName()));
++      RejectJavascriptCallback(base::Value(callback_id), base::Value());
+     }
+     privet_http_resolution_.reset();
+     return false;
+@@ -1678,30 +1678,29 @@ void PrintPreviewHandler::OnPrivetCapabilities(
+     const std::string& callback_id,
+     const base::DictionaryValue* capabilities) {
+   std::string name = privet_capabilities_operation_->GetHTTPClient()->GetName();
+-
+   if (!capabilities || capabilities->HasKey(cloud_print::kPrivetKeyError) ||
+       !printer_lister_) {
+-    RejectJavascriptCallback(base::Value(callback_id), base::Value(name));
++    RejectJavascriptCallback(base::Value(callback_id), base::Value());
+     return;
+   }
+ 
+-  base::DictionaryValue printer_info;
+   const cloud_print::DeviceDescription* description =
+       printer_lister_->GetDeviceDescription(name);
+ 
+   if (!description) {
+-    RejectJavascriptCallback(base::Value(callback_id), base::Value(name));
++    RejectJavascriptCallback(base::Value(callback_id), base::Value());
+     return;
+   }
+ 
+-  FillPrinterDescription(name, *description, true, &printer_info);
+-
++  std::unique_ptr<base::DictionaryValue> printer_info =
++      base::MakeUnique<base::DictionaryValue>();
++  FillPrinterDescription(name, *description, true, printer_info.get());
+   base::DictionaryValue printer_info_and_caps;
+-  printer_info_and_caps.SetDictionary("printer",
+-                                      base::WrapUnique(&printer_info));
+-  base::DictionaryValue capabilities_copy = *capabilities;
++  printer_info_and_caps.SetDictionary("printer", std::move(printer_info));
++  std::unique_ptr<base::DictionaryValue> capabilities_copy =
++      capabilities->CreateDeepCopy();
+   printer_info_and_caps.SetDictionary("capabilities",
+-                                      base::WrapUnique(&capabilities_copy));
++                                      std::move(capabilities_copy));
+   ResolveJavascriptCallback(base::Value(callback_id), printer_info_and_caps);
+ 
+   privet_capabilities_operation_.reset();
+@@ -1810,7 +1809,7 @@ void PrintPreviewHandler::OnGotExtensionPrinterCapabilities(
+     const std::string& printer_id,
+     const base::DictionaryValue& capabilities) {
+   if (capabilities.empty()) {
+-    RejectJavascriptCallback(base::Value(callback_id));
++    RejectJavascriptCallback(base::Value(callback_id), base::Value());
+     return;
+   }
+   ResolveJavascriptCallback(base::Value(callback_id), capabilities);

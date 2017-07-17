@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_PRINTING_PRINT_PREVIEW_MESSAGE_HANDLER_H_
 #define CHROME_BROWSER_PRINTING_PRINT_PREVIEW_MESSAGE_HANDLER_H_
 
+#include <map>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -70,6 +72,7 @@ class PrintPreviewMessageHandler
   void OnSetOptionsFromDocument(
       const PrintHostMsg_SetOptionsFromDocument_Params& params);
 
+  std::map<int, bool> cookies_;
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewMessageHandler);
 };
 

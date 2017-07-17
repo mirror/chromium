@@ -1,0 +1,305 @@
+diff --git a/core/fpdfapi/render/cpdf_charposlist.cpp b/core/fpdfapi/render/cpdf_charposlist.cpp
+index 68df46b..3dd2e7a 100644
+--- a/core/fpdfapi/render/cpdf_charposlist.cpp
++++ b/core/fpdfapi/render/cpdf_charposlist.cpp
+@@ -37,7 +37,7 @@ void CPDF_CharPosList::Load(const std::vector<uint32_t>& charCodes,
+     FXTEXT_CHARPOS& charpos = m_pCharPos[m_nChars++];
+     if (pCIDFont)
+       charpos.m_bFontStyle = true;
+-
++    charpos.m_Unicode = pFont->UnicodeFromCharCode(CharCode)[0];
+     charpos.m_GlyphIndex = pFont->GlyphFromCharCode(CharCode, &bVert);
+     uint32_t GlyphID = charpos.m_GlyphIndex;
+ #if _FXM_PLATFORM_ == _FXM_PLATFORM_APPLE_
+diff --git a/core/fxge/cfx_renderdevice.h b/core/fxge/cfx_renderdevice.h
+index f33da57..165b729 100644
+--- a/core/fxge/cfx_renderdevice.h
++++ b/core/fxge/cfx_renderdevice.h
+@@ -71,6 +71,7 @@ class FXTEXT_CHARPOS {
+ 
+   float m_AdjustMatrix[4];
+   CFX_PointF m_Origin;
++  uint32_t m_Unicode;
+   uint32_t m_GlyphIndex;
+   int32_t m_FontCharWidth;
+ #if _FXM_PLATFORM_ == _FXM_PLATFORM_APPLE_
+diff --git a/core/fxge/cfx_windowsrenderdevice.h b/core/fxge/cfx_windowsrenderdevice.h
+index 7156dcd..f985949 100644
+--- a/core/fxge/cfx_windowsrenderdevice.h
++++ b/core/fxge/cfx_windowsrenderdevice.h
+@@ -25,6 +25,7 @@ extern bool g_pdfium_print_text_with_gdi;
+ extern PDFiumEnsureTypefaceCharactersAccessible
+     g_pdfium_typeface_accessible_func;
+ #endif
++extern bool g_pdfium_print_text_only;
+ extern int g_pdfium_print_postscript_level;
+ 
+ class CFX_WindowsRenderDevice : public CFX_RenderDevice {
+diff --git a/core/fxge/win32/fx_win32_device.cpp b/core/fxge/win32/fx_win32_device.cpp
+index f648118..bd32c6b 100644
+--- a/core/fxge/win32/fx_win32_device.cpp
++++ b/core/fxge/win32/fx_win32_device.cpp
+@@ -691,6 +691,8 @@ bool CFX_Win32FontInfo::GetFontCharset(void* hFont, int* charset) {
+ 
+ int g_pdfium_print_postscript_level = 0;
+ 
++bool g_pdfium_print_text_only = false;
++
+ std::unique_ptr<IFX_SystemFontInfo> IFX_SystemFontInfo::CreateDefault(
+     const char** pUnused) {
+   if (IsGDIEnabled())
+@@ -1370,11 +1372,16 @@ IFX_RenderDeviceDriver* CFX_WindowsRenderDevice::CreateDriver(HDC hDC) {
+   int device_type = ::GetDeviceCaps(hDC, TECHNOLOGY);
+   int obj_type = ::GetObjectType(hDC);
+   bool use_printer = device_type == DT_RASPRINTER ||
+-                     device_type == DT_PLOTTER || obj_type == OBJ_ENHMETADC;
++                     device_type == DT_PLOTTER ||
++                     device_type == DT_CHARSTREAM ||
++                     obj_type == OBJ_ENHMETADC;
+ 
+   if (!use_printer)
+     return new CGdiDisplayDriver(hDC);
+ 
++  if (g_pdfium_print_text_only)
++    return new CTextOnlyPrinterDriver(hDC);
++
+   if (g_pdfium_print_postscript_level == 2 ||
+       g_pdfium_print_postscript_level == 3) {
+     return new CPSPrinterDriver(hDC, g_pdfium_print_postscript_level, false);
+diff --git a/core/fxge/win32/fx_win32_print.cpp b/core/fxge/win32/fx_win32_print.cpp
+index 8f7cbf5..1e5aa49 100644
+--- a/core/fxge/win32/fx_win32_print.cpp
++++ b/core/fxge/win32/fx_win32_print.cpp
+@@ -492,3 +492,125 @@ bool CPSPrinterDriver::DrawDeviceText(int nChars,
+   return m_PSRenderer.DrawText(nChars, pCharPos, pFont, pObject2Device,
+                                font_size, color);
+ }
++
++
++CTextOnlyPrinterDriver::CTextOnlyPrinterDriver(HDC hDC)
++    : m_hDC(hDC) {
++  m_HorzSize = ::GetDeviceCaps(m_hDC, HORZSIZE);
++  m_VertSize = ::GetDeviceCaps(m_hDC, VERTSIZE);
++  m_Width = ::GetDeviceCaps(m_hDC, HORZRES);
++  m_Height = ::GetDeviceCaps(m_hDC, VERTRES);
++  m_nBitsPerPixel = ::GetDeviceCaps(m_hDC, BITSPIXEL);
++  m_OriginY = 0.0f;
++  m_OriginX = 0.0f;
++}
++
++CTextOnlyPrinterDriver::~CTextOnlyPrinterDriver() {
++  EndRendering();
++}
++
++int CTextOnlyPrinterDriver::GetDeviceCaps(int caps_id) const {
++  switch (caps_id) {
++    case FXDC_DEVICE_CLASS:
++      return FXDC_PRINTER;
++    case FXDC_PIXEL_WIDTH:
++      return m_Width;
++    case FXDC_PIXEL_HEIGHT:
++      return m_Height;
++    case FXDC_BITS_PIXEL:
++      return m_nBitsPerPixel;
++    case FXDC_RENDER_CAPS:
++      return FXRC_BIT_MASK;
++    case FXDC_HORZ_SIZE:
++      return m_HorzSize;
++    case FXDC_VERT_SIZE:
++      return m_VertSize;
++  }
++  return 0;
++}
++
++bool CTextOnlyPrinterDriver::SetClip_PathFill(const CFX_PathData* pPathData,
++                                      const CFX_Matrix* pObjectToDevice,
++                                      int fill_mode) {
++  // Adjust the clip box to match since the text only driver doesn't care
++  // about page size and the DC is based off of the screen.
++  m_Width = pPathData->GetBoundingBox().left +
++            pPathData->GetBoundingBox().right;
++  m_Height = pPathData->GetBoundingBox().top +
++            pPathData->GetBoundingBox().bottom;
++  return true;
++}
++
++bool CTextOnlyPrinterDriver::GetClipBox(FX_RECT* pRect) {
++  pRect->left = 0;
++  pRect->right = m_Width;
++  pRect->top = 0;
++  pRect->bottom = m_Height;
++  return true;
++}
++
++bool CTextOnlyPrinterDriver::DrawDeviceText(int nChars,
++                                      const FXTEXT_CHARPOS* pCharPos,
++                                      CFX_Font* pFont,
++                                      const CFX_Matrix* pObject2Device,
++                                      float font_size,
++                                      uint32_t color) {
++  if (!g_pdfium_print_text_only)
++    return false;
++  if (nChars < 1 || !pFont || !pFont->IsEmbedded() || !pFont->IsTTFont())
++    return false;
++
++  // Scale factor used to minimize the kerning problems caused by rounding
++  // errors below. Value chosen based on the title of https://crbug.com/18383
++  const double kScaleFactor = 10;
++
++  // TODO (rbpotter): Determine if the spacing information should be used
++  // somehow.
++  CFX_WideString wsText;
++  std::vector<INT> spacing(nChars);
++  float fPreviousOriginX = m_OriginX;
++  int totalLength = nChars;
++
++  // Detect new lines and add a space. Was likely removed by SkPDF if this is
++  // just text, and spaces seem to be ignored by label printers that use this
++  // driver.
++  if (FXSYS_round(m_OriginY) != FXSYS_round(pObject2Device->f*kScaleFactor)) {
++    wsText += 32;
++    totalLength++;
++  }
++  m_OriginY = pObject2Device->f*kScaleFactor;
++
++  // Text
++  for (int i = 0; i < nChars; ++i) {
++    // Only works with PDFs from Skia's PDF generator. Cannot handle arbitrary
++    // values from PDFs.
++    const FXTEXT_CHARPOS& charpos = pCharPos[i];
++    ASSERT(charpos.m_AdjustMatrix[0] == 0);
++    ASSERT(charpos.m_AdjustMatrix[1] == 0);
++    ASSERT(charpos.m_AdjustMatrix[2] == 0);
++    ASSERT(charpos.m_AdjustMatrix[3] == 0);
++    ASSERT(charpos.m_Origin.y == 0);
++
++    // Round the spacing to the nearest integer, but keep track of the rounding
++    // error for calculating the next spacing value.
++    float fOriginX = charpos.m_Origin.x * kScaleFactor;
++    float fPixelSpacing = fOriginX - fPreviousOriginX;
++    spacing[i] = FXSYS_round(fPixelSpacing);
++    fPreviousOriginX = fOriginX - (fPixelSpacing - spacing[i]);
++    wsText += charpos.m_Unicode;
++  }
++  m_OriginX = fPreviousOriginX;
++
++  size_t len = totalLength;
++  size_t sent_len = 0;
++  while (len > 0) {
++    char buffer[1026];
++    size_t send_len = std::min(len, static_cast<size_t>(1024));
++    *(reinterpret_cast<uint16_t*>(buffer)) = send_len;
++    memcpy(buffer + 2, wsText.UTF8Encode().c_str(), send_len);
++    ::GdiComment(m_hDC, send_len + 2, reinterpret_cast<const BYTE*>(buffer));
++    sent_len += send_len;
++    len -= send_len;
++  }
++  return true;
++}
+diff --git a/core/fxge/win32/win32_int.h b/core/fxge/win32/win32_int.h
+index d92d3b3..3461803 100644
+--- a/core/fxge/win32/win32_int.h
++++ b/core/fxge/win32/win32_int.h
+@@ -333,4 +333,68 @@ class CPSPrinterDriver : public IFX_RenderDeviceDriver {
+   CFX_PSRenderer m_PSRenderer;
+ };
+ 
++class CTextOnlyPrinterDriver : public IFX_RenderDeviceDriver {
++ public:
++  CTextOnlyPrinterDriver(HDC hDC);
++  ~CTextOnlyPrinterDriver() override;
++
++ protected:
++  // IFX_RenderDeviceDriver
++  int GetDeviceCaps(int caps_id) const override;
++  void SaveState() override {};
++  void RestoreState(bool bKeepSaved) override {};
++  bool SetClip_PathFill(const CFX_PathData* pPathData,
++                        const CFX_Matrix* pObject2Device,
++                        int fill_mode) override;
++  bool SetClip_PathStroke(const CFX_PathData* pPathData,
++                          const CFX_Matrix* pObject2Device,
++                          const CFX_GraphStateData* pGraphState) override {
++    return false;
++  }
++  bool DrawPath(const CFX_PathData* pPathData,
++                const CFX_Matrix* pObject2Device,
++                const CFX_GraphStateData* pGraphState,
++                uint32_t fill_color,
++                uint32_t stroke_color,
++                int fill_mode,
++                int blend_type) override { return false; }
++  bool GetClipBox(FX_RECT* pRect) override;
++  bool SetDIBits(const CFX_RetainPtr<CFX_DIBSource>& pBitmap,
++                 uint32_t color,
++                 const FX_RECT* pSrcRect,
++                 int left,
++                 int top,
++                 int blend_type) override { return false; }
++  bool StretchDIBits(const CFX_RetainPtr<CFX_DIBSource>& pBitmap,
++                     uint32_t color,
++                     int dest_left,
++                     int dest_top,
++                     int dest_width,
++                     int dest_height,
++                     const FX_RECT* pClipRect,
++                     uint32_t flags,
++                     int blend_type) override { return false; }
++  bool StartDIBits(const CFX_RetainPtr<CFX_DIBSource>& pBitmap,
++                   int bitmap_alpha,
++                   uint32_t color,
++                   const CFX_Matrix* pMatrix,
++                   uint32_t render_flags,
++                   std::unique_ptr<CFX_ImageRenderer>* handle,
++                   int blend_type) override { return false; }
++  bool DrawDeviceText(int nChars,
++                      const FXTEXT_CHARPOS* pCharPos,
++                      CFX_Font* pFont,
++                      const CFX_Matrix* pObject2Device,
++                      float font_size,
++                      uint32_t color) override;
++
++  HDC m_hDC;
++  int m_Width;
++  int m_Height;
++  int m_nBitsPerPixel;
++  int m_HorzSize;
++  int m_VertSize;
++  float m_OriginX;
++  float m_OriginY;
++};
+ #endif  // CORE_FXGE_WIN32_WIN32_INT_H_
+diff --git a/fpdfsdk/fpdfview.cpp b/fpdfsdk/fpdfview.cpp
+index ccd487a..f474d89 100644
+--- a/fpdfsdk/fpdfview.cpp
++++ b/fpdfsdk/fpdfview.cpp
+@@ -444,6 +444,9 @@ DLLEXPORT void STDCALL FPDF_SetPrintTextWithGDI(FPDF_BOOL use_gdi) {
+   g_pdfium_print_text_with_gdi = !!use_gdi;
+ }
+ #endif  // PDFIUM_PRINT_TEXT_WITH_GDI
++DLLEXPORT void STDCALL FPDF_SetPrintTextOnly(FPDF_BOOL text_only) {
++  g_pdfium_print_text_only = !!text_only;
++}
+ 
+ DLLEXPORT FPDF_BOOL STDCALL FPDF_SetPrintPostscriptLevel(int postscript_level) {
+   if (postscript_level != 0 && postscript_level != 2 && postscript_level != 3)
+diff --git a/public/fpdfview.h b/public/fpdfview.h
+index ba5cb4f..f96a2f1 100644
+--- a/public/fpdfview.h
++++ b/public/fpdfview.h
+@@ -242,6 +242,15 @@ FPDF_SetTypefaceAccessibleFunc(PDFiumEnsureTypefaceCharactersAccessible func);
+ DLLEXPORT void STDCALL FPDF_SetPrintTextWithGDI(FPDF_BOOL use_gdi);
+ #endif  // PDFIUM_PRINT_TEXT_WITH_GDI
+ 
++// Function: FPDF_SetPrintTextOnly
++//          Set whether to print raw text only when printing on Windows.
++//          Experimental API.
++// Parameters:
++//          text_only -   Set to true to enable printing text only.
++// Return value:
++//          None.
++DLLEXPORT void STDCALL FPDF_SetPrintTextOnly(FPDF_BOOL text_only);
++
+ // Function: FPDF_SetPrintPostscriptLevel
+ //          Set postscript printing level when printing on Windows.
+ //          Experimental API.
