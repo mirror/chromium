@@ -33,6 +33,63 @@
       "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33135c9c_f8f2421b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T18:02:16Z",
+      "side": 1,
+      "message": "so java code of content also has a public/private split, except is hard to find and not enforced by DEPS.\n\nThings in org.chromium.content are considered private implementation, and things in org.chromium.content_public are considered part of the public interface. So can you move this interface and that one static method into content_public",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c49a1a_3f254453",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T18:02:16Z",
+      "side": 1,
+      "message": "maybe name this canUnlockOrientation then?",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ec4e58_e6c7d29f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T18:02:16Z",
+      "side": 1,
+      "message": "\"\u003d null\" redundant",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
