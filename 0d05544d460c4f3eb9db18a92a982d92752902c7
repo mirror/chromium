@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f318fb6_cdd6a903",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T15:56:04Z",
+      "side": 1,
+      "message": "I suppose we could iterate over all glyphs and recompute it from scratch in the worst case but let\u0027s see if we can come up with something better when we have safe-to-break.\n\nUntil then, this is fine. Thank you.",
+      "revId": "0d05544d460c4f3eb9db18a92a982d92752902c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
