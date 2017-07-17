@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20271ca0_661fef23",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "SendRemoveFiltered..",
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b7adb9_45a441ed",
+        "filename": "extensions/renderer/ipc_message_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "You can remove |extension_id| param from most if not all methods and let IPCMessageSender use context-\u003eGetExtensionId(), similar to SendAddFilteredEventListenerIPC",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcbfcc1_f90ed352",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "nit: is_lazy",
+      "range": {
+        "startLine": 709,
+        "startChar": 7,
+        "endLine": 709,
+        "endChar": 11
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbab656c_2e5162a0",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "nitty-nit: Filtered event listeners.",
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1894bc_ec624591",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "nit: here and in other places: ExtensionId\nAlso if you keep |extension_id|, then const ExtensionId\u0026 extension_id \u003d ...",
+      "range": {
+        "startLine": 727,
+        "startChar": 9,
+        "endLine": 727,
+        "endChar": 15
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617399d7_3c38cebf",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-17T18:21:10Z",
+      "side": 1,
+      "message": "if (remove_lazy_listener) ?",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 31
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
