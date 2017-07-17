@@ -9,6 +9,7 @@
 #include "base/base64.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/dom_snapshot.h"
@@ -105,6 +106,10 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, WindowOpen) {
   // Mac doesn't have WindowTreeHosts.
   if (parent && child && parent->window_tree_host())
     EXPECT_NE(parent->window_tree_host(), child->window_tree_host());
+
+  gfx::Rect expected_bounds(0, 0, 200, 100);
+  EXPECT_EQ(expected_bounds, child->web_contents()->GetViewBounds());
+  EXPECT_EQ(expected_bounds, child->web_contents()->GetContainerBounds());
 }
 
 class HeadlessWindowOpenTabSocketTest : public HeadlessBrowserTest,
