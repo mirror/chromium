@@ -84,7 +84,7 @@ class PannerHandler final : public AudioHandler {
   void SetPanningModel(const String&);
 
   // Position and orientation
-  void SetPosition(float x, float y, float z);
+  void SetPosition(float x, float y, float z, ExceptionState&);
   void SetOrientation(float x, float y, float z);
 
   // Distance parameters
@@ -227,7 +227,7 @@ class PannerNode final : public AudioNode {
 
   String panningModel() const;
   void setPanningModel(const String&);
-  void setPosition(float x, float y, float z);
+  void setPosition(float x, float y, float z, ExceptionState&);
   void setOrientation(float x, float y, float z);
   String distanceModel() const;
   void setDistanceModel(const String&);

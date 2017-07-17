@@ -44,7 +44,7 @@ enum DistanceModelType {
     attribute PanningModelType panningModel;
 
     // Uses a 3D cartesian coordinate system
-    [MeasureAs=PannerNodeSetPosition] void setPosition(float x, float y, float z);
+    [RaisesException, MeasureAs=PannerNodeSetPosition] void setPosition(float x, float y, float z);
     [MeasureAs=PannerNodeSetOrientation] void setOrientation(float x, float y, float z);
 
     // Uses a 3D cartesian coordinate system
