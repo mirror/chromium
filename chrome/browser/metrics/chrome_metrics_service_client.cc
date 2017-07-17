@@ -42,7 +42,6 @@
 #include "chrome/browser/metrics/network_quality_estimator_provider_impl.h"
 #include "chrome/browser/metrics/process_memory_metrics_emitter.h"
 #include "chrome/browser/metrics/sampling_metrics_provider.h"
-#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_metrics_provider.h"
 #include "chrome/browser/sync/chrome_sync_client.h"
@@ -89,9 +88,13 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/histogram_fetcher.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/metrics/android_metrics_provider.h"
@@ -625,11 +628,6 @@ void ChromeMetricsServiceClient::Initialize() {
 void ChromeMetricsServiceClient::RegisterMetricsServiceProviders() {
   PrefService* local_state = g_browser_process->local_state();
 
-  // Gets access to persistent metrics shared by sub-processes.
-  metrics_service_->RegisterMetricsProvider(
-      std::unique_ptr<metrics::MetricsProvider>(
-          new SubprocessMetricsProvider()));
-
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   metrics_service_->RegisterMetricsProvider(
       std::unique_ptr<metrics::MetricsProvider>(
@@ -838,9 +836,9 @@ void ChromeMetricsServiceClient::OnMemoryDetailCollectionDone() {
   DCHECK(waiting_for_collect_final_metrics_step_);
 
   // Create a callback_task for OnHistogramSynchronizationDone.
-  base::Closure callback = base::Bind(
-      &ChromeMetricsServiceClient::OnHistogramSynchronizationDone,
-      weak_ptr_factory_.GetWeakPtr());
+  base::Closure callback =
+      base::Bind(&ChromeMetricsServiceClient::OnHistogramSynchronizationDone,
+                 weak_ptr_factory_.GetWeakPtr(), true);
 
   base::TimeDelta timeout =
       base::TimeDelta::FromMilliseconds(kMaxHistogramGatheringWaitDuration);
@@ -871,11 +869,18 @@ void ChromeMetricsServiceClient::OnMemoryDetailCollectionDone() {
   // Set up the callback task to call after we receive histograms from all
   // child processes. |timeout| specifies how long to wait before absolutely
   // calling us back on the task.
-  content::FetchHistogramsAsynchronously(base::ThreadTaskRunnerHandle::Get(),
-                                         callback, timeout);
+  if (!histogram_collector_.is_bound()) {
+    content::ServiceManagerConnection::GetForProcess()
+        ->GetConnector()
+        ->BindInterface(metrics::mojom::kServiceName, &histogram_collector_);
+  }
+  histogram_collector_->UpdateHistograms(
+      timeout, base::BindOnce(
+                   &ChromeMetricsServiceClient::OnHistogramSynchronizationDone,
+                   base::Unretained(this)));
 }
 
-void ChromeMetricsServiceClient::OnHistogramSynchronizationDone() {
+void ChromeMetricsServiceClient::OnHistogramSynchronizationDone(bool complete) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // This function should only be called as the callback from an ansynchronous
