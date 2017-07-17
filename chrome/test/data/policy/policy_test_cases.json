@@ -2783,6 +2783,11 @@
     ]
   },
 
+  "EcryptfsMigrationStrategy": {
+    "os": ["chromeos"],
+    "test_policy": { "EcryptfsMigrationStrategy": 1 }
+  },
+
   "----- Chrome OS device policies ---------------------------------------": {},
 
   "DevicePolicyRefreshRate": {

@@ -177,6 +177,11 @@ class CHROMEOS_EXPORT MountParameters {
 
   // If |true|, the home dir will be mounted as public mount.
   bool public_mount = false;
+
+  // If |true|, the home dir will be mounted to a temporary location which will
+  // not be exposed at the usual mount points (such as /home/user and
+  // /home/root).
+  bool hidden_mount = false;
 };
 
 // This function returns true if cryptohome of |account_id| is migrated to

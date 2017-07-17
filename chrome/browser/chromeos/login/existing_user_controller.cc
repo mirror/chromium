@@ -55,6 +55,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -62,6 +63,7 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/arc/arc_util.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/policy/core/common/cloud/cloud_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_core.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
 #include "components/policy/core/common/policy_map.h"
@@ -107,6 +109,22 @@ enum LoginPasswordChangeFlow {
   LOGIN_PASSWORD_CHANGE_FLOW_CRYPTOHOME_FAILURE = 1,
 
   LOGIN_PASSWORD_CHANGE_FLOW_COUNT,  // Must be the last entry.
+};
+
+// The action that should be taken when an ecryptfs user home which needs
+// migration is detected. This must match the order/values of the
+// EcryptfsMigrationStrategy policy.
+enum class EcryptfsMigrationAction {
+  // Don't migrate.
+  DISALLOW_ARC_NO_MIGRATION,
+  // Migrate.
+  MIGRATE,
+  // Wipe the user home and start again.
+  WIPE,
+  // Ask the user if migration should be performed.
+  ASK_USER,
+  // Last value for validity checks.
+  COUNT
 };
 
 // Delay for transferring the auth cache to the system profile.
@@ -207,6 +225,34 @@ bool ShouldForceDircrypto(const AccountId& account_id) {
   if (UserAddingScreen::Get()->IsRunning())
     return false;
 
+  return true;
+}
+
+// Decodes the EcryptfsMigrationStrategy user policy into the
+// EcryptfsMigrationAction enum. If the policy is present, returns true and sets
+// *|out_value|. Otherwise, returns false.
+bool DecodeMigrationActionFromPolicy(
+    enterprise_management::CloudPolicySettings* policy,
+    EcryptfsMigrationAction* out_value) {
+  if (!policy->has_ecryptfsmigrationstrategy())
+    return false;
+
+  const enterprise_management::IntegerPolicyProto& policy_proto =
+      policy->ecryptfsmigrationstrategy();
+  if (!policy_proto.has_value() ||
+      (policy_proto.has_policy_options() &&
+       policy_proto.policy_options().mode() ==
+           enterprise_management::PolicyOptions::UNSET)) {
+    return false;
+  }
+
+  if (policy_proto.value() < 0 ||
+      policy_proto.value() >=
+          static_cast<int64_t>(EcryptfsMigrationAction::COUNT)) {
+    return false;
+  }
+
+  *out_value = static_cast<EcryptfsMigrationAction>(policy_proto.value());
   return true;
 }
 
@@ -926,7 +972,122 @@ void ExistingUserController::OnPasswordChangeDetected() {
 void ExistingUserController::OnOldEncryptionDetected(
     const UserContext& user_context,
     bool has_incomplete_migration) {
-  ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+  if (has_incomplete_migration) {
+    // If migration was incomplete, continue migration without checking user
+    // policy.
+    ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+    return;
+  }
+
+  // Fetch user policy.
+  policy::DeviceManagementService* device_management_service =
+      g_browser_process->platform_part()
+          ->browser_policy_connector_chromeos()
+          ->device_management_service();
+  // Use signin profile request context
+  net::URLRequestContextGetter* signin_profile_context =
+      ProfileHelper::GetSigninProfile()->GetRequestContext();
+  auto cloud_policy_client = base::MakeUnique<policy::CloudPolicyClient>(
+      std::string() /* machine_id */, std::string() /* machine_model */,
+      device_management_service, signin_profile_context,
+      nullptr /* signing_service */);
+  pre_signin_policy_fetcher_ = base::MakeUnique<policy::PreSigninPolicyFetcher>(
+      DBusThreadManager::Get()->GetCryptohomeClient(),
+      DBusThreadManager::Get()->GetSessionManagerClient(),
+      std::move(cloud_policy_client), user_context.GetAccountId(),
+      cryptohome::KeyDefinition(user_context.GetKey()->GetSecret(),
+                                std::string(), cryptohome::PRIV_DEFAULT));
+  pre_signin_policy_fetcher_->FetchPolicy(
+      base::BindOnce(&ExistingUserController::OnPolicyFetchResult,
+                     weak_factory_.GetWeakPtr(), user_context));
+}
+
+void ExistingUserController::OnPolicyFetchResult(
+    UserContext user_context,
+    policy::PreSigninPolicyFetcher::PolicyFetchResult result,
+    std::unique_ptr<enterprise_management::CloudPolicySettings>
+        policy_payload) {
+  using PolicyFetchResult = policy::PreSigninPolicyFetcher::PolicyFetchResult;
+
+  EcryptfsMigrationAction action =
+      EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION;
+  if (result == PolicyFetchResult::NO_POLICY) {
+    // There was no policy, the user is unmanaged. They get to choose themselves
+    // if they'd like to migrate.
+    VLOG(1) << "Policy pre-fetch result: No user policy present";
+    action = EcryptfsMigrationAction::ASK_USER;
+  } else if (result == PolicyFetchResult::SUCCESS) {
+    // User policy was retreived, adhere to it.
+    VLOG(1) << "Policy pre-fetch result: User policy fetched";
+    if (!DecodeMigrationActionFromPolicy(policy_payload.get(), &action)) {
+      // User policy was present, but the EcryptfsMigrationStrategy policy value
+      // was not there. Stay on the safe side and don't start migration.
+      action = EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION;
+    }
+  } else if (result == PolicyFetchResult::ERROR) {
+    // Due to an error, we can't know if the user has policy or not. Stay on the
+    // safe side and don't start migration.
+    VLOG(1) << "Policy pre-fetch result: User policy could not be fetched";
+    action = EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION;
+  } else {
+    NOTREACHED();
+  }
+  VLOG(1) << "Migration action: " << static_cast<int>(action);
+
+  switch (action) {
+    case EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION:
+    default:
+      user_context.SetIsForcingDircrypto(false);
+      ContinuePerformLogin(login_performer_->auth_mode(), user_context);
+      break;
+
+    case EcryptfsMigrationAction::MIGRATE:
+      // TODO(pmarko): Reusing resume may be wrong from UI perspective, in case
+      // we show a UI mentioning "resume"/"interrupted". If that's the case,
+      // introduce an enum instead of the bool parameter to choose between
+      // ask_user/continue_interrupted_migration/start_migration.
+      // Otherwise, at least rename the bool parameter to indicate that this may
+      // not only mean resuming.
+      ShowEncryptionMigrationScreen(user_context, true);
+      break;
+
+    case EcryptfsMigrationAction::ASK_USER:
+      ShowEncryptionMigrationScreen(user_context, false);
+      break;
+
+    case EcryptfsMigrationAction::WIPE:
+      cryptohome::AsyncMethodCaller::GetInstance()->AsyncRemove(
+          cryptohome::Identification(user_context.GetAccountId()),
+          base::Bind(&ExistingUserController::WipePerformed,
+                     weak_factory_.GetWeakPtr(), user_context));
+      break;
+  }
+}
+
+void ExistingUserController::WipePerformed(const UserContext& user_context,
+                                           bool success,
+                                           cryptohome::MountError return_code) {
+  if (!success) {
+    LOG(ERROR) << "Removal of cryptohome for "
+               << user_context.GetAccountId().Serialize()
+               << " failed, return code: " << return_code;
+  }
+
+  // Let the user authenticate online because we lose the OAuth token by
+  // removing the user's cryptohome.  Without this, the user can sign-in offline
+  // but after sign-in would immediately see the "sign-in details are out of
+  // date" error message and be prompted to sign out.
+
+  // Save the necessity to sign-in online into UserManager in case the user
+  // aborts the online flow.
+  user_manager::UserManager::Get()->SaveForceOnlineSignin(
+      user_context.GetAccountId(), true);
+  host_->OnPreferencesChanged();
+
+  // Start online sign-in UI for the user.
+  is_login_in_progress_ = false;
+  login_performer_.reset();
+  login_display_->ShowSigninUI(user_context.GetAccountId().GetUserEmail());
 }
 
 void ExistingUserController::WhiteListCheckFailed(const std::string& email) {
