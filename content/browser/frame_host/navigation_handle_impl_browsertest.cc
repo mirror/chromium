@@ -1246,11 +1246,9 @@ class NavigationLogger : public WebContentsObserver {
   void DidStartNavigation(NavigationHandle* navigation_handle) override {
     started_navigation_urls_.push_back(navigation_handle->GetURL());
   }
-
   void DidRedirectNavigation(NavigationHandle* navigation_handle) override {
     redirected_navigation_urls_.push_back(navigation_handle->GetURL());
   }
-
   void DidFinishNavigation(NavigationHandle* navigation_handle) override {
     finished_navigation_urls_.push_back(navigation_handle->GetURL());
   }
@@ -1565,6 +1563,179 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     EXPECT_EQ(redirected_navigation, logger.redirected_navigation_urls());
     EXPECT_EQ(finished_navigation, logger.finished_navigation_urls());
   }
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, NavigateToBlobURL) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // Create a blob-url.
+  std::string blob_url_string;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var blob = new Blob(["<body>Hello world</body>"], {type: 'text/html'});
+    var url = URL.createObjectURL(blob);
+    domAutomationController.send(url);
+  )", &blob_url_string));
+  GURL blob_url(blob_url_string);
+
+  // Navigate to the blob-url
+  NavigationHandleObserver observer(shell()->web_contents(), blob_url);
+  EXPECT_TRUE(NavigateToURL(shell(), blob_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_EQ(blob_url, observer.last_committed_url());
+  EXPECT_EQ(net::OK, observer.net_error_code());
+
+  // Test that the current document represents the content of the blob.
+  std::string document_content;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var document_content = document.documentElement.innerHTML;
+    domAutomationController.send(document_content);
+  )", &document_content));
+  EXPECT_EQ("<head></head><body>Hello world</body>", document_content);
+}
+
+// A redirect to a blob-url results in a 'file not found' response in
+// blob_url_request_job.cc.
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, RedirectToBlobURL) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // Create a blob-url.
+  std::string blob_url_string;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var blob = new Blob(["<body>Hello world</body>"], {type: 'text/html'});
+    var url = URL.createObjectURL(blob);
+    domAutomationController.send(url);
+  )", &blob_url_string));
+  GURL blob_url(blob_url_string);
+
+  // Navigate to the blob-url with a redirect.
+  GURL redirecting_url =
+      embedded_test_server()->GetURL("/server-redirect?" + blob_url.spec());
+
+  NavigationHandleObserver observer(shell()->web_contents(), redirecting_url);
+  NavigationLogger logger(shell()->web_contents());
+
+  // Returns false because of the redirect, but the navigation has committed.
+  EXPECT_FALSE(NavigateToURL(shell(), redirecting_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_EQ(blob_url, observer.last_committed_url());
+  EXPECT_TRUE(observer.was_redirected());
+  EXPECT_EQ(net::OK, observer.net_error_code());
+
+  std::vector<GURL> started_navigation = {redirecting_url};
+  std::vector<GURL> redirected_navigation = {blob_url};
+  std::vector<GURL> finished_navigation = {blob_url};
+  EXPECT_EQ(started_navigation, logger.started_navigation_urls());
+  EXPECT_EQ(redirected_navigation, logger.redirected_navigation_urls());
+  EXPECT_EQ(finished_navigation, logger.finished_navigation_urls());
+
+  // Test the content of the current page. It should **not** display the content
+  // of the blob. Instead, a blank page (with the 404 reponse code) is
+  // displayed.
+  std::string document_content;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var document_content = document.documentElement.innerHTML;
+    domAutomationController.send(document_content);
+  )", &document_content));
+  EXPECT_EQ(
+      "<head></head><body><pre style=\"word-wrap: break-word; white-space: "
+      "pre-wrap;\"></pre></body>",
+      document_content);
+}
+
+// A navigation to a filesystem-url should work.
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       NavigateToFileSystemURL) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // Create a filesystem-url.
+  std::string filesystem_url_string;
+  ASSERT_TRUE(
+      ExecuteScriptAndExtractString(shell(), R"(
+    var blob = new Blob(["<body>Hello world</body>"], {type: 'text/html'})
+    window.requestFileSystem = window.requestFileSystem ||
+                               window.webkitRequestFileSystem;
+    window.requestFileSystem(TEMPORARY, 1024*1024, filesystem =>
+      filesystem.root.getFile('hello.html', {create: true, exclusive: true},
+        file => file.createWriter(writer => {
+          writer.write(blob);
+          domAutomationController.send(file.toURL());
+        })
+      )
+    );
+  )", &filesystem_url_string));
+  GURL filesystem_url(filesystem_url_string);
+
+  // Navigate to the filesystem-url.
+  NavigationHandleObserver observer(shell()->web_contents(), filesystem_url);
+  EXPECT_TRUE(NavigateToURL(shell(), filesystem_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_EQ(filesystem_url, observer.last_committed_url());
+  EXPECT_EQ(net::OK, observer.net_error_code());
+
+  // Test that the current document represents what is stored in the filesystem.
+  std::string document_content;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var document_content = document.documentElement.innerHTML;
+    domAutomationController.send(document_content);
+  )", &document_content));
+  EXPECT_EQ("<head></head><body>Hello world</body>", document_content);
+}
+
+// A redirect to a filesystem-url should work.
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       RedirectToFileSystemURL) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // Create a filesystem-url.
+  std::string filesystem_url_string;
+  ASSERT_TRUE(
+      ExecuteScriptAndExtractString(shell(), R"(
+    var blob = new Blob(["<body>Hello world</body>"], {type: 'text/html'})
+    window.requestFileSystem = window.requestFileSystem ||
+                               window.webkitRequestFileSystem;
+    window.requestFileSystem(TEMPORARY, 1024*1024, filesystem =>
+      filesystem.root.getFile('hello.html', {create: true, exclusive: true},
+        file => file.createWriter(writer => {
+          writer.write(blob);
+          domAutomationController.send(file.toURL());
+        })
+      )
+    );
+  )", &filesystem_url_string));
+  GURL filesystem_url(filesystem_url_string);
+
+  // Navigate to the filesystem-url with a redirect.
+  GURL redirecting_url = embedded_test_server()->GetURL("/server-redirect?" +
+                                                        filesystem_url.spec());
+
+  NavigationHandleObserver observer(shell()->web_contents(), redirecting_url);
+  NavigationLogger logger(shell()->web_contents());
+
+  // Returns false because of the redirect, but the navigation has committed.
+  EXPECT_FALSE(NavigateToURL(shell(), redirecting_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_EQ(filesystem_url, observer.last_committed_url());
+  EXPECT_TRUE(observer.was_redirected());
+  EXPECT_EQ(net::OK, observer.net_error_code());
+
+  std::vector<GURL> started_navigation = {redirecting_url};
+  std::vector<GURL> redirected_navigation = {filesystem_url};
+  std::vector<GURL> finished_navigation = {filesystem_url};
+  EXPECT_EQ(started_navigation, logger.started_navigation_urls());
+  EXPECT_EQ(redirected_navigation, logger.redirected_navigation_urls());
+  EXPECT_EQ(finished_navigation, logger.finished_navigation_urls());
+
+  // Test that the current document represents what is stored in the filesystem.
+  std::string document_content;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), R"(
+    var document_content = document.documentElement.innerHTML;
+    domAutomationController.send(document_content);
+  )", &document_content));
+  EXPECT_EQ("<head></head><body>Hello world</body>", document_content);
 }
 
 }  // namespace content
