@@ -22,6 +22,30 @@
       "revId": "81d2250bd307381e802f6aad6d9bdc34e6204621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebde0fd5_abb50da9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-17T20:20:15Z",
+      "side": 1,
+      "message": "This should throw a ClassCastException if it isn\u0027t, right? Adding an assert seems redundant.",
+      "parentUuid": "7121e683_19d72300",
+      "range": {
+        "startLine": 133,
+        "startChar": 30,
+        "endLine": 133,
+        "endChar": 89
+      },
+      "revId": "81d2250bd307381e802f6aad6d9bdc34e6204621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
