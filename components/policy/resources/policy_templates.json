@@ -9760,6 +9760,106 @@
 
       If this policy is left not set, the device will behave as if 'DisallowArc' was chosen.''',
     },
+    {
+      'name': 'DeviceOffHours',
+      'type': 'dict',
+      'schema': {
+        'type': 'object',
+        'properties': {
+          'interval': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'id': 'DeviceOffHoursIntervals',
+              'properties': {
+                'start': {
+                  'type': 'object',
+                  'id': 'WeeklyTime',
+                  'properties': {
+                    'weekly': {
+                      'type': 'string',
+                      'id': 'DayOfWeek',
+                      'enum': [
+                        'DAY_OF_WEEK_UNSPECIFIED',
+                        'MONDAY',
+                        'TUESDAY',
+                        'WEDNESDAY',
+                        'THURSDAY',
+                        'FRIDAY',
+                        'SATURDAY',
+                        'SUNDAY'
+                      ],
+                    },
+                    'time' : {
+                      'type': 'object',
+                      'id': 'TimeOfDay',
+                      'properties': {
+                        'hours': { 'type': 'integer' },
+                        'minutes': { 'type': 'integer' },
+                      }
+                    },
+                  }
+                },
+                'end': {
+                  '$ref': 'WeeklyTime'
+                },
+              },
+            },
+          },
+          'policy': {
+            'type': 'array',
+            'items': { 'type':'string' }
+          },
+        },
+      },
+      'supported_on': ['chrome_os:62-'],
+      'device_only': True,
+      'features': {
+        'dynamic_refresh': True,
+      },
+      'example_value': {
+        'interval':
+        [
+          {
+            'start' : {
+              'weekday' : 1,
+              'time': {
+                'hours' : 3,
+                'minutes' : 34,
+              },
+            },
+            'end': {
+              'weekday' : 1,
+              'time': {
+                'hours' : 6,
+                'minutes' : 2,
+              },
+            },
+          },
+          {
+            'start' : {
+              'weekday' : 3,
+              'time': {
+                'hours' : 10,
+                'minutes' : 44,
+              },
+            },
+            'end': {
+              'weekday' : 3,
+              'time': {
+                'hours' : 16,
+                'minutes' : 0,
+              },
+            },
+          },
+        ],
+        'policy': ['a', 'b'],
+      },
+      'id': 376,
+      'caption': '''Off hours intervals when some policies are released''',
+      'tags': [],
+      'desc': '''During the defined time intervals, some policies from list of policies are not applied. Policies should be re-applied on every event when "OffHours" period starts or ends. When "off hours" time is ending and user is logged in not with an allowed account, he will be notified and forced to exit when "off hours" ends. The same should happen if policy is changed and current time became non-"off hours".''',
+    },
   ],
   'messages': {
     # Messages that are not associated to any policies.
