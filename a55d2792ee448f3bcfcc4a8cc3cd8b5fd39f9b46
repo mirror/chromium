@@ -22,6 +22,30 @@
       "revId": "a55d2792ee448f3bcfcc4a8cc3cd8b5fd39f9b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ca6636_55608b6a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T22:03:19Z",
+      "side": 0,
+      "message": "Yes, because it gets registered on the IO thread instead of the UI thread. Note that no code currently depends on this but this in-flight CL does:\nhttps://chromium-review.googlesource.com/c/567539/\n\nIf we all agree that it is in the best interest to reduce the burden on reviewers and fix it now then I can do that as well. oysteine@, zhenw@ what do y\u0027all think?",
+      "parentUuid": "145b8d86_02ff79e1",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 46
+      },
+      "revId": "a55d2792ee448f3bcfcc4a8cc3cd8b5fd39f9b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
