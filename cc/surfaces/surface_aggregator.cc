@@ -218,7 +218,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
   if (ignore_undamaged) {
     gfx::Transform quad_to_target_transform(
         target_transform,
-        surface_quad->shared_quad_state->quad_to_target_transform);
+        surface_quad->shared_quad_state()->quad_to_target_transform);
     *damage_rect_in_quad_space_valid = CalculateQuadSpaceDamageRect(
         quad_to_target_transform, dest_pass->transform_to_root_target,
         root_damage_rect_, damage_rect_in_quad_space);
@@ -248,8 +248,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
   const ResourceProvider::ResourceIdMap& child_to_parent_map =
       provider_ ? provider_->GetChildToParentMap(ChildIdForSurface(surface))
                 : empty_map;
-  bool merge_pass =
-      surface_quad->shared_quad_state->opacity == 1.f && copy_requests.empty();
+  bool merge_pass = surface_quad->shared_quad_state()->opacity == 1.f &&
+                    copy_requests.empty();
 
   const RenderPassList& referenced_passes = render_pass_list;
   size_t passes_to_copy =
@@ -275,7 +275,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
     // transform of the surface quad into account to update their transform to
     // the root surface.
     copy_pass->transform_to_root_target.ConcatTransform(
-        surface_quad->shared_quad_state->quad_to_target_transform);
+        surface_quad->shared_quad_state()->quad_to_target_transform);
     copy_pass->transform_to_root_target.ConcatTransform(target_transform);
     copy_pass->transform_to_root_target.ConcatTransform(
         dest_pass->transform_to_root_target);
@@ -299,7 +299,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
   }
 
   gfx::Transform surface_transform =
-      surface_quad->shared_quad_state->quad_to_target_transform;
+      surface_quad->shared_quad_state()->quad_to_target_transform;
   surface_transform.ConcatTransform(target_transform);
 
   const RenderPass& last_pass = *render_pass_list.back();
@@ -311,11 +311,11 @@ void SurfaceAggregator::HandleSurfaceQuad(
     // smaller cliprect for the quad.
     ClipData surface_quad_clip_rect(
         true, MathUtil::MapEnclosingClippedRect(
-                  surface_quad->shared_quad_state->quad_to_target_transform,
+                  surface_quad->shared_quad_state()->quad_to_target_transform,
                   surface_quad->visible_rect));
-    if (surface_quad->shared_quad_state->is_clipped) {
+    if (surface_quad->shared_quad_state()->is_clipped) {
       surface_quad_clip_rect.rect.Intersect(
-          surface_quad->shared_quad_state->clip_rect);
+          surface_quad->shared_quad_state()->clip_rect);
     }
 
     ClipData quads_clip =
@@ -328,7 +328,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
     RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
 
     SharedQuadState* shared_quad_state =
-        CopySharedQuadState(surface_quad->shared_quad_state, target_transform,
+        CopySharedQuadState(surface_quad->shared_quad_state(), target_transform,
                             clip_rect, dest_pass);
 
     RenderPassDrawQuad* quad =
@@ -368,6 +368,8 @@ void SurfaceAggregator::AddColorConversionPass() {
   shared_quad_state->quad_layer_rect = output_rect;
   shared_quad_state->visible_quad_layer_rect = output_rect;
   shared_quad_state->opacity = 1.f;
+  // TODO(weiliangc): Reserve valid stable id for color coversion.
+  shared_quad_state->stable_id = 1;
 
   RenderPassDrawQuad* quad =
       color_conversion_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
@@ -430,7 +432,7 @@ void SurfaceAggregator::CopyQuadsToPass(
       source_shared_quad_state_list.begin();
   for (auto* quad : source_quad_list) {
     while (sqs_iter != source_shared_quad_state_list.end() &&
-           quad->shared_quad_state != *sqs_iter) {
+           quad->shared_quad_state() != *sqs_iter) {
       ++sqs_iter;
     }
     DCHECK(sqs_iter != source_shared_quad_state_list.end());
@@ -453,10 +455,10 @@ void SurfaceAggregator::CopyQuadsToPass(
                         ignore_undamaged, &damage_rect_in_quad_space,
                         &damage_rect_in_quad_space_valid);
     } else {
-      if (quad->shared_quad_state != last_copied_source_shared_quad_state) {
+      if (quad->shared_quad_state() != last_copied_source_shared_quad_state) {
         dest_shared_quad_state = CopySharedQuadState(
-            quad->shared_quad_state, target_transform, clip_rect, dest_pass);
-        last_copied_source_shared_quad_state = quad->shared_quad_state;
+            quad->shared_quad_state(), target_transform, clip_rect, dest_pass);
+        last_copied_source_shared_quad_state = quad->shared_quad_state();
         if (aggregate_only_damaged_ && !has_copy_requests_) {
           damage_rect_in_quad_space_valid = CalculateQuadSpaceDamageRect(
               dest_shared_quad_state->quad_to_target_transform,
@@ -682,7 +684,7 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
             SurfaceDrawQuad::MaterialCast(quad);
         gfx::Transform target_to_surface_transform(
             render_pass->transform_to_root_target,
-            surface_quad->shared_quad_state->quad_to_target_transform);
+            surface_quad->shared_quad_state()->quad_to_target_transform);
         child_surfaces.emplace_back(surface_quad->surface_id,
                                     in_moved_pixel_pass, remapped_pass_id,
                                     target_to_surface_transform);

@@ -35,9 +35,10 @@ void AddSurfaceQuad(RenderPass* pass,
   SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
   SharedQuadState* shared_quad_state = pass->CreateAndAppendSharedQuadState();
-  shared_quad_state->SetAll(layer_to_target_transform, gfx::Rect(layer_bounds),
-                            visible_layer_rect, clip_rect, is_clipped, opacity,
-                            blend_mode, 0);
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_quad_state->SetAll(stable_id, layer_to_target_transform,
+                            gfx::Rect(layer_bounds), visible_layer_rect,
+                            clip_rect, is_clipped, opacity, blend_mode, 0);
 
   SurfaceDrawQuad* surface_quad =
       pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
@@ -60,8 +61,9 @@ void AddSurfaceQuad(RenderPass* pass,
 void AddRenderPassQuad(RenderPass* pass, RenderPassId render_pass_id) {
   gfx::Rect output_rect = gfx::Rect(0, 0, 5, 5);
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
-  shared_state->SetAll(gfx::Transform(), output_rect, output_rect, output_rect,
-                       false, 1, SkBlendMode::kSrcOver, 0);
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->SetAll(stable_id, gfx::Transform(), output_rect, output_rect,
+                       output_rect, false, 1, SkBlendMode::kSrcOver, 0);
   RenderPassDrawQuad* quad =
       pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   quad->SetNew(shared_state, output_rect, output_rect, render_pass_id, 0,

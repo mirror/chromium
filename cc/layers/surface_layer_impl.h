@@ -40,6 +40,9 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
     return fallback_surface_info_;
   }
 
+  void SetFallbackLayerId(int fallback_layer_id) {
+    fallback_layer_id_ = fallback_layer_id;
+  }
   void SetStretchContentToFillBounds(bool stretch_content);
 
   // LayerImpl overrides.
@@ -56,6 +59,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
       RenderPass* render_pass,
       SurfaceDrawQuadType surface_draw_quad_type,
       const SurfaceInfo& surface_info,
+      uint64_t stable_id,
       SharedQuadState** common_shared_quad_state);
 
   void GetDebugBorderProperties(SkColor* color, float* width) const override;
@@ -65,7 +69,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
 
   SurfaceInfo primary_surface_info_;
   SurfaceInfo fallback_surface_info_;
-
+  int fallback_layer_id_;
   bool stretch_content_to_fill_bounds_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceLayerImpl);

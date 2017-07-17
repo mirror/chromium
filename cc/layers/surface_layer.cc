@@ -57,7 +57,9 @@ scoped_refptr<SurfaceLayer> SurfaceLayer::Create(
 }
 
 SurfaceLayer::SurfaceLayer(scoped_refptr<SurfaceReferenceFactory> ref_factory)
-    : ref_factory_(std::move(ref_factory)) {}
+    : ref_factory_(std::move(ref_factory)) {
+  fallback_layer_id_ = RequestFallbackLayerIdForSurfaceLayer();
+}
 
 SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
@@ -123,6 +125,7 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   SurfaceLayerImpl* layer_impl = static_cast<SurfaceLayerImpl*>(layer);
   layer_impl->SetPrimarySurfaceInfo(primary_surface_info_);
   layer_impl->SetFallbackSurfaceInfo(fallback_surface_info_);
+  layer_impl->SetFallbackLayerId(fallback_layer_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
 }
 
