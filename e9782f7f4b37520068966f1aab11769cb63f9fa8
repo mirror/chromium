@@ -16,6 +16,24 @@
       "revId": "e9782f7f4b37520068966f1aab11769cb63f9fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a4e939_a369d872",
+        "filename": "mojo/edk/system/channel.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-17T20:15:49Z",
+      "side": 1,
+      "message": "Yeah. Unfortunately we need the memory to be aligned and POSIX does not give us an aligned realloc. Large messages (\u003e4k) are very uncommon (\u003c1%) though, and we discourage them anyway.",
+      "parentUuid": "43b4b8a3_3cefc710",
+      "revId": "e9782f7f4b37520068966f1aab11769cb63f9fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
