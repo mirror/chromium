@@ -82,6 +82,30 @@
     },
     {
       "key": {
+        "uuid": "8485a353_7f149c05",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-17T23:34:44Z",
+      "side": 1,
+      "message": "+1, that\u0027s what I was suggesting in my previous comment. Seems like we can just skip all quad types if they\u0027re not visible.",
+      "parentUuid": "546c7974_31612d45",
+      "range": {
+        "startLine": 514,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 0
+      },
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7aea14d_de575287",
         "filename": "cc/layers/render_surface_impl.cc",
         "patchSetId": 3
