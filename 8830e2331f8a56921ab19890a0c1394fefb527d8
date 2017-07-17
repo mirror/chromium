@@ -87,6 +87,24 @@
       "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7767ab72_38ddf64d",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T09:53:48Z",
+      "side": 1,
+      "message": "OK, then I\u0027m going to go ahead with the original plan. I\u0027m going to set the next action on https://crbug.com/739331 to a month from now to remind me.",
+      "parentUuid": "05a39224_1113e54f",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
