@@ -4,7 +4,6 @@
 
 #include "gpu/ipc/service/gpu_vsync_provider_win.h"
 
-#include <dwmapi.h>
 #include <windows.h>
 
 #include <string>
@@ -97,9 +96,8 @@ class GpuVSyncWorker : public base::Thread,
 
   bool GetDisplayFrequency(const wchar_t* device_name, DWORD* frequency);
   void UpdateCurrentDisplayFrequency();
-  bool GetDwmVBlankTimestamp(base::TimeTicks* timestamp);
 
-  void SendGpuVSyncUpdate(base::TimeTicks now, bool use_dwm);
+  void SendGpuVSyncUpdate(base::TimeTicks now);
 
   void InvokeCallbackAndReschedule(base::TimeTicks timestamp,
                                    base::TimeDelta interval);
@@ -249,12 +247,6 @@ void GpuVSyncWorker::WaitForVSyncOnThread() {
 
   UpdateCurrentDisplayFrequency();
 
-  // Use DWM timing only when running on the primary monitor which DWM
-  // is synchronized with and only if we can get accurate high resulution
-  // timestamps.
-  bool use_dwm = (monitor_info.dwFlags & MONITORINFOF_PRIMARY) != 0 &&
-                 base::TimeTicks::IsHighResolution();
-
   NTSTATUS wait_result = WaitForVBlankEvent();
   if (wait_result != STATUS_SUCCESS) {
     if (wait_result == STATUS_GRAPHICS_PRESENT_OCCLUDED) {
@@ -267,7 +259,7 @@ void GpuVSyncWorker::WaitForVSyncOnThread() {
     }
   }
 
-  SendGpuVSyncUpdate(base::TimeTicks::Now(), use_dwm);
+  SendGpuVSyncUpdate(base::TimeTicks::Now());
   ReportErrorCode(WaitForVBlankErrorCode::kSuccess);
 }
 
@@ -348,44 +340,11 @@ void GpuVSyncWorker::UpdateCurrentDisplayFrequency() {
   }
 }
 
-bool GpuVSyncWorker::GetDwmVBlankTimestamp(base::TimeTicks* timestamp) {
-  DWM_TIMING_INFO timing_info;
-  timing_info.cbSize = sizeof(timing_info);
-  HRESULT result = DwmGetCompositionTimingInfo(nullptr, &timing_info);
-  if (result != S_OK)
-    return false;
-
-  *timestamp = base::TimeTicks::FromQPCValue(
-      static_cast<LONGLONG>(timing_info.qpcVBlank));
-  return true;
-}
-
-void GpuVSyncWorker::SendGpuVSyncUpdate(base::TimeTicks now, bool use_dwm) {
-  base::TimeTicks timestamp;
-  base::TimeDelta adjustment;
-
-  if (use_dwm && GetDwmVBlankTimestamp(&timestamp)) {
-    // Timestamp comes from DwmGetCompositionTimingInfo and apparently it might
-    // be up to 2-3 vsync cycles in the past or in the future.
-    // The adjustment formula was suggested here:
-    // http://www.vsynctester.com/firefoxisbroken.html
-    base::TimeDelta interval = GetAverageInterval();
-    adjustment =
-        ((now - timestamp + interval / 8) % interval + interval) % interval -
-        interval / 8;
-    timestamp = now - adjustment;
-  } else {
-    // Not using DWM.
-    timestamp = now;
-  }
-
-  AddTimestamp(timestamp);
-
-  TRACE_EVENT1("gpu", "GpuVSyncWorker::SendGpuVSyncUpdate", "adjustment",
-               adjustment.ToInternalValue());
+void GpuVSyncWorker::SendGpuVSyncUpdate(base::TimeTicks now) {
+  AddTimestamp(now);
 
   DCHECK_GT(GetAverageInterval().InMillisecondsF(), 0);
-  InvokeCallbackAndReschedule(timestamp, GetAverageInterval());
+  InvokeCallbackAndReschedule(now, GetAverageInterval());
 }
 
 void GpuVSyncWorker::InvokeCallbackAndReschedule(base::TimeTicks timestamp,
@@ -406,15 +365,11 @@ void GpuVSyncWorker::InvokeCallbackAndReschedule(base::TimeTicks timestamp,
 void GpuVSyncWorker::UseDelayBasedVSyncOnError(
     WaitForVBlankErrorCode error_code) {
   // This is called in a case of an error.
-  // Use timer based mechanism as a backup for one v-sync cycle, start with
-  // getting VSync parameters to determine timebase and interval.
+  // Use timer based mechanism as a backup for one v-sync cycle.
   // TODO(stanisc): Consider a slower v-sync rate in this particular case.
-  base::TimeTicks timebase;
-  GetDwmVBlankTimestamp(&timebase);
-
   base::TimeDelta interval = GetAverageInterval();
   base::TimeTicks now = base::TimeTicks::Now();
-  base::TimeTicks next_vsync = now.SnappedToNextTick(timebase, interval);
+  base::TimeTicks next_vsync = now.SnappedToNextTick(last_timestamp_, interval);
 
   task_runner()->PostDelayedTask(
       FROM_HERE,
