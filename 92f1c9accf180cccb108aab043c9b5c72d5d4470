@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0d550b6_a1e3a888",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bee7ddb_a1a6dcca",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75bacf59_92076c11",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082a4cc7_37813c0f",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75bacf59_92076c11",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d83ecd0a_a5382aba",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af6cf25d_0a939a7c",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8970a290_cef3d51a",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1f4b12a5_29ae1d8d",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8970a290_cef3d51a",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6508389f_5cf7d332",
         "filename": "content/browser/loader/resource_hints_impl.cc",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de8c258_66991958",
+        "filename": "content/browser/loader/resource_hints_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Probably not, because |getter| may return a nullptr after the shutdown. Since {Preconnect,Preresolve}Url() are standalone functions, we don\u0027t have any guarantees about the status of the context.\nI added a nullptr check.\nDone",
+      "parentUuid": "6508389f_5cf7d332",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

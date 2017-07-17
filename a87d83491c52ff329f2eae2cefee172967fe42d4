@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e792dcc7_7a7cdbd8",
+        "filename": "content/browser/loader/resource_hints_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-17T14:56:30Z",
+      "side": 1,
+      "message": "Seems like the right error code for this case. Correct me if I wrong and there could be other cases when the context getter returns nullptr.",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "a87d83491c52ff329f2eae2cefee172967fe42d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
