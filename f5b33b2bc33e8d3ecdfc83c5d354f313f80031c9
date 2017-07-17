@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99e7ffed_34dca288",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionAlgorithm.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T15:52:30Z",
+      "side": 1,
+      "message": "Could you link to the spec here?\n\nDoes this only apply to 400/500 or do we always check n+100 and n-100 first?",
+      "range": {
+        "startLine": 106,
+        "startChar": 35,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e37fd1_42c431ee",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionAlgorithm.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T15:52:30Z",
+      "side": 1,
+      "message": "UseCapitalCase, not camelCase.",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25da8cbe_cb74bfc3",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T15:52:30Z",
+      "side": 1,
+      "message": "Can we make this clamped and/or checked? Having it be both seems like a bad idea. Especially since we\u0027re moving towards using clamped numbers in more places.",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dbb6ec_f247bbb0",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypesTest.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T15:52:30Z",
+      "side": 1,
+      "message": "2017 :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
