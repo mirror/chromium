@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e84fbfd5_96157251",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T09:53:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5244cbf5_4dda993f",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75e8fb8e_d9ba7ac5",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 9
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "Is it OK if I file a bug and assign it to myself to do it after this CL?",
       "parentUuid": "75e8fb8e_d9ba7ac5",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecd6285_af606dcb",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T09:53:00Z",
+      "side": 1,
+      "message": "Nope. I think that the risk of breaking existing code is too big.",
+      "parentUuid": "56d41175_0767a601",
       "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
