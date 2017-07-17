@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a51a4e12_0ea117e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-17T18:46:33Z",
+      "side": 1,
+      "message": "Why not issue time though? Thought we\u0027re using issueTime as base, and this would be especially meaningful for the responseReceivedTime since they both come from renderer.",
+      "revId": "2146c01313f176c6cf79d5387462d311d9575a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
