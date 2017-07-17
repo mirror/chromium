@@ -22,6 +22,30 @@
       "revId": "a0511f35fedffa45a122b11877066c271bcee70e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fbd490_6d0e5a47",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-17T16:47:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure, as it\u0027s only happened once so far and I haven\u0027t done much investigating. My initial guess would be that it\u0027s either due to something on our end or due to the sleeps that the emulator uses.",
+      "parentUuid": "391cd128_665d5cc0",
+      "range": {
+        "startLine": 143,
+        "startChar": 31,
+        "endLine": 143,
+        "endChar": 89
+      },
+      "revId": "a0511f35fedffa45a122b11877066c271bcee70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
