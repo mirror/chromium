@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaca7508_255a7d01",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T06:58:47Z",
+      "side": 0,
+      "message": "Note that this will briefly be broken between when you submit the downstream CL to remove the provider implementation and when you submit this CL to stop using it.  I think that\u0027s ok, if you get them both in today.  Any later and we should consider splitting them up because we\u0027re near branch point.",
+      "revId": "0ec93b83904c27256a520aca3496ac2a028932ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
