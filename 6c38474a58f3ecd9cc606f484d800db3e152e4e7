@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ecbcd0a_e1f3eeec",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-17T23:40:27Z",
+      "side": 1,
+      "message": "I kinda feel like the whole point of this test is out the window, given the comment above the test.  Does it add anything?  If yes it seems like the comments in it need updating.",
+      "revId": "6c38474a58f3ecd9cc606f484d800db3e152e4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
