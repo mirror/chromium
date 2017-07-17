@@ -95,6 +95,13 @@ base::string16 ChromeCleanerDialog::GetWindowTitle() const {
   return l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_TITLE);
 }
 
+views::View* ChromeCleanerDialog::GetInitiallyFocusedView() {
+  // Set focus on the checkbox to prevent accidental prompt acceptance if the
+  // user is typing as the dialog appears.
+  DCHECK(logs_permission_checkbox_);
+  return logs_permission_checkbox_;
+}
+
 // DialogDelegate overrides.
 
 views::View* ChromeCleanerDialog::CreateFootnoteView() {
