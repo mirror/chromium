@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8b06c16_e6277a28",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-17T18:12:00Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to move the privacy here, you just need to use MojoUkmRecorder via a UkmRecorder pointer, so your friend access applies.",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "270df45b_21160081",
         "filename": "third_party/WebKit/Source/core/DEPS",
         "patchSetId": 6
@@ -30,6 +53,29 @@
       "writtenOn": "2017-07-17T16:25:51Z",
       "side": 1,
       "message": "Is this needed?",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c48002_16c4ae49",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-17T18:12:00Z",
+      "side": 1,
+      "message": "You don\u0027t need to record this every time you add an event, it only needs to be set once per pageload.  You should reuse the same sourceId for all entries on the same pageload.",
+      "range": {
+        "startLine": 512,
+        "startChar": 2,
+        "endLine": 512,
+        "endChar": 54
+      },
       "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
