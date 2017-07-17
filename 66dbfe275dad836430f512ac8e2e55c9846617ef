@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba49f15_139fea6d",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/ExperimentalOptionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T16:10:28Z",
+      "side": 0,
+      "message": "Just for my understanding - Is sleep not needed because shutdown() blocks waiting on all writes to be flushed to disk?",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 14
+      },
+      "revId": "66dbfe275dad836430f512ac8e2e55c9846617ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
