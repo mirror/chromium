@@ -199,13 +199,6 @@ TEST_F(PermissionRequestManagerTest, NoRequests) {
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
 
-TEST_F(PermissionRequestManagerTest, NoView) {
-  manager_->AddRequest(&request1_);
-  // Don't display the pending requests.
-  WaitForBubbleToBeShown();
-  EXPECT_FALSE(prompt_factory_->is_visible());
-}
-
 TEST_F(PermissionRequestManagerTest, TwoRequestsDoNotCoalesce) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
