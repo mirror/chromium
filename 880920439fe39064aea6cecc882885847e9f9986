@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68628909_6f6d5337",
+        "filename": "third_party/sqlite/src/src/vdbeapi.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-17T15:56:24Z",
+      "side": 1,
+      "message": "I guess I\u0027m OK with applying google\u0027s C style guide (adding the braces), but is it cleaner to match SQLite as closely as possible?",
+      "range": {
+        "startLine": 203,
+        "startChar": 62,
+        "endLine": 203,
+        "endChar": 70
+      },
+      "revId": "880920439fe39064aea6cecc882885847e9f9986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f9bf50_a02111d2",
+        "filename": "third_party/sqlite/amalgamation/sqlite3.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4631,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-17T15:56:24Z",
+      "side": 0,
+      "message": "Same question as the one I added to sqlite.h.in",
+      "range": {
+        "startLine": 4631,
+        "startChar": 10,
+        "endLine": 4631,
+        "endChar": 15
+      },
+      "revId": "bb317b9cc0055f7abebcd014dfb6c193548b4d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bfad1c2_a0d50f2f",
+        "filename": "third_party/sqlite/src/ext/fts3/fts3.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 3574,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-17T15:56:24Z",
+      "side": 0,
+      "message": "The original CL deleted this memcpy. Is that not needed?",
+      "range": {
+        "startLine": 3574,
+        "startChar": 16,
+        "endLine": 3574,
+        "endChar": 34
+      },
+      "revId": "bb317b9cc0055f7abebcd014dfb6c193548b4d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9fc1495_93ee636c",
+        "filename": "third_party/sqlite/src/src/sqlite.h.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 4631,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-17T15:56:24Z",
+      "side": 0,
+      "message": "This comment paragraph was deleted in the original CL. Keep it?",
+      "range": {
+        "startLine": 4631,
+        "startChar": 10,
+        "endLine": 4631,
+        "endChar": 15
+      },
+      "revId": "bb317b9cc0055f7abebcd014dfb6c193548b4d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
