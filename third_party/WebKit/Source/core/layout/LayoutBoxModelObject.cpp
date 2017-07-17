@@ -61,6 +61,8 @@ StickyPositionScrollingConstraints* StickyConstraintsForLayoutObject(
 
   PaintLayerScrollableArea* scrollable_area =
       ancestor_overflow_layer->GetScrollableArea();
+  if (!scrolllable_area)
+    return;
   auto it = scrollable_area->GetStickyConstraintsMap().find(obj->Layer());
   if (it == scrollable_area->GetStickyConstraintsMap().end())
     return nullptr;
