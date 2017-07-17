@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af548395_1a9e21be",
+        "filename": "android_webview/browser/aw_safe_browsing_config_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T15:21:04Z",
+      "side": 1,
+      "message": "this now only indicates the state of safebrowsing setting in manifest. add a comment.",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8b0798_37bdffb0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T15:21:04Z",
+      "side": 1,
+      "message": "why do we set this to true unconditionally?",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eacdc54_ecc33cf0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T15:21:04Z",
+      "side": 1,
+      "message": "stale log.",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 75
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc542869_7f8e2b9c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T15:21:04Z",
+      "side": 1,
+      "message": "stale log.",
+      "range": {
+        "startLine": 362,
+        "startChar": 36,
+        "endLine": 362,
+        "endChar": 43
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
