@@ -141,6 +141,24 @@
       "revId": "cfc24270bfc43126129faa67579555fd531c0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f8b5cb_b134f6de",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-17T12:14:06Z",
+      "side": 1,
+      "message": "\"If we want to create GMBImpl on |task_runner_|\u0027s thread, then it should happen either in AllocateGpuMemoryBuffer above, or in OnGpuMemoryBufferAllocated below. But I can\u0027t think of a way of doing that which does not involve having two versions of the functions with duplicated code (where callback in one version receives a handle, and the callback in the other version receives a GMBImpl).\"\n\nThis is what I was asking for. It seems like the best way to handle this from what I can tell but maybe I\u0027m still missing what makes this non-ideal. Is there really no way we can refactor the code to minimize duplicated code for this design? E.g. add a AllocateAndCreateGpuMemoryBuffer+OnGpuMemoryBufferCreated functions that will run on |task_runner_| and adjust AllocateGpuMemoryBuffer/OnGpuMemoryBufferAllocated to maximize code reuse between the \"allocate\" and \"create\" cases. \n\nThe current patch calls CreateBufferDestructionCallback in the \"allocate\"-only case where it\u0027s not needed afaict and I think that makes the code harder to understand.",
+      "parentUuid": "5f2d00ff_71f824ea",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
