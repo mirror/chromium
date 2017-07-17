@@ -22,6 +22,30 @@
       "revId": "87a18ff6d332a03020f3c0d9e6a80a5edabb633e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93955717_24e7b0b4",
+        "filename": "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-17T19:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89080472_4f46e4b0",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "87a18ff6d332a03020f3c0d9e6a80a5edabb633e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
