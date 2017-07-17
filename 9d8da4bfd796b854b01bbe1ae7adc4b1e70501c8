@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4325f1fb_85019ab8",
+        "filename": "chrome/browser/permissions/permission_dialog_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-17T03:27:24Z",
+      "side": 1,
+      "message": "I reverted this to a regular pointer.",
+      "parentUuid": "23525edd_cbf1fd9c",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9498157c_c15f8a31",
         "filename": "chrome/browser/permissions/permission_request_manager.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-17T01:18:32Z",
       "side": 1,
       "message": "nit: I wonder if we should make this more generic, like:\ntab_can_show_prompts_",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19e83cd_e2262a06",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-17T03:27:24Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "9498157c_c15f8a31",
       "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "16e9dcf1_ca62a75a",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-17T03:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12df98df_5ce5aae9",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5b0b23c_6e585432",
         "filename": "chrome/browser/permissions/permission_request_manager.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf13d1a_5139a479",
+        "filename": "chrome/browser/permissions/permission_request_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-17T03:27:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5b0b23c_6e585432",
+      "revId": "9d8da4bfd796b854b01bbe1ae7adc4b1e70501c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
