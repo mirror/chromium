@@ -959,6 +959,11 @@ void DesktopWindowTreeHostX11::SetVisibilityChangedAnimationsEnabled(
   // Much like the previous NativeWidgetGtk, we don't have anything to do here.
 }
 
+bool DesktopWindowTreeHostX11::ShouldDisableWindowAnimations(
+    const Widget::InitParams& params) const {
+  return params.type == Widget::InitParams::TYPE_WINDOW;
+}
+
 NonClientFrameView* DesktopWindowTreeHostX11::CreateNonClientFrameView() {
   return ShouldUseNativeFrame()
              ? new NativeFrameView(native_widget_delegate_->AsWidget())
