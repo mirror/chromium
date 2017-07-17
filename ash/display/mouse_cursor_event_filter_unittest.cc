@@ -145,7 +145,7 @@ TEST_F(MouseCursorEventFilterTest, CursorDeviceScaleFactor) {
   display_manager()->SetLayoutForCurrentDisplays(
       display::test::CreateDisplayLayout(display_manager(),
                                          display::DisplayPlacement::RIGHT, 0));
-  test::CursorManagerTestApi cursor_test_api(Shell::Get()->cursor_manager());
+  CursorManagerTestApi cursor_test_api(Shell::Get()->cursor_manager());
 
   EXPECT_EQ(1.0f, cursor_test_api.GetCurrentCursor().device_scale_factor());
   TestIfMouseWarpsAt(gfx::Point(399, 200));

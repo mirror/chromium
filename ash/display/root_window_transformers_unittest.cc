@@ -406,7 +406,7 @@ TEST_F(RootWindowTransformersTest, ConvertHostToRootCoords) {
 }
 
 TEST_F(RootWindowTransformersTest, LetterBoxPillarBox) {
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   UpdateDisplay("400x200,500x500");
   std::unique_ptr<RootWindowTransformer> transformer(

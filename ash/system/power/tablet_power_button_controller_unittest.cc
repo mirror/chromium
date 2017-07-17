@@ -28,7 +28,6 @@
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -53,7 +52,7 @@ void CopyResult(bool* dest, bool src) {
 
 }  // namespace
 
-class TabletPowerButtonControllerTest : public AshTestBase {
+class TabletPowerButtonControllerTest : public test::AshTestBase {
  public:
   TabletPowerButtonControllerTest() {}
   ~TabletPowerButtonControllerTest() override {}
@@ -688,5 +687,4 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
-}  // namespace test
 }  // namespace ash

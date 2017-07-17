@@ -97,8 +97,8 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
   GetSessionControllerClient()->SetSessionState(
       session_manager::SessionState::ACTIVE);
 
-  test::TestShellDelegate* shell_delegate =
-      static_cast<test::TestShellDelegate*>(Shell::Get()->shell_delegate());
+  TestShellDelegate* shell_delegate =
+      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
   shell_delegate->set_multi_profiles_enabled(multiprofile);
 
   // Instead of using the existing tray panels we create new ones which makes

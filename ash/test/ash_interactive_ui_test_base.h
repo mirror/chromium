@@ -18,7 +18,7 @@ class Env;
 namespace ash {
 namespace test {
 
-class AshInteractiveUITestBase : public AshTestBase {
+class AshInteractiveUITestBase : public test::AshTestBase {
  public:
   AshInteractiveUITestBase();
   ~AshInteractiveUITestBase() override;

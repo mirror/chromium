@@ -27,16 +27,16 @@ class ShelfTest : public test::AshTestBase {
     ShelfView* shelf_view = GetPrimaryShelf()->GetShelfViewForTesting();
     shelf_model_ = shelf_view->model();
 
-    test_.reset(new test::ShelfViewTestAPI(shelf_view));
+    test_.reset(new ShelfViewTestAPI(shelf_view));
   }
 
   ShelfModel* shelf_model() { return shelf_model_; }
 
-  test::ShelfViewTestAPI* test_api() { return test_.get(); }
+  ShelfViewTestAPI* test_api() { return test_.get(); }
 
  private:
   ShelfModel* shelf_model_;
-  std::unique_ptr<test::ShelfViewTestAPI> test_;
+  std::unique_ptr<ShelfViewTestAPI> test_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfTest);
 };

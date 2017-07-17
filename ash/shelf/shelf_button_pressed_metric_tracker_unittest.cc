@@ -21,7 +21,6 @@
 #include "ui/views/controls/button/button.h"
 
 namespace ash {
-namespace test {
 namespace {
 
 // A simple light weight test double dummy for a views::Button.
@@ -59,7 +58,7 @@ DummyEvent::~DummyEvent() {}
 
 // Test fixture for the ShelfButtonPressedMetricTracker class. Relies on
 // AshTestBase to initilize the UserMetricsRecorder and it's dependencies.
-class ShelfButtonPressedMetricTrackerTest : public AshTestBase {
+class ShelfButtonPressedMetricTrackerTest : public test::AshTestBase {
  public:
   static const char*
       kTimeBetweenWindowMinimizedAndActivatedActionsHistogramName;
@@ -312,5 +311,4 @@ TEST_F(ShelfButtonPressedMetricTrackerTest,
       kTimeDeltaInMilliseconds, 1);
 }
 
-}  // namespace test
 }  // namespace ash

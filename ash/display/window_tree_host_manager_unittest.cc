@@ -245,7 +245,7 @@ class WindowTreeHostManagerShutdownTest : public test::AshTestBase,
   DISALLOW_COPY_AND_ASSIGN(WindowTreeHostManagerShutdownTest);
 };
 
-class StartupHelper : public test::TestShellDelegate,
+class StartupHelper : public TestShellDelegate,
                       public WindowTreeHostManager::Observer {
  public:
   StartupHelper() : displays_initialized_(false) {}
@@ -1623,7 +1623,7 @@ TEST_F(WindowTreeHostManagerTest,
   Shell* shell = Shell::Get();
   WindowTreeHostManager* window_tree_host_manager =
       shell->window_tree_host_manager();
-  test::CursorManagerTestApi test_api(shell->cursor_manager());
+  CursorManagerTestApi test_api(shell->cursor_manager());
 
   window_tree_host_manager->GetPrimaryRootWindow()->MoveCursorTo(
       gfx::Point(20, 50));
@@ -1647,7 +1647,7 @@ TEST_F(WindowTreeHostManagerTest,
   Shell* shell = Shell::Get();
   WindowTreeHostManager* window_tree_host_manager =
       shell->window_tree_host_manager();
-  test::CursorManagerTestApi test_api(shell->cursor_manager());
+  CursorManagerTestApi test_api(shell->cursor_manager());
 
   UpdateDisplay("300x300*2/r,200x200");
   // Swap the primary display to make it possible to remove the primary display

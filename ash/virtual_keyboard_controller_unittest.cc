@@ -23,9 +23,8 @@
 #include "ui/keyboard/keyboard_util.h"
 
 namespace ash {
-namespace test {
 
-class VirtualKeyboardControllerTest : public AshTestBase {
+class VirtualKeyboardControllerTest : public test::AshTestBase {
  public:
   VirtualKeyboardControllerTest() {}
   ~VirtualKeyboardControllerTest() override {}
@@ -313,5 +312,4 @@ TEST_F(VirtualKeyboardControllerAlwaysEnabledTest, DoesNotSuppressKeyboard) {
   ASSERT_TRUE(keyboard::IsKeyboardEnabled());
 }
 
-}  // namespace test
 }  // namespace ash

@@ -17,9 +17,8 @@
 #include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
-namespace test {
 
-using ScreenUtilTest = AshTestBase;
+using ScreenUtilTest = test::AshTestBase;
 
 TEST_F(ScreenUtilTest, Bounds) {
   UpdateDisplay("600x600,500x500");
@@ -134,5 +133,4 @@ TEST_F(ScreenUtilTest, ShelfDisplayBoundsInUnifiedDesktop) {
             ScreenUtil::GetDisplayBoundsWithShelf(window).ToString());
 }
 
-}  // namespace test
 }  // namespace ash

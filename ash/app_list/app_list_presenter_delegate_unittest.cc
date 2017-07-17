@@ -78,7 +78,7 @@ class AppListPresenterDelegateTest : public test::AshTestBase,
   }
 
  private:
-  test::TestAppListViewPresenterImpl app_list_presenter_impl_;
+  TestAppListViewPresenterImpl app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListPresenterDelegateTest);
@@ -123,7 +123,7 @@ class FullscreenAppListPresenterDelegateTest
   }
 
  private:
-  test::TestAppListViewPresenterImpl app_list_presenter_impl_;
+  TestAppListViewPresenterImpl app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenAppListPresenterDelegateTest);

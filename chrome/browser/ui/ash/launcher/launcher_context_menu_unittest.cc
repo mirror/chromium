@@ -38,14 +38,14 @@
 namespace {
 
 // A shell delegate that owns a ChromeLauncherController, like production.
-class ChromeLauncherTestShellDelegate : public ash::test::TestShellDelegate {
+class ChromeLauncherTestShellDelegate : public ash::TestShellDelegate {
  public:
   explicit ChromeLauncherTestShellDelegate(Profile* profile)
       : profile_(profile) {}
 
   ChromeLauncherController* controller() { return controller_.get(); }
 
-  // ash::test::TestShellDelegate:
+  // ash::TestShellDelegate:
   void ShelfInit() override {
     if (!controller_) {
       controller_ = base::MakeUnique<ChromeLauncherController>(

@@ -999,7 +999,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfVisibleState) {
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_NEVER);
 
   // The tested behavior relies on the app list presenter implementation.
-  test::TestAppListViewPresenterImpl app_list_presenter_impl;
+  TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a normal unmaximized window; the shelf should be visible.
   aura::Window* window = CreateTestWindow();
@@ -1030,7 +1030,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfAutoHideState) {
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
 
   // The tested behavior relies on the app list presenter implementation.
-  test::TestAppListViewPresenterImpl app_list_presenter_impl;
+  TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a normal unmaximized window; the shelf should be hidden.
   aura::Window* window = CreateTestWindow();
@@ -1097,7 +1097,7 @@ TEST_F(ShelfLayoutManagerTest, DualDisplayOpenAppListWithShelfAutoHideState) {
   wm::ActivateWindow(window_1);
 
   // The tested behavior relies on the app list presenter implementation.
-  test::TestAppListViewPresenterImpl app_list_presenter_impl;
+  TestAppListViewPresenterImpl app_list_presenter_impl;
 
   Shell::Get()->UpdateShelfVisibility();
   EXPECT_FALSE(app_list_presenter_impl.GetTargetVisibility());
@@ -1135,7 +1135,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfHiddenState) {
   Shelf* shelf = GetPrimaryShelf();
 
   // The tested behavior relies on the app list presenter implementation.
-  test::TestAppListViewPresenterImpl app_list_presenter_impl;
+  TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a window and make it full screen; the shelf should be hidden.
   aura::Window* window = CreateTestWindow();

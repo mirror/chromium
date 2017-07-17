@@ -20,9 +20,8 @@
 #include "ui/gfx/transform.h"
 
 namespace ash {
-namespace test {
 
-class ScreenRotationAnimationTest : public AshTestBase {
+class ScreenRotationAnimationTest : public test::AshTestBase {
  public:
   ScreenRotationAnimationTest() {}
   ~ScreenRotationAnimationTest() override {}
@@ -95,5 +94,4 @@ TEST_F(ScreenRotationAnimationTest, DestroyLayerDuringAnimation) {
   layer.reset();
 }
 
-}  // namespace test
 }  // namespace ash

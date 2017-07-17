@@ -36,7 +36,6 @@
 #include "ui/views/window/window_button_order_provider.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -102,7 +101,7 @@ class MaxSizeWidgetDelegate : public views::WidgetDelegateView {
 
 }  // namespace
 
-class SystemGestureEventFilterTest : public AshTestBase {
+class SystemGestureEventFilterTest : public test::AshTestBase {
  public:
   SystemGestureEventFilterTest() : AshTestBase() {}
   ~SystemGestureEventFilterTest() override {}
@@ -479,5 +478,4 @@ TEST_F(SystemGestureEventFilterTest,
   aura::Env::GetInstance()->RemovePreTargetHandler(&event_handler);
 }
 
-}  // namespace test
 }  // namespace ash

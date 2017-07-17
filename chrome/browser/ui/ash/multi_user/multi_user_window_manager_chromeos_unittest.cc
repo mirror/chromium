@@ -113,7 +113,7 @@ class TestShellContentState : public ash::ShellContentState {
   DISALLOW_COPY_AND_ASSIGN(TestShellContentState);
 };
 
-class TestShellDelegateChromeOS : public ash::test::TestShellDelegate {
+class TestShellDelegateChromeOS : public ash::TestShellDelegate {
  public:
   TestShellDelegateChromeOS() {}
 
@@ -142,11 +142,10 @@ std::unique_ptr<Browser> CreateTestBrowser(aura::Window* window,
 }  // namespace
 
 namespace ash {
-namespace test {
 
 // A test class for preparing the chrome::MultiUserWindowManager. It creates
 // various windows and instantiates the chrome::MultiUserWindowManager.
-class MultiUserWindowManagerChromeOSTest : public AshTestBase {
+class MultiUserWindowManagerChromeOSTest : public test::AshTestBase {
  public:
   MultiUserWindowManagerChromeOSTest()
       : multi_user_window_manager_(NULL),
@@ -1642,5 +1641,4 @@ TEST_F(MultiUserWindowManagerChromeOSTest, GetActiveBrowserTest) {
   EXPECT_EQ(nullptr, ChromeNewWindowClient::GetActiveBrowser());
 }
 
-}  // namespace test
 }  // namespace ash

@@ -126,7 +126,7 @@ TEST_F(StatusAreaWidgetFocusTest, FocusOutObserver) {
   // Set session state to LOCKED.
   SessionController* session = Shell::Get()->session_controller();
   ASSERT_TRUE(session->IsActiveUserSessionStarted());
-  test::TestSessionControllerClient* client = GetSessionControllerClient();
+  TestSessionControllerClient* client = GetSessionControllerClient();
   client->SetSessionState(SessionState::LOCKED);
   ASSERT_TRUE(session->IsScreenLocked());
 

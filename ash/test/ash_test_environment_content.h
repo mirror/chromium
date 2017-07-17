@@ -15,10 +15,9 @@ class TestBrowserThreadBundle;
 namespace ash {
 
 class ShellContentState;
+class TestShellContentState;
 
 namespace test {
-
-class TestShellContentState;
 
 // AshTestEnvironment implementation for tests that use content.
 class AshTestEnvironmentContent : public AshTestEnvironment {

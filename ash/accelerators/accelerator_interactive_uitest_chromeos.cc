@@ -21,7 +21,6 @@
 #include "ui/base/test/ui_controls.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -51,7 +50,7 @@ class TestNetworkObserver : public NetworkObserver {
 // make sure they work properly. The test is done as an interactive ui test
 // using ui_controls::Send*() functions.
 // This is to catch any future regressions (crbug.com/469235).
-class AcceleratorInteractiveUITest : public AshInteractiveUITestBase,
+class AcceleratorInteractiveUITest : public test::AshInteractiveUITestBase,
                                      public ShellObserver {
  public:
   AcceleratorInteractiveUITest() : is_in_overview_mode_(false) {}
@@ -208,5 +207,4 @@ TEST_F(AcceleratorInteractiveUITest, MAYBE_ToggleAppList) {
   EXPECT_EQ(2u, test_app_list_presenter.toggle_count());
 }
 
-}  // namespace test
 }  // namespace ash

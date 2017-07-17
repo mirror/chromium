@@ -24,7 +24,6 @@
 #endif
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -200,5 +199,4 @@ TEST_F(NativeCursorManagerAshTest, CursorLoaderX11Test) {
 }
 #endif
 
-}  // namespace test
 }  // namespace ash

@@ -11,12 +11,11 @@
 #include "ui/views/view.h"
 
 namespace ash {
-namespace test {
 
 TestSystemTrayItem::TestSystemTrayItem() : TestSystemTrayItem(UMA_TEST) {}
 
 TestSystemTrayItem::TestSystemTrayItem(SystemTrayItem::UmaType uma_type)
-    : SystemTrayItem(AshTestBase::GetPrimarySystemTray(), uma_type),
+    : SystemTrayItem(test::AshTestBase::GetPrimarySystemTray(), uma_type),
       has_views_(true),
       views_are_visible_(true),
       tray_view_(nullptr),
@@ -76,5 +75,4 @@ void TestSystemTrayItem::OnDetailedViewDestroyed() {
 
 void TestSystemTrayItem::UpdateAfterLoginStatusChange(LoginStatus status) {}
 
-}  // namespace test
 }  // namespace ash
