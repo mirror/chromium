@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3955e35d_a0651968",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Is this necessary in the constructor?",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd7c11a_cc4ab00d",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Why the move?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b346a5_afd874e8",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "This is the unique_ptr API.  Why not just make the unique_ptr public?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3655dfad_25c106c1",
         "filename": "components/download/internal/entry_unittest.cc",
         "patchSetId": 12
@@ -13,6 +82,64 @@
       "writtenOn": "2017-07-17T14:28:02Z",
       "side": 1,
       "message": "for (current_test \u003d 0; current_test \u003c\u003d 12; ++current_test) {\n  SCOPED_TRACE(testing::Message() \u003c\u003c \"current_test \u003d \" \u003c\u003c current_test);",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc2d522_e2294ae2",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Do we need a for loop?  Almost feel like it\u0027d be cleaner having something like:\n\nentry1.guid.pop_back();\n\nVerifyAssignment(entry2, entry1);\n\nentry1.xyz \u003d 2;\n\nVerifyAssignment(entry2, entry1);\n\n...\n\nMaybe pull out the comparators to a helper function which would make it cleaner.",
+      "parentUuid": "3655dfad_25c106c1",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7845802f_de098845",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Remove all of the {}?",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a575b2c_dff11d14",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "break;",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 7
+      },
       "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

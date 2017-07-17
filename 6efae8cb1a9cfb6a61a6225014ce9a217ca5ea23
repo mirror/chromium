@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "47b17a29_266fb8f5",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Ah are things using the \u003d operator?  Should we just disallow it?",
+      "parentUuid": "2f1a9060_9b0a62a8",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f7aca3d_32c7e154",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 6
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "I didn\u0027t quite get what you mean, could you please elaborate?\nAlso please note that NetworkTrafficAnnotationTag has a const member variable and hence if we would need to change it, we need to use unique_ptr (or an alternative approach).",
       "parentUuid": "0457ce42_638ae5fc",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 75
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8669388d_7ca3b984",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T17:38:35Z",
+      "side": 1,
+      "message": "Ah ok then just use a unique_ptr and don\u0027t put it in the constructor.\n\nI was saying we need to validate the params in ControllerImpl::StartDownload (not necessarily relevant to this CL, just something we have to add that we could leverage for this to make sure the annotation was present).",
+      "parentUuid": "8f7ceac8_69ecc960",
       "range": {
         "startLine": 128,
         "startChar": 17,
