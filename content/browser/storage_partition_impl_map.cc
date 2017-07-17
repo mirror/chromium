@@ -403,25 +403,22 @@ StoragePartitionImpl* StoragePartitionImplMap::Get(
       ChromeBlobStorageContext::GetFor(browser_context_);
   StreamContext* stream_context = StreamContext::GetFor(browser_context_);
   ProtocolHandlerMap protocol_handlers;
-  protocol_handlers[url::kBlobScheme] =
-      linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
-          new BlobProtocolHandler(blob_storage_context,
-                                  stream_context,
-                                  partition->GetFileSystemContext()));
+  protocol_handlers[url::kBlobScheme] = base::MakeUnique<BlobProtocolHandler>(
+      blob_storage_context, stream_context, partition->GetFileSystemContext());
   protocol_handlers[url::kFileSystemScheme] =
-      linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
+      std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>(
           CreateFileSystemProtocolHandler(partition_domain,
                                           partition->GetFileSystemContext()));
   for (const auto& scheme : URLDataManagerBackend::GetWebUISchemes()) {
     protocol_handlers[scheme] =
-        linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
+        std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>(
             URLDataManagerBackend::CreateProtocolHandler(
                 browser_context_->GetResourceContext(), blob_storage_context)
                 .release());
   }
 
   protocol_handlers[kChromeDevToolsScheme] =
-      linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
+      std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>(
           CreateDevToolsProtocolHandler(
               browser_context_->GetResourceContext()));
 
