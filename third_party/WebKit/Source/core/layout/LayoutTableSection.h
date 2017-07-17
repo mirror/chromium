@@ -112,7 +112,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   void AddChild(LayoutObject* child,
                 LayoutObject* before_child = nullptr) override;
 
-  int FirstLineBoxBaseline() const override;
+  LayoutUnit FirstLineBoxBaseline() const override;
 
   void AddCell(LayoutTableCell*, LayoutTableRow*);
 

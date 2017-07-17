@@ -1351,21 +1351,20 @@ void LayoutTableSection::MarkAllCellsWidthsDirtyAndOrNeedsLayout(
   }
 }
 
-int LayoutTableSection::FirstLineBoxBaseline() const {
+LayoutUnit LayoutTableSection::FirstLineBoxBaseline() const {
   if (!grid_.size())
-    return -1;
+    return LayoutUnit(-1);
 
-  int first_line_baseline = grid_[0].baseline;
+  LayoutUnit first_line_baseline(grid_[0].baseline);
   if (first_line_baseline >= 0)
     return first_line_baseline + row_pos_[0];
 
   for (const auto& grid_cell : grid_[0].grid_cells) {
     if (const auto* cell = grid_cell.PrimaryCell()) {
-      first_line_baseline =
-          std::max<int>(first_line_baseline,
-                        (cell->LogicalTop() + cell->BorderBefore() +
-                         cell->PaddingBefore() + cell->ContentLogicalHeight())
-                            .ToInt());
+      first_line_baseline = std::max<LayoutUnit>(
+          first_line_baseline, cell->LogicalTop() + cell->BorderBefore() +
+                                   cell->PaddingBefore() +
+                                   cell->ContentLogicalHeight());
     }
   }
 
