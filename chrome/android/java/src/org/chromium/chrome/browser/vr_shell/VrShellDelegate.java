@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -117,6 +118,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook = false;
+    @SuppressLint("StaticFieldLeak")
     private static View sBlackOverlayView;
 
     private ChromeActivity mActivity;
