@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,12 +26,16 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
+import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.widget.Toast;
 
 import java.util.List;
@@ -46,7 +51,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private final ContextMenuManager mContextMenuManager;
     private final SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
     private final TileGroup.Delegate mTileGroupDelegate;
+    private final SuggestionsCarousel mSuggestionsCarousel;
     private final SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
+    private final BottomSheet mSheet;
+    private boolean mContextHasChanged;
 
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
@@ -54,6 +62,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         Profile profile = Profile.getLastUsedProfile();
         SuggestionsNavigationDelegate navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(activity, profile, sheet, tabModelSelector);
+        mSheet = sheet;
         mTileGroupDelegate = new TileGroupDelegateImpl(
                 activity, profile, tabModelSelector, navigationDelegate, snackbarManager);
         mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
@@ -65,7 +74,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         Resources resources = mView.getResources();
         int backgroundColor = SuggestionsConfig.getBackgroundColor(resources);
         mView.setBackgroundColor(backgroundColor);
-        mRecyclerView = (SuggestionsRecyclerView) mView.findViewById(R.id.recycler_view);
+        mRecyclerView = mView.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(backgroundColor);
 
         TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
@@ -74,6 +83,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 activity.getBottomSheet().setTouchEnabled(enabled);
             }
         };
+
         mContextMenuManager =
                 new ContextMenuManager(activity, navigationDelegate, touchEnabledDelegate);
         activity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
@@ -87,9 +97,16 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         UiConfig uiConfig = new UiConfig(mRecyclerView);
         mRecyclerView.init(uiConfig, mContextMenuManager);
 
+        mSuggestionsCarousel = new SuggestionsCarousel(uiConfig, mSuggestionsUiDelegate);
+        updateContextualSuggestions();
+        activity.getTabModelSelector().getCurrentModel().addObserver(
+                new TabModelContextChangeObserver());
+        sheet.getActiveTab().addObserver(new TabContextChangeObserver());
+        mContextHasChanged = true;
+
         final NewTabPageAdapter adapter = new NewTabPageAdapter(mSuggestionsUiDelegate,
                 /* aboveTheFoldView = */ null, uiConfig, OfflinePageBridge.getForProfile(profile),
-                mContextMenuManager, mTileGroupDelegate);
+                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel);
 
         mBottomSheetObserver = new SuggestionsSheetVisibilityChangeObserver(this, activity) {
             @Override
@@ -104,7 +121,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 if (ChromeFeatureList.isEnabled(
                             ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
                         && sheet.getActiveTab() != null) {
-                    updateContextualSuggestions(sheet.getActiveTab().getUrl());
+                    updateContextualSuggestions();
                 }
 
                 super.onSheetOpened();
@@ -200,15 +217,43 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         return BottomSheetContentController.TYPE_SUGGESTIONS;
     }
 
-    private void updateContextualSuggestions(String url) {
+    private void updateContextualSuggestions() {
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
+                || mSheet.getActiveTab() == null || !mContextHasChanged) {
+            return;
+        }
+
+        String url = mSheet.getActiveTab().getUrl();
+
+        assert !TextUtils.isEmpty(url);
+
         mSuggestionsUiDelegate.getSuggestionsSource().fetchContextualSuggestions(
                 url, new Callback<List<SnippetArticle>>() {
                     @Override
-                    public void onResult(List<SnippetArticle> result) {
-                        String text = String.format(
-                                Locale.US, "Received %d contextual suggestions", result.size());
+                    public void onResult(List<SnippetArticle> contextualSuggestions) {
+                        mContextHasChanged = false;
+
+                        String text = String.format(Locale.US, "Received %d contextual suggestions",
+                                contextualSuggestions.size());
                         Toast.makeText(mRecyclerView.getContext(), text, Toast.LENGTH_SHORT).show();
+
+                        mSuggestionsCarousel.newContextualSuggestionsAvailable(
+                                contextualSuggestions);
                     }
                 });
+    }
+
+    private class TabContextChangeObserver extends EmptyTabObserver {
+        @Override
+        public void onLoadUrl(Tab tab, LoadUrlParams params, int loadType) {
+            mContextHasChanged = true;
+        }
+    }
+
+    private class TabModelContextChangeObserver extends EmptyTabModelObserver {
+        @Override
+        public void didMoveTab(Tab tab, int newIndex, int curIndex) {
+            mContextHasChanged = true;
+        }
     }
 }

@@ -10,6 +10,7 @@ import org.chromium.base.DiscardableReferencePool;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.tab.Tab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,11 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     @Override
     public boolean isVisible() {
         return mHost.isVisible();
+    }
+
+    @Override
+    public Tab getActiveTab() {
+        return mHost.getActiveTab();
     }
 
     /** Invalidates the delegate and calls the registered destruction observers. */
