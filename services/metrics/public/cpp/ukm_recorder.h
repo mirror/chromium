@@ -32,6 +32,10 @@ namespace autofill {
 class AutofillMetrics;
 }
 
+namespace blink {
+class AutoplayUmaHelper;
+}
+
 namespace content {
 class MediaInternals;
 class RenderFrameImpl;
@@ -96,6 +100,7 @@ class METRICS_EXPORT UkmRecorder {
 
  private:
   friend autofill::AutofillMetrics;
+  friend blink::AutoplayUmaHelper;
   friend payments::JourneyLogger;
   friend ContextualSearchRankerLoggerImpl;
   friend ProcessMemoryMetricsEmitter;
