@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc0229f8_13b76fd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T21:22:25Z",
+      "side": 1,
+      "message": "Changed to MiB to make it completely unambiguous.\n\n100MiB is a bit of a crazy limit, but seemed reasonable until crbug.com/132160 is addressed.",
+      "parentUuid": "f72c2ee1_8811e12c",
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bf878bc_5e6ad3dc",
         "filename": "components/net_log/net_export_file_writer.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a3fae628_c0adb6c7",
+        "filename": "components/net_log/net_export_file_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T21:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bf878bc_5e6ad3dc",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac18eedf_473f0f51",
         "filename": "components/net_log/net_export_file_writer_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-17T16:30:42Z",
       "side": 1,
       "message": "nit: s/100Mb/100MB",
+      "range": {
+        "startLine": 37,
+        "startChar": 55,
+        "endLine": 37,
+        "endChar": 60
+      },
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53773b38_62e89ebe",
+        "filename": "components/net_log/net_export_file_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T21:22:25Z",
+      "side": 1,
+      "message": "Changed to MiB",
+      "parentUuid": "ac18eedf_473f0f51",
       "range": {
         "startLine": 37,
         "startChar": 55,
