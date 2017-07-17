@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6cb2f56_373cf8c4",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T14:11:27Z",
+      "side": 1,
+      "message": "Yeah..the iteration cost will be higher than the cleanup benefits. I will leave a todo, and check with more tests.",
+      "parentUuid": "31d8005c_41be4508",
+      "range": {
+        "startLine": 873,
+        "startChar": 45,
+        "endLine": 873,
+        "endChar": 75
+      },
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe9e51bc_34010fe7",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "73972c2d_817a068e",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T14:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9e51bc_34010fe7",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b11c34_69036764",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8f5675_9be826f3",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T14:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b11c34_69036764",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +151,24 @@
       "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2c2f81_cfb2479c",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T14:11:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "635bd0ad_0c5890cb",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
