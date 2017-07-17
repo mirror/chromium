@@ -87,7 +87,7 @@ TEST(DnsHostsTest, ParseHosts_CommaIsToken) {
   PopulateExpectedHosts(kEntries, arraysize(kEntries), &expected_hosts);
   ParseHostsWithCommaModeForTesting(
       kContents, &actual_hosts, PARSE_HOSTS_COMMA_IS_TOKEN);
-  ASSERT_EQ(expected_hosts, actual_hosts);
+  ASSERT_EQ(0UL, actual_hosts.size());
 }
 
 TEST(DnsHostsTest, ParseHosts_CommaIsWhitespace) {
@@ -108,20 +108,19 @@ TEST(DnsHostsTest, ParseHosts_CommaIsWhitespace) {
 // Test that the right comma mode is used on each platform.
 TEST(DnsHostsTest, ParseHosts_CommaModeByPlatform) {
   std::string kContents = "127.0.0.1 comma1,comma2";
+  DnsHosts expected_hosts, actual_hosts;
 
 #if defined(OS_MACOSX)
   const ExpectedHostsEntry kEntries[] = {
     { "comma1", ADDRESS_FAMILY_IPV4, "127.0.0.1" },
     { "comma2", ADDRESS_FAMILY_IPV4, "127.0.0.1" },
   };
+  PopulateExpectedHosts(kEntries, arraysize(kEntries), &expected_hosts);
 #else
-  const ExpectedHostsEntry kEntries[] = {
-    { "comma1,comma2", ADDRESS_FAMILY_IPV4, "127.0.0.1" },
-  };
+  const ExpectedHostsEntry kEntries[] = {};
+  PopulateExpectedHosts(kEntries, 0, &expected_hosts);
 #endif
 
-  DnsHosts expected_hosts, actual_hosts;
-  PopulateExpectedHosts(kEntries, arraysize(kEntries), &expected_hosts);
   ParseHosts(kContents, &actual_hosts);
   ASSERT_EQ(expected_hosts, actual_hosts);
 }
