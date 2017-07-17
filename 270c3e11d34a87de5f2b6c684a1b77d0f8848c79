@@ -22,6 +22,30 @@
       "revId": "270c3e11d34a87de5f2b6c684a1b77d0f8848c79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d26baef_44f172a9",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-07-17T19:15:58Z",
+      "side": 1,
+      "message": "Fair enough. I updated the description, however the original action (Accel_Show_System_Tray_Bubble) did not have an owner, so I am leaving it empty here as well.\n\nPTAL!",
+      "parentUuid": "5560791b_44420276",
+      "range": {
+        "startLine": 973,
+        "startChar": 0,
+        "endLine": 974,
+        "endChar": 72
+      },
+      "revId": "270c3e11d34a87de5f2b6c684a1b77d0f8848c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
