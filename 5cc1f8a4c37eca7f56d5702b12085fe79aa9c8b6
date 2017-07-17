@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf164b6e_890cb368",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-17T20:36:25Z",
+      "side": 1,
+      "message": "Please add a crbug link to 742397",
+      "revId": "5cc1f8a4c37eca7f56d5702b12085fe79aa9c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
