@@ -465,7 +465,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchPaymentRequestEvent(
       PaymentEventDataConversion::ToPaymentRequestEventInit(
           WorkerGlobalScope()->ScriptController()->GetScriptState(),
           web_app_request),
-      respond_with_observer, wait_until_observer);
+      event_id, respond_with_observer, wait_until_observer);
 
   wait_until_observer->WillDispatchEvent();
   respond_with_observer->WillDispatchEvent();

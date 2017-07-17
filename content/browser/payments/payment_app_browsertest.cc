@@ -48,7 +48,7 @@ void InvokePaymentAppCallback(const base::Closure& done_callback,
 
 class PaymentAppBrowserTest : public ContentBrowserTest {
  public:
-  PaymentAppBrowserTest() {}
+  PaymentAppBrowserTest() : invoke_payment_app_cancelled_(false) {}
   ~PaymentAppBrowserTest() override {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -101,6 +101,10 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
     return registrationIds;
   }
 
+  void SetInvokePaymentAppCancelled() { invoke_payment_app_cancelled_ = true; }
+
+  bool IsInvokePaymentAppCancelled() { return invoke_payment_app_cancelled_; }
+
   PaymentAppResponsePtr InvokePaymentAppWithTestData(
       int64_t registration_id,
       const std::string& supported_method,
@@ -136,7 +140,9 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
         shell()->web_contents()->GetBrowserContext(), registration_id,
         std::move(event_data),
         base::Bind(&InvokePaymentAppCallback, run_loop.QuitClosure(),
-                   &response));
+                   &response),
+        base::Bind(&PaymentAppBrowserTest::IsInvokePaymentAppCancelled,
+                   base::Unretained(this)));
     run_loop.Run();
 
     return response;
@@ -159,6 +165,7 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
   }
 
  private:
+  bool invoke_payment_app_cancelled_;
   std::unique_ptr<net::EmbeddedTestServer> https_server_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentAppBrowserTest);
@@ -196,6 +203,45 @@ IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocation) {
       PopConsoleString() /* modifiers */);
   EXPECT_EQ("basic-card-payment-app-id",
             PopConsoleString() /* instrumentKey */);
+}
+
+IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocationCancelled) {
+  RegisterPaymentApp();
+
+  std::vector<int64_t> registrationIds = GetAllPaymentAppRegistrationIDs();
+  ASSERT_EQ(1U, registrationIds.size());
+
+  SetInvokePaymentAppCancelled();
+  PaymentAppResponsePtr response(InvokePaymentAppWithTestData(
+      registrationIds[0], "basic-card", "basic-card-payment-app-id"));
+  // InvokePaymentAppCallback returns empty method_name in case of failure, like
+  // in PaymentRequestRespondWithObserver::OnResponseRejected.
+  ASSERT_EQ("", response->method_name);
+
+  ClearStoragePartitionData();
+
+  registrationIds = GetAllPaymentAppRegistrationIDs();
+  ASSERT_EQ(0U, registrationIds.size());
+
+  EXPECT_EQ("https://example.com/", PopConsoleString() /* topLevelOrigin */);
+  EXPECT_EQ("https://example.com/",
+            PopConsoleString() /* paymentRequestOrigin */);
+  EXPECT_EQ("payment-request-id", PopConsoleString() /* paymentRequestId */);
+  EXPECT_EQ("[{\"supportedMethods\":[\"basic-card\"]}]",
+            PopConsoleString() /* methodData */);
+  EXPECT_EQ(
+      "{\"amount\":{\"currency\":\"USD\",\"currencySystem\":\"urn:iso:std:iso:"
+      "4217\",\"value\":\"\"},\"label\":\"\",\"pending\":false}",
+      PopConsoleString() /* total */);
+  EXPECT_EQ(
+      "[{\"additionalDisplayItems\":[],\"supportedMethods\":[\"basic-card\"],"
+      "\"total\":{\"amount\":{\"currency\":\"USD\",\"currencySystem\":\"urn:"
+      "iso:std:iso:4217\",\"value\":\"\"},\"label\":\"\",\"pending\":false}}]",
+      PopConsoleString() /* modifiers */);
+  EXPECT_EQ("basic-card-payment-app-id",
+            PopConsoleString() /* instrumentKey */);
+  EXPECT_EQ("open window failed",
+            PopConsoleString() /* openWindow error message */);
 }
 
 IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppOpenWindowFailed) {

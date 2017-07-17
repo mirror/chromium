@@ -29,6 +29,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
                                      const PaymentRequestEventInit&);
   static PaymentRequestEvent* Create(const AtomicString& type,
                                      const PaymentRequestEventInit&,
+                                     int event_id,
                                      RespondWithObserver*,
                                      WaitUntilObserver*);
   ~PaymentRequestEvent() override;
@@ -51,9 +52,15 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
  private:
   PaymentRequestEvent(const AtomicString& type,
                       const PaymentRequestEventInit&,
+                      int event_id,
                       RespondWithObserver*,
                       WaitUntilObserver*);
+  void IsPaymentRequestCancelled(ScriptState*,
+                                 const String&,
+                                 ScriptPromiseResolver*,
+                                 bool);
 
+  int event_id_;
   String top_level_origin_;
   String payment_request_origin_;
   String payment_request_id_;
