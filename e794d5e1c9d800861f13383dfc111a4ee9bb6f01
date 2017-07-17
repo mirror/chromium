@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caae884f_21d0ebc5",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-17T22:10:23Z",
+      "side": 1,
+      "message": "As discussed offline, you may use WallpaperInfo as the second parameter. https://cs.chromium.org/chromium/src/components/wallpaper/wallpaper_manager_base.h?rcl\u003d14329d06f79f49bfc0caeccd50c31e750f615fe1\u0026l\u003d63",
+      "revId": "e794d5e1c9d800861f13383dfc111a4ee9bb6f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
