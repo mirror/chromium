@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e7da058_fc118f33",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T11:43:13Z",
+      "side": 1,
+      "message": "So let\u0027s think about this for a bit. Do we want to keep adding to the list of circumstances where menu commands might be shown or not shown? Or is this a sign that we need a different approach.\n\nOn Mac they have the notion of disabling commands -- a feature can say \"Hey, IDC_FIND_IN_PAGE is disabled now\". Is this an approach we want to consider? I know we debated a bit about whether the dispatcher should do stuff like that.",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "67c3a8b1c8a259a92bd61281a7b80bd9cd5b7f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
