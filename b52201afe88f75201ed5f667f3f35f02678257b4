@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "682fc44b_355b6e6c",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "The cache is cleared for testing. We also make use of the initialisation to null in the prod code. What\u0027s the gain in not using smart pointers?",
+      "parentUuid": "5ce06546_eca2ffeb",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a7a0453_7c9016b1",
         "filename": "components/os_crypt/os_crypt_linux.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a34d526_d6514210",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7a0453_7c9016b1",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 35
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3e1e54a9_c6f15656",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a397d85e_81796497",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e21e3b_e191010f",
         "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0957a6_78b89170",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e21e3b_e191010f",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d61443c3_bb642064",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034aa172_5b1765c6",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7433a28_d6e45097",
         "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1a283c9e_9bb5f40b",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7433a28_d6e45097",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ed99894_48d3bded",
         "filename": "components/os_crypt/os_crypt_mocker_linux.cc",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b3019f_0028965e",
+        "filename": "components/os_crypt/os_crypt_mocker_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-17T12:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed99894_48d3bded",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
