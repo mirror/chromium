@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc728b8_5b988c5e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 5397,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Nit: Finch -\u003e Variations. Finch refers to the service.",
+      "range": {
+        "startLine": 5397,
+        "startChar": 47,
+        "endLine": 5397,
+        "endChar": 52
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0876a13_50b3ece5",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Need to be a \"const base::string16\u0026\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 29,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3addcd4_3b95b9dc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "This was already assigned by the initializer list.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b672f129_1627ec99",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Remove comment. That\u0027s clear from the code already.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78813a1b_778a40d5",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Make all input-only objects from here and forwards\nconst \u003ctype\u003e\u0026",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f443f025_ba7a40d6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Make this const.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a2d5f8_2479ea67",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "What was the motivation for this change?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da1419b_a3bbeb29",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Use IN_PROC_BROWSER_TEST_P",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad62602c_fae139c2",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-17T21:45:26Z",
+      "side": 1,
+      "message": "Once you go TEST_P, then you can make promo_string_ const and initialize in the constructor with GetParam().",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
