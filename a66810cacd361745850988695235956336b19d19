@@ -103,6 +103,24 @@
       "revId": "a66810cacd361745850988695235956336b19d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dcfd0f_cd190187",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-17T03:49:53Z",
+      "side": 1,
+      "message": "Can you make this an \u0027else\u0027?",
+      "parentUuid": "069918c8_ea797554",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
