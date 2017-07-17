@@ -126,8 +126,6 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<ArcVolumeMounterBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcWallpaperService>(arc_bridge_service));
-  arc_service_manager_->AddService(
-      base::MakeUnique<GpuArcVideoServiceHost>(arc_bridge_service));
 }
 
 void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
@@ -189,6 +187,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcPrintService::GetForBrowserContext(profile);
   ArcProvisionNotificationService::GetForBrowserContext(profile);
   ArcTracingBridge::GetForBrowserContext(profile);
+  GpuArcVideoServiceHost::GetForBrowserContext(profile);
 
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
