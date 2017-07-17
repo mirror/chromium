@@ -582,6 +582,12 @@ def generate_isolate_script_entry(swarming_dimensions, test_args,
   return result
 
 
+BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD = ['system_health.common_desktop',
+                                               'system_health.common_mobile',
+                                               'system_health.memory_desktop',
+                                               'system_health.memory_mobile']
+
+
 def generate_telemetry_test(swarming_dimensions, benchmark_name, browser):
   # The step name must end in 'test' or 'tests' in order for the
   # results to automatically show up on the flakiness dashboard.
@@ -597,6 +603,9 @@ def generate_telemetry_test(swarming_dimensions, benchmark_name, browser):
   ]
   # When this is enabled on more than just windows machines we will need
   # --device=android
+
+  if benchmark_name in BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD:
+    test_args.append('--output-format=json-test-results')
 
   ignore_task_failure = False
   step_name = benchmark_name
