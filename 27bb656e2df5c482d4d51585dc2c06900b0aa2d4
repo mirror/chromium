@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "659a1d93_df435229",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T14:14:14Z",
+      "side": 1,
+      "message": "To clarify, the payment method name that we\u0027re using internally should be exactly what was passed into PaymentRequest, because that will be used to match with payment apps by string equality.",
+      "parentUuid": "33c9eda8_abc67c4b",
+      "range": {
+        "startLine": 400,
+        "startChar": 33,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31a97d63_36d16cdb",
         "filename": "components/payments/core/payment_request_data_util.cc",
         "patchSetId": 2
