@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb060585_3d68cb74",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-17T19:23:00Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "80d9b724_fefbd096",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "983db339_3cab2cb4",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-10T21:26:32Z",
       "side": 1,
       "message": "Please avoid accessing fields like this. Let\u0027s type cast selectedNode instead.",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7696e03_6e482f45",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-17T19:23:00Z",
+      "side": 1,
+      "message": "There\u0027s no object - it is a \"map\". See line 155 above...",
+      "parentUuid": "983db339_3cab2cb4",
       "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2fd425_e390e638",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-17T19:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918e5dfc_4a864e87",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
