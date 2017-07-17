@@ -16,6 +16,24 @@
       "revId": "f1599ea082069ac201bc7bbfc667a28bd4bdae14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468f28fc_7d6392bb",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-17T22:02:13Z",
+      "side": 1,
+      "message": "Agreed 100% - I actually spent a while trying to make this happen beforehand (but with Upload bubble instead of Local), and for some reason even after showing the bubble it said it had card type GENERIC.  Not sure what I was doing wrong, but the code snippet you provided works great, so thank you!",
+      "parentUuid": "5ba85ec9_aa0df0b3",
+      "revId": "f1599ea082069ac201bc7bbfc667a28bd4bdae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
