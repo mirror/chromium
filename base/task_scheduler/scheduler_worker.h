@@ -47,9 +47,6 @@ class BASE_EXPORT SchedulerWorker
     virtual ~Delegate() = default;
 
     // Called by a thread managed by |worker| when it enters its main function.
-    // If a thread is recreated after detachment, |detach_duration| is the time
-    // elapsed since detachment. Otherwise, if this is the first thread created
-    // for |worker|, |detach_duration| is TimeDelta::Max().
     virtual void OnMainEntry(SchedulerWorker* worker) = 0;
 
     // Called by a thread managed by |worker| to get a Sequence from which to
@@ -73,29 +70,27 @@ class BASE_EXPORT SchedulerWorker
     // manually resettable event and is signaled on SchedulerWorker::WakeUp()
     virtual void WaitForWork(WaitableEvent* wake_up_event);
 
-    // Called by a thread if it is allowed to detach if the last call to
-    // GetWork() returned nullptr.
+    // Called by a thread if it is allowed to timeout and delete its worker from
+    // the pool if the last call to GetWork() returned nullptr.
     //
-    // It is the responsibility of the delegate to determine if detachment is
-    // safe. If the delegate is responsible for thread-affine work, detachment
+    // It is the responsibility of the delegate to determine if timeout deletion
+    // is safe. If the delegate is responsible for thread-affine work, deletion
     // is generally not safe.
     //
     // When true is returned:
-    // - The next WakeUp() could be more costly due to new thread creation.
-    // - The worker will take this as a signal that it can detach, but it is not
-    //   obligated to do so.
-    virtual bool CanDetach(SchedulerWorker* worker) = 0;
+    // - The worker will take this as a signal that it can be deleted, but it is
+    //   not obligated to do so.
+    virtual bool CanTimeout(SchedulerWorker* worker) = 0;
 
-    // Called by a thread before it detaches. This method is not allowed to
-    // acquire a SchedulerLock because it is called within the scope of another
-    // SchedulerLock.
-    virtual void OnDetach() = 0;
+    // Called by a thread after it decides to exit due to timeout.
+    virtual void OnTimeout() {}
+
+    // Removes the worker from the pool.
+    virtual void RemoveWorker(SchedulerWorker* worker) = 0;
 
     // Called by a thread right before the main function exits.
     virtual void OnMainExit() {}
   };
-
-  enum class InitialState { ALIVE, DETACHED };
 
   // Creates a SchedulerWorker that runs Tasks from Sequences returned by
   // |delegate|. No actual thread will be created for this SchedulerWorker
@@ -104,32 +99,25 @@ class BASE_EXPORT SchedulerWorker
   // capabilities. |task_tracker| is used to handle shutdown behavior of Tasks.
   // |predecessor_lock| is a lock that is allowed to be held when calling
   // methods on this SchedulerWorker. |backward_compatibility| indicates
-  // whether backward compatibility is enabled. |initial_state| determines
-  // whether the thread is created in Start() or in the first WakeUp() after
-  // Start(). Either JoinForTesting() or Cleanup() must be called before
-  // releasing the last external reference.
+  // whether backward compatibility is enabled. Either JoinForTesting() or
+  // Cleanup() must be called before releasing the last external reference.
   SchedulerWorker(ThreadPriority priority_hint,
                   std::unique_ptr<Delegate> delegate,
                   TaskTracker* task_tracker,
                   const SchedulerLock* predecessor_lock = nullptr,
                   SchedulerBackwardCompatibility backward_compatibility =
-                      SchedulerBackwardCompatibility::DISABLED,
-                  InitialState initial_state = InitialState::ALIVE);
+                      SchedulerBackwardCompatibility::DISABLED);
 
-  // Allows this SchedulerWorker to be backed by a thread. If
-  // InitialState::ALIVE was passed to the constructor and Cleanup() wasn't
-  // called, a thread is created immediately (in a wait state pending a WakeUp()
-  // call). If InitialState::DETACHED was passed to the constructor and
-  // Cleanup() wasn't called, creation is delayed until the next WakeUp(). No
-  // thread will be created if Cleanup() was called. Returns true on success.
+  // Creates a thread to back the SchedulerWorker (as long as Cleanup() hasn't
+  // been called). The thread will be in a wait state pending a
+  // WakeUp() call. No thread will be created if Cleanup() was called. Returns
+  // true on success.
   bool Start();
 
   // Wakes up this SchedulerWorker if it wasn't already awake. After this is
   // called, this SchedulerWorker will run Tasks from Sequences returned by the
-  // GetWork() method of its delegate until it returns nullptr. WakeUp() may
-  // fail if the worker is detached and it fails to allocate a new worker. If
-  // this happens, there will be no call to GetWork(). No-op if Start() wasn't
-  // called.
+  // GetWork() method of its delegate until it returns nullptr. No-op if Start()
+  // wasn't called. It is invalid is call this if Start() failed.
   void WakeUp();
 
   SchedulerWorker::Delegate* delegate() { return delegate_.get(); }
@@ -159,20 +147,13 @@ class BASE_EXPORT SchedulerWorker
  private:
   friend class RefCountedThreadSafe<SchedulerWorker>;
   class Thread;
-  enum class DetachNotify {
-    // Do not notify any component.
-    SILENT,
-    // Notify the delegate.
-    DELEGATE,
-  };
 
   ~SchedulerWorker();
 
   // Returns ownership of the thread instance when appropriate so that it can be
   // freed upon termination of the thread. If ownership transfer is not
   // possible, returns nullptr.
-  std::unique_ptr<SchedulerWorker::Thread> DetachThreadObject(
-      DetachNotify detach_notify);
+  std::unique_ptr<SchedulerWorker::Thread> DetachThreadObject();
 
   void CreateThread();
   bool ShouldExit();
@@ -198,8 +179,6 @@ class BASE_EXPORT SchedulerWorker
 #if defined(OS_WIN)
   const SchedulerBackwardCompatibility backward_compatibility_;
 #endif
-
-  const InitialState initial_state_;
 
   // Set once JoinForTesting() has been called.
   AtomicFlag join_called_for_testing_;

@@ -100,14 +100,14 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // allowed to complete their execution. This can only be called once.
   void JoinForTesting();
 
-  // Disallows worker detachment. If the suggested reclaim time is not
+  // Disallows worker timeout. If the suggested reclaim time is not
   // TimeDelta::Max(), the test must call this before JoinForTesting() to reduce
   // the chance of thread detachment during the process of joining all of the
   // threads, and as a result, threads running after JoinForTesting().
-  void DisallowWorkerDetachmentForTesting();
+  void DisallowWorkerTimeoutForTesting();
 
   // Returns the number of workers alive in this worker pool. The value may
-  // change if workers are woken up or detached during this call.
+  // change if workers are woken up or timeout during this call.
   size_t NumberOfAliveWorkersForTesting();
 
  private:
@@ -129,14 +129,14 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Removes |worker| from |idle_workers_stack_|.
   void RemoveFromIdleWorkersStack(SchedulerWorker* worker);
 
-  // Returns true if worker thread detachment is permitted.
-  bool CanWorkerDetachForTesting();
+  // Returns true if worker timeout is permitted.
+  bool CanWorkerTimeoutForTesting();
 
-  // Adds a new SchedulerWorker based on SchedulerWorkerPoolParams
-  // that were passed into Start(). SchedulerWorker::Start() must be called on
-  // the worker before it is usable. Returns the newly added worker. This cannot
-  // be called before Start(). This function should only be called under the
-  // protection of |lock_|.
+  // Adds a new SchedulerWorker based on SchedulerWorkerPoolParams that were
+  // passed into Start(). SchedulerWorker::Start() must be called on the worker
+  // before it is usable. Returns the newly added worker. This cannot be called
+  // before Start(). This function should only be called under the protection of
+  // |lock_|.
   scoped_refptr<SchedulerWorker> CreateAndRegisterSchedulerWorker();
 
   // Performs the same function as CreateAndRegisterSchedulerWorker(), except
@@ -188,18 +188,13 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Signaled once JoinForTesting() has returned.
   WaitableEvent join_for_testing_returned_;
 
-  // Indicates to the delegates that workers are not permitted to detach their
-  // threads.
-  AtomicFlag worker_detachment_disallowed_;
+  // Indicates to the delegates that workers are not permitted to timeout.
+  AtomicFlag worker_timeout_disallowed_;
 
 #if DCHECK_IS_ON()
   // Set after all the initial workers have been created.
   AtomicFlag workers_created_;
 #endif
-
-  // TaskScheduler.DetachDuration.[worker pool name] histogram. Intentionally
-  // leaked.
-  HistogramBase* const detach_duration_histogram_;
 
   // TaskScheduler.NumTasksBeforeDetach.[worker pool name] histogram.
   // Intentionally leaked.
