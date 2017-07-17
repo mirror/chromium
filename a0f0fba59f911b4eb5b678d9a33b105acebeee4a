@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e75b59ee_6e62ab06",
+        "filename": "remoting/host/policy_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-17T18:18:34Z",
+      "side": 1,
+      "message": "Currently CreateFromPolicyService() is always used on ChromeOS, while other platforms always use CreateFromTaskRunner(). On all platforms both methods are declared, but only one of them would works correctly, which is not ideal. I suggest moving all code from this function to the new Create* methods. The chromeos version of this function (i.e. CreateFromPolicyService()) will compile and work correctly on all platforms. CreateFromTaskRunner() would have to be wrapped in ifdef because it doesn\u0027t work on ChromeOS.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 24
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e211a61e_1b6a93db",
+        "filename": "remoting/host/policy_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-17T18:18:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure that CreateFrom* is a best name for these methods because they don\u0027t take ownership of the parameters.  Maybe rename them to CreateFor* or CreateWith*",
+      "range": {
+        "startLine": 74,
+        "startChar": 40,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c95738d_f6b89b2f",
+        "filename": "remoting/host/policy_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-17T18:18:34Z",
+      "side": 1,
+      "message": "maybe call it CreateInternal?",
+      "range": {
+        "startLine": 97,
+        "startChar": 40,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
