@@ -15,6 +15,7 @@
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
+#include "chrome/browser/previews/previews_infobar_delegate.h"
 #include "chrome/common/page_load_metrics/page_load_timing.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_pingback_client.h"
@@ -114,6 +115,7 @@ const char kBytesInflation[] = "Experimental.Bytes.Network.Inflation";
 
 DataReductionProxyMetricsObserver::DataReductionProxyMetricsObserver()
     : browser_context_(nullptr),
+      opt_out_occurred_(false),
       num_data_reduction_proxy_resources_(0),
       num_network_resources_(0),
       original_network_bytes_(0),
@@ -324,7 +326,7 @@ void DataReductionProxyMetricsObserver::SendPingback(
       first_image_paint, first_contentful_paint,
       experimental_first_meaningful_paint,
       parse_blocked_on_script_load_duration, parse_stop, network_bytes_,
-      original_network_bytes_, app_background_occurred);
+      original_network_bytes_, app_background_occurred, opt_out_occurred_);
   GetPingbackClient()->SendPingback(*data_, data_reduction_proxy_timing);
 }
 
@@ -445,6 +447,12 @@ DataReductionProxyMetricsObserver::GetPingbackClient() const {
              browser_context_)
       ->data_reduction_proxy_service()
       ->pingback_client();
+}
+
+void DataReductionProxyMetricsObserver::OnEventOccurred(
+    const void* const event_key) {
+  if (event_key == PreviewsInfoBarDelegate::OptOutEventKey())
+    opt_out_occurred_ = true;
 }
 
 }  // namespace data_reduction_proxy

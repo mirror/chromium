@@ -104,6 +104,7 @@ class DataReductionProxyMetricsObserver
                    const page_load_metrics::PageLoadExtraInfo& info) override;
   void OnLoadedResource(const page_load_metrics::ExtraRequestCompleteInfo&
                             extra_request_compelte_info) override;
+  void OnEventOccurred(const void* const event_key) override;
 
  private:
   // Sends the page load information to the pingback client.
@@ -122,6 +123,9 @@ class DataReductionProxyMetricsObserver
 
   // The browser context this navigation is operating in.
   content::BrowserContext* browser_context_;
+
+  // True if a Preview opt out occurred during this page load.
+  bool opt_out_occurred_;
 
   // The number of resources that used data reduction proxy.
   int num_data_reduction_proxy_resources_;
