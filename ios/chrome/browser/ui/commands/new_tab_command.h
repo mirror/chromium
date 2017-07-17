@@ -27,6 +27,8 @@
 
 @property(nonatomic, readonly) CGPoint originPoint;
 
+@property(nonatomic) BOOL focusOmnibox;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_NEW_TAB_COMMAND_H_

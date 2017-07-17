@@ -14,6 +14,7 @@
 
 @synthesize incognito = _incognito;
 @synthesize originPoint = _originPoint;
+@synthesize focusOmnibox = _focusOmnibox;
 
 - (instancetype)initWithIncognito:(BOOL)incognito
                       originPoint:(CGPoint)originPoint {
