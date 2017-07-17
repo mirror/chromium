@@ -14,14 +14,18 @@
 #include "base/values.h"
 namespace safe_browsing {
 // Please define any new SafeBrowsing related features in this file, and add
-// them to  the ExperimentalFeaturesList below to start displaying their status
-// on the  chrome://safe-browsing page.
+// them to the ExperimentalFeaturesList below to start displaying their status
+// on the chrome://safe-browsing page.
+
+// This Feature controls various parameters related to occasionally collecting
+// ad samples, for example to control how often collection should occur.
+const base::Feature kAdSamplerTriggerFeature{"SafeBrowsingAdSamplerTrigger",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kLocalDatabaseManagerEnabled{
     "SafeBrowsingV4LocalDatabaseManagerEnabled",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kV4OnlyEnabled{"SafeBrowsingV4OnlyEnabled",
-                                   base::FEATURE_DISABLED_BY_DEFAULT};
 // This Feature specifies which non-resource HTML Elements to collect based on
 // their tag and attributes. It's a single param containing a comma-separated
 // list of pairs. For example: "tag1,id,tag1,height,tag2,foo" - this will
@@ -31,6 +35,9 @@ const base::Feature kV4OnlyEnabled{"SafeBrowsingV4OnlyEnabled",
 const base::Feature kThreatDomDetailsTagAndAttributeFeature{
     "ThreatDomDetailsTagAttributes", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kV4OnlyEnabled{"SafeBrowsingV4OnlyEnabled",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+
 namespace {
 // List of experimental features. Boolean value for each list member should be
 // set to True if the experiment is currently running at a probability other
@@ -39,9 +46,10 @@ std::vector<std::pair<const base::Feature*, bool>>
 
 GetExperimentalFeaturesList() {
   std::vector<std::pair<const base::Feature*, bool>> experimental_features_list{
+      std::make_pair(&kAdSamplerTriggerFeature, false),
       std::make_pair(&kLocalDatabaseManagerEnabled, true),
-      std::make_pair(&kV4OnlyEnabled, true),
-      std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, false)};
+      std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, false),
+      std::make_pair(&kV4OnlyEnabled, true)};
 
   return experimental_features_list;
 }
