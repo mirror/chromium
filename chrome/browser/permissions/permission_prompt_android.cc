@@ -18,21 +18,14 @@
 #include "ui/base/l10n/l10n_util.h"
 
 PermissionPromptAndroid::PermissionPromptAndroid(
-    content::WebContents* web_contents)
+    content::WebContents* web_contents,
+    Delegate* delegate)
     : web_contents_(web_contents),
-      delegate_(nullptr),
+      delegate_(delegate),
       persist_(true),
       weak_factory_(this) {
   DCHECK(web_contents);
-}
 
-PermissionPromptAndroid::~PermissionPromptAndroid() {}
-
-void PermissionPromptAndroid::SetDelegate(Delegate* delegate) {
-  delegate_ = delegate;
-}
-
-void PermissionPromptAndroid::Show() {
   bool has_gesture = true;
   for (const PermissionRequest* request : delegate_->Requests()) {
     has_gesture &=
@@ -53,18 +46,10 @@ void PermissionPromptAndroid::Show() {
       delegate_->Requests()[0]->GetOrigin());
 }
 
+PermissionPromptAndroid::~PermissionPromptAndroid() {}
+
 bool PermissionPromptAndroid::CanAcceptRequestUpdate() {
   return false;
-}
-
-bool PermissionPromptAndroid::HidesAutomatically() {
-  return true;
-}
-
-void PermissionPromptAndroid::Hide() {
-  // Hide() is only called if HidesAutomatically() returns false or
-  // CanAcceptRequestUpdate() return true.
-  NOTREACHED();
 }
 
 void PermissionPromptAndroid::UpdateAnchorPosition() {
@@ -183,6 +168,7 @@ GURL PermissionPromptAndroid::GetLinkURL() const {
 
 // static
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
-    content::WebContents* web_contents) {
-  return base::MakeUnique<PermissionPromptAndroid>(web_contents);
+    content::WebContents* web_contents,
+    Delegate* delegate) {
+  return base::MakeUnique<PermissionPromptAndroid>(web_contents, delegate);
 }
