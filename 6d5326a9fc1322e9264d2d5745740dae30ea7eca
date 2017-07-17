@@ -257,6 +257,29 @@
       "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac37296_9087c4ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/searchwidget/SearchWidgetProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T09:52:02Z",
+      "side": 1,
+      "message": "Nit: leave spaces inside the comments?",
+      "range": {
+        "startLine": 216,
+        "startChar": 44,
+        "endLine": 216,
+        "endChar": 61
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
