@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef0e9ded_5f8894ab",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T18:23:34Z",
+      "side": 1,
+      "message": "Currently this observer is very broad, meaning that it calls back when anything changes. Is there a reason for it to be so generic, given that it is used only in md_settings_ui? Can we tailor it to its current (and only) use more closely?\n\nI wanted to avoid putting WebUI implementation details in safe_browsing/. I tried applying your suggested changes; let me know what you think. \n\n - Reduce logic within md_settings_ui\n\nNote that to do this I changed from a closure to a callback with two booleans parameters",
+      "parentUuid": "f55b8d7a_23882917",
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2bebcf_285e34e2",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "10666923_f9035618",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T18:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f2bebcf_285e34e2",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69cb893_92f2c001",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-14T14:12:16Z",
       "side": 1,
       "message": "DCHECK?",
+      "range": {
+        "startLine": 302,
+        "startChar": 18,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604b5c03_610b0b39",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T18:23:34Z",
+      "side": 1,
+      "message": "It\u0027s a CHECK() here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/md_history_ui.cc?q\u003dcontent::WebUIDataSource::Updat\u0026l\u003d228\n\nI\u0027ll let dpapad chime in on whether CHECK or DCHECk is more appropriate.",
+      "parentUuid": "c69cb893_92f2c001",
       "range": {
         "startLine": 302,
         "startChar": 18,
