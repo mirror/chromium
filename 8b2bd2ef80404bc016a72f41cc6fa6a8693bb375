@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b75acd_6b8c6fbc",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "used?",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e8fb8e_d9ba7ac5",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "Add a unittest for operator\u003d\u003d and operator\u003d?",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabac48d_f2994638",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "convert this to a class?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7501ec_03452c9a",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "return traffic_annotation_;",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efd83f1_aaeba218",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "CHECK(traffic_annotation_);",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa54838_884eb25a",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "return *traffic_annotation;",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9b0d7b_c1381eba",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "delete this line.",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1238e8_8da75d09",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "// representation of a net::NetworkTrafficAnnotationTag.",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda600c2_860e8484",
+        "filename": "components/download/internal/proto_conversions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "proto may have no traffic_annotation.",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5585b1cd_3124bf70",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

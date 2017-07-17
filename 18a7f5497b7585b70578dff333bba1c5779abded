@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e3d65d_26bd388d",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T07:31:24Z",
+      "side": 1,
+      "message": "this line is not necessary.",
+      "revId": "18a7f5497b7585b70578dff333bba1c5779abded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
