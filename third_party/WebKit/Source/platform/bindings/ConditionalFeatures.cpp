@@ -15,12 +15,20 @@ void InstallConditionalFeaturesDefault(
     v8::Local<v8::Object> prototype_object,
     v8::Local<v8::Function> interface_object) {}
 
+void InstallConditionalFeaturesOnGlobalDefault(
+    const WrapperTypeInfo* wrapper_type_info,
+    const ScriptState* script_state) {}
+
 void InstallPendingConditionalFeatureDefault(const String& feature,
                                              const ScriptState* script_state) {}
 
 namespace {
 InstallConditionalFeaturesFunction g_install_conditional_features_function =
     &InstallConditionalFeaturesDefault;
+
+InstallConditionalFeaturesOnGlobalFunction
+    g_install_conditional_features_on_global_function =
+        &InstallConditionalFeaturesOnGlobalDefault;
 
 InstallPendingConditionalFeatureFunction
     g_install_pending_conditional_feature_function =
@@ -34,6 +42,17 @@ InstallConditionalFeaturesFunction SetInstallConditionalFeaturesFunction(
       g_install_conditional_features_function;
   g_install_conditional_features_function =
       new_install_conditional_features_function;
+  return original_function;
+}
+
+InstallConditionalFeaturesOnGlobalFunction
+SetInstallConditionalFeaturesOnGlobalFunction(
+    InstallConditionalFeaturesOnGlobalFunction
+        new_install_conditional_features_on_global_function) {
+  InstallConditionalFeaturesOnGlobalFunction original_function =
+      g_install_conditional_features_on_global_function;
+  g_install_conditional_features_on_global_function =
+      new_install_conditional_features_on_global_function;
   return original_function;
 }
 
@@ -54,6 +73,33 @@ void InstallConditionalFeatures(const WrapperTypeInfo* type,
                                 v8::Local<v8::Function> interface_object) {
   (*g_install_conditional_features_function)(
       type, script_state, prototype_object, interface_object);
+}
+
+void InstallConditionalFeaturesOnGlobal(const WrapperTypeInfo* type,
+                                        const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  (*g_install_conditional_features_on_global_function)(type, script_state);
+}
+
+void InstallConditionalFeaturesOnWindow(const WrapperTypeInfo* type,
+                                        const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  InstallConditionalFeaturesOnGlobal(type, script_state);
+
+  // For the main world, install any remaining conditional bindings (i.e. for
+  // origin trials, which do not apply to extensions).
+  if (script_state->World().IsMainWorld()) {
+    InstallConditionalFeatures(type, script_state, v8::Local<v8::Object>(),
+                               v8::Local<v8::Function>());
+  }
 }
 
 void InstallPendingConditionalFeature(const String& feature,

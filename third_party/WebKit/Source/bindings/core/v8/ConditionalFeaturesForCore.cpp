@@ -20,6 +20,8 @@ namespace blink {
 namespace {
 InstallConditionalFeaturesFunction g_old_install_conditional_features_function =
     nullptr;
+InstallConditionalFeaturesOnGlobalFunction
+    g_old_install_conditional_features_on_global_function = nullptr;
 InstallPendingConditionalFeatureFunction
     g_old_install_pending_conditional_feature_function = nullptr;
 }
@@ -58,6 +60,25 @@ void InstallConditionalFeaturesCore(const WrapperTypeInfo* wrapper_type_info,
   }
 }
 
+void InstallConditionalFeaturesOnGlobalForCore(
+    const WrapperTypeInfo* wrapper_type_info,
+    const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  (*g_old_install_conditional_features_on_global_function)(wrapper_type_info,
+                                                           script_state);
+
+  // TODO(chasej): Generate this logic at compile-time, based on interfaces with
+  // [SecureContext] attribute.
+  if (wrapper_type_info == &V8Window::wrapperTypeInfo) {
+    V8Window::InstallConditionalFeaturesOnGlobal(script_state->GetContext(),
+                                                 script_state->World());
+  }
+}
+
 void InstallPendingConditionalFeatureCore(const String& feature,
                                           const ScriptState* script_state) {
   (*g_old_install_pending_conditional_feature_function)(feature, script_state);
@@ -82,20 +103,12 @@ void InstallPendingConditionalFeatureCore(const String& feature,
   }
 }
 
-void InstallConditionalFeaturesOnWindow(const ScriptState* script_state) {
-  DCHECK(script_state);
-  DCHECK(script_state->GetContext() ==
-         script_state->GetIsolate()->GetCurrentContext());
-  DCHECK(script_state->PerContextData());
-  DCHECK(script_state->World().IsMainWorld());
-  InstallConditionalFeatures(&V8Window::wrapperTypeInfo, script_state,
-                             v8::Local<v8::Object>(),
-                             v8::Local<v8::Function>());
-}
-
 void RegisterInstallConditionalFeaturesForCore() {
   g_old_install_conditional_features_function =
       SetInstallConditionalFeaturesFunction(&InstallConditionalFeaturesCore);
+  g_old_install_conditional_features_on_global_function =
+      SetInstallConditionalFeaturesOnGlobalFunction(
+          &InstallConditionalFeaturesOnGlobalForCore);
   g_old_install_pending_conditional_feature_function =
       SetInstallPendingConditionalFeatureFunction(
           &InstallPendingConditionalFeatureCore);
