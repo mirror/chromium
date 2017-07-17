@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "170562f1_f3133be5",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T13:02:57Z",
+      "side": 1,
+      "message": "Well, this context loss is triggered pretty late in the draw sequence, and all draw checks have passed by now. So, we need to explicitly take care of this.\nMaybe we need some context loss checks at this stage of pipeline too, but thats a different bug i guess.\nIf we would early out here, we would essentially send the quad to parent, it used to trigger a dcheck for sync token at PrepareSendToParent (when I started the patch :)), but now the code is removed (https://chromium-review.googlesource.com/c/560736/).\nBut, the quad is stuck for sure, if we run the unit test, we can see the evict code playing its role.",
+      "parentUuid": "cb334ec9_d70b018f",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 23
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9197b0a_18271bb2",
         "filename": "cc/layers/heads_up_display_layer_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T16:53:45Z",
       "side": 1,
       "message": "If we do need to do this, can we just call this directly from UpdateHudTexture? Would require passing RenderPassList into that function, but seems easier to reason about.",
+      "range": {
+        "startLine": 826,
+        "startChar": 30,
+        "endLine": 826,
+        "endChar": 42
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4c2a50_0763c90d",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-17T13:02:57Z",
+      "side": 1,
+      "message": "Let me know your thoughts on above, i will take care of this accordingly.",
+      "parentUuid": "b9197b0a_18271bb2",
       "range": {
         "startLine": 826,
         "startChar": 30,
