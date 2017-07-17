@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf6fa018_2a4c3928",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4980b47_1cdea254",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399dc69e_693e82fb",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bf729b_ad6e3ffa",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399dc69e_693e82fb",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 27
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6fa62830_e1f668cc",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48f7f6b8_d48f7bcc",
+      "range": {
+        "startLine": 593,
+        "startChar": 30,
+        "endLine": 593,
+        "endChar": 31
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62417af6_9f19ae0c",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-14T14:55:33Z",
       "side": 1,
       "message": "What if the developer calls prompt() again with a user gesture? Should they only get one chance to call it with a gesture? Or should we silently drop non-gestured calls?",
+      "range": {
+        "startLine": 595,
+        "startChar": 6,
+        "endLine": 595,
+        "endChar": 37
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8cd3e5_f7f11f5b",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Good question. For now I\u0027d like to just silently drop non-gestured calls. I think there are other questions like this though that we could get answers to, like if the user cancels a prompt should the developer get to call prompt again.\n\nThe model I\u0027ve gone with for this CL is that the developer gets one shot at calling e.prompt.",
+      "parentUuid": "62417af6_9f19ae0c",
       "range": {
         "startLine": 595,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b475dba2_fdbabb2c",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "A test was crashing without the UpdateState call and it took me a while to figure out why, so I think it is worth explaining something. I\u0027ve reworded the comment. Is that better?",
+      "parentUuid": "a232c9ab_db0081e5",
+      "range": {
+        "startLine": 598,
+        "startChar": 7,
+        "endLine": 598,
+        "endChar": 10
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15abdec5_7a7d2f4e",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-14T14:55:33Z",
       "side": 1,
       "message": "Nit: this comment is out of date.",
+      "range": {
+        "startLine": 606,
+        "startChar": 16,
+        "endLine": 606,
+        "endChar": 17
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354255fa_59993bf1",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "i don\u0027t think it is needed any more, removed.",
+      "parentUuid": "15abdec5_7a7d2f4e",
       "range": {
         "startLine": 606,
         "startChar": 16,
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "32aa78de_6553ebe6",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25aaa772_44b50b2d",
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fedfff3c_2bbe3bcd",
         "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
         "patchSetId": 4
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a7c3e0d5_4b80d48f",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedfff3c_2bbe3bcd",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a6019d7_57c18fe2",
         "filename": "chrome/browser/installable/installable_logging.cc",
         "patchSetId": 4
@@ -194,6 +380,24 @@
       "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f923f7_715848f4",
+        "filename": "chrome/browser/installable/installable_logging.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a6019d7_57c18fe2",
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -217,6 +421,30 @@
       "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cc2328_722b0528",
+        "filename": "chrome/browser/installable/installable_logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T08:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71a3365_f0105441",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
