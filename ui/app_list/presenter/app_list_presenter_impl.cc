@@ -82,6 +82,12 @@ void AppListPresenterImpl::Show(int64_t display_id) {
   base::RecordAction(base::UserMetricsAction("Launcher_Show"));
 }
 
+void AppListPresenterImpl::UpdateBoundsOnYPosition(
+    int64_t y_position_in_screen) {
+  if (view_)
+    view_->UpdateBoundsOnYPosition(y_position_in_screen);
+}
+
 void AppListPresenterImpl::Dismiss() {
   if (!is_visible_)
     return;
