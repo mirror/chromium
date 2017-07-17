@@ -167,8 +167,28 @@ void LegacyInputRouterImpl::SendGestureEvent(
 
   GestureEventWithLatencyInfo gesture_event(original_gesture_event);
 
-  if (touch_action_filter_.FilterGestureEvent(&gesture_event.event))
+  if (touch_action_filter_.FilterGestureEvent(&gesture_event.event)) {
+    // Report how often the gesture event does not match blink's effective
+    // touch action when a touch gesture ends.
+    if (gesture_event.event.source_device ==
+            blink::kWebGestureDeviceTouchscreen &&
+        (gesture_event.event.GetType() == WebInputEvent::kGestureScrollEnd ||
+         gesture_event.event.GetType() == WebInputEvent::kGestureFlingStart ||
+         gesture_event.event.GetType() == WebInputEvent::kGesturePinchEnd)) {
+      UMA_HISTOGRAM_BOOLEAN("TouchAction.EffectiveTouchActionFiltered", true);
+    }
     return;
+  }
+
+  // Report how often the gesture event matches blink's effective touch action
+  // when a touch gesture ends.
+  if (gesture_event.event.source_device ==
+          blink::kWebGestureDeviceTouchscreen &&
+      (gesture_event.event.GetType() == WebInputEvent::kGestureScrollEnd ||
+       gesture_event.event.GetType() == WebInputEvent::kGestureFlingStart ||
+       gesture_event.event.GetType() == WebInputEvent::kGesturePinchEnd)) {
+    UMA_HISTOGRAM_BOOLEAN("TouchAction.EffectiveTouchActionFiltered", false);
+  }
 
   wheel_event_queue_.OnGestureScrollEvent(gesture_event);
 
