@@ -16,6 +16,24 @@
       "revId": "b6c6a361c2d8e849c37d0feb9b35bb306c627846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd725624_2c085c40",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-17T21:55:07Z",
+      "side": 1,
+      "message": "it\u0027s in text_defaults_md.css (see below). We also import this file in settings to set font-size on \u003cbody\u003e.",
+      "parentUuid": "e0e1693b_821aacab",
+      "revId": "b6c6a361c2d8e849c37d0feb9b35bb306c627846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
