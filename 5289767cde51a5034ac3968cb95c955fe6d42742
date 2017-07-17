@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c97b7af0_ed067890",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-17T18:29:59Z",
+      "side": 1,
+      "message": "this can be remove?",
+      "revId": "5289767cde51a5034ac3968cb95c955fe6d42742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a33d0cd_f34bf39c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-17T18:29:59Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "5289767cde51a5034ac3968cb95c955fe6d42742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
