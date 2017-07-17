@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d50bc3c5_982b7b48",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionAlgorithm.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-17T17:50:24Z",
+      "side": 1,
+      "message": "Comment updated accordingly. Only for the 400 and 500 pair the spec mandates the mutually opposite check.",
+      "parentUuid": "99e7ffed_34dca288",
+      "range": {
+        "startLine": 106,
+        "startChar": 35,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9e37fd1_42c431ee",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionAlgorithm.h",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "82daa64d_ea37566a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionAlgorithm.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-17T17:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e37fd1_42c431ee",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25da8cbe_cb74bfc3",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 18
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-17T15:52:30Z",
       "side": 1,
       "message": "Can we make this clamped and/or checked? Having it be both seems like a bad idea. Especially since we\u0027re moving towards using clamped numbers in more places.",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b667d6b_c579f540",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-17T17:50:24Z",
+      "side": 1,
+      "message": "In the subsequent CLs that update parsing from my local branch I do the bounds checks in the parsing stage and in some case follow the clampTo\u003c\u003e templating convention that\u0027s used in the CSS parsing logic in CSSPropertyParser and related classes. In my understanding, since the values stored as FontSelectionValue can only originate from CSS (since they also go through the CSS code when set via JS), I think the parsing stage is the right place to do the boundary checks. What do you think?",
+      "parentUuid": "25da8cbe_cb74bfc3",
       "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
