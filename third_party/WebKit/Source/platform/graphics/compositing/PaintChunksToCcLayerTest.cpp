@@ -64,7 +64,8 @@ class PaintRecordMatcher
       const cc::PaintOpBuffer& buffer,
       ::testing::MatchResultListener* listener) const override {
     auto next = expected_ops_.begin();
-    for (cc::PaintOpBuffer::Iterator it(&buffer); it; ++it) {
+    size_t op_idx = 0;
+    for (cc::PaintOpBuffer::Iterator it(&buffer); it; ++it, ++op_idx) {
       cc::PaintOpType op = (*it)->GetType();
       switch (op) {
         case cc::PaintOpType::ClipRect:
@@ -76,7 +77,7 @@ class PaintRecordMatcher
           if (next == expected_ops_.end()) {
             if (listener->IsInterested()) {
               *listener << "unexpected op " << GetOpName(op) << " at index "
-                        << it.op_idx() << ", expecting end of list.";
+                        << op_idx << ", expecting end of list.";
             }
             return false;
           }
@@ -86,7 +87,7 @@ class PaintRecordMatcher
           }
           if (listener->IsInterested()) {
             *listener << "unexpected op " << GetOpName(op) << " at index "
-                      << it.op_idx() << ", expecting " << GetOpName(*next)
+                      << op_idx << ", expecting " << GetOpName(*next)
                       << "(#" << (next - expected_ops_.begin()) << ").";
           }
           return false;
