@@ -16,6 +16,24 @@
       "revId": "d3c088ebdd12b70341dc9eff67ecff68d8a73b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166077f1_47126e1d",
+        "filename": "ui/login/account_picker/md_screen_account_picker.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-17T18:09:25Z",
+      "side": 1,
+      "message": "Please see below. It\u0027ll change to display: block when being hovered.",
+      "parentUuid": "3ab8240a_0a841e66",
+      "revId": "d3c088ebdd12b70341dc9eff67ecff68d8a73b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
