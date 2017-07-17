@@ -1036,13 +1036,15 @@ source_set("browser") {
     "memory/memory_monitor_android.h",
     "memory/memory_monitor_win.cc",
     "memory/memory_monitor_win.h",
-    "memory/swap_metrics_observer.cc",
-    "memory/swap_metrics_observer.h",
-    "memory/swap_metrics_observer_linux.cc",
-    "memory/swap_metrics_observer_linux.h",
-    "memory/swap_metrics_observer_mac.cc",
-    "memory/swap_metrics_observer_mac.h",
-    "memory/swap_metrics_observer_win.cc",
+    "memory/swap_metrics_delegate_uma.cc",
+    "memory/swap_metrics_delegate_uma.h",
+    "memory/swap_metrics_driver.cc",
+    "memory/swap_metrics_driver.h",
+    "memory/swap_metrics_driver_linux.cc",
+    "memory/swap_metrics_driver_linux.h",
+    "memory/swap_metrics_driver_mac.cc",
+    "memory/swap_metrics_driver_mac.h",
+    "memory/swap_metrics_driver_win.cc",
     "message_port_provider.cc",
     "mime_registry_impl.cc",
     "mime_registry_impl.h",
@@ -1953,8 +1955,8 @@ source_set("browser") {
 
     set_sources_assignment_filter([])
     sources += [
-      "memory/swap_metrics_observer_linux.cc",
-      "memory/swap_metrics_observer_linux.h",
+      "memory/swap_metrics_driver_linux.cc",
+      "memory/swap_metrics_driver_linux.h",
     ]
     set_sources_assignment_filter(sources_assignment_filter)
 

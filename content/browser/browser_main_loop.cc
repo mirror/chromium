@@ -74,7 +74,8 @@
 #include "content/browser/loader_delegate_impl.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/memory/memory_coordinator_impl.h"
-#include "content/browser/memory/swap_metrics_observer.h"
+#include "content/browser/memory/swap_metrics_delegate_uma.h"
+#include "content/browser/memory/swap_metrics_driver.h"
 #include "content/browser/net/browser_online_state_observer.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -449,6 +450,10 @@ GetDefaultTaskSchedulerInitParams() {
           base::SchedulerBackwardCompatibility::INIT_COM_STA));
 #endif
 }
+
+// Time between updating and recording swap rates.
+constexpr base::TimeDelta kSwapMetricsInterval =
+    base::TimeDelta::FromSeconds(60);
 
 }  // namespace
 
@@ -1626,9 +1631,13 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))
     MemoryCoordinatorImpl::GetInstance()->Start();
 
-  auto* swap_metrics_observer = SwapMetricsObserver::GetInstance();
-  if (swap_metrics_observer)
-    swap_metrics_observer->Start();
+  std::unique_ptr<SwapMetricsDriver::Delegate> delegate(
+      base::WrapUnique<SwapMetricsDriver::Delegate>(
+          new SwapMetricsDelegateUma()));
+  swap_metrics_driver_ =
+      SwapMetricsDriver::Create(std::move(delegate), kSwapMetricsInterval);
+  if (swap_metrics_driver_)
+    swap_metrics_driver_->Start();
 }
 
 bool BrowserMainLoop::InitializeToolkit() {
