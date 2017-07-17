@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d01edad0_b4e3e8ff",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "625205c6_2c27f058",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8453160_5f91bdc9",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c663dc38_99b439f1",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "The coordinator itself is long-lived, but |data| doesn\u0027t exist until the share button is tapped and the UI is about to be shown.  That rules out |init|.\n\nI could put data into a property, but that\u0027s a weird way of passing arguments from one method to another.",
+      "parentUuid": "ce6f8d17_1d94fdff",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c737411_ba767eda",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
         "patchSetId": 1
@@ -65,6 +101,30 @@
       "writtenOn": "2017-07-17T09:42:41Z",
       "side": 1,
       "message": "Any reason why this can\u0027t be |stop|? |stop| and |start| can conceptually be called more than once on each chromeController.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efacf8af_e4644210",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "This method is playing the role of \"wasRemovedFromParentCoordinator\".  I\u0027ve created a coordinator that always exists but only sometimes shows UI, so \"stop showing ui\" and \"disconnect from C++ objects, you\u0027re about to be destroyed\" are different.",
+      "parentUuid": "8c737411_ba767eda",
       "range": {
         "startLine": 41,
         "startChar": 8,
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "19b02f26_ee8d9f96",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Yup.  I view provider protocols as an old-architecture concept; after refactoring, we should be using the dispatcher or broadcaster, because those are the approved methods for cross-component communication.",
+      "parentUuid": "7fc7b931_29cad27e",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55b23cde_15762cdc",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
         "patchSetId": 1
@@ -123,6 +201,30 @@
       "writtenOn": "2017-07-17T09:42:41Z",
       "side": 1,
       "message": "This should move into the UI layer at some point, I guess?",
+      "range": {
+        "startLine": 99,
+        "startChar": 35,
+        "endLine": 99,
+        "endChar": 71
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef03dd06_10f6bbfe",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Into the view/vc rather than in the coordinator, yes.",
+      "parentUuid": "55b23cde_15762cdc",
       "range": {
         "startLine": 99,
         "startChar": 35,
@@ -181,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "d7282014_b49fc02a",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "I believe this is just acting as a coordinate system reference.\n\nConverting to UIWindow coordinates first would work, but I wasn\u0027t trying to fix this kind of problem, just document it \u003d)",
+      "parentUuid": "dc15ac95_de28ee1b",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8699e4b0_c5c5f6f5",
         "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h",
         "patchSetId": 1
@@ -192,6 +318,30 @@
       "writtenOn": "2017-07-17T09:42:41Z",
       "side": 1,
       "message": "This seems like a good candidate to abstract into a command.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4dea20_68d0de90",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Yup, probably along with a new \"Error Alert\" component, so that we can move the code out of BVC.",
+      "parentUuid": "8699e4b0_c5c5f6f5",
       "range": {
         "startLine": 10,
         "startChar": 8,
@@ -274,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "76560d3e_ee875947",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Yup, with a Snackbar component.",
+      "parentUuid": "aa37aacc_ca096147",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4adf4b2c_0c7c9367",
         "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
         "patchSetId": 1
@@ -297,6 +465,30 @@
     },
     {
       "key": {
+        "uuid": "5cad1e86_44ba491a",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "I was trying to make the smallest possible change while hacking \u003d)\n\n- BVC registers with the dispatcher as a protocol, so we need some sort of \"BVCCommands\" protocol for that.\n- We pass around a single id\u003cBrowserCommands\u003e that acts as the dispatcher for everything.  In the old architecture, that seems better than passing around an object that conforms to a dozen different protocol.\n\nSo I renamed the old protocol to BVCCommands and created a new BrowserCommands protocol that can act as a dumping ground for everything that\u0027s handled by not-BVC.\n\nAs we refactor components, they will get their own protocols.  For the sake of the old app, maybe BrowserCommands will publicly conform to all of them.",
+      "parentUuid": "4adf4b2c_0c7c9367",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc037b90_f3c5beac",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 1
@@ -308,6 +500,30 @@
       "writtenOn": "2017-07-17T09:42:41Z",
       "side": 1,
       "message": "Does conforming to this protocol mean that there are public API properties or methods that can be removed?",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 40
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e142c33_fe7210bc",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:06:13Z",
+      "side": 1,
+      "message": "Yup, forgot to remove the declarations for shareButtonView and shareButtonAnchorRect below.",
+      "parentUuid": "bc037b90_f3c5beac",
       "range": {
         "startLine": 113,
         "startChar": 15,
