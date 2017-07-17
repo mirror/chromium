@@ -34,6 +34,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac44729_b3da7240",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-17T14:33:01Z",
+      "side": 1,
+      "message": "Sorry, I thought I had replied Friday but I see no record of this anywhere.\n\nRunning a nested loop while manually deferring an IPC makes it pretty hard to find any quick \u0026 easy fixes.\n\nWe could queue incoming InterfaceProvider requests (in BindInterfaceProviderForNewDocument) and ensure that they\u0027re only actually processed in sync with their corresponding DCPL IPC.\n\nOR we could move DCPL to the FrameHost mojom interface (adding the InterfaceProvider request to it rather than in a separate BIPFND message), which is probably something we eventually want anyway. Then the deferral/queueing can happen in a single place, the DCPL impl. This might not be so bad?\n\nNote that we don\u0027t really have the nice (albeit rarely desirable) ability to capture the message and dispatch it later like we do with legacy IPC, so you\u0027d have to manually capture/queue the message parameters, but still that may be the cleanest solution.",
+      "parentUuid": "6431cbba_85f29f73",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
