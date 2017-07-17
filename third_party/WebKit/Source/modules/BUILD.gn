@@ -43,7 +43,13 @@ make_names("module_names") {
   deps = []  # Don't use default deps (otherwise it will be circular).
 }
 
-target(modules_target_type, "modules") {
+if (modules_target_type == "component") {
+  jumbo_target_type = "jumbo_component"
+} else {
+  jumbo_target_type = "jumbo_target"
+}
+target(jumbo_target_type, "modules") {
+  target_type = modules_target_type
   output_name = "blink_modules"
 
   if (modules_target_type == "split_static_library") {
@@ -174,7 +180,7 @@ target(modules_target_type, "modules") {
   }
 }
 
-source_set("modules_testing") {
+blink_unit_test_source_set("modules_testing") {
   sources = [
     "$bindings_modules_v8_output_dir/V8InternalsPartial.cpp",
     "$bindings_modules_v8_output_dir/V8InternalsPartial.h",
@@ -226,7 +232,7 @@ group("make_modules_generated") {
   ]
 }
 
-source_set("unit_tests") {
+blink_unit_test_source_set("unit_tests") {
   testonly = true
 
   sources = [
@@ -314,6 +320,42 @@ source_set("unit_tests") {
     "webdatabase/QuotaTrackerTest.cpp",
     "websockets/DOMWebSocketTest.cpp",
     "websockets/DocumentWebSocketChannelTest.cpp",
+  ]
+
+  jumbo_excluded_sources = [
+    # Too many Command ("using Command = ...")
+    "fetch/BodyStreamBufferTest.cpp",
+    "fetch/BytesConsumerTest.cpp",
+
+    # Too many Result ("using Result = ...")
+    "fetch/DataConsumerHandleTestUtil.cpp",
+
+    # Two Result, one blink::BytesConsumer::Result and one blink::Result
+    "fetch/BytesConsumerTestUtil.cpp",
+
+    # Too many ToString
+    "fetch/FormDataBytesConsumerTest.cpp",
+
+    # Too many MockClient
+    "fetch/MultipartParserTest.cpp",
+    "fetch/ReadableStreamBytesConsumerTest.cpp",
+
+    # Too many CreateIDBValue
+    "indexeddb/IDBTransactionTest.cpp",
+
+    # Too many MockVideoWebMediaPlayer
+    "media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+    "media_controls/MediaControlsRotateToFullscreenDelegateTest.cpp",
+
+    # Too many kBaseUrl and kIcon500x500.
+    "notifications/NotificationResourcesLoaderTest.cpp",
+    "notifications/NotificationImageLoaderTest.cpp",
+
+    # Too many MockEventListener
+    "remoteplayback/RemotePlaybackTest.cpp",
+
+    # Too many MockWebAudioDevice
+    "webaudio/BaseAudioContextTest.cpp",
   ]
 
   configs += [
