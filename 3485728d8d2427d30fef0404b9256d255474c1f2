@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7953e110_9bf73939",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-17T17:12:08Z",
+      "side": 1,
+      "message": "So why not create a FakeNetworkHostScanCache as you\u0027ve done for injecting PersistentHostScanCache?",
+      "parentUuid": "e487d422_5233a2eb",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "3485728d8d2427d30fef0404b9256d255474c1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a0b159_96f4c22a",
         "filename": "chromeos/components/tether/master_host_scan_cache.h",
         "patchSetId": 5
