@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240ca2ba_4d5c6a7b",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-17T21:51:02Z",
+      "side": 1,
+      "message": "The problem with this is that it is not printing the same trace as was captured during StackTrace::StackTrace(), so this doesn\u0027t strictly meet the API contract (in addition to the not outputting to stderr issue!).\n\nWhat does this do under the hood?  Does it unwind the stack in-process and then get the crash-logger to symbolize and print, or does the crashlogger also do the backtrace?  Could the crashlogger be augmented to allow the caller to specify the backtrace addresses, for example? Could it be made to return a string for the caller to print..?",
+      "revId": "938fce50b4ce9b0d5d7c1f213293a932dcec6ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
