@@ -16,6 +16,24 @@
       "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89890abb_6b8a4a36",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-17T14:35:03Z",
+      "side": 1,
+      "message": "After testing one site with a touch listener as well as one without, I can confirm that this code is being reached in both cases.",
+      "parentUuid": "2cc060da_3d8f48ff",
+      "revId": "b41f32e3ab68e141ae7074d38698ff107e070dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
