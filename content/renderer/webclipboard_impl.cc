@@ -177,9 +177,8 @@ void WebClipboardImpl::WriteImage(const WebImage& image,
   if (!delegate_->WriteImage(ui::CLIPBOARD_TYPE_COPY_PASTE, bitmap))
     return;
 
-  if (!url.IsEmpty()) {
-    delegate_->WriteBookmark(ui::CLIPBOARD_TYPE_COPY_PASTE, url, title.Utf16());
 #if !defined(OS_MACOSX)
+  if (!url.IsEmpty()) {
     // When writing the image, we also write the image markup so that pasting
     // into rich text editors, such as Gmail, reveals the image. We also don't
     // want to call writeText(), since some applications (WordPad) don't pick
@@ -190,8 +189,13 @@ void WebClipboardImpl::WriteImage(const WebImage& image,
     delegate_->WriteHTML(ui::CLIPBOARD_TYPE_COPY_PASTE,
                          base::UTF8ToUTF16(URLToImageMarkup(url, title)),
                          GURL());
-#endif
+    // And only write a bookmark (url/title pair) if we're writing markup,
+    // otherwise web applications such as Gmail frequently prefer string
+    // content (assuming it to be markup, even if noted as text/plain) over
+    // the image, resulting in the URL being pasted. https://crbug.com/736439
+    delegate_->WriteBookmark(ui::CLIPBOARD_TYPE_COPY_PASTE, url, title.Utf16());
   }
+#endif
   delegate_->CommitWrite(ui::CLIPBOARD_TYPE_COPY_PASTE);
 }
 
