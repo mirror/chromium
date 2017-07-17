@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fb606dd_a1fa48ba",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DefaultAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Good to know! Thanks.",
+      "parentUuid": "48ddd771_f43c7587",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8773106_e18d536f",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66154606_f4dedc59",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8773106_e18d536f",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6c3b62f6_132999e2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f0b82b_8fc21a95",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3860784_f08c5605",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "70df2c3a_5138c075",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3860784_f08c5605",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e7b09d_6d9097fd",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-14T23:58:15Z",
       "side": 1,
       "message": "How about branching based on the runtime flag?\n\nif (RuntimeEnabledFeatures::AudioWorkletEnabled()) {\n  DCHECK(!render_thread_ \u0026\u0026 worklet_backing_thread_);\n  return worklet_backing_thread_;\n}\nDCHECK(render_thread_ \u0026\u0026 !worklet_backing_thread_);\nreturn render_thread_.get();",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578513f5_c7759035",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done. The comment was removed because it is not relevant anymore.",
+      "parentUuid": "21e7b09d_6d9097fd",
       "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "682069db_cf0e1ff5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6a4af3_85b71d55",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a20a71f_6eb70fd3",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
         "patchSetId": 9
@@ -118,6 +226,24 @@
       "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bc8de3_1082dbe1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a20a71f_6eb70fd3",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b266a828_a907d2a1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9e9c20_8edad99a",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13128c53_afdf9583",
         "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
         "patchSetId": 9
@@ -149,6 +293,24 @@
       "writtenOn": "2017-07-14T23:58:15Z",
       "side": 1,
       "message": "Is this used?",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ec327a_9670fefe",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "It\u0027s a crumb from the change in the follow-up CL. Removing from this one.",
+      "parentUuid": "13128c53_afdf9583",
       "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "bc24f4c1_db3187b2",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "After reading code/discussion on blink-dev, I decided to use a separate interface for the threading setting function rather than using optional arguments.",
+      "parentUuid": "9abfe4dc_e99852ce",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9152ee8_b3ab7bea",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 9
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "7259488a_a865155a",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9152ee8_b3ab7bea",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaed0c35_46c8a754",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391c0116_b5855db0",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-17T21:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaed0c35_46c8a754",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
