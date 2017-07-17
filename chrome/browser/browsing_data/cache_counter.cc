@@ -10,7 +10,7 @@
 #include "net/base/net_errors.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#include "chrome/browser/offline_pages/offline_page_utils.h"
 #endif  // OS_ANDROID
 
 CacheCounter::CacheResult::CacheResult(const CacheCounter* source,

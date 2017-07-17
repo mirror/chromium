@@ -24,7 +24,7 @@
 #include "extensions/common/constants.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#include "chrome/browser/offline_pages/offline_page_utils.h"
 #else
 #include "components/omnibox/browser/vector_icons.h" // nogncheck
 #include "components/toolbar/vector_icons.h"  // nogncheck

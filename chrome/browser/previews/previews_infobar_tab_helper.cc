@@ -28,7 +28,7 @@
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_tab_helper.h"
+#include "chrome/browser/offline_pages/offline_page_tab_helper.h"
 #endif  // defined(OS_ANDROID)
 
 namespace {

@@ -26,7 +26,7 @@
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #endif  // defined(OS_ANDROID)
 
