@@ -6,10 +6,12 @@
 
 #include "bindings/modules/v8/OffscreenRenderingContext.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/html/TextMetrics.h"
 #include "core/frame/Settings.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerSettings.h"
+#include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/paint/PaintCanvas.h"
@@ -17,6 +19,11 @@
 #include "platform/wtf/CurrentTime.h"
 
 namespace blink {
+
+static const char kDefaultFont[] = "10px sans-serif";
+static const char kInheritDirectionString[] = "inherit";
+static const char kRtlDirectionString[] = "rtl";
+static const char kLtrDirectionString[] = "ltr";
 
 OffscreenCanvasRenderingContext2D::~OffscreenCanvasRenderingContext2D() {}
 
@@ -231,4 +238,124 @@ CanvasPixelFormat OffscreenCanvasRenderingContext2D::PixelFormat() const {
 bool OffscreenCanvasRenderingContext2D::IsAccelerated() const {
   return HasImageBuffer() && GetImageBuffer()->IsAccelerated();
 }
+
+String OffscreenCanvasRenderingContext2D::font() const {
+  if (!GetState().HasRealizedFont())
+    return kDefaultFont;
+
+  StringBuilder serialized_font;
+  const FontDescription& font_description =
+      GetState().GetFont().GetFontDescription();
+
+  if (font_description.Style() == kFontStyleItalic)
+    serialized_font.Append("italic ");
+  if (font_description.Weight() == kFontWeightBold)
+    serialized_font.Append("bold ");
+  if (font_description.VariantCaps() == FontDescription::kSmallCaps)
+    serialized_font.Append("small-caps ");
+
+  serialized_font.AppendNumber(font_description.ComputedPixelSize());
+  serialized_font.Append("px");
+
+  const FontFamily& first_font_family = font_description.Family();
+  for (const FontFamily* font_family = &first_font_family; font_family;
+       font_family = font_family->Next()) {
+    if (font_family != &first_font_family)
+      serialized_font.Append(',');
+
+    // FIXME: We should append family directly to serializedFont rather than
+    // building a temporary string.
+    String family = font_family->Family();
+    if (family.StartsWith("-webkit-"))
+      family = family.Substring(8);
+    if (family.Contains(' '))
+      family = "\"" + family + "\"";
+
+    serialized_font.Append(' ');
+    serialized_font.Append(family);
+  }
+
+  return serialized_font.ToString();
+}
+
+void OffscreenCanvasRenderingContext2D::setFont(const String&) {
+}
+
+
+String OffscreenCanvasRenderingContext2D::textAlign() const {
+  return TextAlignName(GetState().GetTextAlign());
+}
+
+void OffscreenCanvasRenderingContext2D::setTextAlign(const String& s) {
+  TextAlign align;
+  if (!ParseTextAlign(s, align))
+    return;
+  if (GetState().GetTextAlign() == align)
+    return;
+  ModifiableState().SetTextAlign(align);
+}
+
+
+String OffscreenCanvasRenderingContext2D::textBaseline() const {
+  return TextBaselineName(GetState().GetTextBaseline());
+}
+
+void OffscreenCanvasRenderingContext2D::setTextBaseline(const String& s) {
+  TextBaseline baseline;
+  if (!ParseTextBaseline(s, baseline))
+    return;
+  if (GetState().GetTextBaseline() == baseline)
+    return;
+  ModifiableState().SetTextBaseline(baseline);
+}
+
+String OffscreenCanvasRenderingContext2D::direction() const {
+  switch (GetState().GetDirection()) {
+    case CanvasRenderingContext2DState::kDirectionRTL:
+      return kRtlDirectionString;
+    case CanvasRenderingContext2DState::kDirectionInherit:
+    case CanvasRenderingContext2DState::kDirectionLTR:
+    default:
+      return kLtrDirectionString;
+  }
+}
+
+void OffscreenCanvasRenderingContext2D::setDirection(const String& direction_string) {
+  CanvasRenderingContext2DState::Direction direction;
+  if (direction_string == kInheritDirectionString)
+    direction = CanvasRenderingContext2DState::kDirectionInherit;
+  else if (direction_string == kRtlDirectionString)
+    direction = CanvasRenderingContext2DState::kDirectionRTL;
+  else if (direction_string == kLtrDirectionString)
+    direction = CanvasRenderingContext2DState::kDirectionLTR;
+  else
+    return;
+
+  if (GetState().GetDirection() != direction)
+    ModifiableState().SetDirection(direction);
+}
+
+
+void OffscreenCanvasRenderingContext2D::fillText(const String& text, double x, double y) {
+}
+
+void OffscreenCanvasRenderingContext2D::fillText(const String& text, double x, double y, double max_width) {
+}
+
+void OffscreenCanvasRenderingContext2D::strokeText(const String& text, double x, double y) {
+}
+
+void OffscreenCanvasRenderingContext2D::strokeText(const String& text, double x, double y, double max_width) {
+}
+
+TextMetrics* OffscreenCanvasRenderingContext2D::measureText(const String& text) {
+  TextMetrics* metrics = TextMetrics::Create();
+
+  return metrics;
+}
+
+
+
+
+
 }

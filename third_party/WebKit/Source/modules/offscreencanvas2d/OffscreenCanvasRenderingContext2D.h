@@ -13,6 +13,10 @@
 
 namespace blink {
 
+class Font;
+class FontMetrics;
+class TextMetrics;
+
 class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
     : public CanvasRenderingContext,
       public BaseRenderingContext2D {
@@ -63,6 +67,24 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
   void RestoreCanvasMatrixClipStack(PaintCanvas* c) const override {
     RestoreMatrixClipStack(c);
   }
+
+  String font() const;
+  void setFont(const String&) override;
+
+  String textAlign() const;
+  void setTextAlign(const String&);
+
+  String textBaseline() const;
+  void setTextBaseline(const String&);
+
+  String direction() const;
+  void setDirection(const String&);
+
+  void fillText(const String& text, double x, double y);
+  void fillText(const String& text, double x, double y, double max_width);
+  void strokeText(const String& text, double x, double y);
+  void strokeText(const String& text, double x, double y, double max_width);
+  TextMetrics* measureText(const String& text);
 
   // BaseRenderingContext2D implementation
   bool OriginClean() const final;
