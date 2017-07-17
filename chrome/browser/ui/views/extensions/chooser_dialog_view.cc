@@ -44,9 +44,6 @@ ChooserDialogView::ChooserDialogView(
   DCHECK(chooser_controller);
   device_chooser_content_view_ =
       new DeviceChooserContentView(this, std::move(chooser_controller));
-  device_chooser_content_view_->SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::CHOOSER);
 }
 
@@ -74,13 +71,7 @@ bool ChooserDialogView::IsDialogButtonEnabled(ui::DialogButton button) const {
 }
 
 views::View* ChooserDialogView::CreateFootnoteView() {
-  views::View* footnote_link = device_chooser_content_view_->footnote_link();
-  if (footnote_link) {
-    footnote_link->SetBorder(
-        views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-            views::INSETS_DIALOG_CONTENTS)));
-  }
-  return footnote_link;
+  return device_chooser_content_view_->footnote_link();
 }
 
 bool ChooserDialogView::Accept() {

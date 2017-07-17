@@ -163,7 +163,7 @@ void LabelExample::AddCustomLabel(View* container) {
   View* control_container = new View();
   control_container->SetBorder(CreateSolidBorder(2, SK_ColorGRAY));
   control_container->SetBackground(CreateSolidBackground(SK_ColorLTGRAY));
-  GridLayout* layout = GridLayout::CreatePanel(control_container);
+  GridLayout* layout = new GridLayout(control_container);
   control_container->SetLayoutManager(layout);
 
   ColumnSet* column_set = layout->AddColumnSet(0);

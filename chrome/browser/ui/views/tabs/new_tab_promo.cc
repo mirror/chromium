@@ -40,7 +40,7 @@ NewTabPromo::NewTabPromo(const gfx::Rect& anchor_rect) {
   set_arrow(views::BubbleBorder::LEFT_TOP);
   views::Widget* new_tab_promo_widget =
       views::BubbleDialogDelegateView::CreateBubble(this);
-  UseCompactMargins();
+  set_margins(gfx::Insets(6));
   new_tab_promo_widget->Show();
   StartAutoCloseTimer(kBubbleCloseDelayDefault);
 }
@@ -65,13 +65,12 @@ void NewTabPromo::OnMouseExited(const ui::MouseEvent& event) {
 }
 
 void NewTabPromo::Init() {
-  auto box_layout = base::MakeUnique<views::BoxLayout>(
-      views::BoxLayout::kVertical, gfx::Insets(), 0);
+  auto* box_layout = new views::BoxLayout(views::BoxLayout::kVertical);
+  SetLayoutManager(box_layout);
   box_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   box_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
-  SetLayoutManager(box_layout.release());
   AddChildView(new views::Label(l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO)));
 }
 
