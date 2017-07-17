@@ -179,6 +179,9 @@ void StabilityMetricsHelper::LogLoadStarted() {
 void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
                                               base::TerminationStatus status,
                                               int exit_code) {
+#if defined(OS_ANDROID)
+  NOTREACHED();
+#endif
   int histogram_type =
       was_extension_process ? RENDERER_TYPE_EXTENSION : RENDERER_TYPE_RENDERER;
 
@@ -209,6 +212,7 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
 #if defined(OS_ANDROID)
     case base::TERMINATION_STATUS_OOM_PROTECTED:
       // TODO(wfh): Check if this should be a Kill or a Crash on Android.
+      NOTREACHED();
       break;
 #endif
 #if defined(OS_CHROMEOS)

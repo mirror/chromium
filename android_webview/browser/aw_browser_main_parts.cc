@@ -130,7 +130,7 @@ int AwBrowserMainParts::PreCreateThreads() {
         base::CreateDirectory(crash_dir);
       breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
           base::MakeUnique<breakpad::CrashDumpManager>(
-              crash_dir, kAndroidMinidumpDescriptor));
+              crash_dir, kAndroidMinidumpDescriptor, nullptr));
     }
   }
 
