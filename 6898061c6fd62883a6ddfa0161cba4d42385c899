@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e4f0e8f_16977f1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Will do after the previous CL lands.",
+      "parentUuid": "598279e3_1bf6e7de",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95b0f23a_590e24c5",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06fcb29_09cf746c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b0f23a_590e24c5",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 20
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bcada627_3e0305c6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c35c8b1_cfdbdc7a",
+      "range": {
+        "startLine": 760,
+        "startChar": 39,
+        "endLine": 760,
+        "endChar": 40
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c8be97_2bdf88d4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2cc5d7_72c0cc13",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c8be97_2bdf88d4",
+      "range": {
+        "startLine": 784,
+        "startChar": 19,
+        "endLine": 784,
+        "endChar": 32
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f4b0c75e_a8b49357",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "645a34ed_4ba596e7",
+      "range": {
+        "startLine": 785,
+        "startChar": 12,
+        "endLine": 785,
+        "endChar": 59
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354f9f1a_0955c047",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "11018716_237a7cc1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "354f9f1a_0955c047",
+      "range": {
+        "startLine": 787,
+        "startChar": 3,
+        "endLine": 787,
+        "endChar": 4
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9252c109_c2afccc4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-13T00:02:40Z",
       "side": 1,
       "message": "For both of these events, follow the existing style for waitable events used in this way.",
+      "range": {
+        "startLine": 803,
+        "startChar": 16,
+        "endLine": 803,
+        "endChar": 28
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638c946c_1d682e22",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T19:05:43Z",
+      "side": 1,
+      "message": "To confirm, by existing style, you\u0027re referring to the *_running  and *_continue naming scheme for WaitableEvents that get signaled when a task is running, and get waited on before the task can finish/continue?",
+      "parentUuid": "9252c109_c2afccc4",
       "range": {
         "startLine": 803,
         "startChar": 16,
