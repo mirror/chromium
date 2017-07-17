@@ -11,12 +11,17 @@
 #include "base/strings/string16.h"
 #include "components/bubble/bubble_delegate.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/gfx/native_widget_types.h"
 
 class Browser;
 
 namespace extensions {
 class Command;
 class Extension;
+}
+
+namespace gfx {
+class Point;
 }
 
 // Provides feedback to the user upon successful installation of an
@@ -90,6 +95,10 @@ class ExtensionInstalledBubble : public BubbleDelegate {
   // TODO(hcarmona): Detect animation in a platform-agnostic manner.
   bool ShouldShow();
 
+  // Returns the anchor point in screen coordinates. Used when there is no
+  // anchor view.
+  gfx::Point GetAnchorPoint(gfx::NativeWindow window) const;
+
   // Returns the string describing how to use the new extension.
   base::string16 GetHowToUseDescription() const;
 
@@ -114,5 +123,15 @@ class ExtensionInstalledBubble : public BubbleDelegate {
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionInstalledBubble);
 };
+
+// TODO(tapted): Move this.
+
+namespace views {
+class BubbleDialogDelegateView;
+}
+
+std::unique_ptr<BubbleUi> BuildViewsExtensionInstalledBubbleUi(
+    ExtensionInstalledBubble* bubble,
+    views::BubbleDialogDelegateView** bubble_impl);
 
 #endif  // CHROME_BROWSER_UI_EXTENSIONS_EXTENSION_INSTALLED_BUBBLE_H_
