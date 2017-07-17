@@ -21,7 +21,10 @@ DialMediaSinkServiceProxy::DialMediaSinkServiceProxy(
   DCHECK(request_context_);
 }
 
-DialMediaSinkServiceProxy::~DialMediaSinkServiceProxy() = default;
+DialMediaSinkServiceProxy::~DialMediaSinkServiceProxy() {
+  LOG(WARNING) << "========================================="
+                  "DialMediaSinkServiceProxy::~DialMediaSinkServiceProxy";
+}
 
 void DialMediaSinkServiceProxy::Start() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

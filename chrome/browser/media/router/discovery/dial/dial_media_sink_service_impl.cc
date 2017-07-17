@@ -24,6 +24,8 @@ DialMediaSinkServiceImpl::DialMediaSinkServiceImpl(
 DialMediaSinkServiceImpl::~DialMediaSinkServiceImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   Stop();
+  LOG(WARNING) << "========================================="
+                  "DialMediaSinkServiceImpl::~DialMediaSinkServiceImpl";
 }
 
 void DialMediaSinkServiceImpl::Start() {
