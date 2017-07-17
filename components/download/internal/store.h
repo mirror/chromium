@@ -13,7 +13,7 @@
 
 namespace download {
 
-struct Entry;
+class Entry;
 
 // A backing storage interface responsible for persisting Entry objects.
 class Store {
