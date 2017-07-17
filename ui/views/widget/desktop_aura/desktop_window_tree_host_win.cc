@@ -405,6 +405,12 @@ void DesktopWindowTreeHostWin::SetVisibilityChangedAnimationsEnabled(
   content_window_->SetProperty(aura::client::kAnimationsDisabledKey, !value);
 }
 
+bool DesktopWindowTreeHostWin::ShouldDisableWindowAnimations(
+    const Widget::InitParams params) const {
+  return params.type == Widget::InitParams::TYPE_WINDOW &&
+         !params.remove_standard_frame;
+}
+
 NonClientFrameView* DesktopWindowTreeHostWin::CreateNonClientFrameView() {
   return ShouldUseNativeFrame()
              ? new NativeFrameView(native_widget_delegate_->AsWidget())

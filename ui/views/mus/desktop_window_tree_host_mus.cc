@@ -662,6 +662,11 @@ void DesktopWindowTreeHostMus::SetVisibilityChangedAnimationsEnabled(
   window()->SetProperty(aura::client::kAnimationsDisabledKey, !value);
 }
 
+bool DesktopWindowTreeHostMus::ShouldDisableWindowAnimations(
+    const Widget::InitParams& params) const {
+  return params.type == Widget::InitParams::TYPE_WINDOW;
+}
+
 NonClientFrameView* DesktopWindowTreeHostMus::CreateNonClientFrameView() {
   if (!ShouldSendClientAreaToServer())
     return nullptr;
