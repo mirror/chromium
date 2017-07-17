@@ -253,6 +253,9 @@ cr.define('bookmarks', function() {
             if (command == Command.COPY_URL) {
               labelPromise =
                   Promise.resolve(loadTimeData.getString('toastUrlCopied'));
+            } else if (idList.length == 1) {
+              labelPromise =
+                  Promise.resolve(loadTimeData.getString('toastItemCopied'));
             } else {
               labelPromise = cr.sendWithPromise(
                   'getPluralString', 'toastItemsCopied', idList.length);
@@ -265,8 +268,16 @@ cr.define('bookmarks', function() {
         case Command.DELETE:
           var idList = Array.from(this.minimizeDeletionSet_(itemIds));
           var title = state.nodes[idList[0]].title;
-          var labelPromise = cr.sendWithPromise(
-              'getPluralString', 'toastItemsDeleted', idList.length);
+          var labelPromise;
+
+          if (idList.length == 1) {
+            labelPromise =
+                Promise.resolve(loadTimeData.getString('toastItemDeleted'));
+          } else {
+            labelPromise = cr.sendWithPromise(
+                'getPluralString', 'toastItemsDeleted', idList.length);
+          }
+
           chrome.bookmarkManagerPrivate.removeTrees(idList, function() {
             this.showTitleToast_(labelPromise, title, true);
           }.bind(this));
