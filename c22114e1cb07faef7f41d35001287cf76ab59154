@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0f8bc42_1ea48618",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "It uses temp_dir_, and temp_dir_ should be created for each test. Putting it in constructor would create a unique temp dir only once.",
+      "parentUuid": "50998624_ab98c614",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04bff0f9_2cfc59eb",
         "filename": "components/url_log/url_log_browsertest_base.cc",
         "patchSetId": 46
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T16:21:36Z",
       "side": 1,
       "message": "CheckContentOfLogFile?",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58c82b9_2a248b24",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The method is removed. We duplicate the code instead.",
+      "parentUuid": "04bff0f9_2cfc59eb",
       "range": {
         "startLine": 49,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ef0149d_84311d13",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba1a216c_94a04d5f",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805c8e6f_59d01556",
         "filename": "components/url_log/url_log_browsertest_base.h",
         "patchSetId": 46
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a850e398_6768b704",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The file is removed.",
+      "parentUuid": "805c8e6f_59d01556",
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44f7c403_dfc8bf35",
         "filename": "components/url_log/url_log_browsertest_base.h",
         "patchSetId": 46
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-17T16:21:36Z",
       "side": 1,
       "message": "Can move this into the cc file, and just forward declare CommaneLine here (The reason to do this is for compilation performance).",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5191765f_263caa88",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The class is removed.",
+      "parentUuid": "44f7c403_dfc8bf35",
       "range": {
         "startLine": 5,
         "startChar": 15,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1c4e1deb_c9f1f348",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The class is removed.",
+      "parentUuid": "3f4bd1aa_cc2d0fbe",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf9fd26_ce44ca61",
         "filename": "components/url_log/url_log_browsertest_base.h",
         "patchSetId": 46
@@ -154,6 +292,30 @@
       "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2a61a0_5712c600",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The class is removed.",
+      "parentUuid": "ebf9fd26_ce44ca61",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "61a1e2f0_cd49a3c7",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The method is removed. We don\u0027t share the functionality between shell\u0027s and chrome\u0027s tests anymore.",
+      "parentUuid": "e7d929eb_dc5ec92f",
+      "range": {
+        "startLine": 20,
+        "startChar": 53,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac5765fd_00f20ec0",
         "filename": "components/url_log/url_log_browsertest_base.h",
         "patchSetId": 46
@@ -200,6 +386,30 @@
       "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3d53c8_35ca3146",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "The method is removed.",
+      "parentUuid": "ac5765fd_00f20ec0",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "1713cca7_7bd41907",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "They can\u0027t be private for some reason. After moving to private, it fails compilation. I think it has something to do with the macro IN_PROC_BROWSER_TEST.",
+      "parentUuid": "565a56ac_252ce513",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad162d33_8cf7bbfe",
         "filename": "components/url_log/url_log_browsertest_base.h",
         "patchSetId": 46
@@ -246,6 +480,30 @@
       "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96b60f9_40ff8930",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad162d33_8cf7bbfe",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "600b5b5f_f04ff9b5",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b342c2_515af8f8",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 53
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c2b4be_b840bd0f",
         "filename": "components/url_log/url_log_chrome_browsertest.cc",
         "patchSetId": 46
@@ -292,6 +574,30 @@
       "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb989e1_8c06bd25",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c2b4be_b840bd0f",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "371448f3_2eca0c0f",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efc49718_04182d49",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "800c8a6e_ad622aac",
         "filename": "components/url_log/url_log_chrome_browsertest.cc",
         "patchSetId": 46
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "85bf0703_5260d463",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800c8a6e_ad622aac",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85615d8f_b5211353",
         "filename": "components/url_log/url_log_content_browsertest.cc",
         "patchSetId": 46
@@ -361,6 +715,30 @@
       "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aecf66_92652f2a",
+        "filename": "components/url_log/url_log_content_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-17T22:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85615d8f_b5211353",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
