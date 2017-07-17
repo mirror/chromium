@@ -9,7 +9,7 @@
 namespace download {
 namespace stats {
 
-void LogControllerStartupStatus(const StartupStatus& status) {
+void LogControllerStartupStatus(bool in_recovery, const StartupStatus& status) {
   DCHECK(status.Complete());
 
   // TODO(dtrainor): Log each failure reason.
