@@ -218,10 +218,12 @@ void TokenValidatorBase::OnCertificatesSelected(
 
   base::Time now = base::Time::Now();
 
-  auto best_match_position =
-      std::max_element(selected_certs.begin(), selected_certs.end(),
-                       std::bind(&WorseThan, issuer, now, std::placeholders::_1,
-                                 std::placeholders::_2));
+  auto best_match_position = std::max_element(
+      selected_certs.begin(), selected_certs.end(),
+      [&issuer, now](const std::unique_ptr<net::ClientCertIdentity>& i1,
+                     const std::unique_ptr<net::ClientCertIdentity>& i2) {
+        return WorseThan(issuer, now, i1, i2);
+      });
 
   if (best_match_position == selected_certs.end() ||
       !IsCertificateValid(issuer, now, (*best_match_position)->certificate())) {
