@@ -42,37 +42,4 @@ SharedWorkerPerformance::SharedWorkerPerformance(SharedWorker& shared_worker)
     : Supplement<SharedWorker>(shared_worker),
       time_origin_(MonotonicallyIncreasingTime()) {}
 
-const char* SharedWorkerPerformance::SupplementName() {
-  return "SharedWorkerPerformance";
-}
-
-SharedWorkerPerformance& SharedWorkerPerformance::From(
-    SharedWorker& shared_worker) {
-  SharedWorkerPerformance* supplement = static_cast<SharedWorkerPerformance*>(
-      Supplement<SharedWorker>::From(shared_worker, SupplementName()));
-  if (!supplement) {
-    supplement = new SharedWorkerPerformance(shared_worker);
-    ProvideTo(shared_worker, SupplementName(), supplement);
-  }
-  return *supplement;
-}
-
-double SharedWorkerPerformance::workerStart(ScriptState* script_state,
-                                            SharedWorker& shared_worker) {
-  return SharedWorkerPerformance::From(shared_worker)
-      .GetWorkerStart(ExecutionContext::From(script_state), shared_worker);
-}
-
-double SharedWorkerPerformance::GetWorkerStart(ExecutionContext* context,
-                                               SharedWorker&) const {
-  DCHECK(context);
-  DCHECK(context->IsDocument());
-  Document* document = ToDocument(context);
-  if (!document->Loader())
-    return 0;
-
-  double navigation_start = document->Loader()->GetTiming().NavigationStart();
-  return time_origin_ - navigation_start;
-}
-
 }  // namespace blink
