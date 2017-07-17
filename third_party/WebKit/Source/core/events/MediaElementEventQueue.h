@@ -23,8 +23,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef GenericEventQueue_h
-#define GenericEventQueue_h
+#ifndef MediaElementEventQueue_h
+#define MediaElementEventQueue_h
 
 #include "core/CoreExport.h"
 #include "core/events/EventQueue.h"
@@ -35,10 +35,10 @@
 
 namespace blink {
 
-class CORE_EXPORT GenericEventQueue final : public EventQueue {
+class CORE_EXPORT MediaElementEventQueue final : public EventQueue {
  public:
-  static GenericEventQueue* Create(EventTarget*);
-  ~GenericEventQueue() override;
+  static MediaElementEventQueue* Create(EventTarget*);
+  ~MediaElementEventQueue() override;
 
   // EventQueue
   DECLARE_VIRTUAL_TRACE();
@@ -50,12 +50,12 @@ class CORE_EXPORT GenericEventQueue final : public EventQueue {
   bool HasPendingEvents() const;
 
  private:
-  explicit GenericEventQueue(EventTarget*);
+  explicit MediaElementEventQueue(EventTarget*);
   void TimerFired(TimerBase*);
 
   Member<EventTarget> owner_;
   HeapVector<Member<Event>> pending_events_;
-  Timer<GenericEventQueue> timer_;
+  TaskRunnerTimer<MediaElementEventQueue> timer_;
 
   bool is_closed_;
 };
