@@ -51,6 +51,24 @@
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b6cbc6_7e6a626d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T06:19:19Z",
+      "side": 1,
+      "message": "OK, got it.\n\nIs firing another timer with no delay a good idea?\nI don\u0027t have a good understanding of whether it\u0027d be\npossible that we could keep restarting the timer\nthousands of times before style is updated.",
+      "parentUuid": "3cbd282f_73f28c5b",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
