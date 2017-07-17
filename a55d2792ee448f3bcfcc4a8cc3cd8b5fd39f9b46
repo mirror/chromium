@@ -46,6 +46,30 @@
       "revId": "a55d2792ee448f3bcfcc4a8cc3cd8b5fd39f9b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8dfe03_21062851",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-17T22:17:00Z",
+      "side": 0,
+      "message": "My opinion will stay the same regardless.\n\nIt was my mistake that I added it to the wrong registry, if moving it to UI registry works then why not fix the code in the right way?",
+      "parentUuid": "34ca6636_55608b6a",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 46
+      },
+      "revId": "a55d2792ee448f3bcfcc4a8cc3cd8b5fd39f9b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
