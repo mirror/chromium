@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f12e231c_ea04608d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:17:16Z",
+      "side": 1,
+      "message": "return nullptr;\n\n(The other 0\u0027s in this file should be nullptr now, that\u0027s\nleftover from when it was WebKit code and they\npreferred 0 for some bizarre reason.)",
+      "revId": "59e3ea7dff495601eec4d0045f53a559f738f517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
