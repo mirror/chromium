@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34d38f4e_a1d36d9c",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-17T07:05:37Z",
+      "side": 1,
+      "message": "Nope! Sorry, copy pasting from old versions of the code (Chris already pointed this out in a previous patch that\u0027s now landed but I had this patch lying around for a while). Fixed now.",
+      "parentUuid": "639b9d9c_83c1fcd9",
+      "revId": "5133865eeb1351ca448d922edf61dfd74b5eea8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98124efa_e0a9cf8a",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "5133865eeb1351ca448d922edf61dfd74b5eea8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc42bcd6_5243e267",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-17T07:05:37Z",
+      "side": 1,
+      "message": "Thanks! Fixed.",
+      "parentUuid": "98124efa_e0a9cf8a",
+      "revId": "5133865eeb1351ca448d922edf61dfd74b5eea8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
