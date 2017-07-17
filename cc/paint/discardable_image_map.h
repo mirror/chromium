@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/containers/adapters.h"
 #include "base/containers/flat_map.h"
 #include "cc/base/rtree.h"
 #include "cc/paint/draw_image.h"
@@ -15,10 +16,14 @@
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_image.h"
+#include "cc/paint/paint_op_buffer.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/utils/SkNoDrawCanvas.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/skia_util.h"
 
 namespace cc {
 class DiscardableImageStore;
@@ -28,19 +33,6 @@ class DiscardableImageStore;
 // rect and get back a list of DrawImages in that rect.
 class CC_PAINT_EXPORT DiscardableImageMap {
  public:
-  class CC_PAINT_EXPORT ScopedMetadataGenerator {
-   public:
-    ScopedMetadataGenerator(DiscardableImageMap* image_map,
-                            const gfx::Size& bounds);
-    ~ScopedMetadataGenerator();
-
-    DiscardableImageStore* image_store() { return image_store_.get(); }
-
-   private:
-    DiscardableImageMap* image_map_;
-    std::unique_ptr<DiscardableImageStore> image_store_;
-  };
-
   DiscardableImageMap();
   ~DiscardableImageMap();
 
@@ -52,6 +44,7 @@ class CC_PAINT_EXPORT DiscardableImageMap {
   gfx::Rect GetRectForImage(PaintImage::Id image_id) const;
 
   void Reset();
+  void Generate(const PaintOpBuffer* paint_op_buffer, const gfx::Rect& bounds);
 
  private:
   friend class ScopedMetadataGenerator;
