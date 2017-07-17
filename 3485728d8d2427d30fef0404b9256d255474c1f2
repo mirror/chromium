@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ee80cf2_45489b09",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-17T16:45:23Z",
+      "side": 1,
+      "message": "Should this be NetworkHostScanCache?",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "3485728d8d2427d30fef0404b9256d255474c1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a0b159_96f4c22a",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-17T16:45:23Z",
+      "side": 1,
+      "message": "Same, should this be NetworkHostScanCache?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "3485728d8d2427d30fef0404b9256d255474c1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
