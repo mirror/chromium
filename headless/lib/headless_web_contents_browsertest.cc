@@ -9,6 +9,8 @@
 #include "base/base64.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/dom_snapshot.h"
@@ -819,5 +821,33 @@ class SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest);
+
+// Regression test for https://crbug.com/733569.
+class HeadlessWebContentsRequestStorageQuotaTest
+    : public HeadlessAsyncDevTooledBrowserTest,
+      public runtime::Observer {
+ public:
+  void RunDevTooledTest() override {
+    EXPECT_TRUE(embedded_test_server()->Start());
+
+    base::RunLoop run_loop;
+    base::MessageLoop::ScopedNestableTaskAllower nest_loop(
+        base::MessageLoop::current());
+    devtools_client_->GetRuntime()->AddObserver(this);
+    devtools_client_->GetRuntime()->Enable(run_loop.QuitClosure());
+    run_loop.Run();
+
+    // Should not crash and call console.log() if quota request succeeds.
+    devtools_client_->GetPage()->Navigate(
+        embedded_test_server()->GetURL("/request_storage_quota.html").spec());
+  }
+
+  void OnConsoleAPICalled(
+      const runtime::ConsoleAPICalledParams& params) override {
+    FinishAsynchronousTest();
+  }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessWebContentsRequestStorageQuotaTest);
 
 }  // namespace headless
