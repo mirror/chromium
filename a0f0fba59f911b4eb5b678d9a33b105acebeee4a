@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd1d52f4_ec98f819",
+        "filename": "remoting/host/policy_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-17T22:51:42Z",
+      "side": 1,
+      "message": "Updated the CL with this suggestion but I did not put CreateWithTaskRunner behind an ifdef as several components still compile (i.e. Me2MeHost) and reference that method and I didn\u0027t want to add more platform ifdefs outside of this file.",
+      "parentUuid": "e75b59ee_6e62ab06",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 24
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e211a61e_1b6a93db",
         "filename": "remoting/host/policy_watcher.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e27764b8_28f5e008",
+        "filename": "remoting/host/policy_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-17T22:51:42Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure that CreateFrom* is a best name for these methods because they don\u0027t take ownership of the parameters.  Maybe rename them to CreateFor* or CreateWith*\n\nDone.",
+      "parentUuid": "e211a61e_1b6a93db",
+      "range": {
+        "startLine": 74,
+        "startChar": 40,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c95738d_f6b89b2f",
         "filename": "remoting/host/policy_watcher.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-17T18:18:34Z",
       "side": 1,
       "message": "maybe call it CreateInternal?",
+      "range": {
+        "startLine": 97,
+        "startChar": 40,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "a0f0fba59f911b4eb5b678d9a33b105acebeee4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e283c7_35bce179",
+        "filename": "remoting/host/policy_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-17T22:51:42Z",
+      "side": 1,
+      "message": "Removed (split between the two new Create* methods).",
+      "parentUuid": "3c95738d_f6b89b2f",
       "range": {
         "startLine": 97,
         "startChar": 40,
