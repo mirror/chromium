@@ -451,11 +451,14 @@ void LocalFrame::SetIsInert(bool inert) {
 void LocalFrame::PropagateInertToChildFrames() {
   for (Frame* child = Tree().FirstChild(); child;
        child = child->Tree().NextSibling()) {
+    HTMLFrameOwnerElement* frame_owner =
+        ToHTMLFrameOwnerElement(child->Owner());
+    frame_owner->UpdateDistribution();
+
     // is_inert_ means that this Frame is inert because of a modal dialog or
     // inert element in an ancestor Frame. Otherwise, decide whether a child
     // Frame element is inert because of an element in this Frame.
-    child->SetIsInert(is_inert_ ||
-                      ToHTMLFrameOwnerElement(child->Owner())->IsInert());
+    child->SetIsInert(is_inert_ || frame_owner->IsInert());
   }
 }
 

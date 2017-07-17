@@ -65,6 +65,17 @@
 
 namespace blink {
 
+namespace {
+
+bool UpdateLayout(Document* document) {
+  if (!document || !document->View())
+    return false;
+  document->View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  return true;
+}
+
+}  // anonymous namespace
+
 class WebAXSparseAttributeClientAdapter : public AXSparseAttributeClient {
  public:
   WebAXSparseAttributeClientAdapter(WebAXSparseAttributeClient& attribute_map)
@@ -161,12 +172,8 @@ int WebAXObject::GenerateAXID() const {
 }
 
 bool WebAXObject::UpdateLayoutAndCheckValidity() {
-  if (!IsDetached()) {
-    Document* document = private_->GetDocument();
-    if (!document || !document->View())
-      return false;
-    document->View()->UpdateLifecycleToCompositingCleanPlusScrolling();
-  }
+  if (IsDetached() || !UpdateLayout(private_->GetDocument()))
+    return false;
 
   // Doing a layout can cause this object to be invalid, so check again.
   return !IsDetached();
@@ -1552,7 +1559,8 @@ WebAXObject::operator AXObject*() const {
 // static
 WebAXObject WebAXObject::FromWebNode(const WebNode& web_node) {
   WebDocument web_document = web_node.GetDocument();
-  const Document* doc = web_document.ConstUnwrap<Document>();
+  Document* doc = web_document.Unwrap<Document>();
+  UpdateLayout(doc);
   AXObjectCacheImpl* cache = ToAXObjectCacheImpl(doc->ExistingAXObjectCache());
   const Node* node = web_node.ConstUnwrap<Node>();
   return cache ? WebAXObject(cache->Get(node)) : WebAXObject();
@@ -1560,7 +1568,9 @@ WebAXObject WebAXObject::FromWebNode(const WebNode& web_node) {
 
 // static
 WebAXObject WebAXObject::FromWebDocument(const WebDocument& web_document) {
-  const Document* document = web_document.ConstUnwrap<Document>();
+  WebDocument mutable_web_document = web_document.GetDocument();
+  Document* document = mutable_web_document.Unwrap<Document>();
+  UpdateLayout(document);
   AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
   return cache ? WebAXObject(cache->GetOrCreate(
                      ToLayoutView(LayoutAPIShim::LayoutObjectFrom(
@@ -1571,7 +1581,9 @@ WebAXObject WebAXObject::FromWebDocument(const WebDocument& web_document) {
 // static
 WebAXObject WebAXObject::FromWebDocumentByID(const WebDocument& web_document,
                                              int ax_id) {
-  const Document* document = web_document.ConstUnwrap<Document>();
+  WebDocument mutable_web_document = web_document.GetDocument();
+  Document* document = mutable_web_document.Unwrap<Document>();
+  UpdateLayout(document);
   AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
   return cache ? WebAXObject(cache->ObjectFromAXID(ax_id)) : WebAXObject();
 }
@@ -1579,7 +1591,9 @@ WebAXObject WebAXObject::FromWebDocumentByID(const WebDocument& web_document,
 // static
 WebAXObject WebAXObject::FromWebDocumentFocused(
     const WebDocument& web_document) {
-  const Document* document = web_document.ConstUnwrap<Document>();
+  WebDocument mutable_web_document = web_document.GetDocument();
+  Document* document = mutable_web_document.Unwrap<Document>();
+  UpdateLayout(document);
   AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
   return cache ? WebAXObject(cache->FocusedObject()) : WebAXObject();
 }
