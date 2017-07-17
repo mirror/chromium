@@ -12,53 +12,16 @@ using namespace password_manager;
 namespace mojo {
 
 // static
-mojom::CredentialType
-EnumTraits<mojom::CredentialType, CredentialType>::ToMojom(
-    CredentialType input) {
+mojom::CredentialMediationRequirement
+EnumTraits<mojom::CredentialMediationRequirement,
+           password_manager::CredentialMediationRequirement>::
+    ToMojom(password_manager::CredentialMediationRequirement input) {
   switch (input) {
-    case CredentialType::CREDENTIAL_TYPE_EMPTY:
-      return mojom::CredentialType::EMPTY;
-    case CredentialType::CREDENTIAL_TYPE_PASSWORD:
-      return mojom::CredentialType::PASSWORD;
-    case CredentialType::CREDENTIAL_TYPE_FEDERATED:
-      return mojom::CredentialType::FEDERATED;
-  }
-
-  NOTREACHED();
-  return mojom::CredentialType::EMPTY;
-}
-
-// static
-bool EnumTraits<mojom::CredentialType, CredentialType>::FromMojom(
-    mojom::CredentialType input,
-    CredentialType* output) {
-  switch (input) {
-    case mojom::CredentialType::EMPTY:
-      *output = CredentialType::CREDENTIAL_TYPE_EMPTY;
-      return true;
-    case mojom::CredentialType::PASSWORD:
-      *output = CredentialType::CREDENTIAL_TYPE_PASSWORD;
-      return true;
-    case mojom::CredentialType::FEDERATED:
-      *output = CredentialType::CREDENTIAL_TYPE_FEDERATED;
-      return true;
-  }
-
-  NOTREACHED();
-  return false;
-}
-
-// static
-mojom::CredentialMediationRequirement EnumTraits<
-    mojom::CredentialMediationRequirement,
-    CredentialMediationRequirement>::ToMojom(CredentialMediationRequirement
-                                                 input) {
-  switch (input) {
-    case CredentialMediationRequirement::kSilent:
+    case password_manager::CredentialMediationRequirement::kSilent:
       return mojom::CredentialMediationRequirement::kSilent;
-    case CredentialMediationRequirement::kOptional:
+    case password_manager::CredentialMediationRequirement::kOptional:
       return mojom::CredentialMediationRequirement::kOptional;
-    case CredentialMediationRequirement::kRequired:
+    case password_manager::CredentialMediationRequirement::kRequired:
       return mojom::CredentialMediationRequirement::kRequired;
   }
 
@@ -68,18 +31,18 @@ mojom::CredentialMediationRequirement EnumTraits<
 
 // static
 bool EnumTraits<mojom::CredentialMediationRequirement,
-                CredentialMediationRequirement>::
+                password_manager::CredentialMediationRequirement>::
     FromMojom(mojom::CredentialMediationRequirement input,
-              CredentialMediationRequirement* output) {
+              password_manager::CredentialMediationRequirement* output) {
   switch (input) {
     case mojom::CredentialMediationRequirement::kSilent:
-      *output = CredentialMediationRequirement::kSilent;
+      *output = password_manager::CredentialMediationRequirement::kSilent;
       return true;
     case mojom::CredentialMediationRequirement::kOptional:
-      *output = CredentialMediationRequirement::kOptional;
+      *output = password_manager::CredentialMediationRequirement::kOptional;
       return true;
     case mojom::CredentialMediationRequirement::kRequired:
-      *output = CredentialMediationRequirement::kRequired;
+      *output = password_manager::CredentialMediationRequirement::kRequired;
       return true;
   }
 
@@ -88,16 +51,53 @@ bool EnumTraits<mojom::CredentialMediationRequirement,
 }
 
 // static
-bool StructTraits<mojom::CredentialInfoDataView, CredentialInfo>::Read(
-    mojom::CredentialInfoDataView data,
-    CredentialInfo* out) {
-  if (data.ReadType(&out->type) && data.ReadId(&out->id) &&
-      data.ReadName(&out->name) && data.ReadIcon(&out->icon) &&
-      data.ReadPassword(&out->password) &&
-      data.ReadFederation(&out->federation))
-    return true;
+password_manager::mojom::Credential::Tag
+UnionTraits<password_manager::mojom::CredentialDataView,
+            password_manager::CredentialInfo>::
+    GetTag(const password_manager::CredentialInfo& info) {
+  switch (info.type) {
+    case password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD:
+      return password_manager::mojom::Credential::Tag::PASSWORD_CREDENTIAL;
+    case password_manager::CredentialType::CREDENTIAL_TYPE_FEDERATED:
+      return password_manager::mojom::Credential::Tag::FEDERATED_CREDENTIAL;
+    case password_manager::CredentialType::CREDENTIAL_TYPE_EMPTY:
+      break;
+  }
+  NOTREACHED();
+  return static_cast<password_manager::mojom::Credential::Tag>(-1);
+}
 
+// static
+bool UnionTraits<mojom::CredentialDataView, password_manager::CredentialInfo>::
+    Read(mojom::CredentialDataView data,
+         password_manager::CredentialInfo* out) {
+  if (data.is_password_credential())
+    return data.ReadPasswordCredential(out);
+  if (data.is_federated_credential())
+    return data.ReadFederatedCredential(out);
+
+  NOTREACHED();
   return false;
+}
+
+// static
+bool StructTraits<mojom::PasswordCredentialDataView,
+                  password_manager::CredentialInfo>::
+    Read(mojom::PasswordCredentialDataView data,
+         password_manager::CredentialInfo* out) {
+  out->type = password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD;
+  return data.ReadId(&out->id) && data.ReadName(&out->name) &&
+         data.ReadIcon(&out->icon) && data.ReadPassword(&out->password);
+}
+
+// static
+bool StructTraits<mojom::FederatedCredentialDataView,
+                  password_manager::CredentialInfo>::
+    Read(mojom::FederatedCredentialDataView data,
+         password_manager::CredentialInfo* out) {
+  out->type = password_manager::CredentialType::CREDENTIAL_TYPE_FEDERATED;
+  return data.ReadId(&out->id) && data.ReadName(&out->name) &&
+         data.ReadIcon(&out->icon) && data.ReadFederation(&out->federation);
 }
 
 }  // namespace mojo

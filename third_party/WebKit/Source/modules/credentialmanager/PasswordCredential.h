@@ -5,7 +5,6 @@
 #ifndef PasswordCredential_h
 #define PasswordCredential_h
 
-#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/modules/v8/FormDataOrURLSearchParams.h"
 #include "modules/ModulesExport.h"
 #include "modules/credentialmanager/Credential.h"
@@ -18,7 +17,6 @@ namespace blink {
 
 class HTMLFormElement;
 class PasswordCredentialData;
-class WebPasswordCredential;
 
 using CredentialPostBodyType = FormDataOrURLSearchParams;
 
@@ -26,10 +24,13 @@ class MODULES_EXPORT PasswordCredential final : public Credential {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  static PasswordCredential* Create(const String& id,
+                                    const String& password,
+                                    const String& name,
+                                    const KURL& icon);
   static PasswordCredential* Create(const PasswordCredentialData&,
                                     ExceptionState&);
   static PasswordCredential* Create(HTMLFormElement*, ExceptionState&);
-  static PasswordCredential* Create(WebPasswordCredential*);
 
   // PasswordCredential.idl
   void setIdName(const String& name) { id_name_ = name; }
@@ -54,7 +55,6 @@ class MODULES_EXPORT PasswordCredential final : public Credential {
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  PasswordCredential(WebPasswordCredential*);
   PasswordCredential(const String& id,
                      const String& password,
                      const String& name,
@@ -64,6 +64,8 @@ class MODULES_EXPORT PasswordCredential final : public Credential {
   String password_name_;
   CredentialPostBodyType additional_data_;
 };
+
+using PasswordCredentialPtr = PasswordCredential*;
 
 }  // namespace blink
 

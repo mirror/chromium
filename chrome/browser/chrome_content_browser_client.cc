@@ -2934,9 +2934,6 @@ bool ChromeContentBrowserClient::BindAssociatedInterfaceRequestFromFrame(
     mojo::ScopedInterfaceEndpointHandle* handle) {
   // TODO(https://crbug.com/736357): Factor AssociatedInterfaceRegistryImpl out
   // into content/public/ so it can be used here.
-  if (interface_name == password_manager::mojom::CredentialManager::Name_) {
-    return true;
-  }
   return false;
 }
 

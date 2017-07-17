@@ -16,14 +16,14 @@
 #include "modules/credentialmanager/PasswordCredentialData.h"
 #include "platform/credentialmanager/PlatformPasswordCredential.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebCredential.h"
-#include "public/platform/WebPasswordCredential.h"
 
 namespace blink {
 
-PasswordCredential* PasswordCredential::Create(
-    WebPasswordCredential* web_password_credential) {
-  return new PasswordCredential(web_password_credential);
+PasswordCredential* PasswordCredential::Create(const String& id,
+                                               const String& password,
+                                               const String& name,
+                                               const KURL& icon_url) {
+  return new PasswordCredential(id, password, name, icon_url);
 }
 
 PasswordCredential* PasswordCredential::Create(
@@ -116,12 +116,6 @@ PasswordCredential* PasswordCredential::Create(
   credential->setAdditionalData(additional_data);
   return credential;
 }
-
-PasswordCredential::PasswordCredential(
-    WebPasswordCredential* web_password_credential)
-    : Credential(web_password_credential->GetPlatformCredential()),
-      id_name_("username"),
-      password_name_("password") {}
 
 PasswordCredential::PasswordCredential(const String& id,
                                        const String& password,
