@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f2d882_617a08c2",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T17:15:02Z",
+      "side": 1,
+      "message": "Just declare \"using \u003csomething\u003e\" for the stuff you use from testing",
+      "range": {
+        "startLine": 2351,
+        "startChar": 13,
+        "endLine": 2351,
+        "endChar": 20
+      },
+      "revId": "5156a324bb320da68ae13b2c3cf68574c5bf3261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
