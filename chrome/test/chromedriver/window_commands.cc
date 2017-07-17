@@ -36,7 +36,7 @@
 
 namespace {
 
-const std::string kUnreachableWebDataURL = "data:text/html,chromewebdata";
+static const char kUnreachableWebDataURL[] = "data:text/html,chromewebdata";
 
 // Defaults to 20 years into the future when adding a cookie.
 const double kDefaultCookieExpiryTime = 20*365*24*60*60;
@@ -728,6 +728,54 @@ Status ExecuteTouchPinch(Session* session,
   if (!params.GetDouble("scale", &scale_factor))
     return Status(kUnknownError, "'scale' must be an integer");
   return web_view->SynthesizePinchGesture(location.x, location.y, scale_factor);
+}
+
+Status ExecutePerformActions(Session* session,
+                             WebView* web_view,
+                             const base::DictionaryValue& params,
+                             std::unique_ptr<base::Value>* value,
+                             Timeout* timeout) {
+  // TODO(kereliuk): check if the current browsing context is still open
+  // or if this error check is handled elsewhere
+
+  // TODO(kereliuk): handle prompts
+
+  // extract action sequence
+  const base::ListValue* actions = NULL;
+  if (!params.GetList("actions", &actions))
+    return Status(kInvalidArgument, "|actions| must be an array");
+
+  // const base::ListValue* actions_by_tick;
+  for (size_t i = 0; i < actions->GetSize(); ++i) {
+    // proccess input action sequence
+    const base::DictionaryValue* action_sequence;
+    if (!actions->GetDictionary(i, &action_sequence))
+      return Status(kInvalidArgument, "each argument must be a dictionary");
+
+    std::string type;
+    if (!action_sequence->GetString("type", &type) ||
+        ((type != "key") && (type != "pointer") && (type != "none"))) {
+      return Status(
+          kInvalidArgument,
+          "|type| must be one of the strings 'key', 'pointer' or 'none'");
+    }
+
+    std::string id;
+    if (!action_sequence->GetString("id", &id))
+      return Status(kInvalidArgument, "|id| must be a string");
+
+    if (type == "pointer") {
+      const base::DictionaryValue* parameters;
+      if (!action_sequence->GetDictionary("parameters", &parameters)) {
+        return Status(kInvalidArgument, "|parameters| must be a dictionary");
+      }
+      // TODO(kereliuk): process pointer parameters
+    }
+  }
+
+  // dispatch actions
+
+  return Status(kOk);
 }
 
 Status ExecuteSendCommand(Session* session,
