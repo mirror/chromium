@@ -75,9 +75,9 @@ public class VrShellImpl
     // Fairly arbitrary values that put a good amount of content on the screen without making the
     // text too small to read.
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_WIDTH = 800f;
+    public static final float DEFAULT_CONTENT_WIDTH = 645f;
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_HEIGHT = 533f;
+    public static final float DEFAULT_CONTENT_HEIGHT = 430f;
 
     // Make full screen 16:9 until we get exact dimensions from playing video.
     private static final float FULLSCREEN_CONTENT_WIDTH = 1024f;
