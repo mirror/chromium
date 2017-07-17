@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f26609_20adcbbf",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:11:51Z",
+      "side": 1,
+      "message": "Slightly out of scope for this CL but should that be `if (!service_-\u003eShouldRecordEngagement(commited_origin_)) return;`?",
+      "revId": "3927a80f6817ae658fc579f06cd5f720ad970dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1add61_5ee9e830",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:11:51Z",
+      "side": 1,
+      "message": "Could we re-use `significant_playback_recorded_`?",
+      "revId": "3927a80f6817ae658fc579f06cd5f720ad970dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc693838_e70c6112",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T13:11:51Z",
+      "side": 1,
+      "message": "200x200 has changed, right? Maybe we shouldn\u0027t provide the exhaustive list here.",
+      "revId": "3927a80f6817ae658fc579f06cd5f720ad970dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
