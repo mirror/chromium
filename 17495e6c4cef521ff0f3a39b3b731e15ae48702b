@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0bad176_7be3b8ff",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-17T19:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc4683d7_fbe88f9d",
+      "revId": "17495e6c4cef521ff0f3a39b3b731e15ae48702b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f4a6c9f_3ef368c8",
         "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h",
         "patchSetId": 2

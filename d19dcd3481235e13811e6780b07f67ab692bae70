@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82760eb8_44ddbbbe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNativeUiTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-17T19:53:54Z",
+      "side": 1,
+      "message": "I\u0027m happy to move this into another file since it is not really testing native UI.",
+      "revId": "d19dcd3481235e13811e6780b07f67ab692bae70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
