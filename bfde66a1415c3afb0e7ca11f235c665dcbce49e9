@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26afd8c9_db1bace4",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 5411,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-17T22:10:12Z",
+      "side": 1,
+      "message": "Done. Updated the context for all the dialog strings.",
+      "parentUuid": "7c224d13_82134913",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca83e7b_2fbff3b2",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712db63e_abe362fe",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 5424,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-17T22:10:12Z",
+      "side": 1,
+      "message": "Done, added a use_titlecase block for this.",
+      "parentUuid": "8ca83e7b_2fbff3b2",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eac69e1a_c69c075b",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-17T22:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a8cfa59_f08a894b",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ccb689_b18f6afd",
         "filename": "ui/views/controls/table/table_view.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-15T01:11:04Z",
       "side": 1,
       "message": "Based on Trent\u0027s changes in e.g. https://chromium-review.googlesource.com/c/559205/15/chrome/browser/ui/views/harmony/chrome_layout_provider.cc , it would probably make sense to do this as a minimum amount of padding around the font.\n\nPerhaps the GetControlHeightForFont() function there could be generalized something like GetHeightForObjectWithFont(enum ObjectType), where ObjectType is CONTROL or TABLE_ROW or something, and we could eliminate the DISTANCE_ values?",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2322a06e_ab217b5a",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-17T22:10:12Z",
+      "side": 1,
+      "message": "In the case of controls the visual size is somewhat incidental, we just want them all to be the same. Conversely, we specifically want the table row height to be 32pt. It\u0027s quite large and doesn\u0027t appear like it\u0027s derived from font height. So I think using padding is an odd way to go about implementing that. Plus the padding number we\u0027d end up with is really weird (11 I think).\n\nSince it\u0027s so large, the case where the font doesn\u0027t fit into the table row is an uncommon edge case. Maybe calling it a \"minimum height\" is misleading about the intention of the code?",
+      "parentUuid": "16ccb689_b18f6afd",
       "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

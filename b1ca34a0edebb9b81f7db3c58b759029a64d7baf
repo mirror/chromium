@@ -16,6 +16,24 @@
       "revId": "b1ca34a0edebb9b81f7db3c58b759029a64d7baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4f386c_f52927f9",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-17T22:10:12Z",
+      "side": 0,
+      "message": "I would if it were a mechanical change, but it affects the layout a lot and I have no way of testing cocoa. At least it\u0027ll all go away after MacViews (I think).",
+      "parentUuid": "39565587_5e5c5c3c",
+      "revId": "b1ca34a0edebb9b81f7db3c58b759029a64d7baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
