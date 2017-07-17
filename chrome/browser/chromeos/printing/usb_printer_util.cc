@@ -166,11 +166,13 @@ std::unique_ptr<Printer> UsbDeviceToPrinter(const device::UsbDevice& device) {
   if (!printer->model().empty()) {
     display_name_parts.push_back(printer->model());
   }
+  printer->set_make_and_model(base::JoinString(display_name_parts, " "));
   if (display_name_parts.empty()) {
     // If we have neither manufacturer nor model, just display the name as
     // unknown.
     display_name_parts.push_back("Unknown Printer");
   }
+
   display_name_parts.push_back("(USB)");
   printer->set_display_name(base::JoinString(display_name_parts, " "));
   printer->set_description(printer->display_name());
