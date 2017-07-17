@@ -1,0 +1,243 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61679f57_654206a9",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "Can you discuss briefly the usual magnitude of |features|? I\u0027m worried that this loop will be nontrivial if |features| is relatively large (in the thousands).\n\n|features| is an array, right? Could it make sense to just log the last seen index? Then you wouldn\u0027t have to keep track of a bitset in the browser process (just in the renderer).",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9833556_f5437a89",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "nit: not used",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07573b0a_e1ecc69e",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "nit: add \"  // page_load_metrics::PageLoadMetricsObserver:\" above this override.",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15ef7cd_3605c6ef",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "Please #include the mojom.h file.",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82db059_7dd38f67",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "nit: #include \"base/macros.h\" and DISALLOW_COPY_AND_ASSIGN(UseCounterPageLoadMetricsObserver);",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a25af92_4fc9794f",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include web_feature mojom",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cfb641_7698aeb0",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include \"url/gurl.h\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345a211f_9ff434ef",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include \"base/test/histogram_tester.h\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdd63c4_59cbba17",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include \"base/metrics/histogram_base.h\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 46,
+        "endLine": 29,
+        "endChar": 69
+      },
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f753cfea_becd205a",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include \"chrome/browser/page_load_metrics/page_load_tracker.h\"",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d0be6d_219bbb98",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "base/macros.h and DISALLOW_COPY_AND_ASSIGN",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab483993_1764764c",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dc5054_667ca258",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-17T20:55:03Z",
+      "side": 1,
+      "message": "Is this conceptually a set or will there be duplicates allowed? Can you document that?",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
