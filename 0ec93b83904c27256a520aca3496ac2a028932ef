@@ -34,6 +34,24 @@
       "revId": "0ec93b83904c27256a520aca3496ac2a028932ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544ade76_7dda4129",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-17T13:10:38Z",
+      "side": 0,
+      "message": "Sorry, I meant that the app itself will be \"broken\" and fail to log the proper data.  The tree itself should stay green, since everything will still compile.",
+      "parentUuid": "05c0c15f_c32f01d7",
+      "revId": "0ec93b83904c27256a520aca3496ac2a028932ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
