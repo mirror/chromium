@@ -46,7 +46,7 @@ import org.chromium.net.test.EmbeddedTestServer;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Instrumentation tests for {@link TileGroup} on the New Tab Page.
+ * Instrumentation tests for the {@link TileGroup} on the New Tab Page.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({

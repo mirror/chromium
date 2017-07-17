@@ -549,7 +549,7 @@ TEST_P(MostVisitedSitesTest, ShouldNotIncludeHomePageIfNoTileRequested) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldReturnMostPopularPageIfOneTileRequested) {
+TEST_P(MostVisitedSitesTest, ShouldReturnHomePageIfOneTileRequested) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
@@ -561,14 +561,14 @@ TEST_P(MostVisitedSitesTest, ShouldReturnMostPopularPageIfOneTileRequested) {
       .Times(AnyNumber())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(mock_observer_,
-              OnMostVisitedURLsAvailable(ElementsAre(MatchesTile(
-                  "Site 1", "http://site1/", TileSource::TOP_SITES))));
+              OnMostVisitedURLsAvailable(ElementsAre(
+                  MatchesTile("", "http://ho.me/", TileSource::HOMEPAGE))));
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/1);
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
+TEST_P(MostVisitedSitesTest, ShouldContainHomePageInAllTiles) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
@@ -588,7 +588,7 @@ TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
   EXPECT_CALL(mock_observer_, OnMostVisitedURLsAvailable(_))
       .WillOnce(SaveArg<0>(&tiles));
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
-                                                  /*num_sites=*/8);
+                                                  /*num_sites=*/4);
   base::RunLoop().RunUntilIdle();
   // Assert that the home page tile is in the first four tiles.
   EXPECT_THAT(tiles[3], MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
