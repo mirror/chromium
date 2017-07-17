@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "e1cc7f67_29f561e3",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T20:45:33Z",
+      "side": 1,
+      "message": "Ah oops, I thought the RHS was also a uint64_t.\n\n(it\u0027s kind of confusing that we have a mix of uint64_t and sise_t, but I guess that\u0027s just how it is. Oh well!)",
+      "parentUuid": "44c2f072_714786ac",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b93b6a8_5a810cb0",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 16
