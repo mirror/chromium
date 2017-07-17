@@ -65,6 +65,9 @@ class ProximityAuthPrefManager {
   virtual void SetLastPasswordEntryTimestampMs(int64_t timestamp_ms);
   virtual int64_t GetLastPasswordEntryTimestampMs() const;
 
+  virtual void SetLastPromotionCheckTimestampMs(int64_t timestamp_ms);
+  virtual int64_t GetLastPromotionCheckTimestampMs() const;
+
  private:
   const base::DictionaryValue* GetRemoteBleDevices() const;
 
