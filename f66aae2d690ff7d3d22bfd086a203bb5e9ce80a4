@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7224407c_5fcdea07",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T15:58:43Z",
+      "side": 0,
+      "message": "Follow the pattern of UsbDevice and have HidDeviceInfo generate its own ID on construction (instead of having it assigned by HidService). You can keep the platform ID in HidDeviceInfo as well so you don\u0027t need to use the mappings as often.",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "f66aae2d690ff7d3d22bfd086a203bb5e9ce80a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
