@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
@@ -88,6 +89,11 @@ class CONTENT_EXPORT MediaStreamDispatcher
   // Returns an audio session_id given a label and an index.
   virtual int audio_session_id(const std::string& label, int index);
 
+  void SetMediaStreamDispatcherHostForTesting(
+      mojom::MediaStreamDispatcherHost* dispatcher_host) {
+    dispatcher_host_for_testing_ = dispatcher_host;
+  }
+
  protected:
   int GetNextIpcIdForTest() { return next_ipc_id_; }
 
@@ -125,6 +131,11 @@ class CONTENT_EXPORT MediaStreamDispatcher
       const std::string& label,
       const StreamDeviceInfo& device_info);
   void OnDeviceOpenFailed(int request_id);
+
+  mojom::MediaStreamDispatcherHost* GetMediaStreamDispatcherHost();
+
+  mojom::MediaStreamDispatcherHostAssociatedPtr dispatcher_host_;
+  mojom::MediaStreamDispatcherHost* dispatcher_host_for_testing_;
 
   // Used for DCHECKs so methods calls won't execute in the wrong thread.
   base::ThreadChecker thread_checker_;

@@ -12,10 +12,12 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/media_stream_messages.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
 #include "media/base/audio_parameters.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -33,6 +35,17 @@ const int kRequestId2 = 20;
 const MediaStreamType kAudioType = MEDIA_DEVICE_AUDIO_CAPTURE;
 const MediaStreamType kVideoType = MEDIA_DEVICE_VIDEO_CAPTURE;
 const MediaStreamType kScreenType = MEDIA_DESKTOP_VIDEO_CAPTURE;
+
+class MockMojoMediaStreamDispatcherHost
+    : public mojom::MediaStreamDispatcherHost {
+ public:
+  MockMojoMediaStreamDispatcherHost() {}
+
+  MOCK_METHOD2(CancelGenerateStream, void(int32_t, int32_t));
+  MOCK_METHOD2(StopStreamDevice, void(int32_t, const std::string&));
+  MOCK_METHOD1(CloseDevice, void(const std::string&));
+  MOCK_METHOD1(StreamStarted, void(const std::string&));
+};
 
 class MockMediaStreamDispatcherEventHandler
     : public MediaStreamDispatcherEventHandler,
@@ -111,7 +124,9 @@ class MediaStreamDispatcherTest : public ::testing::Test {
   MediaStreamDispatcherTest()
       : dispatcher_(new MediaStreamDispatcherUnderTest()),
         handler_(new MockMediaStreamDispatcherEventHandler),
-        security_origin_(GURL("http://test.com")) {}
+        security_origin_(GURL("http://test.com")) {
+    dispatcher_->SetMediaStreamDispatcherHostForTesting(&mock_dispatcher_host_);
+  }
 
   // Generates a request for a MediaStream and returns the request id that is
   // used in IPC. Use this returned id in CompleteGenerateStream to identify
@@ -168,6 +183,7 @@ class MediaStreamDispatcherTest : public ::testing::Test {
 
  protected:
   base::MessageLoop message_loop_;
+  MockMojoMediaStreamDispatcherHost mock_dispatcher_host_;
   std::unique_ptr<MediaStreamDispatcherUnderTest> dispatcher_;
   std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler_;
   url::Origin security_origin_;
@@ -214,6 +230,8 @@ TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
       new MockMediaStreamDispatcherEventHandler);
   std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler2(
       new MockMediaStreamDispatcherEventHandler);
+  MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
+  dispatcher->SetMediaStreamDispatcherHostForTesting(&mock_dispatcher_host);
   url::Origin security_origin;
 
   StreamDeviceInfoArray video_device_array(1);
@@ -326,6 +344,8 @@ TEST_F(MediaStreamDispatcherTest, CancelGenerateStream) {
       new MediaStreamDispatcher(NULL));
   std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
       new MockMediaStreamDispatcherEventHandler);
+  MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
+  dispatcher->SetMediaStreamDispatcherHostForTesting(&mock_dispatcher_host);
   StreamControls components(true, true);
   int ipc_request_id1 = dispatcher->next_ipc_id_;
 
@@ -385,6 +405,8 @@ TEST_F(MediaStreamDispatcherTest, GetNonScreenCaptureDevices) {
       new MediaStreamDispatcher(nullptr));
   std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
       new MockMediaStreamDispatcherEventHandler);
+  MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
+  dispatcher->SetMediaStreamDispatcherHostForTesting(&mock_dispatcher_host);
   url::Origin security_origin;
 
   StreamDeviceInfo video_device_info;
