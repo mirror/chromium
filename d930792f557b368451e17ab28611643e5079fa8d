@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2805a886_eddde84e",
+        "filename": "chrome/browser/printing/print_preview_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T18:52:58Z",
+      "side": 1,
+      "message": "Do we only ever populate this map with |true| values? If so, it seems it could be a std::set instead? Did not realize that when I made my original suggestion to use a map.",
+      "revId": "d930792f557b368451e17ab28611643e5079fa8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
