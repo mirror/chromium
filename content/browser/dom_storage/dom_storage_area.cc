@@ -18,6 +18,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "content/browser/dom_storage/dom_storage_namespace.h"
 #include "content/browser/dom_storage/dom_storage_task_runner.h"
@@ -47,6 +48,10 @@ const int kCommitDefaultDelaySecs = 5;
 const int kMaxBytesPerHour = kPerStorageAreaQuota;
 const int kMaxCommitsPerHour = 60;
 
+size_t SizeOf(const base::string16& str) {
+  return str.length() * sizeof(base::char16);
+}
+
 }  // namespace
 
 bool DOMStorageArea::s_aggressive_flushing_enabled_ = false;
@@ -71,6 +76,12 @@ base::TimeDelta DOMStorageArea::RateLimiter::ComputeDelayNeeded(
 
 DOMStorageArea::CommitBatch::CommitBatch() : clear_all_first(false) {
 }
+
+DOMStorageArea::CommitBatch::CommitBatch(
+    const DOMStorageArea::CommitBatch& other)
+    : clear_all_first(other.clear_all_first),
+      changed_values(other.changed_values) {}
+
 DOMStorageArea::CommitBatch::~CommitBatch() {}
 
 size_t DOMStorageArea::CommitBatch::GetDataSize() const {
@@ -104,6 +115,80 @@ void DOMStorageArea::EnableAggressiveCommitDelay() {
   LevelDBWrapperImpl::EnableAggressiveCommitDelay();
 }
 
+DOMStorageArea::KeysMapWrapper::KeysMapWrapper(size_t quota)
+    : quota_(quota), bytes_used_(0) {
+  ResetKeyIterator();
+}
+
+DOMStorageArea::KeysMapWrapper::KeysMapWrapper(
+    const DOMStorageArea::KeysMapWrapper& other)
+    : values_(other.values_),
+      quota_(other.quota_),
+      bytes_used_(other.bytes_used_) {
+  ResetKeyIterator();
+}
+
+DOMStorageArea::KeysMapWrapper::~KeysMapWrapper() {}
+
+bool DOMStorageArea::KeysMapWrapper::SetItem(const base::string16& key,
+                                             size_t value_size) {
+  const auto found = values_.find(key);
+  size_t old_item_size =
+      found == values_.end() ? 0 : (SizeOf(key) + found->second);
+  size_t new_item_size = SizeOf(key) + value_size;
+  size_t new_bytes_used = bytes_used_ + new_item_size - old_item_size;
+  if (new_item_size > old_item_size && new_bytes_used > quota_)
+    return false;
+  values_[key] = value_size;
+  ResetKeyIterator();
+  bytes_used_ = new_bytes_used;
+  return true;
+}
+
+bool DOMStorageArea::KeysMapWrapper::RemoveItem(const base::string16& key) {
+  auto found = values_.find(key);
+  if (found == values_.end())
+    return false;
+  bytes_used_ -= SizeOf(key) + found->second;
+  values_.erase(found);
+  ResetKeyIterator();
+  return true;
+}
+
+void DOMStorageArea::KeysMapWrapper::TakeValuesFrom(DOMStorageKeysMap* values) {
+  values_.swap(*values);
+  bytes_used_ = 0;
+  if (!values_.empty()) {
+    for (const auto& pair : values_)
+      bytes_used_ += SizeOf(pair.first) + pair.second;
+  }
+  ResetKeyIterator();
+}
+
+base::NullableString16 DOMStorageArea::KeysMapWrapper::Key(unsigned index) {
+  if (index >= values_.size())
+    return base::NullableString16();
+  while (last_key_index_ != index) {
+    if (last_key_index_ > index) {
+      --key_iterator_;
+      --last_key_index_;
+    } else {
+      ++key_iterator_;
+      ++last_key_index_;
+    }
+  }
+  return base::NullableString16(key_iterator_->first, false);
+}
+
+void DOMStorageArea::KeysMapWrapper::ResetKeyIterator() {
+  key_iterator_ = values_.begin();
+  last_key_index_ = 0;
+}
+
+size_t DOMStorageArea::KeysMapWrapper::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(values_);
+}
+
 DOMStorageArea::DOMStorageArea(const GURL& origin,
                                const base::FilePath& directory,
                                DOMStorageTaskRunner* task_runner)
@@ -111,8 +196,8 @@ DOMStorageArea::DOMStorageArea(const GURL& origin,
       origin_(origin),
       directory_(directory),
       task_runner_(task_runner),
-      map_(new DOMStorageMap(kPerStorageAreaQuota +
-                             kPerStorageAreaOverQuotaAllowance)),
+      map_(new KeysMapWrapper(kPerStorageAreaQuota +
+                              kPerStorageAreaOverQuotaAllowance)),
       is_initial_import_done_(true),
       is_shutdown_(false),
       commit_batches_in_flight_(0),
@@ -135,8 +220,8 @@ DOMStorageArea::DOMStorageArea(int64_t namespace_id,
       persistent_namespace_id_(persistent_namespace_id),
       origin_(origin),
       task_runner_(task_runner),
-      map_(new DOMStorageMap(kPerStorageAreaQuota +
-                             kPerStorageAreaOverQuotaAllowance)),
+      map_(new KeysMapWrapper(kPerStorageAreaQuota +
+                              kPerStorageAreaOverQuotaAllowance)),
       session_storage_backing_(session_storage_backing),
       is_initial_import_done_(true),
       is_shutdown_(false),
@@ -158,15 +243,27 @@ DOMStorageArea::~DOMStorageArea() {
 void DOMStorageArea::ExtractValues(DOMStorageValuesMap* map) {
   if (is_shutdown_)
     return;
-  InitialImportIfNeeded();
-  map_->ExtractValues(map);
+  *map = DOMStorageValuesMap();
+  if (backing_)
+    backing_->ReadAllValues(map);
+  // Add changes from commit batch to the obtained map. If no backing exists,
+  // then commit batch is used as the backing storage.
+  if (commit_batch_) {
+    for (const auto& item : commit_batch_->changed_values) {
+      if (!item.second.is_null()) {
+        (*map)[item.first] = item.second;
+      } else {
+        map->erase(item.first);
+      }
+    }
+  }
 }
 
 unsigned DOMStorageArea::Length() {
   if (is_shutdown_)
     return 0;
   InitialImportIfNeeded();
-  return map_->Length();
+  return map_->values().size();
 }
 
 base::NullableString16 DOMStorageArea::Key(unsigned index) {
@@ -176,61 +273,48 @@ base::NullableString16 DOMStorageArea::Key(unsigned index) {
   return map_->Key(index);
 }
 
-base::NullableString16 DOMStorageArea::GetItem(const base::string16& key) {
-  if (is_shutdown_)
-    return base::NullableString16();
-  InitialImportIfNeeded();
-  return map_->GetItem(key);
-}
-
 bool DOMStorageArea::SetItem(const base::string16& key,
-                             const base::string16& value,
-                             base::NullableString16* old_value) {
+                             const base::string16& value) {
   if (is_shutdown_)
     return false;
   InitialImportIfNeeded();
   if (!map_->HasOneRef())
-    map_ = map_->DeepCopy();
-  bool success = map_->SetItem(key, value, old_value);
-  if (success && backing_ &&
-      (old_value->is_null() || old_value->string() != value)) {
-    CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
-    // Values are populated later to avoid holding duplicate memory.
-    commit_batch->changed_values[key] = base::NullableString16();
-  }
-  return success;
+    map_ = new KeysMapWrapper(*map_);
+  if (!map_->SetItem(key, SizeOf(value)))
+    return false;
+
+  CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
+  commit_batch->changed_values[key] = base::NullableString16(value, false);
+  return true;
 }
 
-bool DOMStorageArea::RemoveItem(const base::string16& key,
-                                base::string16* old_value) {
+bool DOMStorageArea::RemoveItem(const base::string16& key) {
   if (is_shutdown_)
     return false;
   InitialImportIfNeeded();
   if (!map_->HasOneRef())
-    map_ = map_->DeepCopy();
-  bool success = map_->RemoveItem(key, old_value);
-  if (success && backing_) {
-    CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
-    commit_batch->changed_values[key] = base::NullableString16();
-  }
-  return success;
+    map_ = new KeysMapWrapper(*map_);
+  if (!map_->RemoveItem(key))
+    return false;
+
+  CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
+  commit_batch->changed_values[key] = base::NullableString16();
+  return true;
 }
 
 bool DOMStorageArea::Clear() {
   if (is_shutdown_)
     return false;
   InitialImportIfNeeded();
-  if (map_->Length() == 0)
+  if (map_->values().size() == 0)
     return false;
 
-  map_ = new DOMStorageMap(kPerStorageAreaQuota +
-                           kPerStorageAreaOverQuotaAllowance);
+  map_ = new KeysMapWrapper(kPerStorageAreaQuota +
+                            kPerStorageAreaOverQuotaAllowance);
 
-  if (backing_) {
-    CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
-    commit_batch->clear_all_first = true;
-    commit_batch->changed_values.clear();
-  }
+  CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
+  commit_batch->clear_all_first = true;
+  commit_batch->changed_values.clear();
 
   return true;
 }
@@ -239,17 +323,25 @@ void DOMStorageArea::FastClear() {
   if (is_shutdown_)
     return;
 
-  map_ = new DOMStorageMap(kPerStorageAreaQuota +
-                           kPerStorageAreaOverQuotaAllowance);
+  map_ = new KeysMapWrapper(kPerStorageAreaQuota +
+                            kPerStorageAreaOverQuotaAllowance);
   // This ensures no import will happen while we're waiting to clear the data
   // from the database.
   is_initial_import_done_ = true;
 
-  if (backing_) {
     CommitBatch* commit_batch = CreateCommitBatchIfNeeded();
     commit_batch->clear_all_first = true;
     commit_batch->changed_values.clear();
-  }
+}
+
+base::NullableString16 DOMStorageArea::GetUncommittedItemForTesting(
+    const base::string16& key) {
+  if (is_shutdown_ || !commit_batch_)
+    return base::NullableString16();
+  const auto it = commit_batch_->changed_values.find(key);
+  if (it == commit_batch_->changed_values.end())
+    return base::NullableString16();
+  return it->second;
 }
 
 DOMStorageArea* DOMStorageArea::ShallowCopy(
@@ -261,13 +353,16 @@ DOMStorageArea* DOMStorageArea::ShallowCopy(
   DOMStorageArea* copy = new DOMStorageArea(
       destination_namespace_id, destination_persistent_namespace_id, origin_,
       session_storage_backing_.get(), task_runner_.get());
-  copy->map_ = map_;
   copy->is_shutdown_ = is_shutdown_;
   copy->is_initial_import_done_ = true;
+  copy->map_ = map_.get();
+  // If no backing, commit batch is used as the storage.
+  if (commit_batch_)
+    copy->commit_batch_ = base::MakeUnique<CommitBatch>(*commit_batch_);
 
   // All the uncommitted changes to this area need to happen before the actual
   // shallow copy is made (scheduled by the upper layer sometime after return).
-  if (commit_batch_)
+  if (backing_)
     ScheduleImmediateCommit();
   return copy;
 }
@@ -294,8 +389,9 @@ void DOMStorageArea::DeleteOrigin() {
     Clear();
     return;
   }
-  map_ = new DOMStorageMap(kPerStorageAreaQuota +
-                           kPerStorageAreaOverQuotaAllowance);
+
+  map_ = new KeysMapWrapper(kPerStorageAreaQuota +
+                            kPerStorageAreaOverQuotaAllowance);
   if (backing_) {
     is_initial_import_done_ = false;
     backing_->Reset();
@@ -317,13 +413,13 @@ void DOMStorageArea::PurgeMemory() {
 
   // Do not set |is_initial_import_done_| to false if map is empty since
   // FastClear expects no imports while waiting for clearing database.
-  if (!map_ || !map_->Length())
+  if (!map_->values().size())
     return;
 
   // Drop the in memory cache, we'll reload when needed.
   is_initial_import_done_ = false;
-  map_ = new DOMStorageMap(kPerStorageAreaQuota +
-                           kPerStorageAreaOverQuotaAllowance);
+  map_ = new KeysMapWrapper(kPerStorageAreaQuota +
+                            kPerStorageAreaOverQuotaAllowance);
 }
 
 void DOMStorageArea::Shutdown() {
@@ -331,12 +427,7 @@ void DOMStorageArea::Shutdown() {
     return;
   is_shutdown_ = true;
 
-  if (commit_batch_) {
-    DCHECK(backing_);
-    PopulateCommitBatchValues();
-  }
-
-  map_ = NULL;
+  map_ = nullptr;
   if (!backing_)
     return;
 
@@ -380,14 +471,15 @@ void DOMStorageArea::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd) {
   if (namespace_id_ == kLocalStorageNamespaceId && backing_)
     backing_->ReportMemoryUsage(pmd, name + "/local_storage");
 
+  size_t map_memory_usage = base::trace_event::EstimateMemoryUsage(*map_);
   // Do not add storage map usage if less than 1KB.
-  if (map_->bytes_used() < 1024)
+  if (map_memory_usage < 1024)
     return;
 
   auto* map_mad = pmd->CreateAllocatorDump(name + "/storage_map");
   map_mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                      base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                     map_->bytes_used());
+                     map_memory_usage);
   if (system_allocator_name)
     pmd->AddSuballocation(map_mad->guid(), system_allocator_name);
 }
@@ -399,9 +491,9 @@ void DOMStorageArea::InitialImportIfNeeded() {
   DCHECK(backing_.get());
 
   base::TimeTicks before = base::TimeTicks::Now();
-  DOMStorageValuesMap initial_values;
-  backing_->ReadAllValues(&initial_values);
-  map_->SwapValues(&initial_values);
+  DOMStorageKeysMap initial_values;
+  backing_->ReadAllKeysAndSizes(&initial_values);
+  map_->TakeValuesFrom(&initial_values);
   is_initial_import_done_ = true;
   base::TimeDelta time_to_import = base::TimeTicks::Now() - before;
   UMA_HISTOGRAM_TIMES("LocalStorage.BrowserTimeToPrimeLocalStorage",
@@ -411,6 +503,7 @@ void DOMStorageArea::InitialImportIfNeeded() {
   // Track localStorage size, from 0-6MB. Note that the maximum size should be
   // 5MB, but we add some slop since we want to make sure the max size is always
   // above what we see in practice, since histograms can't change.
+  // TODO update histogram description
   UMA_HISTOGRAM_CUSTOM_COUNTS("LocalStorage.BrowserLocalStorageSizeInKB",
                               local_storage_size_kb,
                               1, 6 * 1024, 50);
@@ -433,21 +526,17 @@ DOMStorageArea::CommitBatch* DOMStorageArea::CreateCommitBatchIfNeeded() {
   DCHECK(!is_shutdown_);
   if (!commit_batch_) {
     commit_batch_.reset(new CommitBatch());
-    BrowserThread::PostAfterStartupTask(
-        FROM_HERE, task_runner_,
-        base::Bind(&DOMStorageArea::StartCommitTimer, this));
+    if (backing_) {
+      BrowserThread::PostAfterStartupTask(
+          FROM_HERE, task_runner_,
+          base::Bind(&DOMStorageArea::StartCommitTimer, this));
+    }
   }
   return commit_batch_.get();
 }
 
-void DOMStorageArea::PopulateCommitBatchValues() {
-  task_runner_->AssertIsRunningOnPrimarySequence();
-  for (auto& key_value : commit_batch_->changed_values)
-    key_value.second = map_->GetItem(key_value.first);
-}
-
 void DOMStorageArea::StartCommitTimer() {
-  if (is_shutdown_ || !commit_batch_)
+  if (is_shutdown_ || !commit_batch_ || !backing_)
     return;
 
   // Start a timer to commit any changes that accrue in the batch, but only if
@@ -480,20 +569,16 @@ void DOMStorageArea::OnCommitTimer() {
 
   // It's possible that there is nothing to commit if an immediate
   // commit occured after the timer was scheduled but before it fired.
-  if (!commit_batch_)
+  if (!backing_ || !commit_batch_)
     return;
 
   PostCommitTask();
 }
 
 void DOMStorageArea::PostCommitTask() {
-  if (is_shutdown_ || !commit_batch_)
+  if (is_shutdown_ || !commit_batch_ || !backing_)
     return;
 
-  DCHECK(backing_.get());
-
-  PopulateCommitBatchValues();
-  commit_rate_limiter_.add_samples(1);
   data_rate_limiter_.add_samples(commit_batch_->GetDataSize());
 
   // This method executes on the primary sequence, we schedule

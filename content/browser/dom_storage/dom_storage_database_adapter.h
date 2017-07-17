@@ -26,6 +26,7 @@ class CONTENT_EXPORT DOMStorageDatabaseAdapter {
  public:
   virtual ~DOMStorageDatabaseAdapter() {}
   virtual void ReadAllValues(DOMStorageValuesMap* result) = 0;
+  virtual void ReadAllKeysAndSizes(DOMStorageKeysMap* result) = 0;
   virtual bool CommitChanges(
       bool clear_all_first, const DOMStorageValuesMap& changes) = 0;
   virtual void DeleteFiles() {}

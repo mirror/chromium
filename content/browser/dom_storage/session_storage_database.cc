@@ -113,6 +113,24 @@ SessionStorageDatabase::~SessionStorageDatabase() {
 void SessionStorageDatabase::ReadAreaValues(const std::string& namespace_id,
                                             const GURL& origin,
                                             DOMStorageValuesMap* result) {
+  ReadDatabaseInternal(namespace_id, origin, result, nullptr,
+                       false /* only_keys */);
+}
+
+void SessionStorageDatabase::ReadAllKeysAndSizes(
+    const std::string& namespace_id,
+    const GURL& origin,
+    DOMStorageKeysMap* result) {
+  ReadDatabaseInternal(namespace_id, origin, nullptr, result,
+                       true /* only_keys */);
+}
+
+void SessionStorageDatabase::ReadDatabaseInternal(
+    const std::string& namespace_id,
+    const GURL& origin,
+    DOMStorageValuesMap* result_values,
+    DOMStorageKeysMap* result_keys,
+    bool only_keys) {
   // We don't create a database if it doesn't exist. In that case, there is
   // nothing to be added to the result.
   if (!LazyOpen(false))
@@ -129,8 +147,9 @@ void SessionStorageDatabase::ReadAreaValues(const std::string& namespace_id,
   std::string map_id;
   bool exists;
   if (GetMapForArea(namespace_id, origin.spec(), options, &exists, &map_id) &&
-      exists)
-    ReadMap(map_id, options, result, false);
+      exists) {
+    ReadMap(map_id, options, result_values, result_keys, only_keys);
+  }
   db_->ReleaseSnapshot(options.snapshot);
 }
 
@@ -621,8 +640,11 @@ bool SessionStorageDatabase::CreateMapForArea(const std::string& namespace_id,
 
 bool SessionStorageDatabase::ReadMap(const std::string& map_id,
                                      const leveldb::ReadOptions& options,
-                                     DOMStorageValuesMap* result,
+                                     DOMStorageValuesMap* result_values,
+                                     DOMStorageKeysMap* result_keys,
                                      bool only_keys) {
+  DCHECK(!only_keys || result_keys);
+  DCHECK(only_keys || result_values);
   std::unique_ptr<leveldb::Iterator> it(db_->NewIterator(options));
   std::string map_start_key = MapRefCountKey(map_id);
   it->Seek(map_start_key);
@@ -644,14 +666,14 @@ bool SessionStorageDatabase::ReadMap(const std::string& map_id,
     base::string16 key16 =
         base::UTF8ToUTF16(key.substr(map_start_key.length()));
     if (only_keys) {
-      (*result)[key16] = base::NullableString16();
+      (*result_keys)[key16] = it->value().size() / sizeof(base::char16);
     } else {
       // Convert the raw data stored in std::string (it->value()) to raw data
       // stored in base::string16.
       size_t len = it->value().size() / sizeof(base::char16);
       const base::char16* data_ptr =
           reinterpret_cast<const base::char16*>(it->value().data());
-      (*result)[key16] =
+      (*result_values)[key16] =
           base::NullableString16(base::string16(data_ptr, len), false);
     }
   }
@@ -722,12 +744,13 @@ bool SessionStorageDatabase::DecreaseMapRefCount(const std::string& map_id,
 
 bool SessionStorageDatabase::ClearMap(const std::string& map_id,
                                       leveldb::WriteBatch* batch) {
-  DOMStorageValuesMap values;
-  if (!ReadMap(map_id, leveldb::ReadOptions(), &values, true))
+  DOMStorageKeysMap values;
+  if (!ReadMap(map_id, leveldb::ReadOptions(), nullptr, &values, true))
     return false;
-  for (DOMStorageValuesMap::const_iterator it = values.begin();
-       it != values.end(); ++it)
+  for (DOMStorageKeysMap::const_iterator it = values.begin();
+       it != values.end(); ++it) {
     batch->Delete(MapKey(map_id, base::UTF16ToUTF8(it->first)));
+  }
   return true;
 }
 
@@ -755,8 +778,10 @@ bool SessionStorageDatabase::DeepCopyArea(
   // Read the values from the old map here. If we don't need to copy the data,
   // this can stay empty.
   DOMStorageValuesMap values;
-  if (copy_data && !ReadMap(*map_id, leveldb::ReadOptions(), &values, false))
+  if (copy_data &&
+      !ReadMap(*map_id, leveldb::ReadOptions(), &values, nullptr, false)) {
     return false;
+  }
   if (!DecreaseMapRefCount(*map_id, 1, batch))
     return false;
   // Create a new map (this will also break the association to the old map) and

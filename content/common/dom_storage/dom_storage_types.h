@@ -18,6 +18,7 @@
 namespace content {
 
 typedef std::map<base::string16, base::NullableString16> DOMStorageValuesMap;
+typedef std::map<base::string16, size_t> DOMStorageKeysMap;
 
 // The quota for each storage area.
 // This value is enforced in renderer processes and the browser process.

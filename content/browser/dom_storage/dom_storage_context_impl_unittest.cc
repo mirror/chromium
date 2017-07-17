@@ -110,9 +110,9 @@ TEST_F(DOMStorageContextImplTest, UsageInfo) {
 
   // Put some data into local storage and shutdown the context
   // to ensure data is written to disk.
-  base::NullableString16 old_value;
-  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)->
-      OpenStorageArea(kOrigin)->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)
+                  ->OpenStorageArea(kOrigin)
+                  ->SetItem(kKey, kValue));
   context_->Shutdown();
   context_ = NULL;
   base::RunLoop().RunUntilIdle();
@@ -142,10 +142,12 @@ TEST_F(DOMStorageContextImplTest, SessionOnly) {
   // invoke Shutdown() which should delete data for session-only
   // origins.
   base::NullableString16 old_value;
-  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)->
-      OpenStorageArea(kOrigin)->SetItem(kKey, kValue, &old_value));
-  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)->
-      OpenStorageArea(kSessionOnlyOrigin)->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)
+                  ->OpenStorageArea(kOrigin)
+                  ->SetItem(kKey, kValue));
+  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)
+                  ->OpenStorageArea(kSessionOnlyOrigin)
+                  ->SetItem(kKey, kValue));
   context_->Shutdown();
   context_ = NULL;
   base::RunLoop().RunUntilIdle();
@@ -161,8 +163,9 @@ TEST_F(DOMStorageContextImplTest, SetForceKeepSessionState) {
   // Store data for a session-only origin, setup to save session data, then
   // shutdown.
   base::NullableString16 old_value;
-  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)->
-      OpenStorageArea(kSessionOnlyOrigin)->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(context_->GetStorageNamespace(kLocalStorageNamespaceId)
+                  ->OpenStorageArea(kSessionOnlyOrigin)
+                  ->SetItem(kKey, kValue));
   context_->SetForceKeepSessionState();  // Should override clear behavior.
   context_->Shutdown();
   context_ = NULL;
@@ -219,8 +222,7 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
   DOMStorageArea* area = dom_namespace->OpenStorageArea(kOrigin);
   const base::string16 kKey(ASCIIToUTF16("foo"));
   const base::string16 kValue(ASCIIToUTF16("bar"));
-  base::NullableString16 old_nullable_value;
-  area->SetItem(kKey, kValue, &old_nullable_value);
+  area->SetItem(kKey, kValue);
   dom_namespace->CloseStorageArea(area);
 
   // Destroy and recreate the DOMStorageContextImpl.
@@ -237,9 +239,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
                                    kPersistentId);
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
-  base::NullableString16 read_value;
-  read_value = area->GetItem(kKey);
-  EXPECT_EQ(kValue, read_value.string());
+  EXPECT_EQ(1u, area->Length());
+  EXPECT_EQ(kKey, area->Key(0).string());
   dom_namespace->CloseStorageArea(area);
 
   SessionStorageUsageInfo info;
@@ -261,8 +262,7 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
                                    kPersistentId);
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
-  read_value = area->GetItem(kKey);
-  EXPECT_TRUE(read_value.is_null());
+  EXPECT_EQ(0u, area->Length());
   dom_namespace->CloseStorageArea(area);
   context_->Shutdown();
   context_ = NULL;
@@ -288,8 +288,7 @@ TEST_F(DOMStorageContextImplTest, PurgeMemory) {
   // Add an item to the database and commit changes, and keep it open. So, cache
   // is kept alive.
   auto* area2 = dom_namespace->OpenStorageArea(kOrigin);
-  base::NullableString16 old_value;
-  area2->SetItem(kKey, kValue, &old_value);
+  area2->SetItem(kKey, kValue);
   // Call commit directly instead of posting task.
   area2->CommitChanges(area2->commit_batch_.get());
   area2->commit_batch_ = nullptr;
@@ -318,76 +317,75 @@ TEST_F(DOMStorageContextImplTest, DeleteSuboriginLocalStorage) {
   const base::string16 kOriginValue(ASCIIToUTF16("bar"));
   const base::string16 kSuboriginKey(ASCIIToUTF16("foz"));
   const base::string16 kSuboriginValue(ASCIIToUTF16("baz"));
-  base::NullableString16 old_nullable_value;
 
   // Setup data for the first deletion (of the origin rather than the suborigin)
-  origin_area->SetItem(kOriginKey, kOriginValue, &old_nullable_value);
-  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue, &old_nullable_value);
+  origin_area->SetItem(kOriginKey, kOriginValue);
+  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue);
 
   base::NullableString16 read_value;
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_EQ(kOriginValue, read_value.string());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_EQ(kSuboriginValue, read_value.string());
 
   // Deleting the data for the physical origin should delete the data in the
   // suborigin as  well.
   context_->DeleteLocalStorageForPhysicalOrigin(kOrigin);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_TRUE(read_value.is_null());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_TRUE(read_value.is_null());
 
   // Setup data again for the second deletion (of the suborigin rather than the
   // origin)
-  origin_area->SetItem(kOriginKey, kOriginValue, &old_nullable_value);
-  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue, &old_nullable_value);
+  origin_area->SetItem(kOriginKey, kOriginValue);
+  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_EQ(kOriginValue, read_value.string());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_EQ(kSuboriginValue, read_value.string());
 
   // Delete the suborigin by physical origin this time. This should delete both
   // the suborigin and physical origin.
   context_->DeleteLocalStorageForPhysicalOrigin(kSuborigin);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_TRUE(read_value.is_null());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_TRUE(read_value.is_null());
 
   // Setup data again for the third deletion, to test deleting the storage one
   // at a time.
-  origin_area->SetItem(kOriginKey, kOriginValue, &old_nullable_value);
-  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue, &old_nullable_value);
+  origin_area->SetItem(kOriginKey, kOriginValue);
+  suborigin_area->SetItem(kSuboriginKey, kSuboriginValue);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_EQ(kOriginValue, read_value.string());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_EQ(kSuboriginValue, read_value.string());
 
   // Delete the origin only. This should leave the suborigin.
   context_->DeleteLocalStorage(kOrigin);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_TRUE(read_value.is_null());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_EQ(kSuboriginValue, read_value.string());
 
   // Put the origin value back so suborigin deletion can be tested.
-  origin_area->SetItem(kOriginKey, kOriginValue, &old_nullable_value);
+  origin_area->SetItem(kOriginKey, kOriginValue);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_EQ(kOriginValue, read_value.string());
 
   // Delete the suborigin only. This should leave the origin.
   context_->DeleteLocalStorage(kSuborigin);
 
-  read_value = origin_area->GetItem(kOriginKey);
+  read_value = origin_area->GetUncommittedItemForTesting(kOriginKey);
   EXPECT_EQ(kOriginValue, read_value.string());
-  read_value = suborigin_area->GetItem(kSuboriginKey);
+  read_value = suborigin_area->GetUncommittedItemForTesting(kSuboriginKey);
   EXPECT_TRUE(read_value.is_null());
 }
 
