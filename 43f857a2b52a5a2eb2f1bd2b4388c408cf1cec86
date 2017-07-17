@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64b5d37_9e805951",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c18830_236a43ee",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "OOC, why do you set this up in the ctor and not in SetUp?",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d22bf65_5d5897c1",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "Maybe you should use ScopedFeatureList? (base/test/scoped_feature_list.h)",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5b85b9_e71c6d99",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "Why not including media/base/media_switches.h and use media::kMediaEngagement",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1827146_d8ee1f30",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "This is an anti-pattern in Chrome. Unless you really really have to, you should never write tests based on timer. When you need to wait for something to play, could you maybe listen to the `playing` event then update the title accordingly? We can chat offline to look at all the cases.",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ee2a4d_38760d2a",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "Maybe call this `WaitCanPlay()`?",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc98a93e_382988ac",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "I\u0027m worried about tests staying idle for 9 seconds. Would it be possible to advance the clock or maybe set the required playback time from tests to wait a shorter time?",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732705e6_f09521b2",
+        "filename": "chrome/test/data/media/engagement/engagement_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-17T12:52:19Z",
+      "side": 1,
+      "message": "The \u003cscript\u003e being inserted after the \u003cvideo\u003e, you don\u0027t technically need the \"DOMContentLoaded\" because the parser will build the subtree that was already parsed before executing the script.\n\nFeel free to leave it as is, it\u0027s mostly FYI.",
+      "revId": "43f857a2b52a5a2eb2f1bd2b4388c408cf1cec86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
