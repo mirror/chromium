@@ -256,7 +256,7 @@ TEST_F(ManagePasswordsBubbleModelTest, CloseWithoutInteraction) {
   stats.update_time = now;
   EXPECT_CALL(*GetStore(), AddSiteStatsImpl(stats));
   EXPECT_CALL(*controller(), OnNoInteraction());
-  EXPECT_CALL(*controller(), SavePassword()).Times(0);
+  EXPECT_CALL(*controller(), SavePassword(_)).Times(0);
   EXPECT_CALL(*controller(), NeverSavePassword()).Times(0);
   DestroyModelExpectReason(
       password_manager::metrics_util::NO_DIRECT_INTERACTION);
@@ -266,7 +266,7 @@ TEST_F(ManagePasswordsBubbleModelTest, ClickSave) {
   PretendPasswordWaiting();
 
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword());
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value));
   EXPECT_CALL(*controller(), NeverSavePassword()).Times(0);
   model()->OnSaveClicked();
   DestroyModelExpectReason(password_manager::metrics_util::CLICKED_SAVE);
@@ -276,7 +276,7 @@ TEST_F(ManagePasswordsBubbleModelTest, ClickNever) {
   PretendPasswordWaiting();
 
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword()).Times(0);
+  EXPECT_CALL(*controller(), SavePassword(_)).Times(0);
   EXPECT_CALL(*controller(), NeverSavePassword());
   model()->OnNeverForThisSiteClicked();
    EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE, model()->state());
@@ -331,7 +331,7 @@ TEST_F(ManagePasswordsBubbleModelTest, SuppressSignInPromo) {
   base::HistogramTester histogram_tester;
   PretendPasswordWaiting();
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword());
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value));
   model()->OnSaveClicked();
 
   EXPECT_FALSE(model()->ReplaceToShowPromotionIfNeeded());
@@ -346,7 +346,7 @@ TEST_F(ManagePasswordsBubbleModelTest, SignInPromoOK) {
   base::HistogramTester histogram_tester;
   PretendPasswordWaiting();
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword());
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value));
   model()->OnSaveClicked();
 
   EXPECT_TRUE(model()->ReplaceToShowPromotionIfNeeded());
@@ -370,7 +370,7 @@ TEST_F(ManagePasswordsBubbleModelTest, SignInPromoCancel) {
   base::HistogramTester histogram_tester;
   PretendPasswordWaiting();
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword());
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value));
   model()->OnSaveClicked();
 
   EXPECT_TRUE(model()->ReplaceToShowPromotionIfNeeded());
@@ -393,7 +393,7 @@ TEST_F(ManagePasswordsBubbleModelTest, SignInPromoDismiss) {
   base::HistogramTester histogram_tester;
   PretendPasswordWaiting();
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-  EXPECT_CALL(*controller(), SavePassword());
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value));
   model()->OnSaveClicked();
 
   EXPECT_TRUE(model()->ReplaceToShowPromotionIfNeeded());
