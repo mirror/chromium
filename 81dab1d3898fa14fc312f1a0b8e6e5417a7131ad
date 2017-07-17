@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7f6ab2bb_3abab099",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-17T21:21:59Z",
+      "side": 1,
+      "message": "id implies it is an id. But a key can be anything.",
+      "parentUuid": "458feff9_479feab5",
+      "range": {
+        "startLine": 186,
+        "startChar": 35,
+        "endLine": 186,
+        "endChar": 50
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b4c7e88_2cabc2e0",
         "filename": "remoting/ios/persistence/remoting_preferences.h",
         "patchSetId": 3
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "But HostPreferences doesn\u0027t seem to be used anywhere in the codebase. We use KeyChainWrapper to store pairing IDs...\n\nIs that just unused code copied from the old app?",
       "parentUuid": "b80b18fe_8ead59e2",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c3b02a1_a512a20f",
+        "filename": "remoting/ios/persistence/remoting_preferences.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-17T21:21:59Z",
+      "side": 1,
+      "message": "Ha! yes, seems so. BELETED.",
+      "parentUuid": "d3b286ab_ebba8f34",
       "range": {
         "startLine": 10,
         "startChar": 0,
