@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/intent_helper/arc_intent_helper_observer.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -48,14 +49,18 @@ namespace chromeos {
 enum class NoteTakingLockScreenSupport {
   // The app does not support note taking on lock screen.
   kNotSupported,
-  // The app supports note taking on lock screen, but is not selected as the
+  // The app supports lock screen note taking, but is not allowed to run on the
+  // lock screen due to policy settings.
+  kNotAllowedByPolicy,
+  // The app supports note taking on lock screen, but is not selected as a
   // lock screen note taking app by the user. This state implies that the user
   // can be offered to select this app as the lock screen note taking handler.
   kSupported,
-  // The app is selected as the lock screen note taking app by the user.
-  // Currently, only the preferred note taking app can be selected as the lock
-  // screen handler.
-  kSelected
+  // The app is enabled by the user to run as a note taking handler on the lock
+  // screen. Note that, while more than one app can be enabled on lock screen,
+  // currently only the preferred note taking app will be launchable from the
+  // lock screen UI.
+  kEnabled,
 };
 
 // Information about an installed note-taking app.
@@ -92,6 +97,9 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
     // Called when the list of available apps that will be returned by
     // GetAvailableApps() changes or when |play_store_enabled_| changes state.
     virtual void OnAvailableNoteTakingAppsUpdated() = 0;
+
+    // Called when the preferred note taking app for |profile| is updated.
+    virtual void OnPreferredNoteTakingAppUpdated(Profile* profile) = 0;
   };
 
   // Describes the result of an attempt to launch a note-taking app. Values must
@@ -167,6 +175,13 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
   // NoteTakingAppInfo object.
   void SetPreferredApp(Profile* profile, const std::string& app_id);
 
+  // Enables or disables a note taking app from running on the lock screen.
+  // It is no-op if the app does not support lock screen note taking.
+  // Returns whether the app status changed.
+  bool SetAppEnabledOnLockScreen(Profile* profile,
+                                 const std::string& app_id,
+                                 bool enabled);
+
   // Returns true if an app that can be used to take notes is available. UI
   // surfaces that call LaunchAppForNewNote() should be hidden otherwise.
   bool IsAppAvailable(Profile* profile);
@@ -181,6 +196,9 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
 
   // arc::ArcSessionManager::Observer:
   void OnArcPlayStoreEnabledChanged(bool enabled) override;
+
+  // Sets the profile which supports note taking apps on the lock screen.
+  void SetProfileWithEnabledLockScreenApps(Profile* profile);
 
  private:
   NoteTakingHelper();
@@ -225,6 +243,10 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
                            extensions::UnloadedExtensionReason reason) override;
   void OnShutdown(extensions::ExtensionRegistry* registry) override;
 
+  // Called when kNoteTakingAppsAllowedOnLockScreen pref changes for
+  // |profile_with_enabled_lock_screen_apps_|.
+  void OnAllowedNoteTakingAppsChanged();
+
   // True iff Play Store is enabled (i.e. per the checkbox on the settings
   // page). Note that ARC may not be fully started yet when this is true, but it
   // is expected to start eventually. Similarly, ARC may not be fully shut down
@@ -249,6 +271,13 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
   ScopedObserver<extensions::ExtensionRegistry,
                  extensions::ExtensionRegistryObserver>
       extension_registry_observer_;
+
+  // The profile for which lock screen apps are enabled,
+  Profile* profile_with_enabled_lock_screen_apps_ = nullptr;
+
+  // Tracks kNoteTakingAppsAllowedOnLockScreen pref for the profile for which
+  // lock screen apps are enabled.
+  PrefChangeRegistrar pref_change_registrar_;
 
   base::ObserverList<Observer> observers_;
 

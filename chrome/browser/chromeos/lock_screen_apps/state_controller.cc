@@ -146,6 +146,9 @@ void StateController::OnProfilesReady(Profile* primary_profile,
   lock_screen_profile_->GetPrefs()->SetBoolean(prefs::kForceEphemeralProfiles,
                                                true);
 
+  chromeos::NoteTakingHelper::Get()->SetProfileWithEnabledLockScreenApps(
+      primary_profile);
+
   // App manager might have been set previously by a test.
   if (!app_manager_)
     app_manager_ = base::MakeUnique<AppManagerImpl>();

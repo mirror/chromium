@@ -31,8 +31,10 @@
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/prefs/pref_service.h"
+#include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/api/app_runtime.h"
 #include "extensions/common/extension.h"
@@ -56,6 +58,11 @@ const char* const kExtensionIds[] = {
     NoteTakingHelper::kProdKeepExtensionId,
 };
 
+// Boolean pref in per-app extension prefs that indicates whether a note taking
+// app is enabled by the used to run on the lock screen.
+// The default pref value is false.
+constexpr char kLockScreenEnabledAppPref[] = "lock_screen_note_taking_enabled";
+
 // Returns true if |app_id|, a value from prefs::kNoteTakingAppId, looks like
 // it's probably an Android package name rather than a Chrome extension ID.
 bool LooksLikeAndroidPackageName(const std::string& app_id) {
@@ -73,6 +80,74 @@ arc::mojom::IntentInfoPtr CreateIntentInfo(const GURL& clip_data_uri) {
   if (!clip_data_uri.is_empty())
     intent->clip_data_uri = clip_data_uri.spec();
   return intent;
+}
+
+bool IsLockScreenEnabled(const extensions::Extension* app) {
+  if (!lock_screen_apps::StateController::IsEnabled())
+    return false;
+
+  if (!app->permissions_data()->HasAPIPermission(
+          extensions::APIPermission::kLockScreen)) {
+    return false;
+  }
+
+  return extensions::ActionHandlersInfo::HasLockScreenActionHandler(
+      app, app_runtime::ACTION_TYPE_NEW_NOTE);
+}
+
+const base::ListValue* GetAllowedLockScreenApps(PrefService* prefs) {
+  const PrefService::Preference* allowed_lock_screen_apps_pref =
+      prefs->FindPreference(prefs::kNoteTakingAppsAllowedOnLockScreen);
+  if (!allowed_lock_screen_apps_pref ||
+      allowed_lock_screen_apps_pref->IsDefaultValue()) {
+    return nullptr;
+  }
+  DCHECK(allowed_lock_screen_apps_pref->IsManaged());
+
+  const base::Value* allowed_lock_screen_apps_value =
+      allowed_lock_screen_apps_pref->GetValue();
+
+  const base::ListValue* allowed_apps = nullptr;
+  if (!allowed_lock_screen_apps_value ||
+      !allowed_lock_screen_apps_value->GetAsList(&allowed_apps)) {
+    return nullptr;
+  }
+
+  return allowed_apps;
+}
+
+bool ContainedInListValue(const std::string& item,
+                          const base::ListValue* items) {
+  const base::Value::ListStorage& list = items->GetList();
+  return std::find(list.begin(), list.end(), base::Value(item)) != list.end();
+}
+
+NoteTakingLockScreenSupport GetLockScreenSupportForChromeApp(
+    const base::ListValue* allowed_apps,
+    const extensions::ExtensionPrefs* extension_prefs,
+    const extensions::Extension* app) {
+  if (!IsLockScreenEnabled(app))
+    return NoteTakingLockScreenSupport::kNotSupported;
+
+  if (allowed_apps && !ContainedInListValue(app->id(), allowed_apps))
+    return NoteTakingLockScreenSupport::kNotAllowedByPolicy;
+
+  bool enabled = false;
+  if (extension_prefs->ReadPrefAsBoolean(app->id(), kLockScreenEnabledAppPref,
+                                         &enabled) &&
+      enabled) {
+    return NoteTakingLockScreenSupport::kEnabled;
+  }
+
+  return NoteTakingLockScreenSupport::kSupported;
+}
+
+NoteTakingLockScreenSupport GetLockScreenSupportForChromeApp(
+    Profile* profile,
+    const extensions::Extension* app) {
+  return GetLockScreenSupportForChromeApp(
+      GetAllowedLockScreenApps(profile->GetPrefs()),
+      extensions::ExtensionPrefs::Get(profile), app);
 }
 
 }  // namespace
@@ -123,12 +198,21 @@ NoteTakingAppInfos NoteTakingHelper::GetAvailableApps(Profile* profile) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   NoteTakingAppInfos infos;
 
+  const base::ListValue* lock_screen_apps_whitelist =
+      GetAllowedLockScreenApps(profile->GetPrefs());
+
+  const extensions::ExtensionPrefs* extension_prefs =
+      extensions::ExtensionPrefs::Get(profile);
+
   const std::vector<const extensions::Extension*> chrome_apps =
       GetChromeApps(profile);
   for (const auto* app : chrome_apps) {
     NoteTakingLockScreenSupport lock_screen_support =
-        IsLockScreenEnabled(app) ? NoteTakingLockScreenSupport::kSupported
-                                 : NoteTakingLockScreenSupport::kNotSupported;
+        NoteTakingLockScreenSupport::kNotSupported;
+    if (profile == profile_with_enabled_lock_screen_apps_) {
+      lock_screen_support = GetLockScreenSupportForChromeApp(
+          lock_screen_apps_whitelist, extension_prefs, app);
+    }
     infos.push_back(
         NoteTakingAppInfo{app->name(), app->id(), false, lock_screen_support});
   }
@@ -143,11 +227,6 @@ NoteTakingAppInfos NoteTakingHelper::GetAvailableApps(Profile* profile) {
   for (auto& info : infos) {
     if (info.app_id == pref_app_id) {
       info.preferred = true;
-      if (info.lock_screen_support == NoteTakingLockScreenSupport::kSupported &&
-          profile->GetPrefs()->GetBoolean(
-              prefs::kNoteTakingAppEnabledOnLockScreen)) {
-        info.lock_screen_support = NoteTakingLockScreenSupport::kSelected;
-      }
       break;
     }
   }
@@ -174,23 +253,17 @@ std::unique_ptr<NoteTakingAppInfo> NoteTakingHelper::GetPreferredChromeAppInfo(
     return nullptr;
   }
 
-  NoteTakingLockScreenSupport lock_screen_support =
-      NoteTakingLockScreenSupport::kNotSupported;
-  if (IsLockScreenEnabled(preferred_app)) {
-    if (profile->GetPrefs()->GetBoolean(
-            prefs::kNoteTakingAppEnabledOnLockScreen)) {
-      lock_screen_support = NoteTakingLockScreenSupport::kSelected;
-    } else {
-      lock_screen_support = NoteTakingLockScreenSupport::kSupported;
-    }
-  }
-
   std::unique_ptr<NoteTakingAppInfo> info =
       base::MakeUnique<NoteTakingAppInfo>();
   info->name = preferred_app->name();
   info->app_id = preferred_app->id();
   info->preferred = true;
-  info->lock_screen_support = lock_screen_support;
+  if (profile == profile_with_enabled_lock_screen_apps_) {
+    info->lock_screen_support =
+        GetLockScreenSupportForChromeApp(profile, preferred_app);
+  } else {
+    info->lock_screen_support = NoteTakingLockScreenSupport::kNotSupported;
+  }
   return info;
 }
 
@@ -199,16 +272,46 @@ void NoteTakingHelper::SetPreferredApp(Profile* profile,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(profile);
 
+  if (app_id == profile->GetPrefs()->GetString(prefs::kNoteTakingAppId))
+    return;
+
+  profile->GetPrefs()->SetString(prefs::kNoteTakingAppId, app_id);
+
+  for (auto& observer : observers_)
+    observer.OnPreferredNoteTakingAppUpdated(profile);
+}
+
+bool NoteTakingHelper::SetAppEnabledOnLockScreen(Profile* profile,
+                                                 const std::string& app_id,
+                                                 bool enabled) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(profile);
+  if (profile != profile_with_enabled_lock_screen_apps_)
+    return false;
+
   const extensions::Extension* app =
       extensions::ExtensionRegistry::Get(profile)->GetExtensionById(
           app_id, extensions::ExtensionRegistry::ENABLED);
+  if (!app)
+    return false;
 
-  if (!app || !IsLockScreenEnabled(app)) {
-    profile->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    false);
+  NoteTakingLockScreenSupport current_state =
+      GetLockScreenSupportForChromeApp(profile, app);
+
+  if ((enabled && current_state != NoteTakingLockScreenSupport::kSupported) ||
+      (!enabled && current_state != NoteTakingLockScreenSupport::kEnabled)) {
+    return false;
   }
 
-  profile->GetPrefs()->SetString(prefs::kNoteTakingAppId, app_id);
+  extensions::ExtensionPrefs::Get(profile)->UpdateExtensionPref(
+      app_id, kLockScreenEnabledAppPref,
+      base::MakeUnique<base::Value>(enabled));
+
+  if (app_id == profile->GetPrefs()->GetString(prefs::kNoteTakingAppId)) {
+    for (auto& observer : observers_)
+      observer.OnPreferredNoteTakingAppUpdated(profile);
+  }
+  return true;
 }
 
 bool NoteTakingHelper::IsAppAvailable(Profile* profile) {
@@ -261,6 +364,18 @@ void NoteTakingHelper::OnArcPlayStoreEnabledChanged(bool enabled) {
   }
   for (auto& observer : observers_)
     observer.OnAvailableNoteTakingAppsUpdated();
+}
+
+void NoteTakingHelper::SetProfileWithEnabledLockScreenApps(Profile* profile) {
+  DCHECK(!profile_with_enabled_lock_screen_apps_);
+  profile_with_enabled_lock_screen_apps_ = profile;
+
+  pref_change_registrar_.Init(profile->GetPrefs());
+  pref_change_registrar_.Add(
+      prefs::kNoteTakingAppsAllowedOnLockScreen,
+      base::Bind(&NoteTakingHelper::OnAllowedNoteTakingAppsChanged,
+                 base::Unretained(this)));
+  OnAllowedNoteTakingAppsChanged();
 }
 
 NoteTakingHelper::NoteTakingHelper()
@@ -364,19 +479,6 @@ std::vector<const extensions::Extension*> NoteTakingHelper::GetChromeApps(
   }
 
   return extensions;
-}
-
-bool NoteTakingHelper::IsLockScreenEnabled(const extensions::Extension* app) {
-  if (!lock_screen_apps::StateController::IsEnabled())
-    return false;
-
-  if (!app->permissions_data()->HasAPIPermission(
-          extensions::APIPermission::kLockScreen)) {
-    return false;
-  }
-
-  return extensions::ActionHandlersInfo::HasLockScreenActionHandler(
-      app, app_runtime::ACTION_TYPE_NEW_NOTE);
 }
 
 void NoteTakingHelper::UpdateAndroidApps() {
@@ -509,6 +611,20 @@ void NoteTakingHelper::OnExtensionUnloaded(
 
 void NoteTakingHelper::OnShutdown(extensions::ExtensionRegistry* registry) {
   extension_registry_observer_.Remove(registry);
+}
+
+void NoteTakingHelper::OnAllowedNoteTakingAppsChanged() {
+  std::unique_ptr<NoteTakingAppInfo> preferred_app =
+      GetPreferredChromeAppInfo(profile_with_enabled_lock_screen_apps_);
+  if (!preferred_app || preferred_app->lock_screen_support ==
+                            NoteTakingLockScreenSupport::kNotSupported) {
+    return;
+  }
+
+  for (auto& observer : observers_) {
+    observer.OnPreferredNoteTakingAppUpdated(
+        profile_with_enabled_lock_screen_apps_);
+  }
 }
 
 }  // namespace chromeos
