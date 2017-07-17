@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f561f0de_433e9ef3",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-17T16:06:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you set this after a successful setup? \n\nFor instance, what would happen in this case: the user is using EasyUnlock V1, he updates to V2, and then goes to the setup but doesn\u0027t actually finishes it.",
+      "range": {
+        "startLine": 198,
+        "startChar": 50,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "c742fb733980f02eaf2572ea303cf4d072cbad4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
