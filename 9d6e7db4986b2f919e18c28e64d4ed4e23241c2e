@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "529c60b3_a550588f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchRankerLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-07-17T23:16:46Z",
+      "side": 1,
+      "message": "I think we have conditional approval: Martin said Robert may object due to redundancy questions, but otherwise was OK with him from a privacy perspective. I think we have a good argument that the redundancy is minimal.  I\u0027ll flag this to Robert when I ask for his review, but wanted to get your review first.",
+      "parentUuid": "55543c36_2afd287e",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "9d6e7db4986b2f919e18c28e64d4ed4e23241c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed1e443f_15970919",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/TapWordLengthSuppression.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9d6e7db4986b2f919e18c28e64d4ed4e23241c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b0d5e0_c96702f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/TapWordLengthSuppression.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-07-17T23:16:46Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right.",
+      "parentUuid": "ed1e443f_15970919",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "9d6e7db4986b2f919e18c28e64d4ed4e23241c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
