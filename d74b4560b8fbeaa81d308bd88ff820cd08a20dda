@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b1bc8f_85d5b4bf",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T17:56:36Z",
+      "side": 1,
+      "message": "s/bool/cc::DisplayItemList::UsageHint/, and please make it non-defaulted.",
+      "revId": "d74b4560b8fbeaa81d308bd88ff820cd08a20dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
