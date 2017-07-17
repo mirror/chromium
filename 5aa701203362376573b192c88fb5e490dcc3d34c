@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "7b44d531_c7cc7918",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-17T23:42:48Z",
+      "side": 1,
+      "message": "Does this mean that make_and_model is actually reported by the printer, or that make is reported and model is reported. If that latter, then it sounds like stevenjb@ would still be correct (and if the former then I have further questions).",
+      "parentUuid": "3c6dbcbd_f545c628",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1

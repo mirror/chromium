@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f6de232_412d35e7",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-17T23:42:48Z",
+      "side": 1,
+      "message": "It looks like this will concatenate the string in a similar way to \"%s %s\", which could be an issue for i18n.",
+      "revId": "bb6b1b16db8b8c55335992def200853f67f978b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
