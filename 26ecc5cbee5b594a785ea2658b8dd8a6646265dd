@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b9f724c_d38df682",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-17T14:35:02Z",
+      "side": 1,
+      "message": "Nit: curly braces.",
+      "revId": "26ecc5cbee5b594a785ea2658b8dd8a6646265dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
