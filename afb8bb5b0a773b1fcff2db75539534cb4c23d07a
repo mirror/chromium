@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "0e6069c3_bfa63e58",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T22:40:36Z",
+      "side": 1,
+      "message": "the helper class is fine -- I meant the helper class itself could be a private nested class, instead of a public nested class. So production code can\u0027t create this.",
+      "parentUuid": "593100f0_c5fc05b2",
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eda01a2_e7ee77a4",
         "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
         "patchSetId": 1
@@ -201,6 +219,30 @@
       "side": 1,
       "message": "that\u0027s for range-based for loops. this is using the horribly-named reverse_iterator; i don\u0027t think it can be either const (since i\u0027m incrementing it in the loop) or a reference.",
       "parentUuid": "20e375ab_13ad0ccf",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ef5e482_177c3b0a",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T22:40:36Z",
+      "side": 1,
+      "message": "Oh, whoops!",
+      "parentUuid": "f2d227bc_a06238fb",
       "range": {
         "startLine": 51,
         "startChar": 9,
