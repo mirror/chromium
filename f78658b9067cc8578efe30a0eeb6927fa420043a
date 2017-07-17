@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fd9c7d_3cab7a2b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "You can use PostTaskAndReplyWithResult in https://cs.chromium.org/chromium/src/base/task_runner_util.h to directly bind a callback with a non-void return type.",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7181be93_eddfe09d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "If PostTaskAndReplyWithResult doesn\u0027t work out of the box here, try adding base::IgnoreResult?",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2109ee3f_703e0c71",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "Is DCHECKing sequence_checker_ the only reason this is a member function now? If so, IMO it\u0027s fine to get rid of the DCHECK and let this be a non-member function in anonymous namespace.",
+      "range": {
+        "startLine": 97,
+        "startChar": 54,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e78ba0_0d249e63",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "if (network_info_list.empty()) {\n  ...\n}",
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e89565f_a3b3369c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "!network_info.network_id.empty()",
+      "range": {
+        "startLine": 106,
+        "startChar": 28,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52cb8a7_99ab21b1",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-17T18:01:54Z",
+      "side": 1,
+      "message": "Suggest merging this with the second sentence so it\u0027s less verbose.",
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
