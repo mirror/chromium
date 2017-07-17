@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfbc275_4930c0f7",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:36:33Z",
+      "side": 1,
+      "message": "nit: Add ownership/lifetime information.",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "c7d995ca1332f121d6a852e8910a810007faaa33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569fcfff_14c8beb7",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-17T15:36:33Z",
+      "side": 1,
+      "message": "nit: Add lifetime/ownership information.",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "c7d995ca1332f121d6a852e8910a810007faaa33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
