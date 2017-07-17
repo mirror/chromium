@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87b13320_69603268",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd1b5ff_e4693d62",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075ade68_ab64b4c1",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1bc339d_ca447c9f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Then the longest string in filesToRemove_ sets the width. However, zooming in or out sometimes causes the last character in the longest string to be put on the next line.",
+      "parentUuid": "075ade68_ab64b4c1",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5f1372e_4d6b3f58",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e38e00b_651c59c0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "With the \u003cspan id\u003d\u0027powered-by\u0027\u003e\u003c/span\u003e\u003cspan\u003e®\u003c/span\u003e now inserted into the string in C++ instead of javascript, I think it makes sense to keep having an ID for it. Added a comment and renamed it to powered-by-logo.",
+      "parentUuid": "c5f1372e_4d6b3f58",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "77942a2f_e2bdc7a7",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Not anymore; removed it.",
+      "parentUuid": "471cef2d_0b7e8dcb",
+      "range": {
+        "startLine": 108,
+        "startChar": 18,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf128fcc_f217c7b9",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d798a64c_6b54b78b",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf128fcc_f217c7b9",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a9a68814_6b839ab6",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369a6675_8e755969",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de4ff6d_7586f91a",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -124,6 +238,24 @@
       "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b74f953_4759c4a9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de4ff6d_7586f91a",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +291,24 @@
       "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb90434_c9825e8e",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T15:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e1acdb4_91c51c77",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
