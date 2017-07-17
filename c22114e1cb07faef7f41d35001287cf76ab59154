@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50998624_ab98c614",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "This can be done in the constructor.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bff0f9_2cfc59eb",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "CheckContentOfLogFile?",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1a216c_94a04d5f",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "const std::string\u0026, or const auto\u0026",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805c8e6f_59d01556",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "Add include guard.",
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f7c403_dfc8bf35",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "Can move this into the cc file, and just forward declare CommaneLine here (The reason to do this is for compilation performance).",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4bd1aa_cc2d0fbe",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "Should have a destructor, too.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf9fd26_ce44ca61",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "testing::Test has a SetUp method, too.  Name conflicts with inheritance should be avoided.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d929eb_dc5ec92f",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e",
+      "range": {
+        "startLine": 20,
+        "startChar": 53,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5765fd_00f20ec0",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "These methods should have short descriptions.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565a56ac_252ce513",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "These can all be private",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad162d33_8cf7bbfe",
+        "filename": "components/url_log/url_log_browsertest_base.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "include base/macros.h",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b342c2_515af8f8",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027ve ever seen a test file do this before.  These aren\u0027t actually testing url_log - these are testing the NetworkDelegate subclasses that use it.  The chrome one should actually probably be in chrome/browser/net/chrome_network_delegate_browsertest.cc (Though perhaps in a new test fixture, due to the command line arguments).\n\nThe content shell one should be content/shell/browser/shell_network_delegate_browsertest.cc",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 53
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c2b4be_b840bd0f",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "File in components are not allowed to depend on chrome files.  This test should be in chrome/browser/net/",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc49718_04182d49",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "We aren\u0027t every good about it, but multiple inheritance of non-interface classes is technically not allowed.  I\u0027d suggest renaming url_log_browsertest_base to url_log_test_support, and renaming the class similarly, and then just instantiating it as a member of the BrowserTest test fixture.",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800c8a6e_ad622aac",
+        "filename": "components/url_log/url_log_chrome_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "Remove semi-colon.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85615d8f_b5211353",
+        "filename": "components/url_log/url_log_content_browsertest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-17T16:21:36Z",
+      "side": 1,
+      "message": "need to include base/macros for DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
