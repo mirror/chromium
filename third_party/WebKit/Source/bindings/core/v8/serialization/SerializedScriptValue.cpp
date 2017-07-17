@@ -226,11 +226,10 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
   DCHECK(!(buffer->size() % sizeof(UChar)));
   const size_t string_length = buffer->size() / sizeof(UChar);
   StringBuffer<UChar> string_buffer(string_length);
-  char* char_buffer = reinterpret_cast<char*>(string_buffer.Characters());
-  buffer->ForEachSegment([&char_buffer](const char* segment,
-                                        size_t segment_size,
-                                        size_t segment_offset) {
-    std::copy(segment, segment + segment_size, char_buffer + segment_offset);
+  char* char_src = reinterpret_cast<char*>(string_buffer.Characters());
+  buffer->ForEachSegment([&char_src](const char* segment, size_t segment_size,
+                                     size_t segment_offset) {
+    std::copy(segment, segment + segment_size, char_src + segment_offset);
     return true;
   });
   SwapWiredDataIfNeeded(string_buffer);
