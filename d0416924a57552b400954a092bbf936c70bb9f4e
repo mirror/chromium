@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3026031e_4919b9dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-17T13:54:41Z",
+      "side": 1,
+      "message": "cards :)",
+      "revId": "d0416924a57552b400954a092bbf936c70bb9f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886e6c9f_87943a8a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-17T13:54:41Z",
+      "side": 1,
+      "message": "Make sure",
+      "revId": "d0416924a57552b400954a092bbf936c70bb9f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa897ab_cd82fd1d",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-17T13:54:41Z",
+      "side": 1,
+      "message": "has_complete_instrument would be better",
+      "revId": "d0416924a57552b400954a092bbf936c70bb9f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
