@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd43017a_96b2a51e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/passwordcredential-fetch-registrabledomain.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T18:16:35Z",
+      "side": 1,
+      "message": "Where did these changes come from? Is this a rebase artifact? Seems unrelated to everything else.",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

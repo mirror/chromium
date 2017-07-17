@@ -356,6 +356,24 @@
     },
     {
       "key": {
+        "uuid": "6b10db99_09157ad9",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T18:16:35Z",
+      "side": 1,
+      "message": "Thanks for clarifying -- that makes sense.",
+      "parentUuid": "4e8b4d42_2656e6b2",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ba5648_9c4bbadc",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
