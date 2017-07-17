@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1cc45d9_36870b73",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T00:24:26Z",
+      "side": 1,
+      "message": "This is the first real Painter inheritance which differs slightly from the pattern used in other painters (e.g., ObjectPainter isn\u0027t a superclass of all painters). I think your approach is good but I\u0027d like to have all of the painter classes use one pattern if possible. WDYT of making BoxPainter store a LayoutBox\u0026 member and just instantiate a BoxModelObjectPainter when needed? Or is this approach needed for your final design?",
+      "revId": "7c92cc605d2829463c25730182caedc333d9c653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
