@@ -22,6 +22,30 @@
       "revId": "d5b8c353258e20dee7b5887cdf023d9124a11c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4f774c_1c54c6ac",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-17T13:25:57Z",
+      "side": 1,
+      "message": "I tried it but then the macros collided with equally named macros in cc/test/geometry_test_utils.h which work on rects with lowercase names.\n\nThat collision was in platform unit tests, not in core unit tests so keeping them local to core is a working short term solution. Maybe everything will have the same name in the future so that the macros can be merged as well.\n\nAlternatively they need to be renamed, at least the ones that collide, EXPECT_FLOAT_RECT_EQ, EXPECT_FLOAT_SIZE_EQ and EXPECT_SIZE_EQ.",
+      "parentUuid": "8e6bfccd_2d990b54",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 17
+      },
+      "revId": "d5b8c353258e20dee7b5887cdf023d9124a11c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
