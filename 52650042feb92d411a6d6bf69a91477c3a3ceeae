@@ -600,6 +600,24 @@
       "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8123d201_ddb1e73e",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-17T21:48:33Z",
+      "side": 1,
+      "message": "Changed to using an enum",
+      "parentUuid": "98f0dfed_81642402",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
