@@ -26,17 +26,10 @@ class WM_CORE_EXPORT EasyResizeWindowTargeter : public aura::WindowTargeter {
   ~EasyResizeWindowTargeter() override;
 
  protected:
+  // aura::WindowTargeter:
   // NOTE: the insets must be negative.
   void SetInsets(const gfx::Insets& mouse_extend,
-                 const gfx::Insets& touch_extend);
-
-  const gfx::Insets& mouse_extend() const { return mouse_extend_; }
-  const gfx::Insets& touch_extend() const { return touch_extend_; }
-
-  // aura::WindowTargeter:
-  bool GetHitTestRects(aura::Window* window,
-                       gfx::Rect* rect_mouse,
-                       gfx::Rect* rect_touch) const override;
+                 const gfx::Insets& touch_extend) override;
 
  private:
   // aura::WindowTargeter:
@@ -46,11 +39,9 @@ class WM_CORE_EXPORT EasyResizeWindowTargeter : public aura::WindowTargeter {
 
   // Returns true if the hit testing (GetHitTestRects()) should use the
   // extended bounds.
-  bool ShouldUseExtendedBounds(const aura::Window* window) const;
+  bool ShouldUseExtendedBounds(const aura::Window* window) const override;
 
   aura::Window* container_;
-  gfx::Insets mouse_extend_;
-  gfx::Insets touch_extend_;
 
   DISALLOW_COPY_AND_ASSIGN(EasyResizeWindowTargeter);
 };
