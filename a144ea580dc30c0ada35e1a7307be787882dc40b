@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "192870cb_91cc5010",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-17T20:08:13Z",
+      "side": 1,
+      "message": "Just a quick question: How does this work for tests? Is it possible to pass in multiple experiments for the same feature? How do you know which one has been enabled?",
+      "revId": "a144ea580dc30c0ada35e1a7307be787882dc40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
