@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "332b7840_f66ded7f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "499cb4bf_8ba26d55",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b9d070_eb65ff44",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6c9a816_e10f3d8f",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "443aa46c_969fa5b7",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7209e76_2d58b7ef",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "443aa46c_969fa5b7",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0b6bf8f9_8141a4a0",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e10022_fd2799d5",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f70b5bd_8bc1ebbd",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ea02d9c2_3a15f04a",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f70b5bd_8bc1ebbd",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6640305_25edf09a",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -110,6 +212,24 @@
       "writtenOn": "2017-07-14T00:02:24Z",
       "side": 1,
       "message": "do this sanity check before",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c4238a_10d18fc5",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "obsoleted.",
+      "parentUuid": "d6640305_25edf09a",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "9b0eeaaf_368053b4",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "510481d3_937e693b",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5062ae0_68ddef59",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -147,6 +285,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceb894d_7ef878e8",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5062ae0_68ddef59",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "de90b589_5a8e6b90",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "801d1d3d_df8d11f1",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2dc0b6b_43067949",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -181,6 +355,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca49f71_b9a6a85f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2dc0b6b_43067949",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "193679cc_4782fb5a",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02fe91c_68592b0e",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3714da8c_c989ae9c",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -215,6 +425,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176c270b_97dc3e3d",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3714da8c_c989ae9c",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +469,30 @@
     },
     {
       "key": {
+        "uuid": "fc495110_97893075",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "164b984d_d40d63e8",
+      "range": {
+        "startLine": 111,
+        "startChar": 36,
+        "endLine": 111,
+        "endChar": 44
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a89a4f9_d8182dd7",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -255,6 +507,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e9e62b_80de375f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done\n-removed unnecessary logic.",
+      "parentUuid": "9a89a4f9_d8182dd7",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -275,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "009c0d76_95a231dd",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "obsolete",
+      "parentUuid": "fa0f09b0_25b72b7c",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed4c2347_a5d2d71b",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -289,6 +577,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfe5f4d_ea80dcd3",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4c2347_a5d2d71b",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +621,30 @@
     },
     {
       "key": {
+        "uuid": "07f96068_9d0f590f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b16ab51f_35d29295",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 29
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b1797db_a766cdba",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
         "patchSetId": 8
@@ -329,6 +659,24 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91babe4_97a51000",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1797db_a766cdba",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +703,30 @@
     },
     {
       "key": {
+        "uuid": "07544da5_66077d6d",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "thanks. removed.",
+      "parentUuid": "0f151403_d3ee963d",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee8ada07_635329f5",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -366,6 +738,24 @@
       "writtenOn": "2017-07-14T22:51:39Z",
       "side": 1,
       "message": "What about a test for IsURLWhitelisted() on \"https://www.google.com\" -- here the scheme of URL differs from scheme used as rule in whitelist (which is disregarded).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3e610e_f730860f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "removed scheme completely from whitelist as you suggested.",
+      "parentUuid": "ee8ada07_635329f5",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -407,6 +797,24 @@
     },
     {
       "key": {
+        "uuid": "fe1461f5_22ebfa93",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103c5771_8812285d",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8168b9c_5c6401fb",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -418,6 +826,24 @@
       "writtenOn": "2017-07-14T22:51:39Z",
       "side": 1,
       "message": "Did you intentionally make this an invalid IPv6 literal? (ends with trailing colon, which changes the meaning of these tests).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0dc5c1_39355dc5",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "removed the test. I don\u0027t think there is a good way of writing it.",
+      "parentUuid": "f8168b9c_5c6401fb",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -441,6 +867,24 @@
     },
     {
       "key": {
+        "uuid": "c54eff6f_4bc8f813",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "nope",
+      "parentUuid": "9abbd9f1_9acf9d96",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14dfd0e4_9c7fc935",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -452,6 +896,24 @@
       "writtenOn": "2017-07-14T22:51:39Z",
       "side": 1,
       "message": "Is this intentionally using an invalid IPv6 literal? Should be eight 16 bit components, separated by colons (or contractions, or other crazy forms like embedded IPv4).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffcac03_322ebb49",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "yeah this is intentional (for broken), but test was not right either. fixed.",
+      "parentUuid": "14dfd0e4_9c7fc935",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -475,6 +937,24 @@
     },
     {
       "key": {
+        "uuid": "3bbf36f8_b43253eb",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83bc21ca_3a1c5c1e",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a62c5862_5ec52f25",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -492,6 +972,24 @@
     },
     {
       "key": {
+        "uuid": "2b2c1307_0101ad7f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62c5862_5ec52f25",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "125b61f4_e13eedc2",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -503,6 +1001,24 @@
       "writtenOn": "2017-07-14T22:51:39Z",
       "side": 1,
       "message": "Other tests to consider:\n\n* URLs which have trailing dots in the hostname, like \"https://www.google.com.\" Both in the test URL, and whitelist rule.\n\n* Non-standard scheme like \"data:\" or \"mailto:\" (no slashes)\n\n* Include more URL craziness like embedded username/password\n\n* Test a URL where the path component contains something from the whitelist, to make sure it isn\u0027t confused. For instance:   http://www.evil.com/www.google.com\n\n* URLs/Rules where the hostname is encoded as punicode (ASCII representation of IDN)\n\n* Whitelist rules which use a UTF-8 string. Use a straight up crazy one, as well as a valid representation of an IDN. In the latter case then test with a GURL using punycode representation.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c1d198_f7f47568",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-17T20:49:33Z",
+      "side": 1,
+      "message": "\u003e Other tests to consider:\n\u003e \n\u003e * URLs which have trailing dots in the hostname, like \"https://www.google.com.\" Both in the test URL, and whitelist rule.\n\ndone\n\n\u003e \n\u003e * Non-standard scheme like \"data:\" or \"mailto:\" (no slashes)\n\ndone\n\n\u003e \n\u003e * Include more URL craziness like embedded username/password\n\ndone\n\n\u003e \n\u003e * Test a URL where the path component contains something from the whitelist, to make sure it isn\u0027t confused. For instance:   http://www.evil.com/www.google.com\n\ndone\n\u003e \n\u003e * URLs/Rules where the hostname is encoded as punicode (ASCII representation of IDN)\n\u003e \nthis causes a crash due to ICU initialzation and looks like a unit test logic bug for WebView. will debug in crbug/744896\n\n\u003e * Whitelist rules which use a UTF-8 string. Use a straight up crazy one, as well as a valid representation of an IDN. In the latter case then test with a GURL using punycode representation.",
+      "parentUuid": "125b61f4_e13eedc2",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
