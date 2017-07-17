@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "53350b30_497c6895",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6664,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T10:07:27Z",
+      "side": 1,
+      "message": "It should be unnecessary to use weak pointers here: I believe it\u0027s unnecessary in all of this code, as interface requests to the frame\u0027s interface provider aren\u0027t processed once the frame is destroyed.\n\nAlso, should this be using the render view? For a local frame with a remote main frame parent, I think it should be using the associating RenderWidget? See RenderFrameImpl::GetRenderWidget().",
+      "range": {
+        "startLine": 6663,
+        "startChar": 0,
+        "endLine": 6664,
+        "endChar": 77
+      },
+      "revId": "f851391088fa318b33a276f5060da0b97fcb4974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4b8e0de_e492fdcf",
         "filename": "content/renderer/render_view_impl.h",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2017-07-14T21:11:09Z",
       "side": 1,
       "message": "drive-by: please don\u0027t call this a \"service\" :)",
+      "revId": "f851391088fa318b33a276f5060da0b97fcb4974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c595cc2_7fa5b93e",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T10:07:27Z",
+      "side": 1,
+      "message": "Hm... why would we need to rebind this? It seems like that should be something that never happen, but maybe I\u0027m missing something.",
+      "range": {
+        "startLine": 2395,
+        "startChar": 0,
+        "endLine": 2398,
+        "endChar": 43
+      },
       "revId": "f851391088fa318b33a276f5060da0b97fcb4974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
