@@ -15,8 +15,7 @@
 
 // Initializes the bubble with the given text, arrow direction, and alignment.
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
-                   alignment:(BubbleAlignment)alignment
+              arrowDirection:(BubbleArrowDirection)direction
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -25,6 +24,10 @@
                          bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
 
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+
+// Configure the bubble to point at |anchorPoint|, which is in the coordinate
+// system of |self.view|.
+- (void)anchorOnPoint:(CGPoint)anchorPoint;
 
 // Animates the bubble in with a fade-in.
 - (void)animateContentIn;
