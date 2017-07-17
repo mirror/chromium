@@ -8,12 +8,16 @@ if (enable_oop_heap_profiling) {
   static_library("profiling") {
     sources = [
       "address.h",
+      "allocation_event.cc",
+      "allocation_event.h",
       "allocation_tracker.cc",
       "allocation_tracker.h",
       "backtrace.cc",
       "backtrace.h",
       "backtrace_storage.cc",
       "backtrace_storage.h",
+      "json_exporter.cc",
+      "json_exporter.h",
       "memlog_connection_manager.cc",
       "memlog_connection_manager.h",
       "memlog_receiver.h",
