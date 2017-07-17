@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dfb75c4_9d070244",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-17T22:03:08Z",
+      "side": 1,
+      "message": "I am not sure who can review this reordering of steps...\n\nMore details about this change are captured in https://crbug.com/740726#c6 - https://crbug.com/740726#c8.  Trybots are green FWIW (the redness of mac_chromium_rel_ng and purpleness of win_chromium_x64_rel_ng are unrelated).  Looking at the body of the RendererBlinkPlatformImpl\u0027s constructor, it doesn\u0027t seem to do much, so earlier construction seems fine.\n\nBTW: Before this CL, we would miss field trial activation that should be triggered by:\n\n    void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(\n      ...\n      const std::string webfonts_intervention_v2_group_name \u003d\n          base::FieldTrialList::FindFullName(\"WebFontsInterventionV2\");\n\n(without the ordering here it hits the DCHECK described in https://crbug.com/740726#c6).",
+      "range": {
+        "startLine": 1190,
+        "startChar": 0,
+        "endLine": 1191,
+        "endChar": 64
+      },
+      "revId": "c7404de42e10e0dd15ede4f94ed2b2a45fb581b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
