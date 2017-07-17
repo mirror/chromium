@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab78a26_4b1d0c66",
+        "filename": "net/ssl/ssl_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-17T18:30:00Z",
+      "side": 1,
+      "message": "(These don\u0027t go into histograms or anything, right? Probably don\u0027t need to list explicit values.)",
+      "revId": "4695844dbbaed233dc0443164708ca381bd830ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
