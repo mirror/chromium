@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfcf52b1_8adf4a72",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T23:30:59Z",
+      "side": 1,
+      "message": "Instead of injecting a NativeLayer instance from the constructor, how about using our existing getInstance(), setInstance() mechanism, (same as https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.js?l\u003d58)? So this would be simply be:\n\nthis.nativeLayer_ \u003d print_preview.NativeLayer.getInstance();\n\nIn the tests we use setInstance() to provide a fake NativeLayer, before we construct the object to be tested. It seems better to me to stick with one approach, instead of mixing up both approaches in different parts of the code. WDYT?",
+      "revId": "0ffba93586121efa14950bd106271f0611e520cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
