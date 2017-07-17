@@ -140,6 +140,30 @@
       "revId": "08b42e743fc4e211e0a4b2f87b0632d26b78a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb61037_a3fae2fc",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-17T23:42:13Z",
+      "side": 1,
+      "message": "Gotcha. Ok, lets leave it here. Please add a comment above explaining why we clear the hit scrollbar if we hit a part other than thumb. I think it\u0027d also make sense to move this and the above and below blocks into a helper method called AdjustHitTestResultForScrollbars",
+      "parentUuid": "dbc3e048_a337be98",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "08b42e743fc4e211e0a4b2f87b0632d26b78a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

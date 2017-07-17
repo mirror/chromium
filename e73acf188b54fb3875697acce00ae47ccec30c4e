@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7d4d47_8d19b9cd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-17T23:42:13Z",
+      "side": 1,
+      "message": "I think you need to convert this into _root_ frame coordinates. Can you check if this works inside an iframe that\u0027s not at the origin?",
+      "range": {
+        "startLine": 158,
+        "startChar": 52,
+        "endLine": 158,
+        "endChar": 63
+      },
+      "revId": "e73acf188b54fb3875697acce00ae47ccec30c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0874ab8_f2769798",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11227,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-17T23:42:13Z",
+      "side": 1,
+      "message": "It\u0027d probably make sense to give the iframe in this page a non-0 position to catch coordinate conversion errors.",
+      "range": {
+        "startLine": 11227,
+        "startChar": 29,
+        "endLine": 11227,
+        "endChar": 60
+      },
+      "revId": "e73acf188b54fb3875697acce00ae47ccec30c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdcf0b5_f939fc51",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11308,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-17T23:42:13Z",
+      "side": 1,
+      "message": "You should check this for the \u003cdiv\u003e scrollbar case too.",
+      "range": {
+        "startLine": 11308,
+        "startChar": 34,
+        "endLine": 11308,
+        "endChar": 68
+      },
+      "revId": "e73acf188b54fb3875697acce00ae47ccec30c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
