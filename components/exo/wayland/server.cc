@@ -1984,6 +1984,15 @@ void remote_surface_set_window_geometry(wl_client* client,
       gfx::Rect(x, y, width, height));
 }
 
+void remote_surface_set_orientation(wl_client* client,
+                                    wl_resource* resource,
+                                    int32_t orientation) {
+  GetUserDataAs<ShellSurface>(resource)->SetOrientation(
+      orientation == ZCR_REMOTE_SURFACE_V1_ORIENTATION_PORTRAIT
+          ? Orientation::PORTRAIT
+          : Orientation::LANDSCAPE);
+}
+
 void remote_surface_set_scale(wl_client* client,
                               wl_resource* resource,
                               wl_fixed_t scale) {
@@ -2158,7 +2167,8 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_always_on_top,
     remote_surface_unset_always_on_top,
     remote_surface_ack_configure,
-    remote_surface_move};
+    remote_surface_move,
+    remote_surface_set_orientation};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:
@@ -2494,7 +2504,7 @@ void remote_shell_get_notification_surface(wl_client* client,
           GetUserDataAs<Surface>(surface), std::string(notification_key));
   if (!notification_surface) {
     wl_resource_post_error(resource,
-                           ZCR_REMOTE_SHELL_V1_ERROR_INVALID_NOTIFICATION_KEY,
+                           ZCR_REMOTE_SHELL_V1_ERROR_INVALID_NOTIFICATION_ID,
                            "invalid notification key");
     return;
   }
