@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a89b7e19_27ed6dd7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2695,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-17T17:06:04Z",
+      "side": 1,
+      "message": "Yes this path will need tweaking for low DPI fixed backgrounds.  I\u0027m doing that separately for http://crbug.com/734187.",
+      "parentUuid": "ca512b13_87617931",
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c6cc4c_c4dc962a",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-17T15:29:51Z",
       "side": 1,
       "message": "Shouldn\u0027t this be based on HasCompositedLayers \u0026\u0026 ScrollsOverflow rather than the scroll offset? i.e. if this really is scrollable but just happens to be at offset 0, we still want to emit the scroll display items, right?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc436dd2_74ddac14",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-17T17:06:04Z",
+      "side": 1,
+      "message": "I wondered about that but then noticed several existing uses of ScrollRecorder conditional on non-zero offsets.  In particular, PaintLayerPainter::PaintFragmentWithPhase has this check to apply the scroll offset for non-background content.\n\n@chrishtr: Should we emit BeginScroll / EndScroll display items when the offset is zero?  If so, I guess that should be changed everywhere.",
+      "parentUuid": "b4c6cc4c_c4dc962a",
       "range": {
         "startLine": 79,
         "startChar": 4,
