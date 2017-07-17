@@ -20,7 +20,6 @@
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
 #include "components/download/public/client.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
 namespace {
@@ -690,7 +689,7 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
       driver_->Resume(entry->guid);
     } else {
       driver_->Start(entry->request_params, entry->guid,
-                     entry->target_file_path, NO_TRAFFIC_ANNOTATION_YET);
+                     entry->target_file_path, entry->get_traffic_annotation());
     }
   }
 }

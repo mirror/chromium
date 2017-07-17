@@ -9,6 +9,7 @@ group("unit_tests") {
 
   deps = [
     "//components/download/internal:unit_tests",
+    "//net:test_support",
   ]
 
   data_deps = [
