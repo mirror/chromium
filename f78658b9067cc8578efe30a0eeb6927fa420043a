@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "935d6d46_42bb24c2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Ah, ok.  I was wondering why that was missing from TaskRunner\u0027s member functions when it\u0027s in post_task.h.  Done.",
+      "parentUuid": "22fd9c7d_3cab7a2b",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7181be93_eddfe09d",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd728f66_a83f13a8",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7181be93_eddfe09d",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "298c55df_32ae085b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2109ee3f_703e0c71",
+      "range": {
+        "startLine": 97,
+        "startChar": 54,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e78ba0_0d249e63",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d8a279_4cf127ed",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e78ba0_0d249e63",
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "9b556b60_e7e405d2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e89565f_a3b3369c",
+      "range": {
+        "startLine": 106,
+        "startChar": 28,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e52cb8a7_99ab21b1",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.h",
         "patchSetId": 1
@@ -125,6 +239,24 @@
       "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3505f1c_7bfd07a2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-17T21:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52cb8a7_99ab21b1",
+      "revId": "f78658b9067cc8578efe30a0eeb6927fa420043a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
