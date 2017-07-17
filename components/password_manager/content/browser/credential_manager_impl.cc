@@ -24,14 +24,17 @@
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "content/public/browser/web_contents.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager_v2.mojom.h"
 
 namespace password_manager {
 
 namespace {
 
-void RunMojoGetCallback(mojom::CredentialManager::GetCallback callback,
-                        const CredentialInfo& info) {
-  std::move(callback).Run(mojom::CredentialManagerError::SUCCESS, info);
+void RunMojoGetCallback(
+    credential_manager::mojom::CredentialManager::GetCallback callback,
+    const CredentialInfo& info) {
+  std::move(callback).Run(
+      credential_manager::mojom::CredentialManagerError::SUCCESS, info);
 }
 
 }  // namespace
@@ -52,7 +55,7 @@ CredentialManagerImpl::CredentialManagerImpl(content::WebContents* web_contents,
 CredentialManagerImpl::~CredentialManagerImpl() {}
 
 void CredentialManagerImpl::BindRequest(
-    mojom::CredentialManagerRequest request) {
+    credential_manager::mojom::CredentialManagerRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 
@@ -185,9 +188,10 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
     // Callback error.
     std::move(callback).Run(
         pending_request_
-            ? mojom::CredentialManagerError::PENDINGREQUEST
-            : mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
-        base::nullopt);
+            ? credential_manager::mojom::CredentialManagerError::PENDINGREQUEST
+            : credential_manager::mojom::CredentialManagerError::
+                  PASSWORDSTOREUNAVAILABLE,
+        CredentialInfo());
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_REJECTED,
                                   mediation);
     return;
@@ -197,8 +201,9 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   // page is being prerendered.
   if (!client_->IsFillingEnabledForCurrentPage() ||
       !client_->OnCredentialManagerUsed()) {
-    std::move(callback).Run(mojom::CredentialManagerError::SUCCESS,
-                            CredentialInfo());
+    std::move(callback).Run(
+        credential_manager::mojom::CredentialManagerError::SUCCESS,
+        CredentialInfo());
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_NONE,
                                   mediation);
     return;
@@ -207,8 +212,9 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   if (mediation == CredentialMediationRequirement::kSilent &&
       !IsZeroClickAllowed()) {
     // Callback with empty credential info.
-    std::move(callback).Run(mojom::CredentialManagerError::SUCCESS,
-                            CredentialInfo());
+    std::move(callback).Run(
+        credential_manager::mojom::CredentialManagerError::SUCCESS,
+        CredentialInfo());
     LogCredentialManagerGetResult(
         metrics_util::CREDENTIAL_MANAGER_GET_NONE_ZERO_CLICK_OFF, mediation);
     return;

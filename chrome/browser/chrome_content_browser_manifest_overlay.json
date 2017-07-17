@@ -68,7 +68,7 @@
           "extensions::mojom::InlineInstall",
           "media_router::mojom::MediaRouter",
           "page_load_metrics::mojom::PageLoadMetrics",
-          "password_manager::mojom::CredentialManager",
+          "credential_manager::mojom::CredentialManager",
           "translate::mojom::ContentTranslateDriver",
 
           // TODO(beng): These should be moved to a separate capability.

@@ -13,12 +13,11 @@
 #include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "public/platform/WebVector.h"
-#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager_v2.mojom-blink.h"
 
 namespace blink {
 
 class ExecutionContext;
-class WebCredential;
 
 // CredentialManagerClient lives as a supplement to Document, and wraps the
 // embedder-provided WebCredentialManagerClient's methods to make them visible
@@ -29,8 +28,7 @@ class MODULES_EXPORT CredentialManagerClient
   USING_GARBAGE_COLLECTED_MIXIN(CredentialManagerClient);
 
  public:
-  using RequestCallbacks =
-      WebCallbacks<std::unique_ptr<WebCredential>, WebCredentialManagerError>;
+  using RequestCallbacks = WebCallbacks<Credential*, WebCredentialManagerError>;
   using NotificationCallbacks = WebCallbacks<void, WebCredentialManagerError>;
 
   explicit CredentialManagerClient(ExecutionContext*);
@@ -44,10 +42,8 @@ class MODULES_EXPORT CredentialManagerClient
 
   // Ownership of the callback is transferred to the callee for each of
   // the following methods.
-  virtual void DispatchFailedSignIn(std::unique_ptr<WebCredential>,
-                                    NotificationCallbacks*);
-  virtual void DispatchStore(std::unique_ptr<WebCredential>,
-                             NotificationCallbacks*);
+  virtual void DispatchFailedSignIn(Credential*, NotificationCallbacks*);
+  virtual void DispatchStore(Credential*, NotificationCallbacks*);
   virtual void DispatchPreventSilentAccess(NotificationCallbacks*);
   virtual void DispatchGet(WebCredentialMediationRequirement,
                            bool include_passwords,
@@ -55,7 +51,7 @@ class MODULES_EXPORT CredentialManagerClient
                            RequestCallbacks*);
 
  private:
-  ::password_manager::mojom::blink::CredentialManagerPtr mojo_cm_service_;
+  credential_manager::mojom::blink::CredentialManagerPtr mojo_cm_service_;
 };
 
 }  // namespace blink
