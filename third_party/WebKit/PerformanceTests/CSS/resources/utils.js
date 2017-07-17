@@ -19,3 +19,7 @@ function createDeepDOMTree() {
 function createShallowDOMTree() {
         createDOMTree(document.body, 10, 2);
 }
+
+function createRegularDOMTree() {
+        createDOMTree(document.body, 6, 6);
+}
