@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e333884c_f353b10b",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T21:40:34Z",
+      "side": 1,
+      "message": "nit: feature",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e385609_6d964134",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T21:40:34Z",
+      "side": 1,
+      "message": "therefore, size_t here too.",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9873474c_67f20edb",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T21:40:34Z",
+      "side": 1,
+      "message": "Drop the ref?",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4822e3fb_d326ccda",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T21:40:34Z",
+      "side": 1,
+      "message": "Please consider renaming the function to reflect that it is returning a bool.\nSuggestion: IsGoogleAdDetected()",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc2b1d6_9bc61232",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T21:40:34Z",
+      "side": 1,
+      "message": "size_t?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
