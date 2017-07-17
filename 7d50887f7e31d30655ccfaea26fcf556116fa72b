@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98846cfe_991344b1",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T16:30:15Z",
+      "side": 1,
+      "message": "HashString",
+      "revId": "7d50887f7e31d30655ccfaea26fcf556116fa72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
