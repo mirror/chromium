@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d790dcc_f6df1709",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-17T12:30:11Z",
+      "side": 1,
+      "message": "Comment still references FILE thread.",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 16
+      },
+      "revId": "09a9f0c1ddcb94dc775135659411b404d6954a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d9071f_90d0dc87",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-17T12:30:11Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "09a9f0c1ddcb94dc775135659411b404d6954a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e0c201_368baac8",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-17T12:30:11Z",
+      "side": 1,
+      "message": "Ditto. Maybe you could also change Closure -\u003e OnceClosure and base::Passed -\u003e std::move here.",
+      "range": {
+        "startLine": 381,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 78
+      },
+      "revId": "09a9f0c1ddcb94dc775135659411b404d6954a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
