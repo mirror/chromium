@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1df13d66_03b6e1df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T21:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace3a38_b98a579e",
+      "range": {
+        "startLine": 7,
+        "startChar": 82,
+        "endLine": 7,
+        "endChar": 94
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf9a1c07_3b02e2f1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e654cc8f_6cc7ebeb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T21:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf9a1c07_3b02e2f1",
+      "range": {
+        "startLine": 9,
+        "startChar": 324,
+        "endLine": 9,
+        "endChar": 326
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "054168e9_77f2768d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T21:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21dcf84b_1e16ed65",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 35
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e21ccde_5842cc02",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9085ed0a_7c596b9d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T21:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e21ccde_5842cc02",
+      "range": {
+        "startLine": 224,
+        "startChar": 8,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c75e26f0_1b7c906f",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
         "patchSetId": 2
@@ -105,6 +201,24 @@
       "writtenOn": "2017-07-17T17:40:32Z",
       "side": 1,
       "message": "Why make this static/public instead of file local?",
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600b720e_d0fae315",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-17T21:24:00Z",
+      "side": 1,
+      "message": "It\u0027s not public - it\u0027s private. It needs to be static because it needs to have access to the static fields above this (moving to anonymous namespace would prevent that).\n\nThe reason why these constants are private static instead of all in the anonymous namespace is so that TetherNotificationPresenterTest can access them.",
+      "parentUuid": "c75e26f0_1b7c906f",
       "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
