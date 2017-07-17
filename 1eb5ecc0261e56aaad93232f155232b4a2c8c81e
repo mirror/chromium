@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85f381b_56237d7f",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T22:50:01Z",
+      "side": 1,
+      "message": "It seems that you currently allow android to set the offline page buildflag to false. Doesn\u0027t that mean includes such as this on android should be conditional?",
+      "range": {
+        "startLine": 131,
+        "startChar": 25,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dd5b4b_95aeeaf4",
+        "filename": "chrome/browser/browsing_data/cache_counter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T22:50:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the includes be in a BUILDFLAG conditional?",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 32
+      },
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
