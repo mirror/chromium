@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b3a2513_08eacc33",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-07-17T18:59:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72365902_4a736583",
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15207326_f717683e",
         "filename": "cc/layers/render_surface_impl.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1020e39f_c9559b0a",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-07-17T18:59:49Z",
+      "side": 1,
+      "message": "Yes, I think the bug can be fixed either way: 1) make the origin \u003d render_quad_rect.origin(); 2) throw away these quads.\nI wasn\u0027t very clear when writing this comment. I think we can do the latter.",
+      "parentUuid": "15207326_f717683e",
+      "range": {
+        "startLine": 512,
+        "startChar": 36,
+        "endLine": 512,
+        "endChar": 54
+      },
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8dabad3_9feadcd3",
         "filename": "cc/layers/render_surface_impl.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-17T16:04:31Z",
       "side": 1,
       "message": "Is Contains the right test? Is it not possible for a quad_visible_rect_in_coverage_space to intersect such that we need to draw it but not be entirely contained?",
+      "range": {
+        "startLine": 514,
+        "startChar": 30,
+        "endLine": 514,
+        "endChar": 38
+      },
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a19c901_c5c377e6",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-07-17T18:59:49Z",
+      "side": 1,
+      "message": "The bug was broken because cc_param_traits has a sanity check on this condition, so I copy the check here. But throwing away any empty quads can also fix the bug.",
+      "parentUuid": "d8dabad3_9feadcd3",
       "range": {
         "startLine": 514,
         "startChar": 30,
