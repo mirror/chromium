@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97ea13b_8270ec80",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-17T21:08:48Z",
+      "side": 1,
+      "message": "Drive-by: This doesn\u0027t look quite right. Isn\u0027t visible_quad_layer_rect in the same space as quad_layer_rect? Why it scales in the opposite direction?",
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36c8905_d43ebf0b",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-17T21:08:48Z",
+      "side": 1,
+      "message": "Actually, can we shrink render_quad_rect to the visible rect?",
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f136f5_c553c651",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-17T21:08:48Z",
+      "side": 1,
+      "message": "I don\u0027t think temp_quad-\u003evisible_rect is meaningful in any way. I\u0027d rather just intersect the quad rect and visible_layer_rect_in_coverage_space.",
+      "range": {
+        "startLine": 510,
+        "startChar": 15,
+        "endLine": 510,
+        "endChar": 16
+      },
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546c7974_31612d45",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-17T21:08:48Z",
+      "side": 1,
+      "message": "Why can\u0027t we move early out line #509~514 to line #480 so we can de-dupe?",
+      "range": {
+        "startLine": 514,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 0
+      },
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7aea14d_de575287",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-17T21:08:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be after line #541 too?",
+      "range": {
+        "startLine": 533,
+        "startChar": 58,
+        "endLine": 533,
+        "endChar": 59
+      },
+      "revId": "baf71389a7ae004ea1faab20db4d0bc63a5a1448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
