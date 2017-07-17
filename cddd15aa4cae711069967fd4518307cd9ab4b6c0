@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aa97c88_636854b4",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-17T15:29:24Z",
+      "side": 1,
+      "message": "getSelectedImage seems more standard",
+      "revId": "cddd15aa4cae711069967fd4518307cd9ab4b6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
