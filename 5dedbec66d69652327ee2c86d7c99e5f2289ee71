@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a266f1_fd00789a",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T09:44:45Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not sure this is the best directory structure, as \"test\" isn\u0027t a component. The CL description mentions components/payments/test/data -- what happened to that?",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 535,
+        "endChar": 36
+      },
+      "revId": "5dedbec66d69652327ee2c86d7c99e5f2289ee71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
