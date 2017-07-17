@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6d57aa_f45b1bd4",
+        "filename": "device/vr/vr_display_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-17T19:57:43Z",
+      "side": 1,
+      "message": "What guarantees that this pointer remains valid?",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53335e39_7609d093",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-17T19:57:43Z",
+      "side": 1,
+      "message": "It looks like WebView::OnWebContentsFocused is going to be called now in some circumstances that it didn\u0027t used to be. Does doing so fix any bugs that you\u0027re aware of? If not, then are we adding extra work -- or changing the user-visible behavior -- here in some way?\n\nIf I\u0027m reading the code corectly, the behavior here is that this method asks WebView seems to treat OnWebContentsFocused() as an event where the WebContents is asking its embedding view to be focused (which feels more like a delegate method than an observer method). Is the VR code treating it with similar semantics?",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
