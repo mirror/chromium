@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbfb94d_1acea234",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T01:45:18Z",
+      "side": 1,
+      "message": "Rather than creating a new element here, you can just set margin-top on #clearAndReset.\n\n(Also, 24.5px is a weird value. 24px is a fairly common value across WebUI, so maybe that\u0027s what was intended? ¯\\_(ツ)_/¯)",
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22821d6d_da2a46cc",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T01:45:18Z",
+      "side": 1,
+      "message": "I\u0027m not really sure that aria-describedby is necessary here (since it would just match the existing label), but maybe a Settings owner should weigh in.",
+      "range": {
+        "startLine": 123,
+        "startChar": 39,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23dff89c_2ccc0a59",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T01:45:18Z",
+      "side": 1,
+      "message": "aria-label should be a translated string. It seems that subpage-arrows normally use the same string as appears in the settings-box\n\n  aria-label\u003d\"$i18n{siteSettingsClearAndReset}\"",
+      "range": {
+        "startLine": 123,
+        "startChar": 10,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce86aee_2c0577b5",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-17T01:45:18Z",
+      "side": 1,
+      "message": "This code appears in a couple of places in the element definition and the tests. It might be worth pulling it out into a helper getter function?",
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
