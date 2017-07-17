@@ -70,12 +70,11 @@ class PaymentAppContentUnitTestBase::PaymentAppForWorkerTestHelper
 
   void OnPaymentRequestEvent(
       payments::mojom::PaymentRequestEventDataPtr event_data,
-      payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+      payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchPaymentRequestEventCallback
           callback) override {
     EmbeddedWorkerTestHelper::OnPaymentRequestEvent(
-        std::move(event_data), std::move(response_callback),
-        std::move(callback));
+        std::move(event_data), std::move(invoke_callback), std::move(callback));
   }
 
   int64_t last_sw_registration_id_;

@@ -28,7 +28,6 @@
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
-#include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
@@ -203,9 +202,12 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
                           blink::WebServiceWorkerEventResult result,
                           double dispatch_event_time) override;
   void RespondToPaymentRequestEvent(
-      int payment_request_id,
+      int event_id,
       const blink::WebPaymentHandlerResponse& response,
       double dispatch_event_time) override;
+  void IsPaymentRequestCancelled(
+      int event_id,
+      blink::WebIsPaymentRequestCancelledCallback callback) override;
   void DidHandlePaymentRequestEvent(int payment_request_id,
                                     blink::WebServiceWorkerEventResult result,
                                     double dispatch_event_time) override;
@@ -296,9 +298,9 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       blink::mojom::BackgroundSyncEventLastChance last_chance,
       DispatchSyncEventCallback callback) override;
   void DispatchPaymentRequestEvent(
-      int payment_request_id,
+      int event_id,
       payments::mojom::PaymentRequestEventDataPtr event_data,
-      payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+      payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
       DispatchPaymentRequestEventCallback callback) override;
   void Ping(PingCallback callback) override;
 
