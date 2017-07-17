@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "193e4627_72fff54c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Per Ian\u0027s comment below, this variable has been removed, and will instead be extracted in the generated installConditionalFeaturesOnGlobal().\n\nI understand that the global proxy is not detectable by script, so we can safely install binding on the global proxy (outer global). I was reading about the split window (again):\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/WindowProxy.h?rcl\u003dbf700714f1c3918dfd6d68b4b143e34f6cbc1a83\u0026l\u003d59\n\nLooking at that, it seems it might be more correct to have the conditional bindings on the actual global instance (inner global)? Is that feasible or desirable?",
+      "parentUuid": "0573c8dc_fba48cce",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87a414eb_b4d84f55",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
         "patchSetId": 12
@@ -120,6 +144,54 @@
     },
     {
       "key": {
+        "uuid": "40beba39_162b3ecb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "I\u0027m having trouble understanding your question. In core, Window is the only global that currently has an exposed interface with [SecureContext]. In ConditionalFeaturesForModules.cpp, you\u0027ll see it\u0027s the same. When [SecureContext] is defined on interfaces, in modules, exposed to workers, we\u0027ll need to install the bindings.\n\nDoes that clarify things?",
+      "parentUuid": "ffaa1236_193e2138",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0696fe_5593b2fb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a414eb_b4d84f55",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2971947a_7044fc42",
         "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
         "patchSetId": 12
@@ -134,6 +206,24 @@
       "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fedf4d2_549593ab",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2971947a_7044fc42",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "b7de9cd3_7dd81163",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Done. Thanks for the clarification.",
+      "parentUuid": "4ab3385f_312e0725",
+      "range": {
+        "startLine": 397,
+        "startChar": 4,
+        "endLine": 397,
+        "endChar": 52
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e81708_67c596be",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 12
@@ -183,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "c79d2c5a_327a7a38",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e81708_67c596be",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 31
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df7c5b2a_e917978d",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
@@ -200,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "4e8b4d42_2656e6b2",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "No, that shouldn\u0027t be possible. Only attributes with a non-empty \u0027secure_context_test\u0027 value will generate a check using |isSecureContext|, and that is the same condition that is checked to set has_conditionally_enabled_secure_attributes.",
+      "parentUuid": "df7c5b2a_e917978d",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3ba5648_9c4bbadc",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
@@ -211,6 +367,24 @@
       "writtenOn": "2017-07-17T15:03:49Z",
       "side": 1,
       "message": "Probably not for this CL, but we should switch this code to generate new-blink-style names -- ::InstallConditionalFeaturesOnGlobal, prototype_object, etc.",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcc312f_4a6c14e3",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "Yes, I was trying to do that at one point, but ran into an existing macro that expected \u0027prototypeObject\u0027. Revisiting, I can clean it up now. I have to touch all the affected places to address other comments anyways.",
+      "parentUuid": "d3ba5648_9c4bbadc",
       "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -300,6 +474,30 @@
       "side": 1,
       "message": "Good to know.  I forgot that about:blank is a bit special.\n\nIn that case, should InstallCOnditionalFeaturesOnWindow be called when the document gets updated instead of when the context gets initialized?",
       "parentUuid": "904564c2_6065dce4",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5dc0de_ad258a8e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 1,
+      "message": "As Ian pointed out, I think it is still possible to reuse a context: \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?rcl\u003df078efc2606bba8409a20b42aaa85028d2c5b333\u0026l\u003d1061\n\nMore generally, I think the problem is that the V8 context is initialized before the conditional features can be enabled (i.e. origin trials, which need to parse meta tags and inspect HTTP headers).\n\nI updated the comment to describe the general situation. Hopefully that makes more sense to everyone.",
+      "parentUuid": "6ebc556c_ff357d56",
       "range": {
         "startLine": 68,
         "startChar": 15,

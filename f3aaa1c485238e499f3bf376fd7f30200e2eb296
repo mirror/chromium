@@ -16,6 +16,24 @@
       "revId": "f3aaa1c485238e499f3bf376fd7f30200e2eb296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d11a4b_5b463d1b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-17T17:41:30Z",
+      "side": 0,
+      "message": "No. The same check is now done inside InstallConditionalFeaturesOnWindow().",
+      "parentUuid": "94fa7d62_9ed4a92a",
+      "revId": "f3aaa1c485238e499f3bf376fd7f30200e2eb296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
