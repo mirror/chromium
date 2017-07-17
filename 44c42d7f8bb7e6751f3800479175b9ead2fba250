@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "01a977d6_4da3ca91",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T23:14:37Z",
+      "side": 1,
+      "message": "IsLayoutNG and IsBox are really unfortunate. Do you think they could be removed?",
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd1a76fb_dec50d33",
         "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
         "patchSetId": 1
@@ -48,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "c5c011c9_8dae4185",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T23:14:37Z",
+      "side": 1,
+      "message": "These appear to only be used for a FIXME. Will they be needed in the future? If not, can you add a \"TODO(eae): Remove these once XYZ is fixed\" comment here too?",
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d05c589f_e2a817a2",
         "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
         "patchSetId": 1
@@ -65,6 +99,23 @@
         "endLine": 54,
         "endChar": 42
       },
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35707d5_27010f8e",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T23:14:37Z",
+      "side": 1,
+      "message": "It was a mistake when the paint team renamed PaintLayer to DeprecatedPaintLayer. WDYT of using \"Layout\" instead of \"Legacy\"?",
       "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
