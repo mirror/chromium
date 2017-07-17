@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1487d340_4c69aa16",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-07-17T16:39:43Z",
+      "side": 1,
+      "message": "Maybe use a more specific name for this function.  Maybe something like: LockForForceSigninInMemory().  As discussed offline, maybe also add a comment explaining why the opposite of SetIsSigninRequired(false) is LockForceSigninProfile(true).  That is not immediately obvious from looking at the code.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "63d6e99d5311fb116c9730dbcf6ac6c6c99293d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86434f86_022cb419",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-07-17T16:39:43Z",
+      "side": 1,
+      "message": "Need { and } around if and else blocks.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "63d6e99d5311fb116c9730dbcf6ac6c6c99293d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
