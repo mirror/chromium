@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "30ff1562_c98a86ff",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T17:56:51Z",
+      "side": 1,
+      "message": "That should work but you might also want to consider using base/numerics/clamped_math.h - it is templetaized and should work with uint16.\n\nUp to you.",
+      "parentUuid": "6b667d6b_c579f540",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dbb6ec_f247bbb0",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypesTest.cpp",
         "patchSetId": 18
