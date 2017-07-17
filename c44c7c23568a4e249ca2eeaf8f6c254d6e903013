@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97a64a5_3c0ea931",
+        "filename": "ui/android/java/src/org/chromium/ui/display/DisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T16:00:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 151,
+        "startChar": 69,
+        "endLine": 151,
+        "endChar": 78
+      },
+      "revId": "c44c7c23568a4e249ca2eeaf8f6c254d6e903013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993af4ee_000a2f41",
+        "filename": "ui/android/java/src/org/chromium/ui/display/VirtualDisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T16:00:01Z",
+      "side": 1,
+      "message": "these two should keep using passed in args?",
+      "revId": "c44c7c23568a4e249ca2eeaf8f6c254d6e903013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
