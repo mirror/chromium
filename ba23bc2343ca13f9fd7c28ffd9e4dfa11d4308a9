@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a3c1b76_16b0304b",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:02:51Z",
+      "side": 1,
+      "message": "does this result in the correct thing for disabled buttons? (i.e. 000000 at 0.1 alpha) -\u003e #e6e6e6\n\nMy first reading of BlendTowardOppositeLuma on a color like 0xcccccc is that it would make it darker, not lighter, since the luma is already bright..\n\nExcept digging in, I see that BlendTowardOppositeLuma ignores the alpha channel of |stroke_color|, in which case it would use 0x757575 not 0xcccccc . Luma of 0x757575 might be just below the threshold so will actually lighten. It\u0027s very borderline though.\n\nBut then..... what is |text_color| for disabled controls? Now it\u0027s 0x9e9e9e So maybe BlendTowardOppositeLuma _will_ actually darken instead.\n\n\nPerhaps we just pick the alpha to use once? Like\n\n\nif (is_prominent) {\n  stroke_color \u003d SK_ColorTRANSPARENT;\n} else {\n  int stroke_alpha;\n  if (state() \u003d\u003d STATE_DISABLED)\n    stroke_alpha \u003d UseMaterialSecondaryButtons() ? 0x40 : ??;\n  else\n    stroke_alpha \u003d UseMaterialSecondaryButtons() ? 0x5f : 0x4e;\n  stroke_color \u003d SkColorSetA(text_color, stroke_alpha);\n}\n\n\nI\u0027m guessing BlendTowardOppositeLuma was chosen over explicitly blending with white to \"lighten\u0027 in case the background is dark, but using more transparency achieves the same thing.\n\n\n(like I said at http://crbug.com/737271#c4, _really_ I think we should just use constants, or theme colors directly. Applying logic here makes adapting to spec changes unnecessarily complex, and I\u0027m not convinced it does the right thing for high contrast themes).",
+      "range": {
+        "startLine": 291,
+        "startChar": 27,
+        "endLine": 291,
+        "endChar": 48
+      },
+      "revId": "ba23bc2343ca13f9fd7c28ffd9e4dfa11d4308a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
