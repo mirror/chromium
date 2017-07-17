@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c8295d_2db009b7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-17T18:43:15Z",
+      "side": 1,
+      "message": "I might have missed this part of the discussion, but is this expected to be used outside of BubbleView? Also, wouldn\u0027t the anchor be set with autolayout constraints?\n\nI would expect that overall, the util methods would need to return a CGPoint for the bubble view based on the location of the targeted ui element.",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828136b7_3d4c3efd",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-17T18:43:15Z",
+      "side": 1,
+      "message": "Is this different from the BubbleAlignment enum? How is the alignment determined here if it is not returned?",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1a5aaf_2da95e83",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-17T18:43:15Z",
+      "side": 1,
+      "message": "Empty line needed in between this file\u0027s header import and other includes/imports.",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
