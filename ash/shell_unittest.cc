@@ -466,7 +466,7 @@ TEST_F(ShellTest, TestPreTargetHandlerOrder) {
 
   Shell* shell = Shell::Get();
   ui::EventTargetTestApi test_api(shell);
-  test::ShellTestApi shell_test_api(shell);
+  ShellTestApi shell_test_api(shell);
 
   const ui::EventHandlerList& handlers = test_api.pre_target_handlers();
   ui::EventHandlerList::const_iterator cursor_filter =

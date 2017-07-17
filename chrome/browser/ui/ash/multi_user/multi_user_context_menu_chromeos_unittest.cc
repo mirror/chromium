@@ -23,7 +23,7 @@ namespace ash {
 namespace test {
 
 // A test class for preparing the chrome::MultiUserContextMenu.
-class MultiUserContextMenuChromeOSTest : public AshTestBase {
+class MultiUserContextMenuChromeOSTest : public test::AshTestBase {
  public:
   MultiUserContextMenuChromeOSTest()
       : multi_user_window_manager_(nullptr),

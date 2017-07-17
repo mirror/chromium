@@ -23,7 +23,6 @@
 #include "ui/views/widget/widget_delegate.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -50,7 +49,7 @@ class LoginTestWidgetDelegate : public views::WidgetDelegate {
 
 }  // namespace
 
-class LockLayoutManagerTest : public AshTestBase {
+class LockLayoutManagerTest : public test::AshTestBase {
  public:
   void SetUp() override {
     // Allow a virtual keyboard (and initialize it per default).
@@ -292,5 +291,4 @@ TEST_F(LockLayoutManagerTest, MultipleMonitors) {
   EXPECT_EQ(screen_bounds.ToString(), window->GetBoundsInScreen().ToString());
 }
 
-}  // namespace test
 }  // namespace ash

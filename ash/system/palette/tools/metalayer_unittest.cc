@@ -27,8 +27,7 @@ class MetalayerToolTest : public test::AshTestBase {
   void SetUp() override {
     test::AshTestBase::SetUp();
 
-    test::ShellTestApi().SetPaletteDelegate(
-        base::MakeUnique<TestPaletteDelegate>());
+    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
 
     palette_tool_delegate_ = base::MakeUnique<MockPaletteToolDelegate>();
     tool_ = base::MakeUnique<MetalayerMode>(palette_tool_delegate_.get());

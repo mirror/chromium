@@ -53,10 +53,9 @@ class MultiWindowResizeControllerTest : public test::AshTestBase {
 
   void SetUp() override {
     test::AshTestBase::SetUp();
-    WorkspaceController* wc =
-        test::ShellTestApi(Shell::Get()).workspace_controller();
+    WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
     WorkspaceEventHandler* event_handler =
-        test::WorkspaceControllerTestApi(wc).GetEventHandler();
+        WorkspaceControllerTestApi(wc).GetEventHandler();
     resize_controller_ =
         WorkspaceEventHandlerTestHelper(event_handler).resize_controller();
   }

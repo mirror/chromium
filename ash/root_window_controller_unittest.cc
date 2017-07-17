@@ -100,9 +100,7 @@ aura::LayoutManager* GetLayoutManager(RootWindowController* controller,
 
 }  // namespace
 
-namespace test {
-
-class RootWindowControllerTest : public AshTestBase {
+class RootWindowControllerTest : public test::AshTestBase {
  public:
   views::Widget* CreateTestWidget(const gfx::Rect& bounds) {
     views::Widget* widget = views::Widget::CreateWindowWithContextAndBounds(
@@ -1226,5 +1224,4 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, DisplayRotation) {
   EXPECT_EQ("0,600 600x200", keyboard_container->bounds().ToString());
 }
 
-}  // namespace test
 }  // namespace ash

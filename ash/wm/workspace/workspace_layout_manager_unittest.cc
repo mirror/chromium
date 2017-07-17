@@ -1149,9 +1149,8 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
-  WorkspaceController* wc =
-      test::ShellTestApi(Shell::Get()).workspace_controller();
-  test::WorkspaceControllerTestApi test_helper(wc);
+  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
+  WorkspaceControllerTestApi test_helper(wc);
 
   std::unique_ptr<aura::Window> window1(
       CreateTestWindow(gfx::Rect(0, 0, 100, 100)));
@@ -1274,11 +1273,10 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
-  WorkspaceController* wc =
-      test::ShellTestApi(Shell::Get()).workspace_controller();
-  test::WorkspaceControllerTestApi test_helper(wc);
-  test::TestAccessibilityDelegate* accessibility_delegate =
-      static_cast<test::TestAccessibilityDelegate*>(
+  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
+  WorkspaceControllerTestApi test_helper(wc);
+  TestAccessibilityDelegate* accessibility_delegate =
+      static_cast<TestAccessibilityDelegate*>(
           Shell::Get()->accessibility_delegate());
 
   aura::test::TestWindowDelegate delegate;
@@ -1334,11 +1332,10 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackForArc) {
-  WorkspaceController* wc =
-      test::ShellTestApi(Shell::Get()).workspace_controller();
-  test::WorkspaceControllerTestApi test_helper(wc);
-  test::TestAccessibilityDelegate* accessibility_delegate =
-      static_cast<test::TestAccessibilityDelegate*>(
+  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
+  WorkspaceControllerTestApi test_helper(wc);
+  TestAccessibilityDelegate* accessibility_delegate =
+      static_cast<TestAccessibilityDelegate*>(
           Shell::Get()->accessibility_delegate());
 
   accessibility_delegate->ToggleSpokenFeedback(A11Y_NOTIFICATION_NONE);

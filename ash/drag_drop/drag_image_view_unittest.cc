@@ -9,9 +9,8 @@
 #include "ui/base/dragdrop/drag_drop_types.h"
 
 namespace ash {
-namespace test {
 
-using DragDropImageTest = AshTestBase;
+using DragDropImageTest = test::AshTestBase;
 
 TEST_F(DragDropImageTest, SetBoundsConsidersDragHintForTouch) {
   std::unique_ptr<aura::Window> window(CreateTestWindow());
@@ -74,5 +73,4 @@ TEST_F(DragDropImageTest, SetBoundsIgnoresDragHintForMouse) {
             drag_image_view.GetBoundsInScreen());
 }
 
-}  // namespace test
 }  // namespace ash

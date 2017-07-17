@@ -22,7 +22,6 @@
 #include "ui/views/widget/widget.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -56,7 +55,7 @@ class TestDetailsView : public TrayDetailsView {
 class TestItem : public SystemTrayItem {
  public:
   TestItem()
-      : SystemTrayItem(AshTestBase::GetPrimarySystemTray(), UMA_TEST),
+      : SystemTrayItem(test::AshTestBase::GetPrimarySystemTray(), UMA_TEST),
         tray_view_(nullptr),
         default_view_(nullptr),
         detailed_view_(nullptr) {}
@@ -93,7 +92,7 @@ class TestItem : public SystemTrayItem {
 
 }  // namespace
 
-class TrayDetailsViewTest : public AshTestBase {
+class TrayDetailsViewTest : public test::AshTestBase {
  public:
   TrayDetailsViewTest() {}
   ~TrayDetailsViewTest() override {}
@@ -230,5 +229,4 @@ TEST_F(TrayDetailsViewTest, ScrollContentsTest) {
   EXPECT_EQ(view2->layer(), layers[2]);
 }
 
-}  // namespace test
 }  // namespace ash

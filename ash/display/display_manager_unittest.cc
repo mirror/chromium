@@ -2130,7 +2130,7 @@ class TestDisplayObserver : public display::DisplayObserver {
   }
 
  private:
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   bool changed_;
 
   DISALLOW_COPY_AND_ASSIGN(TestDisplayObserver);
@@ -2139,7 +2139,7 @@ class TestDisplayObserver : public display::DisplayObserver {
 TEST_F(DisplayManagerTest, SoftwareMirroring) {
   UpdateDisplay("300x400,400x500");
 
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   EXPECT_EQ(nullptr, test_api.GetHost());
 
   TestDisplayObserver display_observer;
@@ -2235,7 +2235,7 @@ TEST_F(DisplayManagerTest, SingleDisplayToSoftwareMirroring) {
 TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   UpdateDisplay("300x400,400x500");
 
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   EXPECT_EQ(nullptr, test_api.GetHost());
 
   display::ManagedDisplayInfo secondary_info =
@@ -2996,7 +2996,7 @@ TEST_F(DisplayManagerOrientationTest, SaveRestoreUserRotationLock) {
       .SetFirstDisplayAsInternalDisplay();
   ScreenOrientationController* orientation_controller =
       shell->screen_orientation_controller();
-  test::ScreenOrientationControllerTestApi test_api(orientation_controller);
+  ScreenOrientationControllerTestApi test_api(orientation_controller);
   TestObserver test_observer;
   orientation_controller->AddObserver(&test_observer);
 
@@ -3173,7 +3173,7 @@ TEST_F(DisplayManagerOrientationTest, LockToSpecificOrientation) {
       .SetFirstDisplayAsInternalDisplay();
   ScreenOrientationController* orientation_controller =
       shell->screen_orientation_controller();
-  test::ScreenOrientationControllerTestApi test_api(orientation_controller);
+  ScreenOrientationControllerTestApi test_api(orientation_controller);
 
   aura::Window* window_a = CreateTestWindowInShellWithId(0);
   {

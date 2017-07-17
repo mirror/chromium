@@ -146,8 +146,8 @@ class WallpaperControllerTest : public test::AshTestBase {
     root_window_controller->SetWallpaperWidgetController(nullptr);
     root_window_controller->SetAnimatingWallpaperWidgetController(nullptr);
     controller_ = Shell::Get()->wallpaper_controller();
-    wallpaper_delegate_ = static_cast<test::TestWallpaperDelegate*>(
-        Shell::Get()->wallpaper_delegate());
+    wallpaper_delegate_ =
+        static_cast<TestWallpaperDelegate*>(Shell::Get()->wallpaper_delegate());
     controller_->set_wallpaper_reload_delay_for_test(0);
   }
 
@@ -242,7 +242,7 @@ class WallpaperControllerTest : public test::AshTestBase {
 
   WallpaperController* controller_;  // Not owned.
 
-  test::TestWallpaperDelegate* wallpaper_delegate_;
+  TestWallpaperDelegate* wallpaper_delegate_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WallpaperControllerTest);

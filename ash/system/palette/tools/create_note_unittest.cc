@@ -27,8 +27,7 @@ class CreateNoteTest : public test::AshTestBase {
   void SetUp() override {
     test::AshTestBase::SetUp();
 
-    test::ShellTestApi().SetPaletteDelegate(
-        base::MakeUnique<TestPaletteDelegate>());
+    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
 
     palette_tool_delegate_ = base::MakeUnique<MockPaletteToolDelegate>();
     tool_ = base::MakeUnique<CreateNoteAction>(palette_tool_delegate_.get());

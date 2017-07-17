@@ -32,7 +32,6 @@
 #include "ui/gfx/geometry/size.h"
 
 namespace ash {
-namespace test {
 namespace {
 
 bool cursor_visible() {
@@ -65,7 +64,7 @@ class TestShutdownController : public ShutdownController {
 
 }  // namespace
 
-class LockStateControllerTest : public AshTestBase {
+class LockStateControllerTest : public test::AshTestBase {
  public:
   LockStateControllerTest()
       : power_button_controller_(nullptr),
@@ -1036,7 +1035,7 @@ TEST_F(LockStateControllerTest, Screenshot) {
   if (Shell::GetAshConfig() == Config::MASH)
     return;
 
-  test::TestScreenshotDelegate* delegate = GetScreenshotDelegate();
+  TestScreenshotDelegate* delegate = GetScreenshotDelegate();
   delegate->set_can_take_screenshot(true);
 
   EnableMaximizeMode(false);
@@ -1081,5 +1080,4 @@ TEST_F(LockStateControllerTest, Screenshot) {
   EXPECT_EQ(1, delegate->handle_take_screenshot_count());
 }
 
-}  // namespace test
 }  // namespace ash

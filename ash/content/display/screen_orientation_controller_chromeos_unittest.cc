@@ -137,7 +137,7 @@ class ScreenOrientationControllerTest : public test::AshTestBase {
   }
 
   void SetSystemRotationLocked(bool rotation_locked) {
-    test::ScreenOrientationControllerTestApi(
+    ScreenOrientationControllerTestApi(
         Shell::Get()->screen_orientation_controller())
         .SetRotationLocked(rotation_locked);
   }
@@ -150,7 +150,7 @@ class ScreenOrientationControllerTest : public test::AshTestBase {
   }
 
   blink::WebScreenOrientationLockType UserLockedOrientation() const {
-    test::ScreenOrientationControllerTestApi test_api(
+    ScreenOrientationControllerTestApi test_api(
         Shell::Get()->screen_orientation_controller());
     return test_api.UserLockedOrientation();
   }
@@ -641,7 +641,7 @@ TEST_F(ScreenOrientationControllerTest, RotateInactiveDisplay) {
   ASSERT_NE(kNewRotation, display_manager()
                               ->GetDisplayInfo(kInternalDisplayId)
                               .GetActiveRotation());
-  test::ScreenOrientationControllerTestApi(
+  ScreenOrientationControllerTestApi(
       Shell::Get()->screen_orientation_controller())
       .SetDisplayRotation(kNewRotation,
                           display::Display::ROTATION_SOURCE_ACTIVE);
