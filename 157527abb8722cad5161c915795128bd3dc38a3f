@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138d6ca0_20c4b523",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T05:53:23Z",
+      "side": 1,
+      "message": "Why just kStyleClean? How about kLayoutClean?\n\nShould we call UpdateDistribution here?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c11516_996958f6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T05:53:23Z",
+      "side": 1,
+      "message": "Why just kStyleClean? How about kLayoutClean?\n\nShould we call UpdateDistribution here?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
