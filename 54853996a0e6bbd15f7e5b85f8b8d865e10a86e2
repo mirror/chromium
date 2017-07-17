@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9635809_7ca8dcf3",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:35:05Z",
+      "side": 1,
+      "message": "There is definitely room to improve the number of files heuristic (which is now internalized in this .cc file).\n\nAs far as memory usage is concerned, I address this TODO in a follow-up CL, which bounds the memory use by stitching to 64KiB: https://chromium-review.googlesource.com/c/572185/\n\nI plan on landing the two CLs at about the same time. I split it out because this CL was already growing too large for my tastes.",
+      "parentUuid": "49a05268_bd08d867",
+      "range": {
+        "startLine": 322,
+        "startChar": 46,
+        "endLine": 322,
+        "endChar": 50
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b098300_10a8ea92",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "627a838b_e4a40310",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:35:05Z",
+      "side": 1,
+      "message": "Done: I have moved the CreateInprogressDirectory() into the \"if\" below.",
+      "parentUuid": "3b098300_10a8ea92",
+      "range": {
+        "startLine": 513,
+        "startChar": 6,
+        "endLine": 513,
+        "endChar": 15
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8dd0ee7_dc380263",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-17T22:04:48Z",
       "side": 1,
       "message": "nit: It seems like nifty 3-string WriteToFile may work here: \n             \"Log data is being written to the \", GetInprogressDirectory().value(), \" directory\");",
+      "range": {
+        "startLine": 561,
+        "startChar": 33,
+        "endLine": 561,
+        "endChar": 40
+      },
+      "revId": "54853996a0e6bbd15f7e5b85f8b8d865e10a86e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882e1af0_5e56a689",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:35:05Z",
+      "side": 1,
+      "message": "I left it as a TODO because base::FilePath::value() returns a wide string on Windows, so the simplest form of writing that doesn\u0027t quite work.\n\nWhen addressing this TODO I would like to include the following breadcrumbs in the file:\n\n (1) The time when logging started\n (2) The filename or path for the .inprogress directory\n (3) Instructions on how to stitch the file manually (probably just a link to the python script)",
+      "parentUuid": "f8dd0ee7_dc380263",
       "range": {
         "startLine": 561,
         "startChar": 33,
