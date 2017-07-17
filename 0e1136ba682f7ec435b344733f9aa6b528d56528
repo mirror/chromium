@@ -46,6 +46,30 @@
       "revId": "0e1136ba682f7ec435b344733f9aa6b528d56528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba5812e_dd91cb0b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-17T17:58:23Z",
+      "side": 0,
+      "message": "ProcessCU is part of the infrastructure of GRC, if this is the reason, don\u0027t remove it in this patch. What\u0027s the point to remove it and then add it again?\n\nIf the creation of ProcessCU behaves incorrectly, we should try to fix it. If ProcessCU is causing crashes that can\u0027t be solved in this patch, we should try to disable it.",
+      "parentUuid": "d538c09a_6571a5b1",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 46
+      },
+      "revId": "0e1136ba682f7ec435b344733f9aa6b528d56528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
