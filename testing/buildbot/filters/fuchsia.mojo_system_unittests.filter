@@ -1,0 +1,11 @@
+-*MultiprocessMessagePipeTest*
+-DataPipeTest*
+-MessagePipeTest.SharedBufferHandlePingPong
+-PlatformWrapperTest.Wrap*
+-PlatformSharedBufferTest.TooBig
+-PlatformChannelPairPosixTest*
+-SharedBufferTest*
+-SignalsTest.*
+-SharedBufferTest.PassSharedBufferLocal
+-EmbedderTest.*
+-MessageTest.SerializeSimpleMessage*
