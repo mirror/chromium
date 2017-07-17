@@ -36,24 +36,90 @@ void IfTable2Deleter(PMIB_IF_TABLE2 interface_table) {
   }
 }
 
-void WlanApiDeleter(void* p) {
-  if (p) {
-    WlanFreeMemory(p);
+typedef DWORD(WINAPI* WlanOpenHandleFunction)(DWORD dwClientVersion,
+                                              PVOID pReserved,
+                                              PDWORD pdwNegotiatedVersion,
+                                              PHANDLE phClientHandle);
+typedef DWORD(WINAPI* WlanCloseHandleFunction)(HANDLE hClientHandle,
+                                               PVOID pReserved);
+typedef DWORD(WINAPI* WlanEnumInterfacesFunction)(
+    HANDLE hClientHandle,
+    PVOID pReserved,
+    PWLAN_INTERFACE_INFO_LIST* ppInterfaceList);
+typedef DWORD(WINAPI* WlanQueryInterfaceFunction)(
+    HANDLE hClientHandle,
+    const GUID* pInterfaceGuid,
+    WLAN_INTF_OPCODE OpCode,
+    PVOID pReserved,
+    PDWORD pdwDataSize,
+    PVOID* ppData,
+    PWLAN_OPCODE_VALUE_TYPE pWlanOpcodeValueType);
+typedef VOID(WINAPI* WlanFreeMemoryFunction)(PVOID pMemory);
+
+class WlanApi {
+ public:
+  const WlanOpenHandleFunction wlan_open_handle;
+  const WlanCloseHandleFunction wlan_close_handle;
+  const WlanEnumInterfacesFunction wlan_enum_interfaces;
+  const WlanQueryInterfaceFunction wlan_query_interface;
+  const WlanFreeMemoryFunction wlan_free_memory;
+
+  static std::unique_ptr<WlanApi> Create() {
+    static const wchar_t* kWlanDllPath = L"%WINDIR%\\system32\\wlanapi.dll";
+    wchar_t path[MAX_PATH] = {0};
+    ExpandEnvironmentStrings(kWlanDllPath, path, arraysize(path));
+    HINSTANCE library =
+        LoadLibraryEx(path, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+    if (!library) {
+      return nullptr;
+    }
+    return base::WrapUnique(new WlanApi(library));
   }
-}
+
+  ~WlanApi() { FreeLibrary(library_); }
+
+ private:
+  explicit WlanApi(HINSTANCE library)
+      : wlan_open_handle(reinterpret_cast<WlanOpenHandleFunction>(
+            GetProcAddress(library, "WlanOpenHandle"))),
+        wlan_close_handle(reinterpret_cast<WlanCloseHandleFunction>(
+            GetProcAddress(library, "WlanCloseHandle"))),
+        wlan_enum_interfaces(reinterpret_cast<WlanEnumInterfacesFunction>(
+            GetProcAddress(library, "WlanEnumInterfaces"))),
+        wlan_query_interface(reinterpret_cast<WlanQueryInterfaceFunction>(
+            GetProcAddress(library, "WlanQueryInterface"))),
+        wlan_free_memory(reinterpret_cast<WlanFreeMemoryFunction>(
+            GetProcAddress(library, "WlanFreeMemory"))),
+        library_(library) {
+    DCHECK(library);
+    DCHECK(wlan_open_handle);
+    DCHECK(wlan_close_handle);
+    DCHECK(wlan_enum_interfaces);
+    DCHECK(wlan_query_interface);
+    DCHECK(wlan_free_memory);
+  }
+
+  HINSTANCE library_;
+
+  DISALLOW_COPY_AND_ASSIGN(WlanApi);
+};
 
 class ScopedWlanClientHandle {
  public:
-  ScopedWlanClientHandle() {}
+  explicit ScopedWlanClientHandle(
+      const WlanCloseHandleFunction wlan_close_handle)
+      : wlan_close_handle_(wlan_close_handle) {}
   ~ScopedWlanClientHandle() {
     if (handle != nullptr) {
-      WlanCloseHandle(handle, nullptr);
+      wlan_close_handle_(handle, nullptr);
     }
   }
 
   HANDLE handle = nullptr;
 
  private:
+  const WlanCloseHandleFunction wlan_close_handle_;
+
   DISALLOW_COPY_AND_ASSIGN(ScopedWlanClientHandle);
 };
 
@@ -86,10 +152,11 @@ GetInterfaceGuidMacMap() {
 // If it is not a wireless interface or if it's not currently associated with a
 // network, it returns an empty string.
 std::string GetSsidForInterfaceGuid(const HANDLE wlan_client_handle,
+                                    const WlanApi& wlan_api,
                                     const GUID& interface_guid) {
   WLAN_CONNECTION_ATTRIBUTES* connection_info_raw = nullptr;
   DWORD connection_info_size = 0;
-  auto result = WlanQueryInterface(
+  auto result = wlan_api.wlan_query_interface(
       wlan_client_handle, &interface_guid, wlan_intf_opcode_current_connection,
       nullptr, &connection_info_size,
       reinterpret_cast<void**>(&connection_info_raw), nullptr);
@@ -99,8 +166,8 @@ std::string GetSsidForInterfaceGuid(const HANDLE wlan_client_handle,
     DVLOG(2) << "Failed to get wireless connection info: " << result;
     return {};
   }
-  std::unique_ptr<WLAN_CONNECTION_ATTRIBUTES, decltype(&WlanApiDeleter)>
-      connection_info(connection_info_raw, WlanApiDeleter);
+  std::unique_ptr<WLAN_CONNECTION_ATTRIBUTES, WlanFreeMemoryFunction>
+      connection_info(connection_info_raw, wlan_api.wlan_free_memory);
   if (connection_info->isState != wlan_interface_state_connected) {
     return {};
   }
@@ -112,28 +179,32 @@ std::string GetSsidForInterfaceGuid(const HANDLE wlan_client_handle,
 // Returns a map from a network adapter's MAC address to its currently
 // associated WiFi SSID.
 base::small_map<std::map<std::string, std::string>> GetMacSsidMap() {
-  ScopedWlanClientHandle wlan_client_handle;
+  auto wlan_api = WlanApi::Create();
+  if (!wlan_api) {
+    return {};
+  }
+  ScopedWlanClientHandle wlan_client_handle(wlan_api->wlan_close_handle);
   constexpr DWORD kWlanClientVersion = 2;
   DWORD wlan_current_version = 0;
 
-  auto result =
-      WlanOpenHandle(kWlanClientVersion, nullptr, &wlan_current_version,
-                     &wlan_client_handle.handle);
+  auto result = wlan_api->wlan_open_handle(kWlanClientVersion, nullptr,
+                                           &wlan_current_version,
+                                           &wlan_client_handle.handle);
   if (result != ERROR_SUCCESS) {
     LOG(WARNING) << "Failed to open Wlan client handle: " << result;
     return {};
   }
 
   PWLAN_INTERFACE_INFO_LIST wlan_interface_list_raw = nullptr;
-  result = WlanEnumInterfaces(wlan_client_handle.handle, nullptr,
-                              &wlan_interface_list_raw);
+  result = wlan_api->wlan_enum_interfaces(wlan_client_handle.handle, nullptr,
+                                          &wlan_interface_list_raw);
   if (result != ERROR_SUCCESS) {
     LOG(WARNING) << "Failed to enumerate wireless interfaces: " << result;
     return {};
   }
 
-  std::unique_ptr<WLAN_INTERFACE_INFO_LIST, decltype(&WlanApiDeleter)>
-      wlan_interface_list(wlan_interface_list_raw, WlanApiDeleter);
+  std::unique_ptr<WLAN_INTERFACE_INFO_LIST, WlanFreeMemoryFunction>
+      wlan_interface_list(wlan_interface_list_raw, wlan_api->wlan_free_memory);
   auto guid_mac_map = GetInterfaceGuidMacMap();
   base::small_map<std::map<std::string, std::string>> mac_ssid_map;
 
@@ -147,7 +218,7 @@ base::small_map<std::map<std::string, std::string>> GetMacSsidMap() {
     if (mac_entry == guid_mac_map.end()) {
       continue;
     }
-    auto ssid = GetSsidForInterfaceGuid(wlan_client_handle.handle,
+    auto ssid = GetSsidForInterfaceGuid(wlan_client_handle.handle, *wlan_api,
                                         interface_info->InterfaceGuid);
     if (ssid.empty()) {
       continue;
