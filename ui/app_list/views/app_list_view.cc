@@ -26,6 +26,7 @@
 #include "ui/app_list/views/speech_view.h"
 #include "ui/app_list/views/start_page_view.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
@@ -46,7 +47,6 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/masked_window_targeter.h"
 #include "ui/wm/core/shadow_types.h"
 
 namespace app_list {
@@ -134,22 +134,15 @@ class AppListOverlayView : public views::View {
 
 // An event targeter for the search box widget which will ignore events that
 // are on the search box's shadow.
-class SearchBoxWindowTargeter : public wm::MaskedWindowTargeter {
+class SearchBoxWindowTargeter : public aura::WindowTargeter {
  public:
-  explicit SearchBoxWindowTargeter(views::View* search_box)
-      : wm::MaskedWindowTargeter(search_box->GetWidget()->GetNativeWindow()),
-        search_box_(search_box) {}
+  explicit SearchBoxWindowTargeter(views::View* search_box) {
+    const gfx::Insets insets = search_box->GetInsets();
+    SetInsets(insets, insets);
+  }
   ~SearchBoxWindowTargeter() override {}
 
  private:
-  // wm::MaskedWindowTargeter:
-  bool GetHitTestMask(aura::Window* window, gfx::Path* mask) const override {
-    mask->addRect(gfx::RectToSkRect(search_box_->GetContentsBounds()));
-    return true;
-  }
-
-  views::View* search_box_;
-
   DISALLOW_COPY_AND_ASSIGN(SearchBoxWindowTargeter);
 };
 
