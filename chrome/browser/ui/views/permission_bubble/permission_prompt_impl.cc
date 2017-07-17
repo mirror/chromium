@@ -249,24 +249,19 @@ void PermissionsBubbleDialogDelegateView::UpdateAnchor(
 //////////////////////////////////////////////////////////////////////////////
 // PermissionPromptImpl
 
-PermissionPromptImpl::PermissionPromptImpl(Browser* browser)
-    : browser_(browser),
-      delegate_(nullptr),
-      bubble_delegate_(nullptr) {}
-
-PermissionPromptImpl::~PermissionPromptImpl() {
+PermissionPromptImpl::PermissionPromptImpl(Browser* browser, Delegate* delegate)
+    : browser_(browser), delegate_(delegate), bubble_delegate_(nullptr) {
+  Show();
 }
 
-void PermissionPromptImpl::SetDelegate(Delegate* delegate) {
-  delegate_ = delegate;
+PermissionPromptImpl::~PermissionPromptImpl() {
+  if (bubble_delegate_)
+    bubble_delegate_->CloseBubble();
 }
 
 void PermissionPromptImpl::Show() {
   DCHECK(browser_);
   DCHECK(browser_->window());
-
-  if (bubble_delegate_)
-    bubble_delegate_->CloseBubble();
 
   bubble_delegate_ =
       new PermissionsBubbleDialogDelegateView(this, delegate_->Requests());
@@ -298,17 +293,6 @@ void PermissionPromptImpl::Show() {
 
 bool PermissionPromptImpl::CanAcceptRequestUpdate() {
   return !(bubble_delegate_ && bubble_delegate_->IsMouseHovered());
-}
-
-bool PermissionPromptImpl::HidesAutomatically() {
-  return false;
-}
-
-void PermissionPromptImpl::Hide() {
-  if (bubble_delegate_) {
-    bubble_delegate_->CloseBubble();
-    bubble_delegate_ = nullptr;
-  }
 }
 
 void PermissionPromptImpl::UpdateAnchorPosition() {
