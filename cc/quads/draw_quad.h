@@ -69,15 +69,26 @@ class CC_EXPORT DrawQuad {
   // opaque area.
   bool needs_blending;
 
-  // Stores state common to a large bundle of quads; kept separate for memory
-  // efficiency. There is special treatment to reconstruct these pointers
-  // during serialization.
-  const SharedQuadState* shared_quad_state;
+  // This is the stable id identifying shared quad state.
+  uint64_t stable_id;
+
+  void PopulateSharedQuadStatePointer(
+      const SharedQuadState* shared_quad_state) {
+    DCHECK(shared_quad_state);
+    if (shared_quad_state != shared_quad_state_ &&
+        shared_quad_state->stable_id == stable_id)
+      shared_quad_state_ = shared_quad_state;
+  }
+  const SharedQuadState* shared_quad_state() const {
+    DCHECK(shared_quad_state_);
+    DCHECK(shared_quad_state_->stable_id == stable_id);
+    return shared_quad_state_;
+  }
 
   bool IsDebugQuad() const { return material == DEBUG_BORDER; }
 
   bool ShouldDrawWithBlending() const {
-    if (needs_blending || shared_quad_state->opacity < 1.0f)
+    if (needs_blending || shared_quad_state()->opacity < 1.0f)
       return true;
     if (visible_rect.IsEmpty())
       return false;
@@ -95,13 +106,13 @@ class CC_EXPORT DrawQuad {
   // Is the right edge of this tile aligned with the originating layer's
   // right edge?
   bool IsRightEdge() const {
-    return rect.right() == shared_quad_state->quad_layer_rect.right();
+    return rect.right() == shared_quad_state()->quad_layer_rect.right();
   }
 
   // Is the bottom edge of this tile aligned with the originating layer's
   // bottom edge?
   bool IsBottomEdge() const {
-    return rect.bottom() == shared_quad_state->quad_layer_rect.bottom();
+    return rect.bottom() == shared_quad_state()->quad_layer_rect.bottom();
   }
 
   // Is any edge of this tile aligned with the originating layer's
@@ -144,6 +155,12 @@ class CC_EXPORT DrawQuad {
               const gfx::Rect& visible_rect,
               bool needs_blending);
   virtual void ExtendValue(base::trace_event::TracedValue* value) const = 0;
+
+ private:
+  // Stores state common to a large bundle of quads; kept separate for memory
+  // efficiency. This is not transported, and there is special treatment to
+  // reconstruct these pointers during deserialization.
+  const SharedQuadState* shared_quad_state_;
 };
 
 }  // namespace cc

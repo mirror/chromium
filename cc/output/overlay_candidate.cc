@@ -196,22 +196,23 @@ OverlayCandidate::~OverlayCandidate() {}
 bool OverlayCandidate::FromDrawQuad(ResourceProvider* resource_provider,
                                     const DrawQuad* quad,
                                     OverlayCandidate* candidate) {
+  const SharedQuadState* shared_quad_state = quad->shared_quad_state();
   // We don't support an opacity value different than one for an overlay plane.
-  if (quad->shared_quad_state->opacity != 1.f)
+  if (shared_quad_state->opacity != 1.f)
     return false;
   // We support only kSrc (no blending) and kSrcOver (blending with premul).
-  if (!(quad->shared_quad_state->blend_mode == SkBlendMode::kSrc ||
-        quad->shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
+  if (!(shared_quad_state->blend_mode == SkBlendMode::kSrc ||
+        shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
     return false;
 
-  auto& transform = quad->shared_quad_state->quad_to_target_transform;
+  auto& transform = shared_quad_state->quad_to_target_transform;
   candidate->display_rect = gfx::RectF(quad->rect);
   transform.TransformRect(&candidate->display_rect);
   candidate->quad_rect_in_target_space =
       MathUtil::MapEnclosingClippedRect(transform, quad->rect);
 
-  candidate->clip_rect = quad->shared_quad_state->clip_rect;
-  candidate->is_clipped = quad->shared_quad_state->is_clipped;
+  candidate->clip_rect = shared_quad_state->clip_rect;
+  candidate->is_clipped = shared_quad_state->is_clipped;
   candidate->is_opaque = !quad->ShouldDrawWithBlending();
 
   switch (quad->material) {
@@ -231,7 +232,7 @@ bool OverlayCandidate::FromDrawQuad(ResourceProvider* resource_provider,
 
 // static
 bool OverlayCandidate::IsInvisibleQuad(const DrawQuad* quad) {
-  float opacity = quad->shared_quad_state->opacity;
+  float opacity = quad->shared_quad_state()->opacity;
   if (opacity < std::numeric_limits<float>::epsilon())
     return true;
   if (quad->material == DrawQuad::SOLID_COLOR) {
@@ -251,7 +252,7 @@ bool OverlayCandidate::IsOccluded(const OverlayCandidate& candidate,
   for (auto overlap_iter = quad_list_begin; overlap_iter != quad_list_end;
        ++overlap_iter) {
     gfx::RectF overlap_rect = MathUtil::MapClippedRect(
-        overlap_iter->shared_quad_state->quad_to_target_transform,
+        overlap_iter->shared_quad_state()->quad_to_target_transform,
         gfx::RectF(overlap_iter->rect));
     if (candidate.display_rect.Intersects(overlap_rect) &&
         !OverlayCandidate::IsInvisibleQuad(*overlap_iter))
@@ -271,7 +272,7 @@ bool OverlayCandidate::FromTextureQuad(ResourceProvider* resource_provider,
                 candidate->format) == std::end(kOverlayFormats))
     return false;
   gfx::OverlayTransform overlay_transform = GetOverlayTransform(
-      quad->shared_quad_state->quad_to_target_transform, quad->y_flipped);
+      quad->shared_quad_state()->quad_to_target_transform, quad->y_flipped);
   if (quad->background_color != SK_ColorTRANSPARENT ||
       overlay_transform == gfx::OVERLAY_TRANSFORM_INVALID)
     return false;
@@ -289,7 +290,7 @@ bool OverlayCandidate::FromStreamVideoQuad(ResourceProvider* resource_provider,
   if (!resource_provider->IsOverlayCandidate(quad->resource_id()))
     return false;
   gfx::OverlayTransform overlay_transform = GetOverlayTransform(
-      quad->shared_quad_state->quad_to_target_transform, false);
+      quad->shared_quad_state()->quad_to_target_transform, false);
   if (overlay_transform == gfx::OVERLAY_TRANSFORM_INVALID)
     return false;
   if (!quad->matrix.IsScaleOrTranslation()) {
