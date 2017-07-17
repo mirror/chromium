@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cf312ce9_f4d9060c",
+        "filename": "chrome/browser/password_manager/password_store_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T14:41:53Z",
+      "side": 1,
+      "message": "Correct. Note that even in that case, you can just use UMA_HISTOGRAM_BOOLEAN and pick a bool-enum type in histograms.xml that you like.",
+      "parentUuid": "42855429_bb4d2069",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e411d7_d9901819",
         "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
         "patchSetId": 5
