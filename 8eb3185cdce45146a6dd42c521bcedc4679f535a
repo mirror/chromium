@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e24771_5d8b36e6",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T00:26:26Z",
+      "side": 1,
+      "message": "nit: it\u0027s a little confusing for origin/embedding origin to be separated by display name. You may want to reorder those params (I know it was like that before though :)",
+      "revId": "8eb3185cdce45146a6dd42c521bcedc4679f535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c4237c_53670862",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T00:26:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this check is needed. I think an invalid URL will turn into a unique origin.",
+      "revId": "8eb3185cdce45146a6dd42c521bcedc4679f535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8111b01a_6ca97363",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T00:26:26Z",
+      "side": 1,
+      "message": "Round-tripping through ContentSettingsPattern doesn\u0027t seem ideal.\n\nWhat if we have 2 versions of GetDisplayName - one takes a GURL, the other a Pattern. If the pattern is detected to be an origin, we call into the origin version for the result otherwise we just return the pattern.",
+      "revId": "8eb3185cdce45146a6dd42c521bcedc4679f535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7f842f_25e9c580",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T00:26:26Z",
+      "side": 1,
+      "message": "nit: this comment\u0027s a bit confusing because http://* isn\u0027t a valid origing :)",
+      "revId": "8eb3185cdce45146a6dd42c521bcedc4679f535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
