@@ -28,7 +28,6 @@
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -688,5 +687,4 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
-}  // namespace test
 }  // namespace ash
