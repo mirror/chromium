@@ -84,6 +84,13 @@ IN_PROC_BROWSER_TEST_F(OobeTest, NewUser) {
 IN_PROC_BROWSER_TEST_F(OobeTest, Accelerator) {
   WaitForGaiaPageLoad();
 
+  base::TimeDelta delay = base::TimeDelta::FromMilliseconds(5000);
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE,
+                                                       run_loop.QuitClosure(),
+                                                       delay);
+  run_loop.Run();
+
   gfx::NativeWindow login_window = GetLoginWindowWidget()->GetNativeWindow();
 
   ui_controls::SendKeyPress(login_window,
