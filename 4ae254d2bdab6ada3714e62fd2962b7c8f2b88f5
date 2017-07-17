@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3764fff3_f51f7622",
+        "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-17T22:47:25Z",
+      "side": 1,
+      "message": "The DMG was already created for the purposes of other test fixtures, so I think I will just leave this since it won\u0027t be unpacked or processed anyway do to the file size cap check.",
+      "parentUuid": "f45fc5dc_cdefea8e",
+      "range": {
+        "startLine": 1612,
+        "startChar": 0,
+        "endLine": 1612,
+        "endChar": 51
+      },
+      "revId": "4ae254d2bdab6ada3714e62fd2962b7c8f2b88f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6ecde75_cee7a099",
         "filename": "chrome/common/safe_browsing/file_type_policies.cc",
         "patchSetId": 9
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-17T22:36:40Z",
       "side": 1,
       "message": "Actually, I don\u0027t see where this function is being used.\nIf it is not being used, let\u0027s just drop it.",
+      "range": {
+        "startLine": 256,
+        "startChar": 9,
+        "endLine": 256,
+        "endChar": 50
+      },
+      "revId": "4ae254d2bdab6ada3714e62fd2962b7c8f2b88f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de341420_af8af17f",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-17T22:47:25Z",
+      "side": 1,
+      "message": "Ok, sounds good to me.",
+      "parentUuid": "a6ecde75_cee7a099",
       "range": {
         "startLine": 256,
         "startChar": 9,
@@ -91,6 +139,30 @@
       "revId": "4ae254d2bdab6ada3714e62fd2962b7c8f2b88f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbe54ee_6a1e11af",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-17T22:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1f64ce_9f15e6c5",
+      "range": {
+        "startLine": 258,
+        "startChar": 1,
+        "endLine": 262,
+        "endChar": 34
+      },
+      "revId": "4ae254d2bdab6ada3714e62fd2962b7c8f2b88f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
