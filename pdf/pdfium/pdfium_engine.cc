@@ -48,6 +48,7 @@
 #include "ppapi/cpp/var_dictionary.h"
 #include "printing/pdf_transform.h"
 #include "printing/units.h"
+#include "third_party/pdfium/public/fpdf_annot.h"
 #include "third_party/pdfium/public/fpdf_edit.h"
 #include "third_party/pdfium/public/fpdf_ext.h"
 #include "third_party/pdfium/public/fpdf_flatten.h"
@@ -683,6 +684,7 @@ PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
       mouse_down_state_(PDFiumPage::NONSELECTABLE_AREA,
                         PDFiumPage::LinkTarget()),
       in_form_text_area_(false),
+      editable_form_text_area_(false),
       mouse_left_button_down_(false),
       next_page_to_search_(-1),
       last_page_to_search_(-1),
@@ -1775,6 +1777,22 @@ bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {
       is_valid_control |= (form_type == FPDF_FORMFIELD_XFA);
 #endif
       SetInFormTextArea(is_valid_control);
+      if (is_valid_control) {
+        FPDF_ANNOTATION annot = FPDFAnnot_GetInteractiveFormAnnotAtPoint(
+            form_, pages_[last_page_mouse_down_]->GetPage(), page_x, page_y);
+        if (annot) {
+          int flags = FPDFAnnot_GetInteractiveFormFlags(
+              pages_[last_page_mouse_down_]->GetPage(), annot);
+
+          // A form text area is only editable if it is not read only, and if it
+          // is a text field or a user-editable combobox.
+          editable_form_text_area_ = (flags & FPDF_FORMFLAG_READONLY) == 0 &&
+                                     (form_type == FPDF_FORMFIELD_TEXTFIELD ||
+                                      (flags & FPDF_FORMFLAG_CHOICE_COMBO &&
+                                       flags & FPDF_FORMFLAG_CHOICE_EDIT));
+          FPDFPage_CloseAnnot(annot);
+        }
+      }
       return true;  // Return now before we get into the selection code.
     }
   }
@@ -2398,6 +2416,10 @@ std::string PDFiumEngine::GetSelectedText() {
   FormatStringWithHyphens(&result);
   FormatStringForOS(&result);
   return base::UTF16ToUTF8(result);
+}
+
+bool PDFiumEngine::CanCut() {
+  return in_form_text_area_ && editable_form_text_area_;
 }
 
 std::string PDFiumEngine::GetLinkAtPosition(const pp::Point& point) {
@@ -3642,6 +3664,10 @@ void PDFiumEngine::SetInFormTextArea(bool in_form_text_area) {
 
   client_->FormTextFieldFocusChange(in_form_text_area);
   in_form_text_area_ = in_form_text_area;
+
+  // Clear |editable_form_text_area_| when focus no longer in form text area.
+  if (!in_form_text_area_)
+    editable_form_text_area_ = in_form_text_area_;
 }
 
 void PDFiumEngine::SetMouseLeftButtonDown(bool is_mouse_left_button_down) {
