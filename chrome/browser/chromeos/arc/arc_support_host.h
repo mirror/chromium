@@ -14,8 +14,10 @@
 #include "chrome/browser/chromeos/arc/extensions/arc_support_message_host.h"
 #include "extensions/browser/api/messaging/native_message_host.h"
 #include "ui/display/display_observer.h"
+#include "url/gurl.h"
 
 class Profile;
+class GURL;
 
 // Native interface to control ARC support chrome App.
 // TODO(hidehiko,lhchavez): Move this into extensions/ directory, and put it
@@ -24,12 +26,12 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
                        public display::DisplayObserver {
  public:
   enum class UIPage {
-    NO_PAGE,               // Hide everything.
-    TERMS,                 // Terms content page.
-    LSO,                   // LSO page to enter user's credentials.
-    ARC_LOADING,           // ARC loading progress page.
-    AD_AUTH_NOTIFICATION,  // Active Directory user auth notification.
-    ERROR,                 // ARC start error page.
+    NO_PAGE,      // Hide everything.
+    TERMS,        // Terms content page.
+    LSO,          // LSO page to enter user's credentials.
+    ARC_LOADING,  // ARC loading progress page.
+    AD_AUTH,      // Active Directory user SAML authentication.
+    ERROR,        // ARC start error page.
   };
 
   // Error types whose corresponding message ARC support has.
@@ -45,14 +47,16 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
     SIGN_IN_UNKNOWN_ERROR,
   };
 
-  // Delegate to handle manual authentication related events.
+  // Delegate to handle authentication related events. Currently used for AD and
+  // LSO auth.
   class AuthDelegate {
    public:
-    // Called when LSO auth token fetch is successfully completed.
+    // Called when authentication succeeded. LSO auth returns the auth token
+    // |auth_code|, AD auth returns an empty string.
     virtual void OnAuthSucceeded(const std::string& auth_code) = 0;
 
-    // Called when LSO auth token fetch has failed.
-    virtual void OnAuthFailed() = 0;
+    // Called when authentication failed. |error_msg| contains error details.
+    virtual void OnAuthFailed(const std::string& error_msg) = 0;
 
     // Called when "RETRY" button on the error page is clicked during
     // authentication.
@@ -145,8 +149,14 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
   // Requests to show the "ARC is loading" page.
   void ShowArcLoading();
 
-  // Requests to show the "Active Directory auth notification" page.
-  void ShowActiveDirectoryAuthNotification();
+  // Requests to show the "Active Directory auth" page.
+  void ShowAdAuth();
+
+  // Sets the Active Directory Federation Services URL |federation_url| that
+  // handles user authentication (aka the SAML redirect URL), as well as the DM
+  // server URL prefix that used to detect whether the SAML flow finished.
+  void SetAdAuthUrls(const GURL& federation_url,
+                     const std::string& dm_url_prefix);
 
   // Requests to show the error page
   void ShowError(Error error, bool should_show_send_feedback);
@@ -232,6 +242,11 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
   PreferenceCheckboxData metrics_checkbox_;
   PreferenceCheckboxData backup_and_restore_checkbox_;
   PreferenceCheckboxData location_services_checkbox_;
+
+  // Federation Services URL for Active Directory user SAML authentication.
+  GURL ad_auth_federation_url_;
+  // Prefix of DM server URL used to detect whether the SAML flow finished.
+  std::string ad_auth_dm_url_prefix_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcSupportHost);
 };
