@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98cf72e6_531d949f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:19:01Z",
+      "side": 1,
+      "message": "Just curious, why raise this?",
+      "range": {
+        "startLine": 85,
+        "startChar": 38,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "5fb2c88e93c785af2056b5054369d138b92abdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
