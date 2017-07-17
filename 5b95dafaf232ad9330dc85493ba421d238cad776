@@ -286,6 +286,24 @@
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635991c3_26c280a7",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-17T05:53:41Z",
+      "side": 1,
+      "message": "For future reference, the bug is: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d742706, thanks for filing it :)",
+      "parentUuid": "5ab51928_fc680b24",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
