@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/native_app_window.h"
+#include "extensions/browser/app_window/size_constraints.h"
 
 namespace extensions {
 
@@ -72,6 +73,7 @@ class ShellNativeAppWindow : public NativeAppWindow {
 
  private:
   AppWindow* app_window_;
+  extensions::SizeConstraints size_constraints_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellNativeAppWindow);
 };

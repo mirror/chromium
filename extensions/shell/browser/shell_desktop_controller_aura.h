@@ -71,7 +71,6 @@ class ShellDesktopControllerAura
   ~ShellDesktopControllerAura() override;
 
   // DesktopController:
-  gfx::Size GetWindowSize() override;
   AppWindow* CreateAppWindow(content::BrowserContext* context,
                              const Extension* extension) override;
   void AddAppWindow(gfx::NativeWindow window) override;
