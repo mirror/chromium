@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c04548bc_8de42a90",
+        "filename": "chrome/browser/exo_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T19:58:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04046734_56b189f0",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6e14cf_b0aff43f",
         "filename": "chrome/browser/exo_init.h",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I\u0027m just not a fan of the \"Init\" name as this class contains all parts needed to have Exo running but the \"Init\" name to me indicate that it\u0027s something that is just used during initialization. I like having \"Parts\" in the name instead of \"Init\" for that reason. The exact name doesn\u0027t matter so much to me though. ChromeExoParts or ExoParts? Or we can come up with something other than \"parts\" and \"init\" if neither is good.",
       "parentUuid": "d3d0fa9b_4607c35b",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655c20c0_68fc1fe9",
+        "filename": "chrome/browser/exo_init.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-17T19:58:15Z",
+      "side": 1,
+      "message": "I\u0027ve seen \u0027init\u0027 used in the name more often for code like this, but then perhaps it\u0027s just code I\u0027ve written. I\u0027m not sure parts really conveys what this does, but I don\u0027t have a better name. So, ExoParts it is.",
+      "parentUuid": "f267a309_9bf2e2b1",
       "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
