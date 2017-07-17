@@ -14,6 +14,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string16.h"
@@ -26,7 +27,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
-#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.h"
 #include "chrome/browser/safe_browsing/test_safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/v4_test_utils.h"
@@ -981,7 +981,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, NoActivationOnAboutBlank) {
   // Support both pre-/post-PersistentHistograms worlds. The latter is enabled
   // through field trials, so the former is still used on offical builders.
   content::FetchHistogramsFromChildProcesses();
-  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  base::StatisticsRecorder::ImportProvidedHistograms();
 
   // The only frames where filtering was (even considered to be) activated
   // should be the main frame, and the child that was navigated to an HTTP URL.
@@ -1506,7 +1506,7 @@ void ExpectHistogramsAreRecordedForTestFrameSet(
 
   // The rest is produced by renderers, therefore needs to be merged here.
   content::FetchHistogramsFromChildProcesses();
-  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  base::StatisticsRecorder::ImportProvidedHistograms();
 
   tester.ExpectTotalCount(kEvaluationTotalWallDurationForDocument,
                           time_recorded ? 6 : 0);
@@ -1602,7 +1602,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 
   // The rest is produced by renderers, therefore needs to be merged here.
   content::FetchHistogramsFromChildProcesses();
-  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  base::StatisticsRecorder::ImportProvidedHistograms();
 
   // But they still should not be recorded as the filtering is not activated.
   tester.ExpectTotalCount(kEvaluationTotalWallDurationForDocument, 0);

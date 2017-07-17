@@ -53,7 +53,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_plugin_guest_manager.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/histogram_fetcher.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -65,6 +64,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_fileapi_operation_waiter.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -81,6 +81,9 @@
 #include "net/test/python_utils.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -436,6 +439,11 @@ void AppendGzippedResource(const base::RefCountedMemory& encoded,
       break;
     to_append->append(dest_buffer->data(), rv);
   }
+}
+
+void OnHistogramsFetched(scoped_refptr<MessageLoopRunner> runner,
+                         bool complete) {
+  runner->QuitClosure();
 }
 
 // Queries for video input devices on the current system using the getSources
@@ -1085,13 +1093,19 @@ bool SetCookie(BrowserContext* browser_context,
 void FetchHistogramsFromChildProcesses() {
   scoped_refptr<content::MessageLoopRunner> runner = new MessageLoopRunner;
 
-  FetchHistogramsAsynchronously(
-      base::ThreadTaskRunnerHandle::Get(), runner->QuitClosure(),
-      // If this call times out, it means that a child process is not
-      // responding, which is something we should not ignore.  The timeout is
-      // set to be longer than the normal browser test timeout so that it will
-      // be prempted by the normal timeout.
-      TestTimeouts::action_max_timeout());
+  metrics::mojom::HistogramCollectorPtr histogram_collector;
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(metrics::mojom::kServiceName, &histogram_collector);
+
+  // If this call times out, it means that a child process is not
+  // responding, which is something we should not ignore.  The timeout is
+  // set to be longer than the normal browser test timeout so that it will
+  // be prempted by the normal timeout.
+  auto callback = base::Bind(&OnHistogramsFetched, runner);
+  histogram_collector->UpdateHistograms(
+      TestTimeouts::action_max_timeout(),
+      base::BindOnce(&OnHistogramsFetched, runner));
   runner->Run();
 }
 

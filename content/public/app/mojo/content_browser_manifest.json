@@ -25,7 +25,8 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
-	  "cc::mojom::SharedBitmapAllocationNotifier",
+          "cc::mojom::SharedBitmapAllocationNotifier",
+          "content::mojom::HistogramProvider",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MemoryCoordinatorHandle",
@@ -54,6 +55,7 @@
           "service_manager::mojom::ServiceFactory"
         ],
         "utility": [
+          "metrics::mojom::HistogramCollectorcontent::",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ]
@@ -77,6 +79,7 @@
         "device": [ "device:generic_sensor", "device:nfc", "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
+        "metrics": [ "metrics:histograms" ],
         "network": [
           "network_service",
           "test",

@@ -36,7 +36,6 @@
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/histogram_fetcher.h"
 #include "content/public/common/content_switches.h"
 
 #if defined(OS_LINUX)
@@ -220,12 +219,18 @@ void CastMetricsServiceClient::InitializeSystemProfileMetrics(
 
 void CastMetricsServiceClient::CollectFinalMetricsForLog(
     const base::Closure& done_callback) {
+  DCHECK(task_runner_.BelongsToCurrentThread());
+
   // Asynchronously fetch metrics data from child processes. Since this method
   // is called on log upload, metrics that occur between log upload and child
   // process termination will not be uploaded.
-  content::FetchHistogramsAsynchronously(
-      task_runner_, done_callback,
-      base::TimeDelta::FromSeconds(kMetricsFetchTimeoutSeconds));
+  if (!histogram_collector_.is_bound()) {
+    content::ServiceManagerConnection::GetForProcess()
+        ->GetConnector()
+        ->BindInterface(metrics::mojom::kServiceName, &histogram_collector_);
+  }
+  histogram_collector_->UpdateHistograms(
+      base::TimeDelta::FromSeconds(kMetricsFetchTimeoutSeconds), done_callback);
 }
 
 std::string CastMetricsServiceClient::GetMetricsServerUrl() {
