@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/timer/timer.h"
 #include "media/base/media_observer.h"
 #include "media/remoting/metrics.h"
 #include "media/remoting/shared_session.h"
@@ -69,6 +70,8 @@ class RendererController final : public SharedSession::Client,
   void OnRendererFatalError(StopTrigger stop_trigger);
 
  private:
+  friend class RendererControllerTest;
+
   bool has_audio() const {
     return pipeline_metadata_.has_audio &&
            pipeline_metadata_.audio_decoder_config.IsValidConfig();
@@ -85,12 +88,12 @@ class RendererController final : public SharedSession::Client,
   void UpdateFromSessionState(StartTrigger start_trigger,
                               StopTrigger stop_trigger);
 
-  bool IsVideoCodecSupported();
-  bool IsAudioCodecSupported();
-  bool IsRemoteSinkAvailable();
+  bool IsVideoCodecSupported() const;
+  bool IsAudioCodecSupported() const;
+  bool IsRemoteSinkAvailable() const;
 
-  // Helper to decide whether to enter or leave Remoting mode.
-  bool ShouldBeRemoting();
+  // Helpers to decide whether remoting can be activated.
+  bool CanBeRemoting() const;
 
   // Determines whether to enter or leave Remoting mode and switches if
   // necessary. Each call to this method could cause a remoting session to be
@@ -99,8 +102,17 @@ class RendererController final : public SharedSession::Client,
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
 
-  // Indicates whether this media element is in full screen.
-  bool is_fullscreen_ = false;
+  // Start |delayed_start_stability_timer_| and wait for the timer to get fired
+  // to start the remoting. Cancel the start if video element stops being
+  // dominant in viewport.
+  void WaitForStabilityBeforeStart(StartTrigger start_trigger);
+  // Cancel the start of remoting.
+  void CancelDelayedStart();
+  // Called when |delayed_start_stability_timer_| is fired.
+  void OnDelayedStartTimerFired(StartTrigger start_trigger);
+
+  // Helper to request switching to the remoting renderer.
+  void StartRemoting(StartTrigger start_trigger);
 
   // Indicates whether remoting is started.
   bool remote_rendering_started_ = false;
@@ -148,6 +160,13 @@ class RendererController final : public SharedSession::Client,
 
   // Not own by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // When this is running, it indicatates that remoting will be started later
+  // when the timer gets fired. The start will be canceled if the video element
+  // stops being dominant in the viewport during this period.
+  // TODO(xjz): Estimate whether the transmission bandwidth is sufficient to
+  // remote the content while this timer is running.
+  base::OneShotTimer delayed_start_stability_timer_;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 
