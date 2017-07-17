@@ -16,6 +16,24 @@
       "revId": "a63d27873c29b5cae03b96314f72c9ff48227335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a52906_9fc2fd57",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-17T21:36:03Z",
+      "side": 1,
+      "message": "Yeah, :host ::slotted([slot\u003dbutton-container]) works.\nThat part is done. I\u0027d like to remove the class\u003d\"...\" in a follow-up CL.",
+      "parentUuid": "9e69b7d6_d07aad79",
+      "revId": "a63d27873c29b5cae03b96314f72c9ff48227335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
