@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60fcdcde_88417000",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done. Moved the logic to UpdateAndMaybeSwitch() and marked CanBeRemoting() to const. Also marked other query functions to const.",
+      "parentUuid": "32485c1d_758191a6",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904a1c0d_849ad9d1",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-15T00:02:03Z",
       "side": 1,
       "message": "This could just go in the else clause below, where you set remote_rendering_started_ \u003d false.",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd02a2f_a1fb140a",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "The else clause below is where to switch to local renderer. When in the delayed start period, |should_be_remoting| being false only requires to cancel the start, but no need to switch renderer since remoting hasn\u0027t been started yet.",
+      "parentUuid": "904a1c0d_849ad9d1",
       "range": {
         "startLine": 322,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fe970eb6_2bcce6a6",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ffb38ed_210a78eb",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 1
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f530ba9_12be61f7",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-15T00:02:03Z",
       "side": 1,
       "message": "This isn\u0027t necessary since this method is only called from one place, and only the first time  ShouldBeRemoting() starts returning true. You could DCHECK() it to state the assumption that the timer shouldn\u0027t be running.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a015c3_e4ad4e50",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "I feel better to use the if condition here. For example, if for some reason OnRemoteDisplaybackDisabled(true) was called twice, this will be called in the middle of the delayed start. Seems it is not guaranteed that this is only called once at the first time when ShouldBeRemoting() returns true.",
+      "parentUuid": "4f530ba9_12be61f7",
       "range": {
         "startLine": 376,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f93ed983_6a2ef34a",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20427d6b_6907cf69",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 18
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce47d36f_397a83a6",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30622c49_10a14bd8",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce47d36f_397a83a6",
+      "range": {
+        "startLine": 386,
+        "startChar": 17,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4ddd9024_33f75420",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b956a4_0bb7404e",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 53
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abd0b13_6662b434",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-15T00:02:03Z",
       "side": 1,
       "message": "What if it became false during the 5 seconds of waiting?",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea0c7c8_05934b7a",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "This should not be called in that case since the timer should be stopped when it became false.",
+      "parentUuid": "3abd0b13_6662b434",
       "range": {
         "startLine": 401,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0580a08c_06771a85",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Is the check necessary? When ShouldBeRemoting() changed to false, the timer should be stopped immediately and this should not be called.",
+      "parentUuid": "a44422a6_a6aa2758",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "546a6e73_ab6b9bf1",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 1
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-15T00:02:03Z",
       "side": 1,
       "message": "What\u0027s the difference between CanBeRemoting() and ShouldBeRemoting()? Perhaps CanBeRemoting() should be something more-specific, like AreCapabilitiesSatisfied()?",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14163d6_2d36666a",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Yes, CanBeRemoting() indicates whether capabilities are satisfied and whether remoting has been disabled by errors/disableRemotePlayback attribute. Now removed the ShuldBeRemoting() according to your another comment and kept the CanBeRemoting().",
+      "parentUuid": "546a6e73_ab6b9bf1",
       "range": {
         "startLine": 96,
         "startChar": 1,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "dd03b796_182079df",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done. Thanks for the naming suggestions. :)",
+      "parentUuid": "e897eebb_909e48c0",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ea499f_e2d61f6e",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 1
@@ -266,6 +530,30 @@
       "writtenOn": "2017-07-15T00:02:03Z",
       "side": 1,
       "message": "You don\u0027t need this bool: Everywhere you do this:\n\n  if (!activated_..._monitoring_ \u0026\u0026 client_) {\n    client_-\u003eActivate...Monitoring(true);\n    activated_..._monitoring_ \u003d true;\n  }\n\n...you could just do this without ill effects:\n\n  if (client_) {\n    client_-\u003eActivate...Monitoring(true);\n  }",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 58
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8008c21_95bc4872",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "21ea499f_e2d61f6e",
       "range": {
         "startLine": 148,
         "startChar": 0,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "d3dc409a_2d322f1a",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7426d9b_a0942e18",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 62
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623142aa_51adfe89",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 1
@@ -321,6 +633,30 @@
       "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e00c90_10c0bcfb",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-17T19:36:55Z",
+      "side": 1,
+      "message": "Done. Rewrote the comment.",
+      "parentUuid": "623142aa_51adfe89",
+      "range": {
+        "startLine": 173,
+        "startChar": 18,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
