@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ff229f8_e7886cd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-17T11:06:42Z",
+      "side": 1,
+      "message": "As far as I can tell, the padding is zero in both of those files? 12dp is the start/end margin (in both).\n\nIf that is not the case, and the padding is different between two usages of TileGridLayout, how would we handle that for the two constants?",
+      "parentUuid": "c55763dc_bc822a77",
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad05e0d_3f7e6970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "76ce0e29141794447359c1828bd0a746156716ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9869ad35_b00496f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-17T11:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad05e0d_3f7e6970",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,30 @@
       "side": 1,
       "message": "Keeping the index in the tile is probably the right thing to do, it will be easier to notice changes in order of the tiles that way.",
       "parentUuid": "57676756_f99bbbfa",
+      "range": {
+        "startLine": 263,
+        "startChar": 82,
+        "endLine": 263,
+        "endChar": 83
+      },
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad9f3e5_fe8152b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-17T11:06:42Z",
+      "side": 1,
+      "message": "Moved reordering here.",
+      "parentUuid": "cc1932bb_9f60c3c6",
       "range": {
         "startLine": 263,
         "startChar": 82,
