@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953978b9_26dc7dae",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-17T18:21:38Z",
+      "side": 1,
+      "message": "Will this work correctly if the user types, say \"WWW.goo\"?  I think all stored URLs are valid (hence hostnames lowercases), but user input can be uppercase.",
+      "range": {
+        "startLine": 735,
+        "startChar": 55,
+        "endLine": 735,
+        "endChar": 56
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b446f24_c9f5173f",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-17T18:21:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but think this match_after_host logic will work exactly.  If I remember right (I might not), terms can be multi-word strings such as \"google.com/maps\".  This match will appear to be a match in the hostname, yet will extend after the host.  In cases like I think, I think you probably should set match_after_host because, well, there is a match after host.  Can you please check the behavior on inputs like this?",
+      "range": {
+        "startLine": 518,
+        "startChar": 6,
+        "endLine": 518,
+        "endChar": 22
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
