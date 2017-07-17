@@ -70,6 +70,30 @@
       "revId": "202870bf0e82d9cf0d37e6aafc4c291dbc6413c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4605d41e_a535e27a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-17T17:52:33Z",
+      "side": 1,
+      "message": "Indeed, a comment is justified.",
+      "parentUuid": "2366df3c_fb7dc2ac",
+      "range": {
+        "startLine": 825,
+        "startChar": 21,
+        "endLine": 825,
+        "endChar": 33
+      },
+      "revId": "202870bf0e82d9cf0d37e6aafc4c291dbc6413c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
