@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.infobar.InfoBar;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.test.ChromeActivityTestCommon.ChromeTestCommonCallback;
 import org.chromium.chrome.test.util.ApplicationTestUtils;
 
@@ -205,6 +206,17 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
     public Tab loadUrlInNewTab(final String url, final boolean incognito)
             throws InterruptedException {
         return mTestCommon.loadUrlInNewTab(url, incognito);
+    }
+
+    /**
+     * Load a url in a new tab, with the given transition type.
+     * @param url The url of the page to load.
+     * @param incognito Whether the new tab should be incognito.
+     * @param launchType The type of Tab Launch.
+     */
+    public Tab loadUrlInNewTab(final String url, final boolean incognito,
+            final TabLaunchType launchType) throws InterruptedException {
+        return mTestCommon.loadUrlInNewTab(url, incognito, launchType);
     }
 
     /**

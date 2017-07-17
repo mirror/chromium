@@ -49,4 +49,9 @@ public interface VrShell {
      * Returns the GVRLayout as a FrameLayout.
      */
     FrameLayout getContainer();
+
+    /**
+     * Returns whether the back button is enabled.
+     */
+    Boolean isBackButtonEnabled();
 }

@@ -305,13 +305,25 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
      * @param incognito Whether the new tab should be incognito.
      */
     Tab loadUrlInNewTab(final String url, final boolean incognito) throws InterruptedException {
+        return loadUrlInNewTab(url, false, TabLaunchType.FROM_LINK);
+    }
+
+    /**
+     * Load a url in a new tab, with the given transition type.
+     *
+     * @param url The url of the page to load.
+     * @param incognito Whether the new tab should be incognito.
+     * @param launchType The type of Tab Launch.
+     */
+    Tab loadUrlInNewTab(final String url, final boolean incognito, final TabLaunchType launchType)
+            throws InterruptedException {
         Tab tab = null;
         try {
             tab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
                 @Override
                 public Tab call() throws Exception {
                     return mCallback.getActivity().getTabCreator(incognito).launchUrl(
-                            url, TabLaunchType.FROM_LINK);
+                            url, launchType);
                 }
             });
         } catch (ExecutionException e) {
