@@ -34,6 +34,10 @@ namespace net {
 // Defined types for network traffic annotation tags.
 struct NetworkTrafficAnnotationTag {
   const int32_t unique_id_hash_code;
+
+  bool operator==(const NetworkTrafficAnnotationTag& other) const {
+    return unique_id_hash_code == other.unique_id_hash_code;
+  }
 };
 struct PartialNetworkTrafficAnnotationTag {
   const int32_t unique_id_hash_code;

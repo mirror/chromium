@@ -5,15 +5,17 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_ENTRY_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_ENTRY_H_
 
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/download/public/client.h"
 #include "components/download/public/clients.h"
 #include "components/download/public/download_params.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
 
 // An entry in the Model that represents a scheduled download.
-struct Entry {
+class Entry {
  public:
   enum class State {
     // A newly added download.  The Entry is not guaranteed to be persisted in
@@ -44,6 +46,7 @@ struct Entry {
   ~Entry();
 
   bool operator==(const Entry& other) const;
+  Entry& operator=(const Entry& other);
 
   // The feature that is requesting this download.
   DownloadClient client = DownloadClient::INVALID;
@@ -74,6 +77,25 @@ struct Entry {
 
   // Stores the number of retries for this download.
   uint32_t attempt_count;
+
+  bool has_traffic_annotation() const { return bool(traffic_annotation_); }
+
+  const net::NetworkTrafficAnnotationTag& get_traffic_annotation() const {
+    CHECK(traffic_annotation_);
+    return *traffic_annotation_;
+  }
+
+  void set_traffic_annotation(
+      const net::NetworkTrafficAnnotationTag traffic_annotation) {
+    traffic_annotation_ =
+        base::MakeUnique<net::NetworkTrafficAnnotationTag>(traffic_annotation);
+  }
+
+  void reset_traffic_annotation() { traffic_annotation_.reset(); }
+
+ private:
+  // Traffic annotation for the network request.
+  std::unique_ptr<net::NetworkTrafficAnnotationTag> traffic_annotation_;
 };
 
 }  // namespace download

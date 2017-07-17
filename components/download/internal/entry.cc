@@ -7,7 +7,21 @@
 namespace download {
 
 Entry::Entry() : attempt_count(0) {}
-Entry::Entry(const Entry& other) = default;
+Entry::Entry(const Entry& other)
+    : client(other.client),
+      guid(other.guid),
+      create_time(other.create_time),
+      scheduling_params(other.scheduling_params),
+      request_params(other.request_params),
+      state(other.state),
+      target_file_path(other.target_file_path),
+      completion_time(other.completion_time),
+      attempt_count(other.attempt_count) {
+  if (other.has_traffic_annotation())
+    set_traffic_annotation(other.get_traffic_annotation());
+  else
+    reset_traffic_annotation();
+}
 
 Entry::Entry(const DownloadParams& params)
     : client(params.client),
@@ -15,7 +29,9 @@ Entry::Entry(const DownloadParams& params)
       create_time(base::Time::Now()),
       scheduling_params(params.scheduling_params),
       request_params(params.request_params),
-      attempt_count(0) {}
+      attempt_count(0) {
+  set_traffic_annotation(params.traffic_annotation_);
+}
 
 Entry::~Entry() = default;
 
@@ -34,7 +50,27 @@ bool Entry::operator==(const Entry& other) const {
          state == other.state && target_file_path == other.target_file_path &&
          create_time == other.create_time &&
          completion_time == other.completion_time &&
-         attempt_count == other.attempt_count;
+         attempt_count == other.attempt_count &&
+         (has_traffic_annotation() == other.has_traffic_annotation() &&
+          (!has_traffic_annotation() ||
+           get_traffic_annotation() == other.get_traffic_annotation()));
 }
 
+Entry& Entry::operator=(const Entry& other) {
+  client = other.client;
+  guid = other.guid;
+  create_time = other.create_time;
+  scheduling_params = other.scheduling_params;
+  request_params = other.request_params;
+  state = other.state;
+  target_file_path = other.target_file_path;
+  completion_time = other.completion_time;
+  attempt_count = other.attempt_count;
+  if (other.has_traffic_annotation())
+    set_traffic_annotation(other.get_traffic_annotation());
+  else
+    reset_traffic_annotation();
+
+  return *this;
+}
 }  // namespace download

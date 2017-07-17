@@ -75,6 +75,7 @@ source_set("unit_tests") {
     "controller_impl_unittest.cc",
     "download_service_impl_unittest.cc",
     "download_store_unittest.cc",
+    "entry_unittest.cc",
     "entry_utils_unittest.cc",
     "file_monitor_unittest.cc",
     "model_impl_unittest.cc",
@@ -90,6 +91,7 @@ source_set("unit_tests") {
     "//components/download/internal/proto",
     "//components/download/internal/test:test_support",
     "//components/leveldb_proto:test_support",
+    "//net:test_support",
     "//testing/gmock",
     "//testing/gtest",
   ]
