@@ -29,12 +29,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 /**
- * AccountManagerHelper wraps our access of AccountManager in Android.
+ * AccountManagerFacade wraps our access of AccountManager in Android.
  *
- * Use the {@link #initializeAccountManagerHelper} to instantiate it.
+ * Use the {@link #initializeAccountManagerFacade} to instantiate it.
  * After initialization, instance get be acquired by calling {@link #get}.
  */
-public class AccountManagerHelper {
+public class AccountManagerFacade {
     private static final String TAG = "Sync_Signin";
     private static final Pattern AT_SYMBOL = Pattern.compile("@");
     private static final String GMAIL_COM = "gmail.com";
@@ -48,7 +48,7 @@ public class AccountManagerHelper {
     @VisibleForTesting
     public static final String FEATURE_IS_CHILD_ACCOUNT_KEY = "service_uca";
 
-    private static final AtomicReference<AccountManagerHelper> sInstance = new AtomicReference<>();
+    private static final AtomicReference<AccountManagerFacade> sInstance = new AtomicReference<>();
 
     private final AccountManagerDelegate mDelegate;
 
@@ -95,59 +95,59 @@ public class AccountManagerHelper {
     /**
      * @param delegate the account manager to use as a backend service
      */
-    private AccountManagerHelper(AccountManagerDelegate delegate) {
+    private AccountManagerFacade(AccountManagerDelegate delegate) {
         mDelegate = delegate;
     }
 
     /**
-     * Initialize AccountManagerHelper with a custom AccountManagerDelegate.
-     * Ensures that the singleton AccountManagerHelper hasn't been created yet.
-     * This can be overriden in tests using the overrideAccountManagerHelperForTests method.
+     * Initialize AccountManagerFacade with a custom AccountManagerDelegate.
+     * Ensures that the singleton AccountManagerFacade hasn't been created yet.
+     * This can be overriden in tests using the overrideAccountManagerFacadeForTests method.
      *
      * @param delegate the custom AccountManagerDelegate to use.
      */
     @AnyThread
-    public static void initializeAccountManagerHelper(AccountManagerDelegate delegate) {
-        if (!sInstance.compareAndSet(null, new AccountManagerHelper(delegate))) {
-            throw new IllegalStateException("AccountManagerHelper is already initialized!");
+    public static void initializeAccountManagerFacade(AccountManagerDelegate delegate) {
+        if (!sInstance.compareAndSet(null, new AccountManagerFacade(delegate))) {
+            throw new IllegalStateException("AccountManagerFacade is already initialized!");
         }
     }
 
     /**
      * Singleton instance getter. Singleton must be initialized before calling this
-     * (by initializeAccountManagerHelper or overrideAccountManagerHelperForTests).
+     * (by initializeAccountManagerFacade or overrideAccountManagerFacadeForTests).
      *
      * @return a singleton instance
      */
     @AnyThread
-    public static AccountManagerHelper get() {
-        AccountManagerHelper instance = sInstance.get();
-        assert instance != null : "AccountManagerHelper is not initialized!";
+    public static AccountManagerFacade get() {
+        AccountManagerFacade instance = sInstance.get();
+        assert instance != null : "AccountManagerFacade is not initialized!";
         return instance;
     }
 
     /**
-     * Override AccountManagerHelper with a custom AccountManagerDelegate in tests.
-     * Unlike initializeAccountManagerHelper, this will override the existing instance of
-     * AccountManagerHelper if any. Only for use in Tests.
+     * Override AccountManagerFacade with a custom AccountManagerDelegate in tests.
+     * Unlike initializeAccountManagerFacade, this will override the existing instance of
+     * AccountManagerFacade if any. Only for use in Tests.
      *
      * @param context the applicationContext is retrieved from the context used as an argument.
      * @param delegate the custom AccountManagerDelegate to use.
      */
     @VisibleForTesting
     @AnyThread
-    public static void overrideAccountManagerHelperForTests(
+    public static void overrideAccountManagerFacadeForTests(
             Context context, AccountManagerDelegate delegate) {
-        sInstance.set(new AccountManagerHelper(delegate));
+        sInstance.set(new AccountManagerFacade(delegate));
     }
 
     /**
-     * Resets custom AccountManagerHelper set with {@link #overrideAccountManagerHelperForTests}.
+     * Resets custom AccountManagerFacade set with {@link #overrideAccountManagerFacadeForTests}.
      * Only for use in Tests.
      */
     @VisibleForTesting
     @AnyThread
-    public static void resetAccountManagerHelperForTests() {
+    public static void resetAccountManagerFacadeForTests() {
         sInstance.set(null);
     }
 
