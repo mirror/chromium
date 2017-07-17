@@ -381,7 +381,7 @@ std::unique_ptr<base::Value> CoreOptionsHandler::CreateValueForPref(
     controlling_pref = pref;
 
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->Set("value", base::MakeUnique<base::Value>(*pref->GetValue()));
+  dict->Set("value", base::MakeUnique<base::Value>(pref->GetValue()->Clone()));
   if (controlling_pref->IsManaged()) {
     dict->SetString("controlledBy", "policy");
   } else if (controlling_pref->IsExtensionControlled() &&
@@ -408,7 +408,7 @@ std::unique_ptr<base::Value> CoreOptionsHandler::CreateValueForPref(
       controlling_pref->GetRecommendedValue();
   if (recommended_value)
     dict->Set("recommendedValue",
-              base::MakeUnique<base::Value>(*recommended_value));
+              base::MakeUnique<base::Value>(recommended_value->Clone()));
   dict->SetBoolean("disabled", !controlling_pref->IsUserModifiable());
   return std::move(dict);
 }

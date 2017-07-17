@@ -416,7 +416,7 @@ class MergeToAugmented : public MergeToEffective {
     if (values.active_setting) {
       augmented_value->SetWithoutPathExpansion(
           ::onc::kAugmentationActiveSetting,
-          base::MakeUnique<base::Value>(*values.active_setting));
+          base::MakeUnique<base::Value>(values.active_setting->Clone()));
     }
 
     if (!which_effective.empty()) {
@@ -432,23 +432,23 @@ class MergeToAugmented : public MergeToEffective {
       if (values.user_policy) {
         augmented_value->SetWithoutPathExpansion(
             ::onc::kAugmentationUserPolicy,
-            base::MakeUnique<base::Value>(*values.user_policy));
+            base::MakeUnique<base::Value>(values.user_policy->Clone()));
       }
       if (values.device_policy) {
         augmented_value->SetWithoutPathExpansion(
             ::onc::kAugmentationDevicePolicy,
-            base::MakeUnique<base::Value>(*values.device_policy));
+            base::MakeUnique<base::Value>(values.device_policy->Clone()));
       }
     }
     if (values.user_setting) {
       augmented_value->SetWithoutPathExpansion(
           ::onc::kAugmentationUserSetting,
-          base::MakeUnique<base::Value>(*values.user_setting));
+          base::MakeUnique<base::Value>(values.user_setting->Clone()));
     }
     if (values.shared_setting) {
       augmented_value->SetWithoutPathExpansion(
           ::onc::kAugmentationSharedSetting,
-          base::MakeUnique<base::Value>(*values.shared_setting));
+          base::MakeUnique<base::Value>(values.shared_setting->Clone()));
     }
     if (HasUserPolicy() && values.user_editable) {
       augmented_value->SetBooleanWithoutPathExpansion(

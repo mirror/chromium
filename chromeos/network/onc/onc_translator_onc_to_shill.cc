@@ -357,7 +357,7 @@ void LocalTranslator::CopyFieldFromONCToShill(
     return;
   }
   shill_dictionary_->SetWithoutPathExpansion(
-      shill_property_name, base::MakeUnique<base::Value>(*value));
+      shill_property_name, base::MakeUnique<base::Value>(value->Clone()));
 }
 
 void LocalTranslator::AddValueAccordingToSignature(

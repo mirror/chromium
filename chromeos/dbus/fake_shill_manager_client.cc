@@ -185,7 +185,7 @@ void FakeShillManagerClient::SetProperty(const std::string& name,
                                          const ErrorCallback& error_callback) {
   VLOG(2) << "SetProperty: " << name;
   stub_properties_.SetWithoutPathExpansion(
-      name, base::MakeUnique<base::Value>(value));
+      name, base::MakeUnique<base::Value>(value.Clone()));
   CallNotifyObserversPropertyChanged(name);
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }

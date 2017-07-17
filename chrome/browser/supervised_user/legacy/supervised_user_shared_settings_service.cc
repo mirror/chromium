@@ -114,7 +114,8 @@ void SupervisedUserSharedSettingsService::SetValueInternal(
     dict = update_dict->SetDictionaryWithoutPathExpansion(
         key, base::MakeUnique<base::DictionaryValue>());
   }
-  dict->SetWithoutPathExpansion(kValue, base::MakeUnique<base::Value>(value));
+  dict->SetWithoutPathExpansion(kValue,
+                                base::MakeUnique<base::Value>(value.Clone()));
   dict->SetBooleanWithoutPathExpansion(kAcknowledged, acknowledged);
 
   if (!sync_processor_)

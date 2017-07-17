@@ -357,7 +357,7 @@ TEST_F(PersistentPrefStoreConsistencyTest, WriteParentThenChild) {
   three_dict.SetInteger(kKey, 3);
   three_dict.SetDictionary(kDictionaryKey,
                            base::MakeUnique<base::DictionaryValue>());
-  base::DictionaryValue five_dict = three_dict;
+  base::DictionaryValue five_dict = three_dict.Clone();
   five_dict.SetInteger(kKey, 5);
   base::DictionaryValue expected_dict;
   expected_dict.SetInteger(kKey, 3);
@@ -731,7 +731,7 @@ TEST_F(PersistentPrefStoreConsistencyTest, NestedWriteParentThenChild) {
   two_and_four_dict.SetInteger(kNestedOtherKey, 4);
   base::DictionaryValue three_dict;
   three_dict.SetInteger(kNestedKey, 3);
-  base::DictionaryValue expected_dict = two_and_four_dict;
+  base::DictionaryValue expected_dict = two_and_four_dict.Clone();
   expected_dict.SetInteger(kNestedKey, 3);
 
   connection->ForwardUpdates(1);

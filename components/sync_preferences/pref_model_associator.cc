@@ -281,34 +281,30 @@ std::unique_ptr<base::Value> PrefModelAssociator::MergeListValues(
     const base::Value& from_value,
     const base::Value& to_value) {
   if (from_value.GetType() == base::Value::Type::NONE)
-    return base::MakeUnique<base::Value>(to_value);
+    return base::MakeUnique<base::Value>(to_value.Clone());
   if (to_value.GetType() == base::Value::Type::NONE)
-    return base::MakeUnique<base::Value>(from_value);
+    return base::MakeUnique<base::Value>(from_value.Clone());
 
   DCHECK(from_value.GetType() == base::Value::Type::LIST);
   DCHECK(to_value.GetType() == base::Value::Type::LIST);
-  const base::ListValue& from_list_value =
-      static_cast<const base::ListValue&>(from_value);
-  const base::ListValue& to_list_value =
-      static_cast<const base::ListValue&>(to_value);
 
-  auto result = base::MakeUnique<base::ListValue>(to_list_value);
-  base::Value::ListStorage& list = result->GetList();
-  std::copy_if(
-      from_list_value.GetList().begin(), from_list_value.GetList().end(),
-      std::back_inserter(list), [&list](const base::Value& value) {
-        return std::find(list.begin(), list.end(), value) == list.end();
-      });
-  return std::move(result);
+  base::Value result = to_value.Clone();
+  base::Value::ListStorage& list = result.GetList();
+  for (const auto& value : from_value.GetList()) {
+    if (std::find(list.begin(), list.end(), value) == list.end())
+      list.emplace_back(value.Clone());
+  }
+
+  return base::MakeUnique<base::Value>(std::move(result));
 }
 
 std::unique_ptr<base::Value> PrefModelAssociator::MergeDictionaryValues(
     const base::Value& from_value,
     const base::Value& to_value) {
   if (from_value.GetType() == base::Value::Type::NONE)
-    return base::MakeUnique<base::Value>(to_value);
+    return base::MakeUnique<base::Value>(to_value.Clone());
   if (to_value.GetType() == base::Value::Type::NONE)
-    return base::MakeUnique<base::Value>(from_value);
+    return base::MakeUnique<base::Value>(from_value.Clone());
 
   DCHECK_EQ(from_value.GetType(), base::Value::Type::DICTIONARY);
   DCHECK_EQ(to_value.GetType(), base::Value::Type::DICTIONARY);
@@ -316,7 +312,7 @@ std::unique_ptr<base::Value> PrefModelAssociator::MergeDictionaryValues(
       static_cast<const base::DictionaryValue&>(from_value);
   const base::DictionaryValue& to_dict_value =
       static_cast<const base::DictionaryValue&>(to_value);
-  auto result = base::MakeUnique<base::DictionaryValue>(to_dict_value);
+  auto result = base::MakeUnique<base::DictionaryValue>(to_dict_value.Clone());
 
   for (base::DictionaryValue::Iterator it(from_dict_value); !it.IsAtEnd();
        it.Advance()) {
@@ -333,7 +329,7 @@ std::unique_ptr<base::Value> PrefModelAssociator::MergeDictionaryValues(
       // values so we do nothing here.
     } else {
       result->SetWithoutPathExpansion(
-          it.key(), base::MakeUnique<base::Value>(*from_key_value));
+          it.key(), base::MakeUnique<base::Value>(from_key_value->Clone()));
     }
   }
   return std::move(result);

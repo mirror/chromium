@@ -446,7 +446,7 @@ Status WebViewImpl::GetCookies(std::unique_ptr<base::ListValue>* cookies,
       browser_info_->browser_name != "webview") {
     base::ListValue url_list;
     url_list.AppendString(current_page_url);
-    params.Set("urls", base::MakeUnique<base::Value>(url_list));
+    params.Set("urls", base::MakeUnique<base::Value>(url_list.Clone()));
     Status status =
         client_->SendCommandAndGetResult("Network.getCookies", params, &result);
     if (status.IsError())
@@ -590,7 +590,7 @@ Status WebViewImpl::SetFileInputFiles(
     return Status(kUnknownError, "no node ID for file input");
   base::DictionaryValue params;
   params.SetInteger("nodeId", node_id);
-  params.Set("files", base::MakeUnique<base::Value>(file_list));
+  params.Set("files", base::MakeUnique<base::Value>(file_list.Clone()));
   return client_->SendCommand("DOM.setFileInputFiles", params);
 }
 

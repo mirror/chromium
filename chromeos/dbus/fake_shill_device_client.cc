@@ -122,7 +122,7 @@ void FakeShillDeviceClient::SetPropertyInternal(
     return;
   }
   device_properties->SetWithoutPathExpansion(
-      name, base::MakeUnique<base::Value>(value));
+      name, base::MakeUnique<base::Value>(value.Clone()));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeShillDeviceClient::NotifyObserversPropertyChanged,

@@ -418,8 +418,8 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
         new_properties.SetDictionaryWithoutPathExpansion(
             shill::kProviderProperty,
             base::MakeUnique<base::DictionaryValue>());
-    provider->SetWithoutPathExpansion(key,
-                                      base::MakeUnique<base::Value>(value));
+    provider->SetWithoutPathExpansion(
+        key, base::MakeUnique<base::Value>(value.Clone()));
     changed_property = shill::kProviderProperty;
   } else if (value.GetType() == base::Value::Type::DICTIONARY) {
     const base::DictionaryValue* new_dict = NULL;
@@ -434,12 +434,12 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
       new_properties.SetWithoutPathExpansion(property, std::move(cur_value));
     } else {
       new_properties.SetWithoutPathExpansion(
-          property, base::MakeUnique<base::Value>(value));
+          property, base::MakeUnique<base::Value>(value.Clone()));
     }
     changed_property = property;
   } else {
     new_properties.SetWithoutPathExpansion(
-        property, base::MakeUnique<base::Value>(value));
+        property, base::MakeUnique<base::Value>(value.Clone()));
     changed_property = property;
   }
 

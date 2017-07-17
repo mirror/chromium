@@ -242,7 +242,7 @@ void LocalTargetsUIHandler::SendTargets(
   for (const scoped_refptr<DevToolsAgentHost>& host : targets) {
     targets_[host->GetId()] = host;
     hosts.push_back(
-        {host->GetId(), host->GetParentId(), *Serialize(host.get())});
+        {host->GetId(), host->GetParentId(), Serialize(host.get())->Clone()});
   }
 
   SendSerializedTargets(

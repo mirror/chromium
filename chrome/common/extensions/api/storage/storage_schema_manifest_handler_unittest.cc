@@ -89,7 +89,8 @@ TEST_F(StorageSchemaManifestHandlerTest, Parse) {
 TEST_F(StorageSchemaManifestHandlerTest, Validate) {
   base::ListValue permissions;
   permissions.AppendString("storage");
-  manifest_.Set("permissions", base::MakeUnique<base::Value>(permissions));
+  manifest_.Set("permissions",
+                base::MakeUnique<base::Value>(std::move(permissions)));
 
   // Absolute path.
   manifest_.SetString("storage.managed_schema", "/etc/passwd");

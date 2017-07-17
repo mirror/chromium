@@ -73,7 +73,6 @@ class BASE_EXPORT Value {
   static std::unique_ptr<Value> CreateWithCopiedBuffer(const char* buffer,
                                                        size_t size);
 
-  Value(const Value& that);
   Value(Value&& that) noexcept;
   Value() noexcept;  // A null value.
   explicit Value(Type type);
@@ -99,11 +98,11 @@ class BASE_EXPORT Value {
 
   explicit Value(DictStorage&& in_dict) noexcept;
 
-  explicit Value(const ListStorage& in_list);
   explicit Value(ListStorage&& in_list) noexcept;
 
-  Value& operator=(const Value& that);
   Value& operator=(Value&& that) noexcept;
+
+  Value Clone() const;
 
   ~Value();
 
@@ -263,10 +262,10 @@ class BASE_EXPORT Value {
 
  private:
   void InternalCopyFundamentalValue(const Value& that);
-  void InternalCopyConstructFrom(const Value& that);
   void InternalMoveConstructFrom(Value&& that);
-  void InternalCopyAssignFromSameType(const Value& that);
   void InternalCleanup();
+
+  DISALLOW_COPY_AND_ASSIGN(Value);
 };
 
 // DictionaryValue provides a key-value dictionary with (optional) "path"
@@ -281,6 +280,7 @@ class BASE_EXPORT DictionaryValue : public Value {
   static std::unique_ptr<DictionaryValue> From(std::unique_ptr<Value> value);
 
   DictionaryValue();
+  DictionaryValue(Value&& that) noexcept;
 
   // Returns true if the current dictionary has a value for the given key.
   bool HasKey(StringPiece key) const;
@@ -459,7 +459,7 @@ class BASE_EXPORT ListValue : public Value {
   static std::unique_ptr<ListValue> From(std::unique_ptr<Value> value);
 
   ListValue();
-  explicit ListValue(const ListStorage& in_list);
+  ListValue(Value&& that) noexcept;
   explicit ListValue(ListStorage&& in_list) noexcept;
 
   // Clears the contents of this ListValue

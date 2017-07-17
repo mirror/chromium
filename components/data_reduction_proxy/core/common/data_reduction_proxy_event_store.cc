@@ -107,7 +107,8 @@ DataReductionProxyEventStore::GetSummaryValue() const {
   data_reduction_proxy_values->SetBoolean("enabled", enabled_);
   if (current_configuration_) {
     data_reduction_proxy_values->Set(
-        "proxy_config", base::MakeUnique<base::Value>(*current_configuration_));
+        "proxy_config",
+        base::MakeUnique<base::Value>(current_configuration_->Clone()));
   }
 
   switch (secure_proxy_check_state_) {
@@ -130,7 +131,8 @@ DataReductionProxyEventStore::GetSummaryValue() const {
         (base::TimeTicks::Now() - base::TimeTicks()).InMilliseconds();
     if (expiration_ticks_ > current_time_ticks_ms) {
       data_reduction_proxy_values->Set(
-          "last_bypass", base::MakeUnique<base::Value>(*last_bypass_event));
+          "last_bypass",
+          base::MakeUnique<base::Value>(last_bypass_event->Clone()));
     }
   }
 
