@@ -151,6 +151,9 @@ class MobileMemorySystemHealth(_MemorySystemHealthBenchmark):
     # each time before Chrome starts so we effect even the first story
     # - avoiding the bug.
     options.clear_sytem_cache_for_browser_and_profile_on_start = True
+    options.AppendExtraBrowserArgs(
+      ['--no-sandbox', '--enable-heap-profiling=native'])
+
 
   @classmethod
   def Name(cls):
