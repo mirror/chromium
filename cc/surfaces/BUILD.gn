@@ -18,7 +18,7 @@ cc_source_set("surface_id") {
   deps = [
     "//base",
     "//components/viz/common",
-    "//mojo/public/cpp/bindings:struct_traits",
+    "//mojo/public/cpp/bindings:traits",
     "//ui/gfx/geometry:geometry",
   ]
 }

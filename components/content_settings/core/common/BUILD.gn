@@ -25,7 +25,7 @@ static_library("common") {
     "//base",
     "//mojo/common:common_custom_types",
     "//mojo/common:struct_traits",
-    "//mojo/public/cpp/bindings:struct_traits",
+    "//mojo/public/cpp/bindings:traits",
     "//net",
     "//url",
   ]

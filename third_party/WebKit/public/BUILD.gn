@@ -861,6 +861,6 @@ source_set("shared_typemap_traits") {
   deps = [
     ":blink_headers",
     ":mojo_bindings_shared__generator",
-    "//mojo/public/cpp/bindings:struct_traits",
+    "//mojo/public/cpp/bindings:traits",
   ]
 }

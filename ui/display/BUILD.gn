@@ -59,7 +59,7 @@ component("display") {
 
   deps = [
     "//base",
-    "//mojo/public/cpp/bindings:struct_traits",
+    "//mojo/public/cpp/bindings:traits",
     "//third_party/re2",
     "//ui/display/util",
     "//ui/gfx",

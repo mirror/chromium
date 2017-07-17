@@ -479,7 +479,7 @@ cc_component("cc") {
     "//gpu/skia_bindings:skia_bindings",
     "//gpu/vulkan:features",
     "//media",
-    "//mojo/public/cpp/bindings:struct_traits",
+    "//mojo/public/cpp/bindings:traits",
     "//third_party/libyuv",
     "//ui/events:events_base",
     "//ui/gfx",

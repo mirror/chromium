@@ -759,7 +759,7 @@ template("mojom") {
         sources = process_file_template(enabled_sources, generator_cpp_outputs)
       }
       deps = [
-        "//mojo/public/cpp/bindings:struct_traits",
+        "//mojo/public/cpp/bindings:traits",
         "//mojo/public/interfaces/bindings:bindings__generator",
         "//mojo/public/interfaces/bindings:bindings_shared__generator",
       ]
