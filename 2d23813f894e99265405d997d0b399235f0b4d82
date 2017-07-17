@@ -22,6 +22,40 @@
       "revId": "2d23813f894e99265405d997d0b399235f0b4d82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af062ebf_0b7aac00",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-17T23:17:34Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "2d23813f894e99265405d997d0b399235f0b4d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a01116_0373bcd5",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-17T23:17:34Z",
+      "side": 1,
+      "message": "nit: new line",
+      "revId": "2d23813f894e99265405d997d0b399235f0b4d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
