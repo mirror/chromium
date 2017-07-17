@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6676ddc9_3683837e",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-17T10:02:42Z",
+      "side": 1,
+      "message": "pseudo \u003d\u003e FTP",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "f5e3069ac821604104c013b8032de05c173f6b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
