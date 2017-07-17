@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43e5593_52450cb7",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T19:27:31Z",
+      "side": 1,
+      "message": "As a price for adding this, can you ping the previous two \"temporary\" keys above and inquire about their current state?",
+      "range": {
+        "startLine": 196,
+        "startChar": 26,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "72a162136e8d6d303e89561d66650e718cfb8485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
