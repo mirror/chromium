@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace3a38_b98a579e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T17:40:32Z",
+      "side": 1,
+      "message": "Shorten this to fit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 82,
+        "endLine": 7,
+        "endChar": 94
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9a1c07_3b02e2f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T17:40:32Z",
+      "side": 1,
+      "message": "Use newlines so this is readable in the CL.",
+      "range": {
+        "startLine": 9,
+        "startChar": 324,
+        "endLine": 9,
+        "endChar": 326
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dcf84b_1e16ed65",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T17:40:32Z",
+      "side": 1,
+      "message": "nullptr\n\nOr, better yet:\n\nconstexpr std::array\u003cconst char* const, 4\u003e kIdsWhichOpenSettingsOnClick{{\n  TetherNotificationPresenter::kTetherNotifierId,\n  ...\n}};\n\nAnd below:\n\nif (!std::find_if(kIdsWhichOpenSettingsOnClick.begin(),\n    kIdsWhichOpenSettingsOnClick.end(),\n    [](const char* id) { return notification_id \u003d\u003d id; }) {\n  return;\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 35
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e21ccde_5842cc02",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T17:40:32Z",
+      "side": 1,
+      "message": "nullptr (but see above)",
+      "range": {
+        "startLine": 224,
+        "startChar": 8,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75e26f0_1b7c906f",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T17:40:32Z",
+      "side": 1,
+      "message": "Why make this static/public instead of file local?",
+      "revId": "8c83ebce0f84b82d6a30c7cf6e7ae70ac0c34041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
