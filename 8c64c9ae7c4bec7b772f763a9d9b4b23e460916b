@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fe42e7b_ad310933",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T14:17:12Z",
+      "side": 1,
+      "message": "should the favicons be recycled too?",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 22
+      },
+      "revId": "8c64c9ae7c4bec7b772f763a9d9b4b23e460916b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
