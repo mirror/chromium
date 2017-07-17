@@ -22,6 +22,30 @@
       "revId": "c742fb733980f02eaf2572ea303cf4d072cbad4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f5e6b2_cf8f19a4",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-17T18:14:45Z",
+      "side": 1,
+      "message": "The user can\u0027t enter the setup unless they turn off EasyUnlock. In that case, I think it\u0027s fair that login becomes disabled for them.",
+      "parentUuid": "f561f0de_433e9ef3",
+      "range": {
+        "startLine": 198,
+        "startChar": 50,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "c742fb733980f02eaf2572ea303cf4d072cbad4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
