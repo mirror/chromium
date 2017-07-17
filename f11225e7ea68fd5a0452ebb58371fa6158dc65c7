@@ -16,6 +16,24 @@
       "revId": "f11225e7ea68fd5a0452ebb58371fa6158dc65c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746362e8_accbdb8d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T16:29:12Z",
+      "side": 1,
+      "message": "OK, done. I originally just didn\u0027t want to put something that wasn\u0027t already in a DCHECK_IS_ON block into one (bc then I could potentially get the same problem that I had previously), but it\u0027s not a problem here.",
+      "parentUuid": "277a8c39_77bec2c7",
+      "revId": "f11225e7ea68fd5a0452ebb58371fa6158dc65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

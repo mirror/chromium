@@ -16,6 +16,24 @@
       "revId": "ba80cdba458884903e7b8e0c016e6395da38b4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302195bb_ea3ffaba",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-17T16:29:12Z",
+      "side": 1,
+      "message": "Putting that DCHECK within the DCHECK_IS_ON is what caused the error (because then it complained that ContainsWorker is never used).",
+      "parentUuid": "fd223790_607f005a",
+      "revId": "ba80cdba458884903e7b8e0c016e6395da38b4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
