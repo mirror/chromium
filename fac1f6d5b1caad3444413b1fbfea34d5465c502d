@@ -16,6 +16,29 @@
       "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376227b6_5b202b19",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-17T23:51:18Z",
+      "side": 1,
+      "message": "I am not sure I understand the beam forming feature here. Do you have any doc to explain how this works?",
+      "range": {
+        "startLine": 276,
+        "startChar": 56,
+        "endLine": 276,
+        "endChar": 0
+      },
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
