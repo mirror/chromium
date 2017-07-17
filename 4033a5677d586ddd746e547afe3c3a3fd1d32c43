@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a876612_1bbb8fc4",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-17T07:17:53Z",
+      "side": 1,
+      "message": "Rounding doesn\u0027t describe what happens here very well. Call it BorderWidthRounding.",
+      "revId": "4033a5677d586ddd746e547afe3c3a3fd1d32c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
