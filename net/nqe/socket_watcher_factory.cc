@@ -26,12 +26,17 @@ SocketWatcherFactory::SocketWatcherFactory(
   DCHECK(tick_clock_);
 }
 
+SocketWatcherFactory::SocketWatcherFactory(const SocketWatcherFactory& other) =
+    default;
+
 SocketWatcherFactory::~SocketWatcherFactory() {}
 
 std::unique_ptr<SocketPerformanceWatcher>
-SocketWatcherFactory::CreateSocketPerformanceWatcher(const Protocol protocol) {
+SocketWatcherFactory::CreateSocketPerformanceWatcher(
+    const Protocol protocol,
+    const AddressList& address_list) {
   return base::MakeUnique<SocketWatcher>(
-      protocol, min_notification_interval_, task_runner_,
+      protocol, address_list, min_notification_interval_, task_runner_,
       updated_rtt_observation_callback_, tick_clock_);
 }
 

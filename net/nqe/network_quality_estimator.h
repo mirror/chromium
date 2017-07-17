@@ -38,6 +38,7 @@
 #include "net/nqe/network_quality_store.h"
 #include "net/nqe/observation_buffer.h"
 #include "net/nqe/rtt_throughput_estimates_observer.h"
+#include "net/nqe/socket_watcher_factory.h"
 #include "net/socket/socket_performance_watcher_factory.h"
 
 namespace base {
@@ -228,6 +229,9 @@ class NET_EXPORT NetworkQualityEstimator
       bool use_smaller_responses_for_tests,
       bool add_default_platform_observations,
       const NetLogWithSource& net_log);
+
+  virtual std::unique_ptr<nqe::internal::SocketWatcherFactory>
+  CreateSocketWatcherFactory();
 
   // Different experimental statistic algorithms that can be used for computing
   // the predictions.

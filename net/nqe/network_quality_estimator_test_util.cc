@@ -11,6 +11,8 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/nqe/network_quality_estimator_params.h"
+#include "net/nqe/socket_watcher_factory_test_util.h"
+#include "net/nqe/socket_watcher_test_util.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -327,6 +329,13 @@ void TestNetworkQualityEstimator::
 
   NetworkQualityEstimator::NotifyRTTAndThroughputEstimatesObserverIfPresent(
       observer);
+}
+
+std::unique_ptr<nqe::internal::SocketWatcherFactory>
+TestNetworkQualityEstimator::CreateSocketWatcherFactory() {
+  std::unique_ptr<nqe::internal::SocketWatcherFactory> factory =
+      NetworkQualityEstimator::CreateSocketWatcherFactory();
+  return base::MakeUnique<nqe::internal::TestSocketWatcherFactory>(*factory);
 }
 
 }  // namespace net
