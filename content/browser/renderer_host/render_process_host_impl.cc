@@ -529,14 +529,6 @@ void CreateMemoryCoordinatorHandle(
                                                      std::move(request));
 }
 
-void CreateResourceCoordinatorProcessInterface(
-    RenderProcessHostImpl* render_process_host,
-    const service_manager::BindSourceInfo& source_info,
-    resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_process_host->GetProcessResourceCoordinator()->service()->AddBinding(
-      std::move(request));
-}
-
 // Forwards service requests to Service Manager since the renderer cannot launch
 // out-of-process services on is own.
 template <typename R>
@@ -1679,11 +1671,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-  if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
-    registry->AddInterface(base::Bind(
-        &CreateResourceCoordinatorProcessInterface, base::Unretained(this)));
-  }
-
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
         static_cast<ServiceWorkerContextWrapper*>(
@@ -1933,14 +1920,10 @@ mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
 resource_coordinator::ResourceCoordinatorInterface*
 RenderProcessHostImpl::GetProcessResourceCoordinator() {
   if (!process_resource_coordinator_) {
-    base::ProcessHandle process_handle = GetHandle();
-    DCHECK(process_handle);
-
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             ServiceManagerConnection::GetForProcess()->GetConnector(),
-            resource_coordinator::CoordinationUnitType::kProcess,
-            base::Process(process_handle).Pid());
+            resource_coordinator::CoordinationUnitType::kProcess);
   }
   return process_resource_coordinator_.get();
 }
