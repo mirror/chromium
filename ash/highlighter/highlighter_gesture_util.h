@@ -1,0 +1,26 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef ASH_HIGHLIGHTER_HIGHLIGHTER_GESTURE_UTIL_H_
+#define ASH_HIGHLIGHTER_HIGHLIGHTER_GESTURE_UTIL_H_
+
+#include <vector>
+
+#include "ash/ash_export.h"
+#include "ui/gfx/geometry/rect_f.h"
+
+namespace ash {
+
+gfx::RectF ASH_EXPORT GetBoundingBox(const std::vector<gfx::PointF>& points);
+
+bool ASH_EXPORT DetectHorizontalStroke(const gfx::RectF& box,
+                                       const gfx::SizeF& pen_tip_size,
+                                       const std::vector<gfx::PointF>& points);
+
+bool ASH_EXPORT DetectClosedShape(const gfx::RectF& box,
+                                  const std::vector<gfx::PointF>& points);
+
+}  // namespace ash
+
+#endif  // ASH_HIGHLIGHTER_HIGHLIGHTER_GESTURE_UTIL_H_
