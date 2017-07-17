@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c151b0a_7e31dee6",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T17:09:58Z",
+      "side": 1,
+      "message": "nit: this is kinda hard to read, just inline this in the call parameters rather than declare this variable which then gets reused?",
+      "revId": "bc1fea46bea3eb342c7463f3e88090e319617236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66981bb1_329f90e6",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T17:09:58Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "bc1fea46bea3eb342c7463f3e88090e319617236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87090e9c_6bc485ab",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T17:09:58Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 287,
+        "startChar": 56,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "bc1fea46bea3eb342c7463f3e88090e319617236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4153ddc7_c656cf5a",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T17:09:58Z",
+      "side": 1,
+      "message": "same comment everywhere about runUiThreadTasksIncludingDelayedTasks. is the \"DelayedTasks\" bit needed?",
+      "revId": "bc1fea46bea3eb342c7463f3e88090e319617236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
