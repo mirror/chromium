@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba8ba966_c256527f",
+        "filename": "chrome/android/java/res/layout/contextual_suggestions_card.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9fd408_199ab27f",
+        "filename": "chrome/android/java/res/layout/contextual_suggestions_card.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "if all the values here have to match something in the other cards, could they be set as constants in @dimen?",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "725e989e_ad23cdc7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 3
@@ -13,6 +59,138 @@
       "writtenOn": "2017-07-17T13:15:15Z",
       "side": 1,
       "message": "Please write out the documentation for the parameter.",
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e09053a_5da5c444",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "doc?",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f18f717_46a31862",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "remove line?",
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9604bbc_9ec19d7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "can the ui delegate and suggestionsbinder be final?",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3765bc7e_bb252190",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "add a todo for friedrich to determine metrics to be recorded? We don\u0027t want to pollute the ones for regular suggestions. Maybe proper suggestion categories just have to be defined.",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2da333_b365620c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "just pass the value instead of methods if this is trivial and not expected to change?",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8e5116_e0bda1ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "if this never changes for all the carousel cards, just call it once in the constructor, it does not need to be updates at each bind.",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 49
+      },
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -35,6 +213,29 @@
         "startChar": 36,
         "endLine": 76,
         "endChar": 70
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c248e140_b7d876c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "Could you detail the reasoning behind using this instead of `min(height, width)` for example? Do we sometimes want the cards to expand when you rotate?",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 32
       },
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -111,6 +312,29 @@
     },
     {
       "key": {
+        "uuid": "a9da305d_b6669f61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "getActiveTab can be null here",
+      "range": {
+        "startLine": 104,
+        "startChar": 14,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7389cf8_c5ab8c25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 3
@@ -127,6 +351,52 @@
         "startChar": 18,
         "endLine": 246,
         "endChar": 42
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9634911a_0a6ed829",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "let this object register the TabContextChangeObserver when a tab is selected. You want it to be applied to the currently focused tab. You will have to unregister it from the previous tab when it\u0027s unselected too.",
+      "range": {
+        "startLine": 253,
+        "startChar": 18,
+        "endLine": 253,
+        "endChar": 47
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca332ec4_79e5f6c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "javadoc of didMoveTab: Called after a tab has been moved from one position in the {@link TabModel} to another.\n\nI think you want didSelectTab to handle tab switching and didCloseTab to handle closing a tab from the tab switcher without selecting another one.",
+      "range": {
+        "startLine": 255,
+        "startChar": 20,
+        "endLine": 255,
+        "endChar": 30
       },
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -180,6 +450,29 @@
     },
     {
       "key": {
+        "uuid": "11027467_71211e38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "dps? pixels? centimetres?",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd0ee97_e4e4de54",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 3
@@ -203,6 +496,29 @@
     },
     {
       "key": {
+        "uuid": "8b0e9bc8_a432d8e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "document why we listen to this? also,  should the observer be unregistered?",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99488444_c370dc31",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 3
@@ -219,6 +535,52 @@
         "startChar": 4,
         "endLine": 60,
         "endChar": 57
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd6583c_ec577656",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "add a todo that this will be needed for tests? We don\u0027t really need to care about it until then I guess",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 36
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2326df_d5d07590",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "let\u0027s assume that it can\u0027t be null, and feel free to remove this check.",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 53
       },
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -289,6 +651,23 @@
         "endLine": 26,
         "endChar": 47
       },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d549054_ce55921a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "final? dealing with null is annoying, enforcing that it can\u0027t happen is not too hard in this case so we should do it! :)",
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -380,6 +759,52 @@
         "startChar": 16,
         "endLine": 56,
         "endChar": 45
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d6cd73_93ebd944",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "clear then addAll from the incoming suggestions?",
+      "range": {
+        "startLine": 57,
+        "startChar": 23,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0099c4a_711e7b4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-17T13:43:47Z",
+      "side": 1,
+      "message": "looks like it\u0027s not used anywhere",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 20
       },
       "revId": "2913711fba2d761d032d3595eceb9240393c0300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
