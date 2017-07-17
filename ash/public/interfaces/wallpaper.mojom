@@ -19,10 +19,12 @@ interface WallpaperController {
   SetWallpaperPicker(WallpaperPicker picker);
 
   // Set the wallpaper bitmap and layout used for the ash desktop background.
-  // A null or empty |wallpaper| bitmap is treated as a no-op.
+  // A null or empty |wallpaper| bitmap is treated as a no-op. The ID must be
+  // unique to each wallpaper and will be used as the key for caching color
+  // extraction results. An empty ID disables color caching for this wallpaper.
   // TODO(crbug.com/655875): Optimize ash wallpaper transport; avoid sending
   // large bitmaps over Mojo; use shared memory like BitmapUploader, etc.
-  SetWallpaper(skia.mojom.Bitmap? wallpaper, WallpaperLayout layout);
+  SetWallpaper(skia.mojom.Bitmap? wallpaper, string id, WallpaperLayout layout);
 
   // Runs to get wallpaper prominent colors.
   GetWallpaperColors() => (array<uint32> prominent_colors);
