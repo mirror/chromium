@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1b0713_77fa57c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T18:44:08Z",
+      "side": 1,
+      "message": "So the only tricky part about this is that it requires the service to be up before you can hit the APIs.  So something needs to effectively queue the requests to this service while it spins up.  You can do it via intents too, but you\u0027ll have to be careful about sending a foreground intent if we don\u0027t ever want to be in the foreground anyway.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9c1924_9c8df34b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T18:44:08Z",
+      "side": 1,
+      "message": "Do we need a way to have stopForegroundInternal() optionally kill the notification?  If the user pauses a download we don\u0027t necessarily want to kill the notification, we just want to make it no longer a foreground one.\n\nOn that note, Android APIs on stopForeground() don\u0027t make much sense in that stopForeground(bool) still (IIRC) associates the notification with the service.  So stopping the service will still kill the notification... we might need to work around the APIs for this :(.",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0318943_65786a99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T18:44:08Z",
+      "side": 1,
+      "message": "I think in this case we want to call startForegroundInternal() with the new pinned id right?",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
