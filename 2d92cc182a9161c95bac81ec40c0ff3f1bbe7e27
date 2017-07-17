@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9420187f_cf23e075",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83514,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-17T20:16:01Z",
+      "side": 1,
+      "message": "Add something about when this is recorded please.",
+      "revId": "2d92cc182a9161c95bac81ec40c0ff3f1bbe7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b801f27_40595318",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83514,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-17T20:16:01Z",
+      "side": 1,
+      "message": "errornously -\u003e erroneously",
+      "range": {
+        "startLine": 83514,
+        "startChar": 19,
+        "endLine": 83514,
+        "endChar": 30
+      },
+      "revId": "2d92cc182a9161c95bac81ec40c0ff3f1bbe7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
