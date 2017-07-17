@@ -2,6 +2,239 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d413b02_1243ac2c",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "nit: remove ., reflow comment",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c67e22_d17e5459",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f81889_f8872f08",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "Add comment that this is non-null when enabled, null when disabled.",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfecc148_8fce07a8",
+        "filename": "ash/highlighter/highlighter_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "Update comment? This seems specific to a particular HighlighterDelegate implementation.",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f6503_488dfbab",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "naming (kPenTipSize)",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec0ef1e_2b8ddee1",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "naming (kPointsPerLine)",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e58f14_503e76f7",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "naming (LinearInterpolate)",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c81b2fa_139ec160",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "IMO this is a little hard to parse order of operations; add an extra ()?",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cc0158_299321a6",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "Use chrome style (MoveTo, LineTo, etc)",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 13
+      },
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a5891c_1811d610",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "x0, y0, x1, y1?\n\nAt minimum x_from, y_from, etc",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf693c64_7fdc8d96",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "naming (tilt -\u003e kTilt)",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbe09b5_5650c890",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "x_fill, x_outline_left, x_outline_right",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c7d2e4_64f61e3d",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "y_fill, y_outline_left, y_outline_right",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec21cb5d_509d042c",
         "filename": "ash/highlighter/highlighter_view.cc",
         "patchSetId": 8
@@ -30,6 +263,40 @@
       "writtenOn": "2017-07-15T22:54:21Z",
       "side": 1,
       "message": "ditto?",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b7d46a_62ce9581",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "nit: Animate(pivot, 1 /*scale*/);",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f0dfed_81642402",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:58:02Z",
+      "side": 1,
+      "message": "Use \u003c or an epsilon-based compare",
       "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
