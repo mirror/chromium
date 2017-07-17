@@ -9,6 +9,8 @@
 #include "base/base64.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/dom_snapshot.h"
@@ -819,5 +821,28 @@ class SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest);
+
+// Regression test for https://crbug.com/733569.
+IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, RequestStorageQuota) {
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  HeadlessBrowserContext* browser_context =
+      browser()->CreateBrowserContextBuilder().Build();
+
+  // Should not crash.
+  HeadlessWebContents* web_contents =
+      browser_context->CreateWebContentsBuilder()
+          .SetInitialURL(
+              embedded_test_server()->GetURL("/request_storage_quota.html"))
+          .Build();
+  EXPECT_TRUE(WaitForLoad(web_contents));
+
+  // Round trip so that quota ack makes it to renderer.
+  EvaluateScript(web_contents, "");
+
+  auto* contents_impl = HeadlessWebContentsImpl::From(web_contents);
+  EXPECT_EQ("success",
+            base::UTF16ToUTF8(contents_impl->web_contents()->GetTitle()));
+}
 
 }  // namespace headless

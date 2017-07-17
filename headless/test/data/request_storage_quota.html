@@ -1,0 +1,4 @@
+<script type="application/javascript">
+document.title = 'failed';
+navigator.webkitPersistentStorage.requestQuota(10, () => { document.title = 'success'; })
+</script>
