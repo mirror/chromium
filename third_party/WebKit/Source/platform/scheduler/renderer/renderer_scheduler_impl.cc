@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/output/begin_frame_args.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
@@ -2226,6 +2227,12 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
                  queueing_time.InMillisecondsF());
   GetMainThreadOnly().uma_last_queueing_time_report_window_start_time =
       window_start_time;
+
+  if (RendererResourceCoordinator::IsEnabled())
+    RendererResourceCoordinator::Get()->SetProperty(
+        resource_coordinator::mojom::PropertyType::
+            kExpectedTaskQueueingDuration,
+        queueing_time.InMillisecondsF());
 }
 
 AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {
