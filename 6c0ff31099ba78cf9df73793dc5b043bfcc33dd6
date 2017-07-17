@@ -25,6 +25,70 @@
     },
     {
       "key": {
+        "uuid": "241f8acb_f7d61a00",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Yuki, is that the case even when the global is not Window? (are WorkerGlobalScope and subclasses similarly split?)",
+      "parentUuid": "0117a3bf_f9eeeb1d",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a414eb_b4d84f55",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Is is even necessary to pass this in to installConditionalFeaturesOnGlobal? The context is already a parameter, and unless there\u0027s ever going to be additional logic around the |instance_object| variable in this method, then installConditionalFeaturesOnGlobal could just extract it, couldn\u0027t it?\n\n(From its name, that\u0027s what I would expect it to do, otherwise it would be installConditionalFeaturesOnInstance :) )",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2971947a_7044fc42",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Same comment here as in Core -- this variable could be extracted in the installConditionalFeaturesOnGlobal, as it isn\u0027t used here, and the source for it is already being passed to that method.",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ab3385f_312e0725",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 12
@@ -48,6 +112,63 @@
     },
     {
       "key": {
+        "uuid": "58e81708_67c596be",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Can this be \u0027conditionally_enabled_methods\u0027 for consistency?",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 31
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7c5b2a_e917978d",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "If conditionally_enabled_attributes is True (not empty), but has_conditionally_enabled_secure_attributes has_conditionally_enabled_secure_methods are False, then will this try to generate code that uses an undeclared |isSecureContext| variable?",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ba5648_9c4bbadc",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Probably not for this CL, but we should switch this code to generate new-blink-style names -- ::InstallConditionalFeaturesOnGlobal, prototype_object, etc.",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ebc556c_ff357d56",
         "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
         "patchSetId": 12
@@ -59,6 +180,30 @@
       "writtenOn": "2017-07-17T09:46:52Z",
       "side": 1,
       "message": "AFAIK, a V8 context never gets reused even when navigating.  Navigation creates a new window object, a new document object and a new V8 context.  Everything is new ones except for the global proxy (aka outer global).\n\nBefore navigation:\n    global_proxy --\u003e window1, which is associated with context1\nAfter navigation:\n                     window1, which is associated with context1\n    global_proxy --\u003e window2, which is associated with context2\nwhere |global_proxy| no longer points to |window1|.\n\nThrough a navigation, the global proxy doesn\u0027t change, but the global proxy itself is not directly associated with any context while a window object is associated with a context.\n\n\nAs long as I can see, the reason seems that you only want to install them only in the main world and don\u0027t want Chrome extensions to use them.  Not related to navigation, I guess?",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92c3f7e_90baeda0",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-17T15:03:49Z",
+      "side": 1,
+      "message": "Yuki, that was historically not the case -- we had bugs where navigating to a new page within the same origin would create a new window object, but would reuse the context object.\n\nSo when navigating from a page with no origin trial to a page with a trial, in the same renderer, the context would already be initialized, and our normal code path wouldn\u0027t be run. This method was added so that we could specifically add trials to the new window object. This was https://bugs.chromium.org/p/chromium/issues/detail?id\u003d653671",
+      "parentUuid": "6ebc556c_ff357d56",
       "range": {
         "startLine": 68,
         "startChar": 15,
