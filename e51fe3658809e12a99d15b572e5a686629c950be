@@ -22,6 +22,30 @@
       "revId": "e51fe3658809e12a99d15b572e5a686629c950be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9fadbe_46698aef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T18:34:24Z",
+      "side": 1,
+      "message": "Do you think the content controller should be responsible for ending the animation immediately or should the shouldAnimate boolean be piped through to BottomSheet?\n\nIt doesn\u0027t really matter to me whether this class, BottomSheet or BottomSheetNewTabController is responsible for ending the animations. Right now only BottomSheetNewTabController needs to know about the setting content -\u003e ending animations -\u003e open sheet flow, but I\u0027m not opposed to BottomSheetContentController and/or BottomSheet also being aware of non-animating content transitions.",
+      "parentUuid": "faa0c868_970a1a6a",
+      "range": {
+        "startLine": 229,
+        "startChar": 16,
+        "endLine": 229,
+        "endChar": 26
+      },
+      "revId": "e51fe3658809e12a99d15b572e5a686629c950be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
