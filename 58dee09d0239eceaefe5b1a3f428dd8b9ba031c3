@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d83c0207_b31dbf1d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Per: https://chromium-review.googlesource.com/c/560602/ (whichever lands first)",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f933a85_8bc61881",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
         "patchSetId": 6
@@ -36,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "878004d7_6084c123",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "467299a9_d645d86f",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e2f6746_df412f56",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 6
@@ -47,6 +82,24 @@
       "writtenOn": "2017-07-13T21:59:34Z",
       "side": 1,
       "message": "Drop || undefined?",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1109fc61_bd18de98",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "3e2f6746_df412f56",
       "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "bc007474_116f1ad5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "4024684a_17652158",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e99f7c9_294ab319",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 6
@@ -87,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "0a0cc514_49b6fadd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e99f7c9_294ab319",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56fc0fda_442832a8",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 6
@@ -98,6 +187,24 @@
       "writtenOn": "2017-07-13T21:59:34Z",
       "side": 1,
       "message": "Should we get the port number from the URL?",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abba6ab1_dd5df7e1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Sadly no, it conflicts with HAR\u0027s spec choice for IPv6. I think we should fix this when a bug report comes in. I plan on submitting a doc on \"Problems with HAR 1.2\" in the hopes to fix these kinds of problems.",
+      "parentUuid": "56fc0fda_442832a8",
       "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "352c2ac0_fcc986bc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea41386b_b4bcc3b0",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d0329be_c53fdaf6",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 6
@@ -138,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "c2fa1bdd_396ae9e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d0329be_c53fdaf6",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1a5068_4c5763ca",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 6
@@ -149,6 +292,24 @@
       "writtenOn": "2017-07-13T21:59:34Z",
       "side": 1,
       "message": "This looks like it can go negative.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee5a4f7_6c160bb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "It shouldn\u0027t... proxy is included in \"blocked\", since HAR doesn\u0027t support blocked we include it in blocked.",
+      "parentUuid": "fe1a5068_4c5763ca",
       "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "1f6966ad_5cd2efb0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Yes, but because of the way timing in chrome is calculated vs how HAR is calculated, ssl is the only one both HAR and chrome considers part of connect. (see line 139)",
+      "parentUuid": "09a94773_22b3f713",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0324b946_623f321c",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 6
@@ -183,6 +362,24 @@
       "writtenOn": "2017-07-13T21:59:34Z",
       "side": 1,
       "message": "Why? Just readAsText(), you need text after all...",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5937ad21_74fcf46d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Using ChunkedFileReader instead.",
+      "parentUuid": "0324b946_623f321c",
       "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +400,24 @@
       "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdf6c08_d005bf7d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:41:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8f2d43_a0d6890e",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
