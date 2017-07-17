@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "50423976_8f6cd828",
+        "filename": "content/shell/test_runner/accessibility_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Why? What is the situation in which this occurs? If you know it, please document.",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ed83b9_b708ed78",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Why might it be null?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f79f10_49c986c4",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Why this change? It looks like a workaround rather than a fix.",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d88fb3_011aae87",
+        "filename": "third_party/WebKit/Source/core/events/EventDispatcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "If line 280 is correct, line 281 is not necessary, since I don\u0027t think node_\ncan be nullified during the lifetime of the EventDispatcher.",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2448a182_60b0b742",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9efd29_0c1dbdc9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXMenuList.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "138d6ca0_20c4b523",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
         "patchSetId": 6
@@ -84,6 +186,40 @@
       "side": 1,
       "message": "I don\u0027t know, and I don\u0027t know how to check :\\",
       "parentUuid": "a0b6cbc6_7e6a626d",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd33a8d2_7eb94bc8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "Peeking at lifecycle state and posting timers to try to avoid it is generally an anti-pattern.",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae84995_8533c39e",
+        "filename": "third_party/WebKit/Source/modules/exported/WebAXObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-17T16:56:10Z",
+      "side": 1,
+      "message": "This is not updating layout, it\u0027s layout plus also compositing.",
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
