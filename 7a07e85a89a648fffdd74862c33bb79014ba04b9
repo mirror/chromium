@@ -36,6 +36,47 @@
     },
     {
       "key": {
+        "uuid": "ce6f8d17_1d94fdff",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "1) It\u0027s not well-defined. |start| has no mandated semantics in ChromeCoordinators. The rule of thumb is that |start| should induce -presentViewController:animated:.\n\n2) Have |data| be passed on init, or as a property, and have |start| dcheck if it\u0027s not there?",
+      "parentUuid": "b8453160_5f91bdc9",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c737411_ba767eda",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "Any reason why this can\u0027t be |stop|? |stop| and |start| can conceptually be called more than once on each chromeController.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e9deb52_96c73f42",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
         "patchSetId": 1
@@ -47,6 +88,116 @@
       "writtenOn": "2017-07-13T13:45:12Z",
       "side": 1,
       "message": "Current thinking is that it\u0027s ok to use whatever tab helpers you need, but it\u0027s not ok to directly pull in other UI components.\n\nIn this case, I expect that PasswordController will be refactored into a tab helper.  If it turns out to be more of a UI class, then we\u0027d want to add a new provider protocol for this.\n\n(I believe it\u0027s more model-ish because a PasswordController is specific to a single WebState/Tab.  UI components tend to be specific to a single window.)",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc7b931_29cad27e",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "Or, we\u0027ll send a \"show password controller with context \u003cblah\u003e\" message to the dispatcher, since that\u0027s a different part of the UI.",
+      "parentUuid": "0e9deb52_96c73f42",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b23cde_15762cdc",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "This should move into the UI layer at some point, I guess?",
+      "range": {
+        "startLine": 99,
+        "startChar": 35,
+        "endLine": 99,
+        "endChar": 71
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d153628a_28052335",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "Comments on these.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc15ac95_de28ee1b",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "In particular, I wonder what\u0027s needed from the view.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8699e4b0_c5c5f6f5",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "This seems like a good candidate to abstract into a command.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 37
+      },
       "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +221,24 @@
     },
     {
       "key": {
+        "uuid": "d533cddf_3720b502",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "f598e01a_a904aef0",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c44f7f1_0b36fc7c",
         "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
         "patchSetId": 1
@@ -81,6 +250,70 @@
       "writtenOn": "2017-07-13T13:45:12Z",
       "side": 1,
       "message": "Snackbars are likely to be used by more than just this one component.  I expect that eventually this protocol will move from activity_services/requirements into something like snackbar/public.",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa37aacc_ca096147",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "Seems like -showSnackbar: is a command.",
+      "parentUuid": "1c44f7f1_0b36fc7c",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adf4b2c_0c7c9367",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "What\u0027s the rationale here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc037b90_f3c5beac",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 1,
+      "message": "Does conforming to this protocol mean that there are public API properties or methods that can be removed?",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 40
+      },
       "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

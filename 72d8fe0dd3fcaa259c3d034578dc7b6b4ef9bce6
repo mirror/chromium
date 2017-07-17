@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ddadb0_80aec74b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5051,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-17T09:42:41Z",
+      "side": 0,
+      "message": "However ugly this approach may seem, it\u0027s worth it if we can chop this much out of the BVC for each component.",
+      "range": {
+        "startLine": 5051,
+        "startChar": 1,
+        "endLine": 5051,
+        "endChar": 7
+      },
+      "revId": "72d8fe0dd3fcaa259c3d034578dc7b6b4ef9bce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
