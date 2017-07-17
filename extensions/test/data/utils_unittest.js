@@ -7,6 +7,17 @@ var AssertTrue = assert.AssertTrue;
 var AssertFalse = assert.AssertFalse;
 var utils = require('utils');
 
+function runCallbackWithLastError(message, callback) {
+  if (bindingUtil) {
+    bindingUtil.runCallbackWithLastError(message, callback);
+  } else {
+    // Unittests don't include the last error module, so we fake it.
+    chrome.runtime.lastError = {message: 'error message'};
+    callback();
+    chrome.runtime.lastError = null;
+  }
+}
+
 function testSuperClass() {
   function SuperClassImpl() {}
 
@@ -101,9 +112,8 @@ function fakeApiFunction(shouldSucceed, numberOfResults, callback) {
     $Function.apply(callback, null, result);
     return;
   }
-  chrome.runtime.lastError = 'error message';
-  callback();
-  chrome.runtime.lastError = null;
+  console.warn('About to run callback with last error');
+  runCallbackWithLastError('error message', callback);
 }
 
 function testPromiseNoResult() {
