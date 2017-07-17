@@ -1,0 +1,380 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f44a4f69_4d5a3b39",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "q: What is \"SHOW_PRESS\"? How is this different than ET_GESTURE_TAP[_DOWN]?\n(it would be nice if the enum values has some explanatory comments)",
+      "range": {
+        "startLine": 228,
+        "startChar": 27,
+        "endLine": 228,
+        "endChar": 48
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0502b16f_793f890a",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Remove/update this TODO and cite crbug.com/742461 in your CL desc.\n(close the bug out after landing, if this addresses it sufficiently)",
+      "range": {
+        "startLine": 702,
+        "startChar": 21,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533e0f51_6ac6c13a",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Can you combine |is_dragging_app_list_| and |gesture_drag_status_|?\n(Maybe add a new GestureDragStatus enum value if that helps?)",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6774d9f2_1d3437fd",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "aside: It\u0027s weird that we have different vertical/horizontal behaviors... any idea why?",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bbcede_a84a2ac1",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Will this show the app list on the second display if you swipe up on the second display\u0027s shelf?",
+      "range": {
+        "startLine": 1111,
+        "startChar": 29,
+        "endLine": 1111,
+        "endChar": 30
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda82b1e_efad184f",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "nit: order above IsSwipingCorrectDirection, to match the decl.\n(I would also support in-lining these checks in CompleteGestureDrag)",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62715ff_a51515e1",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, shelf-\u003ealignment());",
+      "range": {
+        "startLine": 329,
+        "startChar": 22,
+        "endLine": 329,
+        "endChar": 44
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790331d4_c097d07f",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf-\u003eauto_hide_behavior());",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faabd0bc_b1187422",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Is |widget| needed? Add a comment explaining why.",
+      "range": {
+        "startLine": 332,
+        "startChar": 9,
+        "endLine": 332,
+        "endChar": 15
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178ae021_86c70cc0",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Is this LayoutShelf() call needed?",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca26cba7_49542261",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "nit: use the default ctor here: |gfx::Vector2d delta;| or inline the delta values in each |end| calculation, like |gfx::Point end \u003d start - gfx::Vector2d(0, work_area_bounds.height() / 2.0);|, etc.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be882eb0_2b4f9024",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "nit: move this higher up in the test fixture (perhaps with the kEnableFullscreenAppList code?), it\u0027s more of an environment setup step.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8031914b_4031d6d1",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "nit: \u0027dismiss\u0027, but really, this should clarify that it \u0027should begin to show, but then ultimately dismiss the app list.\u0027 (to explain why the show_count is incremented)",
+      "range": {
+        "startLine": 362,
+        "startChar": 70,
+        "endLine": 362,
+        "endChar": 78
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3573ba8_e42c929a",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Is this call needed again here? remove if not.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d53ecc4_23f42f7b",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "nit: \u0027Swipe\u0027",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdfaae9_71912918",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Is this call needed again here? remove if not.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1bedf1_074f11a5",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Does each TrayBackgroundView need to do this?",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5187998_2775c0c9",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Test this value somewhere or remove it and the accessor and the UpdateBoundsOnYPosition override impl.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47bb182_e7d77851",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "Could the service and presenter just use UpdateDrag? That would be nice.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddc62fd_8c862f36",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-17T22:34:14Z",
+      "side": 1,
+      "message": "What happens if |y_position_in_screen| is \u003c0 or very large (taller than the work area or display bounds)? This should consider and guard against malicious callers of the mojo interface; perhaps this should have logic similar to UpdateDrag (or that clamping behavior should move here). It would be even better if we combine the two functions, as I request above.",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
