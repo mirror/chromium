@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59e0250_607955aa",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-17T17:22:40Z",
+      "side": 1,
+      "message": "Should we continue if this returns false?",
+      "range": {
+        "startLine": 183,
+        "startChar": 24,
+        "endLine": 183,
+        "endChar": 57
+      },
+      "revId": "3a77f5146ff9049d6212ae333281a21251e72037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
