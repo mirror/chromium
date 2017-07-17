@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5c757c2_4a2b8d6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-17T17:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "922e3e5d_2238a4a4",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cf693c9_5e51b70f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86146873_018b95e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-17T17:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cf693c9_5e51b70f",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2df30499_3e3cde3b",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-17T17:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edebe0fd_126d150f",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adc118b8_807be514",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a803166_896846c7",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-17T17:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc118b8_807be514",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
