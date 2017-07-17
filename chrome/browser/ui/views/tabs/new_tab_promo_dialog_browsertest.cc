@@ -6,6 +6,8 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/grit/generated_resources.h"
+#include "ui/base/l10n/l10n_util.h"
 
 class NewTabPromoDialogTest : public DialogBrowserTest {
  public:
@@ -14,17 +16,41 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
     BrowserView* browser_view =
-        BrowserView::GetBrowserViewForBrowser(browser());
-    browser_view->tabstrip()->new_tab_button()->ShowPromo();
+        static_cast<BrowserView*>(InProcessBrowserTest::browser()->window());
+
+    browser_view->tabstrip()->new_tab_button()->ShowPromo(promo_string_);
   }
+
+  // Text to be shown in the NewTabPromo.
+  base::string16 promo_string_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NewTabPromoDialogTest);
 };
 
+// The following tests are for the three potential strings being considered
+// for the NewTabPromo.
+
 // Test that calls ShowDialog("default"). Interactive when run via
 // browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
-// --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo
-IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo) {
+// --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo1
+IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo1) {
+  promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_1);
+  RunDialog();
+}
+
+// Test that calls ShowDialog("default"). Interactive when run via
+// browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
+// --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo2
+IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo2) {
+  promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_2);
+  RunDialog();
+}
+
+// Test that calls ShowDialog("default"). Interactive when run via
+// browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
+// --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo3
+IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo3) {
+  promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_3);
   RunDialog();
 }
