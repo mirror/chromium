@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "391cd128_665d5cc0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T15:03:12Z",
+      "side": 1,
+      "message": "Is this a problem with the emulator, or with our code? If the former, you should probably file a Daydream bug, and if the latter, you should probably file a Chrome bug.",
+      "range": {
+        "startLine": 143,
+        "startChar": 31,
+        "endLine": 143,
+        "endChar": 89
+      },
+      "revId": "a0511f35fedffa45a122b11877066c271bcee70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
