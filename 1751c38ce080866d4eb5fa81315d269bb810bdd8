@@ -16,6 +16,24 @@
       "revId": "1751c38ce080866d4eb5fa81315d269bb810bdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2acf78_52bf019c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNativeUiTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-17T19:56:13Z",
+      "side": 0,
+      "message": "Cool. Glad to simplify :)",
+      "parentUuid": "b128f04a_d26acec2",
+      "revId": "1751c38ce080866d4eb5fa81315d269bb810bdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "d19dcd3481235e13811e6780b07f67ab692bae70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbb0c62_fd89da68",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNativeUiTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-17T19:56:13Z",
+      "side": 1,
+      "message": "I\u0027m totally ok with it here since you\u0027re contrasting the behavior with native UI.",
+      "parentUuid": "82760eb8_44ddbbbe",
+      "revId": "d19dcd3481235e13811e6780b07f67ab692bae70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
