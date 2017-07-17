@@ -10959,6 +10959,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="373" label="UseSystemDefaultPrinterAsDefault"/>
   <int value="374" label="DeviceEcryptfsMigrationStrategy"/>
   <int value="375" label="SafeBrowsingForTrustedSourcesEnabled"/>
+  <int value="376" label="DeviceOffHours"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
