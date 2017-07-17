@@ -285,6 +285,30 @@
       "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53be8673_35818280",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-17T17:26:43Z",
+      "side": 1,
+      "message": "Good to know.  I forgot that about:blank is a bit special.\n\nIn that case, should InstallCOnditionalFeaturesOnWindow be called when the document gets updated instead of when the context gets initialized?",
+      "parentUuid": "904564c2_6065dce4",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
