@@ -62,6 +62,8 @@ namespace WTF {
 class TextEncoding;
 }
 
+class GURL;
+
 namespace blink {
 
 struct KURLHash;
@@ -217,6 +219,8 @@ class PLATFORM_EXPORT KURL {
   bool PotentiallyDanglingMarkup() const {
     return parsed_.potentially_dangling_markup;
   }
+
+  operator GURL() const;
 
  private:
   void Init(const KURL& base,

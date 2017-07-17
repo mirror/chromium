@@ -13,7 +13,12 @@
 #include "core/html/media/AutoplayPolicy.h"
 #include "platform/Histogram.h"
 #include "platform/wtf/CurrentTime.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom-shared.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "url/gurl.h"
 
 namespace blink {
 
@@ -23,6 +28,18 @@ const int32_t kMaxOffscreenDurationUmaMS = 60 * 60 * 1000;
 const int32_t kOffscreenDurationUmaBucketCount = 50;
 const int32_t kMaxWaitTimeUmaMS = 30 * 1000;
 const int32_t kWaitTimeBucketCount = 50;
+
+const char kAutoplayAttemptUkmEvent[] = "Media.Autoplay.Attempt";
+const char kAutoplayAttemptUkmSourceMetric[] = "Source";
+const char kAutoplayAttemptUkmAudioTrackMetric[] = "AudioTrack";
+const char kAutoplayAttemptUkmVideoTrackMetric[] = "VideoTrack";
+const char kAutoplayAttemptUkmUserGestureRequiredMetric[] =
+    "UserGestureRequired";
+const char kAutoplayAttemptUkmMutedMetric[] = "Muted";
+
+const char kAutoplayMutedUnmuteUkmEvent[] = "Media.Autoplay.Muted.UnmuteAction";
+const char kAutoplayMutedUnmuteUkmSourceMetric[] = "Source";
+const char kAutoplayMutedUnmuteUkmResultMetric[] = "Result";
 
 }  // namespace
 
@@ -168,6 +185,22 @@ void AutoplayUmaHelper::OnAutoplayInitiated(AutoplaySource source) {
     }
   }
 
+  // Record UKM autoplay event.
+  {
+    std::unique_ptr<ukm::UkmEntryBuilder> builder =
+        CreateUkmBuilder(kAutoplayAttemptUkmEvent);
+    builder->AddMetric(kAutoplayAttemptUkmSourceMetric,
+                       source == AutoplaySource::kMethod);
+    builder->AddMetric(kAutoplayAttemptUkmAudioTrackMetric,
+                       element_->HasAudio());
+    builder->AddMetric(kAutoplayAttemptUkmVideoTrackMetric,
+                       element_->HasVideo());
+    builder->AddMetric(
+        kAutoplayAttemptUkmUserGestureRequiredMetric,
+        element_->GetAutoplayPolicy().IsGestureNeededForPlayback());
+    builder->AddMetric(kAutoplayAttemptUkmMutedMetric, element_->muted());
+  }
+
   element_->addEventListener(EventTypeNames::playing, this, false);
 }
 
@@ -257,6 +290,24 @@ void AutoplayUmaHelper::RecordAutoplayUnmuteStatus(
        static_cast<int>(AutoplayUnmuteActionStatus::kNumberOfStatus)));
 
   autoplay_unmute_histogram.Count(static_cast<int>(status));
+
+  // Record UKM event for unmute muted autoplay.
+  {
+    std::unique_ptr<ukm::UkmEntryBuilder> builder =
+        CreateUkmBuilder(kAutoplayMutedUnmuteUkmEvent);
+
+    int source = static_cast<int>(AutoplaySource::kAttribute);
+    if (sources_.size() ==
+        static_cast<size_t>(AutoplaySource::kNumberOfSources)) {
+      source = static_cast<int>(AutoplaySource::kDualSource);
+    } else if (sources_.count(AutoplaySource::kMethod)) {
+      source = static_cast<int>(AutoplaySource::kAttribute);
+    }
+
+    builder->AddMetric(kAutoplayMutedUnmuteUkmSourceMetric, source);
+    builder->AddMetric(kAutoplayMutedUnmuteUkmResultMetric,
+                       status == AutoplayUnmuteActionStatus::kSuccess);
+  }
 }
 
 void AutoplayUmaHelper::VideoWillBeDrawnToCanvas() {
@@ -440,6 +491,26 @@ bool AutoplayUmaHelper::ShouldRecordUserPausedAutoplayingCrossOriginVideo()
          !sources_.empty() &&
          !recorded_cross_origin_autoplay_results_.count(
              CrossOriginAutoplayResult::kUserPaused);
+}
+
+void AutoplayUmaHelper::EnsureMojoUkmRecorder() {
+  if (mojo_ukm_recorder_)
+    return;
+
+  ukm::mojom::UkmRecorderInterfacePtr interface;
+  Platform::Current()->GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&interface));
+  mojo_ukm_recorder_.reset(new ukm::MojoUkmRecorder(std::move(interface)));
+}
+
+std::unique_ptr<ukm::UkmEntryBuilder> AutoplayUmaHelper::CreateUkmBuilder(
+    const char* event) {
+  EnsureMojoUkmRecorder();
+
+  KURL url = element_->GetDocument().Url();
+  const ukm::SourceId source_id = mojo_ukm_recorder_->GetNewSourceID();
+  mojo_ukm_recorder_->UpdateSourceURL(source_id, url);
+  return mojo_ukm_recorder_->GetEntryBuilder(source_id, event);
 }
 
 DEFINE_TRACE(AutoplayUmaHelper) {

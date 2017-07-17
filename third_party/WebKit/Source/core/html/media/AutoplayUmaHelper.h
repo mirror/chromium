@@ -13,6 +13,11 @@
 
 #include <set>
 
+namespace ukm {
+class MojoUkmRecorder;
+class UkmEntryBuilder;
+}  // namespace ukm
+
 namespace blink {
 
 // These values are used for histograms. Do not reorder.
@@ -114,6 +119,13 @@ class CORE_EXPORT AutoplayUmaHelper : public EventListener,
   bool ShouldListenToContextDestroyed() const;
   bool ShouldRecordUserPausedAutoplayingCrossOriginVideo() const;
 
+  // Creates the MojoUkmRecorder if it is not created. No-op if it already
+  // exists.
+  void EnsureMojoUkmRecorder();
+
+  // Retuns a ukm::UkmEntryBuilder created from the MojoUkmRecorder.
+  std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmBuilder(const char*);
+
   // The autoplay sources.
   std::set<AutoplaySource> sources_;
 
@@ -150,6 +162,8 @@ class CORE_EXPORT AutoplayUmaHelper : public EventListener,
       muted_video_offscreen_duration_visibility_observer_;
 
   double load_start_time_ms_;
+
+  std::unique_ptr<ukm::MojoUkmRecorder> mojo_ukm_recorder_;
 };
 
 }  // namespace blink

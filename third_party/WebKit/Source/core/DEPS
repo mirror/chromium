@@ -11,6 +11,7 @@ include_rules = [
     "+platform",
     "+public/platform",
     "+public/web",
+    "+services/metrics/public",
     "+third_party/skia/include",
     "+ui/gfx/geometry",
     "-web",
@@ -23,3 +24,9 @@ include_rules = [
     "!core/frame/WebRemoteFrameBase.h",
     "!core/frame/WebRemoteFrameImpl.h",
 ]
+
+specific_include_rules = {
+  "AutoplayUmaHelper\.cpp": [
+    "+url/gurl.h",
+  ]
+}
