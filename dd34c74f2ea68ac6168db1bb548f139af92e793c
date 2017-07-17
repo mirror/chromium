@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e561c8c9_31d7b391",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-17T17:33:10Z",
+      "side": 1,
+      "message": "Made a booboo by adding this. Removed.",
+      "parentUuid": "8e4cb5f4_009bd235",
+      "range": {
+        "startLine": 688,
+        "startChar": 20,
+        "endLine": 688,
+        "endChar": 36
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ef6d12_ff7ac2e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03b28a6_5382e8cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-17T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ef6d12_ff7ac2e2",
+      "range": {
+        "startLine": 854,
+        "startChar": 43,
+        "endLine": 854,
+        "endChar": 48
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a4d135e_58b8e752",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-17T17:33:10Z",
+      "side": 1,
+      "message": "This function was added in this CL: https://codereview.chromium.org/2980453002/diff/110001/chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+      "parentUuid": "3fab73ce_8f522bf9",
+      "range": {
+        "startLine": 916,
+        "startChar": 84,
+        "endLine": 916,
+        "endChar": 95
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bf1b62_2d7d69d3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb7750e_31db3fae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-17T17:33:10Z",
+      "side": 1,
+      "message": "Done. We will see a 2D flash before exiting to Daydream since the black screen is removed in onPause and not onStop. That\u0027s probably okay for now since this is a rare thing. Added a comment to address that in a follow-up CL.",
+      "parentUuid": "22bf1b62_2d7d69d3",
+      "range": {
+        "startLine": 1110,
+        "startChar": 12,
+        "endLine": 1110,
+        "endChar": 40
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
