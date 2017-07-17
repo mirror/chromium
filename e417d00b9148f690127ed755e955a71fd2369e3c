@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "026e432d_faa5b832",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T20:53:03Z",
+      "side": 1,
+      "message": "Creating the tab_resource_coordinator is not the only point of failure. This failure will also happen when any ResourceCoordinatorInterface is created (e.g. the frame_resource_coordinator and process_resource_coordinator in ResourceCoordinatorWebContentsObserver::DidFinishNavigation).\n\nI\u0027ll go ahead and move this function back to services/*, but I will keep the ServiceManagerConnection check in ResourceCoordinatorWebContentsObserver::IsEnabled as this is was the LGTMed approach by zhenw@, rockot@. The Blink-side integration can be handled in your follow up CL.",
+      "parentUuid": "7710e9ac_8a5864e4",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d82159b_de5e2e4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 16
