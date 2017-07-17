@@ -16,6 +16,24 @@
       "revId": "2146c01313f176c6cf79d5387462d311d9575a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25838054_50255829",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-17T21:28:18Z",
+      "side": 1,
+      "message": "We are not using issueTime in this file as a base... we only use issueTime as a base for HAR not for once it\u0027s inside chrome. This responseReceivedTime is the best of timing.receiveHeadersEnd and endTime, but should be receiveHeadersEnd in most cases. There should be no major difference here between how it was and how this patch is changing it. It just makes it more uniform so HAR doesn\u0027t need to work as hard to get imports to not make the UI wacky.",
+      "parentUuid": "a51a4e12_0ea117e9",
+      "revId": "2146c01313f176c6cf79d5387462d311d9575a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
