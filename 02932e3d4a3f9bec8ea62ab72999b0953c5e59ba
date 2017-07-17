@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "111fc4d4_e621f2af",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-17T23:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5e8f899_1f43a03c",
+      "revId": "02932e3d4a3f9bec8ea62ab72999b0953c5e59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082c842f_c7cb8b71",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "02932e3d4a3f9bec8ea62ab72999b0953c5e59ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384f3fe1_bcee6df5",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-17T23:11:44Z",
+      "side": 1,
+      "message": "This separation is deliberate - the first three are copied directly from the parameters, the |weak_pump_| is an internal detail.\n\nHowever, I\u0027ve moved the param-copies to the top, so that there are then three subsequent blocks, each storing an internal parameter.",
+      "parentUuid": "082c842f_c7cb8b71",
+      "revId": "02932e3d4a3f9bec8ea62ab72999b0953c5e59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
