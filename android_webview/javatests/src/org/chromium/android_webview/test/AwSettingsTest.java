@@ -2979,6 +2979,29 @@ public class AwSettingsTest extends AwTestBase {
         doAllowEmptyDocumentPersistenceTest(false);
     }
 
+    @SmallTest
+    @Feature({"AndroidWebView", "Preferences"})
+    public void testCSSHexAlphaColorEnabled() throws Throwable {
+        final TestAwContentsClient client = new TestAwContentsClient();
+        final AwTestContainerView containerView = createAwTestContainerViewOnMainSync(client);
+        final AwContents awContents = containerView.getAwContents();
+        enableJavaScriptOnUiThread(awContents);
+        CallbackHelper onPageFinishedHelper = client.getOnPageFinishedHelper();
+        final String expectedTitle = "false"; // https://crbug.com/618472
+        final String page = "<!doctype html><html>"
+                + "<script>"
+                + "function getCSSHexAlphaSupport() {"
+                + "  return CSS.supports('color', '#AABBCCDD').toString();"
+                + "}"
+                + "</script>"
+                + "<body onload='document.title=getCSSHexAlphaSupport()'>"
+                + "  <div id='test'></div>"
+                + "</body></html>";
+        loadDataSync(awContents, onPageFinishedHelper, page, "text/html", false);
+        String actualTitle = getTitleOnUiThread(awContents);
+        assertEquals(expectedTitle, actualTitle);
+    }
+
     private static class SelectionRangeTestDependencyFactory extends TestDependencyFactory {
         private boolean mDoNotUpdate;
         public SelectionRangeTestDependencyFactory(boolean doNotUpdate) {
