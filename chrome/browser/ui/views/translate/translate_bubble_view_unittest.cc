@@ -43,7 +43,8 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
         revert_translation_called_(false),
         translation_declined_(false),
         original_language_index_on_translation_(-1),
-        target_language_index_on_translation_(-1) {}
+        target_language_index_on_translation_(-1),
+        can_blacklist_site_(true) {}
 
   TranslateBubbleModel::ViewState GetViewState() const override {
     return view_state_transition_.view_state();
@@ -120,6 +121,8 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
            target_language_index_on_translation_ == target_language_index_;
   }
 
+  bool CanBlacklistSite() override { return can_blacklist_site_; }
+
   TranslateBubbleViewStateTransition view_state_transition_;
   translate::TranslateErrors::Type error_type_;
   int original_language_index_;
@@ -134,6 +137,7 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
   bool translation_declined_;
   int original_language_index_on_translation_;
   int target_language_index_on_translation_;
+  bool can_blacklist_site_;
 };
 
 }  // namespace
