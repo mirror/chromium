@@ -62,6 +62,11 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
     private String mCurrentlySelectedKeyword;
 
     /**
+     * Keyword that is both selected and confirmed (with a click to {@link #mConfirmButton}).
+     */
+    private String mConfirmedKeyword;
+
+    /**
      * Constructs a DefaultSearchEngineDialogHelper.
      *
      * @param dialogType     Dialog type to show.
@@ -102,6 +107,12 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
         return mCurrentlySelectedKeyword;
     }
 
+    /** @return Keyword that corresponds to the search engine that is selected and confirmed. */
+    @Nullable
+    public final String getConfirmedKeyword() {
+        return mConfirmedKeyword;
+    }
+
     @Override
     public final void onCheckedChanged(RadioGroup group, int checkedId) {
         mCurrentlySelectedKeyword = (String) group.findViewById(checkedId).getTag();
@@ -122,8 +133,9 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
             return;
         }
 
-        mDelegate.onUserSeachEngineChoice(
-                mSearchEngineKeywords, mCurrentlySelectedKeyword.toString());
+        mConfirmedKeyword = mCurrentlySelectedKeyword;
+
+        mDelegate.onUserSeachEngineChoice(mSearchEngineKeywords, mConfirmedKeyword.toString());
         mFinishRunnable.run();
     }
 
