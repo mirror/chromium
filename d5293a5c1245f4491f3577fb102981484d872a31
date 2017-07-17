@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46bf09bb_5ece2f28",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T12:56:06Z",
+      "side": 1,
+      "message": "It\u0027s not Get but Create now",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "d5293a5c1245f4491f3577fb102981484d872a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c31070b_272ad517",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T12:56:06Z",
+      "side": 1,
+      "message": "I\u0027m surprised you don\u0027t get any warning from ASAN bots.\nI\u0027m proposing to have a static member pointer which you return here. Constructor/destructor can set this pointer to a member of OSCryptLinuxTest. Then there is no memory leak.",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "d5293a5c1245f4491f3577fb102981484d872a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

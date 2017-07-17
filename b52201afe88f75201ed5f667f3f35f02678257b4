@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e1966b7a_f804f685",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T12:56:06Z",
+      "side": 1,
+      "message": "There is no gain. It\u0027s just a confusion arising from seeing a struct which apparently cares about memory management but in fact leaking everything. I\u0027d appreciate a comment on Cache explaining how it\u0027s used in production.",
+      "parentUuid": "682fc44b_355b6e6c",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a7a0453_7c9016b1",
         "filename": "components/os_crypt/os_crypt_linux.cc",
         "patchSetId": 6
