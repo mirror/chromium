@@ -151,8 +151,9 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   void DidRunTask() override;
   void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override;
   TimeDelta GetSleepTimeout() override;
-  bool CanDetach(SchedulerWorker* worker) override;
-  void OnDetach() override;
+  bool CanTimeout(SchedulerWorker* worker) override;
+  void OnTimeout() override;
+  void RemoveWorker(SchedulerWorker* worker) override;
 
  private:
   SchedulerWorkerPoolImpl* outer_;
@@ -192,13 +193,6 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
       idle_workers_stack_cv_for_testing_(lock_.CreateConditionVariable()),
       join_for_testing_returned_(WaitableEvent::ResetPolicy::MANUAL,
                                  WaitableEvent::InitialState::NOT_SIGNALED),
-      // Mimics the UMA_HISTOGRAM_LONG_TIMES macro.
-      detach_duration_histogram_(Histogram::FactoryTimeGet(
-          kDetachDurationHistogramPrefix + name_ + kPoolNameSuffix,
-          TimeDelta::FromMilliseconds(1),
-          TimeDelta::FromHours(1),
-          50,
-          HistogramBase::kUmaTargetedHistogramFlag)),
       // Mimics the UMA_HISTOGRAM_COUNTS_1000 macro. When a worker runs more
       // than 1000 tasks before detaching, there is no need to know the exact
       // number of tasks that ran.
@@ -345,7 +339,6 @@ void SchedulerWorkerPoolImpl::PostTaskWithSequenceNow(
 
 void SchedulerWorkerPoolImpl::GetHistograms(
     std::vector<const HistogramBase*>* histograms) const {
-  histograms->push_back(detach_duration_histogram_);
   histograms->push_back(num_tasks_between_waits_histogram_);
 }
 
@@ -371,39 +364,38 @@ void SchedulerWorkerPoolImpl::JoinForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(workers_created_.IsSet());
 #endif
-  DCHECK(!CanWorkerDetachForTesting() || suggested_reclaim_time_.is_max())
-      << "Workers can detach during join.";
+  DCHECK(!CanWorkerTimeoutForTesting() || suggested_reclaim_time_.is_max())
+      << "Workers can timeout during join.";
 
-  decltype(workers_) workers_copy;
+  // Keep calling JoinForTesting because workers may be finishing up tasks
+  // that posts nested tasks, which may cause new workers to be created.
+  // JoinForTesting will be called on SchedulerWorkers until there are no more
+  // workers to join.
+  while (true) {
+    decltype(workers_) workers_copy;
 
-  // Make a copy of the SchedulerWorkers so that we can call
-  // SchedulerWorker::JoinForTesting() without holding |lock_| since
-  // SchedulerWorkers may need to access |workers_|.
-  {
-    AutoSchedulerLock auto_lock(lock_);
+    {
+      AutoSchedulerLock auto_lock(lock_);
+      if (workers_.empty())
+        break;
 
-    workers_copy = workers_;
+      // Make a copy of the SchedulerWorkers so that we can call
+      // SchedulerWorker::JoinForTesting() without holding |lock_| since
+      // SchedulerWorkers may need to access |workers_|.
+      workers_copy = workers_;
+    }
+    for (const auto& worker : workers_copy)
+      worker->JoinForTesting();
   }
 
-  for (const auto& worker : workers_copy)
-    worker->JoinForTesting();
-
-  // The |workers_| vector is currently expected not to change after
-  // JoinForTesting is called, so the copy is not expected to become stale.
-  //
-  // TODO(jeffreyhe): After detachment is removed, remove this DCHECK and
-  // create a flag to prevent changes to |workers_|. See crbug.com/740612.
-  {
-    AutoSchedulerLock auto_lock(lock_);
-    DCHECK(workers_copy == workers_);
-  }
-
+  AutoSchedulerLock auto_lock(lock_);
+  DCHECK(workers_.empty());
   DCHECK(!join_for_testing_returned_.IsSignaled());
   join_for_testing_returned_.Signal();
 }
 
-void SchedulerWorkerPoolImpl::DisallowWorkerDetachmentForTesting() {
-  worker_detachment_disallowed_.Set();
+void SchedulerWorkerPoolImpl::DisallowWorkerTimeoutForTesting() {
+  worker_timeout_disallowed_.Set();
 }
 
 size_t SchedulerWorkerPoolImpl::NumberOfAliveWorkersForTesting() {
@@ -435,11 +427,6 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
 
   DCHECK_EQ(num_tasks_since_last_wait_, 0U);
 
-  if (!last_detach_time_.is_null()) {
-    outer_->detach_duration_histogram_->AddTime(TimeTicks::Now() -
-                                                last_detach_time_);
-  }
-
   PlatformThread::SetName(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
@@ -467,7 +454,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
   // its WaitableEvent. When it wakes up (either because WakeUp() was called or
   // because the sleep timeout expired), it calls GetWork() again. The code
   // below records the histogram and, if GetWork() returns nullptr again, the
-  // SchedulerWorker may detach. If that happens,
+  // SchedulerWorker may timeout. If that happens,
   // |did_detach_since_last_get_work_| is set to true and the next call to
   // GetWork() won't record the histogram  (which is correct since the
   // SchedulerWorker didn't wait on its WaitableEvent since the last time the
@@ -535,22 +522,34 @@ TimeDelta SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
   return outer_->suggested_reclaim_time_;
 }
 
-bool SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::CanDetach(
+bool SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::CanTimeout(
     SchedulerWorker* worker) {
-  const bool can_detach =
+  const bool can_timeout =
       !idle_start_time_.is_null() &&
       (TimeTicks::Now() - idle_start_time_) > outer_->suggested_reclaim_time_ &&
       worker != outer_->PeekAtIdleWorkersStack() &&
-      outer_->CanWorkerDetachForTesting();
-  return can_detach;
+      outer_->CanWorkerTimeoutForTesting();
+  return can_timeout;
 }
 
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnDetach() {
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnTimeout() {
   DCHECK(!did_detach_since_last_get_work_);
   outer_->num_tasks_before_detach_histogram_->Add(num_tasks_since_last_detach_);
   num_tasks_since_last_detach_ = 0;
   did_detach_since_last_get_work_ = true;
-  last_detach_time_ = TimeTicks::Now();
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::RemoveWorker(
+    SchedulerWorker* worker) {
+  outer_->RemoveFromIdleWorkersStack(worker);
+
+  AutoSchedulerLock auto_lock(outer_->lock_);
+
+  auto worker_iter =
+      std::find(outer_->workers_.begin(), outer_->workers_.end(), worker);
+  DCHECK(worker_iter != outer_->workers_.end());
+
+  outer_->workers_.erase(worker_iter);
 }
 
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
@@ -586,7 +585,7 @@ void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
     SchedulerWorker* worker) {
   AutoSchedulerLock auto_lock(lock_);
 
-  // Detachment may cause multiple attempts to add because the delegate cannot
+  // A timeout may cause multiple attempts to add because the delegate cannot
   // determine who woke it up. As a result, when it wakes up, it may conclude
   // there's no work to be done and attempt to add itself to the idle stack
   // again.
@@ -610,8 +609,8 @@ void SchedulerWorkerPoolImpl::RemoveFromIdleWorkersStack(
   idle_workers_stack_.Remove(worker);
 }
 
-bool SchedulerWorkerPoolImpl::CanWorkerDetachForTesting() {
-  return !worker_detachment_disallowed_.IsSet();
+bool SchedulerWorkerPoolImpl::CanWorkerTimeoutForTesting() {
+  return !worker_timeout_disallowed_.IsSet();
 }
 
 scoped_refptr<SchedulerWorker>
@@ -623,8 +622,7 @@ SchedulerWorkerPoolImpl::CreateAndRegisterSchedulerWorker() {
   // the thread lock is acquired when WakeUp is called on the worker.
   workers_.push_back(MakeRefCounted<SchedulerWorker>(
       priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this),
-      task_tracker_, &lock_, backward_compatibility_,
-      SchedulerWorker::InitialState::ALIVE));
+      task_tracker_, &lock_, backward_compatibility_));
 
   return workers_.back();
 }
