@@ -43,22 +43,24 @@ class AffiliationDatabase {
 
   // Looks up the equivalence class containing |facet_uri|, and returns true if
   // such a class is found, in which case it is also stored into |result|.
-  bool GetAffiliationsForFacetURI(const FacetURI& facet_uri,
-                                  AffiliatedFacetsWithUpdateTime* result) const;
+  bool GetAffiliationsAndBrandingForFacetURI(
+      const FacetURI& facet_uri,
+      AffiliatedFacetsWithUpdateTime* result) const;
 
   // Retrieves all stored equivalence classes.
-  void GetAllAffiliations(
+  void GetAllAffiliationsAndBranding(
       std::vector<AffiliatedFacetsWithUpdateTime>* results) const;
 
   // Removes the stored equivalence class, if any, containing |facet_uri|.
-  void DeleteAffiliationsForFacetURI(const FacetURI& facet_uri);
+  void DeleteAffiliationsAndBrandingForFacetURI(const FacetURI& facet_uri);
 
   // Removes stored equivalence classes that were last updated before the
   // |cutoff_threshold|.
-  void DeleteAffiliationsOlderThan(const base::Time& cutoff_threshold);
+  void DeleteAffiliationsAndBrandingOlderThan(
+      const base::Time& cutoff_threshold);
 
   // Removes all records from all tables of the database.
-  void DeleteAllAffiliations();
+  void DeleteAllAffiliationsAndBranding();
 
   // Stores the equivalence class defined by |affiliated_facets| to the DB and
   // returns true unless it has a non-empty subset with a preexisting class, in
