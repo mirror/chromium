@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c28460_c80cc734",
+        "filename": "content/browser/renderer_host/media/video_capture_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-17T22:43:17Z",
+      "side": 1,
+      "message": "Turns out this cannot be done as simple as I though.\nThe failing tests on Windows (luckily) revealed the following problematic situation:\n1. After a first call to EnumerateDevice(), a second call to EnumerateDevices() comes in before the (asynchronous) response to the first one has been sent.\n2. While the second request is still being processed by the video capture service, the response for the first request arrives here.\n3. With this call to Uninitialize(), we close the connection to the service, even though the answer to the second request is still pending.\n4. The service drops the answer to the second request.\n\u003d\u003e We never invoke |client_callback| for the second request.\n\nThe root of the problem already existed before this CL. If the connection to the service is lost while processing an EnumerateDevices request, |client_callback| is never invoked. I will work out a solution for this, but it will warrant a CL of its own.\n\nTherefore, I will drop this functional change from this CL and keep only the changes to the UMA logging for this CL.",
+      "revId": "3e5ccbbf1abd1165754f20482297001f28cd9a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
