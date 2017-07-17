@@ -60,7 +60,7 @@ std::string ToDisplayName(int64_t id) {
 
 }  // namespace
 
-class DisplayManagerTest : public test::AshTestBase,
+class DisplayManagerTest : public AshTestBase,
                            public display::DisplayObserver,
                            public aura::WindowObserver {
  public:
@@ -2130,7 +2130,7 @@ class TestDisplayObserver : public display::DisplayObserver {
   }
 
  private:
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   bool changed_;
 
   DISALLOW_COPY_AND_ASSIGN(TestDisplayObserver);
@@ -2139,7 +2139,7 @@ class TestDisplayObserver : public display::DisplayObserver {
 TEST_F(DisplayManagerTest, SoftwareMirroring) {
   UpdateDisplay("300x400,400x500");
 
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   EXPECT_EQ(nullptr, test_api.GetHost());
 
   TestDisplayObserver display_observer;
@@ -2235,7 +2235,7 @@ TEST_F(DisplayManagerTest, SingleDisplayToSoftwareMirroring) {
 TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   UpdateDisplay("300x400,400x500");
 
-  test::MirrorWindowTestApi test_api;
+  MirrorWindowTestApi test_api;
   EXPECT_EQ(nullptr, test_api.GetHost());
 
   display::ManagedDisplayInfo secondary_info =
@@ -2705,7 +2705,7 @@ TEST_F(DisplayManagerTest, DontRegisterBadConfig) {
       list, builder.Build());
 }
 
-class ScreenShutdownTest : public test::AshTestBase {
+class ScreenShutdownTest : public AshTestBase {
  public:
   ScreenShutdownTest() {}
   ~ScreenShutdownTest() override {}
@@ -2735,7 +2735,7 @@ namespace {
 // A helper class that sets the display configuration and starts ash.
 // This is to make sure the font configuration happens during ash
 // initialization process.
-class FontTestHelper : public test::AshTestBase {
+class FontTestHelper : public AshTestBase {
  public:
   enum DisplayType { INTERNAL, EXTERNAL };
 
@@ -2751,7 +2751,7 @@ class FontTestHelper : public test::AshTestBase {
 
   ~FontTestHelper() override { TearDown(); }
 
-  // test::AshTestBase:
+  // AshTestBase:
   void TestBody() override { NOTREACHED(); }
 
  private:
@@ -2996,7 +2996,7 @@ TEST_F(DisplayManagerOrientationTest, SaveRestoreUserRotationLock) {
       .SetFirstDisplayAsInternalDisplay();
   ScreenOrientationController* orientation_controller =
       shell->screen_orientation_controller();
-  test::ScreenOrientationControllerTestApi test_api(orientation_controller);
+  ScreenOrientationControllerTestApi test_api(orientation_controller);
   TestObserver test_observer;
   orientation_controller->AddObserver(&test_observer);
 
@@ -3173,7 +3173,7 @@ TEST_F(DisplayManagerOrientationTest, LockToSpecificOrientation) {
       .SetFirstDisplayAsInternalDisplay();
   ScreenOrientationController* orientation_controller =
       shell->screen_orientation_controller();
-  test::ScreenOrientationControllerTestApi test_api(orientation_controller);
+  ScreenOrientationControllerTestApi test_api(orientation_controller);
 
   aura::Window* window_a = CreateTestWindowInShellWithId(0);
   {

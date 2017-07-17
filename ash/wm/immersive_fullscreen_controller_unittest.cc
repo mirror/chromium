@@ -104,7 +104,7 @@ class ConsumeEventHandler : public ui::test::TestEventHandler {
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ImmersiveFullscreenControllerTest : public ash::test::AshTestBase {
+class ImmersiveFullscreenControllerTest : public ash::AshTestBase {
  public:
   enum Modality {
     MODALITY_MOUSE,
@@ -138,9 +138,9 @@ class ImmersiveFullscreenControllerTest : public ash::test::AshTestBase {
     return controller_->mouse_x_when_hit_top_in_screen_;
   }
 
-  // ash::test::AshTestBase overrides:
+  // ash::AshTestBase overrides:
   void SetUp() override {
-    ash::test::AshTestBase::SetUp();
+    ash::AshTestBase::SetUp();
 
     widget_ = new views::Widget();
     views::Widget::InitParams params;
