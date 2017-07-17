@@ -99,6 +99,149 @@
     },
     {
       "key": {
+        "uuid": "ce4d05e2_155fe2b3",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "nit: Either add curly brace for consistency with the other 1-line ifs, or remove from the other two.",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c87e232_bfe21192",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "base::StringPiece host \u003d test_url.host_piece();",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4e10e3_c50548fb",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "as a",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267cb2a0_ce268f39",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Can you leave this as KEEP_WHITESPACE?\n\nThere shouldn\u0027t be whitespace that needs to be removed from the already normalized hostname. Is that possible?\n\nIn general I wouldn\u0027t want SplitString\u0027s notion of whitespace tampering with the interpretation of host labels, so simpler to do a direct split on \".\"",
+      "range": {
+        "startLine": 131,
+        "startChar": 57,
+        "endLine": 131,
+        "endChar": 72
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8297356_124b8f9b",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Is this correct for the IP literal case?\n\nIn the current grammar a leading dot means \"exact match\"... except in the case of IP literals where it is invalid to have a leading dot.",
+      "range": {
+        "startLine": 134,
+        "startChar": 37,
+        "endLine": 134,
+        "endChar": 54
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2e55d9_cd3fc580",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Can you short-circuit if url.is_invalid() ?",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfb41dc_ce53c89e",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Same comment as for adding rule. I suggest extracting this to a shared function, say SplitHost()",
+      "range": {
+        "startLine": 161,
+        "startChar": 57,
+        "endLine": 161,
+        "endChar": 78
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5603f408_c52fc139",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 9
@@ -167,6 +310,80 @@
         "endLine": 82,
         "endChar": 69
       },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd634c7a_4f85cd39",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Thanks for all the extra tests, great test cases!",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31f6cf9_5cfe990e",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "This test is a variation of SchemeInWhiteListIsInvalid. Perhaps rename it to reflect it is about scheme in the whitelist rules, not in the URL under test.",
+      "range": {
+        "startLine": 119,
+        "startChar": 43,
+        "endLine": 119,
+        "endChar": 68
+      },
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237c599b_7962172f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "Nice additional tests!",
+      "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b885f95a_bfc11d1c",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T22:21:35Z",
+      "side": 1,
+      "message": "This fails I think for a different reason -- 1.192.168.1.1 here matches as non-IP",
       "revId": "fc4fe77b9fc3f52c594c5685fb0131c5c499f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
