@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a2fda5b_bb019dd1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-17T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11cf8d7a_6a18f56c",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "138a247ab32379933a92635d608560a713b53f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f39cb81f_765fc5f5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T09:50:14Z",
       "side": 1,
       "message": "Nit: no dash. Also, |selectAccount| is a string, not an access point. Also, add a comment for |isDefaultAccount|?",
+      "range": {
+        "startLine": 86,
+        "startChar": 28,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "138a247ab32379933a92635d608560a713b53f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce5e86a_0c0e0538",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-17T12:31:16Z",
+      "side": 1,
+      "message": "Oops, thanks. I\u0027ve updated JavaDocs.",
+      "parentUuid": "f39cb81f_765fc5f5",
       "range": {
         "startLine": 86,
         "startChar": 28,
