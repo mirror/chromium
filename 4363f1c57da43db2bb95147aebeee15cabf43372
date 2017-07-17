@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea577add_7271a0b9",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-07-17T21:13:45Z",
+      "side": 1,
+      "message": "nit: It looks like |touchscreen_gesture_target_map_| is going to be small, in which case we should probably avoid std::unordered_map in favour of std::map (or possibly base::flat_map). See https://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/rdxOHKzQmRY/fgMJCEGxCgAJ and https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md#Map-and-set-selection .",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "4363f1c57da43db2bb95147aebeee15cabf43372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
