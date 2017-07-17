@@ -70,6 +70,30 @@
       "revId": "0e1136ba682f7ec435b344733f9aa6b528d56528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befa4828_cf055e40",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T18:37:32Z",
+      "side": 0,
+      "message": "I will leave it in if that\u0027s what everyone else wants, but I do not support adding code that is not doing anything useful at the time of commit. Especially if that code is not accompanied by tests.\n\nProcess CUs still exist. Only the code for CPU profiling has been removed and there is already a patch under review to add it back.\n\nGetting GRC enabled by default is the priority and then everyone can resolve their issues with respect to it being enabled. For me that will be fixing render process CPU profiling and for you that will be related to the \"fake page\" issue.",
+      "parentUuid": "0ba5812e_dd91cb0b",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 46
+      },
+      "revId": "0e1136ba682f7ec435b344733f9aa6b528d56528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

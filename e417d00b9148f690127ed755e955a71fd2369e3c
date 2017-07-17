@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a8af0abb_829d1e41",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T18:37:32Z",
+      "side": 1,
+      "message": "Here was my rationale for this file. Please feel free to clarify any misunderstandings I have:\n\n(1) ResourceCoordinator should enabled when both the feature flag is enabled and when there is a ServiceManagerContext available to connect to it through. If only the feature flag is check this will crash during tests.\n\n(2) Checking for whether the ServiceManagerContext is available is performed by content::ServiceManagerConnection::GetForProcess(). My understanding is that files under content/* are not accessible from the services/ directory. If this is true then for this check to be correct and compile it cannot be in a file within services/*.\n\n(3) Blink can include content/*, but this file is currently under chrome/*. That is why my previous comment suggested moving it to be under content/* instead.",
+      "parentUuid": "85f0b087_072abf4f",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d82159b_de5e2e4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 16
