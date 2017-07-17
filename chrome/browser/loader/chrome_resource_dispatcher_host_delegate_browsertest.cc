@@ -21,6 +21,7 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/scoped_command_line.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_browsertest.h"
@@ -419,9 +420,14 @@ void ReportRequestHeaders(std::map<std::string, std::string>* request_headers,
                           const std::string& url,
                           const std::string& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // TODO(crbug.com/739433): Remove debug output when fixed.
+  std::string kDebugKey = base::StringPrintf("DEBUG[%s]", url.c_str());
+  (*request_headers)[kDebugKey] +=
+      base::StringPrintf("[%s|%s]", url.c_str(), headers.c_str());
   // Ensure that a previous value is not overwritten.
   EXPECT_FALSE(base::ContainsKey(*request_headers, url))
-      << "URL: " << url << ", Headers: " << headers;
+      << (*request_headers)[kDebugKey];
   (*request_headers)[url] = headers;
 }
 
