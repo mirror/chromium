@@ -24,7 +24,7 @@ namespace {
 
 void FillOsDumpFromProcessMemoryDump(
     const base::trace_event::ProcessMemoryDump* pmd,
-    base::trace_event::MemoryDumpCallbackResult::OSMemDump* osDump) {
+    mojom::RawOSMemDump* osDump) {
   if (pmd->has_process_totals()) {
     const base::trace_event::ProcessMemoryTotals* totals =
         pmd->process_totals();
@@ -47,7 +47,7 @@ uint32_t GetDumpsSumKb(const std::string& pattern,
 
 void CreateDumpSummary(
     const base::trace_event::ProcessMemoryDumpsMap& process_dumps,
-    base::trace_event::MemoryDumpCallbackResult* result) {
+    mojom::RawProcessMemoryDump* result) {
   for (const auto& kv : process_dumps) {
     base::ProcessId pid = kv.first;  // kNullProcessId for the current process.
     const base::trace_event::ProcessMemoryDump* process_memory_dump =
@@ -55,30 +55,31 @@ void CreateDumpSummary(
 
     // TODO(hjd): Transitional until we send the full PMD. See crbug.com/704203
     if (pid == base::kNullProcessId) {
-      result->chrome_dump.malloc_total_kb =
+      result->chrome_dump->malloc_total_kb =
           GetDumpsSumKb("malloc", process_memory_dump);
-      result->chrome_dump.v8_total_kb =
+      result->chrome_dump->v8_total_kb =
           GetDumpsSumKb("v8/*", process_memory_dump);
 
-      result->chrome_dump.command_buffer_total_kb =
+      result->chrome_dump->command_buffer_total_kb =
           GetDumpsSumKb("gpu/gl/textures/*", process_memory_dump);
-      result->chrome_dump.command_buffer_total_kb +=
+      result->chrome_dump->command_buffer_total_kb +=
           GetDumpsSumKb("gpu/gl/buffers/*", process_memory_dump);
-      result->chrome_dump.command_buffer_total_kb +=
+      result->chrome_dump->command_buffer_total_kb +=
           GetDumpsSumKb("gpu/gl/renderbuffers/*", process_memory_dump);
 
       // partition_alloc reports sizes for both allocated_objects and
       // partitions. The memory allocated_objects uses is a subset of
       // the partitions memory so to avoid double counting we only
       // count partitions memory.
-      result->chrome_dump.partition_alloc_total_kb =
+      result->chrome_dump->partition_alloc_total_kb =
           GetDumpsSumKb("partition_alloc/partitions/*", process_memory_dump);
-      result->chrome_dump.blink_gc_total_kb =
+      result->chrome_dump->blink_gc_total_kb =
           GetDumpsSumKb("blink_gc", process_memory_dump);
-      FillOsDumpFromProcessMemoryDump(process_memory_dump, &result->os_dump);
+      FillOsDumpFromProcessMemoryDump(process_memory_dump,
+                                      result->os_dump.get());
     } else {
       auto& os_dump = result->extra_processes_dumps[pid];
-      FillOsDumpFromProcessMemoryDump(process_memory_dump, &os_dump);
+      FillOsDumpFromProcessMemoryDump(process_memory_dump, os_dump.get());
     }
   }
 }
@@ -174,20 +175,7 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
   // double counting.
   if (req_args.level_of_detail !=
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED) {
-    // The results struct to fill.
-    base::trace_event::MemoryDumpCallbackResult result;
-
-    CreateDumpSummary(process_dumps, &result);
-
-    process_memory_dump->os_dump = result.os_dump;
-    process_memory_dump->chrome_dump = result.chrome_dump;
-    for (const auto& kv : result.extra_processes_dumps) {
-      const base::ProcessId pid = kv.first;
-      const base::trace_event::MemoryDumpCallbackResult::OSMemDump&
-          os_mem_dump = kv.second;
-      DCHECK_EQ(0u, process_memory_dump->extra_processes_dumps.count(pid));
-      process_memory_dump->extra_processes_dumps[pid] = os_mem_dump;
-    }
+    CreateDumpSummary(process_dumps, process_memory_dump.get());
   }
   callback.Run(success, dump_guid, std::move(process_memory_dump));
 }
@@ -209,9 +197,8 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
 void ClientProcessImpl::RequestOSMemoryDump(
     const std::vector<base::ProcessId>& ids,
     const RequestOSMemoryDumpCallback& callback) {
-  using OSMemDump = base::trace_event::MemoryDumpCallbackResult::OSMemDump;
-  std::unordered_map<base::ProcessId, OSMemDump> results;
-  callback.Run(true, results);
+  std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
+  callback.Run(true, std::move(results));
 }
 
 ClientProcessImpl::Config::Config(service_manager::Connector* connector,
