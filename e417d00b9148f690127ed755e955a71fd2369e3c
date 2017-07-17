@@ -39,6 +39,29 @@
       "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca25439_25e4f553",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-17T17:12:56Z",
+      "side": 1,
+      "message": "Please update the comment to\n// TODO(lpy) crbug.com/743314, enabled once \u0027Shadow Page\u0027 case is resolved correctly.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

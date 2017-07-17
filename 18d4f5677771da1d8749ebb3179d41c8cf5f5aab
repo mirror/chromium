@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "637200ac_2461f865",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-17T17:12:56Z",
+      "side": 1,
+      "message": "Also put crbug.com/743314 in this comment.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "18d4f5677771da1d8749ebb3179d41c8cf5f5aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
