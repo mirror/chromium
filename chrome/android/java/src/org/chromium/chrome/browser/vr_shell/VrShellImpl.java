@@ -33,7 +33,6 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -668,12 +667,14 @@ public class VrShellImpl
 
     @CalledByNative
     public void navigateForward() {
+        if (!mCanGoForward) return;
         mActivity.getToolbarManager().forward();
         updateHistoryButtonsVisibility();
     }
 
     @CalledByNative
     public void navigateBack() {
+        if (!mCanGoBack) return;
         if (mActivity instanceof ChromeTabbedActivity) {
             // TODO(mthiesse): We should do this for custom tabs as well, as back for custom tabs
             // is also expected to close tabs.
@@ -689,11 +690,14 @@ public class VrShellImpl
             nativeSetHistoryButtonsEnabled(mNativeVrShell, false, false);
             return;
         }
-        // Hitting back when on the NTP usually closes Chrome, which we don't allow in VR, so we
-        // just disable the back button.
-        boolean shouldAlwaysGoBack = mActivity instanceof ChromeTabbedActivity
-                && (mNativePage == null || !(mNativePage instanceof NewTabPage));
-        boolean canGoBack = mTab.canGoBack() || shouldAlwaysGoBack;
+        boolean willCloseTab = false;
+        if (mActivity instanceof ChromeTabbedActivity) {
+            ChromeTabbedActivity cta = (ChromeTabbedActivity) mActivity;
+            // If hitting back would minimize Chrome, disable the back button.
+            // See ChromeTabbedActivity#handleBackPressed().
+            willCloseTab = cta.backShouldCloseTab(mTab) && !mTab.isCreatedForExternalApp();
+        }
+        boolean canGoBack = mTab.canGoBack() || willCloseTab;
         boolean canGoForward = mTab.canGoForward();
         if ((mCanGoBack != null && canGoBack == mCanGoBack)
                 && (mCanGoForward != null && canGoForward == mCanGoForward)) {
@@ -734,6 +738,12 @@ public class VrShellImpl
     @VisibleForTesting
     public void setOnDispatchTouchEventForTesting(OnDispatchTouchEventCallback callback) {
         mOnDispatchTouchEventForTesting = callback;
+    }
+
+    @VisibleForTesting
+    @Override
+    public Boolean isBackButtonEnabled() {
+        return mCanGoBack;
     }
 
     private native long nativeInit(VrShellDelegate delegate, long nativeWindowAndroid,
