@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0e1693b_821aacab",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T21:18:54Z",
+      "side": 1,
+      "message": "Where is the global \"font-size: 13px\" defined?",
+      "revId": "b6c6a361c2d8e849c37d0feb9b35bb306c627846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
