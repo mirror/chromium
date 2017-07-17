@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2eb2aed_39c8ca79",
+        "filename": "services/ui/ws/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-17T13:45:39Z",
+      "side": 1,
+      "message": "Is this propagated from ash to ws? It\u0027s a global variable that isn\u0027t part of the display::Display itself.",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 26
+      },
+      "revId": "0f6838473e48570f13d34046e3349c85b031662b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76af26b_4f2b1ab5",
+        "filename": "services/ui/ws/display.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-17T13:45:39Z",
+      "side": 1,
+      "message": "This updates the cursor config based on the display::Display, so maybe UpdateCursorConfig() or something to better describe it?",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 22
+      },
+      "revId": "0f6838473e48570f13d34046e3349c85b031662b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b038d4f_4413e735",
+        "filename": "services/ui/ws/test_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-17T13:45:39Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 733,
+        "startChar": 2,
+        "endLine": 733,
+        "endChar": 10
+      },
+      "revId": "0f6838473e48570f13d34046e3349c85b031662b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149f4eba_af7d06bb",
+        "filename": "services/ui/ws/window_tree_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-17T13:45:39Z",
+      "side": 1,
+      "message": "Can you put a comment explaining why the device scale factor is this, either here or down where you check something based on it?",
+      "revId": "0f6838473e48570f13d34046e3349c85b031662b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
