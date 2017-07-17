@@ -514,21 +514,6 @@ void Shell::UpdateAfterLoginStatusChange(LoginStatus status) {
     root_window_controller->UpdateAfterLoginStatusChange(status);
 }
 
-void Shell::NotifyMaximizeModeStarted() {
-  for (auto& observer : shell_observers_)
-    observer.OnMaximizeModeStarted();
-}
-
-void Shell::NotifyMaximizeModeEnding() {
-  for (auto& observer : shell_observers_)
-    observer.OnMaximizeModeEnding();
-}
-
-void Shell::NotifyMaximizeModeEnded() {
-  for (auto& observer : shell_observers_)
-    observer.OnMaximizeModeEnded();
-}
-
 void Shell::NotifyOverviewModeStarting() {
   for (auto& observer : shell_observers_)
     observer.OnOverviewModeStarting();
