@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "dd6e5670_900ac429",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-17T16:46:34Z",
+      "side": 1,
+      "message": "I think this can be false if we had a locked image we couldn\u0027t clean up - my original comment might not have been clear. The second check below is fine though.",
+      "parentUuid": "73972c2d_817a068e",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b11c34_69036764",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 1
