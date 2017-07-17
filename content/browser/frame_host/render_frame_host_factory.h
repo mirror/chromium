@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "content/common/widget.mojom.h"
 
 namespace content {
 
@@ -38,6 +39,7 @@ class CONTENT_EXPORT RenderFrameHostFactory {
       FrameTreeNode* frame_tree_node,
       int32_t routing_id,
       int32_t widget_routing_id,
+      mojom::WidgetRequest widget_request,
       bool hidden,
       bool renderer_initiated_creation);
 
@@ -59,6 +61,7 @@ class CONTENT_EXPORT RenderFrameHostFactory {
       FrameTreeNode* frame_tree_node,
       int32_t routing_id,
       int32_t widget_routing_id,
+      mojom::WidgetRequest widget_request,
       bool hidden,
       bool renderer_initiated_creation) = 0;
 

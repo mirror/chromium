@@ -185,12 +185,14 @@ class CaptureTestRenderViewHost : public TestRenderViewHost {
                             RenderWidgetHostDelegate* widget_delegate,
                             int32_t routing_id,
                             int32_t main_frame_routing_id,
+                            mojom::WidgetPtr widget,
                             bool swapped_out)
       : TestRenderViewHost(instance,
                            base::MakeUnique<RenderWidgetHostImpl>(
                                widget_delegate,
                                instance->GetProcess(),
                                routing_id,
+                               std::move(widget),
                                false /* This means: "Is not hidden." */),
                            delegate,
                            main_frame_routing_id,
@@ -219,10 +221,11 @@ class CaptureTestRenderViewHostFactory : public RenderViewHostFactory {
       RenderWidgetHostDelegate* widget_delegate,
       int32_t routing_id,
       int32_t main_frame_routing_id,
+      mojom::WidgetPtr widget,
       bool swapped_out) override {
     return new CaptureTestRenderViewHost(instance, delegate, widget_delegate,
                                          routing_id, main_frame_routing_id,
-                                         swapped_out);
+                                         std::move(widget), swapped_out);
   }
 
  private:

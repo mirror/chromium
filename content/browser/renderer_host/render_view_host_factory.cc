@@ -26,6 +26,7 @@ RenderViewHost* RenderViewHostFactory::Create(
     RenderWidgetHostDelegate* widget_delegate,
     int32_t routing_id,
     int32_t main_frame_routing_id,
+    mojom::WidgetPtr widget,
     bool swapped_out,
     bool hidden) {
   // RenderViewHost creation can be either browser-driven (by the user opening a
@@ -46,14 +47,14 @@ RenderViewHost* RenderViewHostFactory::Create(
   if (factory_) {
     return factory_->CreateRenderViewHost(instance, delegate, widget_delegate,
                                           routing_id, main_frame_routing_id,
-                                          swapped_out);
+                                          std::move(widget), swapped_out);
   }
-  return new RenderViewHostImpl(
-      instance,
-      base::MakeUnique<RenderWidgetHostImpl>(
-          widget_delegate, instance->GetProcess(), routing_id, hidden),
-      delegate, main_frame_routing_id, swapped_out,
-      true /* has_initialized_audio_host */);
+  return new RenderViewHostImpl(instance,
+                                base::MakeUnique<RenderWidgetHostImpl>(
+                                    widget_delegate, instance->GetProcess(),
+                                    routing_id, std::move(widget), hidden),
+                                delegate, main_frame_routing_id, swapped_out,
+                                true /* has_initialized_audio_host */);
 }
 
 // static

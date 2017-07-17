@@ -168,6 +168,7 @@ class CONTENT_EXPORT FrameTree {
   RenderViewHostImpl* CreateRenderViewHost(SiteInstance* site_instance,
                                            int32_t routing_id,
                                            int32_t main_frame_routing_id,
+                                           mojom::WidgetPtr widget,
                                            bool swapped_out,
                                            bool hidden);
 

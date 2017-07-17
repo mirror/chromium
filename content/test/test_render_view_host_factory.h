@@ -34,6 +34,7 @@ class TestRenderViewHostFactory : public RenderViewHostFactory {
       RenderWidgetHostDelegate* widget_delegate,
       int32_t routing_id,
       int32_t main_frame_routing_id,
+      mojom::WidgetPtr widget,
       bool swapped_out) override;
 
  private:
