@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "d131c275_0cbf45a6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-17T07:56:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87c6db22_4741123c",
+      "range": {
+        "startLine": 195,
+        "startChar": 58,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623cf486_cde410d6",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 1
