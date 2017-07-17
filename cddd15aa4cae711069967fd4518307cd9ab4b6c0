@@ -16,6 +16,24 @@
       "revId": "cddd15aa4cae711069967fd4518307cd9ab4b6c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4e078e_79e0e56d",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-17T15:35:58Z",
+      "side": 1,
+      "message": "I prefer (and have tried to use) \u0027get\u0027 for methods that return a result immediately or in a callback, and \u0027request\u0027 for methods such as this that trigger an event or notification. *shrug*",
+      "parentUuid": "8aa97c88_636854b4",
+      "revId": "cddd15aa4cae711069967fd4518307cd9ab4b6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
