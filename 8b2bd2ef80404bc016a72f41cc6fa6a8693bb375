@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5244cbf5_4dda993f",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "No, not anymore.",
+      "parentUuid": "a2b75acd_6b8c6fbc",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75e8fb8e_d9ba7ac5",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 9
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "b44087af_1290544b",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cabac48d_f2994638",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56d41175_0767a601",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Is it OK if I file a bug and assign it to myself to do it after this CL?",
+      "parentUuid": "75e8fb8e_d9ba7ac5",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e7501ec_03452c9a",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 9
@@ -73,6 +133,24 @@
       "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf54644_90ce3dbc",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "With \u0027traffic_annotation_\u0027 alone, I get this error: no viable conversion from returned value of type \u0027const std::unique_ptr\u003cnet::NetworkTrafficAnnotationTag\u003e\u0027 to function return type \u0027bool\u0027.\n\nThe alternative I see is \u0027traffic_annotation_ !\u003d nullptr\u0027.",
+      "parentUuid": "9e7501ec_03452c9a",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "24f205c1_efbeae19",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9efd83f1_aaeba218",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa54838_884eb25a",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 9
@@ -107,6 +203,24 @@
       "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf4b4d9_416b0233",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa54838_884eb25a",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "c0747fa1_3088fe57",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9b0d7b_c1381eba",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1238e8_8da75d09",
         "filename": "components/download/internal/proto/entry.proto",
         "patchSetId": 9
@@ -141,6 +273,24 @@
       "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6999538_8a5cfdd0",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1238e8_8da75d09",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "82d9a9a6_ff83b9b8",
+        "filename": "components/download/internal/proto_conversions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda600c2_860e8484",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5585b1cd_3124bf70",
         "filename": "components/download/public/download_params.h",
         "patchSetId": 9
@@ -175,6 +343,24 @@
       "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3f7c83_b56273a3",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-17T09:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5585b1cd_3124bf70",
+      "revId": "8b2bd2ef80404bc016a72f41cc6fa6a8693bb375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
