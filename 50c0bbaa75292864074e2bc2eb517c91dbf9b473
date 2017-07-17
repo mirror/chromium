@@ -22,6 +22,30 @@
       "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced1d2a8_f266adb8",
+        "filename": "components/filesystem/lock_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-17T19:52:26Z",
+      "side": 1,
+      "message": "File locks are used only for LevelDB. \nThis function doesn\u0027t just returns success. It fails if the file is already locked. LockTable maintains in-process set of locks, so even without using locks provided by the OS this class is still useful as it ensures that lock for the same file cannot be acquired more than once. Profile directories normally are not shared between multiple processes, so the same LevelDB files should not be open by more than one chrome process, i.e. in-process locks are sufficient.",
+      "parentUuid": "50e0d350_f8efc058",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
