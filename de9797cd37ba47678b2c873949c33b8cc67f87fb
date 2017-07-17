@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e74749d_7d0f8f92",
+        "filename": "testing/buildbot/filters/fuchsia.mojo_js_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T23:33:07Z",
+      "side": 1,
+      "message": "should we have a tracking bug for this? and a \"TODO: delete file\" comment at the top of the file?\n\nalso, do you reference this file from anywhere?",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8f1ffc_d2e42de5",
+        "filename": "testing/buildbot/filters/fuchsia.mojo_system_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T23:33:07Z",
+      "side": 1,
+      "message": "same question in this file (about todo and bugs; I see this one is referenced)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
