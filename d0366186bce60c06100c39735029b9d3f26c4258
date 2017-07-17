@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c380985d_0de54c3b",
+        "filename": "ash/system/palette/common_palette_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:03:22Z",
+      "side": 1,
+      "message": "The comment is confusing because the DCHECK is on enabled(), so it reads like the tool must already be enabled, but the comment is saying it needs to always be disabled.\n\nCan you move the DCHECK somewhere else so it can be DCHECK(!enabled()) or explain why we check enabled() in the comment?",
+      "revId": "d0366186bce60c06100c39735029b9d3f26c4258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29018ab6_5ab0e95e",
+        "filename": "ash/system/palette/palette_tool_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:03:22Z",
+      "side": 1,
+      "message": "Can this be const?",
+      "revId": "d0366186bce60c06100c39735029b9d3f26c4258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8dd195_360cf88b",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:03:22Z",
+      "side": 1,
+      "message": "nit: just test_api_?",
+      "revId": "d0366186bce60c06100c39735029b9d3f26c4258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43542b0_b44b6a80",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:03:22Z",
+      "side": 1,
+      "message": "Please add test-level comment.",
+      "revId": "d0366186bce60c06100c39735029b9d3f26c4258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c824923_06965ff8",
+        "filename": "ash/test/palette_tray_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T18:03:22Z",
+      "side": 1,
+      "message": "I think it is reasonable to inline this directly in PaletteTray, ie,\n\n  class PaletteTray {\n    class TestApi {\n      // ...\n    };\n  };\n\nThe idea is to make sure all exposed internal details can be quickly viewed in one file.",
+      "revId": "d0366186bce60c06100c39735029b9d3f26c4258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
