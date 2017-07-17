@@ -783,11 +783,10 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
     return WebInputEventResult::kNotHandled;
 
   if (event.Event().pointer_type ==
-      blink::WebPointerProperties::PointerType::kPen)
-    return WebInputEventResult::kNotHandled;
-
-  if (HandleDrag(event, DragInitiator::kMouse))
+          blink::WebPointerProperties::PointerType::kMouse &&
+      HandleDrag(event, DragInitiator::kMouse)) {
     return WebInputEventResult::kHandledSystem;
+  }
 
   Node* target_node = event.InnerNode();
   if (!target_node)
