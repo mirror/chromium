@@ -565,7 +565,6 @@
   "ios_chrome_ui_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_ui_egtests",
     "type": "raw",
-    "args": [],
   },
   "ios_chrome_unittests": {
     "label": "//ios/chrome/test:ios_chrome_unittests",
