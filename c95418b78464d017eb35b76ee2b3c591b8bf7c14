@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea7947b3_a8db827f",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-17T03:38:08Z",
+      "side": 1,
+      "message": "\u003e Here we are always returning true and NotifyError() doesn\u0027t do same thing as return false. Why not make the service side return a value here?\n\nEven if we were to return a boolean it wouldn\u0027t be enough - we \nneed to also make this call Sync (note that it\u0027s already Sync in \nIPC).  \n\nLonger term, wouldn\u0027t we like to make this asynchronous?\nFiled a bug since it\u0027s beyond the scope of this mojification,\nhttps://crbug.com/744210.",
+      "parentUuid": "be81fa20_dbd73476",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 13
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fdefa8e_7a60bff6",
         "filename": "media/mojo/clients/mojo_video_encode_accelerator.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501f4fef_9958ddb0",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-17T03:38:08Z",
+      "side": 1,
+      "message": "Very true. Done.",
+      "parentUuid": "5fdefa8e_7a60bff6",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
