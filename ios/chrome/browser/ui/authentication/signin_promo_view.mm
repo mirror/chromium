@@ -31,6 +31,12 @@ const CGFloat kProfileImageFixedSize = 48;
 const CGFloat kButtonHeight = 36;
 }
 
+NSString* const kSigninPromoViewId = @"signin_promo_view";
+NSString* const kSigninPromoPrimaryButtonId = @"signin_promo_primary_button";
+NSString* const kSigninPromoSecondaryButtonId =
+    @"signin_promo_secondary_button";
+NSString* const kSigninPromoCloseButtonId = @"signin_promo_close_button";
+
 @implementation SigninPromoView {
   NSArray<NSLayoutConstraint*>* _coldStateConstraints;
   NSArray<NSLayoutConstraint*>* _warmStateConstraints;
@@ -49,6 +55,7 @@ const CGFloat kButtonHeight = 36;
   self = [super initWithFrame:frame];
   if (self) {
     self.isAccessibilityElement = YES;
+    self.accessibilityIdentifier = kSigninPromoViewId;
 
     // Adding subviews.
     self.clipsToBounds = YES;
@@ -62,7 +69,7 @@ const CGFloat kButtonHeight = 36;
 
     _primaryButton = [[MDCFlatButton alloc] init];
     _primaryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _primaryButton.accessibilityIdentifier = @"signin_promo_primary_button";
+    _primaryButton.accessibilityIdentifier = kSigninPromoPrimaryButtonId;
     _primaryButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [_primaryButton addTarget:self
                        action:@selector(onPrimaryButtonAction:)
@@ -71,7 +78,7 @@ const CGFloat kButtonHeight = 36;
 
     _secondaryButton = [[MDCFlatButton alloc] init];
     _secondaryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _secondaryButton.accessibilityIdentifier = @"signin_promo_secondary_button";
+    _secondaryButton.accessibilityIdentifier = kSigninPromoSecondaryButtonId;
     [_secondaryButton addTarget:self
                          action:@selector(onSecondaryButtonAction:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -79,7 +86,7 @@ const CGFloat kButtonHeight = 36;
 
     _closeButton = [[UIButton alloc] init];
     _closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _closeButton.accessibilityIdentifier = @"signin_promo_close_button";
+    _closeButton.accessibilityIdentifier = kSigninPromoCloseButtonId;
     [self addSubview:_closeButton];
 
     // Adding style.

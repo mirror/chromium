@@ -8,8 +8,10 @@
 
 #import <EarlGrey/EarlGrey.h>
 
+#include "base/command_line.h"
 #include "base/mac/scoped_block.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/signin/core/common/signin_switches.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #include "ios/chrome/test/app/settings_test_util.h"
 #include "ios/chrome/test/app/signin_test_util.h"
@@ -137,6 +139,9 @@ const CFTimeInterval kDrainTimeout = 5;
 // and revert browser settings to default. It also starts the HTTP server and
 // enables mock authentication.
 + (void)setUp {
+  // Enable sign-in promo for all tests.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableSigninPromo);
   [super setUp];
   [[self class] startHTTPServer];
   [[self class] enableMockAuthentication];
