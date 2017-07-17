@@ -202,6 +202,15 @@ template <class ContainerType>
 ObserverListBase<ObserverType>::Iter<ContainerType>::~Iter() {
   if (list_ && --list_->notify_depth_ == 0)
     list_->Compact();
+#if DCHECK_IS_ON()
+  if (list_) {
+    auto* list_raw = list_.get();
+    list_ = nullptr;
+    if (!list_raw->HasWeakPtrs()) {
+      list_raw->DetachFromSequence();
+    }
+  }
+#endif
 }
 
 template <class ObserverType>

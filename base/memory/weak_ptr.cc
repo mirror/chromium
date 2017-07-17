@@ -29,6 +29,8 @@ WeakReference::Flag::Flag(WeakReference::Flag::NullFlagTag) : is_valid_(false) {
   AddRef();
 }
 
+WeakReference::Flag::~Flag() {}
+
 WeakReference::Flag* WeakReference::Flag::NullFlag() {
   ANNOTATE_SCOPED_MEMORY_LEAK;
   static Flag* g_null_flag = new Flag(kNullFlagTag);
@@ -43,22 +45,22 @@ void WeakReference::Flag::Invalidate() {
     DCHECK(!is_valid_);
     return;
   }
-  // The flag being invalidated with a single ref implies that there are no
-  // weak pointers in existence. Allow deletion on other thread in this
-  // case.
-  DCHECK(sequence_checker_.CalledOnValidSequence() || HasOneRef())
+  DCHECK(sequence_checker_.CalledOnValidSequence())
       << "WeakPtrs must be invalidated on the same sequenced thread.";
 #endif
   is_valid_ = 0;
 }
 
-WeakReference::Flag::~Flag() {}
+void WeakReference::Flag::DetachFromSequence() {
+  DCHECK(HasOneRef()) << "Cannot detach from Sequence while WeakPtrs exist.";
+  sequence_checker_.DetachFromSequence();
+}
 
 WeakReference::WeakReference() : flag_(Flag::NullFlag()) {}
 
-WeakReference::~WeakReference() {}
+WeakReference::WeakReference(const scoped_refptr<Flag>& flag) : flag_(flag) {}
 
-WeakReference::WeakReference(const Flag* flag) : flag_(flag) {}
+WeakReference::~WeakReference() {}
 
 WeakReference::WeakReference(WeakReference&& other)
     : flag_(std::move(other.flag_)) {
@@ -75,11 +77,14 @@ WeakReferenceOwner::~WeakReferenceOwner() {
 }
 
 WeakReference WeakReferenceOwner::GetRef() const {
-  // If we hold the last reference to the Flag then create a new one.
-  if (!HasRefs())
-    flag_ = new WeakReference::Flag();
+#if DCHECK_IS_ON()
+  if (flag_ != WeakReference::Flag::NullFlag())
+    DCHECK(flag_->IsValid());
+#endif
+  if (flag_ == WeakReference::Flag::NullFlag())
+    flag_ = make_scoped_refptr(new WeakReference::Flag());
 
-  return WeakReference(flag_.get());
+  return WeakReference(flag_);
 }
 
 void WeakReferenceOwner::Invalidate() {
@@ -87,6 +92,10 @@ void WeakReferenceOwner::Invalidate() {
     flag_->Invalidate();
     flag_ = WeakReference::Flag::NullFlag();
   }
+}
+
+void WeakReferenceOwner::DetachFromSequence() {
+  flag_->DetachFromSequence();
 }
 
 WeakPtrBase::WeakPtrBase() : ptr_(0) {}
