@@ -90,6 +90,95 @@
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 }
 
+.spectrum-contrast-info {
+    position: absolute;
+    right: 10px;
+    left: auto;
+    bottom: 10px;
+    color: white;
+    display: none;
+    border-radius: 2px;
+    padding: 3px 3px 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    align-items: center;
+    transition: right .05s ease-out, left .05s ease-out, bottom .05s ease-out, top .05s ease-out;
+}
+
+.spectrum-contrast-info .low-contrast {
+    display: none;
+    margin-right: 3px;
+}
+
+.spectrum-contrast-info.contrast-fail .low-contrast {
+    display: initial;
+}
+
+.spectrum-contrast-info.contrast-info-left {
+    left: 10px;
+    right: auto;
+}
+
+.spectrum-contrast-info.contrast-info-top {
+    top: 10px;
+    bottom: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.spectrum-contrast-info.contrast-fail {
+    background-color: #b40202;
+}
+
+.spectrum-contrast-info .value {
+    margin-right: 4px;
+}
+
+.spectrum-contrast-details {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 111px;
+    top: 124px;
+    z-index: 13;
+    font-size: 13px;
+    color: #333;
+    display: none;
+}
+
+.spectrum-contrast-details.visible {
+    display: initial;
+}
+
+.spectrum-contrast-details div {
+    margin: 12px;
+}
+
+.contrast-details-value {
+    color: white;
+    border-radius: 2px;
+    border: 1px solid green;
+    background-color: green;
+    margin-left: 0.5em;
+    padding: 1px 3px;
+    align-items:  baseline;
+}
+
+.contrast-details-value.contrast-color-white {
+    border: 1px solid #ddd;
+}
+
+.contrast-details-value [is=ui-icon] {
+    display: none;
+    margin-left: 0.5em;
+}
+
+.contrast-details-value.contrast-fail .smallicon-no {
+    display: inline-block;
+}
+
+.contrast-details-value.contrast-pass .smallicon-checkmark-square {
+    display: inline-block;
+}
+
 .swatch {
     width: 32px;
     height: 32px;
@@ -418,4 +507,34 @@ div.palette-preview {
 .delete-color-toolbar-active {
     background-color: #ddd;
     color: white;
+}
+
+.swatch.contrast {
+    width: 20px;
+    height: 20px;
+    margin: -10px;
+    position: relative;
+    top: -5px;
+    left: 17px;
+    background-image: url(Images/checker.png);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.swatch.contrast .swatch-overlay {
+    padding: 0;
+}
+
+button.background-color-picker {
+    border: 0;
+    padding:  0;
+    background: none;
+    position: relative;
+    margin-top: -12px;
+    left: 26px;
+    top: 7px;
+}
+
+button.background-color-picker.active [is=ui-icon].largeicon-eyedropper.icon-mask{
+    background-color: hsl(218, 81%, 59%);
 }
