@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9238a5e4_478bb290",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-07-17T12:50:50Z",
+      "side": 1,
+      "message": "parsing_compressed_header_ is already utilized on rockchip devices.\nhttps://cs.chromium.org/chromium/src/media/gpu/v4l2_slice_video_decode_accelerator.cc?q\u003dIsFrameContextRequired\u0026sq\u003dpackage:chromium\u0026l\u003d365\n\nRegarding rename, |partial_frame_info_pending_compressed_header_| looks not clear to me because frame_info itself is not partial. How about |frame_info_for_context_update_| ?",
+      "parentUuid": "37297421_d7783d1f",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c16a67_2ac6d713",
         "filename": "media/filters/vp9_parser.cc",
         "patchSetId": 1
