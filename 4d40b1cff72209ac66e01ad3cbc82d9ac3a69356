@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6e001056_b7456ae1",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-17T18:03:38Z",
+      "side": 1,
+      "message": "Thanks for raising these concerns!\nWhat process are those log consumers using right now to load the files? (Since they will presumably need to run a step to stitch the files as chrome://net-internals/ doesn\u0027t support loading directory-based logs).\n\nThe challenge with using directories as the canonical format is:\n\n (1) There is no web platform support for reading from a directory. So to load these in the NetLog viewer you would need to explicitly stitch into 1 file first, or give up on using a web-based approach.\n\n (2) Outputting a directory presents an additional barrier for users wanting to share logs (in the case of net-export they would need to zip it up or something before attaching to bug/email).\n\nWhile I would love for the directory-based format to be the canonical format (certainly more efficient/elegant than joining to 1 file) I think that using a single-file format simplifies the transition.\n\nI don\u0027t think the built-in stitching will make things any worse for this consumer. Here is how I see things working:\n\n  (a) When using net-export or --log-net-log or cronet\u0027s mechanism, it outputs to an intermediate directory. If logging is shut down gracefully, the log will be stitched together into a single file at the desired destination. This is the simple case, and works well for the user.\n\n  (b) If logging is *not* shut down gracefully (either because of a crash, incomplete log session, etc) then we are left with the \u003clogpath.json\u003e.inprogress/ directory containing the unstitched data. Note that right now this directory does in fact get left behind if you don\u0027t shut down gracefully, so the data is not lost. At this point the user of logging is in the same situation they were in before -- they have a directory of log files and need to stitch it to do anything useful with it (open in NetLog viewer).\n\nIn the case of (b) the user would need to run an extra step. I did complicate this in this patchset by removing the \"constants.json\" file, since now data is split between \u003clogpath.json\u003e and \u003clogpath.json\u003e.inprogress/ directory.\n\nOK, so what I think I can do is restore the \"constants.json\" and \"end_netlog.json\" files, this way the \".inprogress\" directory contains the complete log data. While logging is in progress, I can make \u003clogpath.json\u003e be a dummy file that contains a message to the effect of:\n\n\"\"\"Logging is in progress, the in progress data is in the directory XXXXX. When logging ends that data will be moved into this file. If logging was interrupted, you can stitch the results by running YYYY\"\"\".\n\nIt would be great if \"stitching\" simply involved zipping the directory. We could support that in the future with the external NetLog viewer, but will have to wait until we have migrated off chrome://net-internals/ (Since we don\u0027t want to be importing heavy-weight javascript libraries into Chrome).\n\nAnother possibility is to add support for loading directory-based logs directly to the NetLog viewer. Unfortunately you can\u0027t do this in the Web Platform :( The only solution I am aware of is to use a Chrome extension and grant it support to file:// URLs, which is pretty gross. So realistically I don\u0027t think directory-based support (outside of say a zipped archive) is feasible in the NetLog viewer. A zipped directory seems like the optimal form of stitching, since it is easy for users to run and also benefits from compression.\n\nWDYT?",
+      "parentUuid": "63d35c13_f51ca425",
+      "range": {
+        "startLine": 1048,
+        "startChar": 22,
+        "endLine": 1048,
+        "endChar": 26
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c590884b_796f8881",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 7
