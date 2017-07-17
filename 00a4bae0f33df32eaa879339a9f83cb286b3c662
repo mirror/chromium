@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85263194_29c21213",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "include \u003cmap\u003e",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc94430_60f447f5",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "I\u0027d change the language here a bit to avoid using the term \"Chrome\".",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcf52a2_91cd209a",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "Could these be std::string?",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0672b48c_537027a8",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "We probably won\u0027t need the Apple Store ID as per our offline discussion?",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 73
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7062479c_531e3146",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "IOSNativeAppPaymentInstrument",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ccabb5_3160d802",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "I would call this method_id and add another argument for the universal link. Based on our offline discussion, the method identifier may not be the same as the universal link.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe465ba_d05efc99",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "s/method/supported_methods here and in the implementation.\nI don\u0027t know why it\u0027s called \"method\" here:\nhttps://cs.chromium.org/chromium/src/components/payments/core/payment_instrument.h?dr\u003dCSs\u0026l\u003d63",
+      "range": {
+        "startLine": 55,
+        "startChar": 38,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0681900_c24d60a5",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "I\u0027d probably remove this part.",
+      "range": {
+        "startLine": 59,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a499f554_c51fe45f",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "You should probably keep a UIImage here if you\u0027re converting this data to a UIImage later on. This is also helpful in case you\u0027d want to have a placeholder image until the network request returns.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 8
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2831b0b9_21637515",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "Do you need to import \u003cFoundation/Foundation.h\u003e?",
+      "range": {
+        "startLine": 68,
+        "startChar": 24,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefd754f_a5a936a2",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2bc47f_d250ffdc",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 6,
+        "startChar": 9,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026276c8_6a04b78d",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "Move this to the top followed by a new line to separate it from the other includes.",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 73
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c112b1db_dab17c4e",
+        "filename": "ios/chrome/browser/payments/ios_native_app_payment_instrument.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T21:23:07Z",
+      "side": 1,
+      "message": "You don\u0027t need this as it is included in the header file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "00a4bae0f33df32eaa879339a9f83cb286b3c662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
