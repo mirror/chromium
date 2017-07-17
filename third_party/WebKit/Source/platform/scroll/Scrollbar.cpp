@@ -173,7 +173,8 @@ bool Scrollbar::ThumbWillBeUnderMouse() const {
 
 void Scrollbar::AutoscrollPressedPart(double delay) {
   // Don't do anything for the thumb or if nothing was pressed.
-  if (pressed_part_ == kThumbPart || pressed_part_ == kNoPart)
+  if (pressed_part_ == kThumbPart || pressed_part_ == kNoPart ||
+      pressed_part_ == kScrollbarBGPart)
     return;
 
   // Handle the track.
