@@ -15,10 +15,12 @@ namespace chromeos {
 // succeeded at all.  |make| represents the printer manufacturer.  |model| is
 // the printer model.  |autoconf| indicates if we think we can compute the
 // printer capabilites without a PPD.
-using PrinterInfoCallback = base::Callback<void(bool success,
-                                                const std::string& make,
-                                                const std::string& model,
-                                                bool autoconf)>;
+using PrinterInfoCallback =
+    base::Callback<void(bool success,
+                        const std::string& make,
+                        const std::string& model,
+                        const std::string& make_and_model,
+                        bool autoconf)>;
 
 // Dispatch an IPP request to |host| on |port| for |path| to obtain
 // basic printer information.
