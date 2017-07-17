@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a7edb00_4001ff5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-17T19:23:14Z",
+      "side": 1,
+      "message": "The behavior doesn\u0027t change. This is just protecting against any potential future change to MSVC that result in it failing to build because it becomes more strict about enforcing constexpr correctness.",
+      "parentUuid": "8573d632_064cbf96",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f327044a_c324c75f",
         "filename": "base/numerics/checked_math.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29948610_524e3c0d",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-17T19:23:14Z",
+      "side": 1,
+      "message": "As discussed in person, I\u0027ve replaced this with MustTreatAsConstexpr(), which has a name that more clearly conveys the logic.",
+      "parentUuid": "f327044a_c324c75f",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2fb6e583_5f7659c4",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-17T19:23:14Z",
+      "side": 1,
+      "message": "Explained in person the limitations of C++11 constexpr.",
+      "parentUuid": "7201824f_75fc620d",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd5778a_01955bb2",
         "filename": "base/numerics/clamped_math.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7e0a3e_55614a73",
+        "filename": "base/numerics/clamped_math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-17T19:23:14Z",
+      "side": 1,
+      "message": "Ditto on C++11 constexpr.",
+      "parentUuid": "1fd5778a_01955bb2",
+      "revId": "0f132063db4de510633fdb7e24b91a3e997050a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
