@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae0e3f8b_987c5060",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-17T12:29:35Z",
+      "side": 1,
+      "message": "Done. I moved this to the case when the touch sequence has ended.",
+      "parentUuid": "0bdb39e5_606f8314",
+      "range": {
+        "startLine": 271,
+        "startChar": 14,
+        "endLine": 271,
+        "endChar": 23
+      },
+      "revId": "15409eeacfc803a4b4eb26bf0bdd5415fefd518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "565457ee_9e6e191e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "15409eeacfc803a4b4eb26bf0bdd5415fefd518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1705b568_fc1b9a16",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 79758,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-17T12:29:35Z",
+      "side": 1,
+      "message": "Done. I\u0027m not sure about the current ordering for the naming of the labels. I currently have it so it goes from the least significant bit up. (i.e. PAN_X first, PAN_Y second, PINCH_ZOOM third, and DOUBLE_TAP_ZOOM last). I am wondering if you think this ordering is okay or if it changing it like the following would be better:\nPAN_RIGHT_PAN_Y_PINCH_ZOOM_DOUBLE_TAP_ZOOM -\u003e DOUBLE_TAP_ZOOM_PINCH_ZOOM_PAN_Y_PAN_X.\n\nI personally don\u0027t like how PAN_Y occurs before PAN_X in this case, but I am open to suggestions.",
+      "parentUuid": "565457ee_9e6e191e",
+      "range": {
+        "startLine": 79758,
+        "startChar": 49,
+        "endLine": 79758,
+        "endChar": 50
+      },
+      "revId": "15409eeacfc803a4b4eb26bf0bdd5415fefd518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
