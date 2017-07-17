@@ -41,8 +41,7 @@ cr.define('extensions', function() {
       /** @type {extensions.Toolbar} */
       toolbar: Object,
 
-      /** @type {extensions.ItemDelegate} */
-      itemDelegate: Object,
+      delegate: Object,
 
       inDevMode: {
         type: Boolean,
