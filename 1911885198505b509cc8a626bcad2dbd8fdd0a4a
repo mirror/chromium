@@ -1005,6 +1005,23 @@
     },
     {
       "key": {
+        "uuid": "b70a8b86_de3cca40",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T15:09:45Z",
+      "side": 1,
+      "message": "MockCryptohomeClient is being removed:\n\nhttps://chromium-review.googlesource.com/c/563153/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2d3f15_5074c004",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
         "patchSetId": 11
