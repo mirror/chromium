@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "683066ea_13f986e9",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-17T05:19:03Z",
+      "side": 1,
+      "message": "Reverted this - turns out it was only preventing a very specific issue which was when the role attribute changed, GetOrCreate() is called, so I modified AXObjectCacheImpl::HandleAriaExpandedChange() to call Get() instead of GetOrCreate(), which seems to work.",
+      "parentUuid": "ccccd218_e3154976",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb28b123_6d60e7ee",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f66743e2_abf1f9ad",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-17T05:19:03Z",
+      "side": 1,
+      "message": "Understood; removed.",
+      "parentUuid": "05176efe_596e4b69",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9b926da_608f5a76",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 4
@@ -100,6 +136,24 @@
       "writtenOn": "2017-07-14T02:02:02Z",
       "side": 1,
       "message": "This seems okay to me. Long-term I\u0027m going to try to\nmake it so that we don\u0027t need to check this right\nat the moment an attribute changes, that\u0027s just causing\nso many problems. I\u0027m thinking we just want to mark\nsome nodes dirty and then only at serialization time\nfigure out what events to fire.\n\nBut until then, checking NeedsDistributionRecalc\nseems like a better idea than calling\nUpdateDistribution.\n\nDoes this change alone not fix it? If not, why not?",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a6fc60_341e5dd9",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-17T05:19:03Z",
+      "side": 1,
+      "message": "No: removing the UpdateDistribution in AccessibilityIsIgnored to avoid calling it mid-layout means we hit this DCHECK a lot, so I had to call UpdateDistribution in a bunch of other places.",
+      "parentUuid": "496cdc27_47eebc47",
       "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
