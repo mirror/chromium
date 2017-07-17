@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "191d1ce5_87dc6192",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-17T00:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d7e3cde_3faa6c63",
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac461416_c63cb10d",
         "filename": "content/browser/memory/swap_metrics_driver_mac.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f21e56_b21ebe8d",
+        "filename": "content/browser/memory/swap_metrics_driver_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-17T00:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac461416_c63cb10d",
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a8ed69f2_a5187c6f",
+        "filename": "content/browser/memory/swap_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-17T00:28:28Z",
+      "side": 1,
+      "message": "I agree; great suggestion! Done.",
+      "parentUuid": "38bc24e4_502c4f29",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36624c9f_deeeffc1",
         "filename": "content/browser/memory/swap_metrics_observer.h",
         "patchSetId": 6
@@ -79,6 +139,30 @@
       "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9563369c_fcca26c6",
+        "filename": "content/browser/memory/swap_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-17T00:28:28Z",
+      "side": 1,
+      "message": "Yes, I think that\u0027s better. Done.",
+      "parentUuid": "36624c9f_deeeffc1",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
