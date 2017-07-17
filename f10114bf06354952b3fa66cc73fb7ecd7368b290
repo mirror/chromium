@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd1fa724_bad22a3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-17T00:36:39Z",
+      "side": 1,
+      "message": "mention filename here -\u003e CSSValueIDMappingsGenerated.h",
+      "revId": "f10114bf06354952b3fa66cc73fb7ecd7368b290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab01abd_d92c9567",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-17T00:36:39Z",
+      "side": 1,
+      "message": "Add the link inline when you mention the CL",
+      "revId": "f10114bf06354952b3fa66cc73fb7ecd7368b290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
