@@ -22,6 +22,30 @@
       "revId": "11c7ff3150220af205c2f3dfaf4ade8666a248a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b854bc8e_40be958b",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-17T18:52:02Z",
+      "side": 1,
+      "message": "\u003e should this be a supported case?  If you call this and host_ isn\u0027t initialized, then it is silently dropped on the floor.  Should we be saving the value in the case of !host_ and then call this in CreateLayerTreeHost with the cached value?\n\u003e \n\u003e Or should we just make this a DCHECK(host_) here instead of the if?\n\nlooks fine changing it to a dcheck, afaict",
+      "parentUuid": "ef5d7b36_16ddc435",
+      "range": {
+        "startLine": 619,
+        "startChar": 11,
+        "endLine": 619,
+        "endChar": 12
+      },
+      "revId": "11c7ff3150220af205c2f3dfaf4ade8666a248a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
