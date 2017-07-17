@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43b4b8a3_3cefc710",
+        "filename": "mojo/edk/system/channel.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-07-17T20:00:25Z",
+      "side": 1,
+      "message": "It seems like there is the potential for this being a hot-spot in the code for large (\u003e4k) messages. It might be worth using realloc to mitigate the cost sometimes? Or, perhaps we should at least measure impact of this?",
+      "revId": "e9782f7f4b37520068966f1aab11769cb63f9fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
