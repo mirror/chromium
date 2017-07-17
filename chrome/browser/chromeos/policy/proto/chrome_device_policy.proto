@@ -682,6 +682,15 @@ message DeviceLogUploadSettingsProto {
   optional bool system_log_upload_enabled = 1 [default = false];
 }
 
+message DisplayLegacySortOrderEnabledProto {
+  // True if the displays should be sorted according to the legacy sort order,
+  // which uses the full display IDs to sort the displays. False (default) if
+  // the displays should be sorted according to the new sort order, which uses
+  // only the least significant 8 bits of the display IDs (which is the output
+  // port index) to sort the displays.
+  optional bool display_legacy_sort_order_enabled = 1 [default = false];
+}
+
 // This setting is controlled by the device policy DisplayRotationDefault.
 // If the policy is set and therefore display_rotation_default contains a value,
 // all displays will be rotated clockwise to the specified orientation at
@@ -875,4 +884,5 @@ message ChromeDeviceSettingsProto {
       device_ecryptfs_migration_strategy = 51;
   optional DeviceSecondFactorAuthenticationProto
       device_second_factor_authentication = 52;
+  optional DisplayLegacySortOrderEnabledProto display_legacy_sort_order = 53;
 }

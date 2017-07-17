@@ -143,7 +143,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 375
+#   For your editing convenience: highest ID currently used: 376
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -9759,6 +9759,30 @@
       If you set this policy to 'AllowMigration', users with ecryptfs home directories will be offered to migrate these to ext4 encryption as necessary (currently when Android N becomes available on the device).
 
       If this policy is left not set, the device will behave as if 'DisallowArc' was chosen.''',
+    },
+    {
+      'name': 'DisplayLegacySortOrderEnabled',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome_os:60-'],
+      'device_only': True,
+      'features': {
+        'can_be_recommended': False,
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'example_value': True,
+      'id': 376,
+      'caption': '''Restore the multi display legacy sort order behavior''',
+      'tags': [],
+      'desc': '''If this policy is set to true, the legacy multi display sort
+      order will be used which did not sort by the output port index number.
+      This is useful for devices where swapping cables to restore this legacy
+      sort order is not feasible.
+
+      If this policy is set to false or unset, the new correct display sort
+      order will be used which uses only the output port index for a more
+      deterministic display sort.''',
     },
   ],
   'messages': {

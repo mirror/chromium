@@ -102,6 +102,8 @@ CHROMEOS_EXPORT extern const char kRebootOnShutdown[];
 
 CHROMEOS_EXPORT extern const char kExtensionCacheSize[];
 
+CHROMEOS_EXPORT extern const char kDisplayLegacySortOrderEnabled[];
+
 CHROMEOS_EXPORT extern const char kDisplayRotationDefault[];
 
 CHROMEOS_EXPORT extern const char kLoginAuthenticationBehavior[];

@@ -197,6 +197,13 @@ const char kRebootOnShutdown[] = "cros.device.reboot_on_shutdown";
 // size in bytes.
 const char kExtensionCacheSize[] = "cros.device.extension_cache_size";
 
+// A boolean pref that specifies whether to sort the displays using the legacy
+// sort order behavior by their full IDs, or sort them by the new sort order
+// behavior which uses the least significant 8 bits of the IDs (which is the
+// index of the output port).
+const char kDisplayLegacySortOrderEnabled[] =
+    "cros.device.display_legacy_sort_order_enabled";
+
 // An integer pref that sets the display rotation at startup to a certain
 // value, overriding the user value:
 // 0 = 0 degrees rotation

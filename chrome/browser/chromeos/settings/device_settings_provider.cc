@@ -67,6 +67,7 @@ const char* const kKnownSettings[] = {
     kDeviceOwner,
     kDeviceQuirksDownloadEnabled,
     kDeviceWallpaperImage,
+    kDisplayLegacySortOrderEnabled,
     kDisplayRotationDefault,
     kExtensionCacheSize,
     kHeartbeatEnabled,
@@ -537,6 +538,14 @@ void DecodeGenericPolicies(
     new_values_cache->SetInteger(
         kExtensionCacheSize,
         policy.extension_cache_size().extension_cache_size());
+  }
+
+  if (policy.has_display_legacy_sort_order() &&
+      policy.display_legacy_sort_order()
+          .has_display_legacy_sort_order_enabled()) {
+    new_values_cache->SetBoolean(
+        kDisplayLegacySortOrderEnabled,
+        policy.display_legacy_sort_order().display_legacy_sort_order_enabled());
   }
 
   if (policy.has_display_rotation_default() &&

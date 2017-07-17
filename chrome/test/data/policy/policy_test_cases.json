@@ -2803,6 +2803,11 @@
     ]
   },
 
+  "DisplayLegacySortOrderEnabled": {
+    "os": ["chromeos"],
+    "test_policy": { "DisplayLegacySortOrderEnabled": true }
+  },
+
   "DisplayRotationDefault": {
     "os": ["chromeos"],
     "can_be_recommended": false,
