@@ -35,7 +35,6 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_status_code.h"
 #include "net/nqe/network_quality_estimator_util.h"
-#include "net/nqe/socket_watcher_factory.h"
 #include "net/nqe/throughput_analyzer.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
@@ -288,13 +287,6 @@ NetworkQualityEstimator::NetworkQualityEstimator(
                  base::Unretained(this)),
       use_localhost_requests_, use_smaller_responses_for_tests, net_log_));
 
-  watcher_factory_.reset(new nqe::internal::SocketWatcherFactory(
-      base::ThreadTaskRunnerHandle::Get(),
-      params_->min_socket_watcher_notification_interval(),
-      base::Bind(&NetworkQualityEstimator::OnUpdatedRTTAvailable,
-                 base::Unretained(this)),
-      tick_clock_.get()));
-
   // Record accuracy after a 15 second interval. The values used here must
   // remain in sync with the suffixes specified in
   // tools/metrics/histograms/histograms.xml.
@@ -302,6 +294,19 @@ NetworkQualityEstimator::NetworkQualityEstimator(
 
   for (int i = 0; i < STATISTIC_LAST; ++i)
     http_rtt_at_last_main_frame_[i] = nqe::internal::InvalidRTT();
+
+  watcher_factory_ = CreateSocketWatcherFactory();
+}
+
+std::unique_ptr<nqe::internal::SocketWatcherFactory>
+NetworkQualityEstimator::CreateSocketWatcherFactory() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return base::MakeUnique<nqe::internal::SocketWatcherFactory>(
+      base::ThreadTaskRunnerHandle::Get(),
+      params_->min_socket_watcher_notification_interval(),
+      base::Bind(&NetworkQualityEstimator::OnUpdatedRTTAvailable,
+                 base::Unretained(this)),
+      tick_clock_.get());
 }
 
 void NetworkQualityEstimator::AddDefaultEstimates() {

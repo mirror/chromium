@@ -11,6 +11,10 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/nqe/network_quality_estimator_params.h"
+#include "net/nqe/socket_watcher.h"
+#include "net/nqe/socket_watcher_factory.h"
+#include "net/nqe/socket_watcher_factory_test_util.h"
+#include "net/nqe/socket_watcher_test_util.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -83,6 +87,7 @@ TestNetworkQualityEstimator::TestNetworkQualityEstimator(
       net_log_(std::move(net_log)) {
   // Set up the embedded test server.
   EXPECT_TRUE(embedded_test_server_.Start());
+  watcher_factory_ = CreateSocketWatcherFactory();
 }
 
 TestNetworkQualityEstimator::~TestNetworkQualityEstimator() {}
@@ -327,6 +332,18 @@ void TestNetworkQualityEstimator::
 
   NetworkQualityEstimator::NotifyRTTAndThroughputEstimatesObserverIfPresent(
       observer);
+}
+
+std::unique_ptr<nqe::internal::SocketWatcherFactory>
+TestNetworkQualityEstimator::CreateSocketWatcherFactory() {
+  std::unique_ptr<nqe::internal::SocketWatcherFactory> swf =
+      NetworkQualityEstimator::CreateSocketWatcherFactory();
+
+  nqe::internal::SocketWatcherFactory* swf_ptr = swf.get();
+
+  nqe::internal::SocketWatcherFactory val(*swf_ptr);
+
+  return base::MakeUnique<nqe::internal::TestSocketWatcherFactory>(val);
 }
 
 }  // namespace net

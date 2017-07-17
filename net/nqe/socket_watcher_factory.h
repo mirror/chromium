@@ -13,6 +13,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "net/base/net_export.h"
 #include "net/socket/socket_performance_watcher.h"
 #include "net/socket/socket_performance_watcher_factory.h"
 
@@ -35,7 +36,8 @@ namespace internal {
 
 // SocketWatcherFactory implements SocketPerformanceWatcherFactory.
 // SocketWatcherFactory is thread safe.
-class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
+class NET_EXPORT_PRIVATE SocketWatcherFactory
+    : public SocketPerformanceWatcherFactory {
  public:
   // Creates a SocketWatcherFactory.  All socket watchers created by
   // SocketWatcherFactory call |updated_rtt_observation_callback| on
@@ -49,13 +51,17 @@ class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
       OnUpdatedRTTAvailableCallback updated_rtt_observation_callback,
       base::TickClock* tick_clock);
 
+  SocketWatcherFactory(const SocketWatcherFactory&);
+
   ~SocketWatcherFactory() override;
 
   // SocketPerformanceWatcherFactory implementation:
   std::unique_ptr<SocketPerformanceWatcher> CreateSocketPerformanceWatcher(
-      const Protocol protocol) override;
+      const Protocol protocol,
+      const AddressList& address_list) override;
 
- private:
+ protected:
+  // Protected for testing.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Minimum interval betweeen consecutive notifications to the socket watchers
@@ -67,7 +73,8 @@ class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
 
   base::TickClock* tick_clock_;
 
-  DISALLOW_COPY_AND_ASSIGN(SocketWatcherFactory);
+ private:
+  DISALLOW_ASSIGN(SocketWatcherFactory);
 };
 
 }  // namespace internal
