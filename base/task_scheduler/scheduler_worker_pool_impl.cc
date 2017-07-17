@@ -139,10 +139,12 @@ bool ContainsWorker(const std::vector<scoped_refptr<SchedulerWorker>>& workers,
 }  // namespace
 
 class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
-    : public SchedulerWorker::Delegate {
+    : public SchedulerWorker::Delegate,
+      BlockingObserver {
  public:
   // |outer| owns the worker for which this delegate is constructed.
-  SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer);
+  SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer,
+                              const SchedulerLock* predecessor_lock);
   ~SchedulerWorkerDelegateImpl() override;
 
   // SchedulerWorker::Delegate:
@@ -154,6 +156,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   bool CanTimeout(SchedulerWorker* worker) override;
   void OnTimeout() override;
   void RemoveWorker(SchedulerWorker* worker) override;
+
+  // BlockingObserver:
+  void TaskBlocked() override;
+  void TaskUnblocked() override;
 
  private:
   SchedulerWorkerPoolImpl* outer_;
@@ -178,6 +184,17 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // Number of tasks executed since the last time the
   // TaskScheduler.NumTasksBeforeDetach histogram was recorded.
   size_t num_tasks_since_last_detach_ = 0;
+
+  // Synchronizes access to |blocked_start_time_| and
+  // |increased_capacity_since_blocked_|.
+  mutable SchedulerLock blocked_lock_;
+
+  // Time when TaskBlocked() was last called.
+  TimeTicks blocked_start_time_;
+
+  // Indicates whether |worker_capacity_| was incremented due to the last call
+  // to TaskBlocked().
+  bool increased_capacity_since_blocked_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -409,8 +426,9 @@ size_t SchedulerWorkerPoolImpl::NumberOfAliveWorkersForTesting() {
 }
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
-    : outer_(outer) {}
+    SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer,
+                                const SchedulerLock* predecessor_lock)
+    : outer_(outer), blocked_lock_(predecessor_lock) {}
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     ~SchedulerWorkerDelegateImpl() = default;
@@ -463,6 +481,19 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     outer_->num_tasks_between_waits_histogram_->Add(num_tasks_since_last_wait_);
     num_tasks_since_last_wait_ = 0;
   }
+  did_detach_since_last_get_work_ = false;
+
+  // Returns no work if more workers need to be suspended or if a suspended
+  // worker is asking for work.
+  int workers_overcapacity = outer_->workers_.size() - outer_->worker_capacity_;
+  const bool need_more_suspended_workers =
+      workers_overcapacity >
+      static_cast<int>(outer_->idle_workers_stack_.Size());
+
+  if (need_more_suspended_workers || outer_->WorkerIsSuspended(worker)) {
+    last_get_work_returned_nullptr_ = true;
+    return nullptr;
+  }
 
   scoped_refptr<Sequence> sequence;
   {
@@ -485,7 +516,6 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
       outer_->AddToIdleWorkersStack(worker);
       if (idle_start_time_.is_null())
         idle_start_time_ = TimeTicks::Now();
-      did_detach_since_last_get_work_ = false;
       last_get_work_returned_nullptr_ = true;
       return nullptr;
     }
@@ -496,7 +526,6 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
 
   outer_->RemoveFromIdleWorkersStack(worker);
   idle_start_time_ = TimeTicks();
-  did_detach_since_last_get_work_ = false;
   last_get_work_returned_nullptr_ = false;
 
   return sequence;
@@ -550,6 +579,20 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::RemoveWorker(
   DCHECK(worker_iter != outer_->workers_.end());
 
   outer_->workers_.erase(worker_iter);
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::TaskBlocked() {
+  AutoSchedulerLock auto_lock(blocked_lock_);
+  blocked_start_time_ = TimeTicks::Now();
+  increased_capacity_since_blocked_ = false;
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::TaskUnblocked() {
+  AutoSchedulerLock pool_auto_lock(outer_->lock_);
+  AutoSchedulerLock blocked_auto_lock(blocked_lock_);
+  if (increased_capacity_since_blocked_)
+    --outer_->worker_capacity_;
+  blocked_start_time_ = TimeTicks();
 }
 
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
@@ -620,8 +663,11 @@ SchedulerWorkerPoolImpl::CreateAndRegisterSchedulerWorker() {
   // SchedulerWorker needs |lock_| as a predecessor for its thread lock
   // because in WakeUpOneWorker, |lock_| is first acquired and then
   // the thread lock is acquired when WakeUp is called on the worker.
+  // SchedulerWorkerDelegateImpl has |lock_| as a predecessor for its own lock
+  // because in TaskUnblocked, SchedulerWorkerDelegateImpl needs to acquire both
+  // locks.
   workers_.push_back(MakeRefCounted<SchedulerWorker>(
-      priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this),
+      priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this, &lock_),
       task_tracker_, &lock_, backward_compatibility_));
 
   return workers_.back();
@@ -632,6 +678,17 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
   scoped_refptr<SchedulerWorker> worker = CreateAndRegisterSchedulerWorker();
   worker->Start();
   return worker;
+}
+
+bool SchedulerWorkerPoolImpl::WorkerIsSuspended(
+    const SchedulerWorker* worker) const {
+  AutoSchedulerLock auto_lock(lock_);
+  int workers_overcapacity = workers_.size() - worker_capacity_;
+  int worker_pos = idle_workers_stack_.Find(worker);
+
+  if (worker_pos != -1 && worker_pos < workers_overcapacity)
+    return true;
+  return false;
 }
 
 }  // namespace internal

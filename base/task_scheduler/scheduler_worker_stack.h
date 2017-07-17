@@ -41,6 +41,10 @@ class BASE_EXPORT SchedulerWorkerStack {
   // Returns true if |worker| is already on the stack.
   bool Contains(const SchedulerWorker* worker) const;
 
+  // Returns the position of the |worker| on the stack from the bottom of the
+  // stack. Returns -1 if |worker| is not on the stack.
+  int Find(const SchedulerWorker* worker) const;
+
   // Removes |worker| from the stack.
   void Remove(const SchedulerWorker* worker);
 

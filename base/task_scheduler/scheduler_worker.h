@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/blocking_observer.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker_params.h"
 #include "base/task_scheduler/sequence.h"
@@ -161,7 +162,6 @@ class BASE_EXPORT SchedulerWorker
   // Synchronizes access to |thread_| (read+write), |started_| (read+write) and
   // |should_exit_| (write-only). See Cleanup() for details.
   mutable SchedulerLock thread_lock_;
-
   // The underlying thread for this SchedulerWorker.
   // The thread object will be cleaned up by the running thread unless we join
   // against the thread. Joining requires the thread object to remain alive for

@@ -143,6 +143,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // this also calls Start() on the worker.
   scoped_refptr<SchedulerWorker> CreateRegisterAndStartSchedulerWorker();
 
+  // Returns true if the |worker| is currently suspended.
+  bool WorkerIsSuspended(const SchedulerWorker* worker) const;
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -157,7 +160,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   SchedulerBackwardCompatibility backward_compatibility_;
 
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
-  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_| and
+  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|,
   // |num_wake_ups_before_start_|. Has |shared_priority_queue_|'s lock as
   // its predecessor so that a worker can be pushed to |idle_workers_stack_|
   // within the scope of a Transaction (more details in GetWork()).
