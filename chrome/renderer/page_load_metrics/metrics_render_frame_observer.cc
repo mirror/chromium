@@ -40,9 +40,11 @@ class MojoPageTimingSender : public PageTimingSender {
   }
   ~MojoPageTimingSender() override {}
   void SendTiming(const mojom::PageLoadTimingPtr& timing,
-                  const mojom::PageLoadMetadataPtr& metadata) override {
+                  const mojom::PageLoadMetadataPtr& metadata,
+                  const mojom::PageLoadFeaturesPtr& new_features) override {
     DCHECK(page_load_metrics_);
-    page_load_metrics_->UpdateTiming(timing->Clone(), metadata->Clone());
+    page_load_metrics_->UpdateTiming(timing->Clone(), metadata->Clone(),
+                                     new_features->Clone());
   }
 
  private:
@@ -67,6 +69,12 @@ void MetricsRenderFrameObserver::DidObserveLoadingBehavior(
     blink::WebLoadingBehaviorFlag behavior) {
   if (page_timing_metrics_sender_)
     page_timing_metrics_sender_->DidObserveLoadingBehavior(behavior);
+}
+
+void MetricsRenderFrameObserver::DidObserveNewFeatureUsage(
+    blink::mojom::WebFeature feature) {
+  if (page_timing_metrics_sender_)
+    page_timing_metrics_sender_->DidObserveNewFeatureUsage(feature);
 }
 
 void MetricsRenderFrameObserver::FrameDetached() {

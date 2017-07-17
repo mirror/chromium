@@ -15,8 +15,9 @@ FakePageTimingSender::~FakePageTimingSender() {}
 
 void FakePageTimingSender::SendTiming(
     const mojom::PageLoadTimingPtr& timing,
-    const mojom::PageLoadMetadataPtr& metadata) {
-  validator_->UpdateTiming(timing, metadata);
+    const mojom::PageLoadMetadataPtr& metadata,
+    const mojom::PageLoadFeaturesPtr& new_features) {
+  validator_->UpdateTiming(timing, metadata, new_features);
 }
 
 FakePageTimingSender::PageTimingValidator::PageTimingValidator() {}
@@ -43,11 +44,30 @@ void FakePageTimingSender::PageTimingValidator::VerifyExpectedTimings() const {
   }
 }
 
+void FakePageTimingSender::PageTimingValidator::UpdateExpectPageLoadFeatures(
+    const blink::mojom::WebFeature feature) {
+  expected_features_.push_back(feature);
+}
+
+void FakePageTimingSender::PageTimingValidator::VerifyExpectedFeatures() const {
+  ASSERT_EQ(actual_features_.size(), expected_features_.size());
+  for (size_t i = 0; i < actual_features_.size(); ++i) {
+    if (actual_features_.at(i) == expected_features_.at(i))
+      continue;
+    ADD_FAILURE() << "Actual feature != expected feature at index " << i;
+  }
+}
+
 void FakePageTimingSender::PageTimingValidator::UpdateTiming(
     const mojom::PageLoadTimingPtr& timing,
-    const mojom::PageLoadMetadataPtr& metadata) {
+    const mojom::PageLoadMetadataPtr& metadata,
+    const mojom::PageLoadFeaturesPtr& new_features) {
   actual_timings_.push_back(timing.Clone());
+  for (auto feature : new_features->features) {
+    actual_features_.push_back(feature);
+  }
   VerifyExpectedTimings();
+  VerifyExpectedFeatures();
 }
 
 }  // namespace page_load_metrics

@@ -148,7 +148,7 @@ void Deprecation::CountDeprecation(const LocalFrame* frame,
     return;
 
   if (!page->GetUseCounter().HasRecordedMeasurement(feature)) {
-    page->GetUseCounter().RecordMeasurement(feature);
+    page->GetUseCounter().RecordMeasurement(feature, *frame);
     DCHECK(!DeprecationMessage(feature).IsEmpty());
     ConsoleMessage* console_message =
         ConsoleMessage::Create(kDeprecationMessageSource, kWarningMessageLevel,
