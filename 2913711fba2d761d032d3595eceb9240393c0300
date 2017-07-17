@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "725e989e_ad23cdc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Please write out the documentation for the parameter.",
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c719f8e5_2a8d7889",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Do we need to observe the UiConfig to update the layout on e.g. orientation changes?",
+      "range": {
+        "startLine": 76,
+        "startChar": 36,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b3fc6a_82e0bdd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Why don\u0027t you just inline these?",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb7f841_c39e3b41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Isn\u0027t this call a no-op if |mContextHasChanged| starts out false?",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd9b9e4_4f9f4437",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "We add an observer for the tab that\u0027s active when the sheet is created. What about other tabs?",
+      "range": {
+        "startLine": 104,
+        "startChar": 29,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7389cf8_c5ab8c25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Can you just make these anonymous classes and inline them where they\u0027re used?",
+      "range": {
+        "startLine": 246,
+        "startChar": 18,
+        "endLine": 246,
+        "endChar": 42
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69348bc6_62ac4e1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "The carousel doesn\u0027t really use the adapter to fetch suggestions, it gets suggestions from somewhere else and sets them on the adapter, right?",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 52
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b614d4a_c87368b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "What unit is this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd0ee97_e4e4de54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Just FYI, I have a CL in progress (https:/crrev.com/c/574373) that unregisters from UiConfig to avoid memory leaks. If it lands before this one, you should probably unregister in this class too.",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99488444_c370dc31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "You actually need to implement this method (and add a new method on NodeVisitor to visit a carousel item).",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 57
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162a6821_094999aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Hm, I think of the |mAdapter| member as the data item that we bind, so the idiomatic thing to do would be to only set the adapter in onBindViewHolder(). That would also mean that this method would not have any dependencies on members, so it could be static and/or live somewhere else.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2820e1_9e850d7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Nit: This comment almost says too much about the specific way in which the class is used. How about just \"Adapter for a horizontal list (a \"carousel\") of suggestions. The individual suggestions are held in {@link ContextualSuggestionsCardViewHolder} instances\" or something?",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b87d79_b4937071",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "This seems unused.\n\n(Do you get a warning about an unused member? I tend to get them in Eclipse. If you don\u0027t, it might be worth configuring your IDE so you do get them, and if you do, please pay attention to them :) )",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0261eea5_28fe28cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t really happen if we return 0 for the item count, right?",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc1adf7_b4d59e81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Neither should this -- it\u0027s an error to ask the adapter to bind a view holder to an item that doesn\u0027t exist.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afd0f26_0d1b69a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Under what circumstances is |mSuggestions| null? Just initially? Would it make more sense to initialize it with an empty list?",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa806a7_e1a9dfdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "This method does more than just notifying that there are new suggestions available. setSuggestions maybe? Also, Javadoc.",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92e1bfc_fa1fd2ca",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-17T13:15:15Z",
+      "side": 1,
+      "message": "Woah that line is broken in an ugly way :-/ Can you unbreak this somehow?",
+      "range": {
+        "startLine": 1167,
+        "startChar": 16,
+        "endLine": 1167,
+        "endChar": 90
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
