@@ -7,15 +7,9 @@
 namespace features {
 
 // Globally enable the GRC.
+// When checking if GRC is enabled use |IsResourceCoordinatorEnabled| instead
+// of |base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)|.
 const base::Feature kGlobalResourceCoordinator{
-    "GlobalResourceCoordinator", base::FEATURE_DISABLED_BY_DEFAULT};
+    "GlobalResourceCoordinator", base::FEATURE_ENABLED_BY_DEFAULT};
 
 }  // namespace features
-
-namespace resource_coordinator {
-
-bool IsResourceCoordinatorEnabled() {
-  return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
-}
-
-}  // namespace resource_coordinator

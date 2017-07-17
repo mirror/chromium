@@ -6,13 +6,13 @@
 
 #include <utility>
 
+#include "chrome/browser/resource_coordinator/resource_coordinator_utils.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
-#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
@@ -78,7 +78,7 @@ ResourceCoordinatorWebContentsObserver::
 
 // static
 bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
-  return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
+  return resource_coordinator::IsResourceCoordinatorEnabled();
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {
