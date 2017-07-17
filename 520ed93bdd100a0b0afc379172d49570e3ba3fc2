@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "378f63b5_081bea4d",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:16:11Z",
+      "side": 1,
+      "message": "Do we need to store this? Is there any case where you can\u0027t\ntrivially compute it on the browser side just by walking up\nuntil you find an ancestor that\u0027s not editable?",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3259616_2ab031d0",
         "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
         "patchSetId": 6
@@ -19,6 +36,57 @@
     },
     {
       "key": {
+        "uuid": "a44fe0b6_2df7d890",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:16:11Z",
+      "side": 1,
+      "message": "This is a C++ class so this should be is_deleted, and lowercase text, above.",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebeb3b4d_c49b65da",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:16:11Z",
+      "side": 1,
+      "message": "Would it be possible to compute the value on the browser\nside instead?\n\nDoing it here means that when you\u0027re editing a big gmail\nmessage, we have to send the entire message contents as\na single big string with every character you press,\nrather than only sending the nodes you\u0027re currently\nediting.",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42547098_84a063a4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:16:11Z",
+      "side": 1,
+      "message": "Call RootEditableElement() in VisibleUnitsLine.cpp so as not\nto duplicate this calculation",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca1bdc92_5baa3b28",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 6
@@ -30,6 +98,24 @@
       "writtenOn": "2017-07-11T21:01:49Z",
       "side": 1,
       "message": "Considering all of the tree walking we already do browser side and extension side, would it make sense to just have a boolean attribute is_text_control and let browser accessibility and other clients handle it. An editable root doesn\u0027t seem like a Blink concept but a detail needed by screen readers. I\u0027m also thinking of an editable root that has an iframe for whatever reason.",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0725e742_1df97543",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-17T08:16:11Z",
+      "side": 1,
+      "message": "I was thinking the same thing, but Blink definitely does have\na concept of an editable root too. The question is whether it\u0027s\never nontrivial to compute it just by walking up the ancestors\nfrom the browser side.",
+      "parentUuid": "ca1bdc92_5baa3b28",
       "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
