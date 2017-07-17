@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ff99ec_ed5d9586",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T22:15:00Z",
+      "side": 1,
+      "message": "If we go down this path I\u0027ll change the type of PaintContainer in PaintInfo to BoxModelPainterInterface. It is only used from BoxPainter and friends.",
+      "range": {
+        "startLine": 107,
+        "startChar": 19,
+        "endLine": 107,
+        "endChar": 29
+      },
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1a76fb_dec50d33",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T22:15:00Z",
+      "side": 1,
+      "message": "These classes will go in a separate file, keeping it here for clarifty during the WIP phase.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05c589f_e2a817a2",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-17T22:15:00Z",
+      "side": 1,
+      "message": "These names are terrible, suggestions more than welcome!",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "44c42d7f8bb7e6751f3800479175b9ead2fba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
