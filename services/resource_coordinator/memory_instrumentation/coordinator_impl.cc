@@ -391,7 +391,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
 
     // TODO(hjd): We should have a better way to tell if os_dump is filled.
     // TODO(hjd): Remove this if when we collect OS dumps separately.
-    if (dump && dump->resident_set_kb > 0) {
+    if (dump->resident_set_kb > 0) {
       DCHECK_EQ(0u, os_dumps.count(pid));
       os_dumps[pid] = std::move(dump);
     }
@@ -419,7 +419,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
 
     // The dump might be nullptr if the client crashed / disconnected before
     // replying.
-    if (!response.second.dump_ptr || !os_dumps[pid])
+    if (!response.second.dump_ptr)
       continue;
 
     mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
