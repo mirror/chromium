@@ -112,8 +112,6 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<ArcStorageManager>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcTtsService>(arc_bridge_service));
-  arc_service_manager_->AddService(
-      base::MakeUnique<ArcUserSessionService>(arc_bridge_service));
   if (chromeos::switches::IsVoiceInteractionEnabled()) {
     arc_service_manager_->AddService(
         base::MakeUnique<ArcVoiceInteractionFrameworkService>(
@@ -189,6 +187,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcPrintService::GetForBrowserContext(profile);
   ArcProvisionNotificationService::GetForBrowserContext(profile);
   ArcTracingBridge::GetForBrowserContext(profile);
+  ArcUserSessionService::GetForBrowserContext(profile);
 
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
