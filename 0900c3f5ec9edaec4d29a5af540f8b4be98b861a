@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8064950_ba4736d1",
+        "filename": "chrome/android/java/res/layout/incognito_bottom_sheet_content.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d07ce2_088d011d",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc3ee80d_a625d90f",
         "filename": "chrome/android/java/res/layout/incognito_bottom_sheet_content_md.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d6d4b7_17db1377",
+        "filename": "chrome/android/java/res/layout/incognito_bottom_sheet_content_md.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3ee80d_a625d90f",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a654d968_eed37708",
+        "filename": "chrome/android/java/res/layout/incognito_bottom_sheet_content_md.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c99b61b_2bb31221",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f9224f_702771b7",
         "filename": "chrome/android/java/res/layout/new_tab_page_incognito.xml",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94b627b_2f00bc87",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14f9224f_702771b7",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "45c211be_43575cb0",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8f08dd_c1a727ce",
+      "range": {
+        "startLine": 7,
+        "startChar": 59,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "858bd908_baa6a938",
         "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "60b9c058_79eff391",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "858bd908_baa6a938",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbcb3225_5f717b00",
         "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-17T20:31:42Z",
       "side": 1,
       "message": "I think we won\u0027t want this top padding in Chrome Home. Can you please upload screenshots of the in-flight patch to the bug?",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7286d4_10f9084e",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Got rid of the padding and attached a pic of the MD incognito page to the bug.",
+      "parentUuid": "bbcb3225_5f717b00",
       "range": {
         "startLine": 14,
         "startChar": 35,
@@ -183,6 +351,30 @@
       "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b78e9b8_c6544a0d",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-17T23:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c55280_ab1d26ef",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
