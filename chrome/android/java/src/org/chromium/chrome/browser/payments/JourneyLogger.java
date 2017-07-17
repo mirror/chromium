@@ -39,9 +39,11 @@ public class JourneyLogger {
      * @param section The section for which to log.
      * @param number The number of suggestions.
      */
-    public void setNumberOfSuggestionsShown(int section, int number) {
+    public void setNumberOfSuggestionsShown(
+            int section, int number, boolean hasCompleteSuggestion) {
         assert section < Section.MAX;
-        nativeSetNumberOfSuggestionsShown(mJourneyLoggerAndroid, section, number);
+        nativeSetNumberOfSuggestionsShown(
+                mJourneyLoggerAndroid, section, number, hasCompleteSuggestion);
     }
 
     /**
@@ -174,17 +176,10 @@ public class JourneyLogger {
         }
     }
 
-    /**
-     * Records the fact that the user had an initial form of payment.
-     */
-    public void setUserHadInitialFormOfPayment() {
-        nativeSetUserHadInitialFormOfPayment(mJourneyLoggerAndroid);
-    }
-
     private native long nativeInitJourneyLoggerAndroid(boolean isIncognito, String url);
     private native void nativeDestroy(long nativeJourneyLoggerAndroid);
-    private native void nativeSetNumberOfSuggestionsShown(
-            long nativeJourneyLoggerAndroid, int section, int number);
+    private native void nativeSetNumberOfSuggestionsShown(long nativeJourneyLoggerAndroid,
+            int section, int number, boolean hasCompleteSuggestion);
     private native void nativeIncrementSelectionChanges(
             long nativeJourneyLoggerAndroid, int section);
     private native void nativeIncrementSelectionEdits(long nativeJourneyLoggerAndroid, int section);
@@ -201,5 +196,4 @@ public class JourneyLogger {
     private native void nativeSetCompleted(long nativeJourneyLoggerAndroid);
     private native void nativeSetAborted(long nativeJourneyLoggerAndroid, int reason);
     private native void nativeSetNotShown(long nativeJourneyLoggerAndroid, int reason);
-    private native void nativeSetUserHadInitialFormOfPayment(long nativeJourneyLoggerAndroid);
 }

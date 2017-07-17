@@ -308,6 +308,17 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
     }
 
     /**
+     *  Clicks on the label corresponding to the contact info suggestion at the specified
+     *  |suggestionIndex|.
+     * @throws InterruptedException
+     */
+    protected void clickOnContactInfoSuggestionOptionAndWait(
+            final int suggestionIndex, CallbackHelper helper)
+            throws ExecutionException, TimeoutException, InterruptedException {
+        mTestCommon.clickOnContactInfoSuggestionOptionAndWait(suggestionIndex, helper);
+    }
+
+    /**
      *  Clicks on the edit icon corresponding to the payment method suggestion at the specified
      *  |suggestionIndex|.
      */
