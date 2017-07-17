@@ -22,6 +22,30 @@
       "revId": "ba23bc2343ca13f9fd7c28ffd9e4dfa11d4308a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e186362e_5b6e7e23",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-17T20:02:43Z",
+      "side": 1,
+      "message": "If we want to BlendTowardOppositeLuma(), we need to call GetResultingPaintColor() first with the stroke and whatever-is-behind-the-stroke colors to compute the resulting opaque color.  Otherwise it will do the wrong thing, since as you note it doesn\u0027t take alpha into account (and indeed can\u0027t do so in a sane way).\n\nThe effects of BlendTowardOppositeLuma() and using more transparency won\u0027t be quite the same unless the background color is guaranteed to be pure white or pure black.  If we BlendTowardOppositeLuma(), then we will always modify the stroke color a constant amount regardless of background color, whereas if we use transparency, then as the background color becomes closer to the stroke color, disabled and non-disabled buttons will have more-similar stroke colors to each other.\n\nProbably the BlendTowardOppositeLuma() effect is better, though not hugely.\n\nAs for logic, I agree with you that long-term it would be better to not have complicated logic here, but if one wants a variety of subtle shading effects on things like button strokes, then it just means the constants or logic have to be elsewhere; my proposal is in the theme system itself.  I wouldn\u0027t try to address this in this CL.",
+      "parentUuid": "8a3c1b76_16b0304b",
+      "range": {
+        "startLine": 291,
+        "startChar": 27,
+        "endLine": 291,
+        "endChar": 48
+      },
+      "revId": "ba23bc2343ca13f9fd7c28ffd9e4dfa11d4308a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
