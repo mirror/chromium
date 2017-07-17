@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82f5999_9dd4a34b",
+        "filename": "gpu/ipc/host/gpu_memory_buffer_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-17T18:03:28Z",
+      "side": 1,
+      "message": "nit: Adding parenthesis around \"defined(OS_CHROMEOS) \u0026\u0026 defined(ARCH_CPU_X86_FAMILY)\" would increase readability.",
+      "revId": "f5657598e17648ab2701ddaf02e26c29a97ec282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
