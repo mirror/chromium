@@ -18,9 +18,8 @@ ScopedAsyncTaskScheduler::ScopedAsyncTaskScheduler() {
   // stay alive even when they don't have work.
   constexpr int kMaxThreads = 1;
   const TimeDelta kSuggestedReclaimTime = TimeDelta::Max();
-  const SchedulerWorkerPoolParams worker_pool_params(
-      SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE, kMaxThreads,
-      kSuggestedReclaimTime);
+  const SchedulerWorkerPoolParams worker_pool_params(kMaxThreads,
+                                                     kSuggestedReclaimTime);
   TaskScheduler::Create("ScopedAsync");
   task_scheduler_ = TaskScheduler::GetInstance();
   TaskScheduler::GetInstance()->Start({worker_pool_params, worker_pool_params,

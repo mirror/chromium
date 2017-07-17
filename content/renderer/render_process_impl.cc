@@ -75,8 +75,6 @@ void SetV8FlagIfHasSwitch(const char* switch_name, const char* v8_flag) {
 
 std::unique_ptr<base::TaskScheduler::InitParams>
 GetDefaultTaskSchedulerInitParams() {
-  using StandbyThreadPolicy =
-      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
 
   constexpr int kMaxNumThreadsInBackgroundPool = 1;
   constexpr int kMaxNumThreadsInBackgroundBlockingPool = 1;
@@ -85,20 +83,16 @@ GetDefaultTaskSchedulerInitParams() {
   constexpr auto kSuggestedReclaimTime = base::TimeDelta::FromSeconds(30);
 
   return base::MakeUnique<base::TaskScheduler::InitParams>(
-      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
-                                      kMaxNumThreadsInBackgroundPool,
+      base::SchedulerWorkerPoolParams(kMaxNumThreadsInBackgroundPool,
                                       kSuggestedReclaimTime),
-      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
-                                      kMaxNumThreadsInBackgroundBlockingPool,
+      base::SchedulerWorkerPoolParams(kMaxNumThreadsInBackgroundBlockingPool,
                                       kSuggestedReclaimTime),
       base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::LAZY,
           std::max(
               kMaxNumThreadsInForegroundPoolLowerBound,
               content::GetMinThreadsInRendererTaskSchedulerForegroundPool()),
           kSuggestedReclaimTime),
-      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
-                                      kMaxNumThreadsInForegroundBlockingPool,
+      base::SchedulerWorkerPoolParams(kMaxNumThreadsInForegroundBlockingPool,
                                       kSuggestedReclaimTime));
 }
 

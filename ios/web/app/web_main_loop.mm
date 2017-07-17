@@ -40,23 +40,17 @@ namespace {
 
 std::unique_ptr<base::TaskScheduler::InitParams>
 GetDefaultTaskSchedulerInitParams() {
-  using StandbyThreadPolicy =
-      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
   return base::MakeUnique<base::TaskScheduler::InitParams>(
       base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
           base::TimeDelta::FromSeconds(30)),
       base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
           base::TimeDelta::FromSeconds(30)),
       base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
           base::TimeDelta::FromSeconds(30)),
       base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
           base::TimeDelta::FromSeconds(60)));
 }
