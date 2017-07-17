@@ -34,6 +34,24 @@
       "revId": "55edfdc72d371d7896b4559e73405d2dccbae351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c886a814_fa03d187",
+        "filename": "chrome/browser/extensions/external_install_error.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T19:38:20Z",
+      "side": 1,
+      "message": "\u003e Regarding 1), I haven\u0027t seen advise regarding weak pointer being implementation details. Doesn\u0027t it also solve the case where an object A which doesn\u0027t own B, wants to be \"aware\" of the lifetime of B?\n\nYep.  The counter-argument is that things that need to implicitly query the lifetime of other objects (rather than having deterministic lifetimes, where B depends on A so A is guaranteed to outlive B) are generally bad.  Of course, we have plenty of these instances around the codebase, so we still use them.  But it\u0027s nice to avoid when possible.  Most of the objection regarding WeakPtr as a public interface has been in various discussions on chromium-dev, with no concrete advice one way or the other.\n\n\u003e Also, regarding the comment, I can\u0027t see how this can cause the Extension object to be deleted, so I didn\u0027t add that to the comment.\n\nMy thinking was it could be potentially possible to do, e.g.:\nconst Extension* extension \u003d GetExtensionBeingRemoved();\nmanager-\u003eRemoveExternalInstallError(extension-\u003eid());\n\nBut we don\u0027t actually do this anywhere, so omitting it is fine.",
+      "parentUuid": "d2089936_898bb8fd",
+      "revId": "55edfdc72d371d7896b4559e73405d2dccbae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
