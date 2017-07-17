@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64047e13_85961125",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:16:10Z",
+      "side": 1,
+      "message": "nit: Thanks!",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "1e3978618724021cf3c01fe22f2602229f377f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8331ece2_53c445db",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:16:10Z",
+      "side": 1,
+      "message": "Could you please spruce up data for this test with some branding info too?",
+      "revId": "1e3978618724021cf3c01fe22f2602229f377f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63e9025_205a3f9b",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:16:10Z",
+      "side": 1,
+      "message": "nit: Please update comments in this class to better reflect that they handle branding data too.",
+      "revId": "1e3978618724021cf3c01fe22f2602229f377f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
