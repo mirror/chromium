@@ -82973,6 +82973,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Size of a WebAssembly module.</summary>
 </histogram>
 
+<histogram name="V8ScriptRunner.CompileScriptTimeHistogram">
+  <owner>maxlgu@chromium.org</owner>
+  <summary>
+    The time v8 script runner spent on compiling script. The time is limited to
+    measure the V8ScriptRunner.CompileScript function only; it doesn't include
+    script parsing time.
+  </summary>
+</histogram>
+
 <histogram name="Variations.CreateTrials.SeedExpiry"
     enum="VariationsSeedExpiry">
   <owner>asvitkine@chromium.org</owner>

@@ -416,6 +416,7 @@ std::unique_ptr<CompileFn> SelectCompileFunction(V8CacheOptions cache_options,
 }  // namespace
 
 v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
+    ExecutionContext* context,
     const ScriptSourceCode& source,
     v8::Isolate* isolate,
     AccessControlStatus access_control_status,
@@ -425,13 +426,15 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
     return v8::Local<v8::Script>();
   }
   return CompileScript(
-      V8String(isolate, source.Source()), source.Url(), source.SourceMapUrl(),
-      source.StartPosition(), isolate, source.GetResource(), source.Streamer(),
+      context, V8String(isolate, source.Source()), source.Url(),
+      source.SourceMapUrl(), source.StartPosition(), isolate,
+      source.GetResource(), source.Streamer(),
       source.GetResource() ? source.GetResource()->CacheHandler() : nullptr,
       access_control_status, cache_options);
 }
 
 v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
+    ExecutionContext* context,
     const String& code,
     const String& file_name,
     const String& source_map_url,
@@ -444,13 +447,14 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
     V8ThrowException::ThrowError(isolate, "Source file too large.");
     return v8::Local<v8::Script>();
   }
-  return CompileScript(V8String(isolate, code), file_name, source_map_url,
-                       text_position, isolate, nullptr, nullptr,
+  return CompileScript(context, V8String(isolate, code), file_name,
+                       source_map_url, text_position, isolate, nullptr, nullptr,
                        cache_metadata_handler, access_control_status,
                        v8_cache_options);
 }
 
 v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
+    ExecutionContext* context,
     v8::Local<v8::String> code,
     const String& file_name,
     const String& source_map_url,
@@ -465,6 +469,9 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
       "v8,devtools.timeline", "v8.compile", "fileName", file_name.Utf8(),
       "data",
       InspectorCompileScriptEvent::Data(file_name, script_start_position));
+  probe::V8Compile probe(context, file_name,
+                         script_start_position.line_.ZeroBasedInt(),
+                         script_start_position.column_.ZeroBasedInt());
 
   DCHECK(!streamer || resource);
   DCHECK(!resource || resource->CacheHandler() == cache_handler);
@@ -587,7 +594,8 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::CompileAndRunInternalScript(
     const TextPosition& script_start_position) {
   v8::Local<v8::Script> script;
   if (!V8ScriptRunner::CompileScript(
-           source, file_name, String(), script_start_position, isolate, nullptr,
+           ExecutionContext::From(ScriptState::Current(isolate)), source,
+           file_name, String(), script_start_position, isolate, nullptr,
            nullptr, nullptr, kSharableCrossOrigin, kV8CacheOptionsDefault)
            .ToLocal(&script))
     return v8::MaybeLocal<v8::Value>();

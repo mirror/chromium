@@ -53,11 +53,13 @@ class CORE_EXPORT V8ScriptRunner final {
  public:
   // For the following methods, the caller sites have to hold
   // a HandleScope and a ContextScope.
-  static v8::MaybeLocal<v8::Script> CompileScript(const ScriptSourceCode&,
+  static v8::MaybeLocal<v8::Script> CompileScript(ExecutionContext*,
+                                                  const ScriptSourceCode&,
                                                   v8::Isolate*,
                                                   AccessControlStatus,
                                                   V8CacheOptions);
-  static v8::MaybeLocal<v8::Script> CompileScript(const String&,
+  static v8::MaybeLocal<v8::Script> CompileScript(ExecutionContext*,
+                                                  const String&,
                                                   const String& file_name,
                                                   const String& source_map_url,
                                                   const TextPosition&,
@@ -69,7 +71,8 @@ class CORE_EXPORT V8ScriptRunner final {
   // normal scripe resources, CachedMetadataHandler is from ScriptResource.
   // For worker script, ScriptResource is null but CachedMetadataHandler may be
   // set. When ScriptStreamer is set, ScriptResource must be set.
-  static v8::MaybeLocal<v8::Script> CompileScript(v8::Local<v8::String>,
+  static v8::MaybeLocal<v8::Script> CompileScript(ExecutionContext*,
+                                                  v8::Local<v8::String>,
                                                   const String& file_name,
                                                   const String& source_map_url,
                                                   const TextPosition&,
