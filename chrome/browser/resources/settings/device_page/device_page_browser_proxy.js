@@ -67,10 +67,22 @@ settings.LidClosedBehavior = {
 settings.PowerManagementSettings;
 
 /**
+ * A note app's availability for running as note handler app from lock screen.
+ * Mirrors chromeos::NoteTakingLockScreenSupport.
+ * @enum {number}
+ */
+settings.NoteAppLockScreenSupport = {
+  NOT_SUPPORTED: 0,
+  NOT_ALLOWED_BY_POLICY: 1,
+  SUPPORTED: 2,
+  ENABLED: 3
+};
+
+/**
  * @typedef {{name:string,
  *            value:string,
  *            preferred:boolean,
- *            supportsLockScreen: boolean}}
+ *            lockScreenSupport: settings.NoteAppLockScreenSupport}}
  */
 settings.NoteAppInfo;
 
@@ -146,6 +158,15 @@ cr.define('settings', function() {
      *     |onNoteTakingAppsUpdated| callback.
      */
     setPreferredNoteTakingApp(appId) {}
+
+    /**
+     * Sets whether the note taking app should be enabled to run as a lock
+     * screen note action handler.
+     * @param {string} appId The app id.
+     * @param {boolean} enabled Whether the app should be enabled to handle note
+     *     actions from the lock screen.
+     */
+    setNoteTakingAppEnabledOnLockScreen(appId, enabled) {}
   }
 
   /**
@@ -223,6 +244,11 @@ cr.define('settings', function() {
     /** @override */
     setPreferredNoteTakingApp(appId) {
       chrome.send('setPreferredNoteTakingApp', [appId]);
+    }
+
+    /** @override */
+    setNoteTakingAppEnabledOnLockScreen(appId, enabled) {
+      chrome.send('setNoteTakingAppEnabledOnLockScreen', [appId, enabled]);
     }
   }
 
