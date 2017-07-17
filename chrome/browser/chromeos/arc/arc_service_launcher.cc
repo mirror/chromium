@@ -169,6 +169,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcAuthService::GetForBrowserContext(profile);
   ArcBluetoothBridge::GetForBrowserContext(profile);
   ArcBootErrorNotification::GetForBrowserContext(profile);
+  ArcBootPhaseMonitorBridge::GetForBrowserContext(profile);
   ArcClipboardBridge::GetForBrowserContext(profile);
   ArcCrashCollectorBridge::GetForBrowserContext(profile);
   ArcDownloadsWatcherService::GetForBrowserContext(profile);
@@ -185,9 +186,6 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcProvisionNotificationService::GetForBrowserContext(profile);
   ArcTracingBridge::GetForBrowserContext(profile);
 
-  arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
-      arc_service_manager_->arc_bridge_service(),
-      multi_user_util::GetAccountIdFromProfile(profile)));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcFileSystemOperationRunner>(
           arc_service_manager_->arc_bridge_service(), profile));
