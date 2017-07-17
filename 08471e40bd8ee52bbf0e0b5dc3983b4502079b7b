@@ -46,6 +46,30 @@
       "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00414c8b_a30e9bcc",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-17T22:51:44Z",
+      "side": 1,
+      "message": "This is a modal dialog that is shown some time after startup if Chrome detects that the user\u0027s computer is infected by unwanted software. Since displaying the dialog is triggered without any user action, the user may be in the middle of writing something when the dialog appears.",
+      "parentUuid": "041a305f_fd1fcfcb",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
