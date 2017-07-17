@@ -58,6 +58,18 @@
       :host-context([hide-focus-ring]) [tabindex]:focus {
         outline: none;
       }
+
+      .folder-icon {
+        background-image: url(chrome://bookmarks/images/folder.svg);
+        background-size: contain;
+        height: 20px;
+        min-width: 20px;
+        width: 20px;
+      }
+
+      .folder-icon[open] {
+        background-image: url(chrome://bookmarks/images/folder_open.svg);
+      }
     </style>
   </template>
 </dom-module>
