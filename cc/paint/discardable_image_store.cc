@@ -202,8 +202,10 @@ void DiscardableImageStore::AddImage(PaintImage paint_image,
   const SkMatrix& ctm = canvas_->getTotalMatrix();
 
   SkRect paint_rect = MapRect(ctm, rect);
+  SkPaint paint;
+  flags.ToSkPaint(&paint);
   bool computed_paint_bounds =
-      canvas_->ComputePaintBounds(paint_rect, ToSkPaint(&flags), &paint_rect);
+      canvas_->ComputePaintBounds(paint_rect, &paint, &paint_rect);
   if (!computed_paint_bounds) {
     // TODO(vmpstr): UMA this case.
     paint_rect = clip_rect;
