@@ -22,6 +22,30 @@
       "revId": "5fb2c88e93c785af2056b5054369d138b92abdd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c54ba03_05ae9f5c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-17T17:03:05Z",
+      "side": 1,
+      "message": "In a situation where the app is GPU limited(*), polling the fence for completion had meant that on average there\u0027s a delay of half a polling interval after it finished until we detect that, so it was important to use a short interval. Now, wait-with-timeout means that we\u0027ll get instant notification when it completes, independent of the timeout length. The timeout duration is now used to avoid unlimited blocking on the VrShellGl\u0027s event loop, and I made it longer than the polling interval to avoid burning CPU more than necessary.\n\nIn normal operation, there shouldn\u0027t be anything going on at this point in the render loop that would require very fast response. I think the next VSync should already be scheduled at this point, but it\u0027s possible that there may be a sequence where that hasn\u0027t happened yet.\n\nI don\u0027t have a strong opinion about this, let me know if you\u0027d prefer me to use something closer to the original value (1000 or 500 us?) or do more tuning separately in a followup.\n\n(*) If the app performance is bottlenecked on JavaScript execution time, it won\u0027t be throttled by this mechanism, previous-frame completion should be reported already by the time it checks.",
+      "parentUuid": "98cf72e6_531d949f",
+      "range": {
+        "startLine": 85,
+        "startChar": 38,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "5fb2c88e93c785af2056b5054369d138b92abdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
