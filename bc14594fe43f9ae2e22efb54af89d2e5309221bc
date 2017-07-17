@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270df45b_21160081",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:25:51Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9aba03d_dbdad99c",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:25:51Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf23559_09ebf470",
+        "filename": "third_party/WebKit/Source/platform/weborigin/KURL.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-17T16:25:51Z",
+      "side": 1,
+      "message": "Shall we add a comment about when we should or should not use this method?",
+      "revId": "bc14594fe43f9ae2e22efb54af89d2e5309221bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
