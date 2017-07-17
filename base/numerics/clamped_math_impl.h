@@ -21,6 +21,23 @@
 namespace base {
 namespace internal {
 
+template <typename T,
+          typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
+constexpr T SaturatedAbsWrapper(T value) {
+  return (!CanDetectCompileTimeConstant() || IsCompileTimeConstant(value)) &&
+                 !ClampedAbsFastOp<T>::is_supported
+             ? static_cast<T>(SafeUnsignedAbs(value) -
+                              IsValueNegative<T>(SafeUnsignedAbs(value)))
+             : ClampedAbsFastOp<T>::Do(value);
+}
+
+template <
+    typename T,
+    typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr>
+constexpr T SaturatedAbsWrapper(T value) {
+  return value < 0 ? -value : value;
+}
+
 template <typename T, typename U, class Enable = void>
 struct ClampedAddOp {};
 
