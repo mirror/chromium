@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9597a6cf_9dd7ba7e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:35:04Z",
+      "side": 1,
+      "message": "Nit optional: Maybe more readable as follows\n\n// Avoid calling the observer if nothing changed.\nif (show_cleanup \u003d\u003d cached_should_show_cleanup_in_settings_ui_ \u0026\u0026\n    powered_by_partner \u003d\u003d cached_cleanup_powered_by_partner_) {\n  return;\n}\n\ncached_should_show_cleanup_in_settings_ui_ \u003d show_cleanup;\ncached_cleanup_powered_by_partner_ \u003d powered_by_partner;\non_show_cleanup_ui_change_.Run(show_cleanup, powered_by_partner);",
+      "revId": "27764861623ad2bbffc2e75026a0113a54d38ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

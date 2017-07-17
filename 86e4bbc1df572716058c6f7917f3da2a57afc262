@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ad6138cb_2f6c5359",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:35:04Z",
+      "side": 1,
+      "message": "Tip: When quoting text from previous message, use the built in \"quote\" option, otherwise the formatting is very confusing. It looks as if my comment was repeated instead of quoted.\n\n\u003e Quoted text goes here, prefixed by \"\u003e\".\n\nMy response goes here.",
+      "parentUuid": "ef0e9ded_5f8894ab",
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2bebcf_285e34e2",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h",
         "patchSetId": 2
