@@ -929,11 +929,14 @@ test("content_browsertests") {
     use_default_launcher = false
   } else {
     # Non-Android.
+    deps += [ "//components/url_log" ]
     sources += [
       "../browser/host_zoom_map_impl_browsertest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
       "../browser/zoom_browsertest.cc",
+      "../shell/browser/shell_network_delegate_browsertest.cc",
     ]
+    data += [ "//components/url_log/test_data/" ]
   }
 
   if (is_mac) {

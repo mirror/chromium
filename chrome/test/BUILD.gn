@@ -1700,6 +1700,7 @@ test("browser_tests") {
       "//chrome/common/extensions/docs/examples/apps/calculator/",
       "//chrome/third_party/mock4js/",
       "//components/test/data/update_client/",
+      "//components/url_log/test_data/",
       "//content/test/data/",
       "//google_apis/test/",
       "//media/test/data/",
