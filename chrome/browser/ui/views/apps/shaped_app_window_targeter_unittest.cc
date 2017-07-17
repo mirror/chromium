@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/aura_test_base.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -52,6 +54,14 @@ class ShapedAppWindowTargeterTest : public aura::test::AuraTestBase {
   void TearDown() override {
     widget_.reset();
     aura::test::AuraTestBase::TearDown();
+  }
+
+  void SetWindowResizable(bool resizable) {
+    widget_->GetNativeWindow()->SetProperty(
+        aura::client::kResizeBehaviorKey,
+        ui::mojom::kResizeBehaviorCanMaximize |
+            ui::mojom::kResizeBehaviorCanMinimize |
+            (resizable ? ui::mojom::kResizeBehaviorCanResize : 0));
   }
 
  private:
@@ -141,16 +151,31 @@ TEST_F(ShapedAppWindowTargeterTest, HitTestOnlyForShapedWindow) {
     ASSERT_FALSE(details.dispatcher_destroyed);
     EXPECT_EQ(window, move.target());
   }
+
+  SetWindowResizable(true);
   {
     // Without any custom shapes, an event that falls just outside the window
     // bounds should also be targeted correctly to the window, because of the
-    // targeter installed on the root-window.
+    // targeter installed on the root-window (for resizable windows).
     ui::MouseEvent move(ui::ET_MOUSE_MOVED, gfx::Point(10, 10),
                         gfx::Point(10, 10), ui::EventTimeForNow(), ui::EF_NONE,
                         ui::EF_NONE);
     ui::EventDispatchDetails details = event_sink()->OnEventFromSource(&move);
     ASSERT_FALSE(details.dispatcher_destroyed);
     EXPECT_EQ(window, move.target());
+  }
+
+  SetWindowResizable(false);
+  {
+    // Without any custom shapes, an event that falls just outside the window
+    // bounds should also be targeted correctly to the root window (for
+    // non-resizable windows).
+    ui::MouseEvent move(ui::ET_MOUSE_MOVED, gfx::Point(10, 10),
+                        gfx::Point(10, 10), ui::EventTimeForNow(), ui::EF_NONE,
+                        ui::EF_NONE);
+    ui::EventDispatchDetails details = event_sink()->OnEventFromSource(&move);
+    ASSERT_FALSE(details.dispatcher_destroyed);
+    EXPECT_EQ(root_window(), move.target());
   }
 
   std::unique_ptr<SkRegion> region(new SkRegion);
@@ -169,8 +194,9 @@ TEST_F(ShapedAppWindowTargeterTest, HitTestOnlyForShapedWindow) {
   }
 
   // Remove the custom shape. This should restore the behaviour of targeting the
-  // app window for events just outside its bounds.
+  // app window for events just outside its bounds (for a resizable window).
   app_window()->UpdateShape(std::unique_ptr<SkRegion>());
+  SetWindowResizable(true);
   {
     ui::MouseEvent move(ui::ET_MOUSE_MOVED, gfx::Point(10, 10),
                         gfx::Point(10, 10), ui::EventTimeForNow(), ui::EF_NONE,
@@ -178,6 +204,17 @@ TEST_F(ShapedAppWindowTargeterTest, HitTestOnlyForShapedWindow) {
     ui::EventDispatchDetails details = event_sink()->OnEventFromSource(&move);
     ASSERT_FALSE(details.dispatcher_destroyed);
     EXPECT_EQ(window, move.target());
+  }
+  // Make window non-resizable. Events near (but outside) of the window should
+  // reach the root.
+  SetWindowResizable(false);
+  {
+    ui::MouseEvent move(ui::ET_MOUSE_MOVED, gfx::Point(10, 10),
+                        gfx::Point(10, 10), ui::EventTimeForNow(), ui::EF_NONE,
+                        ui::EF_NONE);
+    ui::EventDispatchDetails details = event_sink()->OnEventFromSource(&move);
+    ASSERT_FALSE(details.dispatcher_destroyed);
+    EXPECT_EQ(root_window(), move.target());
   }
 }
 

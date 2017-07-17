@@ -65,14 +65,16 @@ bool EasyResizeWindowTargeter::EventLocationInsideBounds(
 
 bool EasyResizeWindowTargeter::ShouldUseExtendedBounds(
     const aura::Window* window) const {
-  // Use the extended bounds only for immediate child windows of |container_|.
-  // Use the default targeter otherwise.
-  if (window->parent() != container_)
-    return false;
-
+  // Use the extended bounds only for resizable immediate child windows of
+  //  |container_|. Use the default targeter otherwise.
   const bool can_resize =
       window->GetProperty(aura::client::kResizeBehaviorKey) &
       ui::mojom::kResizeBehaviorCanResize;
+  if (window->parent() != container_ || !can_resize)
+    return false;
+
+  // For transient children use extended bounds if a transient parent or if
+  // transient parent's parent is a top level window in |container_|.
   aura::client::TransientWindowClient* transient_window_client =
       aura::client::GetTransientWindowClient();
   const aura::Window* transient_parent =
@@ -80,7 +82,7 @@ bool EasyResizeWindowTargeter::ShouldUseExtendedBounds(
           ? transient_window_client->GetTransientParent(window)
           : nullptr;
   return !transient_parent || transient_parent == container_ ||
-         (can_resize && transient_parent->parent() == container_);
+         transient_parent->parent() == container_;
 }
 
 }  // namespace wm
