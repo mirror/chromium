@@ -42,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "8bab12cb_9aa2b360",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-17T13:25:15Z",
+      "side": 1,
+      "message": "Wait, so you tell the scheduler to execute the task after 24h? Will this ever get executed?\nalso, didn\u0027t we already wait for long enough?",
+      "range": {
+        "startLine": 158,
+        "startChar": 42,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "dc271b5da2df27e781874bccb5f0217787d32c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210f67d0_b1af7a70",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-17T13:25:15Z",
+      "side": 1,
+      "message": "please document the new behavior, and when precisely it gets triggered (i.e. validation at StartListening() if enough time passed since last validation).",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "dc271b5da2df27e781874bccb5f0217787d32c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df9c6f56_0425df37",
         "filename": "components/ntp_snippets/pref_names.h",
         "patchSetId": 2
