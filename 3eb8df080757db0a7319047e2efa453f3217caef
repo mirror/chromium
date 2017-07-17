@@ -22,6 +22,30 @@
       "revId": "3eb8df080757db0a7319047e2efa453f3217caef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7d4c1e_0bfa63e9",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-17T16:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6fa1fce_27f765c1",
+      "range": {
+        "startLine": 1141,
+        "startChar": 32,
+        "endLine": 1141,
+        "endChar": 58
+      },
+      "revId": "3eb8df080757db0a7319047e2efa453f3217caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

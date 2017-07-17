@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "86dc16b2_74911956",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-17T16:38:51Z",
+      "side": 1,
+      "message": "Yes. It will also close the app list. Let me update the comment.",
+      "parentUuid": "db69b736_d183bbf9",
+      "range": {
+        "startLine": 1225,
+        "startChar": 53,
+        "endLine": 1225,
+        "endChar": 57
+      },
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6135044b_1dfc3ae6",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 13
