@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b95b1f9c_a9cec50c",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "It\u0027s not 2014.",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25d0459_4475a73c",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "Do you need all these includes?",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091457e5_c58cd636",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "This should have a comment.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621d11ab_afddd3b0",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "Should be virtual if you\u0027re expecting subclasses.",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1f31ef_80f94726",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "Comment?\n\nAlso, if you\u0027re not providing an implementation for these, why not make them pure virtual and omit the .cc file?",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404e9ea0_5edc94c8",
+        "filename": "components/variations/platform_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-17T19:47:30Z",
+      "side": 1,
+      "message": "Add private: section with DISALLOW_COPY_AND_ASSIGN().",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "f01d4ff598d967ff7e9a0aeb851e248e7b10daae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
