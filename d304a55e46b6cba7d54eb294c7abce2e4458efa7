@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b1c362be_d1d99da4",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T20:11:22Z",
+      "side": 1,
+      "message": "I think we need to also remove the explicit template parameter here: otherwise, the arguments are const T\u0026, which will truncate the LHS to zero.",
+      "parentUuid": "c202658a_fe303d82",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b93b6a8_5a810cb0",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 16
