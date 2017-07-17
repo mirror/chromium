@@ -1348,7 +1348,12 @@ content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
                : content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 
-  if (id != -1) {
+  if (id == IDC_BACKSPACE_BACK) {
+    // Backspace is not a shortcut anymore.
+    return content::KeyboardEventProcessingResult::NOT_HANDLED;
+  }
+
+  if (id != -1 ) {
     // |accelerator| is a non-reserved browser shortcut (e.g. Ctrl+f).
     return (event.GetType() == blink::WebInputEvent::kRawKeyDown)
                ? content::KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT
