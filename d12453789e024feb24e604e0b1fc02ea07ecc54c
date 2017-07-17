@@ -22,6 +22,30 @@
       "revId": "d12453789e024feb24e604e0b1fc02ea07ecc54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f8c1a1_6ed49900",
+        "filename": "components/safe_browsing/base_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T17:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b950068_e64c7f0b",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 61
+      },
+      "revId": "d12453789e024feb24e604e0b1fc02ea07ecc54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
