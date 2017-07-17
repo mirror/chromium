@@ -16,6 +16,24 @@
       "revId": "0ec93b83904c27256a520aca3496ac2a028932ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c0c15f_c32f01d7",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-07-17T13:07:22Z",
+      "side": 0,
+      "message": "I think as long as the downstream is submitted first, it will be OK because it is only removing the overridden implementation. The interface is not abstract.",
+      "parentUuid": "eaca7508_255a7d01",
+      "revId": "0ec93b83904c27256a520aca3496ac2a028932ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
