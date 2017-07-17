@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc4f3922_c57c7ada",
+        "filename": "chrome/browser/android/metrics/uma_session_stats.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-17T13:09:15Z",
+      "side": 0,
+      "message": "Yes, that is fully unreachable on android. As evidenced by zero records of CrashExitCodes.Renderer.\n\n@Ran - please add a NOTREACHED() for android there.",
+      "parentUuid": "5cb0bdab_620854dd",
+      "range": {
+        "startLine": 152,
+        "startChar": 46,
+        "endLine": 152,
+        "endChar": 47
+      },
+      "revId": "28f86b0681af84d9bfae78a9a5480cd66ac3fe23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9edba9c_730ce8b5",
         "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
         "patchSetId": 7
