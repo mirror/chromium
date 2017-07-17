@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//build/split_static_library.gni")
 import("//build/config/chromecast_build.gni")
 import("//third_party/WebKit/Source/bindings/bindings.gni")
@@ -81,6 +82,7 @@ target(modules_target_type, "modules") {
   deps = [
     ":make_modules_generated",
     ":module_names",
+    ":mojo_bindings_blink",
     "//device/geolocation/public/interfaces:interfaces_blink",
     "//third_party/WebKit/Source/bindings/modules:generated",
     "//third_party/WebKit/Source/bindings/modules/v8:bindings_modules_impl",
@@ -172,6 +174,35 @@ target(modules_target_type, "modules") {
     configs -= [ "//build/config/compiler:default_symbols" ]
     configs += remove_webcore_symbols_config
   }
+}
+
+mojom("mojo_bindings") {
+  visibility += [
+    "./*",
+    "//third_party/WebKit/public:forwarder_for_mojo_bindings_in_modules"
+  ]
+
+  sources = [
+    "//third_party/WebKit/public/platform/modules/credentialmanager/v2.mojom",
+  ]
+
+  component_output_prefix = "blink_modules_mojo_bindings"
+
+  # The chromium variant must be linked with content and use the same export
+  # settings in component build because of the WebBluetoothDeviceId typemap
+  # inside content.
+  export_class_attribute = "CONTENT_EXPORT"
+  export_define = "CONTENT_IMPLEMENTATION=1"
+  export_header = "content/common/content_export.h"
+
+  # Similarly, the blink variant must be linked with the platform component
+  # since it uses types from it in its typemaps.
+  export_class_attribute_blink = "MODULES_EXPORT"
+  export_define_blink = "BLINK_MODULES_IMPLEMENTATION=1"
+  export_header_blink = "third_party/WebKit/Source/modules/ModulesExport.h"
+
+  # TODO(crbug.com/699569): Convert to use the new JS bindings.
+  js_bindings_mode = "both"
 }
 
 source_set("modules_testing") {

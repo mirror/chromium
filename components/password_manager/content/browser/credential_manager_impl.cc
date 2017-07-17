@@ -24,6 +24,7 @@
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "content/public/browser/web_contents.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/v2.mojom.h"
 
 namespace password_manager {
 
@@ -64,6 +65,11 @@ void CredentialManagerImpl::BindRequest(
   // pipe once that happens, so the DCHECK above will succeed.
   binding_.set_connection_error_handler(base::Bind(
       &CredentialManagerImpl::DisconnectBinding, base::Unretained(this)));
+
+  ::credential_manager::mojom::CredentialManagerV2Ptr p;
+  auto r = mojo::MakeRequest(&p);
+  p->Store(::credential_manager::mojom::PasswordCredential::New(),
+           ::credential_manager::mojom::CredentialManagerV2::StoreCallback());
 }
 
 bool CredentialManagerImpl::HasBinding() const {

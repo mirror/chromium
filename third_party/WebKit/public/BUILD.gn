@@ -36,7 +36,7 @@ group("test_support") {
 }
 
 group("all_blink") {
-  # This includes some test targets. Don't link into production!
+  #This includes some test targets.Don't link into production!
   testonly = true
 
   public_deps = [
@@ -709,6 +709,16 @@ grit("image_resources") {
   ]
 }
 
+# Fun part here. We currently cannot add these as deps of `mojom` targets due
+# to sanity checks that verify all flavors of bindings are there (they aren't).
+group("forwarder_for_mojo_bindings_in_modules") {
+  visibility = [ "//content/*" ]
+  public_deps = [
+    # Only the vanilla C++ bindings.
+    "//third_party/WebKit/Source/modules:mojo_bindings",
+  ]
+}
+
 mojom("mojo_bindings") {
   visibility = [ "//content/*" ]
   visibility_blink = [
@@ -845,6 +855,7 @@ group("generate_mojo_bindings") {
     ":mojo_bindings__generator",
     ":mojo_bindings_blink__generator",
     ":offscreen_canvas_mojo_bindings_blink__generator",
+    "//third_party/WebKit/Source/modules:mojo_bindings__generator",
   ]
 }
 

@@ -33,6 +33,7 @@
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "public/platform/WebFederatedCredential.h"
 #include "public/platform/WebPasswordCredential.h"
+#include "public/platform/modules/credentialmanager/v2.mojom-blink.h"
 
 namespace blink {
 
@@ -231,6 +232,12 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
   if (!CheckBoilerplate(resolver))
     return promise;
+
+  ::credential_manager::mojom::blink::CredentialManagerV2::StoreCallback c;
+  ::credential_manager::mojom::blink::CredentialManagerV2Ptr cm;
+  auto request = mojo::MakeRequest(&cm);
+  auto* ptr = static_cast<PasswordCredential*>(credential);
+  cm->Store(ptr, std::move(c));
 
   auto web_credential =
       WebCredential::Create(credential->GetPlatformCredential());
