@@ -46,6 +46,8 @@ def main():
       required=True)
   parser.add_argument(
       '--isolated-script-test-chartjson-output', required=False)
+  parser.add_argument(
+      '--isolated-script-test-histogram-output', required=False)
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
   args, rest_args = parser.parse_known_args()
   xvfb_proc = None
@@ -68,6 +70,8 @@ def main():
     chartresults = None
     json_test_results_present = '--output-format=json-test-results' in rest_args
     json_test_results = None
+    histogram_results_present = '--output-format=histograms' in rest_args
+    histogram_results = None
 
     results = None
     try:
@@ -104,6 +108,10 @@ def main():
         with open(tempfile_name) as f:
           json_test_results = json.load(f)
 
+      if histogram_results_present:
+        tempfile_name = os.path.join(tempfile_dir, 'histograms.json')
+        with open(tempfile_name) as f:
+          histogram_results = json.load(f)
     except Exception:
       traceback.print_exc()
       if results:
@@ -122,6 +130,12 @@ def main():
       chartjson_output_file = \
         open(args.isolated_script_test_chartjson_output, 'w')
       json.dump(chartresults, chartjson_output_file)
+
+    if histogram_results_present and args.isolated_script_test_histogram_output:
+      histogram_output_file = (
+          open(args.isolated_script_test_histogram_output, 'w'))
+      json.dump(histogram_results, histogram_output_file)
+
 
     if not json_test_results_present:
       json_test_results = {
