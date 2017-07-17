@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "76f7ab90_080d4eea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:13:32Z",
+      "side": 1,
+      "message": "That would be because onStart() calls setWindowModeForVr in some cases.",
+      "parentUuid": "9cda5daf_36813813",
+      "range": {
+        "startLine": 626,
+        "startChar": 8,
+        "endLine": 626,
+        "endChar": 25
+      },
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6812170e_99d90d0a",
         "filename": "content/browser/screen_orientation/screen_orientation_provider.cc",
         "patchSetId": 1
