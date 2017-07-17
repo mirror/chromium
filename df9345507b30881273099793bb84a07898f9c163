@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ead37956_778c541d",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T21:54:40Z",
+      "side": 1,
+      "message": "Rename",
+      "revId": "df9345507b30881273099793bb84a07898f9c163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a4d35_fef693e1",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T21:54:40Z",
+      "side": 1,
+      "message": "Rename",
+      "revId": "df9345507b30881273099793bb84a07898f9c163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6145441_42bb6f5a",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T21:54:40Z",
+      "side": 1,
+      "message": "Rename",
+      "revId": "df9345507b30881273099793bb84a07898f9c163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494d75ae_865dd7aa",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T21:54:40Z",
+      "side": 1,
+      "message": "enum class",
+      "revId": "df9345507b30881273099793bb84a07898f9c163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be21c58_7f8f2608",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T21:54:40Z",
+      "side": 1,
+      "message": "kFadeOut, kInflate, kDeflate",
+      "revId": "df9345507b30881273099793bb84a07898f9c163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
