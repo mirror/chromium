@@ -70,6 +70,30 @@
       "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a11ff4_3180d420",
+        "filename": "components/filesystem/lock_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-17T20:37:53Z",
+      "side": 1,
+      "message": "See my previous comment. Locking should still work in-process. I\u0027ve filed crbug.com/744893 to look a this issue again later, when we have better understanding of how chrome will run on Fuchsia.",
+      "parentUuid": "3519e20c_b481165a",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "50c0bbaa75292864074e2bc2eb517c91dbf9b473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
