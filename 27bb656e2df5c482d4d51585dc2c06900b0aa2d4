@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c0ac85da_7c42ab30",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T14:41:21Z",
+      "side": 1,
+      "message": "Done. Just a thought, maybe URLs shouldn\u0027t be compared using string equality?",
+      "parentUuid": "659a1d93_df435229",
+      "range": {
+        "startLine": 400,
+        "startChar": 33,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a97d63_36d16cdb",
         "filename": "components/payments/core/payment_request_data_util.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "60c40d8a_a3226c05",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T14:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a97d63_36d16cdb",
+      "range": {
+        "startLine": 162,
+        "startChar": 52,
+        "endLine": 162,
+        "endChar": 57
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fae113f_3d705a8a",
         "filename": "components/payments/core/payment_request_data_util.cc",
         "patchSetId": 2
@@ -83,6 +131,30 @@
       "writtenOn": "2017-07-17T14:12:34Z",
       "side": 1,
       "message": "Why change from \"method\" to \"url.spec()\"?",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "27bb656e2df5c482d4d51585dc2c06900b0aa2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378275b2_20ad7c17",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-17T14:41:21Z",
+      "side": 1,
+      "message": "Done. So that we use the canonical URL. Removing as per your comment that URLs shouldn\u0027t end with a \"/\"",
+      "parentUuid": "1fae113f_3d705a8a",
       "range": {
         "startLine": 168,
         "startChar": 58,
