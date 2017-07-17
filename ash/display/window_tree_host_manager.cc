@@ -809,7 +809,13 @@ ui::EventDispatchDetails WindowTreeHostManager::DispatchKeyEventPostIME(
   aura::Window* active_window = wm::GetActiveWindow();
   aura::Window* root_window = active_window ? active_window->GetRootWindow()
                                             : Shell::GetPrimaryRootWindow();
-  return root_window->GetHost()->DispatchKeyEventPostIME(event);
+  // Update the target to be the same as |root_window|, this matters for mus
+  // which keys off the target.
+  std::unique_ptr<ui::Event> cloned_event(ui::Event::Clone(*event));
+  ui::Event::DispatcherApi dispatcher_api(cloned_event.get());
+  dispatcher_api.set_target(root_window);
+  return root_window->GetHost()->DispatchKeyEventPostIME(
+      cloned_event->AsKeyEvent());
 }
 
 AshWindowTreeHost* WindowTreeHostManager::AddWindowTreeHostForDisplay(
