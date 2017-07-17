@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277a8c39_77bec2c7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-17T16:22:06Z",
+      "side": 1,
+      "message": "It\u0027s the other #endif you want to remove IMO, same as below, DCHECK should be in same block as the lock .",
+      "revId": "f11225e7ea68fd5a0452ebb58371fa6158dc65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
