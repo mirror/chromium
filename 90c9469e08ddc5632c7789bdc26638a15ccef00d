@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3655dfad_25c106c1",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "for (current_test \u003d 0; current_test \u003c\u003d 12; ++current_test) {\n  SCOPED_TRACE(testing::Message() \u003c\u003c \"current_test \u003d \" \u003c\u003c current_test);",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d5401e_a0ab6d36",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "NOTREACHED()",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2e79b8_1d231a3b",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79eab02_4d7ecf6b",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "// Compare unequal values.\nEXPECT_FALSE(entry1 \u003d\u003d entry2);\nEXPECT_NE(entry1, entry2);\nEXPECT_NE(entry2, entry1);",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111af6dd_a1bf8540",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "// Verify assignment.",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b8d22b_adf19197",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "EXPECT_EQ(entry1, entry2);\nEXPECT_EQ(entry2, entry1);",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6ca4b3_8648e3eb",
+        "filename": "components/download/internal/entry_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T14:28:02Z",
+      "side": 1,
+      "message": "// Verify copy constructor.\nEntry entry3(entry1);\nEXPECT_EQ(entry1, entry3);\nEXPECT_EQ(entry3, entry1);",
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
