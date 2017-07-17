@@ -21,6 +21,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "components/exo/compositor_rotation_lock.h"
 #include "components/exo/surface.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/cursor_client.h"
@@ -30,6 +31,7 @@
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/class_property.h"
+#include "ui/compositor/compositor.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/path.h"
@@ -48,6 +50,10 @@ DEFINE_LOCAL_UI_CLASS_PROPERTY_KEY(Surface*, kMainSurfaceKey, nullptr)
 
 // Application Id set by the client.
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(std::string, kApplicationIdKey, nullptr);
+
+// Maximum amount of time to wait until the arc window is resized
+// to match the display's orientation in tablet mode.
+constexpr int kRotationLockTimeoutMs = 2500;
 
 // This is a struct for accelerator keys used to close ShellSurfaces.
 const struct Accelerator {
@@ -598,6 +604,12 @@ void ShellSurface::SetGeometry(const gfx::Rect& geometry) {
   pending_geometry_ = geometry;
 }
 
+void ShellSurface::SetOrientation(Orientation orientation) {
+  TRACE_EVENT1("exo", "ShellSurface::SetOrientation", "orientation",
+               orientation == Orientation::PORTRAIT ? "portrait" : "landscape");
+  pending_orientation_ = orientation;
+}
+
 void ShellSurface::SetRectangularShadowEnabled(bool enabled) {
   TRACE_EVENT1("exo", "ShellSurface::SetRectangularShadowEnabled", "enabled",
                enabled);
@@ -773,6 +785,12 @@ void ShellSurface::OnSurfaceCommit() {
       if (container_ == ash::kShellWindowId_SystemModalContainer)
         UpdateSystemModal();
     }
+    orientation_ = pending_orientation_;
+    if (rotation_lock_)
+      rotation_lock_->UnlockIfOrientationMatches(orientation_);
+
+  } else {
+    rotation_lock_.reset();
   }
 }
 
@@ -1014,6 +1032,9 @@ void ShellSurface::OnWindowDestroying(aura::Window* window) {
       widget_->OnSizeConstraintsChanged();
   }
   window->RemoveObserver(this);
+
+  display::Screen* screen = display::Screen::GetScreen();
+  screen->RemoveObserver(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1030,6 +1051,13 @@ void ShellSurface::OnWindowActivated(
     DCHECK(activatable_);
     Configure();
     UpdateShadow();
+    display::Screen* screen = display::Screen::GetScreen();
+    if (gained_active == widget_->GetNativeWindow()) {
+      screen->AddObserver(this);
+    } else {
+      screen->RemoveObserver(this);
+      rotation_lock_.reset();
+    }
   }
 }
 
@@ -1082,6 +1110,35 @@ void ShellSurface::OnKeyEvent(ui::KeyEvent* event) {
       event->key_code() == ui::VKEY_ESCAPE) {
     EndDrag(true /* revert */);
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// display::DisplayObserver overrides:
+
+void ShellSurface::OnDisplayMetricsChanged(const display::Display& new_display,
+                                           uint32_t changed_metrics) {
+  if (!widget_ || bounds_mode_ != BoundsMode::CLIENT ||
+      !WMHelper::GetInstance()->IsMaximizeModeWindowManagerEnabled()) {
+    return;
+  }
+
+  const display::Screen* screen = display::Screen::GetScreen();
+  display::Display current_display =
+      screen->GetDisplayNearestWindow(widget_->GetNativeWindow());
+  if (current_display.id() != new_display.id() ||
+      !(changed_metrics & display::DisplayObserver::DISPLAY_METRIC_ROTATION)) {
+    return;
+  }
+
+  Orientation target_orientation =
+      CompositorRotationLock::SizeToOrientation(new_display.size());
+  if (orientation_ == target_orientation) {
+    return;
+  }
+
+  rotation_lock_ =
+      base::MakeUnique<CompositorRotationLock>(this, target_orientation);
+  rotation_lock_->Lock();
 }
 
 void ShellSurface::OnMouseEvent(ui::MouseEvent* event) {
@@ -1179,6 +1236,14 @@ void ShellSurface::OnGestureEvent(ui::GestureEvent* event) {
       NOTREACHED();
       break;
   }
+}
+
+std::unique_ptr<ui::CompositorLock> ShellSurface::CreateCompositorLock(
+    ui::CompositorLockClient* client) {
+  ui::Compositor* compositor =
+      widget_->GetNativeWindow()->layer()->GetCompositor();
+  return compositor->GetCompositorLock(
+      client, base::TimeDelta::FromMilliseconds(kRotationLockTimeoutMs));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
