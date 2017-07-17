@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "013e7151_02bccb90",
+        "filename": "ui/webui/resources/cr_elements/paper_button_style_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:18:46Z",
+      "side": 1,
+      "message": "Nit: Maybe move this at the top with a blank line after it, as we do in settings.",
+      "revId": "151ca1e67fe0c2df1268df2514eb54a8de49326e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
