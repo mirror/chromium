@@ -121,6 +121,24 @@
       "revId": "a66810cacd361745850988695235956336b19d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c1c755_93c173f0",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-17T04:39:30Z",
+      "side": 1,
+      "message": "sure :v, did not see upper",
+      "parentUuid": "94dcfd0f_cd190187",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
