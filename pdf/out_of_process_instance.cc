@@ -213,10 +213,41 @@ void EnableAccessibility(PP_Instance instance) {
   }
 }
 
+void SetCaretPosition(PP_Instance instance, struct PP_FloatPoint position) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->SetCaretPosition(pp::FloatPoint(position));
+  }
+}
+
+void MoveRangeSelectionExtent(PP_Instance instance,
+                              struct PP_FloatPoint extent) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->MoveRangeSelectionExtent(pp::FloatPoint(extent));
+  }
+}
+
+void SetSelectionBounds(PP_Instance instance,
+                        struct PP_FloatPoint base,
+                        struct PP_FloatPoint extent) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->SetSelectionBounds(pp::FloatPoint(base),
+                                            pp::FloatPoint(extent));
+  }
+}
+
 const PPP_Pdf ppp_private = {
-    &GetLinkAtPosition, &Transform, &GetPrintPresetOptionsFromDocument,
-    &EnableAccessibility,
-};
+    &GetLinkAtPosition,   &Transform,        &GetPrintPresetOptionsFromDocument,
+    &EnableAccessibility, &SetCaretPosition, &MoveRangeSelectionExtent,
+    &SetSelectionBounds};
 
 int ExtractPrintPreviewPageIndex(base::StringPiece src_url) {
   // Sample |src_url| format: chrome://print/id/page_index/print.pdf
@@ -810,6 +841,44 @@ void OutOfProcessInstance::SendAccessibilityViewportInfo() {
   viewport_info.offset = available_area_.point();
   viewport_info.zoom = zoom_ * device_scale_;
   pp::PDF::SetAccessibilityViewportInfo(GetPluginInstance(), &viewport_info);
+}
+
+void OutOfProcessInstance::SelectionChanged(const pp::Rect& left,
+                                            const pp::Rect& right) {
+  pp::PDF::SelectionChanged(
+      GetPluginInstance(),
+      PP_MakeFloatPoint(left.x(), left.y() + top_toolbar_height_),
+      left.height(),
+      PP_MakeFloatPoint(right.right(), right.y() + top_toolbar_height_),
+      right.height());
+}
+
+void OutOfProcessInstance::SetCaretPosition(const pp::FloatPoint& position) {
+  pp::Point new_position(position.x(), position.y());
+  ScalePoint(device_scale_, &new_position);
+  new_position.set_x(new_position.x() - available_area_.x());
+  engine_->SetCaretPosition(new_position);
+}
+
+void OutOfProcessInstance::MoveRangeSelectionExtent(
+    const pp::FloatPoint& extent) {
+  pp::Point new_extent(extent.x(), extent.y());
+  ScalePoint(device_scale_, &new_extent);
+  new_extent.set_x(new_extent.x() - available_area_.x());
+  engine_->MoveRangeSelectionExtent(new_extent);
+}
+
+void OutOfProcessInstance::SetSelectionBounds(const pp::FloatPoint& base,
+                                              const pp::FloatPoint& extent) {
+  pp::Point new_base_point(base.x(), base.y());
+  ScalePoint(device_scale_, &new_base_point);
+  new_base_point.set_x(new_base_point.x() - available_area_.x());
+
+  pp::Point new_extent_point(extent.x(), extent.y());
+  ScalePoint(device_scale_, &new_extent_point);
+  new_extent_point.set_x(new_extent_point.x() - available_area_.x());
+
+  engine_->SetSelectionBounds(new_base_point, new_extent_point);
 }
 
 pp::Var OutOfProcessInstance::GetLinkAtPosition(const pp::Point& point) {
