@@ -14,16 +14,14 @@
 #include "core/url/URLSearchParams.h"
 #include "modules/credentialmanager/FormDataOptions.h"
 #include "modules/credentialmanager/PasswordCredentialData.h"
-#include "platform/credentialmanager/PlatformPasswordCredential.h"
-#include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebCredential.h"
-#include "public/platform/WebPasswordCredential.h"
 
 namespace blink {
 
-PasswordCredential* PasswordCredential::Create(
-    WebPasswordCredential* web_password_credential) {
-  return new PasswordCredential(web_password_credential);
+PasswordCredential* PasswordCredential::Create(const String& id,
+                                               const String& password,
+                                               const String& name,
+                                               const KURL& icon_url) {
+  return new PasswordCredential(id, password, name, icon_url);
 }
 
 PasswordCredential* PasswordCredential::Create(
@@ -117,33 +115,17 @@ PasswordCredential* PasswordCredential::Create(
   return credential;
 }
 
-PasswordCredential::PasswordCredential(
-    WebPasswordCredential* web_password_credential)
-    : Credential(web_password_credential->GetPlatformCredential()),
-      id_name_("username"),
-      password_name_("password") {}
-
 PasswordCredential::PasswordCredential(const String& id,
                                        const String& password,
                                        const String& name,
                                        const KURL& icon)
-    : Credential(PlatformPasswordCredential::Create(id, password, name, icon)),
+    : Credential(id),
+      name_(name),
+      icon_url_(icon),
+      password_(password),
       id_name_("username"),
-      password_name_("password") {}
-
-const String& PasswordCredential::password() const {
-  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
-      ->Password();
-}
-
-const String& PasswordCredential::name() const {
-  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
-      ->Name();
-}
-
-const KURL& PasswordCredential::iconURL() const {
-  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
-      ->IconURL();
+      password_name_("password") {
+  SetType("password");
 }
 
 PassRefPtr<EncodedFormData> PasswordCredential::EncodeFormData(

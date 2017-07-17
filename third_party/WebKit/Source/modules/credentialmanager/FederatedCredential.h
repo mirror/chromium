@@ -8,38 +8,46 @@
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "modules/credentialmanager/Credential.h"
-#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class FederatedCredentialInit;
-class WebFederatedCredential;
 
 class MODULES_EXPORT FederatedCredential final : public Credential {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  static FederatedCredential* Create(const String& id,
+                                     RefPtr<SecurityOrigin> provider,
+                                     const String& name,
+                                     const KURL& icon);
   static FederatedCredential* Create(const FederatedCredentialInit&,
                                      ExceptionState&);
-  static FederatedCredential* Create(WebFederatedCredential*);
 
   // FederatedCredential.idl
-  const String provider() const;
-  const String& name() const;
-  const KURL& iconURL() const;
+  const String provider() const { return provider_->ToString(); }
+  const String& name() const { return name_; }
+  const KURL& iconURL() const { return icon_url_; }
 
   // TODO(mkwst): This is a stub, as we don't yet have any support on the
   // Chromium-side.
   const String& protocol() const { return g_empty_string; }
 
+  DECLARE_VIRTUAL_TRACE();
+
  private:
-  FederatedCredential(WebFederatedCredential*);
   FederatedCredential(const String& id,
-                      const KURL& provider,
+                      RefPtr<SecurityOrigin> provider,
                       const String& name,
                       const KURL& icon);
+  String name_;
+  KURL icon_url_;
+  RefPtr<SecurityOrigin> provider_;
 };
 
 }  // namespace blink

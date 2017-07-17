@@ -28,11 +28,9 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebCredential.h"
 #include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
-#include "public/platform/WebFederatedCredential.h"
-#include "public/platform/WebPasswordCredential.h"
+#include "public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
 
 namespace blink {
 
@@ -92,7 +90,7 @@ class RequestCallbacks : public CredentialManagerClient::RequestCallbacks {
       : resolver_(resolver) {}
   ~RequestCallbacks() override {}
 
-  void OnSuccess(std::unique_ptr<WebCredential> credential) override {
+  void OnSuccess(Credential* credential) override {
     ExecutionContext* context =
         ExecutionContext::From(resolver_->GetScriptState());
     if (!context)
@@ -105,16 +103,10 @@ class RequestCallbacks : public CredentialManagerClient::RequestCallbacks {
       return;
     }
 
-    DCHECK(credential->IsPasswordCredential() ||
-           credential->IsFederatedCredential());
+    DCHECK(credential->IsPassword() || credential->IsFederated());
     UseCounter::Count(ExecutionContext::From(resolver_->GetScriptState()),
                       WebFeature::kCredentialManagerGetReturnedCredential);
-    if (credential->IsPasswordCredential())
-      resolver_->Resolve(PasswordCredential::Create(
-          static_cast<WebPasswordCredential*>(credential.get())));
-    else
-      resolver_->Resolve(FederatedCredential::Create(
-          static_cast<WebFederatedCredential*>(credential.get())));
+    resolver_->Resolve(credential);
   }
 
   void OnError(WebCredentialManagerError reason) override {
@@ -232,11 +224,13 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
   if (!CheckBoilerplate(resolver))
     return promise;
 
-  auto web_credential =
-      WebCredential::Create(credential->GetPlatformCredential());
+  ::password_manager::mojom::blink::CredentialManager::StoreCallback c;
+  ::password_manager::mojom::blink::CredentialManagerPtr cm;
+  auto request = mojo::MakeRequest(&cm);
+  cm->Store(credential, std::move(c));
+
   CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchStore(std::move(web_credential),
-                      new NotificationCallbacks(resolver));
+      ->DispatchStore(credential, new NotificationCallbacks(resolver));
   return promise;
 }
 

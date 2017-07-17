@@ -9,9 +9,9 @@
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "core/dom/Document.h"
+#include "modules/credentialmanager/Credential.h"
 #include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/credentialmanager/CredentialRequestOptions.h"
-#include "public/platform/WebCredential.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -67,7 +67,7 @@ TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
   V8GCController::CollectAllGarbageForTesting(v8::Isolate::GetCurrent());
 
   // Invoking the callback shouldn't crash.
-  get_callback->OnSuccess(std::unique_ptr<WebCredential>());
+  get_callback->OnSuccess(nullptr);
 }
 
 }  // namespace blink
