@@ -22,6 +22,30 @@
       "revId": "e69279b735f14638105b57155374d083f151511c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52236a75_58fb0e38",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-17T14:46:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f035665_88e4dfaa",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 69
+      },
+      "revId": "e69279b735f14638105b57155374d083f151511c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
