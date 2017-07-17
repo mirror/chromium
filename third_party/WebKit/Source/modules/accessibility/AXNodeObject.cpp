@@ -2604,7 +2604,8 @@ void AXNodeObject::ComputeAriaOwnsChildren(
   Vector<String> id_vector;
   if (!CanHaveChildren() || IsNativeTextControl() ||
       HasContentEditableAttributeSet()) {
-    AxObjectCache().UpdateAriaOwns(this, id_vector, owned_children);
+    if (GetNode())
+      AxObjectCache().UpdateAriaOwns(this, id_vector, owned_children);
     return;
   }
 
