@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77f4a790_60e041b5",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T15:39:17Z",
+      "side": 1,
+      "message": "You can inline, it\u0027s as simple as other methods.",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "7aed5517d666b99b5232244d4dd793419c40a0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fbe0dc_819cb389",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-17T15:39:17Z",
+      "side": 1,
+      "message": "Move to \"private\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "7aed5517d666b99b5232244d4dd793419c40a0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
