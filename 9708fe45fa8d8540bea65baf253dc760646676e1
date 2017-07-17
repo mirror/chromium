@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c7a480da_0780e951",
+        "filename": "chrome/browser/password_manager/password_store_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-17T14:59:41Z",
+      "side": 1,
+      "message": "I considered it, but I\u0027m not sure if we might end up extending this metric to more values in the future to say more about the results. Therefore I used the enumeration. If that\u0027s wasteful, I\u0027m happy to change to UMA_HISTOGRAM_BOOLEAN, given that I\u0027m not sure how likely we are to need to extend the enum.",
+      "parentUuid": "cf312ce9_f4d9060c",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e411d7_d9901819",
         "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
         "patchSetId": 5
