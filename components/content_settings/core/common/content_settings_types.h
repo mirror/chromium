@@ -71,6 +71,9 @@ enum ContentSettingsType {
   // specific origin.
   CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT,
 
+  // Website setting which stores whether or not the site can play sound.
+  CONTENT_SETTINGS_TYPE_SOUND,
+
   // WARNING: This enum is going to be removed soon. Do not depend on NUM_TYPES.
   CONTENT_SETTINGS_NUM_TYPES_DO_NOT_USE,
 };
