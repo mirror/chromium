@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61e3b19_a1e756c5",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-17T22:58:33Z",
+      "side": 1,
+      "message": "allow_idle_cleanup_ for consistency?",
+      "revId": "13b447914caa1209cb5f214030a0149305e75488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
