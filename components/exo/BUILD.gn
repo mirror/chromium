@@ -204,3 +204,12 @@ test("exo_unittests") {
     deps += [ "//components/exo/wayland:unit_tests" ]
   }
 }
+
+if (is_linux) {
+  executable("wayland_client_demo") {
+    output_name = "wayland_client_demo"
+    deps = [
+      "//components/exo/wayland/client_demo:client_demo",
+    ]
+  }
+}
