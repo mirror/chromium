@@ -417,9 +417,11 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 // Checks the target BVC's current tab's URL. If this URL is chrome://newtab,
 // loads |url| in this tab. Otherwise, open |url| in a new tab in the target
 // BVC.
+// |tabDisplayedCompletion| will be called on the new tab (if not nil).
 - (Tab*)openOrReuseTabInMode:(ApplicationMode)targetMode
                      withURL:(const GURL&)url
-                  transition:(ui::PageTransition)transition;
+                  transition:(ui::PageTransition)transition
+         tabOpenedCompletion:(ProceduralBlock)tabOpenedCompletion;
 // Returns whether the restore infobar should be displayed.
 - (bool)mustShowRestoreInfobar;
 // Begins the process of dismissing the stack view with the given current model,
@@ -2184,7 +2186,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (Tab*)openOrReuseTabInMode:(ApplicationMode)targetMode
                      withURL:(const GURL&)URL
-                  transition:(ui::PageTransition)transition {
+                  transition:(ui::PageTransition)transition
+         tabOpenedCompletion:(ProceduralBlock)tabOpenedCompletion {
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
 
@@ -2192,7 +2195,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (!(currentTabInTargetBVC && IsURLNtp(currentTabInTargetBVC.visibleURL))) {
     return [targetBVC addSelectedTabWithURL:URL
                                     atIndex:NSNotFound
-                                 transition:transition];
+                                 transition:transition
+                         tabAddedCompletion:tabOpenedCompletion];
   }
 
   Tab* newTab = currentTabInTargetBVC;
@@ -2200,6 +2204,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (!(IsURLNtp(URL))) {
     web::NavigationManager::WebLoadParams params(URL);
     [newTab webState]->GetNavigationManager()->LoadURLWithParams(params);
+  }
+  if (tabOpenedCompletion) {
+    tabOpenedCompletion();
   }
   return newTab;
 }
@@ -2210,6 +2217,29 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
   NSUInteger tabIndex = NSNotFound;
+
+  BOOL launchVoiceSearch = [_startupParameters launchVoiceSearch];
+  BOOL launchQRScanner = [_startupParameters launchQRScanner];
+  BOOL launchFocusOmnibox = [_startupParameters launchFocusOmnibox];
+  // Commands are only allowed on NTP and there must be at most one command.
+  DCHECK_GE(1,
+            (IsURLNtp(url) ? 0 : 1) +          // Not NTP URL
+                (launchVoiceSearch ? 1 : 0) +  // Open Voice Search
+                (launchQRScanner ? 1 : 0) +    // Launch QR Code search
+                (launchFocusOmnibox ? 1 : 0)   // Focus Omnibox
+            );
+
+  ProceduralBlock tabOpenedCompletion = ^{
+    if (launchVoiceSearch) {
+      [self startVoiceSearch];
+    }
+    if (launchQRScanner) {
+      [targetBVC showQRScanner];
+    }
+    if (launchFocusOmnibox) {
+      [targetBVC focusOmnibox];
+    }
+  };
 
   Tab* tab = nil;
   if (_tabSwitcherIsActive) {
@@ -2223,8 +2253,17 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
               : StackViewDismissalMode::INCOGNITO;
       tab = [targetBVC addSelectedTabWithURL:url
                                      atIndex:tabIndex
-                                  transition:transition];
+                                  transition:transition
+                          tabAddedCompletion:tabOpenedCompletion];
     } else {
+      // Voice search, QRScanner and the omnibox are presented by the BVC.
+      // They must be started after the BVC view is added in the hierarchy.
+      self.startVoiceSearchAfterTabSwitcherDismissal =
+          [_startupParameters launchVoiceSearch];
+      self.startQRScannerAfterTabSwitcherDismissal =
+          [_startupParameters launchQRScanner];
+      self.startFocusOmniboxAfterTabSwitcherDismissal =
+          [_startupParameters launchFocusOmnibox];
       tab = [_tabSwitcherController
           dismissWithNewTabAnimationToModel:targetBVC.tabModel
                                     withURL:url
@@ -2238,45 +2277,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     self.currentBVC = targetBVC;
     tab = [self openOrReuseTabInMode:targetMode
                              withURL:url
-                          transition:transition];
-  }
-
-  if ([_startupParameters launchVoiceSearch]) {
-    if (_tabSwitcherIsActive || _dismissingStackView) {
-      // Since VoiceSearch is presented by the BVC, it must be started after the
-      // Tab Switcher dismissal completes and the BVC's view is in the
-      // hierarchy.
-      self.startVoiceSearchAfterTabSwitcherDismissal = YES;
-    } else {
-      // When starting the application from the Notification center,
-      // ApplicationWillResignActive is sent just after startup.
-      // If the voice search is triggered synchronously, it is immediately
-      // dismissed. Start it asynchronously instead.
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self startVoiceSearch];
-      });
-    }
-  } else if ([_startupParameters launchQRScanner]) {
-    if (_tabSwitcherIsActive || _dismissingStackView) {
-      // QR Scanner is presented by the BVC, similarly to VoiceSearch. It must
-      // also be started after the BVC's view is in the hierarchy.
-      self.startQRScannerAfterTabSwitcherDismissal = YES;
-    } else {
-      // Start the QR Scanner asynchronously to prevent the application from
-      // dismissing the modal view if QR Scanner is started from the
-      // Notification center.
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentBVC showQRScanner];
-      });
-    }
-  } else if ([_startupParameters launchFocusOmnibox]) {
-    if (_tabSwitcherIsActive || _dismissingStackView) {
-      self.startFocusOmniboxAfterTabSwitcherDismissal = YES;
-    } else {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentBVC focusOmnibox];
-      });
-    }
+                          transition:transition
+                 tabOpenedCompletion:tabOpenedCompletion];
   }
 
   if (_restoreHelper) {
