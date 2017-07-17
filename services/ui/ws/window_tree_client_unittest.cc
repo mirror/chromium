@@ -2213,8 +2213,9 @@ TEST_F(WindowTreeClientTest, SurfaceIdPropagation) {
     compositor_frame.metadata.begin_frame_ack =
         cc::BeginFrameAck(0, 1, 1, true);
     cc::LocalSurfaceId local_surface_id(1, base::UnguessableToken::Create());
-    surface_ptr->SubmitCompositorFrame(local_surface_id,
-                                       std::move(compositor_frame));
+    surface_ptr->SubmitCompositorFrame(
+        local_surface_id, std::move(compositor_frame),
+        base::TimeTicks::Now().ToInternalValue());
   }
   // Make sure the parent connection gets the surface ID.
   wt_client1()->WaitForChangeCount(1);
@@ -2251,8 +2252,9 @@ TEST_F(WindowTreeClientTest, SurfaceIdPropagation) {
     compositor_frame.metadata.begin_frame_ack =
         cc::BeginFrameAck(0, 1, 1, true);
     cc::LocalSurfaceId local_surface_id(2, base::UnguessableToken::Create());
-    surface_ptr->SubmitCompositorFrame(local_surface_id,
-                                       std::move(compositor_frame));
+    surface_ptr->SubmitCompositorFrame(
+        local_surface_id, std::move(compositor_frame),
+        base::TimeTicks::Now().ToInternalValue());
   }
   // Make sure the parent connection gets the surface ID.
   wt_client2()->WaitForChangeCount(1);

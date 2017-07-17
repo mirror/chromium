@@ -42,7 +42,8 @@ class TestClientBinding : public cc::mojom::CompositorFrameSink,
 
   // cc::mojom::CompositorFrameSink implementation:
   void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
-                             cc::CompositorFrame frame) override {
+                             cc::CompositorFrame frame,
+                             uint64_t submit_time) override {
     ++frames_submitted_;
     last_frame_ = std::move(frame);
     last_begin_frame_ack_ = last_frame_.metadata.begin_frame_ack;
