@@ -75,6 +75,7 @@ extern const char kChromeUIPrintURL[];
 extern const char kChromeUIQuitURL[];
 extern const char kChromeUIRestartURL[];
 extern const char kChromeUIMdSettingsURL[];
+extern const char kChromeUIMediaEngagementHost[];
 extern const char kChromeUISettingsURL[];
 extern const char kChromeUIContentSettingsURL[];
 // TODO(dbeam): remove settings-frame.

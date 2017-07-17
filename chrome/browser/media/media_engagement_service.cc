@@ -208,11 +208,11 @@ void MediaEngagementService::RecordVisit(const GURL& url) {
   delete score;
 }
 
-std::vector<media::mojom::MediaEngagementScoreDetails>
+std::vector<media::mojom::MediaEngagementScoreDetailsPtr>
 MediaEngagementService::GetAllScoreDetails() const {
   std::set<GURL> origins = GetEngagementOriginsFromContentSettings(profile_);
 
-  std::vector<media::mojom::MediaEngagementScoreDetails> details;
+  std::vector<media::mojom::MediaEngagementScoreDetailsPtr> details;
   details.reserve(origins.size());
   for (const GURL& origin : origins) {
     if (!origin.is_valid())
