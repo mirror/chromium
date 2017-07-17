@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bdea4b8e_5b914bc2",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "FirstRunBubblePresenter should still be able to call ShowFirstRunBubble(Browser* browser) -- I\u0027m only suggesting we move this mac-specific definition here to first_run_bubble_controller.mm, the declaration in the browser_dialogs.h can stay where it is.",
+      "parentUuid": "a0914e84_1bba0841",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97cd758d_cc0cbee0",
         "filename": "chrome/browser/ui/cocoa/bubble_anchor_util_views.mm",
         "patchSetId": 5

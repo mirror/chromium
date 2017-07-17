@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e75e22_913a9f4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "Make sure you update the CL description too.  (the deluge of noise in gerrit emails probably hid the earlier comment)",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4bd1b2_868bb280",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "Since gerrit makes it easy to miss.. note there\u0027s an update to an earlier thread on this line  https://chromium-review.googlesource.com/c/535735/5/chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm#138",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322e9b42_f6b8c21c",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "move the old comment. E.g.\n\n  // Since showing the bubble raises the parent window, only show it if the browser\n  // is still active (and not closed).",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebe79b8_8a4a6f53",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "I think you still need an #include for this. I\u0027ll send off a dry run which should pick it up.",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1733509c_dad9a7a1",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "!OS_CHROMEOS. But I think this might need to move inside ShowFirstRunBubble\u0027s curlies. The old code suggests ChromeOS still needs a definition, it just shouldn\u0027t do anything when called.",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e927c424_cb71e383",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "this might be unused after the comment below too",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e9f9d1_e7699b89",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175a2494_d2038489",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "static_cast -\u003e BrowserView::GetBrowserViewForBrowser(browser)",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416a2ddc_27e6abca",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ff6932_0ec9a021",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8239f90_2c4df970",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e2a014_a9b9c3ab",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "This should probably do `if (!anchor_view)`. When it\u0027s non-null I think there\u0027s a later call that calls SetAnchorRect again to clobber the effect of this SetAnchorRect call. I.e., although it still works, it\u0027s a bit misleading to a reader who might think this is doing something when anchor_rect is non-null.",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eea1ce4_32c4f1be",
+        "filename": "chrome/browser/ui/views/first_run_bubble_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-17T01:50:22Z",
+      "side": 1,
+      "message": "too many arguments? This may suggest we should move first_run_bubble_unittest.cc in the chrome/test/BUILD.gn so it gets coverage on Mac - can you do that?",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 13
+      },
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
