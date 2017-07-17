@@ -4,6 +4,7 @@
 
 #include "components/filesystem/lock_table.h"
 
+#include "build/build_config.h"
 #include "components/filesystem/file_impl.h"
 
 namespace filesystem {
@@ -22,11 +23,13 @@ base::File::Error LockTable::LockFile(FileImpl* file) {
     return base::File::FILE_ERROR_FAILED;
   }
 
+#if !defined(OS_FUCHSIA)
   base::File::Error lock_err = file->RawLockFile();
   if (lock_err != base::File::FILE_OK) {
     // Locking failed for some reason.
     return lock_err;
   }
+#endif  // !OS_FUCHSIA
 
   locked_files_.insert(file->path());
   return base::File::FILE_OK;
@@ -35,12 +38,14 @@ base::File::Error LockTable::LockFile(FileImpl* file) {
 base::File::Error LockTable::UnlockFile(FileImpl* file) {
   auto it = locked_files_.find(file->path());
   if (it != locked_files_.end()) {
+#if !defined(OS_FUCHSIA)
     base::File::Error lock_err = file->RawUnlockFile();
     if (lock_err != base::File::FILE_OK) {
       // TODO(erg): When can we fail to release a lock?
       NOTREACHED();
       return lock_err;
     }
+#endif  // !OS_FUCHSIA
 
     locked_files_.erase(it);
   }
