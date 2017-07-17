@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41345601_bca002e0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:04:44Z",
+      "side": 1,
+      "message": "Nit: Indent should be 4?",
+      "revId": "d440202b8afb733dd0b540fade70da1837db1d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81969a6_6cbde58b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:04:44Z",
+      "side": 1,
+      "message": "Where does the literal \"2\" come from? Can you either reference an enumeration instead, or at least add a comment?",
+      "revId": "d440202b8afb733dd0b540fade70da1837db1d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
