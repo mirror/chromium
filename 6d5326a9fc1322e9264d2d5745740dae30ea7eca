@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b0f1d0fb_9b9daab6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-17T14:49:51Z",
+      "side": 1,
+      "message": "i think you should remove it now unless you just want it to be a single clean cl to remove it (because we want this for m61)",
+      "parentUuid": "90f787a1_08f324cd",
+      "range": {
+        "startLine": 292,
+        "startChar": 46,
+        "endLine": 292,
+        "endChar": 85
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999a7941_1cf8a999",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunSignInProcessor.java",
         "patchSetId": 3
