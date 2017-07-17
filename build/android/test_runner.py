@@ -399,11 +399,12 @@ def AddInstrumentationTestOptions(parser):
                               replacement_apk=os.path.realpath(split_arg[1]))
   parser.add_argument(
       '--replace-system-package',
-      type=package_replacement, default=None,
+      action='append', type=package_replacement, default=[],
       help='Specifies a system package to replace with a given APK for the '
            'duration of the test. Given as a comma-separated pair of strings, '
            'the first element being the package and the second the path to the '
-           'replacement APK. Only supports replacing one package. Example: '
+           'replacement APK. Add one argument for each package to replace. '
+           'Example: '
            '--replace-system-package com.example.app,path/to/some.apk')
   parser.add_argument(
       '--runtime-deps-path',

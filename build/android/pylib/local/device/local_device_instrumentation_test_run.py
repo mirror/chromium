@@ -115,7 +115,7 @@ class LocalDeviceInstrumentationTestRun(
     super(LocalDeviceInstrumentationTestRun, self).__init__(env, test_instance)
     self._flag_changers = {}
     self._ui_capture_dir = dict()
-    self._replace_package_contextmanager = None
+    self._replace_package_contextmanagers = []
 
   #override
   def TestPackage(self):
@@ -137,10 +137,11 @@ class LocalDeviceInstrumentationTestRun(
         # _RunTest, which isn't possible using 'with' without applying the
         # context manager up in test_runner. Instead, we manually invoke
         # its __enter__ and __exit__ methods in setup and teardown
-        self._replace_package_contextmanager = system_app.ReplaceSystemApp(
-            dev, self._test_instance.replace_system_package.package,
-            self._test_instance.replace_system_package.replacement_apk)
-        steps.append(self._replace_package_contextmanager.__enter__)
+        for package in self._test_instance.replace_system_package:
+          self._replace_package_contextmanagers.append(
+              system_app.ReplaceSystemApp(dev, package.package,
+                                          package.replacement_apk))
+          steps.append(self._replace_package_contextmanagers[-1].__enter__)
 
       def install_helper(apk, permissions):
         @trace_event.traced("apk_path")
@@ -277,8 +278,8 @@ class LocalDeviceInstrumentationTestRun(
       if self._test_instance.ui_screenshot_dir:
         pull_ui_screen_captures(dev)
 
-      if self._replace_package_contextmanager:
-        self._replace_package_contextmanager.__exit__(*sys.exc_info())
+      for manager in reversed(self._replace_package_contextmanagers):
+        manager.__exit__(*sys.exc_info())
 
     @trace_event.traced
     def pull_ui_screen_captures(dev):
