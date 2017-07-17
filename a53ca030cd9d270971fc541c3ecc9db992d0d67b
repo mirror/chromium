@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "227aecd5_435ba6ef",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/link-prefetch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-17T22:49:50Z",
+      "side": 1,
+      "message": "It still seems odd and unnecessary to me that we would accept URLs with newlines in their hostnames.",
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a06445d2_3c2f2bdc",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 2
