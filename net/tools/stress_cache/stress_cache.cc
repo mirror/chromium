@@ -303,15 +303,9 @@ void StressTheCache(int iteration) {
   PathService::Get(base::DIR_TEMP, &path);
   path = path.AppendASCII("cache_test_stress");
 
-  base::Thread cache_thread("CacheThread");
-  if (!cache_thread.StartWithOptions(
-          base::Thread::Options(base::MessageLoop::TYPE_IO, 0)))
-    return;
-
   g_data = new Data();
   g_data->iteration = iteration;
-  g_data->cache = new disk_cache::BackendImpl(
-      path, mask, cache_thread.task_runner().get(), NULL);
+  g_data->cache = new disk_cache::BackendImpl(path, mask, NULL);
   g_data->cache->SetMaxSize(cache_size);
   g_data->cache->SetFlags(disk_cache::kNoLoadProtection);
 
