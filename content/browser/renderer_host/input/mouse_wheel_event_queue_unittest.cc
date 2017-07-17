@@ -341,8 +341,8 @@ class MouseWheelEventQueueTest
 
   void SendGestureEvent(WebInputEvent::Type type) {
     WebGestureEvent event(type, WebInputEvent::kNoModifiers,
-                          ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
-    event.source_device = blink::kWebGestureDeviceTouchscreen;
+                          ui::EventTimeStampToSeconds(ui::EventTimeForNow()),
+                          blink::kWebGestureDeviceTouchscreen);
     queue_->OnGestureScrollEvent(
         GestureEventWithLatencyInfo(event, ui::LatencyInfo()));
   }

@@ -785,7 +785,7 @@ void ContentViewCore::ScrollBegin(JNIEnv* env,
   event.data.scroll_begin.target_viewport = target_viewport;
 
   if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+    event.SetSourceDevice(blink::kWebGestureDeviceSyntheticAutoscroll);
 
   SendGestureEvent(event);
 }
@@ -829,7 +829,7 @@ void ContentViewCore::FlingStart(JNIEnv* env,
   event.data.fling_start.target_viewport = target_viewport;
 
   if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+    event.SetSourceDevice(blink::kWebGestureDeviceSyntheticAutoscroll);
 
   SendGestureEvent(event);
 }
@@ -844,7 +844,7 @@ void ContentViewCore::FlingCancel(JNIEnv* env,
 
   if (from_gamepad) {
     event.data.fling_cancel.target_viewport = true;
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+    event.SetSourceDevice(blink::kWebGestureDeviceSyntheticAutoscroll);
   }
 
   SendGestureEvent(event);
