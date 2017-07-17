@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../../inspector-protocol/resources/inspector-protocol-test.js"></script>
+<script>
+async function test() {
+  async function dumpResponse(cacheId, path) {
+    var result = await InspectorTest.sendCommandPromise("CacheStorage.requestCachedResponse", {"cacheId": cacheId, "requestURL": path});
+    if (result["error"]) {
+      var error = result["error"];
+      InspectorTest.log(`Error: ${error.message} ${error.data || ""}`);
+      return;
+    }
+    var response = result["result"]["response"];
+    InspectorTest.log(response.headers["Content-Type"]);
+    InspectorTest.log("Type of body: " + (typeof response.body));
+  }
+
+  function navigateToPageWithSW() {
+    return new Promise(resolve => InspectorTest.evaluateInPage(
+            "prepareForReload(), window.location.href", url => {
+        var newUrl = url.replace(
+            "read-cached-response.html", "resources/service-worker.html");
+        resolve (InspectorTest.sendCommandPromise("Page.navigate", {
+          url: newUrl,
+          referrer: "http://referrer.com/"
+        }));
+      }));
+  }
+
+  async function waitForServiceWorkerActivation() {
+    var activated = false;
+    while (!activated) {
+      var result = await InspectorTest.waitForEventPromise("ServiceWorker.workerVersionUpdated");
+      var versions = result["params"]["versions"];
+      if (versions.length === 0)
+        continue;
+      activated = versions[0]["status"] === "activated";
+    }
+  }
+
+  var swActivatedPromise = waitForServiceWorkerActivation();
+  await navigateToPageWithSW();
+  await InspectorTest.sendCommandPromise("Runtime.enable", {});
+  var result = await InspectorTest.sendCommandPromise("ServiceWorker.enable", {});
+  await swActivatedPromise;
+  result = await InspectorTest.sendCommandPromise("CacheStorage.requestCacheNames", {securityOrigin: "http://127.0.0.1:8000"});
+  var cacheId = result["result"]["caches"][0]["cacheId"];
+  result = await InspectorTest.sendCommandPromise("CacheStorage.requestEntries", {cacheId, skipCount: 0, pageSize: 5});
+  var requests = result["result"]["cacheDataEntries"].map(entry => entry["request"]).sort();
+  InspectorTest.log("Cached requests:");
+
+  for (var entry of requests)
+    await dumpResponse(cacheId, entry);
+
+  await dumpResponse(null, null);
+  await dumpResponse(cacheId, null);
+  await dumpResponse("bogus", requests[0]);
+  await dumpResponse(cacheId, "http://localhost:8080/bogus");
+
+  InspectorTest.completeTest();
+}
+</script>
+</head>
+<body onload="runTest();">
+<p>Tests reading cached response from the protocol</p>
+</body>
