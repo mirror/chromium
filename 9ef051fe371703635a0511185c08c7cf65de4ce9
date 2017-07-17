@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "053aa6b3_3015beb2",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T21:16:18Z",
+      "side": 1,
+      "message": "StructPtr is movable though, so in that case, we should pass by value, in combination with std::move().",
+      "parentUuid": "df4eeafa_137a1026",
+      "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a69ab1a8_43d01cd5",
         "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
         "patchSetId": 13
