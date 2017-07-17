@@ -16,6 +16,24 @@
       "revId": "9c5bbf9d7c832ea5966e492ae5b7d5497490c869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ce8a31_560cf29e",
+        "filename": "chrome/test/chromedriver/window_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1129864
+      },
+      "writtenOn": "2017-07-17T19:37:39Z",
+      "side": 1,
+      "message": "Done, thank you!",
+      "parentUuid": "39ef2dca_3e2df358",
+      "revId": "9c5bbf9d7c832ea5966e492ae5b7d5497490c869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
