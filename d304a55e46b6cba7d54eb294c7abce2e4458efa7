@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4888867c_923b8d57",
+        "filename": "storage/browser/blob/blob_data_builder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Yeah, uint8_t would be a bit nicer, but (unless I also update other methods) would be rather inconsistent with AppendData and PopulateFutureData (and all the BlobDataItem, DataElement etc classes that all currently use char* for arbitrary bytes). So not sure it makes sense to change this one char* without changing at least the other methods in this class as well, or ideally even changing the type throughout the blob code...",
+      "parentUuid": "4d8cd71e_16623a99",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 7
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61e4ea57_5dec174d",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9658799_dd37d9bb",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Totally agree, reworded it to hopefully be clearer (\"might no longer have any references\").",
+      "parentUuid": "61e4ea57_5dec174d",
+      "range": {
+        "startLine": 88,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c27fb19e_7a688a6e",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Good point. I believe you\u0027re right, and it isn\u0027t in fact possible for an InterfacePtr to have encountered_error() return true the moment of arrival, even if the interface ptr that was send had it true already. So removed this check here, and a couple of lines up the same check for get_blob()-\u003eblob.encountered_error().",
+      "parentUuid": "dba40caa_270753d5",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 7
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4552389_1ce48caf",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4329eb_102670da",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4552389_1ce48caf",
+      "range": {
+        "startLine": 354,
+        "startChar": 30,
+        "endLine": 354,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c202658a_fe303d82",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Good point. Ultimately BlobMemoryController::DetermineStrategy will ensure that we don\u0027t pick the DataPipeTransportStrategy unless bytes-\u003elength fits in a size_t (and we\u0027d never be able to fit more than size_t bytes in memory anyway), but it would still be bad if somehow a bug in BlobMemoryController would end up causing this to infinite-loop. I don\u0027t think a DCHECK here to make sure bytes-\u003elength fits in a size_t would be useful, as even with whatever bug in BlobMemoryController you\u0027d still need a misbehaving renderer to try to send more than size_t bytes, so it would be unlikely to ever trigger a DCHECK. So instead I just changed the type of source_offset to uint64_t, matching bytes-\u003elength, to make sure this at least makes progress.",
+      "parentUuid": "19824d6a_ee005d46",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b93b6a8_5a810cb0",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 16
@@ -137,6 +257,30 @@
       "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c9a354_2cc730ee",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-17T18:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b93b6a8_5a810cb0",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 14
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
