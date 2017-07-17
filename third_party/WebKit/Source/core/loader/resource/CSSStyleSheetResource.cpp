@@ -42,6 +42,19 @@
 
 namespace blink {
 
+CSSStyleSheetResource::ScopedDataDecodedAndClearer::ScopedDataDecodedAndClearer(
+    CSSStyleSheetResource* resource)
+    : resource_(resource) {
+  if (resource_->Data() && !resource_->IsUnusedPreload())
+    resource_->SetDecodedSheetText(resource_->DecodedText());
+}
+
+CSSStyleSheetResource::ScopedDataDecodedAndClearer::
+    ~ScopedDataDecodedAndClearer() {
+  if (!resource_->decoded_sheet_text_.IsEmpty())
+    resource_->ClearData();
+}
+
 CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
                                                     ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
@@ -103,6 +116,7 @@ void CSSStyleSheetResource::DidAddClient(ResourceClient* c) {
   // HTMLLinkElement::setCSSStyleSheet.
   Resource::DidAddClient(c);
 
+  ScopedDataDecodedAndClearer data_clearer(this);
   if (HasClient(c) && did_notify_first_data_)
     static_cast<StyleSheetResourceClient*>(c)->DidAppendFirstData(this);
 
@@ -156,9 +170,7 @@ void CSSStyleSheetResource::CheckNotify() {
   TriggerNotificationForFinishObservers();
 
   // Decode the data to find out the encoding and cache the decoded sheet text.
-  if (Data())
-    SetDecodedSheetText(DecodedText());
-
+  ScopedDataDecodedAndClearer data_clearer(this);
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
       GetResponse().HttpHeaderField(HTTPNames::Referrer_Policy);
@@ -174,13 +186,6 @@ void CSSStyleSheetResource::CheckNotify() {
     c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
                         referrer_policy, Encoding(), this);
   }
-
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {

@@ -62,6 +62,24 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   void AppendData(const char* data, size_t length) override;
 
  private:
+  // Helper class to decode the resources data in the constructor, and clear the
+  // data in the destructor. Only performs the decoding if the resource is
+  // actively being used (i.e. not an unused preload). This provides two
+  // benefits:
+  // 1. Memory savings for unused preloads
+  // 2. Not dropping raw data for preloads with associated SRI metadata. This
+  // allows preloads to be used to compute SRI integrity.
+  class ScopedDataDecodedAndClearer {
+    STACK_ALLOCATED();
+
+   public:
+    explicit ScopedDataDecodedAndClearer(CSSStyleSheetResource*);
+    ~ScopedDataDecodedAndClearer();
+
+   private:
+    Member<CSSStyleSheetResource> resource_;
+  };
+
   class CSSStyleSheetResourceFactory : public ResourceFactory {
    public:
     CSSStyleSheetResourceFactory()
