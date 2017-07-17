@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e69b7d6_d07aad79",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-17T19:00:30Z",
+      "side": 1,
+      "message": "Can you check if the following would also work?\n\n:host ::slotted(slot\u003d\"button-container\")\n\nAsking because this would allow us to eliminate the need for having both class and slot from client code.\n\n\u003cdiv class\u003d\"button-container\" slot\u003d\"button-container\"\u003e\nwould become simply\n\u003cdiv slot\u003d\"button-container\"\u003e",
+      "revId": "a63d27873c29b5cae03b96314f72c9ff48227335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
