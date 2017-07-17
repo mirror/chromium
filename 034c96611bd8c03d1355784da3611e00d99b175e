@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfa19cd7_c7552c62",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-17T20:27:31Z",
+      "side": 1,
+      "message": "It is not expected to be used outside of BubbleView. We would ideally set the anchor using autolayout constraints, but I think that would require us to use autolayout in BVC.\n\nI think this util method should be doing what you expect--it returns the bottom midpoint of the target element if the arrow points up, and the top midpoint if the arrow points down. Let me know; it seems that I should clarify this comment.",
+      "parentUuid": "c4c8295d_2db009b7",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "828136b7_3d4c3efd",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-17T18:43:15Z",
       "side": 1,
       "message": "Is this different from the BubbleAlignment enum? How is the alignment determined here if it is not returned?",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd0c4b5_b0525a50",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-17T20:27:31Z",
+      "side": 1,
+      "message": "We\u0027re moving away from explicitly setting alignment as leading/center/trailing, since the distance from the edge to the triangle is not fixed across all instances of the bubble. See this comment on the UI review deck: https://docs.google.com/presentation/d/1AL2xqwLlFnZl8rEdVCvzIx30LghiebZQSMNVnzpKutE/edit?ts\u003d59681843#slide\u003did.g2276a1b491_1_0\n\nI\u0027ll modify this comment so it\u0027s more clear.",
+      "parentUuid": "828136b7_3d4c3efd",
       "range": {
         "startLine": 14,
         "startChar": 34,
