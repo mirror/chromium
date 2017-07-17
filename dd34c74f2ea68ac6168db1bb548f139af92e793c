@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e4cb5f4_009bd235",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:57:40Z",
+      "side": 1,
+      "message": "Why add this? It\u0027s probably better to not have both a static and non-static function with the same name, than it is to save a few characters :P",
+      "range": {
+        "startLine": 688,
+        "startChar": 20,
+        "endLine": 688,
+        "endChar": 36
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ef6d12_ff7ac2e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:57:40Z",
+      "side": 1,
+      "message": "nit: get paused",
+      "range": {
+        "startLine": 854,
+        "startChar": 43,
+        "endLine": 854,
+        "endChar": 48
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fab73ce_8f522bf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:57:40Z",
+      "side": 1,
+      "message": "This a typo? Don\u0027t think this function exists.",
+      "range": {
+        "startLine": 916,
+        "startChar": 84,
+        "endLine": 916,
+        "endChar": 95
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bf1b62_2d7d69d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T14:57:40Z",
+      "side": 1,
+      "message": "This looks unnecessary, and easily broken. Why not just leave this function unchanged?\n\nWe will call cancelPendingVrEntry below because we\u0027re not in VR in this case.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 12,
+        "endLine": 1110,
+        "endChar": 40
+      },
+      "revId": "dd34c74f2ea68ac6168db1bb548f139af92e793c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
