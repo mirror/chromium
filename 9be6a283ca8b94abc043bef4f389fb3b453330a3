@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ab1a8c_de3ae60b",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1148129
+      },
+      "writtenOn": "2017-07-17T15:31:54Z",
+      "side": 1,
+      "message": "nit: \u0027privet\u0027",
+      "range": {
+        "startLine": 732,
+        "startChar": 43,
+        "endLine": 732,
+        "endChar": 58
+      },
+      "revId": "9be6a283ca8b94abc043bef4f389fb3b453330a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
