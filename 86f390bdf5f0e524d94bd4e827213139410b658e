@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1f0a491e_1d51d1b2",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:05:33Z",
+      "side": 1,
+      "message": "nit: add an empty line after this include",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c83981e4_3c6711f1",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
@@ -30,6 +47,23 @@
       "writtenOn": "2017-07-17T22:12:46Z",
       "side": 1,
       "message": "just return base::TimeDelata() and remove the private member variable?",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fed3b0_b708dfc1",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:05:33Z",
+      "side": 1,
+      "message": "file_size_ is not used.",
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +98,40 @@
       "writtenOn": "2017-07-17T22:12:46Z",
       "side": 1,
       "message": "you need {} for if/else statement that spans multiple lines",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfeac73_b327dc8c",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:05:33Z",
+      "side": 1,
+      "message": "We now only trigger the accepted download callback. We do not trigger success/failure download after this.",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40405713_59069b4a",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-17T23:05:33Z",
+      "side": 1,
+      "message": "nit: comment not needed",
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
