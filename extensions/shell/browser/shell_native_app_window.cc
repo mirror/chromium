@@ -17,6 +17,10 @@ ShellNativeAppWindow::ShellNativeAppWindow(
     AppWindow* app_window,
     const AppWindow::CreateParams& params)
     : app_window_(app_window) {
+  size_constraints_.set_minimum_size(
+      params.GetContentMinimumSize(gfx::Insets()));
+  size_constraints_.set_maximum_size(
+      params.GetContentMaximumSize(gfx::Insets()));
 }
 
 ShellNativeAppWindow::~ShellNativeAppWindow() {
@@ -172,12 +176,12 @@ void ShellNativeAppWindow::HideWithApp() {
 
 gfx::Size ShellNativeAppWindow::GetContentMinimumSize() const {
   // Content fills the desktop and cannot be resized.
-  return DesktopController::instance()->GetWindowSize();
+  return size_constraints_.GetMinimumSize();
 }
 
 gfx::Size ShellNativeAppWindow::GetContentMaximumSize() const {
   // Content fills the desktop and cannot be resized.
-  return DesktopController::instance()->GetWindowSize();
+  return size_constraints_.GetMaximumSize();
 }
 
 void ShellNativeAppWindow::SetContentSizeConstraints(
