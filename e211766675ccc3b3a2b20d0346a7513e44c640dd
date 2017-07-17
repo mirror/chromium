@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72c2ee1_8811e12c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:30:42Z",
+      "side": 1,
+      "message": "nit: s/100Mb/100MB.\nI think of \u0027b\u0027 as bit. Making it capitalized might be clearer that this is in bytes.",
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf878bc_5e6ad3dc",
+        "filename": "components/net_log/net_export_file_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:30:42Z",
+      "side": 1,
+      "message": "nit: suggest adding a one line comment to kNoLimit.\nCould reuse the other comment that you have on FileNetLogObserver::kNoLimit:\n\nSpecial value meaning \"can use an unlimited number of bytes\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac18eedf_473f0f51",
+        "filename": "components/net_log/net_export_file_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-17T16:30:42Z",
+      "side": 1,
+      "message": "nit: s/100Mb/100MB",
+      "range": {
+        "startLine": 37,
+        "startChar": 55,
+        "endLine": 37,
+        "endChar": 60
+      },
+      "revId": "e211766675ccc3b3a2b20d0346a7513e44c640dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
