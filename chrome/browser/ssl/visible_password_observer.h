@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_VISIBLE_PASSWORD_OBSERVER_H_
-#define COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_VISIBLE_PASSWORD_OBSERVER_H_
+#ifndef CHROME_BROWSER_SSL_VISIBLE_PASSWORD_OBSERVER_H_
+#define CHROME_BROWSER_SSL_VISIBLE_PASSWORD_OBSERVER_H_
 
 #include <set>
 
@@ -16,7 +16,7 @@ namespace content {
 class RenderFrameHost;
 }  // namespace content
 
-namespace password_manager {
+namespace password_observer {
 
 // This class tracks password visibility notifications for the
 // RenderFrameHosts in a WebContents. There is one
@@ -69,6 +69,6 @@ class VisiblePasswordObserver
   DISALLOW_COPY_AND_ASSIGN(VisiblePasswordObserver);
 };
 
-}  // namespace password_manager
+}  // namespace password_observer
 
-#endif  // COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_VISIBLE_PASSWORD_OBSERVER_H_
+#endif  // CHROME_BROWSER_SSL_VISIBLE_PASSWORD_OBSERVER_H_
