@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72508292_9eb85769",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-17T16:59:54Z",
+      "side": 1,
+      "message": "Why do we need a new file for this? I think it should be fine to just keep it in its original file, right?",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d82159b_de5e2e4c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-17T16:59:54Z",
+      "side": 1,
+      "message": "Is this line for debugging only and will be removed before submitting?",
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
