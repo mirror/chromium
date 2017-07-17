@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2cc8b4_84e90831",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-17T07:30:32Z",
+      "side": 1,
+      "message": "Would you mind putting the culprit CL https://codereview.chromium.org/2935183002 in the commit message?",
+      "revId": "a5283067569e2cb5e1dc537cc421b380670582a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
