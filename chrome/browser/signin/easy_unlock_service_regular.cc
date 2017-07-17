@@ -458,8 +458,8 @@ void EasyUnlockServiceRegular::InitializeInternal() {
   OnPrefsChanged();
 
 #if defined(OS_CHROMEOS)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery)) {
     pref_manager_.reset(
         new proximity_auth::ProximityAuthPrefManager(profile()->GetPrefs()));
     GetCryptAuthDeviceManager()->AddObserver(this);
