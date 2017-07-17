@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e43cb239_9f01780f",
+        "filename": "ios/chrome/browser/ui/contextual_search/contextual_search_wrangler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-17T14:42:13Z",
+      "side": 1,
+      "message": "Not booking because this is just moving unused code, but consider commenting the classes and methods in this file.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "20982d1f771cdf9e2bc4e9dfdbe2655bf10627dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
