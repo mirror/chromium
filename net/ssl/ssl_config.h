@@ -39,6 +39,7 @@ enum TLS13Variant {
   kTLS13VariantDraft,
   kTLS13VariantExperiment,
   kTLS13VariantRecordTypeExperiment,
+  kTLS13VariantNoSessionIDExperiment,
 };
 
 // Default minimum protocol version.
