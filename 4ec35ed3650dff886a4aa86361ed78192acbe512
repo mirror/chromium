@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6a03eb_aaaf2c91",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-17T12:03:01Z",
+      "side": 1,
+      "message": "I don\u0027t see how this one is reset if the row no longer is visibility:collapse.",
+      "revId": "4ec35ed3650dff886a4aa86361ed78192acbe512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d531e6ef_ccdd4d83",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-17T12:03:01Z",
+      "side": 1,
+      "message": "Here you get O(n) \u003d n^2 performance. Can\u0027t you update row_pos_ as you go through the outer loop instead?",
+      "revId": "4ec35ed3650dff886a4aa86361ed78192acbe512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91ecb9e_4e37a5b8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-17T12:03:01Z",
+      "side": 1,
+      "message": "RowSpan() isn\u0027t a very cheap call, so doing it before each iteration doesn\u0027t seem too good.",
+      "revId": "4ec35ed3650dff886a4aa86361ed78192acbe512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
