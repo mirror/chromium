@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "566bac53_d4f5770b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/CardViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T21:32:42Z",
+      "side": 1,
+      "message": "Should we be doing this in the other ViewHolder\u0027s as well? I don\u0027t think it needs to be done in this CL (especially since bookamrks/history/downloads are completely destroyed when the bottom sheet is closed), just curious on your thoughts.",
+      "range": {
+        "startLine": 209,
+        "startChar": 24,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "5ee8b141946d2d96b692526d86b3fe9f46fe9708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
