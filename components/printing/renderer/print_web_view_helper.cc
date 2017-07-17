@@ -1353,10 +1353,11 @@ bool PrintWebViewHelper::CreatePreviewDocument() {
     if (print_preview_context_.IsLastPageOfPrintReadyMetafile()) {
       DCHECK(print_preview_context_.IsModifiable() ||
              print_preview_context_.IsFinalPageRendered());
-      if (!FinalizePrintReadyDocument())
+      if (!FinalizePrintReadyDocument(false))
         return false;
     }
   }
+  FinalizePrintReadyDocument(true);
   print_preview_context_.Finished();
   return true;
 }
@@ -1392,8 +1393,8 @@ bool PrintWebViewHelper::RenderPreviewPage(
 }
 #endif  // !defined(OS_MACOSX) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
-bool PrintWebViewHelper::FinalizePrintReadyDocument() {
-  DCHECK(!is_print_ready_metafile_sent_);
+bool PrintWebViewHelper::FinalizePrintReadyDocument(bool is_final) {
+  DCHECK(is_print_ready_metafile_sent_ == is_final);
   print_preview_context_.FinalizePrintReadyDocument();
 
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
