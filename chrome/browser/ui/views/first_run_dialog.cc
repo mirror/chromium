@@ -23,6 +23,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/views/border.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/layout/grid_layout.h"
@@ -80,7 +81,10 @@ FirstRunDialog::FirstRunDialog(Profile* profile)
     : profile_(profile),
       make_default_(NULL),
       report_crashes_(NULL) {
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  GridLayout* layout = new GridLayout(this);
+  SetLayoutManager(layout);
+  SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG)));
 
   views::ColumnSet* column_set = layout->AddColumnSet(0);
   column_set->AddColumn(GridLayout::FILL, GridLayout::CENTER, 0,
