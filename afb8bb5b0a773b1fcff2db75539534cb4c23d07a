@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38eb25ec_aa256071",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "i would just say \"standalone Caps Lock keys\", otherwise we might infer that they don\u0027t have Search keys\n\n[eg, parrot and stout both have both the Win/Search key and Caps Lock]",
+      "range": {
+        "startLine": 84,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 14
+      },
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5cee08_d81d5d2e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "would it make sense to do private: and friend class TestKeyboardHandler?",
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eda01a2_e7ee77a4",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "I thought we normally omit trivial destructors (let them be implicitly declared/defined). Or has that changed?",
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489a8ea9_467a6cb5",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "nit: by convention, primitive pointer arguments are usually \"out\" args (as opposed to const references)",
+      "range": {
+        "startLine": 48,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e375ab_13ad0ccf",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "[const] auto\u0026 or [const] auto* per https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ea46c1_ad214b86",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-17T18:09:48Z",
+      "side": 1,
+      "message": "people usually tell me to make these private and add protected getters. *shrug*",
+      "revId": "afb8bb5b0a773b1fcff2db75539534cb4c23d07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
