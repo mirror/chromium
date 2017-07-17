@@ -179,9 +179,30 @@ public class DeviceSensorsTest extends AndroidTestCase {
         assertTrue("should contain no sensors", mDeviceSensors.mActiveSensors.isEmpty());
         assertFalse(mDeviceSensors.mDeviceMotionIsActive);
         assertFalse(mDeviceSensors.mDeviceOrientationIsActive);
+        assertFalse(mDeviceSensors.mDeviceOrientationAbsoluteIsActive);
         assertFalse(mDeviceSensors.mDeviceOrientationIsActiveWithBackupSensors);
+        assertFalse(mDeviceSensors.mDeviceOrientationAbsoluteIsActiveWithBackupSensors);
         assertEquals(DeviceSensors.DEVICE_ORIENTATION_ABSOLUTE_SENSORS.size(),
                 mMockSensorManager.mNumUnRegistered);
+    }
+
+    @SmallTest
+    public void testRegisterSensorsDeviceOrientationAbsoluteRotationVectorNotAvailable() {
+        MockSensorManager mockSensorManager = new MockSensorManager();
+        mockSensorManager.setRotationVectorAvailable(false);
+        mDeviceSensors.setSensorManagerProxy(mockSensorManager);
+        boolean startOrientation = mDeviceSensors.start(0, ConsumerType.ORIENTATION_ABSOLUTE, 100);
+
+        assertTrue(startOrientation);
+        assertFalse(mDeviceSensors.mDeviceOrientationIsActive);
+        assertTrue(mDeviceSensors.mDeviceOrientationAbsoluteIsActive);
+        assertTrue(mDeviceSensors.mDeviceOrientationAbsoluteIsActiveWithBackupSensors);
+        assertTrue("should contain option B orientation absolute sensors",
+                mDeviceSensors.mActiveSensors.containsAll(
+                        DeviceSensors.DEVICE_ORIENTATION_ABSOLUTE_SENSORS_B));
+        assertEquals(DeviceSensors.DEVICE_ORIENTATION_ABSOLUTE_SENSORS_B.size(),
+                mockSensorManager.mNumRegistered);
+        assertEquals(0, mockSensorManager.mNumUnRegistered);
     }
 
     @SmallTest
