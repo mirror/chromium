@@ -20,6 +20,10 @@ struct StructTraits<cc::mojom::SharedQuadStateDataView, OptSharedQuadState> {
 
   static void SetToNull(OptSharedQuadState* output) { output->sqs = nullptr; }
 
+  static uint64_t stable_id(const OptSharedQuadState& input) {
+    return input.sqs->stable_id;
+  }
+
   static const gfx::Transform& quad_to_target_transform(
       const OptSharedQuadState& input) {
     return input.sqs->quad_to_target_transform;
@@ -57,6 +61,10 @@ struct StructTraits<cc::mojom::SharedQuadStateDataView, OptSharedQuadState> {
 
 template <>
 struct StructTraits<cc::mojom::SharedQuadStateDataView, cc::SharedQuadState> {
+  static uint64_t stable_id(const cc::SharedQuadState& sqs) {
+    return sqs.stable_id;
+  }
+
   static const gfx::Transform& quad_to_target_transform(
       const cc::SharedQuadState& sqs) {
     return sqs.quad_to_target_transform;
@@ -98,6 +106,7 @@ struct StructTraits<cc::mojom::SharedQuadStateDataView, cc::SharedQuadState> {
       return false;
     }
 
+    out->stable_id = data.stable_id();
     out->is_clipped = data.is_clipped();
     out->opacity = data.opacity();
     if (data.blend_mode() > static_cast<int>(SkBlendMode::kLastMode))

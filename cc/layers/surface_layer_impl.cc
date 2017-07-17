@@ -67,9 +67,9 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
     return;
 
   SharedQuadState* common_shared_quad_state = nullptr;
-  auto* primary =
-      CreateSurfaceDrawQuad(render_pass, SurfaceDrawQuadType::PRIMARY,
-                            primary_surface_info_, &common_shared_quad_state);
+  auto* primary = CreateSurfaceDrawQuad(
+      render_pass, SurfaceDrawQuadType::PRIMARY, primary_surface_info_, id(),
+      &common_shared_quad_state);
   // Emitting a fallback SurfaceDrawQuad is unnecessary if the primary and
   // fallback surface Ids match.
   if (primary && fallback_surface_info_.id() != primary_surface_info_.id()) {
@@ -85,6 +85,7 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
               fallback_surface_info_.device_scale_factor();
       primary->fallback_quad = CreateSurfaceDrawQuad(
           render_pass, SurfaceDrawQuadType::FALLBACK, fallback_surface_info_,
+          fallback_layer_id_,
           use_common_shared_quad_state ? &common_shared_quad_state : nullptr);
     }
   }
@@ -94,6 +95,7 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     RenderPass* render_pass,
     SurfaceDrawQuadType surface_draw_quad_type,
     const viz::SurfaceInfo& surface_info,
+    uint64_t stable_id,
     SharedQuadState** common_shared_quad_state) {
   DCHECK(surface_info.is_valid());
 
@@ -134,6 +136,7 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     shared_quad_state = render_pass->CreateAndAppendSharedQuadState();
     PopulateScaledSharedQuadState(shared_quad_state, layer_to_content_scale_x,
                                   layer_to_content_scale_y);
+    shared_quad_state->stable_id = stable_id;
   }
   if (common_shared_quad_state)
     *common_shared_quad_state = shared_quad_state;

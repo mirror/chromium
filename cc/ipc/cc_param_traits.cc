@@ -378,12 +378,12 @@ void ParamTraits<cc::RenderPass>::Write(base::Pickle* m, const param_type& p) {
     }
 
     // Null shared quad states should not occur.
-    DCHECK(quad->shared_quad_state);
+    DCHECK(quad->shared_quad_state());
 
     // SharedQuadStates should appear in the order they are used by DrawQuads.
     // Find the SharedQuadState for this DrawQuad.
     while (shared_quad_state_iter != p.shared_quad_state_list.end() &&
-           quad->shared_quad_state != *shared_quad_state_iter) {
+           quad->shared_quad_state() != *shared_quad_state_iter) {
       ++shared_quad_state_iter;
     }
 
@@ -522,7 +522,7 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
         return false;
     }
 
-    draw_quad->shared_quad_state = p->shared_quad_state_list.back();
+    draw_quad->PopulateSharedQuadStatePointer(p->shared_quad_state_list.back());
     // If this quad is a fallback SurfaceDrawQuad then update the previous
     // primary SurfaceDrawQuad to point to this quad.
     if (draw_quad->material == cc::DrawQuad::SURFACE_CONTENT) {

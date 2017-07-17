@@ -34,10 +34,10 @@ DCLayerOverlayProcessor::DCLayerResult FromYUVQuad(
 // This returns the smallest rectangle in target space that contains the quad.
 gfx::RectF ClippedQuadRectangle(const DrawQuad* quad) {
   gfx::RectF quad_rect = MathUtil::MapClippedRect(
-      quad->shared_quad_state->quad_to_target_transform,
+      quad->shared_quad_state()->quad_to_target_transform,
       gfx::RectF(quad->rect));
-  if (quad->shared_quad_state->is_clipped)
-    quad_rect.Intersect(gfx::RectF(quad->shared_quad_state->clip_rect));
+  if (quad->shared_quad_state()->is_clipped)
+    quad_rect.Intersect(gfx::RectF(quad->shared_quad_state()->clip_rect));
   return quad_rect;
 }
 
@@ -49,7 +49,7 @@ gfx::RectF GetOcclusionBounds(const gfx::RectF& target_quad,
   gfx::RectF occlusion_bounding_box;
   for (auto overlap_iter = quad_list_begin; overlap_iter != quad_list_end;
        ++overlap_iter) {
-    float opacity = overlap_iter->shared_quad_state->opacity;
+    float opacity = overlap_iter->shared_quad_state()->opacity;
     if (opacity < std::numeric_limits<float>::epsilon())
       continue;
     const DrawQuad* quad = *overlap_iter;
@@ -88,7 +88,7 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
     QuadList::ConstIterator quad_list_begin,
     QuadList::ConstIterator quad,
     DCLayerOverlay* ca_layer_overlay) {
-  if (quad->shared_quad_state->blend_mode != SkBlendMode::kSrcOver)
+  if (quad->shared_quad_state()->blend_mode != SkBlendMode::kSrcOver)
     return DC_LAYER_FAILED_QUAD_BLEND_MODE;
 
   DCLayerResult result;
@@ -108,13 +108,13 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
       new DCLayerOverlaySharedState);
   overlay_shared_state->z_order = 1;
 
-  overlay_shared_state->is_clipped = quad->shared_quad_state->is_clipped;
+  overlay_shared_state->is_clipped = quad->shared_quad_state()->is_clipped;
   overlay_shared_state->clip_rect =
-      gfx::RectF(quad->shared_quad_state->clip_rect);
+      gfx::RectF(quad->shared_quad_state()->clip_rect);
 
-  overlay_shared_state->opacity = quad->shared_quad_state->opacity;
+  overlay_shared_state->opacity = quad->shared_quad_state()->opacity;
   overlay_shared_state->transform =
-      quad->shared_quad_state->quad_to_target_transform.matrix();
+      quad->shared_quad_state()->quad_to_target_transform.matrix();
 
   ca_layer_overlay->shared_state = overlay_shared_state;
   ca_layer_overlay->bounds_rect = gfx::RectF(quad->rect);
@@ -138,8 +138,8 @@ void DCLayerOverlayProcessor::Process(ResourceProvider* resource_provider,
       continue;
     }
 
-    if (!it->shared_quad_state->quad_to_target_transform
-             .Preserves2dAxisAlignment() &&
+    if (!it->shared_quad_state()
+             ->quad_to_target_transform.Preserves2dAxisAlignment() &&
         !base::FeatureList::IsEnabled(
             features::kDirectCompositionComplexOverlays)) {
       RecordDCLayerResult(DC_LAYER_FAILED_COMPLEX_TRANSFORM);
@@ -181,8 +181,8 @@ bool DCLayerOverlayProcessor::ProcessForOverlay(
     return false;
   // The quad is on top, so promote it to an overlay and remove all damage
   // underneath it.
-  if (it->shared_quad_state->quad_to_target_transform
-          .Preserves2dAxisAlignment() &&
+  if (it->shared_quad_state()
+          ->quad_to_target_transform.Preserves2dAxisAlignment() &&
       !display_rect_changed && !it->ShouldDrawWithBlending()) {
     damage_rect->Subtract(quad_rectangle);
   }
@@ -206,25 +206,20 @@ bool DCLayerOverlayProcessor::ProcessForUnderlay(
   bool display_rect_changed = (display_rect != previous_display_rect_);
   // The quad is occluded, so replace it with a black solid color quad and
   // place the overlay itself under the quad.
-  if (it->shared_quad_state->quad_to_target_transform
-          .IsIdentityOrIntegerTranslation()) {
+  if (it->shared_quad_state()
+          ->quad_to_target_transform.IsIdentityOrIntegerTranslation()) {
     *this_frame_underlay_rect = quad_rectangle;
   }
   dc_layer->shared_state->z_order = -1;
-  const SharedQuadState* shared_quad_state = it->shared_quad_state;
-  gfx::Rect rect = it->visible_rect;
-  SolidColorDrawQuad* replacement =
-      quad_list->ReplaceExistingElement<SolidColorDrawQuad>(it);
-  replacement->SetAll(shared_quad_state, rect, rect, rect, false,
-                      SK_ColorTRANSPARENT, true);
+  quad_list->ReplaceExistingElementWithSolidColor(it);
 
   if (*this_frame_underlay_rect == previous_frame_underlay_rect_) {
     // If this underlay rect is the same as for last frame, subtract its
     // area from the damage of the main surface, as the cleared area was
     // already cleared last frame. Add back the damage from the occluded
     // area for this and last frame, as that may have changed.
-    if (it->shared_quad_state->quad_to_target_transform
-            .Preserves2dAxisAlignment() &&
+    if (it->shared_quad_state()
+            ->quad_to_target_transform.Preserves2dAxisAlignment() &&
         !display_rect_changed) {
       gfx::Rect occluding_damage_rect = *damage_rect;
       occluding_damage_rect.Intersect(quad_rectangle);
