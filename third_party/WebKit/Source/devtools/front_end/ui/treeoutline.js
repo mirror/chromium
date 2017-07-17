@@ -189,7 +189,6 @@ UI.TreeOutline = class extends Common.Object {
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.traversePreviousTreeElement(!this.expandTreeElementsWhenArrowing);
     if (nextSelectedElement) {
-      nextSelectedElement.reveal();
       nextSelectedElement.select(false, true);
       return true;
     }
@@ -204,7 +203,6 @@ UI.TreeOutline = class extends Common.Object {
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.traverseNextTreeElement(!this.expandTreeElementsWhenArrowing);
     if (nextSelectedElement) {
-      nextSelectedElement.reveal();
       nextSelectedElement.select(false, true);
       return true;
     }
@@ -930,7 +928,6 @@ UI.TreeElement = class {
       nextSelectedElement = nextSelectedElement.parent;
 
     if (nextSelectedElement) {
-      nextSelectedElement.reveal();
       nextSelectedElement.select(false, true);
       return true;
     }
@@ -959,7 +956,6 @@ UI.TreeElement = class {
       nextSelectedElement = nextSelectedElement.nextSibling;
 
     if (nextSelectedElement) {
-      nextSelectedElement.reveal();
       nextSelectedElement.select(false, true);
       return true;
     }
