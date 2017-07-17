@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68b25cdb_f03e60b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-17T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8318266_acc5c184",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 134
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a92395_911b6fea",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T15:25:10Z",
       "side": 1,
       "message": "Add a comment explaining why this function doesn\u0027t set |state_| to kIdle. I believe it is so that on error it does not transition to the idle state until the error event is dispatched.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 40
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a038a5_109096ea",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-17T15:58:39Z",
+      "side": 1,
+      "message": "Done. Thanks for the proposal!",
+      "parentUuid": "53a92395_911b6fea",
       "range": {
         "startLine": 259,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5656edea_b2ea0f11",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-17T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679e28df_267d9950",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 1
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
