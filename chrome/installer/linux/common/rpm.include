@@ -133,7 +133,13 @@ determine_rpm_package_manager() {
     "Fedora")
       PACKAGEMANAGER=yum
       ;;
-    "Mageia"|"MandrivaLinux")
+    "Mageia")
+      PACKAGEMANAGER=urpmi
+      if [ "$(lsb_release -rs 2> /dev/null)" -ge "6" ]; then
+        ALT_PACKAGEMANAGER=yum
+      fi
+      ;;
+    "MandrivaLinux")
       PACKAGEMANAGER=urpmi
       ;;
     "SUSE LINUX")
@@ -284,6 +290,20 @@ update_bad_repo() {
     update_urpmi_cfg
     ;;
   esac
+
+  if [ "$ALT_PACKAGEMANAGER" ]; then
+    case $ALT_PACKAGEMANAGER in
+    "yum")
+      update_repo_file "$YUM_REPO_FILE"
+      ;;
+    "yast")
+      update_repo_file "$ZYPPER_REPO_FILE"
+      ;;
+    "urpmi")
+      update_urpmi_cfg
+      ;;
+    esac
+  fi
 }
 
 update_repo_file() {

@@ -142,6 +142,20 @@ if [ "$repo_add_once" = "true" ]; then
     install_yast
     ;;
   esac
+
+  if [ "${ALT_PACKAGEMANAGER}" ]; then
+    case $ALT_PACKAGEMANAGER in
+    "yum")
+      install_yum
+      ;;
+    "urpmi")
+      install_urpmi
+      ;;
+    "yast")
+      install_yast
+      ;;
+    esac
+  fi
 fi
 
 # Some package managers have locks that prevent everything from being
