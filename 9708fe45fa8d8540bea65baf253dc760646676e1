@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e238bb4d_2ca114f1",
+        "filename": "chrome/browser/password_manager/password_store_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:23:54Z",
+      "side": 1,
+      "message": "Have you considered recording the actual count of results here?\n\nI think it might be interesting to know if there are any \"power users\" of this feature who\u0027d loose a lot of passwords; and then we don\u0027t need to introduce a new enum.\n\nI\u0027m not sure if we filter results to the observed form\u0027s origin here. If yes, then my suggestion makes less sense.",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e411d7_d9901819",
+        "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:23:54Z",
+      "side": 1,
+      "message": "nit: observed_form (same below)",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116973d4_a49c37fc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 52562,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-17T12:23:54Z",
+      "side": 1,
+      "message": "nit: Lookup (it\u0027s one word)",
+      "revId": "9708fe45fa8d8540bea65baf253dc760646676e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
