@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8bacb507_cdb5f5fb",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-17T21:23:45Z",
+      "side": 1,
+      "message": "Just to clarify, we should leave it as is?",
+      "parentUuid": "3fee7979_89be2efe",
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8024e375_5200f3b4",
         "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
         "patchSetId": 2
@@ -57,6 +75,30 @@
       "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347c3652_ad3a400e",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-17T21:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8024e375_5200f3b4",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "db659c2f_9c28d9d4",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-17T21:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "786456a7_ebc8824a",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a26c40_0a7d38b1",
         "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
         "patchSetId": 2
@@ -103,6 +169,30 @@
       "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d195e897_61b2d559",
+        "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-17T21:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a26c40_0a7d38b1",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "37d6c0bd6633792726dd3cf9603e9676d208197e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
