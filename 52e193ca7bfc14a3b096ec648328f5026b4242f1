@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bc73a38_35a9f491",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21863,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-17T15:01:39Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but it looks like this will record the time between two successive scripts finishing injection.  This has a couple potential issues:\n- It includes the time it took for the script to run.\n- It is recorded even when we yield no time at all.\n\nIt seems like the more useful metric would be how long we yield (excluding script run time) iff yielding was a possibility?",
+      "revId": "52e193ca7bfc14a3b096ec648328f5026b4242f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
