@@ -104,6 +104,29 @@
     },
     {
       "key": {
+        "uuid": "942c53d5_71c80b23",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-17T18:13:12Z",
+      "side": 1,
+      "message": "could also potentially make these have defaults of nullopt, e.g.\n\nWTF::Optional\u003cLayoutUnit\u003e override_logical_width \u003d nullopt,",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b00cc95_b1d89adb",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
         "patchSetId": 5
