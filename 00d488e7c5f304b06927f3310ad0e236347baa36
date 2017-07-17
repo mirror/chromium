@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca03a663_70f378f9",
+        "filename": "ios/build/tools/convert_gn_xcodeproj.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-17T16:29:38Z",
+      "side": 1,
+      "message": "This will only find the \"*.md\" in the main repository, not in sub-directories (like ios_internal). Maybe use \"gclient recurse -j1 git ls-files *.md\" to get all the .md files in all sub-directories (but there may be too many files).",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 16
+      },
+      "revId": "00d488e7c5f304b06927f3310ad0e236347baa36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2de4b08_db56a70e",
+        "filename": "ios/build/tools/convert_gn_xcodeproj.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-17T16:29:38Z",
+      "side": 1,
+      "message": "paths \u003d subprocess.check_output(list_files_cmd).splitlines()",
+      "range": {
+        "startLine": 151,
+        "startChar": 50,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "00d488e7c5f304b06927f3310ad0e236347baa36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ff0630_285c4141",
+        "filename": "ios/build/tools/convert_gn_xcodeproj.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-17T16:29:38Z",
+      "side": 1,
+      "message": "GetFolderFroPath → GetFolderForPath",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "00d488e7c5f304b06927f3310ad0e236347baa36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
