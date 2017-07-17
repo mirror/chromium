@@ -34,6 +34,24 @@
       "revId": "77cef53f4917bd11572a89b5f56d777a5c831001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c04168_fe9017ee",
+        "filename": "chrome/service/service_utility_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-17T14:24:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to worry about it. This code (and all cloud print proxy support code) has a relatively short life left, as a non-Chrome-based replacement is being tested now.",
+      "parentUuid": "ecd7e2a9_260f89b2",
+      "revId": "77cef53f4917bd11572a89b5f56d777a5c831001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
