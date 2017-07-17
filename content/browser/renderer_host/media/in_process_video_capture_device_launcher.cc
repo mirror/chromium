@@ -8,9 +8,9 @@
 #include "base/strings/stringprintf.h"
 #include "content/browser/media/capture/desktop_capture_device_uma_types.h"
 #include "content/browser/media/capture/web_contents_video_capture_device.h"
+#include "content/browser/renderer_host/media/service_connector_provider_impl.h"
 #include "content/browser/renderer_host/media/in_process_launched_video_capture_device.h"
 #include "content/browser/renderer_host/media/video_capture_controller.h"
-#include "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/desktop_media_id.h"
 #include "content/public/common/media_stream_request.h"
@@ -33,13 +33,6 @@
 #endif
 
 namespace {
-
-std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
-    media::VideoCaptureJpegDecoder::DecodeDoneCB decode_done_cb,
-    base::Callback<void(const std::string&)> send_log_message_cb) {
-  return base::MakeUnique<content::VideoCaptureGpuJpegDecoder>(
-      std::move(decode_done_cb), std::move(send_log_message_cb));
-}
 
 // The maximum number of video frame buffers in-flight at any one time. This
 // value should be based on the logical capacity of the capture pipeline, and
@@ -156,10 +149,14 @@ InProcessVideoCaptureDeviceLauncher::CreateDeviceClient(
       base::MakeUnique<media::VideoFrameReceiverOnTaskRunner>(
           receiver, BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
       std::move(buffer_pool),
-      base::Bind(&CreateGpuJpegDecoder,
-                 base::Bind(&media::VideoFrameReceiver::OnFrameReadyInBuffer,
-                            receiver),
-                 base::Bind(&media::VideoFrameReceiver::OnLog, receiver)));
+      // TODO: How do we get log messages from the factory to WebRTC?
+      base::MakeUnique<
+          media::ConnectorProviderBasedVideoCaptureJpegDecoderFactory>(
+          base::MakeUnique<ServiceConnectorProviderImpl>(),
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO),
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO)));
 }
 
 void InProcessVideoCaptureDeviceLauncher::OnDeviceStarted(

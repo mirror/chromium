@@ -23,7 +23,6 @@
 #include "content/browser/renderer_host/media/media_stream_provider.h"
 #include "content/browser/renderer_host/media/mock_video_capture_provider.h"
 #include "content/browser/renderer_host/media/video_capture_controller_event_handler.h"
-#include "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h"
 #include "content/browser/renderer_host/media/video_capture_manager.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/public/browser/browser_thread.h"
@@ -45,12 +44,6 @@ using ::testing::Mock;
 using ::testing::SaveArg;
 
 namespace content {
-
-std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
-    media::VideoCaptureJpegDecoder::DecodeDoneCB decode_done_cb) {
-  return base::MakeUnique<content::VideoCaptureGpuJpegDecoder>(
-      std::move(decode_done_cb), base::Bind([](const std::string&) {}));
-}
 
 class MockVideoCaptureControllerEventHandler
     : public VideoCaptureControllerEventHandler {
@@ -164,10 +157,7 @@ class VideoCaptureControllerTest
         base::MakeUnique<media::VideoFrameReceiverOnTaskRunner>(
             controller_->GetWeakPtrForIOThread(),
             BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
-        buffer_pool_,
-        base::Bind(&CreateGpuJpegDecoder,
-                   base::Bind(&media::VideoFrameReceiver::OnFrameReadyInBuffer,
-                              controller_->GetWeakPtrForIOThread()))));
+        buffer_pool_));
   }
 
   void SendStubFrameToDeviceClient(const media::VideoCaptureFormat format) {

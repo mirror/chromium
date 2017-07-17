@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_RENDERER_HOST_MEDIA_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_
-#define CONTENT_BROWSER_RENDERER_HOST_MEDIA_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_
+#ifndef MEDIA_CAPTURE_VIDEO_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_
+#define MEDIA_CAPTURE_VIDEO_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -18,7 +18,7 @@
 #include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread.h"
-#include "content/common/content_export.h"
+#include "media/capture/capture_export.h"
 #include "gpu/config/gpu_info.h"
 #include "media/capture/video/video_capture_jpeg_decoder.h"
 #include "media/video/jpeg_decode_accelerator.h"
@@ -27,7 +27,7 @@ namespace gpu {
 class GpuChannelHost;
 }
 
-namespace content {
+namespace media {
 
 // Adapter to GpuJpegDecodeAccelerator for VideoCaptureDevice::Client. It takes
 // care of GpuJpegDecodeAccelerator creation, shared memory, and threading
@@ -36,22 +36,24 @@ namespace content {
 // All public methods except JpegDecodeAccelerator::Client ones should be called
 // on the same thread. JpegDecodeAccelerator::Client methods should be called on
 // the IO thread.
-class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
+class CAPTURE_EXPORT VideoCaptureGpuJpegDecoder
     : public media::VideoCaptureJpegDecoder,
       public media::JpegDecodeAccelerator::Client,
       public base::SupportsWeakPtr<VideoCaptureGpuJpegDecoder> {
  public:
-  // |decode_done_cb| is called on the IO thread when decode succeed. This can
-  // be on any thread. |decode_done_cb| is never called after
-  // VideoCaptureGpuJpegDecoder is destroyed.
-  VideoCaptureGpuJpegDecoder(
-      DecodeDoneCB decode_done_cb,
-      base::Callback<void(const std::string&)> send_log_message_cb);
+  explicit VideoCaptureGpuJpegDecoder(
+      base::OnceClosure context_ref,
+      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
+      scoped_refptr<base::SingleThreadTaskRunner>
+          io_task_runner,
+      const VideoCaptureJpegDecoderFactory::ReceiveDecodedFrameCB&
+          receive_decoded_frame_cb,
+      scoped_refptr<base::SingleThreadTaskRunner>
+          receive_decoded_frame_task_runner);
   ~VideoCaptureGpuJpegDecoder() override;
 
-  // Implementation of VideoCaptureJpegDecoder:
-  void Initialize() override;
-  STATUS GetStatus() const override;
+  // Implementation of media::VideoCaptureJpegDecoder:
+  bool IsInErrorState() const override;
   void DecodeCapturedData(
       const uint8_t* data,
       size_t in_buffer_size,
@@ -61,7 +63,6 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
       media::VideoCaptureDevice::Client::Buffer out_buffer) override;
 
   // JpegDecodeAccelerator::Client implementation.
-  // These will be called on IO thread.
   void VideoFrameReady(int32_t buffer_id) override;
   void NotifyError(int32_t buffer_id,
                    media::JpegDecodeAccelerator::Error error) override;
@@ -76,38 +77,21 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
       base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
       const gpu::GPUInfo& gpu_info);
 
-  // Initialization helper, to establish GPU channel.
-  static void EstablishGpuChannelOnUIThread(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this);
+  void LazyInitializeDecoder();
+  bool DecodingInProgress() const;
 
-  static void GpuChannelEstablishedOnUIThread(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
-      scoped_refptr<gpu::GpuChannelHost> established_channel_host);
-
-  void FinishInitialization(
-      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host);
-
-  // Returns true if the decoding of last frame is not finished yet.
-  bool IsDecoding_Locked() const;
-
-  // Records |decoder_status_| to histogram.
-  void RecordInitDecodeUMA_Locked();
-
+  base::OnceClosure context_ref_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host_;
+  const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // The underlying JPEG decode accelerator.
   std::unique_ptr<media::JpegDecodeAccelerator> decoder_;
 
   // The callback to run when decode succeeds.
-  const DecodeDoneCB decode_done_cb_;
-
-  const base::Callback<void(const std::string&)> send_log_message_cb_;
-  bool has_received_decoded_frame_;
-
-  // Guards |decode_done_closure_| and |decoder_status_|.
-  mutable base::Lock lock_;
+  VideoCaptureJpegDecoderFactory::ReceiveDecodedFrameCB
+      receive_decoded_frame_cb_;
+  const scoped_refptr<base::SingleThreadTaskRunner>
+      receive_decoded_frame_task_runner_;
 
   // The closure of |decode_done_cb_| with bound parameters.
   base::Closure decode_done_closure_;
@@ -118,17 +102,17 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
   // The id for current input BitstreamBuffer being decoded.
   int32_t in_buffer_id_;
 
+  bool is_in_error_state_ = false;
+
   // Shared memory to store JPEG stream buffer. The input BitstreamBuffer is
   // backed by this.
   std::unique_ptr<base::SharedMemory> in_shared_memory_;
-
-  STATUS decoder_status_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureGpuJpegDecoder);
 };
 
-}  // namespace content
+}  // namespace media
 
-#endif  // CONTENT_BROWSER_RENDERER_HOST_MEDIA_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_
+#endif  // MEDIA_CAPTURE_VIDEO_VIDEO_CAPTURE_GPU_JPEG_DECODER_H_

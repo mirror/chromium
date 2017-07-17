@@ -9,7 +9,9 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/capture/video/video_capture_buffer_pool_impl.h"
 #include "media/capture/video/video_capture_buffer_tracker_factory_impl.h"
-#include "media/capture/video/video_capture_jpeg_decoder.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/video_capture/receiver_mojo_to_media_adapter.h"
 
 namespace {
@@ -40,11 +42,10 @@ namespace video_capture {
 DeviceMediaToMojoAdapter::DeviceMediaToMojoAdapter(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref,
     std::unique_ptr<media::VideoCaptureDevice> device,
-    const media::VideoCaptureJpegDecoderFactoryCB&
-        jpeg_decoder_factory_callback)
+    base::WeakPtr<media::ServiceConnectorProvider> connector_provider)
     : service_ref_(std::move(service_ref)),
       device_(std::move(device)),
-      jpeg_decoder_factory_callback_(jpeg_decoder_factory_callback),
+      connector_provider_(connector_provider),
       device_started_(false) {}
 
 DeviceMediaToMojoAdapter::~DeviceMediaToMojoAdapter() {
@@ -63,7 +64,7 @@ void DeviceMediaToMojoAdapter::Start(
 
   auto receiver_adapter =
       base::MakeUnique<ReceiverMojoToMediaAdapter>(std::move(receiver));
-  // We must hold on something that allows us to unsubscribe from
+  // We must hold on to something that allows us to unsubscribe from
   // receiver.set_connection_error_handler() when we stop the device. Otherwise,
   // we may receive a corresponding callback after having been destroyed.
   // This happens when the deletion of |receiver| is delayed (scheduled to a
@@ -79,9 +80,15 @@ void DeviceMediaToMojoAdapter::Start(
   scoped_refptr<media::VideoCaptureBufferPool> buffer_pool(
       new media::VideoCaptureBufferPoolImpl(std::move(buffer_tracker_factory),
                                             max_buffer_pool_buffer_count()));
+  auto jpeg_decoder_factory = base::MakeUnique<
+      media::ConnectorProviderBasedVideoCaptureJpegDecoderFactory>(
+      base::MakeUnique<media::ServiceConnectorProviderOnTaskRunner>(
+          connector_provider_, base::ThreadTaskRunnerHandle::Get()),
+      base::ThreadTaskRunnerHandle::Get(),
+      nullptr);
 
   auto device_client = base::MakeUnique<media::VideoCaptureDeviceClient>(
-      std::move(media_receiver), buffer_pool, jpeg_decoder_factory_callback_);
+      std::move(media_receiver), buffer_pool, std::move(jpeg_decoder_factory));
 
   device_->AllocateAndStart(requested_settings, std::move(device_client));
   device_started_ = true;
@@ -150,6 +157,7 @@ void DeviceMediaToMojoAdapter::Stop() {
 }
 
 void DeviceMediaToMojoAdapter::OnClientConnectionErrorOrClose() {
+  DVLOG(3) << "Client has closed connection to receiver";
   DCHECK(thread_checker_.CalledOnValidThread());
   Stop();
 }

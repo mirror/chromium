@@ -23,6 +23,8 @@ namespace video_capture {
 // TODO(rockot/chfremer): Consider just renaming the type.
 using FakeVideoCaptureDeviceTest = FakeDeviceTest;
 
+// Tests that frames produced by the fake device trigger calls to the
+// VideoFrameReceiver (not checking for the actual content).
 TEST_F(FakeVideoCaptureDeviceTest, FrameCallbacksArrive) {
   base::RunLoop wait_loop;
   // Constants must be static as a workaround

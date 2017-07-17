@@ -11,7 +11,9 @@
         ]
       },
       "requires" : {
-        "service_manager": [ "service_manager:all_users" ]
+        "content_browser": [ "gpu_client" ],
+        "service_manager": [ "service_manager:all_users" ],
+        "ui": [ "gpu_client" ]
       }
     }
   }

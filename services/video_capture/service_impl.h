@@ -9,6 +9,7 @@
 
 #include "base/threading/thread_checker.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "media/capture/video/video_capture_jpeg_decoder.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -21,7 +22,9 @@
 
 namespace video_capture {
 
-class ServiceImpl : public service_manager::Service {
+class ServiceImpl :
+    public service_manager::Service,
+    public media::ServiceConnectorProvider {
  public:
   ServiceImpl();
   ~ServiceImpl() override;
@@ -32,6 +35,10 @@ class ServiceImpl : public service_manager::Service {
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
   bool OnServiceManagerConnectionLost() override;
+
+  // media::ServiceConnectorProvider
+  void GetConnectorAsync(
+    base::Callback<void(service_manager::Connector*)> callback) override;
 
  private:
   void OnDeviceFactoryProviderRequest(

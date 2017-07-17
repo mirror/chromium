@@ -117,6 +117,11 @@ const char kUseFileForFakeAudioCapture[] = "use-file-for-fake-audio-capture";
 // accelerator hardware to be present.
 const char kUseFakeJpegDecodeAccelerator[] = "use-fake-jpeg-decode-accelerator";
 
+// Disable hardware acceleration of mjpeg decode for captured frame, where
+// available.
+const char kDisableAcceleratedMjpegDecode[] =
+    "disable-accelerated-mjpeg-decode";
+
 // Enables support for inband text tracks in media content.
 const char kEnableInbandTextTracks[] = "enable-inband-text-tracks";
 

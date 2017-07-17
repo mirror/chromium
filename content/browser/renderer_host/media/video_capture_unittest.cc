@@ -46,6 +46,7 @@ using ::testing::Mock;
 using ::testing::Return;
 using ::testing::SaveArg;
 using ::testing::StrictMock;
+using ::testing::Values;
 
 namespace content {
 
@@ -110,8 +111,12 @@ ACTION_P2(ExitMessageLoop, task_runner, quit_closure) {
 // This is an integration test of VideoCaptureHost in conjunction with
 // MediaStreamManager, VideoCaptureManager, VideoCaptureController, and
 // VideoCaptureDevice.
-class VideoCaptureTest : public testing::Test,
-                         public mojom::VideoCaptureObserver {
+// The test parameter is passed as the command-line option string for
+// configuring the fake video capture device factory.
+class VideoCaptureTest
+    : public testing::Test,
+      public mojom::VideoCaptureObserver,
+      public ::testing::WithParamInterface<std::string> {
  public:
   VideoCaptureTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
@@ -126,8 +131,8 @@ class VideoCaptureTest : public testing::Test,
   void SetUp() override {
     SetBrowserClientForTesting(&browser_client_);
 
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kUseFakeDeviceForMediaStream);
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kUseFakeDeviceForMediaStream, GetParam());
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFakeUIForMediaStream);
     media_stream_manager_ =
@@ -328,26 +333,26 @@ class VideoCaptureTest : public testing::Test,
 };
 
 // Construct and destruct all objects. This is a non trivial sequence.
-TEST_F(VideoCaptureTest, ConstructAndDestruct) {}
+TEST_P(VideoCaptureTest, ConstructAndDestruct) {}
 
-TEST_F(VideoCaptureTest, StartAndImmediateStop) {
+TEST_P(VideoCaptureTest, StartAndImmediateStop) {
   StartAndImmediateStopCapture();
 }
 
-TEST_F(VideoCaptureTest, StartAndCaptureAndStop) {
+TEST_P(VideoCaptureTest, StartAndCaptureAndStop) {
   StartCapture();
   WaitForOneCapturedBuffer();
   WaitForOneCapturedBuffer();
   StopCapture();
 }
 
-TEST_F(VideoCaptureTest, StartAndErrorAndStop) {
+TEST_P(VideoCaptureTest, StartAndErrorAndStop) {
   StartCapture();
   SimulateError();
   StopCapture();
 }
 
-TEST_F(VideoCaptureTest, StartAndCaptureAndError) {
+TEST_P(VideoCaptureTest, StartAndCaptureAndError) {
   EXPECT_CALL(*this, OnStateChanged(mojom::VideoCaptureState::STOPPED))
       .Times(0);
   StartCapture();
@@ -356,13 +361,13 @@ TEST_F(VideoCaptureTest, StartAndCaptureAndError) {
   base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(200));
 }
 
-TEST_F(VideoCaptureTest, StartAndPauseAndResumeAndStop) {
+TEST_P(VideoCaptureTest, StartAndPauseAndResumeAndStop) {
   StartCapture();
   PauseResumeCapture();
   StopCapture();
 }
 
-TEST_F(VideoCaptureTest, CloseSessionWithoutStopping) {
+TEST_P(VideoCaptureTest, CloseSessionWithoutStopping) {
   StartCapture();
 
   // When the session is closed via the stream without stopping capture, the
@@ -371,5 +376,11 @@ TEST_F(VideoCaptureTest, CloseSessionWithoutStopping) {
   CloseSession();
   base::RunLoop().RunUntilIdle();
 }
+
+INSTANTIATE_TEST_CASE_P(
+    ,
+    VideoCaptureTest,
+    Values("", "format=MJPEG"));
+
 
 }  // namespace content

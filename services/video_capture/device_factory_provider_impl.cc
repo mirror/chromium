@@ -13,23 +13,15 @@
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/video_capture/device_factory_media_to_mojo_adapter.h"
 
-namespace {
-
-// TODO(chfremer): Replace with an actual decoder factory.
-// https://crbug.com/584797
-std::unique_ptr<media::VideoCaptureJpegDecoder> CreateJpegDecoder() {
-  return nullptr;
-}
-
-}  // anonymous namespace
-
 namespace video_capture {
 
 DeviceFactoryProviderImpl::DeviceFactoryProviderImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref,
-    base::Callback<void(float)> set_shutdown_delay_cb)
+    base::Callback<void(float)> set_shutdown_delay_cb,
+    base::WeakPtr<media::ServiceConnectorProvider> connector_provider)
     : service_ref_(std::move(service_ref)),
-      set_shutdown_delay_cb_(std::move(set_shutdown_delay_cb)) {}
+      set_shutdown_delay_cb_(std::move(set_shutdown_delay_cb)),
+      connector_provider_(std::move(connector_provider)) {}
 
 DeviceFactoryProviderImpl::~DeviceFactoryProviderImpl() {}
 
@@ -59,7 +51,7 @@ void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory() {
 
   device_factory_ = base::MakeUnique<DeviceFactoryMediaToMojoAdapter>(
       service_ref_->Clone(), std::move(video_capture_system),
-      base::Bind(CreateJpegDecoder));
+      connector_provider_);
 }
 
 }  // namespace video_capture

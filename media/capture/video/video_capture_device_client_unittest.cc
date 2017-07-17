@@ -64,10 +64,6 @@ class MockVideoCaptureController : public VideoFrameReceiver {
   }
 };
 
-std::unique_ptr<media::VideoCaptureJpegDecoder> ReturnNullPtrAsJpecDecoder() {
-  return nullptr;
-}
-
 // Test fixture for testing a unit consisting of an instance of
 // VideoCaptureDeviceClient connected to a partly-mocked instance of
 // VideoCaptureController, and an instance of VideoCaptureBufferPoolImpl
@@ -83,8 +79,7 @@ class VideoCaptureDeviceClientTest : public ::testing::Test {
     auto controller = base::MakeUnique<MockVideoCaptureController>();
     controller_ = controller.get();
     device_client_ = base::MakeUnique<media::VideoCaptureDeviceClient>(
-        std::move(controller), buffer_pool,
-        base::Bind(&ReturnNullPtrAsJpecDecoder));
+        std::move(controller), buffer_pool);
   }
   ~VideoCaptureDeviceClientTest() override {}
 
