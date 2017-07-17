@@ -36,6 +36,7 @@ bool HasHeaderValues(net::URLRequest* request,
                      const std::set<std::string>& allowed_values) {
   std::string response_headers;
   request->GetResponseHeaderByName(header, &response_headers);
+  LOG(ERROR) << "Response header: " << header << ": " << response_headers;
   const std::vector<std::string> response_values = base::SplitString(
       response_headers, ",", base::KEEP_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   for (const auto& value : response_values) {
@@ -216,6 +217,8 @@ void ChromeExpectCTReporter::OnResponseStarted(net::URLRequest* request,
   // - Access-Control-Allow-Methods: POST
   // - Access-Control-Allow-Headers: Content-Type
 
+  LOG(ERROR) << "Got preflight response for " << request->url();
+
   if (!request->status().is_success() || response_code < 200 ||
       response_code > 299) {
     RecordUMAOnFailure(preflight->report_uri, request->status().error(),
@@ -235,6 +238,9 @@ void ChromeExpectCTReporter::OnResponseStarted(net::URLRequest* request,
     // Do not use |preflight| after this point, since it has been erased above.
     return;
   }
+
+  LOG(ERROR) << "Valid preflight for " << request->url()
+             << ", sending report to " << preflight->report_uri;
 
   report_sender_->Send(preflight->report_uri,
                        "application/expect-ct-report+json; charset=utf-8",
@@ -275,6 +281,8 @@ void ChromeExpectCTReporter::SendPreflight(
   extra_headers.SetHeader("Access-Control-Request-Method", "POST");
   extra_headers.SetHeader("Access-Control-Request-Headers", "content-type");
   url_request->SetExtraRequestHeaders(extra_headers);
+
+  LOG(ERROR) << "Sending preflight for " << report_uri;
 
   net::URLRequest* raw_request = url_request.get();
   inflight_preflights_[raw_request] = base::MakeUnique<PreflightInProgress>(
