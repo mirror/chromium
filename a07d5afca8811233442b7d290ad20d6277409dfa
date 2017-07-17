@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "06b80747_9347f539",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "Gone",
+      "parentUuid": "8bead037_fa1dda57",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85198823_53152ac0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
         "patchSetId": 1
@@ -580,6 +604,30 @@
     },
     {
       "key": {
+        "uuid": "e4a76e75_4830a67b",
+        "filename": "components/ntp_tiles/exploration_section.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "Gone",
+      "parentUuid": "ef8cea0c_775bf020",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "599d4955_a48f703f",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -624,6 +672,30 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e912a3fd_aa1b0fe2",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "We want to deprecate \"sites()\" to keep the interface small.\nPERSONALIZED contains only the popular sites that will appear in the personalized section.\nSo, although popular sites are not personalized, the personalized section definitely contains popular sites.\nBut it should be way easier now.",
+      "parentUuid": "4d945156_2ee700df",
+      "range": {
+        "startLine": 545,
+        "startChar": 52,
+        "endLine": 545,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -745,6 +817,30 @@
     },
     {
       "key": {
+        "uuid": "36d6bc5c_ba01106c",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "Now, there is only one method that is called: either onMostVisited... OR onExploration...\nWe can safely deprecate (and remove) the first one.",
+      "parentUuid": "c4dfc6c2_ae69f168",
+      "range": {
+        "startLine": 94,
+        "startChar": 77,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfa6b87_433eb692",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 1
@@ -837,6 +933,30 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e5ed5f_64ed309f",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "It\u0027s one now.",
+      "parentUuid": "1e573d34_65a877cf",
+      "range": {
+        "startLine": 68,
+        "startChar": 70,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1004,6 +1124,24 @@
     },
     {
       "key": {
+        "uuid": "9cff3261_e0d45d86",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "64571fbe_44b42da9",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca1d91c_3d34662e",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 1
@@ -1048,6 +1186,30 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbd084e_4dd32c44",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-17T16:59:28Z",
+      "side": 1,
+      "message": "+1 to removing the -1. It\u0027s all map and all enum now.",
+      "parentUuid": "6b0f077b_cb5f2c8e",
+      "range": {
+        "startLine": 364,
+        "startChar": 44,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
