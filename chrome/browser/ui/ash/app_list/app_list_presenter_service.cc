@@ -53,6 +53,11 @@ void AppListPresenterService::StartVoiceInteractionSession() {
     service->StartSessionFromUserInteraction(gfx::Rect());
 }
 
+void AppListPresenterService::UpdateBoundsOnYPosition(
+    int64_t y_position_in_screen) {
+  GetPresenter()->UpdateBoundsOnYPosition(y_position_in_screen);
+}
+
 app_list::AppListPresenterImpl* AppListPresenterService::GetPresenter() {
   return AppListServiceAsh::GetInstance()->GetAppListPresenter();
 }

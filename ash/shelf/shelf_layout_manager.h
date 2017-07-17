@@ -121,7 +121,7 @@ class ASH_EXPORT ShelfLayoutManager
   // Processes a gesture event and updates the status of the shelf when
   // appropriate. Returns true if the gesture has been handled and it should not
   // be processed any further, false otherwise.
-  bool ProcessGestureEvent(const ui::GestureEvent& event);
+  bool ProcessGestureEvent(const ui::GestureEvent& event_in_screen);
 
   // Set an animation duration override for the show / hide animation of the
   // shelf. Specifying 0 leads to use the default.
@@ -291,10 +291,11 @@ class ASH_EXPORT ShelfLayoutManager
   bool IsShelfAutoHideForFullscreenMaximized() const;
 
   // Gesture related functions:
-  void StartGestureDrag(const ui::GestureEvent& gesture);
-  void UpdateGestureDrag(const ui::GestureEvent& gesture);
-  void CompleteGestureDrag(const ui::GestureEvent& gesture);
+  void StartGestureDrag(const ui::GestureEvent& gesture_in_screen);
+  void UpdateGestureDrag(const ui::GestureEvent& gesture_in_screen);
+  void CompleteGestureDrag(const ui::GestureEvent& gesture_in_screen);
   void CancelGestureDrag();
+  bool ShouldShowAppListForDragging(const ui::GestureEvent& sequence_end);
 
   // Returns true if the gesture is swiping up on a hidden shelf or swiping down
   // on a visible shelf; other gestures should not change shelf visibility.
@@ -328,9 +329,6 @@ class ASH_EXPORT ShelfLayoutManager
   // False when neither the auto hide timer nor the timer task are running.
   bool mouse_over_shelf_when_auto_hide_timer_started_;
 
-  // Whether the fullscreen app list feature is enabled.
-  const bool is_fullscreen_app_list_enabled_;
-
   base::ObserverList<ShelfLayoutManagerObserver> observers_;
 
   // The shelf reacts to gesture-drags, and can be set to auto-hide for certain
@@ -344,6 +342,10 @@ class ASH_EXPORT ShelfLayoutManager
     GESTURE_DRAG_COMPLETE_IN_PROGRESS
   };
   GestureDragStatus gesture_drag_status_;
+
+  // True if the user is in the process of gesture-dragging to open the app
+  // list.
+  bool is_dragging_app_list_ = false;
 
   // Tracks the amount of the drag. The value is only valid when
   // |gesture_drag_status_| is set to GESTURE_DRAG_IN_PROGRESS.
