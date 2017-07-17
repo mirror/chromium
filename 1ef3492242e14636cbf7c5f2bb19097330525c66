@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e4f282_944043b1",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-17T10:58:09Z",
+      "side": 0,
+      "message": "Slightly unrelated to this change, but it fixes a `git cl lint` error.",
+      "range": {
+        "startLine": 199,
+        "startChar": 1,
+        "endLine": 199,
+        "endChar": 2
+      },
+      "revId": "1ef3492242e14636cbf7c5f2bb19097330525c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
