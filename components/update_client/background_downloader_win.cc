@@ -11,7 +11,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <functional>
+#include <algorithm>
 #include <iomanip>
 #include <limits>
 #include <memory>
@@ -326,35 +326,6 @@ HRESULT FindBitsJobIf(Predicate pred,
   }
 
   return jobs->empty() ? S_FALSE : S_OK;
-}
-
-bool JobCreationOlderThanDaysPredicate(ComPtr<IBackgroundCopyJob> job,
-                                       int num_days) {
-  BG_JOB_TIMES times = {};
-  HRESULT hr = job->GetTimes(&times);
-  if (FAILED(hr))
-    return false;
-
-  const base::TimeDelta time_delta(base::TimeDelta::FromDays(num_days));
-  const base::Time creation_time(base::Time::FromFileTime(times.CreationTime));
-
-  return creation_time + time_delta < base::Time::Now();
-}
-
-bool JobFileUrlEqualPredicate(ComPtr<IBackgroundCopyJob> job, const GURL& url) {
-  std::vector<ComPtr<IBackgroundCopyFile>> files;
-  HRESULT hr = GetFilesInJob(job, &files);
-  if (FAILED(hr))
-    return false;
-
-  for (size_t i = 0; i != files.size(); ++i) {
-    ScopedCoMem<base::char16> remote_name;
-    if (SUCCEEDED(files[i]->GetRemoteName(&remote_name)) &&
-        url == GURL(base::StringPiece16(remote_name)))
-      return true;
-  }
-
-  return false;
 }
 
 // Creates an instance of the BITS manager.
@@ -717,9 +688,19 @@ HRESULT BackgroundDownloader::QueueBitsJob(const GURL& url,
 HRESULT BackgroundDownloader::CreateOrOpenJob(const GURL& url,
                                               ComPtr<IBackgroundCopyJob>* job) {
   std::vector<ComPtr<IBackgroundCopyJob>> jobs;
-  HRESULT hr =
-      FindBitsJobIf(std::bind2nd(std::ptr_fun(JobFileUrlEqualPredicate), url),
-                    bits_manager_, &jobs);
+  HRESULT hr = FindBitsJobIf(
+      [&url](ComPtr<IBackgroundCopyJob> job) {
+        std::vector<ComPtr<IBackgroundCopyFile>> files;
+        return SUCCEEDED(GetFilesInJob(job, &files)) &&
+               std::any_of(
+                   files.begin(), files.end(),
+                   [&url](const ComPtr<IBackgroundCopyFile>& file) {
+                     ScopedCoMem<base::char16> remote_name;
+                     return SUCCEEDED(file->GetRemoteName(&remote_name)) &&
+                            url == GURL(base::StringPiece16(remote_name));
+                   });
+      },
+      bits_manager_, &jobs);
   if (SUCCEEDED(hr) && !jobs.empty()) {
     *job = jobs.front();
     return S_FALSE;
@@ -897,9 +878,21 @@ void BackgroundDownloader::CleanupStaleJobs() {
   last_sweep = current_time;
 
   std::vector<ComPtr<IBackgroundCopyJob>> jobs;
-  FindBitsJobIf(std::bind2nd(std::ptr_fun(JobCreationOlderThanDaysPredicate),
-                             kPurgeStaleJobsAfterDays),
-                bits_manager_, &jobs);
+  FindBitsJobIf(
+      [](ComPtr<IBackgroundCopyJob> job) {
+        BG_JOB_TIMES times = {};
+        HRESULT hr = job->GetTimes(&times);
+        if (FAILED(hr))
+          return false;
+
+        const base::TimeDelta time_delta(
+            base::TimeDelta::FromDays(kPurgeStaleJobsAfterDays));
+        const base::Time creation_time(
+            base::Time::FromFileTime(times.CreationTime));
+
+        return creation_time + time_delta < base::Time::Now();
+      },
+      bits_manager_, &jobs);
 
   for (const auto& job : jobs)
     CleanupJob(job);
