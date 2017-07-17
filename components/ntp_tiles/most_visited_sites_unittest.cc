@@ -29,6 +29,7 @@
 #include "components/ntp_tiles/json_unsafe_parser.h"
 #include "components/ntp_tiles/popular_sites_impl.h"
 #include "components/ntp_tiles/pref_names.h"
+#include "components/ntp_tiles/section_type.h"
 #include "components/ntp_tiles/switches.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -58,6 +59,7 @@ using testing::AnyNumber;
 using testing::ByMove;
 using testing::Contains;
 using testing::ElementsAre;
+using testing::ElementsAreArray;
 using testing::Eq;
 using testing::InSequence;
 using testing::Invoke;
@@ -210,6 +212,8 @@ class MockMostVisitedSitesObserver : public MostVisitedSites::Observer {
  public:
   MOCK_METHOD1(OnMostVisitedURLsAvailable, void(const NTPTilesVector& tiles));
   MOCK_METHOD1(OnIconMadeAvailable, void(const GURL& site_url));
+  MOCK_METHOD1(OnExplorationTilesAvailable,
+               void(const std::map<SectionType, NTPTilesVector>& tiles));
 };
 
 class FakeHomePageClient : public MostVisitedSites::HomePageClient {
@@ -347,8 +351,10 @@ class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
     }
 
     // Disable in most tests, this is overriden in a specific test.
-    feature_list_.InitAndDisableFeature(
-        kNtpMostLikelyFaviconsFromServerFeature);
+    feature_list_.InitWithFeatures(
+        /*enabled_fetures=*/{},
+        /*disabled_fetures=*/{kSiteExplorationsFeature,
+                              kNtpMostLikelyFaviconsFromServerFeature});
 
     // We use StrictMock to make sure the object is not used unless Popular
     // Sites is enabled.
@@ -745,6 +751,52 @@ TEST_P(MostVisitedSitesTest, ShouldInformSuggestionSourcesWhenBlacklisting) {
       .Times(AnyNumber());
   most_visited_sites_->AddOrRemoveBlacklistedUrl(GURL(kHomePageUrl),
                                                  /*add_url=*/false);
+}
+
+TEST_P(MostVisitedSitesTest, ShouldCallSiteExplorationsWhenFeatureEnabled) {
+  base::test::ScopedFeatureList feature_list;
+  std::map<SectionType, NTPTilesVector> sections;
+  const auto& ps = most_visited_sites_->popular_sites()->sections();
+  feature_list.InitWithFeatures(
+      /*enabled_fetures=*/{kSiteExplorationsFeature},
+      /*disabled_fetures=*/{kNtpMostLikelyFaviconsFromServerFeature});
+  DisableRemoteSuggestions();
+  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
+      .WillRepeatedly(InvokeCallbackArgument<0>(
+          MostVisitedURLList{MakeMostVisitedURL("Site 1", "http://site1/")}));
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+
+  if (IsPopularSitesEnabledViaVariations()) {
+    EXPECT_THAT(ps, Not(IsEmpty()));
+    EXPECT_CALL(mock_observer_, OnExplorationTilesAvailable(_))
+        .WillOnce(SaveArg<0>(&sections));
+  } else {
+    EXPECT_CALL(mock_observer_,
+                OnMostVisitedURLsAvailable(ElementsAre(MatchesTile(
+                    "Site 1", "http://site1/", TileSource::TOP_SITES))));
+  }
+
+  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
+                                                  /*num_sites=*/5);
+  base::RunLoop().RunUntilIdle();
+  if (!IsPopularSitesEnabledViaVariations()) {
+    return;
+  }
+  EXPECT_THAT(sections.size(), Eq(ps.size()));
+  for (const auto& section : sections) {
+    if (section.first == SectionType::PERSONALIZED) {
+      EXPECT_THAT(
+          section.second,
+          ElementsAre(
+              MatchesTile("Site 1", "http://site1/", TileSource::TOP_SITES),
+              MatchesTile("PopularSite1", "http://popularsite1/",
+                          TileSource::POPULAR),
+              MatchesTile("PopularSite2", "http://popularsite2/",
+                          TileSource::POPULAR)));
+      continue;
+    }
+    EXPECT_THAT(section.second, Not(IsEmpty()));
+  }
 }
 
 TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {

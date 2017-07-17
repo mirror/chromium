@@ -36,6 +36,7 @@
 using testing::Eq;
 using testing::Gt;
 using testing::IsEmpty;
+using testing::Not;
 
 namespace ntp_tiles {
 namespace {
@@ -445,6 +446,95 @@ TEST_F(PopularSitesTest, ShouldOverrideDirectory) {
               Eq(base::Optional<bool>(true)));
 
   EXPECT_THAT(sites.size(), Eq(1u));
+}
+
+TEST_F(PopularSitesTest, DoesNotFetchExplorationSitesWithoutFeature) {
+  // TODO(fhorschig): This test assumes the exploration sites are integrated
+  // in the existing JSON. DO NOT SUBMIT before we know whether this is true as
+  // the test code should not fetch web sites.
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndDisableFeature(kSiteExplorationsFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  // There should be 0 default social sites as nothing was fetched yet.
+  EXPECT_THAT(ps->sections().find(SectionType::SOCIAL),
+              Eq(ps->sections().end()));
+
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // There should be 0 social sites as the fetch should have been omitted.
+  EXPECT_THAT(ps->sections().find(SectionType::SOCIAL),
+              Eq(ps->sections().end()));
+}
+
+TEST_F(PopularSitesTest, FetchesExplorationSitesWithFeature) {
+  // TODO(fhorschig): This test assumes the exploration sites are integrated
+  // in the existing JSON. DO NOT SUBMIT before we know whether this is true as
+  // the test code should not fetch web sites.
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndEnableFeature(kSiteExplorationsFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  // There should be 0 default social sites as nothing was fetched yet.
+  EXPECT_THAT(ps->sections().find(SectionType::SOCIAL),
+              Eq(ps->sections().end()));
+
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // Expect that every section has some sites.
+  const size_t kSectionCount = static_cast<size_t>(SectionType::LAST) + 1;
+  ASSERT_THAT(ps->sections().size(), Eq(kSectionCount));
+  for (const std::pair<SectionType, PopularSites::SitesVector>& section :
+       ps->sections()) {
+    EXPECT_THAT(section.second.size(), Not(Eq(0ul)));
+  }
 }
 
 }  // namespace

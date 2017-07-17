@@ -40,6 +40,21 @@ public interface MostVisitedSites {
          */
         @CalledByNative("Observer")
         void onIconMadeAvailable(String siteUrl);
+
+        /**
+         * This is called when the list of exploration URLs is initially available or updated.
+         * Parameters guaranteed to be non-null.
+         *
+         * @param titles Array of exploration url page titles.
+         * @param sections Array of section IDs to which the exploration urls belong to.
+         * @param urls Array of exploration URLs.
+         * @param whitelistIconPaths The paths to the icon image files for whitelisted tiles, empty
+         *                           strings otherwise.
+         * @param sources For each tile, the {@code TileSource} that generated the tile.
+         */
+        @CalledByNative("Observer")
+        void onExplorationTilesAvailable(String[] titles, String[] urls, int[] sections,
+                String[] whitelistIconPaths, int[] sources);
     }
 
     /**

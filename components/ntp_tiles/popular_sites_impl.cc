@@ -5,6 +5,7 @@
 #include "components/ntp_tiles/popular_sites_impl.h"
 
 #include <stddef.h>
+#include <map>
 #include <utility>
 
 #include "base/bind.h"
@@ -12,6 +13,7 @@
 #include "base/feature_list.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -201,8 +203,10 @@ PopularSitesImpl::PopularSitesImpl(
       download_context_(download_context),
       parse_json_(std::move(parse_json)),
       is_fallback_(false),
-      sites_(ParseSiteList(*prefs->GetList(kPopularSitesJsonPref))),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  sections_[SectionType::PERSONALIZED] =
+      ParseSiteList(*prefs->GetList(kPopularSitesJsonPref));
+}
 
 PopularSitesImpl::~PopularSitesImpl() {}
 
@@ -233,7 +237,12 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
 }
 
 const PopularSites::SitesVector& PopularSitesImpl::sites() const {
-  return sites_;
+  return sections().at(SectionType::PERSONALIZED);
+}
+
+const std::map<SectionType, PopularSitesImpl::SitesVector>&
+PopularSitesImpl::sections() const {
+  return sections_;
 }
 
 GURL PopularSitesImpl::GetLastURLFetched() const {
@@ -331,6 +340,170 @@ void PopularSitesImpl::RegisterProfilePrefs(
   user_prefs->RegisterListPref(kPopularSitesJsonPref, DefaultPopularSites());
 }
 
+void PopularSitesImpl::PopulateSectionsWithSampleData() {
+  SitesVector* social = &sections_[SectionType::SOCIAL];
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Facebook"),
+                       /* url= */ GURL("https://facebook.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Instagram"),
+                       /* url= */ GURL("https://instagram.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Pinterest"),
+                       /* url= */ GURL("https://pinterest.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Twitter"),
+                       /* url= */ GURL("https://twitter.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("VKontakte"),
+                       /* url= */ GURL("https://vk.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+
+  SitesVector* entertainment = &sections_[SectionType::ENTERTAINMENT];
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("YouTube"),
+                              /* url= */ GURL("https://youtube.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("HotStar"),
+                              /* url= */ GURL("https://hotstar.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("CricBuzz"),
+                              /* url= */ GURL("https://cricbuzz.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("Whitty Feed"),
+                              /* url= */ GURL("https://whittyfeed.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("Voot"),
+                              /* url= */ GURL("https://voot.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+
+  SitesVector* news = &sections_[SectionType::NEWS];
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Times of India"),
+                     /* url= */ GURL("https://toi.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Jagran"),
+                     /* url= */ GURL("https://jagran.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Daily Thanthi"),
+                     /* url= */ GURL("https://dailythanthi.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Live Hindustan"),
+                     /* url= */ GURL("https://livehindustan.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("AajTak"),
+                     /* url= */ GURL("https://aajtak.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+
+  SitesVector* ecommerce = &sections_[SectionType::ECOMMERCE];
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("Amazon"),
+                          /* url= */ GURL("https://amazon.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("FlipKart"),
+                          /* url= */ GURL("https://flipkart.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("Snapdeal"),
+                          /* url= */ GURL("https://snapdeal.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("OLX"),
+                          /* url= */ GURL("https://olx.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+
+  SitesVector* tools = &sections_[SectionType::TOOLS];
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Google Maps"),
+                      /* url= */ GURL("https://maps.google.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("TrueCaller"),
+                      /* url= */ GURL("https://truecaller.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("PayTm"),
+                      /* url= */ GURL("https://paytm.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Ola"),
+                      /* url= */ GURL("https://ola.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Bookmyshow"),
+                      /* url= */ GURL("https://bookmyshow.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Zomato"),
+                      /* url= */ GURL("https://zomato.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+
+  SitesVector* travel = &sections_[SectionType::TRAVEL];
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("MakemyTrip"),
+                       /* url= */ GURL("https://makemytrip.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Via"),
+                       /* url= */ GURL("https://via.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Housing"),
+                       /* url= */ GURL("https://housing.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Redbus"),
+                       /* url= */ GURL("https://redbus.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Goibibo"),
+                       /* url= */ GURL("https://goibibo.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+}
+
 void PopularSitesImpl::FetchPopularSites() {
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("popular_sites_fetch", R"(
@@ -396,7 +569,13 @@ void PopularSitesImpl::OnJsonParsed(std::unique_ptr<base::Value> json) {
                    base::Time::Now().ToInternalValue());
   prefs_->SetString(kPopularSitesURLPref, pending_url_.spec());
 
-  sites_ = ParseSiteList(*list);
+  if (base::FeatureList::IsEnabled(kSiteExplorationsFeature)) {
+    // TODO(fhorschig): Remove the sample data and actually parse stuff. Unless
+    // this is done, DO NOT SUBMIT.
+    PopulateSectionsWithSampleData();
+  }
+
+  sections_[SectionType::PERSONALIZED] = ParseSiteList(*list);
   callback_.Run(true);
 }
 
