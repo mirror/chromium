@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa0c868_970a1a6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-17T16:29:12Z",
+      "side": 1,
+      "message": "How would you feel about adding \u0027boolean animate\u0027 to this method? That way the content controller is responsible for more of the work of how content changes.",
+      "range": {
+        "startLine": 229,
+        "startChar": 16,
+        "endLine": 229,
+        "endChar": 26
+      },
+      "revId": "e51fe3658809e12a99d15b572e5a686629c950be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
