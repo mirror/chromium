@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "656a938b_f70a670d",
+        "filename": "android_webview/browser/aw_safe_browsing_config_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T18:16:40Z",
+      "side": 1,
+      "message": "I changed the name to include the \"_by_manifest\" suffix. Let me know if we still need a comment.",
+      "parentUuid": "af548395_1a9e21be",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8b0798_37bdffb0",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7e2d87_3389b31c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T18:16:40Z",
+      "side": 1,
+      "message": "The meaning was unclear, so I refactored things.\n\nWe only setSafeBrowsingEnabledByManifest(true) if we have the manifest flag (appHasOptedIn()) or the commandline switch.",
+      "parentUuid": "bc8b0798_37bdffb0",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a492d1b_a7ceba9e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eacdc54_ecc33cf0",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 75
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc542869_7f8e2b9c",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b41ad0_db5c16ad",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-17T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc542869_7f8e2b9c",
+      "range": {
+        "startLine": 362,
+        "startChar": 36,
+        "endLine": 362,
+        "endChar": 43
+      },
+      "revId": "36a9a7880363537814ddb38e347ae67d210fc6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
