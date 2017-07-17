@@ -9,8 +9,8 @@
  * @return {object} The updated details.
  */
 function updateDetails(details, shippingOption) {
-  var selectedShippingOption;
-  var otherShippingOption;
+  let selectedShippingOption;
+  let otherShippingOption;
   if (shippingOption === 'standard') {
     selectedShippingOption = details.shippingOptions[0];
     otherShippingOption = details.shippingOptions[1];
@@ -34,8 +34,9 @@ function updateDetails(details, shippingOption) {
  * Launches payment request that provides multiple shipping options worldwide,
  * regardless of the shipping address.
  */
-function onBuyClicked() { // eslint-disable-line no-unused-vars
-  var supportedInstruments = [{
+function onBuyClicked() {  // eslint-disable-line no-unused-vars
+  let supportedInstruments = [
+    {
       supportedMethods: ['https://android.com/pay'],
       data: {
         merchantName: 'Rouslan Solomakhin',
@@ -46,64 +47,66 @@ function onBuyClicked() { // eslint-disable-line no-unused-vars
           parameters: {
             'gateway': 'stripe',
             'stripe:publishableKey': 'pk_live_lNk21zqKM2BENZENh3rzCUgo',
-            'stripe:version': '2016-07-06'
-          }
-        }
-      }
+            'stripe:version': '2016-07-06',
+          },
+        },
+      },
     },
     {
-      supportedMethods: ['basic-card']
-    }
+      supportedMethods: ['basic-card'],
+    },
   ];
 
-  var details = {
+  let details = {
     total: {
       label: 'Donation',
       amount: {
         currency: 'USD',
-        value: '55.00'
-      }
+        value: '55.00',
+      },
     },
-    displayItems: [{
+    displayItems: [
+      {
         label: 'Original donation amount',
         amount: {
           currency: 'USD',
-          value: '65.00'
-        }
+          value: '65.00',
+        },
       },
       {
         label: 'Friends and family discount',
         amount: {
           currency: 'USD',
-          value: '-10.00'
-        }
-      }
+          value: '-10.00',
+        },
+      },
     ],
-    shippingOptions: [{
+    shippingOptions: [
+      {
         id: 'standard',
         label: 'Standard shipping',
         amount: {
           currency: 'USD',
-          value: '0.00'
+          value: '0.00',
         },
-        selected: true
+        selected: true,
       },
       {
         id: 'express',
         label: 'Express shipping',
         amount: {
           currency: 'USD',
-          value: '12.00'
-        }
-      }
-    ]
+          value: '12.00',
+        },
+      },
+    ],
   };
 
-  var options = {
+  let options = {
     requestShipping: true,
     requestPayerName: true,
     requestPayerPhone: true,
-    requestPayerEmail: true
+    requestPayerEmail: true,
   };
 
   if (!window.PaymentRequest) {
@@ -112,7 +115,7 @@ function onBuyClicked() { // eslint-disable-line no-unused-vars
   }
 
   try {
-    var request = new PaymentRequest(supportedInstruments, details, options);
+    let request = new PaymentRequest(supportedInstruments, details, options);
 
     request.addEventListener('shippingaddresschange', function(e) {
       e.updateWith(new Promise(function(resolve) {
@@ -130,21 +133,22 @@ function onBuyClicked() { // eslint-disable-line no-unused-vars
     });
 
     request.show()
-      .then(function(instrumentResponse) {
-        window.setTimeout(function() {
-          instrumentResponse.complete('success')
-            .then(function() {
-              done('This is a demo website. No payment will be processed.',
-                instrumentResponse);
-            })
-            .catch(function(err) {
-              error(err);
-            });
-        }, 2000);
-      })
-      .catch(function(err) {
-        error(err);
-      });
+        .then(function(instrumentResponse) {
+          window.setTimeout(function() {
+            instrumentResponse.complete('success')
+                .then(function() {
+                  done(
+                      'This is a demo website. No payment will be processed.',
+                      instrumentResponse);
+                })
+                .catch(function(err) {
+                  error(err);
+                });
+          }, 2000);
+        })
+        .catch(function(err) {
+          error(err);
+        });
   } catch (e) {
     error('Developer mistake: \'' + e.message + '\'');
   }

@@ -39,7 +39,7 @@ using payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 const CGFloat kScrollDisplacement = 100.0;
 // URL of the Payment Request test page.
 const char kPaymentRequestDemoPage[] =
-    "http://ios/testing/data/http_server_files/payment_request.html";
+    "http://components/test/data/payments/payment_request.html";
 
 // Finds the shipping address cell on the Payment Summary page.
 id<GREYMatcher> ShippingAddressCellMatcher(autofill::AutofillProfile* profile) {
