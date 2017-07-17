@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f7ec611_5799da14",
+        "filename": "chrome/android/java/res/layout/connection_info.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T21:16:24Z",
+      "side": 1,
+      "message": "This should probably be @style/RobotoMediumStyle to compensate for the lack of sans-serif-medium on older OS versions.",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef11150_37f59af8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/BluetoothChooserDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T21:16:24Z",
+      "side": 1,
+      "message": "Are there screenshots of this in one of the bugs?\n\nI think there\u0027s probably a better way to do this e.g. setting something on the associated ItemChooserDialog, but I\u0027m not quite sure where this shows up.",
+      "range": {
+        "startLine": 317,
+        "startChar": 53,
+        "endLine": 317,
+        "endChar": 68
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c67161_a372c94b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T21:16:24Z",
+      "side": 1,
+      "message": "What is this emphasizing?",
+      "range": {
+        "startLine": 415,
+        "startChar": 61,
+        "endLine": 415,
+        "endChar": 78
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8861677c_6509a437",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T21:16:24Z",
+      "side": 1,
+      "message": "This should probably also be RobotoMediumStyle.",
+      "range": {
+        "startLine": 418,
+        "startChar": 60,
+        "endLine": 418,
+        "endChar": 66
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
