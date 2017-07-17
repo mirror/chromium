@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67bdfd2d_16d52bea",
+        "filename": "ui/base/cocoa/touch_bar_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T21:40:31Z",
+      "side": 1,
+      "message": "Is the #if needed? Do you get a warning about dupe visibility attribs otherwise? If not, I\u0027d always write the #else block and let the 2nd visibility attrib win in component builds.",
+      "revId": "fd31141e4fde9596b0cbd244a7b4cf9788e92b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
