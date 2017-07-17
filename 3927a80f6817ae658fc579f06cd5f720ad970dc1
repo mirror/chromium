@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ce7cf601_557f546e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-17T14:32:46Z",
+      "side": 1,
+      "message": "Actually, they are checked upstream to be http/https by the service so we don\u0027t need them at all.",
+      "parentUuid": "ece4c0da_fe5e0b19",
+      "revId": "3927a80f6817ae658fc579f06cd5f720ad970dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1add61_5ee9e830",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 4
