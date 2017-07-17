@@ -458,6 +458,1026 @@
       "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92586069_6222c64c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84457151_cf22edca",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a512367_d32314a1",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ff146c_e3163fa7",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Needed by header already.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efeef001_3ccb9c7e",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fef91b_a03e7deb",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Needed by header already.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5b8246_efc4973b",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82af4b7c_b63a986d",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Where is this ued?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdf2279_09888969",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/PreSigninPolicyFetcher:://",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b75999_3f576abc",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "A DCHECK() in test-only code is discouraged. If something goes wrong, you want the test to fail, not crash.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6ad773_11daad17",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: #include \"base/files/file_path.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27dc7a51_e6d3b8b4",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Add curly braces for multi-line conditional.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75889a8c_5cc314af",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Add a comment that we are returning the cached policy here.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cf260a_0d3ecfe6",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/enterprise_management/em/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847347be_943c617b",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/enterprise_management/em/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f65538_8292c0ec",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/enterprise_management/em/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30395b6_1883ad58",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1517e99_0032a99c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91908c7a_0ac6e399",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e675f68f_a7c3c731",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Remove blank line.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e6f390_cd2ccd9b",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const reference.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03df5dc7_b663ac58",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2c8b0c_5faac78c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bc2d57_8896047c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754a6c78_945aadc0",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103916a3_5ea1c0a7",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: const pointer.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9540d38_66a0f31c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/policy/of the fresh policy/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531333ee_97559194",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c127da_a0578b20",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Already included by header.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1248e324_794787ec",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Already included by header.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7574fdf7_7db09d51",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Already included by header.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3c0ffa_59cb23cb",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2d3f15_5074c004",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13992be_35e7bec1",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcab386d_586ff502",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487e4599_12f01a7f",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5600a511_209f509f",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71eef16_9678837a",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Merge the \"using ::testing\" and \"using testing\" blocks into one.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9ca0f8_a69cbfe9",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit_ Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306579fa_02b32e75",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9626541b_1154f34f",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf39ae0_a67df7e4",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8408eebf_013ce1fa",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da73541_f1f0799a",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88dac357_6fe4b8d3",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd03288_d264326c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Duplicate of ::testing::_.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d127a2d_8dd3e0dd",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit 1: The comment is in singular, but seems to apply to two constants.\nNit 2: These are not paths but URLs.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f37fc63_fdd416cd",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Tests should use the designated .test TLD.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b0384a_1ef9cf70",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: #include \"chromeos/cryptohome/homedir_methods.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ef5638_6ece0d29",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/policy:://",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5fab31_95289ba8",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: This is not used anywhere.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe421c7_d6f408ba",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: #include \"base/files/file_path.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe8b4d8_e047bdd7",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: #include \"base/callback.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa70246_6a739d4e",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/enterprise_management/em/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3bd2fc_06ce8f1b",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: #include \"base/bind_helpers.h\"",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392b7f15_e7336d40",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: s/enterprise_management/em/",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116791e8_3b726384",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Do we verify that last sentence (i.e. that no network fetch attempt is made)?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4540ad61_c743cd25",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Here and below: Expectation first, tested variable second.",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b2f1c7_d6677238",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Do we verify that last sentence (i.e. that no network fetch attempt is made)?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4773c3cf_cb777f5d",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-17T14:43:56Z",
+      "side": 1,
+      "message": "Nit: Do we verify that last sentence (i.e. that no network fetch attempt is made)?",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
