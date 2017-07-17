@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93f2d46f_61e2c107",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee6a868_5c6abd91",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2dd37d_5ad3cbde",
         "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b24eaa3_a6174906",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2dd37d_5ad3cbde",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fdda85cc_b3459736",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fccacfe8_bb6b4020",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 77
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee3f2176_df1d7bd0",
         "filename": "content/browser/payments/payment_app_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222e31eb_bd7e5aa8",
+        "filename": "content/browser/payments/payment_app_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee3f2176_df1d7bd0",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9970eec8_5e724264",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b778d4c6_0c0f464d",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c572029_bdbf3bd5",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5a9b3c42_e7345b32",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c572029_bdbf3bd5",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4a05c3_96296d54",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-14T17:45:46Z",
       "side": 1,
       "message": "Why is the event_id_ required?",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cc9f26_7bf618fa",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "To index the stored callback, like RespondToPaymentRequest, https://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_context_client.cc?rcl\u003df60bf1912f80fd88025c435396c757164ffb4aad\u0026l\u003d1088\n\nAnd did prefer to put the new interface \u0027IsPaymentRequestCancelled\u0027 in PaymentRequestRespondWithObserver, https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.h?rcl\u003df60bf1912f80fd88025c435396c757164ffb4aad\u0026l\u003d21",
+      "parentUuid": "ca4a05c3_96296d54",
       "range": {
         "startLine": 80,
         "startChar": 10,
@@ -183,6 +351,30 @@
       "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f522d591_1530461a",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-17T20:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d130ae99_744992a4",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
