@@ -1708,6 +1708,7 @@ test("browser_tests") {
       "//ppapi/tests/test_page.css.mock-http-headers",
       "//testing/test_env.py",
       "//third_party/accessibility-audit/axs_testing.js",
+      "//third_party/axe-core/axe.js",
       "//third_party/chaijs/chai.js",
       "//third_party/mocha/mocha.js",
       "//third_party/polymer/v1_0/components-chromium/iron-test-helpers/mock-interactions.js",
