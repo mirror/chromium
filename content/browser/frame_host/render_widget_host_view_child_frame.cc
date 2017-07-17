@@ -66,7 +66,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!service_manager::ServiceManagerIsRemote()) {
-    GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
+    GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
+        frame_sink_id_);
     CreateCompositorFrameSinkSupport();
   }
 }
@@ -75,7 +76,8 @@ RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (!service_manager::ServiceManagerIsRemote()) {
     ResetCompositorFrameSinkSupport();
     if (GetFrameSinkManager())
-      GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
+      GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
+          frame_sink_id_);
   }
 }
 
