@@ -101,6 +101,24 @@
       "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddf2841_66841335",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-17T05:22:08Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f497529b_33c80a4f",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
