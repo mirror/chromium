@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "624cb0e7_456cd32e",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-17T20:47:18Z",
+      "side": 1,
+      "message": "True? Are you sure you don\u0027t want false here? If so, say \"on canary and in unbranded builds\" in the Cl description.",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "70c77802d166aed370d5efe58a49588da6be286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
