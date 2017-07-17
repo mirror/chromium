@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "720a5611_79fec0f5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T17:40:29Z",
+      "side": 1,
+      "message": "The check can no longer live inside /service/resource_coordinator/* because it is not sufficient to say that the resource_coordinator service is not just enabled if the kGlobalResourceCoordinator feature is enabled. The ServiceManager itself must have a valid context whose code lives inside content/.\n\nIt might be better to move this code to content because WebKit code cannot execute code in /chrome based on my understanding. The BlinkResourceCoordinatorInterface and its derived classes will need to call this.",
+      "parentUuid": "72508292_9eb85769",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d82159b_de5e2e4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 16
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "35e46824_b54710f1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T17:40:29Z",
+      "side": 1,
+      "message": "Done -- yes, my apologies.",
+      "parentUuid": "4d82159b_de5e2e4c",
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ca25439_25e4f553",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
         "patchSetId": 16
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-17T17:12:56Z",
       "side": 1,
       "message": "Please update the comment to\n// TODO(lpy) crbug.com/743314, enabled once \u0027Shadow Page\u0027 case is resolved correctly.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef031ceb_7fc956a2",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-17T17:40:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3ca25439_25e4f553",
       "range": {
         "startLine": 20,
         "startChar": 2,
