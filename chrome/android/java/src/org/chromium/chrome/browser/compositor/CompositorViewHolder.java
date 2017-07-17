@@ -720,7 +720,6 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     public void onDetachedFromWindow() {
-        if (mLayoutManager != null) mLayoutManager.destroy();
         flushInvalidation();
         mInvalidator.set(null);
         super.onDetachedFromWindow();

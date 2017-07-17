@@ -1938,7 +1938,10 @@ public class ChromeTabbedActivity
 
     @Override
     public void onDestroyInternal() {
-        if (mLayoutManager != null) mLayoutManager.removeOverviewModeObserver(this);
+        if (mLayoutManager != null) {
+            mLayoutManager.removeOverviewModeObserver(this);
+            mLayoutManager.destroy();
+        }
 
         if (mTabModelSelectorTabObserver != null) {
             mTabModelSelectorTabObserver.destroy();
