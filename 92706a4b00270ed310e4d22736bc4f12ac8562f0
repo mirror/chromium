@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91166676_41b4574e",
+        "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T16:54:54Z",
+      "side": 1,
+      "message": "Do we want a test that querying the status returns the old status until the task runs?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "92706a4b00270ed310e4d22736bc4f12ac8562f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
