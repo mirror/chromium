@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72365902_4a736583",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-17T16:04:31Z",
+      "side": 1,
+      "message": "Why do we only skip these rects for TILED_CONTENT and not all quads?",
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15207326_f717683e",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-17T16:04:31Z",
+      "side": 1,
+      "message": "Isn\u0027t it still possible to have an empty visible rect as long as the origin is within render_quad_rect?",
+      "range": {
+        "startLine": 512,
+        "startChar": 36,
+        "endLine": 512,
+        "endChar": 54
+      },
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dabad3_9feadcd3",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-17T16:04:31Z",
+      "side": 1,
+      "message": "Is Contains the right test? Is it not possible for a quad_visible_rect_in_coverage_space to intersect such that we need to draw it but not be entirely contained?",
+      "range": {
+        "startLine": 514,
+        "startChar": 30,
+        "endLine": 514,
+        "endChar": 38
+      },
+      "revId": "b2a165c833176a661f98fd8f51cda0226c8e2219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
