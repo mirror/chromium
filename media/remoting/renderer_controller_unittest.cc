@@ -67,6 +67,19 @@ class RendererControllerTest : public ::testing::Test,
 
   void CreateCdm(bool is_remoting) { is_remoting_cdm_ = is_remoting; }
 
+  bool IsInDelayedStart() {
+    return controller_->delayed_start_stability_timer_.IsRunning();
+  }
+
+  void DelayedStartEnds() {
+    EXPECT_TRUE(IsInDelayedStart());
+    const base::Closure callback =
+        controller_->delayed_start_stability_timer_.user_task();
+    EXPECT_FALSE(callback.is_null());
+    callback.Run();
+    controller_->delayed_start_stability_timer_.Stop();
+  }
+
   base::MessageLoop message_loop_;
 
  protected:
@@ -80,7 +93,7 @@ class RendererControllerTest : public ::testing::Test,
   DISALLOW_COPY_AND_ASSIGN(RendererControllerTest);
 };
 
-TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
+TEST_F(RendererControllerTest, ToggleRendererOnDominantChange) {
   EXPECT_FALSE(is_rendering_remotely_);
   const scoped_refptr<SharedSession> shared_session =
       FakeRemoterFactory::CreateSharedSession(false);
@@ -88,33 +101,37 @@ TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
   controller_->SetClient(this);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
-  controller_->OnEnteredFullscreen();
-  RunUntilIdle();
-  EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnMetadataChanged(DefaultMetadata());
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  controller_->OnBecameDominantVisibleContent(true);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnPlaying();
   RunUntilIdle();
-  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(IsInDelayedStart());  // All requirements now satisfied.
+  DelayedStartEnds();
+  RunUntilIdle();
+  EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(disable_pipeline_suspend_);
 
   // Leaving fullscreen should shut down remoting.
-  controller_->OnExitedFullscreen();
+  controller_->OnBecameDominantVisibleContent(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
 }
 
 TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
@@ -134,11 +151,6 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   controller_->OnPlaying();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  controller_->OnEnteredFullscreen();
-  RunUntilIdle();
-  EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
-  EXPECT_FALSE(disable_pipeline_suspend_);
   // An available sink that does not support remote rendering should not cause
   // the controller to toggle remote rendering on.
   shared_session->OnSinkAvailable(mojom::RemotingSinkCapabilities::NONE);
@@ -153,10 +165,18 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
-  EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnBecameDominantVisibleContent(true);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_TRUE(IsInDelayedStart());
+  DelayedStartEnds();
+  RunUntilIdle();
+  EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(disable_pipeline_suspend_);
-  controller_->OnExitedFullscreen();
+  controller_->OnBecameDominantVisibleContent(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
@@ -177,21 +197,24 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
   controller_->OnMetadataChanged(DefaultMetadata());
-  RunUntilIdle();
-  EXPECT_FALSE(is_rendering_remotely_);
-  controller_->OnEnteredFullscreen();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  controller_->OnBecameDominantVisibleContent(true);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnPlaying();
   RunUntilIdle();
-  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(IsInDelayedStart());  // All requirements now satisfied.
+  DelayedStartEnds();
+  RunUntilIdle();
+  EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(disable_pipeline_suspend_);
 
   // If the page disables remote playback (e.g., by setting the
@@ -214,18 +237,21 @@ TEST_F(RendererControllerTest, StartFailed) {
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
-  controller_->OnEnteredFullscreen();
-  RunUntilIdle();
-  EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnMetadataChanged(DefaultMetadata());
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  controller_->OnBecameDominantVisibleContent(true);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnPlaying();
+  RunUntilIdle();
+  EXPECT_TRUE(IsInDelayedStart());
+  DelayedStartEnds();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
@@ -265,13 +291,15 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
 
-  // For encrypted contents, entering/exiting full screen has no effect.
-  controller_->OnEnteredFullscreen();
+  // For encrypted contents, becoming/exiting dominant has no effect.
+  controller_->OnBecameDominantVisibleContent(true);
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
-  controller_->OnExitedFullscreen();
+  EXPECT_FALSE(IsInDelayedStart());
+  controller_->OnBecameDominantVisibleContent(false);
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
 
   EXPECT_NE(SharedSession::SESSION_PERMANENTLY_STOPPED,
             controller_->session()->state());
@@ -295,18 +323,22 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
   initial_shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  controller_->OnEnteredFullscreen();
+  controller_->OnBecameDominantVisibleContent(true);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnMetadataChanged(EncryptedMetadata());
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnPlaying();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
 
   const scoped_refptr<SharedSession> cdm_shared_session =
       FakeRemoterFactory::CreateSharedSession(true);
@@ -318,6 +350,7 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(is_remoting_cdm_);
+  EXPECT_FALSE(IsInDelayedStart());
 }
 
 TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
@@ -327,18 +360,22 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
   controller_->SetClient(this);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
-  controller_->OnEnteredFullscreen();
+  controller_->OnBecameDominantVisibleContent(true);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnMetadataChanged(EncryptedMetadata());
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   controller_->OnPlaying();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
 
   const scoped_refptr<SharedSession> cdm_shared_session =
       FakeRemoterFactory::CreateSharedSession(false);
@@ -350,6 +387,7 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(is_remoting_cdm_);
+  EXPECT_FALSE(IsInDelayedStart());
 
   cdm_shared_session->OnSinkGone();
   RunUntilIdle();
@@ -368,6 +406,7 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
   // Switch to using the remoting renderer, even when the remoting CDM session
   // was already terminated, to show the failure interstitial.
   EXPECT_TRUE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInDelayedStart());
   EXPECT_EQ(SharedSession::SESSION_PERMANENTLY_STOPPED,
             controller_->session()->state());
 }
