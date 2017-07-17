@@ -275,6 +275,7 @@ Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
                << " is larger than bytes left in buffer: "
                << curr_frame_info_.size -
                       curr_frame_header_.uncompressed_header_size;
+      curr_frame_info_.Reset();
       return kInvalidStream;
     }
   }
