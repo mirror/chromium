@@ -15,6 +15,7 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_private.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/new_tab_command.h"
@@ -51,17 +52,15 @@ BOOL IsIncognitoMode() {
 
 void OpenNewTab() {
   @autoreleasepool {  // Make sure that all internals are deallocated.
-    GenericChromeCommand* command =
-        [[NewTabCommand alloc] initWithIncognito:NO];
-    chrome_test_util::RunCommandWithActiveViewController(command);
+    NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:NO];
+    [chrome_test_util::DispatcherForActiveViewController() openNewTab:command];
   }
 }
 
 void OpenNewIncognitoTab() {
   @autoreleasepool {  // Make sure that all internals are deallocated.
-    GenericChromeCommand* command =
-        [[NewTabCommand alloc] initWithIncognito:YES];
-    chrome_test_util::RunCommandWithActiveViewController(command);
+    NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:YES];
+    [chrome_test_util::DispatcherForActiveViewController() openNewTab:command];
   }
 }
 

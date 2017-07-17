@@ -347,7 +347,7 @@
   switch (action) {
     case OverscrollAction::NEW_TAB: {
       NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:NO];
-      [self.suggestionsViewController chromeExecuteCommand:command];
+      [_dispatcher openNewTab:command];
     } break;
     case OverscrollAction::CLOSE_TAB: {
       [_dispatcher closeCurrentTab];

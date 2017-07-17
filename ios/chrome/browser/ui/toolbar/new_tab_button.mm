@@ -36,10 +36,6 @@ const NSTimeInterval kNewTabButtonTransitionDuration =
   if (self = [super initWithFrame:frame]) {
     self.incognito = NO;
 
-    [self addTarget:self
-                  action:@selector(sendNewTabCommand)
-        forControlEvents:UIControlEventTouchUpInside];
-
     [self
         setContentEdgeInsets:UIEdgeInsetsMakeDirected(0, kContentInset, 0, 0)];
     [self setContentHorizontalAlignment:
@@ -83,14 +79,6 @@ const NSTimeInterval kNewTabButtonTransitionDuration =
   } else {
     self.incognito = incognito;
   }
-}
-
-- (void)sendNewTabCommand {
-  CGPoint center = [self.superview convertPoint:self.center toView:self.window];
-  NewTabCommand* command =
-      [[NewTabCommand alloc] initWithIncognito:self.isIncognito
-                                   originPoint:center];
-  [self chromeExecuteCommand:command];
 }
 
 @end
