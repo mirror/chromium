@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "849e0855_6c57357b",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T19:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41345601_bca002e0",
+      "revId": "d440202b8afb733dd0b540fade70da1837db1d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f81969a6_6cbde58b",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d440202b8afb733dd0b540fade70da1837db1d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd38076_dfae32e6",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-17T19:19:03Z",
+      "side": 1,
+      "message": "I added a comment.",
+      "parentUuid": "f81969a6_6cbde58b",
+      "revId": "d440202b8afb733dd0b540fade70da1837db1d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
