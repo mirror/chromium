@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4f848d3_c128b079",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T10:00:53Z",
+      "side": 1,
+      "message": "// TODO(crbug.com/739433) Remove debug output when fixed.",
+      "revId": "bb8f2e6ad3276fa3f52bb7bfaaf48d367cf577ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77edc50_de38aeeb",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T10:00:53Z",
+      "side": 1,
+      "message": "How about \"DEBUG[%s]\" and naming the variable kDebugKey?",
+      "revId": "bb8f2e6ad3276fa3f52bb7bfaaf48d367cf577ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28892747_630ae089",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T10:00:53Z",
+      "side": 1,
+      "message": "this is initialized with an empty string on access by default.",
+      "revId": "bb8f2e6ad3276fa3f52bb7bfaaf48d367cf577ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1dab02_7021166d",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T10:00:53Z",
+      "side": 1,
+      "message": "(*request_headers)[kDebugKey] +\u003d base::StringPrintf(...);",
+      "revId": "bb8f2e6ad3276fa3f52bb7bfaaf48d367cf577ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
