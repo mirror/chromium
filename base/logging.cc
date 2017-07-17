@@ -549,10 +549,16 @@ LogMessage::~LogMessage() {
 #if !defined(OFFICIAL_BUILD) && !defined(OS_NACL) && !defined(__UCLIBC__) && \
     !defined(OS_AIX)
   if (severity_ == LOG_FATAL && !base::debug::BeingDebugged()) {
+#if defined(OS_FUCHSIA)
+    // Fuchsia's system crashdump call writes directly to stderr, not to a
+    // buffer.
+    base::debug::StackTrace().Print();
+#else
     // Include a stack trace on a fatal, unless a debugger is attached.
     base::debug::StackTrace trace;
     stream_ << std::endl;  // Newline to separate from log message.
     trace.OutputToStream(&stream_);
+#endif
   }
 #endif
   stream_ << std::endl;

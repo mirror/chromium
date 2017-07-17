@@ -4,6 +4,7 @@
 
 #include "base/debug/stack_trace.h"
 
+#include <magenta/crashlogger.h>
 #include <magenta/process.h>
 #include <magenta/syscalls.h>
 #include <magenta/syscalls/port.h>
@@ -57,10 +58,16 @@ StackTrace::StackTrace(size_t count) : count_(0) {
 }
 
 void StackTrace::Print() const {
-  OutputToStream(&std::cerr);
+  // Fuchsia has a nice backtrace processor that we can call to print the
+  // stack details directly to stderr. The data is intended to be symbolized
+  // out-of-process.
+  crashlogger_request_backtrace();
 }
 
 void StackTrace::OutputToStream(std::ostream* os) const {
+  // Emit the IPs for each stack frame.
+  // TODO(fuchsia): Return detailed output from
+  // crashlogger_request_backtrace() to |os|.
   // TODO(fuchsia): Consider doing symbol resolution here. See
   // https://crbug.com/706592.
   for (size_t i = 0; (i < count_) && os->good(); ++i) {
