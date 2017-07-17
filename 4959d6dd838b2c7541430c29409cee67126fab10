@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dfa2244_994ec150",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 64,
+        "startChar": 64,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d190c25_61da62a5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "contains?",
+      "range": {
+        "startLine": 170,
+        "startChar": 37,
+        "endLine": 170,
+        "endChar": 40
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f458fd_6f6411ac",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 170,
+        "startChar": 52,
+        "endLine": 170,
+        "endChar": 60
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ff431b_62b6c3ce",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "base::ContainsOnlyChars() for better readability.\nbase::ToLowerASCII() so you don\u0027t have to repeat the alphabet twice.",
+      "range": {
+        "startLine": 570,
+        "startChar": 35,
+        "endLine": 570,
+        "endChar": 52
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94194678_901a79dc",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 594,
+        "startChar": 29,
+        "endLine": 594,
+        "endChar": 35
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2e7ff9_7f4f0cf3",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "nit: Prefer std::string() to represent an invalid / irrelevant / nonexistent value.",
+      "range": {
+        "startLine": 626,
+        "startChar": 18,
+        "endLine": 626,
+        "endChar": 20
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de10949_5221a6af",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "nit: You\u0027re inconsistent with the suffixes ForTest/ForTesting.",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 30
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79ae800_a4f1e5d4",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "nit: If this is the GN mock file for testing, is there a GN mock file for production? What I mean is that \"mock\" is implied by \"for testing\". How about just gn_file_for_testing_?",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 29
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08b3157_d9382fa7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "Why was this lowercased?",
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0890291_f0e69986",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "The result of methods called CreateSomething is typically Something, not bool. Can we just return unique_ptr\u003cAnnotationInstance\u003e here, and empty unique_ptr\u003c\u003e for error?",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e88aa76_f22a65ff",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "nit: missing a word here",
+      "range": {
+        "startLine": 352,
+        "startChar": 66,
+        "endLine": 352,
+        "endChar": 67
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c943161_478e6f03",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-17T23:46:08Z",
+      "side": 1,
+      "message": "This is a very complicated condition that will result in an incomprehensible output. Consider EXPECT_EQ() \u003c\u003c \"Adding an error output explaining what happened when the condition is false.\"",
+      "range": {
+        "startLine": 418,
+        "startChar": 10,
+        "endLine": 418,
+        "endChar": 20
+      },
+      "revId": "4959d6dd838b2c7541430c29409cee67126fab10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
