@@ -198,7 +198,7 @@ gfx::Size CalculateDefaultTileSize(float initial_device_scale_factor,
                                    const ScreenInfo& screen_info) {
   int default_tile_size = 256;
 #if defined(OS_ANDROID)
-  const gfx::Size screen_size = gfx::ScaleToFlooredSize(
+  const gfx::Size& screen_size = gfx::ScaleToFlooredSize(
       screen_info.rect.size(), screen_info.device_scale_factor);
   int display_width = screen_size.width();
   int display_height = screen_size.height();
@@ -534,7 +534,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.max_staging_buffer_usage_in_bytes /= 4;
 
   cc::ManagedMemoryPolicy defaults = settings.gpu_memory_policy;
-  settings.gpu_memory_policy = GetGpuMemoryPolicy(defaults);
+  settings.gpu_memory_policy = GetGpuMemoryPolicy(defaults, screen_info);
   settings.software_memory_policy.num_resources_limit =
       base::SharedMemory::GetHandleLimit() / 3;
 
@@ -546,7 +546,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
 // static
 cc::ManagedMemoryPolicy RenderWidgetCompositor::GetGpuMemoryPolicy(
-    const cc::ManagedMemoryPolicy& default_policy) {
+    const cc::ManagedMemoryPolicy& default_policy,
+    const ScreenInfo& screen_info) {
   cc::ManagedMemoryPolicy actual = default_policy;
   actual.bytes_limit_when_visible = 0;
 
@@ -628,6 +629,16 @@ cc::ManagedMemoryPolicy RenderWidgetCompositor::GetGpuMemoryPolicy(
   actual.bytes_limit_when_visible = 512 * 1024 * 1024;
   actual.priority_cutoff_when_visible =
       gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE;
+
+  // For large monitors (4k), double the tile memory to avoid frequent out of
+  // memory problems. 4k could mean a screen width of anywhere from 3840 to 4096
+  // (see https://en.wikipedia.org/wiki/4K_resolution). We use 3500 as a proxy
+  // for "large enough".
+  static const int kLargeDisplayThreshold = 3500;
+  int display_width =
+      std::round(screen_info.rect.width() * screen_info.device_scale_factor);
+  if (display_width >= kLargeDisplayThreshold)
+    actual.bytes_limit_when_visible *= 2;
 #endif
   return actual;
 }
