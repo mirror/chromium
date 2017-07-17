@@ -111,7 +111,7 @@ Vector<String> IDBValue::GetUUIDs() const {
 }
 
 RefPtr<SerializedScriptValue> IDBValue::CreateSerializedValue() const {
-  return SerializedScriptValue::Create(data_);
+  return SerializedScriptValue::Create(data_->Data(), data_->size());
 }
 
 bool IDBValue::IsNull() const {
