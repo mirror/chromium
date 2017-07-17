@@ -16,6 +16,24 @@
       "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83d6513_7298b066",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T21:41:08Z",
+      "side": 1,
+      "message": "This change prevents us from adding duplicates to g_devices, so the result passed back to the caller of AndroidUsbDevice::Enumerate will still get all of the enumerated devices, including the one that was skipped because of this check since it is already in g_devices.",
+      "parentUuid": "899c4e8f_7819c1a6",
+      "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
