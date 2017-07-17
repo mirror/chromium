@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9010ce_a6ac052f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-17T07:24:11Z",
+      "side": 1,
+      "message": "could you create a bug and link to it? Does this cause any user-observable badness?",
+      "revId": "7629799d81063a7c3c2b5c7fd712cbc0f87d53b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
