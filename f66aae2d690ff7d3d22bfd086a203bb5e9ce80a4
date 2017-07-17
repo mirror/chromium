@@ -46,6 +46,30 @@
       "revId": "f66aae2d690ff7d3d22bfd086a203bb5e9ce80a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7316fd_27b09dfb",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T23:42:31Z",
+      "side": 0,
+      "message": "HidDeviceInfo will only be sent from the service implementation to clients so I think it\u0027s okay if some information is lost in translation. For example, HidDeviceInfoLinux adds extra Linux-specific fields which will also not be typemapped.\n\nLong term I suggest not using a typemap and having HidDeviceInfo contain internal fields like the platform device ID and a pointer to the Mojo struct which can be cloned when sending device information through Mojo. That will make it more clear which fields are not part of the Mojo interface but are still critical to the functionality of the HID service implementation.",
+      "parentUuid": "1b2946b0_0dd22f2c",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "f66aae2d690ff7d3d22bfd086a203bb5e9ce80a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
