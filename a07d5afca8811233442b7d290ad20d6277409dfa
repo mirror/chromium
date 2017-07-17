@@ -721,6 +721,30 @@
     },
     {
       "key": {
+        "uuid": "c4dfc6c2_ae69f168",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-17T09:08:14Z",
+      "side": 1,
+      "message": "IMO this smells like we could simplify now and iterate later on advanced cases, since there are various scenarios that would make this problem trivial:\n- We might want to bake in the exploration URLs too, similarly to Popular Sites (possibly without the icon).\n- UX/PM might decide that an open UI shouldn\u0027t be updated if the exploration URLs come later than the regular ones.\n- Calling OnMostVisitedURLsAvailable() again might be sufficient.",
+      "parentUuid": "fb20190e_0eb54077",
+      "range": {
+        "startLine": 94,
+        "startChar": 77,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cfa6b87_433eb692",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 1
@@ -756,6 +780,54 @@
       "side": 1,
       "message": "Unless we copy the SitesVector, it might easily change and for some events, only the sections are needed. \nThis might happen anyway if we need to get the sections out of the JSON.",
       "parentUuid": "0cfa6b87_433eb692",
+      "range": {
+        "startLine": 68,
+        "startChar": 70,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e573d34_65a877cf",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-17T09:08:14Z",
+      "side": 1,
+      "message": "Not sure I understand your argument here, I think a simpler API should be preferred in doubt, and only add complexity when real need arises. Is the UI really not going to always read all sections?",
+      "parentUuid": "5be238a1_9c926424",
+      "range": {
+        "startLine": 68,
+        "startChar": 70,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00085b48_35f56214",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-17T09:08:14Z",
+      "side": 1,
+      "message": "Not sure I understand your argument here, I think a simpler API should be preferred in doubt, and only add complexity when real need arises. Is the UI really not going to always read all sections?",
+      "parentUuid": "5be238a1_9c926424",
       "range": {
         "startLine": 68,
         "startChar": 70,
