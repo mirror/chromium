@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "content/browser/background_fetch/background_fetch_delegate_proxy.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/common/background_fetch/background_fetch_types.h"
@@ -70,12 +71,6 @@ class CONTENT_EXPORT BackgroundFetchJobController {
   // Returns the options with which this job is fetching data.
   const BackgroundFetchOptions& options() const { return options_; }
 
- private:
-  class Core;
-
-  // Requests the download manager to start fetching |request|.
-  void StartRequest(scoped_refptr<BackgroundFetchRequestInfo> request);
-
   // Called when the given |request| has started fetching, after having been
   // assigned the |download_guid| by the download system.
   void DidStartRequest(scoped_refptr<BackgroundFetchRequestInfo> request,
@@ -83,6 +78,10 @@ class CONTENT_EXPORT BackgroundFetchJobController {
 
   // Called when the given |request| has been completed.
   void DidCompleteRequest(scoped_refptr<BackgroundFetchRequestInfo> request);
+
+ private:
+  // Requests the download manager to start fetching |request|.
+  void StartRequest(scoped_refptr<BackgroundFetchRequestInfo> request);
 
   // Called when a completed download has been marked as such in DataManager.
   void DidMarkRequestCompleted(bool has_pending_or_active_requests);
@@ -96,19 +95,16 @@ class CONTENT_EXPORT BackgroundFetchJobController {
   // The current state of this Job Controller.
   State state_ = State::INITIALIZED;
 
-  // Inner core of this job controller which lives on the UI thread.
-  std::unique_ptr<Core, BrowserThread::DeleteOnUIThread> ui_core_;
-  base::WeakPtr<Core> ui_core_ptr_;
-
   // The DataManager's lifetime is controlled by the BackgroundFetchContext and
   // will be kept alive until after the JobController is destroyed.
   BackgroundFetchDataManager* data_manager_;
 
+  // Proxy for interacting with the BackgroundFetchDelegate across thread
+  // boundaries.
+  BackgroundFetchDelegateProxy delegate_proxy_;
+
   // Callback for when all fetches have been completed.
   CompletedCallback completed_callback_;
-
-  // Traffic annotation for network request.
-  const net::NetworkTrafficAnnotationTag traffic_annotation_;
 
   base::WeakPtrFactory<BackgroundFetchJobController> weak_ptr_factory_;
 
