@@ -33,6 +33,7 @@
 
 #include <memory>
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Forward.h"

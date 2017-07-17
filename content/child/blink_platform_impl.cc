@@ -386,6 +386,13 @@ void BlinkPlatformImpl::SetCompositorThread(
     WaitUntilWebThreadTLSUpdate(compositor_thread_);
 }
 
+void BlinkPlatformImpl::SetFileThread(
+    blink::scheduler::WebThreadBase* file_thread) {
+  file_thread_ = file_thread;
+  if (file_thread_)
+    WaitUntilWebThreadTLSUpdate(file_thread_);
+}
+
 blink::WebThread* BlinkPlatformImpl::CurrentThread() {
   return static_cast<blink::WebThread*>(current_thread_slot_.Get());
 }
@@ -652,6 +659,10 @@ WebString BlinkPlatformImpl::QueryLocalizedString(WebLocalizedString::Name name,
 
 blink::WebThread* BlinkPlatformImpl::CompositorThread() const {
   return compositor_thread_;
+}
+
+blink::WebThread* BlinkPlatformImpl::FileThread() const {
+  return file_thread_;
 }
 
 std::unique_ptr<blink::WebGestureCurve>
