@@ -95,8 +95,7 @@ DownloadFileImpl::DownloadFileImpl(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> stream_reader,
-    const net::NetLogWithSource& download_item_net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer)
+    const net::NetLogWithSource& download_item_net_log)
     : net_log_(
           net::NetLogWithSource::Make(download_item_net_log.net_log(),
                                       net::NetLogSourceType::DOWNLOAD_FILE)),
@@ -109,7 +108,6 @@ DownloadFileImpl::DownloadFileImpl(
       record_stream_bandwidth_(false),
       bytes_seen_with_parallel_streams_(0),
       bytes_seen_without_parallel_streams_(0),
-      observer_(observer),
       weak_factory_(this) {
   source_streams_[save_info_->offset] = base::MakeUnique<SourceStream>(
       save_info_->offset, save_info_->length, std::move(stream_reader));
@@ -131,9 +129,11 @@ void DownloadFileImpl::Initialize(
     const InitializeCallback& initialize_callback,
     const CancelRequestCallback& cancel_request_callback,
     const DownloadItem::ReceivedSlices& received_slices,
+    base::WeakPtr<DownloadDestinationObserver> observer,
     bool is_parallelizable) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
+  observer_ = observer;
   update_timer_.reset(new base::RepeatingTimer());
   int64_t bytes_so_far = 0;
   cancel_request_callback_ = cancel_request_callback;
