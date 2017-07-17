@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9125fc10_6d7b211c",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-17T12:03:38Z",
+      "side": 1,
+      "message": "Maybe make this the full \"Document\" rather than just \"Doc\". (Wonder why this isn\u0027t in the HTMLFormControlElementTest though...)",
+      "range": {
+        "startLine": 288,
+        "startChar": 10,
+        "endLine": 288,
+        "endChar": 13
+      },
+      "revId": "71a5383888b4357e4148406ed9ba8521491ef357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
