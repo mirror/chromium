@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc66815_e77cf6e5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-17T19:19:41Z",
+      "side": 1,
+      "message": "nit: I\u0027d expect \"i + 1\" to compile?",
+      "range": {
+        "startLine": 817,
+        "startChar": 14,
+        "endLine": 817,
+        "endChar": 20
+      },
+      "revId": "1003304c1281917cbae9640606ba5dbf0b8f3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7119e49_3d827219",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-17T19:19:41Z",
+      "side": 1,
+      "message": "I think this is unnecessary because that last worker should never attempt to detach (this call is present in other tests to prevent detach races but there isn\u0027t one here -- apart from the race to detach before the EXPECT_EQ above but if that hits we\u0027re already too late...).",
+      "range": {
+        "startLine": 831,
+        "startChar": 2,
+        "endLine": 831,
+        "endChar": 52
+      },
+      "revId": "1003304c1281917cbae9640606ba5dbf0b8f3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
