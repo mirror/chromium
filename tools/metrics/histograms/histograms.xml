@@ -79582,6 +79582,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Translate.SourceLanguage" enum="CLD3LanguageCode">
+  <owner>yyushkina@google.com</owner>
+  <summary>
+    The number of times each source language code is sent in a request to the
+    Translate server.
+  </summary>
+</histogram>
+
+<histogram name="Translate.TargetLanguage" enum="CLD3LanguageCode">
+  <owner>yyushkina@google.com</owner>
+  <summary>
+    The number of times each target language code is sent in a request to the
+    Translate server.
+  </summary>
+</histogram>
+
 <histogram name="Translate.TimeToBeReady" units="ms">
   <owner>kenjibaheux@google.com</owner>
   <summary>
