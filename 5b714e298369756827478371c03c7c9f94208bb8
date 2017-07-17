@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49902809_47555e5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-17T07:40:40Z",
+      "side": 1,
+      "message": "nit: be more specific on the title, like \"Only include windows_version.h on Windows build\".",
+      "revId": "5b714e298369756827478371c03c7c9f94208bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b84e63d_7bbdd0e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-17T07:40:40Z",
+      "side": 1,
+      "message": "Would you mind putting the culprit CL in the commit message?https://codereview.chromium.org/2941623003",
+      "revId": "5b714e298369756827478371c03c7c9f94208bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
