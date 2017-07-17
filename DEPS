@@ -15,7 +15,7 @@
 # necessary (e.g., a git mirror is used when the source project is SVN-based).
 # To update the revision that Chromium pulls for a given dependency:
 #
-#  # Create and switch to a new branch
+#  # Create and switch to a new branchhh
 #  git new-branch depsroll
 #  # Run roll-dep (provided by depot_tools) giving the dep's path and optionally
 #  # a regex that will match the line in this file that contains the current
