@@ -16,7 +16,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "content/common/content_export.h"
@@ -271,7 +271,7 @@ class CONTENT_EXPORT PresentationServiceImpl
       pending_start_presentation_cb_;
 
   // For ReconnectPresentation requests.
-  base::hash_map<int, linked_ptr<NewPresentationCallbackWrapper>>
+  base::hash_map<int, std::unique_ptr<NewPresentationCallbackWrapper>>
       pending_reconnect_presentation_cbs_;
 
   // RAII binding of |this| to an Presentation interface request.
