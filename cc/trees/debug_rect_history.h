@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "cc/input/touch_action.h"
 #include "cc/layers/layer_collections.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -46,11 +47,16 @@ enum DebugRectType {
 };
 
 struct DebugRect {
+  DebugRect(DebugRectType new_type,
+            const gfx::Rect& new_rect,
+            TouchAction new_touch_action)
+      : type(new_type), rect(new_rect), touch_action(new_touch_action) {}
   DebugRect(DebugRectType new_type, const gfx::Rect& new_rect)
-      : type(new_type), rect(new_rect) {}
+      : DebugRect(new_type, new_rect, kTouchActionAuto) {}
 
   DebugRectType type;
   gfx::Rect rect;
+  TouchAction touch_action;
 };
 
 // This class maintains a history of rects of various types that can be used
