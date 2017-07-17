@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ecd2ff5_6885fe8d",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-17T19:02:07Z",
+      "side": 1,
+      "message": "nits: s/is_for_fyi_waterfall/for_fyi_waterfall",
+      "revId": "445c96c9297f292ef1bd6a57975a2587878674b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
