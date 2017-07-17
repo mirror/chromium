@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da77eecd_9745732f",
+        "filename": "components/translate/core/browser/translate_browser_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-17T02:50:36Z",
+      "side": 1,
+      "message": "Discussed offline - histograms.xml updated.",
+      "parentUuid": "567e37ef_4b3fd090",
+      "revId": "2fc1fa3b14914583685db129bd11d9ec0ec99c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "067e9cd8_ad5eb77a",
         "filename": "components/translate/core/browser/translate_manager.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-17T01:28:21Z",
       "side": 1,
       "message": "Should we log orginal_source_language, or source_lang?",
+      "revId": "2fc1fa3b14914583685db129bd11d9ec0ec99c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c21b777_54ee20ac",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-17T02:50:36Z",
+      "side": 1,
+      "message": "It\u0027s a good question - I felt that original_source_lang is more useful because we can (approximately?) derive the other info from it (by mapping unsupported language codes to \"und\").\n\nWhat do you think?",
+      "parentUuid": "067e9cd8_ad5eb77a",
       "revId": "2fc1fa3b14914583685db129bd11d9ec0ec99c19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
