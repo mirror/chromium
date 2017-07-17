@@ -16,6 +16,24 @@
       "revId": "839ce1be4b4cdc2a0f92bd0da4fc1fe3d10f67e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8903f1_b8c72fd1",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-17T16:40:28Z",
+      "side": 0,
+      "message": "Yes I agree. It seems that we have tons of drainUntilIdle in our code, and I\u0027m pretty sure a decent amount of them are unnecessary, though they are harmless.\n\n1. I just verified they are safe to remove using the two_sided.py script.\n2. Yes, and this may require a deep clean up, and I think EG2 migration might be a good opportunity.",
+      "parentUuid": "9066491a_bfff6a9b",
+      "revId": "839ce1be4b4cdc2a0f92bd0da4fc1fe3d10f67e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
