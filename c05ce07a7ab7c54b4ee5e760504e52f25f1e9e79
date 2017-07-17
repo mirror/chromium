@@ -94,6 +94,30 @@
       "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba2a1a5_5a0f70af",
+        "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-17T23:52:33Z",
+      "side": 1,
+      "message": "If so, does it make sense to call focus() on noload event? (in which case, it still shouldn\u0027t show the keyboard, i guess)",
+      "parentUuid": "0d9e3b5e_619f8bc8",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
