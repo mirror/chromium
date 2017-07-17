@@ -88,6 +88,11 @@ PerformanceTiming* PerformanceBase::timing() const {
   return nullptr;
 }
 
+DOMHighResTimeStamp PerformanceBase::timeOrigin() const {
+  DCHECK(time_origin_ > 0.0);
+  return ConvertSecondsToDOMHighResTimeStamp(ClampTimeResolution(time_origin_));
+}
+
 PerformanceEntryVector PerformanceBase::getEntries() {
   PerformanceEntryVector entries;
 
@@ -304,7 +309,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
 
   if (info.RedirectChain().IsEmpty()) {
     PerformanceEntry* entry = PerformanceResourceTiming::Create(
-        info, TimeOrigin(), start_time, allow_timing_details, serverTiming);
+        info, RawTimeOrigin(), start_time, allow_timing_details, serverTiming);
     NotifyObserversOfEntry(*entry);
     if (!IsResourceTimingBufferFull())
       AddResourceTimingBuffer(*entry);
@@ -328,7 +333,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
   double last_redirect_end_time = last_redirect_timing->ReceiveHeadersEnd();
 
   PerformanceEntry* entry = PerformanceResourceTiming::Create(
-      info, TimeOrigin(), start_time, last_redirect_end_time,
+      info, RawTimeOrigin(), start_time, last_redirect_end_time,
       allow_timing_details, allow_redirect_details, serverTiming);
   NotifyObserversOfEntry(*entry);
   if (!IsResourceTimingBufferFull())

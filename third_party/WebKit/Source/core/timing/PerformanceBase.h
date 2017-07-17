@@ -86,7 +86,9 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(double) const;
   DOMHighResTimeStamp now() const;
 
-  double TimeOrigin() const { return time_origin_; }
+  DOMHighResTimeStamp timeOrigin() const;
+
+  double RawTimeOrigin() const { return time_origin_; }
 
   PerformanceEntryVector getEntries();
   PerformanceEntryVector getEntriesByType(const String& entry_type);
