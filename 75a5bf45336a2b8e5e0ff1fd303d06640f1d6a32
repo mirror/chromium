@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c6cc4c_c4dc962a",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-17T15:29:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be based on HasCompositedLayers \u0026\u0026 ScrollsOverflow rather than the scroll offset? i.e. if this really is scrollable but just happens to be at offset 0, we still want to emit the scroll display items, right?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
