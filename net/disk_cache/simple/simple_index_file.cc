@@ -348,7 +348,7 @@ bool SimpleIndexFile::IndexMetadata::CheckIndexMetadata() {
 }
 
 SimpleIndexFile::SimpleIndexFile(
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
+    const scoped_refptr<base::SequencedTaskRunner>& cache_thread,
     const scoped_refptr<base::TaskRunner>& worker_pool,
     net::CacheType cache_type,
     const base::FilePath& cache_directory)
@@ -359,8 +359,7 @@ SimpleIndexFile::SimpleIndexFile(
       index_file_(cache_directory_.AppendASCII(kIndexDirectory)
                       .AppendASCII(kIndexFileName)),
       temp_index_file_(cache_directory_.AppendASCII(kIndexDirectory)
-                           .AppendASCII(kTempIndexFileName)) {
-}
+                           .AppendASCII(kTempIndexFileName)) {}
 
 SimpleIndexFile::~SimpleIndexFile() {}
 

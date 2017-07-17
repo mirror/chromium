@@ -95,9 +95,9 @@ std::unique_ptr<Backend> CreateAndInitBackend(const CacheSpec& spec) {
       &SetSuccessCodeOnCompletion,
       base::Unretained(&run_loop),
       base::Unretained(&succeeded));
-  const int net_error = CreateCacheBackend(
-      spec.cache_type, spec.backend_type, spec.path, 0, false,
-      base::ThreadTaskRunnerHandle::Get(), NULL, &backend, callback);
+  const int net_error =
+      CreateCacheBackend(spec.cache_type, spec.backend_type, spec.path, 0,
+                         false, NULL, &backend, callback);
   if (net_error == net::OK)
     callback.Run(net::OK);
   else
