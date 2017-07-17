@@ -1956,13 +1956,13 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, SelectAllStaysAfterUpdate) {
   test_toolbar_model->set_text(url_a);
   omnibox_view->Update();
   EXPECT_EQ(url_a, omnibox_view->GetText());
-  EXPECT_FALSE(omnibox_view->IsSelectAll());
+  EXPECT_TRUE(omnibox_view->IsSelectAll());
 
   // Test behavior of the "reversed" attribute of OmniboxView::SelectAll().
   test_toolbar_model->set_text(ASCIIToUTF16("AB"));
   omnibox_view->Update();
   // Should be at the end already. Shift+Left to select "reversed".
-  EXPECT_EQ(0u, GetSelectionSize(omnibox_view));
+  EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
   EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
@@ -1989,12 +1989,12 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, SelectAllStaysAfterUpdate) {
   omnibox_view->Update();
   EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
 
-  // Now Shift+Right should do nothing, and Shift+Left should reduce.
-  // At the end, so Shift+Right should do nothing.
-  ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_RIGHT, ui::EF_SHIFT_DOWN));
+  // We reverse select all on Update() so shift-left won't do anything.
+  // On Cocoa, shift-left will just anchor it on the left.
+  ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
   EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
 
-  // And Left should reduce by one character.
-  ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
+  // And shift-right should reduce by one character.
+  ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_RIGHT, ui::EF_SHIFT_DOWN));
   EXPECT_EQ(1u, GetSelectionSize(omnibox_view));
 }

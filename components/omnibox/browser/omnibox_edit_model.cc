@@ -169,9 +169,10 @@ void OmniboxEditModel::RestoreState(const State* state) {
   // Restore the autocomplete controller's input, or clear it if this is a new
   // tab.
   input_ = state ? state->autocomplete_input : AutocompleteInput();
-  if (!state)
+  if (!state) {
+    view_->SelectNone();
     return;
-
+  }
   SetFocusState(state->focus_state, OMNIBOX_FOCUS_CHANGE_TAB_SWITCH);
   focus_source_ = state->focus_source;
   // Restore any user editing.
@@ -424,6 +425,7 @@ void OmniboxEditModel::PasteAndGo(const base::string16& text) {
   UMA_HISTOGRAM_COUNTS("Omnibox.PasteAndGo", 1);
 
   view_->RevertAll();
+  // Do we want a select-all here?
   AutocompleteMatch match;
   GURL alternate_nav_url;
   ClassifyStringForPasteAndGo(text, &match, &alternate_nav_url);
@@ -638,6 +640,7 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
       if (client_->ProcessExtensionKeyword(template_url, match, disposition,
                                            observer.get())) {
         if (disposition != WindowOpenDisposition::NEW_BACKGROUND_TAB)
+          // Do we want a select all here?
           view_->RevertAll();
         return;
       }
@@ -659,12 +662,10 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
                               SEARCH_ENGINE_MAX);
   }
 
-  // Get the current text before we call RevertAll() which will clear it.
-  base::string16 current_text = view_->GetText();
-
   if (disposition != WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     base::AutoReset<bool> tmp(&in_revert_, true);
     view_->RevertAll();  // Revert the box to its unedited state.
+    // Do we want select-all here?
   }
 
   // Track whether the destination URL sends us to a search results page
