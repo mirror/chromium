@@ -25,16 +25,13 @@
 #include "net/disk_cache/blockfile/trace.h"
 #include "net/disk_cache/disk_cache.h"
 
-namespace base {
-class SingleThreadTaskRunner;
-}  // namespace base
-
 namespace net {
 class NetLog;
 }  // namespace net
 
 namespace disk_cache {
 
+class CleanupContext;
 struct Index;
 
 enum BackendFlags {
@@ -55,9 +52,13 @@ class NET_EXPORT_PRIVATE BackendImpl : public Backend {
   friend class Eviction;
  public:
   BackendImpl(const base::FilePath& path,
-              const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
+              CleanupContext* cleanup_context,
               net::NetLog* net_log);
+
   // mask can be used to limit the usable size of the hash table, for testing.
+  BackendImpl(const base::FilePath& path, uint32_t mask, net::NetLog* net_log);
+
+  // Can be used to provide a thread --- for testing only.
   BackendImpl(const base::FilePath& path,
               uint32_t mask,
               const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
@@ -297,6 +298,10 @@ class NET_EXPORT_PRIVATE BackendImpl : public Backend {
   size_t DumpMemoryStats(
       base::trace_event::ProcessMemoryDump* pmd,
       const std::string& parent_absolute_name) const override;
+  scoped_refptr<base::SequencedTaskRunner> GetCacheTaskRunner() override;
+
+  // Ensures that our private cache thread completes work.
+  static void FlushForTesting();
 
  private:
   using EntriesMap = std::unordered_map<CacheAddr, EntryImpl*>;
@@ -378,6 +383,9 @@ class NET_EXPORT_PRIVATE BackendImpl : public Backend {
 
   // Returns the maximum total memory for the memory buffers.
   int MaxBuffersSize();
+
+  // We want this destroyed after every other field.
+  scoped_refptr<CleanupContext> cleanup_context_;
 
   InFlightBackendIO background_queue_;  // The controller of pending operations.
   scoped_refptr<MappedFile> index_;  // The main cache index.
