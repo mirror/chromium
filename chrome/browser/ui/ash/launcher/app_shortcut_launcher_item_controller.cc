@@ -8,6 +8,7 @@
 
 #include <utility>
 
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/launch_util.h"
@@ -15,7 +16,6 @@
 #include "chrome/browser/ui/ash/launcher/arc_playstore_shortcut_launcher_item_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
@@ -34,6 +34,8 @@
 #include "ui/aura/window.h"
 #include "ui/events/event.h"
 #include "ui/wm/core/window_animations.h"
+
+#include "base/strings/utf_string_conversions.h" 
 
 using extensions::Extension;
 using extensions::ExtensionRegistry;
@@ -93,10 +95,19 @@ void AppShortcutLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::ItemSelected et:" << event->type() << "ef:" << event->flags();
   // In case of a keyboard event, we were called by a hotkey. In that case we
   // activate the next item in line if an item of our list is already active.
   if (event && event->type() == ui::ET_KEY_RELEASED && AdvanceToNextApp()) {
     std::move(callback).Run(ash::SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
+    return;
+  }
+
+  if (event && ((event->type() == ui::ET_MOUSE_PRESSED && event->flags() == ui::EF_RIGHT_MOUSE_BUTTON) ||
+        (event->type() == ui::ET_GESTURE_LONG_TAP))) {
+    LOG(ERROR) << "MSW AppShortcutLauncherItemController::ItemSelected SHOW_CONTEXT_MENU";
+    std::move(callback).Run(ash::SHELF_ACTION_SHOW_CONTEXT_MENU,
+                            GetContextMenuItems(event ? event->flags() : ui::EF_NONE));
     return;
   }
 
@@ -143,6 +154,19 @@ ash::MenuItemList AppShortcutLauncherItemController::GetAppMenuItems(
   }
   return items;
 }
+
+ash::MenuItemList AppShortcutLauncherItemController::GetContextMenuItems(
+    int event_flags) {
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::GetContextMenuItems TEST ITEM";
+  ash::MenuItemList items;
+  ash::mojom::MenuItemPtr item(ash::mojom::MenuItem::New());
+  item->command_id = 123; 
+  item->label = base::ASCIIToUTF16("MSW TEST ITEM"); 
+  // item->image = *controller->GetAppListIcon(tab).ToSkBitmap();
+  items.push_back(std::move(item));
+  return items;
+}
+
 
 void AppShortcutLauncherItemController::ExecuteCommand(uint32_t command_id,
                                                        int32_t event_flags) {
