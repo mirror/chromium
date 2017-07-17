@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "796b5a49_a8986b51",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-17T23:27:56Z",
+      "side": 1,
+      "message": "fwiw, this is not a closure (see the empty capture list). I\u0027m a fan of this style because it reduces jumping around the file, makes it obvious the function is only used here, yet still makes it easy to extract common functionality if needed.",
+      "parentUuid": "08be9d89_3f9a5931",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df8dd94_7b71a301",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 4
