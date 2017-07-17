@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3e4aeb_035332fa",
+        "filename": "chrome/browser/supervised_user/supervised_user_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "Looking at this, and the devtools PageNavigationThrottle, I\u0027m wondering if we should make NavigationThrottle::Resume and NavigationThrottle::CancelDeferredNavigation virtual, and let implementers override them. In particular, this code reads as an override of NavigationThrottle::Resume, while it\u0027s actually a method in the derived class calling it\u0027s parent class method of the same name. That\u0027s a bit weird IMO.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a490b7e_22df6e14",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "nit: the order of functions in the .cc file should match the .h file.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3cd05d_0dc984ff",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to land this as a CHECK to try to identify if this case does happen in practice, however this should eventually be converted to a DCHECK. Please add a TODO about this. Same in CancelDeferredNavigation.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d823d45c_9b177027",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "Please explain in the comment what |resuming_throttle| and |cancelling_throttle| stand for in the two functions.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa048da_02814497",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "I think we should call those ResumeInternal and CancelDeferredNavigationInternal. This way it\u0027s very clear that they shouldn\u0027t be exposed.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e6db7e_6d9007d8",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "I would phrase this the other way:\n// Returns the throttle that is currently deferring the navigation (i.e. the throttle at index |next_index_ - 1|). If the handle is not deferred, returns nullptr.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e820f3_162fa221",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-17T14:05:30Z",
+      "side": 1,
+      "message": "CancelNavigation is not used outside of the TestNavigationThrottle, so it doesn\u0027t need to be public.",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
