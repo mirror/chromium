@@ -116,6 +116,30 @@
       "revId": "08b42e743fc4e211e0a4b2f87b0632d26b78a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc3e048_a337be98",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-17T14:59:27Z",
+      "side": 1,
+      "message": "Hi David, I think here is the best place. \nIn PLSA, we have the point (related to layer) but ScrollbarTheme::HitTest we need to pass the point(related to frame) that is why PLSA::HitTestOverflowControls need to re-implement Scrollbar::FrameRect. If we want to put this to LFV and PLSA, we need to re-implement ScrollbarTheme::HitTest in PLSA.",
+      "parentUuid": "43bdf4b3_600428f4",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "08b42e743fc4e211e0a4b2f87b0632d26b78a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
