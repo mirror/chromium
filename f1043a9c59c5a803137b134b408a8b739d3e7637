@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c58940b7_98df8d00",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T18:44:28Z",
+      "side": 1,
+      "message": "Nit: private",
+      "revId": "f1043a9c59c5a803137b134b408a8b739d3e7637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec97d38_8c001547",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T18:44:28Z",
+      "side": 1,
+      "message": "Nit: is this needed anymore if we don\u0027t use inheritance? I think we can just use box_model_.StyleRef().",
+      "revId": "f1043a9c59c5a803137b134b408a8b739d3e7637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9371bfaa_85a6a245",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-17T18:44:28Z",
+      "side": 1,
+      "message": "Same comment as above",
+      "revId": "f1043a9c59c5a803137b134b408a8b739d3e7637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
