@@ -18,8 +18,12 @@ using content::BrowserThread;
 
 namespace arc {
 
-ArcDocumentsProviderBackendDelegate::ArcDocumentsProviderBackendDelegate()
-    : async_file_util_(&roots_), watcher_manager_(&roots_) {}
+ArcDocumentsProviderBackendDelegate::ArcDocumentsProviderBackendDelegate(
+    content::BrowserContext* context)
+    : context_(context),
+      roots_(context),
+      async_file_util_(&roots_),
+      watcher_manager_(&roots_) {}
 
 ArcDocumentsProviderBackendDelegate::~ArcDocumentsProviderBackendDelegate() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -40,8 +44,8 @@ ArcDocumentsProviderBackendDelegate::CreateFileStreamReader(
     storage::FileSystemContext* context) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  return base::MakeUnique<ArcDocumentsProviderFileStreamReader>(url, offset,
-                                                                &roots_);
+  return base::MakeUnique<ArcDocumentsProviderFileStreamReader>(
+      context_, url, offset, &roots_);
 }
 
 std::unique_ptr<storage::FileStreamWriter>

@@ -13,13 +13,18 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend_delegate.h"
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 // Implements ARC documents provider filesystem.
 class ArcDocumentsProviderBackendDelegate
     : public chromeos::FileSystemBackendDelegate {
  public:
-  ArcDocumentsProviderBackendDelegate();
+  explicit ArcDocumentsProviderBackendDelegate(
+      content::BrowserContext* context);
   ~ArcDocumentsProviderBackendDelegate() override;
 
   // FileSystemBackend::Delegate overrides.
@@ -41,6 +46,7 @@ class ArcDocumentsProviderBackendDelegate
                                  const storage::URLCallback& callback) override;
 
  private:
+  content::BrowserContext* const context_;  // Owned by ProfileManager.
   ArcDocumentsProviderRootMap roots_;
   ArcDocumentsProviderAsyncFileUtil async_file_util_;
   ArcDocumentsProviderWatcherManager watcher_manager_;

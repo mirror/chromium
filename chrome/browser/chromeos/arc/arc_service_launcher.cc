@@ -174,6 +174,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcDownloadsWatcherService::GetForBrowserContext(profile);
   ArcEnterpriseReportingService::GetForBrowserContext(profile);
   ArcFileSystemMounter::GetForBrowserContext(profile);
+  ArcFileSystemOperationRunner::GetForBrowserContext(profile);
   ArcImeService::GetForBrowserContext(profile);
   ArcMetricsService::GetForBrowserContext(profile);
   ArcNetHostImpl::GetForBrowserContext(profile);
@@ -188,9 +189,6 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
       multi_user_util::GetAccountIdFromProfile(profile)));
-  arc_service_manager_->AddService(
-      base::MakeUnique<ArcFileSystemOperationRunner>(
-          arc_service_manager_->arc_bridge_service(), profile));
   arc_service_manager_->AddService(base::MakeUnique<ArcNotificationManager>(
       arc_service_manager_->arc_bridge_service(),
       multi_user_util::GetAccountIdFromProfile(profile)));

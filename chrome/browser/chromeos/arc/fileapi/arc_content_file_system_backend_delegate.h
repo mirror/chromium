@@ -10,6 +10,10 @@
 #include "base/macros.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend_delegate.h"
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 // Delegate implementation of the some methods in chromeos::FileSystemBackend
@@ -17,7 +21,8 @@ namespace arc {
 class ArcContentFileSystemBackendDelegate
     : public chromeos::FileSystemBackendDelegate {
  public:
-  ArcContentFileSystemBackendDelegate();
+  explicit ArcContentFileSystemBackendDelegate(
+      content::BrowserContext* context);
   ~ArcContentFileSystemBackendDelegate() override;
 
   // FileSystemBackend::Delegate overrides.
@@ -39,6 +44,7 @@ class ArcContentFileSystemBackendDelegate
                                  const storage::URLCallback& callback) override;
 
  private:
+  content::BrowserContext* context_;  // Owned by ProfileManager.
   std::unique_ptr<storage::AsyncFileUtil> async_file_util_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcContentFileSystemBackendDelegate);

@@ -17,19 +17,25 @@
 namespace base {
 class File;
 class SequencedTaskRunner;
-}
+}  // namespace base
+
+namespace content {
+class BrowserContext;
+}  // namespace content
 
 namespace net {
 class IOBuffer;
 class IOBufferWithSize;
-}
+}  // namespace net
 
 namespace arc {
 
 // FileStreamReader implementation for ARC content file system.
 class ArcContentFileSystemFileStreamReader : public storage::FileStreamReader {
  public:
-  ArcContentFileSystemFileStreamReader(const GURL& arc_url, int64_t offset);
+  ArcContentFileSystemFileStreamReader(content::BrowserContext* context,
+                                       const GURL& arc_url,
+                                       int64_t offset);
   ~ArcContentFileSystemFileStreamReader() override;
 
   // storage::FileStreamReader override:
@@ -80,6 +86,7 @@ class ArcContentFileSystemFileStreamReader : public storage::FileStreamReader {
       int64_t num_bytes_to_consume,
       int read_result);
 
+  content::BrowserContext* const context_;  // Owned by ProfileManager.
   GURL arc_url_;
   int64_t offset_;
 

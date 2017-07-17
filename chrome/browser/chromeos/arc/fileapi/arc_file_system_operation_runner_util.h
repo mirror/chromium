@@ -12,6 +12,10 @@
 
 class GURL;
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 namespace file_system_operation_runner_util {
@@ -63,24 +67,32 @@ class ObserverIOThreadWrapper
 // Utility functions to post a task to run ArcFileSystemOperationRunner methods.
 // These functions must be called on the IO thread. Callbacks and observers will
 // be called on the IO thread.
-void GetFileSizeOnIOThread(const GURL& url,
+void GetFileSizeOnIOThread(content::BrowserContext* context,
+                           const GURL& url,
                            const GetFileSizeCallback& callback);
-void OpenFileToReadOnIOThread(const GURL& url,
+void OpenFileToReadOnIOThread(content::BrowserContext* context,
+                              const GURL& url,
                               const OpenFileToReadCallback& callback);
-void GetDocumentOnIOThread(const std::string& authority,
+void GetDocumentOnIOThread(content::BrowserContext* context,
+                           const std::string& authority,
                            const std::string& document_id,
                            const GetDocumentCallback& callback);
-void GetChildDocumentsOnIOThread(const std::string& authority,
+void GetChildDocumentsOnIOThread(content::BrowserContext* context,
+                                 const std::string& authority,
                                  const std::string& parent_document_id,
                                  const GetChildDocumentsCallback& callback);
-void AddWatcherOnIOThread(const std::string& authority,
+void AddWatcherOnIOThread(content::BrowserContext* context,
+                          const std::string& authority,
                           const std::string& document_id,
                           const WatcherCallback& watcher_callback,
                           const AddWatcherCallback& callback);
-void RemoveWatcherOnIOThread(int64_t watcher_id,
+void RemoveWatcherOnIOThread(content::BrowserContext* context,
+                             int64_t watcher_id,
                              const RemoveWatcherCallback& callback);
-void AddObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer);
-void RemoveObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer);
+void AddObserverOnIOThread(content::BrowserContext* context,
+                           scoped_refptr<ObserverIOThreadWrapper> observer);
+void RemoveObserverOnIOThread(content::BrowserContext* context,
+                              scoped_refptr<ObserverIOThreadWrapper> observer);
 
 }  // namespace file_system_operation_runner_util
 }  // namespace arc

@@ -13,6 +13,10 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace storage {
 class FileSystemURL;
 }  // namespace storage
@@ -27,7 +31,7 @@ class ArcDocumentsProviderRoot;
 // only on the IO thread anyway.
 class ArcDocumentsProviderRootMap {
  public:
-  ArcDocumentsProviderRootMap();
+  explicit ArcDocumentsProviderRootMap(content::BrowserContext* context);
   ~ArcDocumentsProviderRootMap();
 
   // Looks up a root corresponding to |url|.

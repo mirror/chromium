@@ -19,10 +19,14 @@ using content::BrowserThread;
 namespace arc {
 
 ArcDocumentsProviderFileStreamReader::ArcDocumentsProviderFileStreamReader(
+    content::BrowserContext* context,
     const storage::FileSystemURL& url,
     int64_t offset,
     ArcDocumentsProviderRootMap* roots)
-    : offset_(offset), content_url_resolved_(false), weak_ptr_factory_(this) {
+    : context_(context),
+      offset_(offset),
+      content_url_resolved_(false),
+      weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   base::FilePath path;
@@ -79,7 +83,7 @@ void ArcDocumentsProviderFileStreamReader::OnResolveToContentUrl(
 
   if (content_url.is_valid()) {
     underlying_reader_ = base::MakeUnique<ArcContentFileSystemFileStreamReader>(
-        content_url, offset_);
+        context_, content_url, offset_);
   }
   content_url_resolved_ = true;
 
