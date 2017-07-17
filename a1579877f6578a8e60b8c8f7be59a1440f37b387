@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "939bd175_3c6e7e53",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-17T20:57:48Z",
+      "side": 1,
+      "message": "Ah, I see now that event_id_ is used in many places. That would be the preferred method, then.\n\nPlease don\u0027t put IsPaymentRequestCancelled into PaymentRequestRespondWithObserver. That seems like an incorrect place for it. Please use the event_id_. Sorry for the back-and-forth!",
+      "parentUuid": "41cc9f26_7bf618fa",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d130ae99_744992a4",
         "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
         "patchSetId": 7
