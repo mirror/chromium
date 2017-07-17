@@ -24,7 +24,29 @@ namespace {
 constexpr char kAppNameKey[] = "name";
 constexpr char kAppIdKey[] = "value";
 constexpr char kAppPreferredKey[] = "preferred";
-constexpr char kAppLockScreenSupportKey[] = "supportsLockScreen";
+constexpr char kAppLockScreenSupportKey[] = "lockScreenSupport";
+
+// Enum values of settings.NoteAppLockScreenSupport used in the UI code.
+// IMPORTANT: Keep these in sync with chromeos::NoteTakingLockScreenSupport
+// enum values.
+constexpr int kNotSupportedOnLockScreen = 0;
+constexpr int kNotAllowedByPolicy = 1;
+constexpr int kSupportedOnLockScreen = 2;
+constexpr int kEnabledOnLockScreen = 3;
+
+int LockScreenSupportToInt(NoteTakingLockScreenSupport support) {
+  switch (support) {
+    case NoteTakingLockScreenSupport::kNotSupported:
+      return kNotSupportedOnLockScreen;
+    case NoteTakingLockScreenSupport::kNotAllowedByPolicy:
+      return kNotAllowedByPolicy;
+    case NoteTakingLockScreenSupport::kSupported:
+      return kSupportedOnLockScreen;
+    case NoteTakingLockScreenSupport::kEnabled:
+      return kEnabledOnLockScreen;
+  }
+  return kNotSupportedOnLockScreen;
+}
 
 }  // namespace
 
@@ -52,12 +74,21 @@ void StylusHandler::RegisterMessages() {
       base::Bind(&StylusHandler::SetPreferredNoteTakingApp,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
+      "setNoteTakingAppEnabledOnLockScreen",
+      base::Bind(&StylusHandler::SetNoteTakingAppEnabledOnLockScreen,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
       "showPlayStoreApps",
       base::Bind(&StylusHandler::ShowPlayStoreApps, base::Unretained(this)));
 }
 
 void StylusHandler::OnAvailableNoteTakingAppsUpdated() {
   UpdateNoteTakingApps();
+}
+
+void StylusHandler::OnPreferredNoteTakingAppUpdated(Profile* profile) {
+  if (Profile::FromWebUI(web_ui()) == profile)
+    UpdateNoteTakingApps();
 }
 
 void StylusHandler::OnDeviceListsComplete() {
@@ -82,9 +113,8 @@ void StylusHandler::UpdateNoteTakingApps() {
       dict->SetString(kAppNameKey, info.name);
       dict->SetString(kAppIdKey, info.app_id);
       dict->SetBoolean(kAppPreferredKey, info.preferred);
-      dict->SetBoolean(kAppLockScreenSupportKey,
-                       info.lock_screen_support !=
-                           NoteTakingLockScreenSupport::kNotSupported);
+      dict->SetInteger(kAppLockScreenSupportKey,
+                       LockScreenSupportToInt(info.lock_screen_support));
       apps_list.Append(std::move(dict));
 
       note_taking_app_ids_.insert(info.app_id);
@@ -113,6 +143,22 @@ void StylusHandler::SetPreferredNoteTakingApp(const base::ListValue* args) {
 
   NoteTakingHelper::Get()->SetPreferredApp(Profile::FromWebUI(web_ui()),
                                            app_id);
+}
+
+void StylusHandler::SetNoteTakingAppEnabledOnLockScreen(
+    const base::ListValue* args) {
+  std::string app_id;
+  CHECK(args->GetString(0, &app_id));
+  bool enabled = false;
+  CHECK(args->GetBoolean(1, &enabled));
+
+  if (!note_taking_app_ids_.count(app_id)) {
+    LOG(ERROR) << "Got unknown note-taking-app ID \"" << app_id << "\"";
+    return;
+  }
+
+  NoteTakingHelper::Get()->SetAppEnabledOnLockScreen(
+      Profile::FromWebUI(web_ui()), app_id, enabled);
 }
 
 void StylusHandler::HandleInitialize(const base::ListValue* args) {

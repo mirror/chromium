@@ -14,6 +14,18 @@ Polymer({
   is: 'settings-stylus',
 
   properties: {
+    /**
+     * Policy indicator type for user policy - used for policy indicator UI
+     * shown when an app that is not allowed to run on lock screen by policy is
+     * selected.
+     * @const {CrPolicyIndicatorType}
+     * @private
+     */
+    UserPolicyIndicator: {
+      type: String,
+      value: CrPolicyIndicatorType.USER_POLICY,
+    },
+
     /** Preferences state. */
     prefs: {
       type: Object,
@@ -50,8 +62,34 @@ Polymer({
     },
   },
 
+  /**
+   * @return {boolean} Whether note taking from the lock screen is supported
+   *     by the selected note-taking app.
+   */
   supportsLockScreen_: function() {
-    return this.selectedApp_ && this.selectedApp_.supportsLockScreen;
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport !=
+        settings.NoteAppLockScreenSupport.NOT_SUPPORTED;
+  },
+
+  /**
+   * @return {boolean} Whether the selected app is disallowed to handle note
+   *     actions from lock screen as a result of a user policy.
+   */
+  disallowedOnLockScreenByPolicy_: function() {
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.NOT_ALLOWED_BY_POLICY;
+  },
+
+  /**
+   * @return {boolean} Whether the selected app is enabled as a note action
+   *     handler on the lock screen.
+   */
+  lockScreenSupportEnabled_: function() {
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.ENABLED;
   },
 
   /** @private {?settings.DevicePageBrowserProxy} */
@@ -80,6 +118,25 @@ Polymer({
       return app.value == id;
     }) ||
         null;
+  },
+
+  /**
+   * Toggles whether the selected app is enabled as a note action handler on
+   * the lock screen.
+   */
+  toggleLockScreenSupport_: function() {
+    assert(!!this.selectedApp_);
+    if (this.selectedApp_.lockScreenSupport !=
+            settings.NoteAppLockScreenSupport.ENABLED &&
+        this.selectedApp_.lockScreenSupport !=
+            settings.NoteAppLockScreenSupport.SUPPORTED) {
+      return;
+    }
+
+    var enable = this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.SUPPORTED;
+    this.browserProxy_.setNoteTakingAppEnabledOnLockScreen(
+        this.selectedApp_.value, enable);
   },
 
   /** @private */
