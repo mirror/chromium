@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81138803_a072a209",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-07-17T18:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ba4d66_a71e09c2",
+      "revId": "c77b976ba65a4493b896f7c3308a70dbaab0f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4477a45_767afdb3",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-15T00:59:20Z",
       "side": 1,
       "message": "How about just calling dispatch_async(dispatch_get_main_queue()) regardless of current thread?",
+      "range": {
+        "startLine": 295,
+        "startChar": 21,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "c77b976ba65a4493b896f7c3308a70dbaab0f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746d4810_9e49f4d9",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-07-17T18:17:43Z",
+      "side": 1,
+      "message": "Checked docs and it states that completion handler may be dispatched to a background queue. So, always re-dispatch is the right thing to do.",
+      "parentUuid": "b4477a45_767afdb3",
       "range": {
         "startLine": 295,
         "startChar": 21,
