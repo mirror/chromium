@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "e5baf8c3_a11db096",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T18:45:12Z",
+      "side": 1,
+      "message": "I\u0027ve looked at startNetLogToDisk API in Cronet, and it is exposed as part of ExperimentalCronetEngine, so it should be Ok to change. \n\nI\u0027ve also looked at internal consumers of this API, and there is only one, and it does indeed call stopNetLog.\n\nI think that for Cronet consumers it is also easier to collect / send single netlog file, rather than entire directory. Having descriptive message in \u003clogpath.json\u003e while collection is in progress sounds good to me.\n\nI wonder whether for Cronet consumers it could make sense to have a reasonable default netlog size, and allow them to change it if necessary, so they would still use startNetLogToFile / stopNetLog and have experimental option to set maxnetlogsize?",
+      "parentUuid": "2b0145cc_1b0579eb",
+      "range": {
+        "startLine": 1048,
+        "startChar": 22,
+        "endLine": 1048,
+        "endChar": 26
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c590884b_796f8881",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 7
@@ -153,6 +177,29 @@
       "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2f5433b_b31b401b",
+        "filename": "net/log/file_net_log_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-17T18:45:12Z",
+      "side": 1,
+      "message": "kLimit -\u003e kNoLimit.",
+      "range": {
+        "startLine": 61,
+        "startChar": 47,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
