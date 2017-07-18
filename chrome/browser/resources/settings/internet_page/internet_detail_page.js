@@ -152,6 +152,13 @@ Polymer({
   wasPreviousRouteNetworkDetailPage_: false,
 
   /**
+   * Whether the tether dialog should be prevented from being shown on the next
+   * route change.
+   * @private {boolean}
+   */
+  shouldPreventTetherDialogOnNextRouteChange_: false,
+
+  /**
    * settings.RouteObserverBehavior
    * @param {!settings.Route} route
    * @param {!settings.Route} oldRoute
@@ -177,15 +184,19 @@ Polymer({
       console.error('No guid specified for page:' + route);
       this.close_();
     }
+
     // Set basic networkProperties until they are loaded.
     this.networkPropertiesReceived_ = false;
-    var type = /** @type {!chrome.networkingPrivate.NetworkType} */ (
-                   queryParams.get('type')) ||
-        CrOnc.Type.WI_FI;
     this.shouldShowConfigureWhenNetworkLoaded_ =
+        !this.shouldPreventTetherDialogOnNextRouteChange_ &&
         queryParams.get('showConfigure') == 'true';
     this.wasPreviousRouteNetworkDetailPage_ =
         oldRoute == settings.routes.NETWORK_DETAIL;
+    this.shouldPreventTetherDialogOnNextRouteChange_ = false;
+
+    var type = /** @type {!chrome.networkingPrivate.NetworkType} */ (
+                   queryParams.get('type')) ||
+        CrOnc.Type.WI_FI;
     var name = queryParams.get('name') || type;
     this.networkProperties = {
       GUID: this.guid,
@@ -244,6 +255,9 @@ Polymer({
 
     if (this.shouldShowConfigureWhenNetworkLoaded_ &&
         this.networkProperties.Tether) {
+      // Set |this.shouldShowConfigureWhenNetworkLoaded_| back to false to
+      // ensure that the Tether dialog is only shown once.
+      this.shouldShowConfigureWhenNetworkLoaded_ = false;
       this.showTetherDialog_();
     }
   },
@@ -575,13 +589,25 @@ Polymer({
 
   /** @private */
   onTetherDialogClose_: function() {
-    // The tether dialog is opened by specifying "showConfigure=true"
-    // in the query params. This may lead to the previous route also
-    // being the detail page, in which case we should navigate back to
-    // the previous route here so that when the user navigates back
-    // they will navigate to the previous non-detail page.
-    if (this.wasPreviousRouteNetworkDetailPage_)
+    // The tether dialog is opened by specifying "showConfigure=true" in the
+    // query parameters. There are two ways that this happens:
+    // (1) This page is opened via a click on the Tether network from another
+    //     page or from another UI element not in the settings page (e.g., from
+    //     quick settings). If this is the case, we should remain on the detail
+    //     page and no special handling is needed.
+    // (2) The dialog is opened from the network detail page (i.e., the previous
+    //     page is the same page except for perhaps the query parameters). If
+    //     this is the case, there is now an extra entry in the back stack which
+    //     is equivalent to this entry, so we should navigate back to prevent
+    //     the possibility that the user clicks back and ends up on the same
+    //     page again. Additionally,
+    //     |this.shouldPreventTetherDialogOnNextRouteChange_| is set to true
+    //     during this transition to ensure that navigating backwards does not
+    //     reopen the dialog.
+    if (this.wasPreviousRouteNetworkDetailPage_) {
+      this.shouldPreventTetherDialogOnNextRouteChange_ = true;
       settings.navigateToPreviousRoute();
+    }
   },
 
   /** @private */
