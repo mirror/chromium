@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8ef60bfe_ea9f9b8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-18T11:02:18Z",
+      "side": 1,
+      "message": "Gerrit made (for some reason :/ ) a separate patchset just for an updated commit message.\nPls see https://chromium-review.googlesource.com/c/559344/6//COMMIT_MSG",
+      "parentUuid": "cc241496_07952ee3",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 134
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a92395_911b6fea",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 4
