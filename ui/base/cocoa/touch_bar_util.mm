@@ -18,6 +18,10 @@ Class NSCustomTouchBarItem() {
   return NSClassFromString(@"NSCustomTouchBarItem");
 }
 
+Class NSGroupTouchBarItem() {
+  return NSClassFromString(@"NSGroupTouchBarItem");
+}
+
 NSButton* GetBlueTouchBarButton(NSString* title, id target, SEL action) {
   NSButton* button =
       [NSButton buttonWithTitle:title target:target action:action];
