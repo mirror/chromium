@@ -6635,4 +6635,111 @@ TEST_F(PersonalDataManagerTest, LogStoredProfileMetrics) {
                                      200, 1);
 }
 
+TEST_F(PersonalDataManagerTest, RemoveProfilesNotUsedSinceTimestamp) {
+  const char kHistogramName[] = "Autofill.AddressesSuppressedForDisuse";
+  const base::Time kNow = AutofillClock::Now();
+  constexpr size_t kNumProfiles = 10;
+
+  // Setup the profile vectors with last use dates ranging from |now| to 270
+  // days ago, in 30 day increments.  Note that the profiles are sorted by
+  // decreasing last use date.
+  std::vector<AutofillProfile> all_profile_data;
+  std::vector<AutofillProfile*> all_profile_ptrs;
+  all_profile_data.reserve(kNumProfiles);
+  all_profile_ptrs.reserve(kNumProfiles);
+  for (size_t i = 0; i < kNumProfiles; ++i) {
+    constexpr base::TimeDelta k30Days = base::TimeDelta::FromDays(30);
+    all_profile_data.emplace_back(base::GenerateGUID(), "https://example.com");
+    all_profile_data.back().set_use_date(kNow - (i * k30Days));
+    all_profile_ptrs.push_back(&all_profile_data.back());
+  }
+
+  // Verify that disused profiles get removed from the end. Note that the last
+  // four profiles have use dates more than 175 days ago.
+  {
+    // Create a working copy of the profile pointers.
+    std::vector<AutofillProfile*> profiles(all_profile_ptrs);
+
+    // The first 6 have use dates more recent than 175 days ago.
+    std::vector<AutofillProfile*> expected_profiles(profiles.begin(),
+                                                    profiles.begin() + 6);
+
+    // Filter the profiles while capturing histograms.
+    base::HistogramTester histogram_tester;
+    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(
+        kNow - base::TimeDelta::FromDays(175), &profiles);
+
+    // Validate that we get the expected filtered profiles and histograms.
+    EXPECT_EQ(expected_profiles, profiles);
+    histogram_tester.ExpectTotalCount(kHistogramName, 1);
+    histogram_tester.ExpectBucketCount(kHistogramName, 4, 1);
+  }
+
+  // Reverse the profile order and verify that disused profiles get removed
+  // from the beginning. Note that the first five profiles, post reversal, have
+  // use dates more then 145 days ago.
+  {
+    // Create a reversed working copy of the profile pointers.
+    std::vector<AutofillProfile*> profiles(all_profile_ptrs.rbegin(),
+                                           all_profile_ptrs.rend());
+
+    // The last 5 profiles have use dates more recent than 145 days ago.
+    std::vector<AutofillProfile*> expected_profiles(profiles.begin() + 5,
+                                                    profiles.end());
+
+    // Filter the profiles while capturing histograms.
+    base::HistogramTester histogram_tester;
+    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(
+        kNow - base::TimeDelta::FromDays(145), &profiles);
+
+    // Validate that we get the expected filtered profiles and histograms.
+    EXPECT_EQ(expected_profiles, profiles);
+    histogram_tester.ExpectTotalCount(kHistogramName, 1);
+    histogram_tester.ExpectBucketCount(kHistogramName, 5, 1);
+  }
+
+  // Randomize the profile order and validate that the filtered list retains
+  // that order. Note that the six profiles have use dates more then 115 days
+  // ago.
+  {
+    // A handy constant.
+    const base::Time k115DaysAgo = kNow - base::TimeDelta::FromDays(115);
+
+    // Created a shuffled master copy of the profile pointers.
+    std::vector<AutofillProfile*> shuffled_profiles(all_profile_ptrs);
+    std::random_shuffle(shuffled_profiles.begin(), shuffled_profiles.end());
+
+    // Copy the shuffled profile pointer collections to use as the working set.
+    std::vector<AutofillProfile*> profiles(shuffled_profiles);
+
+    // Filter the profiles while capturing histograms.
+    base::HistogramTester histogram_tester;
+    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(k115DaysAgo,
+                                                             &profiles);
+
+    // Validate that we have the right profiles. Iterate of the the shuffled
+    // master copy and the filtered copy at the same time. making sure that the
+    // elements in the filtered copy occur in the same order as the shuffled
+    // master. Along the way, validate that the elements in and out of the
+    // filtered copy have appropriate use dates.
+    EXPECT_EQ(4u, profiles.size());
+    auto it = shuffled_profiles.begin();
+    for (const AutofillProfile* profile : profiles) {
+      for (; it != shuffled_profiles.end() && (*it) != profile; ++it) {
+        EXPECT_LT((*it)->use_date(), k115DaysAgo);
+      }
+      ASSERT_TRUE(it != shuffled_profiles.end());
+      EXPECT_GT(profile->use_date(), k115DaysAgo);
+      ++it;
+    }
+    for (; it != shuffled_profiles.end(); ++it) {
+      EXPECT_LT((*it)->use_date(), k115DaysAgo);
+    }
+
+    // Validate the histograms.
+    histogram_tester.ExpectTotalCount(kHistogramName, 1);
+    histogram_tester.ExpectBucketCount(kHistogramName, 6, 1);
+  }
+}
+
 }  // namespace autofill
