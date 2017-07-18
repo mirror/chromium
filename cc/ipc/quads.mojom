@@ -139,5 +139,9 @@ struct DrawQuad {
   // quads.
   SharedQuadState? sqs;
 
+  // This is a stable id indicating which layer this quad comes from. This also
+  // helps indentify which shared quad state this quad would refer to.
+  uint64 stable_id;
+
   DrawQuadState draw_quad_state;
 };

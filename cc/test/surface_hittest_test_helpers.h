@@ -25,21 +25,25 @@ class CompositorFrame;
 namespace test {
 
 void CreateSharedQuadState(RenderPass* pass,
+                           uint64_t stable_id,
                            const gfx::Transform& transform,
                            const gfx::Rect& root_rect);
 
 void CreateSolidColorDrawQuad(RenderPass* pass,
+                              uint64_t stable_id,
                               const gfx::Transform& transform,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect);
 
 void CreateRenderPassDrawQuad(RenderPass* pass,
+                              uint64_t stable_id,
                               const gfx::Transform& transform,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect,
                               int render_pass_id);
 
 void CreateSurfaceDrawQuad(RenderPass* pass,
+                           uint64_t stable_id,
                            const gfx::Transform& transform,
                            const gfx::Rect& root_rect,
                            const gfx::Rect& quad_rect,

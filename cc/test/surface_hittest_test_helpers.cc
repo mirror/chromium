@@ -15,18 +15,20 @@ namespace cc {
 namespace test {
 
 void CreateSharedQuadState(RenderPass* pass,
+                           uint64_t stable_id,
                            const gfx::Transform& transform,
                            const gfx::Rect& root_rect) {
   SharedQuadState* child_shared_state = pass->CreateAndAppendSharedQuadState();
-  child_shared_state->SetAll(transform, root_rect, root_rect, root_rect, false,
-                             1.0f, SkBlendMode::kSrcOver, 0);
+  child_shared_state->SetAll(stable_id, transform, root_rect, root_rect,
+                             root_rect, false, 1.0f, SkBlendMode::kSrcOver, 0);
 }
 
 void CreateSolidColorDrawQuad(RenderPass* pass,
+                              uint64_t stable_id,
                               const gfx::Transform& transform,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect) {
-  CreateSharedQuadState(pass, transform, root_rect);
+  CreateSharedQuadState(pass, stable_id, transform, root_rect);
   SolidColorDrawQuad* color_quad =
       pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect, quad_rect,
@@ -34,11 +36,12 @@ void CreateSolidColorDrawQuad(RenderPass* pass,
 }
 
 void CreateRenderPassDrawQuad(RenderPass* pass,
+                              uint64_t stable_id,
                               const gfx::Transform& transform,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect,
                               int render_pass_id) {
-  CreateSharedQuadState(pass, transform, root_rect);
+  CreateSharedQuadState(pass, stable_id, transform, root_rect);
   RenderPassDrawQuad* render_pass_quad =
       pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   render_pass_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,
@@ -48,11 +51,12 @@ void CreateRenderPassDrawQuad(RenderPass* pass,
 }
 
 void CreateSurfaceDrawQuad(RenderPass* pass,
+                           uint64_t stable_id,
                            const gfx::Transform& transform,
                            const gfx::Rect& root_rect,
                            const gfx::Rect& quad_rect,
                            viz::SurfaceId surface_id) {
-  CreateSharedQuadState(pass, transform, root_rect);
+  CreateSharedQuadState(pass, stable_id, transform, root_rect);
   SurfaceDrawQuad* surface_quad =
       pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   surface_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,

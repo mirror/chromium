@@ -375,7 +375,7 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
   SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(
-      draw_transform(), content_rect(), content_rect(),
+      id(), draw_transform(), content_rect(), content_rect(),
       draw_properties_.clip_rect, draw_properties_.is_clipped,
       draw_properties_.draw_opacity, BlendMode(), sorting_context_id);
 
@@ -449,7 +449,7 @@ void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
   if (!temp_quad)
     return;
   gfx::Transform mask_quad_to_surface_contents =
-      temp_quad->shared_quad_state->quad_to_target_transform;
+      temp_quad->shared_quad_state()->quad_to_target_transform;
   // Draw transform of a mask layer should be a 2d scale.
   DCHECK(mask_quad_to_surface_contents.IsScale2d());
   gfx::Vector2dF mask_quad_to_surface_contents_scale =

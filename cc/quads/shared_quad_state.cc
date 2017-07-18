@@ -14,7 +14,8 @@
 namespace cc {
 
 SharedQuadState::SharedQuadState()
-    : is_clipped(false),
+    : stable_id(0),
+      is_clipped(false),
       opacity(0.f),
       blend_mode(SkBlendMode::kSrcOver),
       sorting_context_id(0) {}
@@ -27,7 +28,8 @@ SharedQuadState::~SharedQuadState() {
       "cc::SharedQuadState", this);
 }
 
-void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
+void SharedQuadState::SetAll(uint64_t stable_id,
+                             const gfx::Transform& quad_to_target_transform,
                              const gfx::Rect& quad_layer_rect,
                              const gfx::Rect& visible_quad_layer_rect,
                              const gfx::Rect& clip_rect,
@@ -35,6 +37,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
                              float opacity,
                              SkBlendMode blend_mode,
                              int sorting_context_id) {
+  this->stable_id = stable_id;
   this->quad_to_target_transform = quad_to_target_transform;
   this->quad_layer_rect = quad_layer_rect;
   this->visible_quad_layer_rect = visible_quad_layer_rect;
@@ -46,6 +49,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
 }
 
 void SharedQuadState::AsValueInto(base::trace_event::TracedValue* value) const {
+  value->SetInteger("stable_id", stable_id);
   MathUtil::AddToTracedValue("transform", quad_to_target_transform, value);
   MathUtil::AddToTracedValue("layer_content_rect", quad_layer_rect, value);
   MathUtil::AddToTracedValue("layer_visible_content_rect",

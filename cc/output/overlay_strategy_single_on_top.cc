@@ -46,7 +46,7 @@ bool OverlayStrategySingleOnTop::Attempt(
       if (std::find(std::begin(kOverlayFormatsWithAlpha),
                     std::end(kOverlayFormatsWithAlpha),
                     candidate.format) != std::end(kOverlayFormatsWithAlpha) &&
-          it->shared_quad_state->blend_mode == SkBlendMode::kSrc)
+          it->shared_quad_state()->blend_mode == SkBlendMode::kSrc)
         continue;
 
       if (candidate.display_rect.size().GetArea() >

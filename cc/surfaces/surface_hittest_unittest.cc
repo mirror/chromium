@@ -82,11 +82,9 @@ TEST(SurfaceHittestTest, Hittest_BadCompositorFrameDoesNotCrash) {
       kArbitraryFrameSinkId,
       viz::LocalSurfaceId(0xdeadbeef, base::UnguessableToken::Create()));
   gfx::Rect child_rect(200, 200);
-  CreateSurfaceDrawQuad(root_pass,
-                        gfx::Transform(),
-                        root_rect,
-                        child_rect,
-                        child_surface_id);
+  uint64_t stable_id = 1;
+  CreateSurfaceDrawQuad(root_pass, stable_id, gfx::Transform(), root_rect,
+                        child_rect, child_surface_id);
 
   // Submit the root frame.
   viz::LocalSurfaceIdAllocator root_allocator;
@@ -166,14 +164,12 @@ TEST(SurfaceHittestTest, Hittest_ChildSurface) {
   viz::LocalSurfaceId child_local_surface_id = child_allocator.GenerateId();
   viz::SurfaceId child_surface_id(child_frame_sink_id, child_local_surface_id);
   gfx::Rect child_rect(200, 200);
-  CreateSurfaceDrawQuad(root_pass,
-                        gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f,
-                                        0.0f, 1.0f, 0.0f, 50.0f,
-                                        0.0f, 0.0f, 1.0f, 0.0f,
-                                        0.0f, 0.0f, 0.0f, 1.0f),
-                        root_rect,
-                        child_rect,
-                        child_surface_id);
+  uint64_t stable_id = 1;
+  CreateSurfaceDrawQuad(
+      root_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f, 50.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+      root_rect, child_rect, child_surface_id);
 
   // Submit the root frame.
   viz::LocalSurfaceIdAllocator root_allocator;
@@ -188,12 +184,11 @@ TEST(SurfaceHittestTest, Hittest_ChildSurface) {
 
   // Add a solid quad in the child surface.
   gfx::Rect child_solid_quad_rect(100, 100);
+  ++stable_id;
   CreateSolidColorDrawQuad(
-      child_pass,
-      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f,
-                     0.0f, 1.0f, 0.0f, 50.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f,
-                     0.0f, 0.0f, 0.0f, 1.0f),
+      child_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f, 50.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
       root_rect, child_solid_quad_rect);
 
   // Submit the frame.
@@ -243,14 +238,12 @@ TEST(SurfaceHittestTest, Hittest_ChildSurface) {
 
   // Submit another root frame, with a slightly perturbed child Surface.
   root_frame = CreateCompositorFrame(root_rect, &root_pass);
-  CreateSurfaceDrawQuad(root_pass,
-                        gfx::Transform(1.0f, 0.0f, 0.0f, 75.0f,
-                                        0.0f, 1.0f, 0.0f, 75.0f,
-                                        0.0f, 0.0f, 1.0f, 0.0f,
-                                        0.0f, 0.0f, 0.0f, 1.0f),
-                        root_rect,
-                        child_rect,
-                        child_surface_id);
+  stable_id = 1;
+  CreateSurfaceDrawQuad(
+      root_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 75.0f, 0.0f, 1.0f, 0.0f, 75.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+      root_rect, child_rect, child_surface_id);
   root_support->SubmitCompositorFrame(root_local_surface_id,
                                       std::move(root_frame));
 
@@ -304,22 +297,21 @@ TEST(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
 
   // Create a RenderPassDrawQuad to a non-existant RenderPass.
   int invalid_render_pass_id = 1337;
-  CreateRenderPassDrawQuad(root_pass, gfx::Transform(), root_rect, root_rect,
-                           invalid_render_pass_id);
+  uint64_t stable_id = 1;
+  CreateRenderPassDrawQuad(root_pass, stable_id, gfx::Transform(), root_rect,
+                           root_rect, invalid_render_pass_id);
 
   // Add a reference to the child surface on the root surface.
   viz::LocalSurfaceIdAllocator child_allocator;
   viz::LocalSurfaceId child_local_surface_id = child_allocator.GenerateId();
   viz::SurfaceId child_surface_id(child_frame_sink_id, child_local_surface_id);
   gfx::Rect child_rect(200, 200);
-  CreateSurfaceDrawQuad(root_pass,
-                        gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f,
-                                       0.0f, 1.0f, 0.0f, 50.0f,
-                                       0.0f, 0.0f, 1.0f, 0.0f,
-                                       0.0f, 0.0f, 0.0f, 1.0f),
-                        root_rect,
-                        child_rect,
-                        child_surface_id);
+  ++stable_id;
+  CreateSurfaceDrawQuad(
+      root_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f, 50.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+      root_rect, child_rect, child_surface_id);
 
   // Submit the root frame.
   viz::LocalSurfaceIdAllocator root_allocator;
@@ -334,13 +326,12 @@ TEST(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
 
   // Add a solid quad in the child surface.
   gfx::Rect child_solid_quad_rect(100, 100);
-  CreateSolidColorDrawQuad(child_pass,
-                           gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f,
-                                         0.0f, 1.0f, 0.0f, 50.0f,
-                                         0.0f, 0.0f, 1.0f, 0.0f,
-                                         0.0f, 0.0f, 0.0f, 1.0f),
-                           root_rect,
-                           child_solid_quad_rect);
+  ++stable_id;
+  CreateSolidColorDrawQuad(
+      child_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f, 50.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+      root_rect, child_solid_quad_rect);
 
   // Submit the frame.
   child_support->SubmitCompositorFrame(child_local_surface_id,
@@ -424,19 +415,17 @@ TEST(SurfaceHittestTest, Hittest_RenderPassDrawQuad) {
 
   // Create a RenderPassDrawQuad.
   gfx::Rect render_pass_quad_rect(100, 100);
-  CreateRenderPassDrawQuad(root_pass,
-                           transform_to_root_target,
-                           root_rect,
-                           render_pass_quad_rect,
+  int stable_id = 1;
+  CreateRenderPassDrawQuad(root_pass, stable_id, transform_to_root_target,
+                           root_rect, render_pass_quad_rect,
                            child_render_pass_id);
 
   // Add a solid quad in the child render pass.
   RenderPass* child_render_pass = root_frame.render_pass_list.front().get();
   gfx::Rect child_solid_quad_rect(100, 100);
-  CreateSolidColorDrawQuad(child_render_pass,
-                           gfx::Transform(),
-                           gfx::Rect(100, 100),
-                           child_solid_quad_rect);
+  ++stable_id;
+  CreateSolidColorDrawQuad(child_render_pass, stable_id, gfx::Transform(),
+                           gfx::Rect(100, 100), child_solid_quad_rect);
 
   // Submit the root frame.
   viz::LocalSurfaceIdAllocator root_allocator;
@@ -518,12 +507,11 @@ TEST(SurfaceHittestTest, Hittest_SingleSurface_WithInsetsDelegate) {
   viz::LocalSurfaceId child_local_surface_id = child_allocator.GenerateId();
   viz::SurfaceId child_surface_id(child_frame_sink_id, child_local_surface_id);
   gfx::Rect child_rect(200, 200);
+  int stable_id = 1;
   CreateSurfaceDrawQuad(
-      root_pass,
-      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f,
-                     0.0f, 1.0f, 0.0f, 50.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f,
-                     0.0f, 0.0f, 0.0f, 1.0f),
+      root_pass, stable_id,
+      gfx::Transform(1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f, 50.0f, 0.0f,
+                     0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
       root_rect, child_rect, child_surface_id);
 
   // Submit the root frame.
@@ -539,8 +527,9 @@ TEST(SurfaceHittestTest, Hittest_SingleSurface_WithInsetsDelegate) {
 
   // Add a solid quad in the child surface.
   gfx::Rect child_solid_quad_rect(190, 190);
+  ++stable_id;
   CreateSolidColorDrawQuad(
-      child_pass,
+      child_pass, stable_id,
       gfx::Transform(1.0f, 0.0f, 0.0f, 5.0f, 0.0f, 1.0f, 0.0f, 5.0f, 0.0f, 0.0f,
                      1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
       root_rect, child_solid_quad_rect);

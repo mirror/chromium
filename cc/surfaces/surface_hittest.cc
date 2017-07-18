@@ -204,7 +204,7 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
   for (const DrawQuad* quad : render_pass->quad_list) {
     if (quad->material == DrawQuad::SURFACE_CONTENT) {
       gfx::Transform target_to_quad_transform;
-      if (!quad->shared_quad_state->quad_to_target_transform.GetInverse(
+      if (!quad->shared_quad_state()->quad_to_target_transform.GetInverse(
               &target_to_quad_transform)) {
         return false;
       }
@@ -277,15 +277,15 @@ bool SurfaceHittest::PointInQuad(const DrawQuad* quad,
                                  gfx::Point* point_in_quad_space) {
   // First we test against the clip_rect. The clip_rect is in target space, so
   // we can test the point directly.
-  if (quad->shared_quad_state->is_clipped &&
-      !quad->shared_quad_state->clip_rect.Contains(
+  if (quad->shared_quad_state()->is_clipped &&
+      !quad->shared_quad_state()->clip_rect.Contains(
           point_in_render_pass_space)) {
     return false;
   }
 
   // We now transform the point to content space and test if it hits the
   // rect.
-  if (!quad->shared_quad_state->quad_to_target_transform.GetInverse(
+  if (!quad->shared_quad_state()->quad_to_target_transform.GetInverse(
           target_to_quad_transform)) {
     return false;
   }

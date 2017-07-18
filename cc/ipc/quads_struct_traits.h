@@ -459,6 +459,10 @@ struct StructTraits<cc::mojom::DrawQuadDataView, DrawQuadWithSharedQuadState> {
     return {input.shared_quad_state};
   }
 
+  static uint64_t stable_id(const DrawQuadWithSharedQuadState& input) {
+    return input.quad->stable_id;
+  }
+
   static const cc::DrawQuad& draw_quad_state(
       const DrawQuadWithSharedQuadState& input) {
     return *input.quad;
@@ -487,7 +491,7 @@ struct ArrayTraits<cc::QuadList> {
   }
 
   static void AdvanceIterator(ConstIterator& iterator) {  // NOLINT
-    iterator.last_shared_quad_state = (*iterator.it)->shared_quad_state;
+    iterator.last_shared_quad_state = (*iterator.it)->shared_quad_state();
     ++iterator.it;
   }
 
@@ -495,7 +499,8 @@ struct ArrayTraits<cc::QuadList> {
     DrawQuadWithSharedQuadState dq = {*iterator.it, nullptr};
     // Only serialize the SharedQuadState if we haven't seen it before and
     // therefore have not already serialized it.
-    const cc::SharedQuadState* current_sqs = (*iterator.it)->shared_quad_state;
+    const cc::SharedQuadState* current_sqs =
+        (*iterator.it)->shared_quad_state();
     if (current_sqs != iterator.last_shared_quad_state)
       dq.shared_quad_state = current_sqs;
     return dq;

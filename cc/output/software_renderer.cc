@@ -221,7 +221,7 @@ void SoftwareRenderer::DoDrawQuad(const DrawQuad* quad,
 
   gfx::Transform quad_rect_matrix;
   QuadRectTransform(&quad_rect_matrix,
-                    quad->shared_quad_state->quad_to_target_transform,
+                    quad->shared_quad_state()->quad_to_target_transform,
                     gfx::RectF(quad->rect));
   gfx::Transform contents_device_transform =
       current_frame()->window_matrix * current_frame()->projection_matrix *
@@ -248,9 +248,9 @@ void SoftwareRenderer::DoDrawQuad(const DrawQuad* quad,
   }
 
   if (quad->ShouldDrawWithBlending() ||
-      quad->shared_quad_state->blend_mode != SkBlendMode::kSrcOver) {
-    current_paint_.setAlpha(quad->shared_quad_state->opacity * 255);
-    current_paint_.setBlendMode(quad->shared_quad_state->blend_mode);
+      quad->shared_quad_state()->blend_mode != SkBlendMode::kSrcOver) {
+    current_paint_.setAlpha(quad->shared_quad_state()->opacity * 255);
+    current_paint_.setBlendMode(quad->shared_quad_state()->blend_mode);
   } else {
     current_paint_.setBlendMode(SkBlendMode::kSrc);
   }
@@ -317,7 +317,7 @@ void SoftwareRenderer::DrawDebugBorderQuad(const DebugBorderDrawQuad* quad) {
   current_canvas_->resetMatrix();
 
   current_paint_.setColor(quad->color);
-  current_paint_.setAlpha(quad->shared_quad_state->opacity *
+  current_paint_.setAlpha(quad->shared_quad_state()->opacity *
                           SkColorGetA(quad->color));
   current_paint_.setStyle(SkPaint::kStroke_Style);
   current_paint_.setStrokeWidth(quad->width);
@@ -334,7 +334,7 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
   current_canvas_->concat(content_matrix);
 
   const bool needs_transparency =
-      SkScalarRoundToInt(quad->shared_quad_state->opacity * 255) < 255;
+      SkScalarRoundToInt(quad->shared_quad_state()->opacity * 255) < 255;
   const bool disable_image_filtering =
       disable_picture_quad_image_filtering_ || quad->nearest_neighbor;
 
@@ -361,9 +361,9 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
     // TODO(vmpstr): Fold this canvas into playback and have raster source
     // accept a set of settings on playback that will determine which canvas to
     // apply. (http://crbug.com/594679)
-    skia::OpacityFilterCanvas filtered_canvas(current_canvas_,
-                                              quad->shared_quad_state->opacity,
-                                              disable_image_filtering);
+    skia::OpacityFilterCanvas filtered_canvas(
+        current_canvas_, quad->shared_quad_state()->opacity,
+        disable_image_filtering);
     quad->raster_source->PlaybackToCanvas(
         &filtered_canvas, canvas_color_space, quad->content_rect,
         quad->content_rect,
@@ -382,7 +382,7 @@ void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
   gfx::RectF visible_quad_vertex_rect = MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   current_paint_.setColor(quad->color);
-  current_paint_.setAlpha(quad->shared_quad_state->opacity *
+  current_paint_.setAlpha(quad->shared_quad_state()->opacity *
                           SkColorGetA(quad->color));
   current_canvas_->drawRect(gfx::RectFToSkRect(visible_quad_vertex_rect),
                             current_paint_);
@@ -566,7 +566,7 @@ void SoftwareRenderer::DrawUnsupportedQuad(const DrawQuad* quad) {
 #else
   current_paint_.setColor(SK_ColorMAGENTA);
 #endif
-  current_paint_.setAlpha(quad->shared_quad_state->opacity * 255);
+  current_paint_.setAlpha(quad->shared_quad_state()->opacity * 255);
   current_canvas_->drawRect(gfx::RectFToSkRect(QuadVertexRect()),
                             current_paint_);
 }
@@ -696,7 +696,7 @@ sk_sp<SkShader> SoftwareRenderer::GetBackgroundFilterShader(
 
   gfx::Transform quad_rect_matrix;
   QuadRectTransform(&quad_rect_matrix,
-                    quad->shared_quad_state->quad_to_target_transform,
+                    quad->shared_quad_state()->quad_to_target_transform,
                     gfx::RectF(quad->rect));
   gfx::Transform contents_device_transform =
       current_frame()->window_matrix * current_frame()->projection_matrix *

@@ -62,7 +62,7 @@ void LayerTestCommon::VerifyQuadsExactlyCoverRect(const QuadList& quads,
     EXPECT_TRUE(iter->rect.Contains(iter->visible_rect));
 
     gfx::RectF quad_rectf = MathUtil::MapClippedRect(
-        iter->shared_quad_state->quad_to_target_transform,
+        iter->shared_quad_state()->quad_to_target_transform,
         gfx::RectF(iter->visible_rect));
 
     // Before testing for exact coverage in the integer world, assert that
@@ -90,21 +90,22 @@ void LayerTestCommon::VerifyQuadsAreOccluded(const QuadList& quads,
   // No quad should exist if it's fully occluded.
   for (auto* quad : quads) {
     gfx::Rect target_visible_rect = MathUtil::MapEnclosingClippedRect(
-        quad->shared_quad_state->quad_to_target_transform, quad->visible_rect);
+        quad->shared_quad_state()->quad_to_target_transform,
+        quad->visible_rect);
     EXPECT_FALSE(occluded.Contains(target_visible_rect));
   }
 
   // Quads that are fully occluded on one axis only should be shrunken.
   for (auto* quad : quads) {
     gfx::Rect target_rect = MathUtil::MapEnclosingClippedRect(
-        quad->shared_quad_state->quad_to_target_transform, quad->rect);
-    if (!quad->shared_quad_state->quad_to_target_transform
-             .IsIdentityOrIntegerTranslation()) {
-      DCHECK(quad->shared_quad_state->quad_to_target_transform
-                 .IsPositiveScaleOrTranslation())
-          << quad->shared_quad_state->quad_to_target_transform.ToString();
+        quad->shared_quad_state()->quad_to_target_transform, quad->rect);
+    if (!quad->shared_quad_state()
+             ->quad_to_target_transform.IsIdentityOrIntegerTranslation()) {
+      DCHECK(quad->shared_quad_state()
+                 ->quad_to_target_transform.IsPositiveScaleOrTranslation())
+          << quad->shared_quad_state()->quad_to_target_transform.ToString();
       gfx::RectF target_rectf = MathUtil::MapClippedRect(
-          quad->shared_quad_state->quad_to_target_transform,
+          quad->shared_quad_state()->quad_to_target_transform,
           gfx::RectF(quad->rect));
       // Scale transforms allowed, as long as the final transformed rect
       // ends up on integer boundaries for ease of testing.

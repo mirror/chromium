@@ -85,7 +85,7 @@ CALayerResult FromRenderPassQuad(
     return CA_LAYER_FAILED_RENDER_PASS_BACKGROUND_FILTERS;
   }
 
-  if (quad->shared_quad_state->sorting_context_id != 0)
+  if (quad->shared_quad_state()->sorting_context_id != 0)
     return CA_LAYER_FAILED_RENDER_PASS_SORTING_CONTEXT_ID;
 
   auto it = render_pass_filters.find(quad->render_pass_id);
@@ -185,11 +185,11 @@ class CALayerOverlayProcessor {
       CALayerOverlay* ca_layer_overlay,
       bool* skip,
       bool* render_pass_draw_quad) {
-    if (quad->shared_quad_state->blend_mode != SkBlendMode::kSrcOver)
+    if (quad->shared_quad_state()->blend_mode != SkBlendMode::kSrcOver)
       return CA_LAYER_FAILED_QUAD_BLEND_MODE;
 
     // Early-out for invisible quads.
-    if (quad->shared_quad_state->opacity == 0.f) {
+    if (quad->shared_quad_state()->opacity == 0.f) {
       *skip = true;
       return CA_LAYER_SUCCESS;
     }
@@ -205,21 +205,21 @@ class CALayerOverlayProcessor {
     if (quad->IsTopEdge())
       ca_layer_overlay->edge_aa_mask |= GL_CA_LAYER_EDGE_TOP_CHROMIUM;
 
-    if (most_recent_shared_quad_state_ != quad->shared_quad_state) {
-      most_recent_shared_quad_state_ = quad->shared_quad_state;
+    if (most_recent_shared_quad_state_ != quad->shared_quad_state()) {
+      most_recent_shared_quad_state_ = quad->shared_quad_state();
       most_recent_overlay_shared_state_ = new CALayerOverlaySharedState;
       // Set rect clipping and sorting context ID.
       most_recent_overlay_shared_state_->sorting_context_id =
-          quad->shared_quad_state->sorting_context_id;
+          quad->shared_quad_state()->sorting_context_id;
       most_recent_overlay_shared_state_->is_clipped =
-          quad->shared_quad_state->is_clipped;
+          quad->shared_quad_state()->is_clipped;
       most_recent_overlay_shared_state_->clip_rect =
-          gfx::RectF(quad->shared_quad_state->clip_rect);
+          gfx::RectF(quad->shared_quad_state()->clip_rect);
 
       most_recent_overlay_shared_state_->opacity =
-          quad->shared_quad_state->opacity;
+          quad->shared_quad_state()->opacity;
       most_recent_overlay_shared_state_->transform =
-          quad->shared_quad_state->quad_to_target_transform.matrix();
+          quad->shared_quad_state()->quad_to_target_transform.matrix();
     }
     ca_layer_overlay->shared_state = most_recent_overlay_shared_state_;
 

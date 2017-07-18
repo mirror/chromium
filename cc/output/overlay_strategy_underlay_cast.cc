@@ -29,7 +29,7 @@ bool OverlayStrategyUnderlayCast::Attempt(
     if (OverlayCandidate::IsInvisibleQuad(quad))
       continue;
 
-    const auto& transform = quad->shared_quad_state->quad_to_target_transform;
+    const auto& transform = quad->shared_quad_state()->quad_to_target_transform;
     gfx::RectF quad_rect = gfx::RectF(quad->rect);
     transform.TransformRect(&quad_rect);
 
