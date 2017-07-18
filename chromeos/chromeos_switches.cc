@@ -182,6 +182,9 @@ const char kDisableEolNotification[] = "disable-eol-notification";
 // 'fake' telemetry login.
 const char kDisableGaiaServices[] = "disable-gaia-services";
 
+// Disables the set of Harmony default user images.
+const char kDisableHarmonyUserImages[] = "disable-harmony-user-images";
+
 // Disables HID-detection OOBE screen.
 const char kDisableHIDDetectionOnOOBE[] = "disable-hid-detection-on-oobe";
 

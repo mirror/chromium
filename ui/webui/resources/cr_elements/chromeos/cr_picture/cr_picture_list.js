@@ -17,7 +17,7 @@ Polymer({
 
     /**
      * The default user images.
-     * @type {!Array<!{title: string, url: string}>}
+     * @type {!Array<!{index: number, title: string, url: string}>}
      */
     defaultImages: {
       type: Array,
@@ -44,7 +44,7 @@ Polymer({
 
     /**
      * The url of the currently set profile picture image.
-     * @private {string}
+     * @private
      */
     profileImageUrl_: {
       type: String,
@@ -54,11 +54,20 @@ Polymer({
     /**
      * The url of the old image, which is either the existing image sourced from
      * the camera, a file, or a deprecated default image.
-     * @private {string}
+     * @private
      */
     oldImageUrl_: {
       type: String,
       value: '',
+    },
+
+    /**
+     * The index associated with the old image if it was a default iamge or -1.
+     * @private
+     */
+    oldImageIndex_: {
+      type: Number,
+      value: -1,
     },
 
     /** @private */
@@ -115,9 +124,11 @@ Polymer({
 
   /**
    * @param {string} imageUrl
+   * @param {number=} imageIndex
    */
-  setOldImageUrl(imageUrl) {
+  setOldImageUrl(imageUrl, imageIndex) {
     this.oldImageUrl_ = imageUrl;
+    this.oldImageIndex_ = imageIndex === undefined ? -1 : imageIndex;
     if (imageUrl) {
       this.$.selector.select(this.$.selector.indexOf(this.$.oldImage));
       this.selectedImageUrl_ = imageUrl;

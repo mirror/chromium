@@ -59,6 +59,7 @@ CHROMEOS_EXPORT extern const char kDisableDeviceDisabling[];
 CHROMEOS_EXPORT extern const char kDisableEncryptionMigration[];
 CHROMEOS_EXPORT extern const char kDisableEolNotification[];
 CHROMEOS_EXPORT extern const char kDisableGaiaServices[];
+CHROMEOS_EXPORT extern const char kDisableHarmonyUserImages[];
 CHROMEOS_EXPORT extern const char kDisableHIDDetectionOnOOBE[];
 CHROMEOS_EXPORT extern const char kDisableLoginAnimations[];
 CHROMEOS_EXPORT extern const char kDisableMachineCertRequest[];
