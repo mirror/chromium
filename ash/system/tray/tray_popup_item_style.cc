@@ -70,15 +70,15 @@ void TrayPopupItemStyle::SetupLabel(views::Label* label) const {
   const gfx::FontList& base_font_list = views::Label::GetDefaultFontList();
   switch (font_style_) {
     case FontStyle::TITLE:
-      label->SetFontList(base_font_list.Derive(1, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(1, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::MEDIUM));
       break;
     case FontStyle::DEFAULT_VIEW_LABEL:
-      label->SetFontList(base_font_list.Derive(1, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(1, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::NORMAL));
       break;
     case FontStyle::SUB_HEADER:
-      label->SetFontList(base_font_list.Derive(1, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(1, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::MEDIUM));
       label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_ProminentButtonColor));
@@ -86,15 +86,15 @@ void TrayPopupItemStyle::SetupLabel(views::Label* label) const {
       break;
     case FontStyle::DETAILED_VIEW_LABEL:
     case FontStyle::SYSTEM_INFO:
-      label->SetFontList(base_font_list.Derive(1, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(1, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::NORMAL));
       break;
     case FontStyle::BUTTON:
-      label->SetFontList(base_font_list.Derive(0, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(0, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::MEDIUM));
       break;
     case FontStyle::CAPTION:
-      label->SetFontList(base_font_list.Derive(0, gfx::Font::NORMAL,
+      label->SetFontList(base_font_list.Derive(0, gfx::TextStyle::NORMAL,
                                                gfx::Font::Weight::NORMAL));
       break;
   }

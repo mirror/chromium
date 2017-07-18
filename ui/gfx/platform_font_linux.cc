@@ -20,6 +20,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/linux_font_delegate.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/gfx/text_utils.h"
 
 namespace gfx {
@@ -90,7 +91,7 @@ PlatformFontLinux::PlatformFontLinux(const std::string& font_name,
   query.families.push_back(font_name);
   query.pixel_size = font_size_pixels;
   query.weight = Font::Weight::NORMAL;
-  InitFromDetails(nullptr, font_name, font_size_pixels, Font::NORMAL,
+  InitFromDetails(nullptr, font_name, font_size_pixels, TextStyle::NORMAL,
                   query.weight, gfx::GetFontRenderParams(query, nullptr));
 }
 
@@ -105,7 +106,7 @@ bool PlatformFontLinux::InitDefaultFont() {
   bool success = false;
   std::string family = kFallbackFontFamilyName;
   int size_pixels = 12;
-  int style = Font::NORMAL;
+  int style = TextStyle::NORMAL;
   Font::Weight weight = Font::Weight::NORMAL;
   FontRenderParams params;
 
@@ -134,7 +135,7 @@ bool PlatformFontLinux::InitDefaultFont() {
 #endif
 
   sk_sp<SkTypeface> typeface =
-      CreateSkTypeface(style & Font::ITALIC, weight, &family, &success);
+      CreateSkTypeface(style & TextStyle::ITALIC, weight, &family, &success);
   if (!success)
     return false;
   g_default_font.Get() = new PlatformFontLinux(
@@ -267,7 +268,7 @@ void PlatformFontLinux::InitFromDetails(
   font_family_ = font_family;
   bool success = true;
   typeface_ = typeface ? std::move(typeface)
-                       : CreateSkTypeface(style & Font::ITALIC, weight,
+                       : CreateSkTypeface(style & TextStyle::ITALIC, weight,
                                           &font_family_, &success);
   CHECK(success) << "Could not find any font: " << font_family_ << ", "
                  << kFallbackFontFamilyName;
@@ -308,8 +309,9 @@ void PlatformFontLinux::ComputeMetricsIfNecessary() {
     paint.setTypeface(typeface_);
     paint.setFakeBoldText(weight_ >= Font::Weight::BOLD &&
                           !typeface_->isBold());
-    paint.setTextSkewX((Font::ITALIC & style_) && !typeface_->isItalic() ?
-                        -SK_Scalar1/4 : 0);
+    paint.setTextSkewX((TextStyle::ITALIC & style_) && !typeface_->isItalic()
+                           ? -SK_Scalar1 / 4
+                           : 0);
     SkPaint::FontMetrics metrics;
     paint.getFontMetrics(&metrics);
     ascent_pixels_ = SkScalarCeilToInt(-metrics.fAscent);

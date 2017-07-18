@@ -345,7 +345,8 @@ std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text) {
   // since asking for a MEDIUM font will give a lighter font.
   std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(text);
   label->SetFontList(ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      ui::kLabelFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
+      ui::kLabelFontSizeDelta, gfx::TextStyle::NORMAL,
+      gfx::Font::Weight::MEDIUM));
   return label;
 }
 

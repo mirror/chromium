@@ -24,7 +24,7 @@ std::string BuildDescription(const std::vector<std::string>& families,
   std::string description = base::JoinString(families, ",");
   description += ",";
 
-  if (style & Font::ITALIC)
+  if (style & TextStyle::ITALIC)
     description += "Italic ";
   switch (weight) {
     case Font::Weight::THIN:
@@ -68,7 +68,7 @@ FontListImpl::FontListImpl(const std::string& font_description_string)
     : font_description_string_(font_description_string),
       common_height_(-1),
       common_baseline_(-1),
-      font_style_(-1),
+      text_style_(-1),
       font_size_(-1),
       font_weight_(Font::Weight::INVALID) {
   DCHECK(!font_description_string.empty());
@@ -78,14 +78,14 @@ FontListImpl::FontListImpl(const std::string& font_description_string)
 }
 
 FontListImpl::FontListImpl(const std::vector<std::string>& font_names,
-                           int font_style,
+                           int text_style,
                            int font_size,
                            Font::Weight font_weight)
     : font_description_string_(
-          BuildDescription(font_names, font_style, font_size, font_weight)),
+          BuildDescription(font_names, text_style, font_size, font_weight)),
       common_height_(-1),
       common_baseline_(-1),
-      font_style_(font_style),
+      text_style_(text_style),
       font_size_(font_size),
       font_weight_(font_weight) {
   DCHECK(!font_names.empty());
@@ -96,16 +96,16 @@ FontListImpl::FontListImpl(const std::vector<Font>& fonts)
     : fonts_(fonts),
       common_height_(-1),
       common_baseline_(-1),
-      font_style_(-1),
+      text_style_(-1),
       font_size_(-1),
       font_weight_(Font::Weight::INVALID) {
   DCHECK(!fonts.empty());
-  font_style_ = fonts[0].GetStyle();
+  text_style_ = fonts[0].GetStyle();
   font_size_ = fonts[0].GetFontSize();
   font_weight_ = fonts[0].GetWeight();
 #if DCHECK_IS_ON()
   for (size_t i = 1; i < fonts.size(); ++i) {
-    DCHECK_EQ(fonts[i].GetStyle(), font_style_);
+    DCHECK_EQ(fonts[i].GetStyle(), text_style_);
     DCHECK_EQ(fonts[i].GetFontSize(), font_size_);
   }
 #endif
@@ -114,20 +114,20 @@ FontListImpl::FontListImpl(const std::vector<Font>& fonts)
 FontListImpl::FontListImpl(const Font& font)
     : common_height_(-1),
       common_baseline_(-1),
-      font_style_(-1),
+      text_style_(-1),
       font_size_(-1),
       font_weight_(Font::Weight::INVALID) {
   fonts_.push_back(font);
 }
 
 FontListImpl* FontListImpl::Derive(int size_delta,
-                                   int font_style,
+                                   int text_style,
                                    Font::Weight weight) const {
   // If there is a font vector, derive from that.
   if (!fonts_.empty()) {
     std::vector<Font> fonts = fonts_;
     for (size_t i = 0; i < fonts.size(); ++i)
-      fonts[i] = fonts[i].Derive(size_delta, font_style, weight);
+      fonts[i] = fonts[i].Derive(size_delta, text_style, weight);
     return new FontListImpl(fonts);
   }
 
@@ -139,7 +139,7 @@ FontListImpl* FontListImpl::Derive(int size_delta,
   CHECK(FontList::ParseDescription(font_description_string_, &font_names,
                                    &old_style, &old_size, &old_weight));
   const int size = std::max(1, old_size + size_delta);
-  return new FontListImpl(font_names, font_style, size, weight);
+  return new FontListImpl(font_names, text_style, size, weight);
 }
 
 int FontListImpl::GetHeight() const {
@@ -165,9 +165,9 @@ int FontListImpl::GetExpectedTextWidth(int length) const {
 }
 
 int FontListImpl::GetFontStyle() const {
-  if (font_style_ == -1)
+  if (text_style_ == -1)
     CacheFontStyleAndSize();
-  return font_style_;
+  return text_style_;
 }
 
 int FontListImpl::GetFontSize() const {
@@ -188,22 +188,24 @@ const std::vector<Font>& FontListImpl::GetFonts() const {
 
     std::vector<std::string> font_names;
     // It's possible that Font::UNDERLINE is specified and it's already
-    // stored in |font_style_| but |font_description_string_| doesn't have the
-    // underline info.  So we should respect |font_style_| as long as it's
+    // stored in |text_style_| but |font_description_string_| doesn't have the
+    // underline info.  So we should respect |text_style_| as long as it's
     // valid.
     int style = 0;
     CHECK(FontList::ParseDescription(font_description_string_, &font_names,
                                      &style, &font_size_, &font_weight_));
-    if (font_style_ == -1)
-      font_style_ = style;
+    if (text_style_ == -1)
+      text_style_ = style;
     for (size_t i = 0; i < font_names.size(); ++i) {
       DCHECK(!font_names[i].empty());
 
       Font font(font_names[i], font_size_);
-      if (font_style_ == Font::NORMAL && font_weight_ == Font::Weight::NORMAL)
+      if (text_style_ == TextStyle::NORMAL &&
+          font_weight_ == Font::Weight::NORMAL) {
         fonts_.push_back(font);
-      else
-        fonts_.push_back(font.Derive(0, font_style_, font_weight_));
+      } else {
+        fonts_.push_back(font.Derive(0, text_style_, font_weight_));
+      }
     }
   }
   return fonts_;
@@ -230,13 +232,13 @@ void FontListImpl::CacheCommonFontHeightAndBaseline() const {
 
 void FontListImpl::CacheFontStyleAndSize() const {
   if (!fonts_.empty()) {
-    font_style_ = fonts_[0].GetStyle();
+    text_style_ = fonts_[0].GetStyle();
     font_size_ = fonts_[0].GetFontSize();
     font_weight_ = fonts_[0].GetWeight();
   } else {
     std::vector<std::string> font_names;
     CHECK(FontList::ParseDescription(font_description_string_, &font_names,
-                                     &font_style_, &font_size_, &font_weight_));
+                                     &text_style_, &font_size_, &font_weight_));
   }
 }
 

@@ -116,7 +116,7 @@ const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
   // Ignore |style| since it only affects color in the Harmony spec.
 
   return ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      size_delta, gfx::Font::NORMAL, font_weight);
+      size_delta, gfx::TextStyle::NORMAL, font_weight);
 }
 
 SkColor HarmonyTypographyProvider::GetColor(

@@ -33,7 +33,7 @@ Font::Weight GetValueBolderThan(Font::Weight weight) {
 Font::Weight TypographyProvider::WeightNotLighterThanNormal(
     Font::Weight weight) {
   if (ResourceBundle::GetSharedInstance()
-          .GetFontListWithDelta(0, Font::NORMAL, Font::Weight::NORMAL)
+          .GetFontListWithDelta(0, gfx::TextStyle::NORMAL, Font::Weight::NORMAL)
           .GetFontWeight() < weight)
     return weight;
   return Font::Weight::NORMAL;
@@ -45,7 +45,7 @@ const gfx::FontList& DefaultTypographyProvider::GetFont(int context,
   Font::Weight font_weight;
   GetDefaultFont(context, style, &size_delta, &font_weight);
   return ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      size_delta, Font::NORMAL, font_weight);
+      size_delta, gfx::TextStyle::NORMAL, font_weight);
 }
 
 SkColor DefaultTypographyProvider::GetColor(
@@ -112,7 +112,8 @@ void DefaultTypographyProvider::GetDefaultFont(int context,
       if (context == style::CONTEXT_BUTTON) {
         *font_weight = GetValueBolderThan(
             ResourceBundle::GetSharedInstance()
-                .GetFontListWithDelta(*size_delta, Font::NORMAL, *font_weight)
+                .GetFontListWithDelta(*size_delta, gfx::TextStyle::NORMAL,
+                                      *font_weight)
                 .GetFontWeight());
       }
       break;

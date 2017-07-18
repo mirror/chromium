@@ -24,6 +24,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_fallback.h"
 #include "ui/gfx/platform_font_win.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/gfx/win/direct_write.h"
 #include "ui/gfx/win/text_analysis_source.h"
 
@@ -392,7 +393,7 @@ bool GetFallbackFont(const Font& font,
   }
   base::string16 original_name = base::UTF8ToUTF16(font.GetFontName());
   DWRITE_FONT_STYLE font_style = DWRITE_FONT_STYLE_NORMAL;
-  if (font.GetStyle() & Font::ITALIC)
+  if (font.GetStyle() & TextStyle::ITALIC)
     font_style = DWRITE_FONT_STYLE_ITALIC;
   if (FAILED(fallback->MapCharacters(
           text_analysis.Get(), 0, text_length, nullptr, original_name.c_str(),

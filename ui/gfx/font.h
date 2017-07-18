@@ -31,13 +31,6 @@ class PlatformFont;
 //   +--------+--------------------------------------+
 class GFX_EXPORT Font {
  public:
-  // The following constants indicate the font style.
-  enum FontStyle {
-    NORMAL = 0,
-    ITALIC = 1,
-    UNDERLINE = 2,
-  };
-
   // Standard font weights as used in Pango and Windows. The values must match
   // https://msdn.microsoft.com/en-us/library/system.windows.fontweights(v=vs.110).aspx
   enum class Weight {

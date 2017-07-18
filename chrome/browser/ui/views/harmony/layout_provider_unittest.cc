@@ -143,7 +143,7 @@ TEST(LayoutProviderTest, DISABLED_RequestFontBySize) {
   gfx::FontList body1_font = rb.GetFontListWithDelta(kBody1 - kBase);
   gfx::FontList body2_font = rb.GetFontListWithDelta(kBody2 - kBase);
   gfx::FontList button_font = rb.GetFontListWithDelta(
-      kButton - kBase, gfx::Font::NORMAL, kButtonWeight);
+      kButton - kBase, gfx::TextStyle::NORMAL, kButtonWeight);
 
   // The following checks on leading don't need to match the spec. Instead, it
   // means Label::SetLineHeight() needs to be used to increase it. But what we
