@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be53958_55da3f69",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:07:17Z",
+      "side": 1,
+      "message": "Can\u0027t you continue to use $i18nRaw{}?",
+      "revId": "f38ab45003c49a64cbc990a325fdd47f04a5fc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a0eee2a_55e909d2",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:07:17Z",
+      "side": 0,
+      "message": "Can you keep this?",
+      "revId": "0a99285795ade2dd281995dee72fdb9e80d3fd6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
