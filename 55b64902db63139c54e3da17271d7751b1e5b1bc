@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "917d6008_3be1024e",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-18T01:41:32Z",
+      "side": 1,
+      "message": "I don\u0027t know what Dirk had in mind for the LUCI part of this configuration, but if I were working on LUCI, I would probably arrange for LUCI to hold the single source of truth of the list of tryservers and define an RPC interface for clients like gerrit to use. That would mean that in the long term there would be no need for a \u0027luci\u0027 section here.\n\nAnyway, happy to do whatever Dirk prefers.",
+      "parentUuid": "79a99c9c_093fbeea",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 0
+      },
+      "revId": "55b64902db63139c54e3da17271d7751b1e5b1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bd31f87_94e71974",
         "filename": "tools/mb/mb.py",
         "patchSetId": 1
