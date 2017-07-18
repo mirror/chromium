@@ -22,6 +22,30 @@
       "revId": "92e87bfc27d3ee093edc668c8dcdcf607309aa41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1e3765_0389bdd4",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-18T16:36:01Z",
+      "side": 0,
+      "message": "According to the comments, it\u0027s waiting for the UI to finish loading, however, EarlGrey already handles UI synchronization, so it\u0027s unclear why we need this. Based on my previous experiences, a large number of drainUntilIdle are added arbitrarily for no reasons, so I intend to remove them, and if there is indeed a flake, we should first understand why it fails, and then add drainUntilIdle with necessary comments.",
+      "parentUuid": "d2108983_31db64ab",
+      "range": {
+        "startLine": 299,
+        "startChar": 31,
+        "endLine": 299,
+        "endChar": 38
+      },
+      "revId": "92e87bfc27d3ee093edc668c8dcdcf607309aa41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
