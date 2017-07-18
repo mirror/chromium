@@ -16,6 +16,24 @@
       "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef7f8e1_f5163fc6",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-18T10:06:37Z",
+      "side": 1,
+      "message": "Oh, modules\u0027 unit_tests was in this patch as well. Not sure that was intended.\n\nI can split it out and clean it up a bit before adding it or delay this patch a bit.\n\nThe symptoms the excludes try solve in this case is symbol collisions. Trivial to fix in general (rename something), but a bit time consuming for someone unfamiliar with the code to decide on a better name, make patches, complete reviews and check in so I lag behind a bit.\n\nI also don\u0027t want any excludes at all if possible.",
+      "parentUuid": "d597990f_4320a634",
+      "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
