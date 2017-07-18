@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ebb9c0_0067741f",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "Don\u0027t need this anymore, start_y is the fullscreen widget position. Probably get rid of the datamember and make it local to fullscreen initialization",
+      "range": {
+        "startLine": 572,
+        "startChar": 22,
+        "endLine": 572,
+        "endChar": 23
+      },
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e460c32_12d7211b",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "Probably dont need to save the start position",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4999a1cc_cc327407",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "get rid of comment",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb1abfd_9d2d99fb",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "simplify by calling it at the beginning, only after we get the closed animation.",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c80cf5_f860ae9c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "remove comment.",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3028ddf8_c79b4d42",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "remove comment",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac587608_ca4efce5",
+        "filename": "ui/gfx/animation/animation_test_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "rc",
+      "range": {
+        "startLine": 34,
+        "startChar": 28,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4c11b7_303afbe2",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa80301_11d59a34",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6713c2a_c01da115",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6c03a7_4437763c",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77a7310_6439bc8c",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72023156_5a13e6a4",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d7478e_b382bc30",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-18T21:53:24Z",
+      "side": 1,
+      "message": "r",
+      "revId": "0e77a3ba31f2d0eb502b826d676823ca059c0758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
