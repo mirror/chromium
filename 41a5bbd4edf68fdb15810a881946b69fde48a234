@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870b0159_a483f334",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-18T19:28:42Z",
+      "side": 1,
+      "message": "This can probably just return ukm::UkmRecorder*",
+      "range": {
+        "startLine": 1332,
+        "startChar": 2,
+        "endLine": 1332,
+        "endChar": 22
+      },
+      "revId": "41a5bbd4edf68fdb15810a881946b69fde48a234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
