@@ -16,6 +16,24 @@
       "revId": "03e69d943358e1aa9fdb4a76e4db6fc5dd9b0d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654c2e1f_31ea5eb1",
+        "filename": "components/precache/android/javatests/src/org/chromium/components/precache/DeviceStateTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-18T18:37:59Z",
+      "side": 1,
+      "message": "my bad, this file is actually deleted already. I made a mistake when rebasing",
+      "parentUuid": "b5a285a8_ad88bb83",
+      "revId": "03e69d943358e1aa9fdb4a76e4db6fc5dd9b0d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
