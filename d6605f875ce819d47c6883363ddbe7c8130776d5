@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7165732f_d0e54661",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:16:24Z",
+      "side": 1,
+      "message": "s/appears to sometimes not get initialized/doesn\u0027t get initialized/",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7a66bf_f9e12e2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:16:24Z",
+      "side": 1,
+      "message": "s/object/callback",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1d6537_70426ae6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:16:24Z",
+      "side": 1,
+      "message": "s/paralell/parallel/ and below, though I\u0027m not sure \"parallel\" is really the precise word. Maybe:\n\n\"Additionally, the async callsite uses base::Bind instead of base::BindOnce, which we\u0027ve changed since the callback only needs to be run a single time.\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 38,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0b0cfb_e770df94",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:16:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand, are you sure this is solving the problem? No other consumer of WebContentsGetter needs to do this, afaik.",
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f621dd_223fdda5",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:16:24Z",
+      "side": 1,
+      "message": "This is fine, but it shouldn\u0027t influence the crash.",
+      "range": {
+        "startLine": 525,
+        "startChar": 32,
+        "endLine": 525,
+        "endChar": 40
+      },
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
