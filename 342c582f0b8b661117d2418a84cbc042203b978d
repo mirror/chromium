@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f696e64e_81a8b69d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T21:10:34Z",
+      "side": 1,
+      "message": "typo: call *is* redundant",
+      "revId": "342c582f0b8b661117d2418a84cbc042203b978d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1436ee70_e6ee0416",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/treeoutline.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T21:10:34Z",
+      "side": 1,
+      "message": "nit: here and below, can you please reverse the condition, i.e.:\n\nif (!nextSelectedElement)\n  return false;\nnextSelectedElement.select(false, true);\nreturn true;",
+      "revId": "342c582f0b8b661117d2418a84cbc042203b978d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
