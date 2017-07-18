@@ -494,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "2499acf7_2d0ee4a9",
+        "filename": "ppapi/c/private/ppb_pdf.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:18:38Z",
+      "side": 1,
+      "message": "To be clear, I mean pass by const pointer. Since this is in ppapi/c, we can\u0027t use const-ref. I don\u0027t see why not. We do with GetFontFileWithFallback.",
+      "parentUuid": "bc62f24e_783c1d72",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4e7290a_63c3c211",
         "filename": "ppapi/c/private/ppp_pdf.h",
         "patchSetId": 5
