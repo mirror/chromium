@@ -16,6 +16,24 @@
       "revId": "5fcbe0549f691ffbdc99f46023056ed8c23925b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fd2c88_efe04a0c",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-18T20:06:57Z",
+      "side": 1,
+      "message": "Doing it again yield no changes, even after rebasing.\n\n./generate_perf_data --validate-only\nAll the perf JSON config files are up-to-date. \\o/\n\nWhat exactly do you mean, looking at the diff I only see entries removed, none added by the CL. Thats what I would expect, since it is removing tests that have been mark \u0027PermanentlyDisabledBenchmark\u0027 in StoryExpectations.\n\nBlink_Perf.canvas was permanently disabled on svelte devices, meaning just A1 devices on the waterfall.\nhttps://cs.chromium.org/chromium/src/tools/perf/benchmarks/blink_perf.py?l\u003d315\n\nThat means I would expect 2 benchmarks with blink_perf.canvas to disappear (blink_perf.canvas and blink_perf.canvas.ref on the a1 bot) and thats what I see.\n\nAll that leads me to believe I just misunderstand your question.",
+      "parentUuid": "5ab9c2a3_0933f91c",
+      "revId": "5fcbe0549f691ffbdc99f46023056ed8c23925b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
