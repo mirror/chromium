@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "f82b933d_0c0186e9",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Move up above with the classes.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5371e91_8d57787a",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
         "patchSetId": 1
@@ -73,6 +96,322 @@
       "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5446c48_0ee544ea",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Can we have a constant for this magic number?",
+      "range": {
+        "startLine": 99,
+        "startChar": 39,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e95627c_bb641a4b",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Your change is the equivalent to the old DCHECK\u0027s, but what about checking for \u003c\u003d 0 since these are all signed types.",
+      "range": {
+        "startLine": 1794,
+        "startChar": 29,
+        "endLine": 1794,
+        "endChar": 30
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c39153f_e1069f54",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Why not sequence_number_?",
+      "range": {
+        "startLine": 1880,
+        "startChar": 38,
+        "endLine": 1880,
+        "endChar": 39
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cdb36c2_2f704a25",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "How about adding:\n\n  std::unique_ptr\u003cIndexedDBTombstoneCrawler\u003e owner(this);\n\nat the beginning of the function so that you know that this won\u0027t leak? Then you can remove the explicit deletes.",
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20163918_965dce1d",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Do you want to run the on_complete callback if there are errors starting, or only if successfully started? If not can that be documented in the header?",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 17
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "598dca07_00d8d78b",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "No need for default - can safely rely on clang to fail if not all cases are handled.",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 11
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50b58ebd_61100777",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Should all of the LOG\u0027s be converted to DLOG\u0027s?",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 7
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "918ad442_e71c5194",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Should crawl_state_.object_store_it and crawl_state_.curr_index_key be reset here?",
+      "range": {
+        "startLine": 218,
+        "startChar": 24,
+        "endLine": 218,
+        "endChar": 30
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e123edb_f444ee31",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "s/os/store/",
+      "range": {
+        "startLine": 230,
+        "startChar": 32,
+        "endLine": 230,
+        "endChar": 34
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6d16bb2_07e7102f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Do you need to call iterator_-\u003eNext() here and other places that \u0027continue\u0027 to avoid an infinite loop?",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 20
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1c39d4a_2d8e6244",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "comment to describe what this class does.",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a86eec2_03deb917",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "Rename \"database\" to \"metadata_idx\", or something more descriptive.",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "365d6ad7_b610318a",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "nit: Would this function, and use of, be clearer if it weren\u0027t a double-negative? Maybe ShouldContinueIteration?",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 31
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f310dce_caff27cb",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-18T22:00:13Z",
+      "side": 1,
+      "message": "nit: rename to num_iterations_.",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
