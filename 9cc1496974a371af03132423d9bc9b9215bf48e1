@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5788f2_6cc54d05",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-18T17:01:12Z",
+      "side": 1,
+      "message": "Hrm...Wonder if this is even needed - we should reach the check in HostResolverImpl first.  I\u0027ll look into this myself if I have time (No need to delay this CL on it).",
+      "range": {
+        "startLine": 136,
+        "startChar": 45,
+        "endLine": 136,
+        "endChar": 46
+      },
+      "revId": "9cc1496974a371af03132423d9bc9b9215bf48e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

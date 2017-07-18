@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99bb80cc_e1a8c339",
+        "filename": "net/dns/dns_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-18T17:01:12Z",
+      "side": 0,
+      "message": "The description says we continue to measure these, but this CL is removing these histograms.  Should either update the description and histograms.xml, or add these histograms back.  Or am I missing something?",
+      "range": {
+        "startLine": 93,
+        "startChar": 56,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "7d1476b8f693f79a755cc70f93856add69dc1834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
