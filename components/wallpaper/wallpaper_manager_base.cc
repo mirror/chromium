@@ -146,24 +146,6 @@ MovableOnDestroyCallback::~MovableOnDestroyCallback() {
     callback_.Run();
 }
 
-WallpaperInfo::WallpaperInfo()
-    : layout(WALLPAPER_LAYOUT_CENTER),
-      type(user_manager::User::WALLPAPER_TYPE_COUNT) {
-}
-
-WallpaperInfo::WallpaperInfo(const std::string& in_location,
-                             WallpaperLayout in_layout,
-                             user_manager::User::WallpaperType in_type,
-                             const base::Time& in_date)
-    : location(in_location),
-      layout(in_layout),
-      type(in_type),
-      date(in_date) {
-}
-
-WallpaperInfo::~WallpaperInfo() {
-}
-
 void AssertCalledOnWallpaperSequence() {
 #if DCHECK_IS_ON()
   DCHECK(g_wallpaper_sequence_checker.Get().CalledOnValidSequence());
@@ -189,8 +171,7 @@ const int kWallpaperThumbnailHeight = 68;
 
 const char kUsersWallpaperInfo[] = "user_wallpaper_info";
 
-const char kUserWallpapers[] = "UserWallpapers";
-const char kUserWallpapersProperties[] = "UserWallpapersProperties";
+const char kWallpaperColors[] = "wallpaper_colors";
 
 const base::FilePath&
 WallpaperManagerBase::CustomizedWallpaperRescaledFiles::path_downloaded()
@@ -314,8 +295,7 @@ base::FilePath WallpaperManagerBase::GetCustomWallpaperDir(
 // static
 void WallpaperManagerBase::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(kUsersWallpaperInfo);
-  registry->RegisterDictionaryPref(kUserWallpapers);
-  registry->RegisterDictionaryPref(kUserWallpapersProperties);
+  registry->RegisterDictionaryPref(kWallpaperColors);
 }
 
 void WallpaperManagerBase::EnsureLoggedInUserWallpaperLoaded() {
