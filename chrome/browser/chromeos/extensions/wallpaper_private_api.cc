@@ -20,9 +20,9 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
@@ -240,14 +240,7 @@ bool WallpaperPrivateSetWallpaperIfExistsFunction::RunAsync() {
   }
   wallpaper_path = wallpaper_path.Append(file_name);
 
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-
-  task_runner->PostTask(
+  GetNonBlockingTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&WallpaperPrivateSetWallpaperIfExistsFunction::
                                     ReadFileAndInitiateStartDecode,
                                 this, wallpaper_path, fallback_path));
@@ -346,14 +339,7 @@ void WallpaperPrivateSetWallpaperFunction::OnWallpaperDecoded(
   // Set unsafe_wallpaper_decoder_ to null since the decoding already finished.
   unsafe_wallpaper_decoder_ = NULL;
 
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::BLOCK_SHUTDOWN);
-
-  task_runner->PostTask(
+  GetBlockingTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&WallpaperPrivateSetWallpaperFunction::SaveToFile, this));
 }
@@ -475,13 +461,6 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
       wallpaper::kThumbnailWallpaperSubDir, wallpaper_files_id_,
       params->file_name);
 
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::BLOCK_SHUTDOWN);
-
   wallpaper::WallpaperLayout layout = wallpaper_api_util::GetLayoutEnum(
       wallpaper_base::ToString(params->layout));
   wallpaper_api_util::RecordCustomWallpaperLayout(layout);
@@ -505,7 +484,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
     std::unique_ptr<gfx::ImageSkia> deep_copy(image.DeepCopy());
     // Generates thumbnail before call api function callback. We can then
     // request thumbnail in the javascript callback.
-    task_runner->PostTask(
+    GetBlockingTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(
             &WallpaperPrivateSetCustomWallpaperFunction::GenerateThumbnail,
@@ -635,14 +614,7 @@ bool WallpaperPrivateGetThumbnailFunction::RunAsync() {
         chromeos::switches::kDefaultWallpaperSmall);
   }
 
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-
-  task_runner->PostTask(
+  WallpaperFunctionBase::GetNonBlockingTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&WallpaperPrivateGetThumbnailFunction::Get,
                                 this, thumbnail_path));
   return true;
@@ -699,14 +671,7 @@ bool WallpaperPrivateSaveThumbnailFunction::RunAsync() {
       save_thumbnail::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
 
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-
-  task_runner->PostTask(
+  WallpaperFunctionBase::GetNonBlockingTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&WallpaperPrivateSaveThumbnailFunction::Save, this,
                      params->data, GURL(params->url).ExtractFileName()));
@@ -748,14 +713,7 @@ WallpaperPrivateGetOfflineWallpaperListFunction::
 }
 
 bool WallpaperPrivateGetOfflineWallpaperListFunction::RunAsync() {
-  scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-
-  task_runner->PostTask(
+  WallpaperFunctionBase::GetNonBlockingTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&WallpaperPrivateGetOfflineWallpaperListFunction::GetList,
                      this));
