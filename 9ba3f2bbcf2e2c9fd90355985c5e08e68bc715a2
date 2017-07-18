@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f0a24c_781711e2",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T20:26:45Z",
+      "side": 1,
+      "message": "We also need to initialize |remote_device_list_| in this class\u0027 constructor so that GetSyncedDevices() will return a valid RemoteDeviceList before a sync occurs.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 1
+      },
+      "revId": "9ba3f2bbcf2e2c9fd90355985c5e08e68bc715a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54b5dd5_0457e389",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T20:26:45Z",
+      "side": 1,
+      "message": "RemoteDeviceProvider encapsulates device syncs, so we don\u0027t want clients of this class to need to know anything about when a sync is occurring.\n\nInstead, let\u0027s just have one function: OnRemoteDeviceListChanged(). It will be called whenever remote_device_list_ has changed.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9ba3f2bbcf2e2c9fd90355985c5e08e68bc715a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
