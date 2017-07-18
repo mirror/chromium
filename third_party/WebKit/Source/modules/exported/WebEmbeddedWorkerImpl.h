@@ -97,6 +97,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   // WebFrameClient overrides.
   void FrameDetached(WebLocalFrame*, DetachType) override;
   void DidFinishDocumentLoad() override;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   // WebDevToolsAgentClient overrides.
   void SendProtocolMessage(int session_id,
@@ -122,6 +123,8 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   // This is kept until startWorkerContext is called, and then passed on
   // to WorkerContext.
   std::unique_ptr<WebContentSettingsClient> content_settings_client_;
+
+  std::unique_ptr<service_manager::InterfaceProvider> interface_provider_;
 
   // Kept around only while main script loading is ongoing.
   RefPtr<WorkerScriptLoader> main_script_loader_;

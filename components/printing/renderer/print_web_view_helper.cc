@@ -36,6 +36,7 @@
 #include "printing/metafile_skia_wrapper.h"
 #include "printing/pdf_metafile_skia.h"
 #include "printing/units.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebDoubleSize.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
@@ -692,6 +693,7 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void CallOnReady();
   void ResizeForPrinting();
@@ -709,6 +711,7 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
   bool should_print_backgrounds_;
   bool should_print_selection_only_;
   bool is_printing_started_;
+  std::unique_ptr<service_manager::InterfaceProvider> interface_provider_;
 
   base::WeakPtrFactory<PrepareFrameAndViewForPrint> weak_ptr_factory_;
 
@@ -727,6 +730,8 @@ PrepareFrameAndViewForPrint::PrepareFrameAndViewForPrint(
       should_print_backgrounds_(params.should_print_backgrounds),
       should_print_selection_only_(params.selection_only),
       is_printing_started_(false),
+      interface_provider_(
+          base::MakeUnique<service_manager::InterfaceProvider>()),
       weak_ptr_factory_(this) {
   PrintMsg_Print_Params print_params = params;
   if (!should_print_selection_only_ ||
@@ -870,6 +875,11 @@ PrepareFrameAndViewForPrint::CreateURLLoader(
     base::SingleThreadTaskRunner* task_runner) {
   // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
   return blink::Platform::Current()->CreateURLLoader(request, task_runner);
+}
+
+service_manager::InterfaceProvider*
+PrepareFrameAndViewForPrint::GetInterfaceProvider() {
+  return interface_provider_.get();
 }
 
 void PrepareFrameAndViewForPrint::CallOnReady() {

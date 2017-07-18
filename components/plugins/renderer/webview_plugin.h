@@ -182,9 +182,11 @@ class WebViewPlugin : public blink::WebPlugin,
     // WebFrameClient methods:
     void DidClearWindowObject() override;
     void FrameDetached(blink::WebLocalFrame*, DetachType) override;
+    service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
    private:
     WebViewPlugin* plugin_;
+    std::unique_ptr<service_manager::InterfaceProvider> interface_provider_;
 
     // Owned by us, deleted via |close()|.
     blink::WebView* web_view_;

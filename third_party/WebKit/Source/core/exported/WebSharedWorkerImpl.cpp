@@ -89,6 +89,8 @@ WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
       main_frame_(nullptr),
       asked_to_terminate_(false),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
+      interface_provider_(
+          WTF::MakeUnique<service_manager::InterfaceProvider>()),
       client_(client),
       pause_worker_context_on_start_(false),
       is_paused_on_start_(false),
@@ -208,6 +210,11 @@ void WebSharedWorkerImpl::DidFinishDocumentLoad() {
            WTF::Unretained(this)));
   // Do nothing here since onScriptLoaderFinished() might have been already
   // invoked and |this| might have been deleted at this point.
+}
+
+service_manager::InterfaceProvider*
+WebSharedWorkerImpl::GetInterfaceProvider() {
+  return interface_provider_.get();
 }
 
 void WebSharedWorkerImpl::SendProtocolMessage(int session_id,

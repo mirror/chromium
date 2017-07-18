@@ -16,6 +16,7 @@
 #include "content/public/common/web_preferences.h"
 #include "content/public/renderer/render_view.h"
 #include "gin/converter.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -252,9 +253,11 @@ void WebViewPlugin::DidFailLoading(const WebURLError& error) {
   error_.reset(new WebURLError(error));
 }
 
-WebViewPlugin::WebViewHelper::WebViewHelper(
-    WebViewPlugin* plugin,
-    const WebPreferences& preferences) : plugin_(plugin) {
+WebViewPlugin::WebViewHelper::WebViewHelper(WebViewPlugin* plugin,
+                                            const WebPreferences& preferences)
+    : plugin_(plugin),
+      interface_provider_(
+          base::MakeUnique<service_manager::InterfaceProvider>()) {
   web_view_ = WebView::Create(this, blink::kWebPageVisibilityStateVisible);
   // ApplyWebPreferences before making a WebLocalFrame so that the frame sees a
   // consistent view of our preferences.
@@ -363,6 +366,11 @@ void WebViewPlugin::WebViewHelper::FrameDetached(blink::WebLocalFrame* frame,
     frame->FrameWidget()->Close();
 
   frame->Close();
+}
+
+service_manager::InterfaceProvider*
+WebViewPlugin::WebViewHelper::GetInterfaceProvider() {
+  return interface_provider_.get();
 }
 
 void WebViewPlugin::OnZoomLevelChanged() {

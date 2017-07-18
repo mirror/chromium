@@ -106,6 +106,8 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebContentSettingsClient> content_settings_client)
     : worker_context_client_(std::move(client)),
       content_settings_client_(std::move(content_settings_client)),
+      interface_provider_(
+          WTF::MakeUnique<service_manager::InterfaceProvider>()),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       web_view_(nullptr),
       main_frame_(nullptr),
@@ -363,6 +365,11 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
            WTF::Unretained(this)));
   // Do nothing here since onScriptLoaderFinished() might have been already
   // invoked and |this| might have been deleted at this point.
+}
+
+service_manager::InterfaceProvider*
+WebEmbeddedWorkerImpl::GetInterfaceProvider() {
+  return interface_provider_.get();
 }
 
 void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
