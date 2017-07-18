@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddcd8cb9_bd6c4699",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-18T07:58:23Z",
+      "side": 1,
+      "message": "This version still parses \"123.45.XYZ\" as 123.45 and ignore the trailing XYZ.\nTo be strictly compliant with the spec, the trailing ignored characters should\nbe [0-9.]* and otherwise it should be rejected.\n\nAlso I\u0027d like to have some test cases in HTTPParsersTest.cpp:ParseHTTPRefresh",
+      "revId": "68b0ef3fff32546a0256215d7dad12505bba4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
