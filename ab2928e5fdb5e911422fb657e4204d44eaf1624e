@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c3079b0_3316ebf1",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-18T23:24:19Z",
+      "side": 1,
+      "message": "I thought a WebGL canvas would have an alpha channel by default. Does tdl.webgl.setupWebGL, that seemed to be used in WebGL Aquarium, initialize a 3d context without transparency?",
+      "revId": "ab2928e5fdb5e911422fb657e4204d44eaf1624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
