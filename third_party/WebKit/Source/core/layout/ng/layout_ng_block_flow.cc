@@ -14,6 +14,8 @@ namespace blink {
 LayoutNGBlockFlow::LayoutNGBlockFlow(Element* element)
     : LayoutBlockFlow(element) {}
 
+LayoutNGBlockFlow::~LayoutNGBlockFlow() {}
+
 bool LayoutNGBlockFlow::IsOfType(LayoutObjectType type) const {
   return type == kLayoutObjectNGBlockFlow || LayoutBlockFlow::IsOfType(type);
 }
@@ -66,6 +68,32 @@ int LayoutNGBlockFlow::InlineBlockBaseline(
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
+}
+
+RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
+    NGConstraintSpace* constraint_space,
+    NGBreakToken* break_token) const {
+  if (!cached_result_ || break_token || NeedsLayout())
+    return nullptr;
+  if (*constraint_space != *cached_constraint_space_)
+    return nullptr;
+  return cached_result_->CloneWithoutOffset();
+}
+
+void LayoutNGBlockFlow::SetCachedLayoutResult(
+    NGConstraintSpace* constraint_space,
+    NGBreakToken* break_token,
+    RefPtr<NGLayoutResult> layout_result) {
+  if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
+    return;
+  if (break_token ||
+      !layout_result->PhysicalFragment()->BreakToken()->IsFinished()) {
+    // We can't cache these yet
+    return;
+  }
+
+  cached_constraint_space_ = constraint_space;
+  cached_result_ = layout_result;
 }
 
 }  // namespace blink
