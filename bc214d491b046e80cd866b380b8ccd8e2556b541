@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aada0786_32626871",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "Left align The*?",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4158b39_442e2284",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "Add this parameter to comments?",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6509588_89ad7afb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "firstCompleteAddressIndex is not set to SectionInformation.NO_SELECTION only when mUiShippingOptions.getSelectedItem() !\u003d null, this looks not the intention of this metrics?",
+      "range": {
+        "startLine": 607,
+        "startChar": 16,
+        "endLine": 607,
+        "endChar": 41
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0db8ed_fcf9ad31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "shall we move this out of \u0027if (option instanceof AutofillPaymentInstrument)\u0027?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 0,
+        "endLine": 1090,
+        "endChar": 81
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7670537_872e9292",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "For cards, canPreselect \u003d\u003d false doesn\u0027t mean they are incomplete, might because the type is unknown, then \u0027selection !\u003d SectionInformation.NO_SELECTION\u0027 in this case. is this what we intend to record?",
+      "range": {
+        "startLine": 1577,
+        "startChar": 44,
+        "endLine": 1577,
+        "endChar": 53
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff21e37_d06c7050",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "Annotate Nullable for this parameter in this function and ContactDetailsSection, and explain when it could be null?",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feecd133_ee38f49e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestTestRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "just one space at the front?",
+      "range": {
+        "startLine": 311,
+        "startChar": 8,
+        "endLine": 311,
+        "endChar": 14
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc253b2_e4517367",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 53236,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T22:13:35Z",
+      "side": 1,
+      "message": "FYI: is it allowed to rename a histogram instead of obsolete it and add a new one?",
+      "range": {
+        "startLine": 53236,
+        "startChar": 25,
+        "endLine": 53236,
+        "endChar": 71
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
