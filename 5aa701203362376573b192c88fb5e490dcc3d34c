@@ -180,6 +180,24 @@
     },
     {
       "key": {
+        "uuid": "4a3599f0_a665f87b",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T21:33:31Z",
+      "side": 1,
+      "message": "I\u0027ve added a note to the header file for the printer object.",
+      "parentUuid": "c7dc07fb_0516d7eb",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1

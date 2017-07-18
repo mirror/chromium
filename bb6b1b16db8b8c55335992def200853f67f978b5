@@ -34,6 +34,24 @@
       "revId": "bb6b1b16db8b8c55335992def200853f67f978b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4008e228_43f981e9",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T21:33:31Z",
+      "side": 1,
+      "message": "I\u0027m no longer using display_name_parts as that will likely change.  Added TODO to fix display name generation.",
+      "parentUuid": "05576a44_1c02e6c7",
+      "revId": "bb6b1b16db8b8c55335992def200853f67f978b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
