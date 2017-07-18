@@ -351,6 +351,15 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
+  if (auto* content_frame = ContentFrame()) {
+    v8::Local<v8::Object> object =
+        frame->Client()->GetV8ScriptableObjectForPluginFrame(isolate,
+                                                             *content_frame);
+    if (!object.IsEmpty())
+      plugin_wrapper_.Reset(isolate, object);
+  }
+
   if (plugin_wrapper_.IsEmpty()) {
     PluginView* plugin;
 

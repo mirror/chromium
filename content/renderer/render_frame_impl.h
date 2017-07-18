@@ -668,6 +668,12 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebSecurityOrigin& security_origin,
       blink::WebSetSinkIdCallbacks* web_callbacks) override;
   blink::WebPageVisibilityState VisibilityState() const override;
+  blink::WebURL OverridePDFEmbedWithHTML(
+      const blink::WebURL& url,
+      const blink::WebString& orig_mime_type) override;
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
@@ -1117,6 +1123,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void RequestOverlayRoutingTokenFromHost();
 
   void SendUpdateFaviconURL(blink::WebIconURL::Type icon_types_mask);
+
+  // Called by a RenderFrame under this frame to notify that its WebFrame is
+  // being swapped. If |old_frame| is local then it will swap out. If
+  // |new_frame| is local then the RenderFrame is swapping in.
+  void ChildFrameWillSwap(blink::WebFrame* old_frame,
+                          blink::WebFrame* new_frame);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
