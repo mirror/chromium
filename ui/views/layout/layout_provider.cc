@@ -87,6 +87,12 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 20;
     case DistanceMetric::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH:
       return 75;
+    case DISTANCE_RELATED_LABEL_HORIZONTAL:
+      return 10;
+    case DISTANCE_TABLE_CELL_HORIZONTAL_MARGIN:
+      return 10;
+    case DISTANCE_TABLE_ROW_MINIMUM_HEIGHT:
+      return 24;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL:
       return 20;
   }
