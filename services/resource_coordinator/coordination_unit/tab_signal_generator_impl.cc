@@ -4,9 +4,15 @@
 
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
+
+// From 1 hour to 24 hours, with 100 buckets.
+#define HEURISTICS_HISTOGRAM(name, sample)                                \
+  UMA_HISTOGRAM_CUSTOM_TIMES(name, sample, base::TimeDelta::FromHours(1), \
+                             base::TimeDelta::FromHours(24), 100)
 
 namespace resource_coordinator {
 
@@ -15,7 +21,13 @@ namespace resource_coordinator {
     observer->METHOD(cu->id(), __VA_ARGS__);                      \
   });
 
-TabSignalGeneratorImpl::TabSignalGeneratorImpl() = default;
+constexpr base::TimeDelta kMaxSlientTime = base::TimeDelta::FromMinutes(1);
+
+const char* kBackgroundAudioStartsUMA =
+    "TabManager.Heuristics.BackgroundAudioStarts";
+
+TabSignalGeneratorImpl::TabSignalGeneratorImpl()
+    : metrics_collector_(base::MakeUnique<MetricsCollector>()) {}
 
 TabSignalGeneratorImpl::~TabSignalGeneratorImpl() = default;
 
@@ -28,6 +40,13 @@ bool TabSignalGeneratorImpl::ShouldObserve(
   auto coordination_unit_type = coordination_unit->id().type;
   return coordination_unit_type == CoordinationUnitType::kWebContents ||
          coordination_unit_type == CoordinationUnitType::kFrame;
+}
+
+void TabSignalGeneratorImpl::OnBeforeCoordinationUnitDestroyed(
+    const CoordinationUnitImpl* coordination_unit) {
+  if (coordination_unit->id().type == CoordinationUnitType::kFrame) {
+    metrics_collector_->CoordinationUnitRemoved(coordination_unit->id());
+  }
 }
 
 void TabSignalGeneratorImpl::OnPropertyChanged(
@@ -63,6 +82,51 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
                           mojom::TabEvent::kDoneLoading);
       break;
     }
+  }
+  metrics_collector_->OnFramePropertyChanged(coordination_unit, property_type,
+                                             value);
+}
+
+TabSignalGeneratorImpl::MetricsCollector::MetricsCollector() = default;
+
+TabSignalGeneratorImpl::MetricsCollector::~MetricsCollector() = default;
+
+void TabSignalGeneratorImpl::MetricsCollector::CoordinationUnitRemoved(
+    CoordinationUnitID cu_id) {
+  frame_data_map_.erase(cu_id);
+}
+
+void TabSignalGeneratorImpl::MetricsCollector::OnFramePropertyChanged(
+    const FrameCoordinationUnitImpl* coordination_unit,
+    const mojom::PropertyType property_type,
+    const base::Value& value) {
+  FrameData& frame_data = frame_data_map_[coordination_unit->id()];
+  if (property_type == mojom::PropertyType::kAudible) {
+    bool audible = value.GetBool();
+    if (!audible) {
+      frame_data.last_blurt_time_ = base::TimeTicks::Now();
+      return;
+    }
+    auto visible_value =
+        coordination_unit->GetProperty(mojom::PropertyType::kVisible);
+    if (!visible_value.is_bool())
+      return;
+    bool visible = visible_value.GetBool();
+    // Only record metrics while it is backgrounded.
+    if (visible)
+      return;
+    // Audio is considered to have started playing if the tab has never
+    // previously played audio, or has been silent for at least one minute.
+    auto now = base::TimeTicks::Now();
+    if (frame_data.last_blurt_time_ + kMaxSlientTime < now) {
+      HEURISTICS_HISTOGRAM(kBackgroundAudioStartsUMA,
+                           now - frame_data.last_invisible_time_);
+    }
+  } else if (property_type == mojom::PropertyType::kVisible) {
+    bool visible = value.GetBool();
+    if (visible)
+      return;
+    frame_data.last_invisible_time_ = base::TimeTicks::Now();
   }
 }
 
