@@ -46,6 +46,30 @@
       "revId": "5c87c73af52c211f15469ec8f671ed068e9c6b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98783d1d_e59e977e",
+        "filename": "ui/arc/notification/arc_notification_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-18T15:08:45Z",
+      "side": 1,
+      "message": "It does! Maybe just add a TODO to make the ctor in L44 private.",
+      "parentUuid": "615381c9_75745e7b",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 72
+      },
+      "revId": "5c87c73af52c211f15469ec8f671ed068e9c6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
