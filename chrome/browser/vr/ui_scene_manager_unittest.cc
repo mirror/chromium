@@ -9,6 +9,7 @@
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
+#include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/mock_browser_interface.h"
 #include "chrome/browser/vr/test/ui_scene_manager_test.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -266,6 +267,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   // Hold onto the background color to make sure it changes.
   SkColor initial_background = scene_->GetWorldBackgroundColor();
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
 
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
@@ -275,7 +277,14 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
     SCOPED_TRACE("Entered Fullsceen");
     // Make sure background has changed for fullscreen.
     EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
+    // Should have started transition.
+    EXPECT_EQ(1lu, content_quad->animation_player().animations().size());
   }
+
+  // Start and finish the transition.
+  content_quad->animation_player().Tick(UsToTicks(0));
+  content_quad->animation_player().Tick(UsToTicks(1000000));
+  EXPECT_TRUE(content_quad->animation_player().animations().empty());
 
   // Everything should return to original state after leaving fullscreen.
   manager_->SetFullscreen(false);
@@ -283,6 +292,8 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   {
     SCOPED_TRACE("Exited Fullsceen");
     EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
+    // Should have started transition.
+    EXPECT_EQ(1lu, content_quad->animation_player().animations().size());
   }
 }
 

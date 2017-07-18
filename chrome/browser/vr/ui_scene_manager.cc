@@ -271,6 +271,9 @@ void UiSceneManager::CreateContentQuad() {
   element->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
   element->set_visible(false);
   element->set_corner_radius(kContentCornerRadius);
+  Transition transition;
+  transition.target_properties[cc::TargetProperty::TRANSFORM] = true;
+  element->animation_player().set_transition(transition);
   main_content_ = element.get();
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
