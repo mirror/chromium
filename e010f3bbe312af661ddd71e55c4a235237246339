@@ -22,6 +22,30 @@
       "revId": "e010f3bbe312af661ddd71e55c4a235237246339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc613cc_6033760a",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10152,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-18T18:30:16Z",
+      "side": 1,
+      "message": "Yes, sorry about this. Rebased this change on to https://chromium-review.googlesource.com/c/571100/5",
+      "parentUuid": "34e3099a_263cc42b",
+      "range": {
+        "startLine": 10152,
+        "startChar": 18,
+        "endLine": 10152,
+        "endChar": 26
+      },
+      "revId": "e010f3bbe312af661ddd71e55c4a235237246339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
