@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4fe12db_fd8fbe2e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-18T13:03:35Z",
+      "side": 1,
+      "message": "If it is not available on Mac, please list OSs where username correction is available.",
+      "range": {
+        "startLine": 1538,
+        "startChar": 62,
+        "endLine": 1538,
+        "endChar": 72
+      },
+      "revId": "fd840a9858fd2585a72618d20b5093ffe8e1405a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffbbd5d_43d63fb6",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
