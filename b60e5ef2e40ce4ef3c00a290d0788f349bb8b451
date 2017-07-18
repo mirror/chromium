@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b7cbad_361e0ccd",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-18T15:26:38Z",
+      "side": 0,
+      "message": "This loses CQ coverage for the WebGL 1.0 tests running on top of ANGLE on the optional tryservers, which seems problematic. Should we convert this target to webgl_conformance_gl_passthrough_tests in addition to the other change here to switch the WebGL 2.0 tests on ANGLE to using the passthrough command decoder?",
+      "revId": "b60e5ef2e40ce4ef3c00a290d0788f349bb8b451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
