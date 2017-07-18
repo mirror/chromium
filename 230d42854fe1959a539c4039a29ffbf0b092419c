@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d061c663_96430c43",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "For consistency in function names, I suggest you either add a \"With\" to RecordSigninImpression*With*NoAccountUserActionForAccessPoint or remove it from RecordSigninImpressionWithAccountUserActionForAccessPoint",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 277,
+        "endChar": 60
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45fb66b_524f5765",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15544,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "The description here is used on the histograms dashboard, so it needs to be descriptive enough. I think we should not reference the enums in the code in this description. I suggest we change this to:\n\"Recorded when starting sign-in using the promo view from the bookmarks manager with no default account\".",
+      "range": {
+        "startLine": 15544,
+        "startChar": 5,
+        "endLine": 15544,
+        "endChar": 62
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bcaa4c_c6f270fa",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15551,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from the recent tabs with no default account.\"",
+      "range": {
+        "startLine": 15551,
+        "startChar": 37,
+        "endLine": 15551,
+        "endChar": 40
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54fbbb3_d2541f00",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15559,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from settings with no default account.\"",
+      "range": {
+        "startLine": 15559,
+        "startChar": 3,
+        "endLine": 15559,
+        "endChar": 14
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90329537_8ed9c9b7",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15569,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from the tab switcher with no default account.\"",
+      "range": {
+        "startLine": 15569,
+        "startChar": 4,
+        "endLine": 15569,
+        "endChar": 12
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18ee8fc_af4a78b8",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15578,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from the bookmarks manager with a default account.\"",
+      "range": {
+        "startLine": 15578,
+        "startChar": 15,
+        "endLine": 15578,
+        "endChar": 16
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03cf840_9b1b16c7",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15587,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from the recent tabs with a default account.\"",
+      "range": {
+        "startLine": 15587,
+        "startChar": 4,
+        "endLine": 15587,
+        "endChar": 12
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae859e2_457bac1a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15596,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from settings with a default account.\"",
+      "range": {
+        "startLine": 15596,
+        "startChar": 16,
+        "endLine": 15596,
+        "endChar": 20
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49428b92_11ae275f",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15605,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T16:33:55Z",
+      "side": 1,
+      "message": "Suggestion: \"Recorded when starting sign-in using the promo view from the tab switcher with a default account.\"",
+      "range": {
+        "startLine": 15605,
+        "startChar": 16,
+        "endLine": 15605,
+        "endChar": 20
+      },
+      "revId": "230d42854fe1959a539c4039a29ffbf0b092419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
