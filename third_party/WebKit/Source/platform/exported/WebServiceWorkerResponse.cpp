@@ -111,8 +111,15 @@ void WebServiceWorkerResponse::VisitHTTPHeaderFields(
     header_visitor->VisitHeader(i->key, i->value);
 }
 
-void WebServiceWorkerResponse::SetBlob(const WebString& uuid, uint64_t size) {
-  private_->blob_data_handle = BlobDataHandle::Create(uuid, String(), size);
+void WebServiceWorkerResponse::SetBlob(const WebString& uuid,
+                                       uint64_t size,
+                                       storage::mojom::blink::BlobPtr blob) {
+  /*auto blob_info = blob.PassInterface();
+  storage::mojom::blink::BlobPtr blink_blob;
+  blink_blob.Bind(storage::mojom::blink::BlobPtrInfo(blob_info.PassHandle(),
+                                                     blob_info.version()));*/
+  private_->blob_data_handle =
+      BlobDataHandle::Create(uuid, String(), size, std::move(blob));
 }
 
 WebString WebServiceWorkerResponse::BlobUUID() const {
@@ -125,6 +132,16 @@ uint64_t WebServiceWorkerResponse::BlobSize() const {
   if (!private_->blob_data_handle)
     return 0;
   return private_->blob_data_handle->size();
+}
+
+storage::mojom::blink::BlobPtr WebServiceWorkerResponse::Blob() const {
+  if (!private_->blob_data_handle)
+    return nullptr;
+  if (!private_->blob_data_handle->blob())
+    return nullptr;
+  storage::mojom::blink::BlobPtr result;
+  private_->blob_data_handle->blob()->Clone(MakeRequest(&result));
+  return result;
 }
 
 void WebServiceWorkerResponse::SetError(WebServiceWorkerResponseError error) {

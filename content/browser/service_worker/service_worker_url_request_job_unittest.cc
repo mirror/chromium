@@ -60,6 +60,7 @@
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/blob/blob_url_request_job.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
+#include "storage/common/blob_storage/blob_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -448,7 +449,7 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
             blink::kWebServiceWorkerResponseTypeDefault,
             base::MakeUnique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+            nullptr, blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             base::MakeUnique<
@@ -679,7 +680,7 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
             blink::kWebServiceWorkerResponseTypeDefault,
             base::MakeUnique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+            nullptr, blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             base::MakeUnique<
@@ -766,7 +767,7 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
         ServiceWorkerResponse(
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
             blink::kWebServiceWorkerResponseTypeDefault, MakeHeaders(),
-            blob_uuid_, blob_size_,
+            blob_uuid_, blob_size_, nullptr,
             blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
@@ -864,7 +865,7 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
         ServiceWorkerResponse(
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
             blink::kWebServiceWorkerResponseTypeDefault, MakeHeaders(), "", 0,
-            blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+            nullptr, blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             base::MakeUnique<
@@ -1354,7 +1355,7 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
             blink::kWebServiceWorkerResponseTypeDefault,
             base::MakeUnique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+            nullptr, blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             base::MakeUnique<
