@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40bb9710_9288fb65",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2695,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T00:00:55Z",
+      "side": 1,
+      "message": "Without changes, we will also prefer painting mixed backgrounds (fixed and non-fixed) into the graphics layer which means the non-fixed background will move with scroll and need to be repainted (opposite of the problem with mixed backgrounds without RLS). I\u0027m thinking we might want to change GetBackgroundPaintLocation on the root to prefer the scrolling contents layer in the tricky cases so that we have the same behavior as without the flag.",
+      "parentUuid": "a89b7e19_27ed6dd7",
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c6cc4c_c4dc962a",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
         "patchSetId": 5
