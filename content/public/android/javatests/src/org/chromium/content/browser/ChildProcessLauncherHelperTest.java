@@ -162,7 +162,7 @@ public class ChildProcessLauncherHelperTest {
 
         // Launch a service from this process. Since slot 0 is already bound by the Helper, it
         // will fail to start and the ChildProcessLauncher will retry and use the slot 1.
-        ChildProcessCreationParams creationParams = new ChildProcessCreationParams(
+        final ChildProcessCreationParams creationParams = new ChildProcessCreationParams(
                 context.getPackageName(), false /* isExternalService */,
                 LibraryProcessType.PROCESS_CHILD, true /* bindToCallerCheck */);
         ChildProcessLauncherHelper launcher = startSandboxedChildProcessWithCreationParams(
@@ -180,7 +180,7 @@ public class ChildProcessLauncherHelperTest {
         for (int i = 0; i < connectionAllocator.getNumberOfServices(); ++i) {
             ChildProcessConnection sandboxedConn =
                     connectionAllocator.getChildProcessConnectionAtSlotForTesting(i);
-            if (i <= 1) {
+            if (i == 1) {
                 Assert.assertNotNull(sandboxedConn);
                 Assert.assertNotNull(
                         ChildProcessLauncherTestUtils.getConnectionService(sandboxedConn));
@@ -191,12 +191,6 @@ public class ChildProcessLauncherHelperTest {
 
         Assert.assertEquals(
                 connectionAllocator.getChildProcessConnectionAtSlotForTesting(1), retryConnection);
-
-        ChildProcessConnection failedConnection =
-                connectionAllocator.getChildProcessConnectionAtSlotForTesting(0);
-        Assert.assertEquals(0, ChildProcessLauncherTestUtils.getConnectionPid(failedConnection));
-        Assert.assertFalse(ChildProcessLauncherTestUtils.getConnectionService(failedConnection)
-                                   .bindToCaller());
 
         CriteriaHelper.pollInstrumentationThread(
                 new Criteria("Failed waiting retry connection to get pid") {
@@ -209,6 +203,22 @@ public class ChildProcessLauncherHelperTest {
                 != helperConnectionPid);
         Assert.assertTrue(
                 ChildProcessLauncherTestUtils.getConnectionService(retryConnection).bindToCaller());
+
+        // Unbind the service.
+        msg = Message.obtain(null, ChildProcessLauncherTestHelperService.MSG_UNBIND_SERVICE);
+        serviceConnection.mMessenger.send(msg);
+
+        // It should free up the connection (eventually) and the CPL should be able to use that
+        // slot.
+        CriteriaHelper.pollInstrumentationThread(new Criteria(
+                "Failed waiting retry connection to get pid") {
+            @Override
+            public boolean isSatisfied() {
+                ChildProcessLauncherHelper launcher2 = startSandboxedChildProcessWithCreationParams(
+                        creationParams, BLOCK_UNTIL_SETUP, true /* doSetupConnection */);
+                return launcher2 != null;
+            }
+        });
     }
 
     private static void warmUpOnUiThreadBlocking(final Context context) {
