@@ -1753,9 +1753,8 @@ if (enable_java_templates) {
                         root_build_dir),
           ]
           args += invoker.post_process_package_resources_args
-          inputs = [
-            _resource_packaged_apk_path,
-          ]
+          inputs = [ _resource_packaged_apk_path ] +
+                   invoker.post_process_package_resources_args
           outputs = [
             _post_processed_resource_packaged_apk_path,
           ]
