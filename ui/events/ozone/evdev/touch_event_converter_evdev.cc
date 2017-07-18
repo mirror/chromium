@@ -374,19 +374,9 @@ void TouchEventConverterEvdev::EmulateMultitouchEvent(
 
 void TouchEventConverterEvdev::ProcessKey(const input_event& input) {
   switch (input.code) {
-    case BTN_TOUCH:
-    case BTN_LEFT:
-    case BTN_0:
-      events_[current_slot_].btn_left.down = input.value;
-      events_[current_slot_].btn_left.changed = true;
-      break;
     case BTN_STYLUS:
-      events_[current_slot_].btn_right.down = input.value;
-      events_[current_slot_].btn_right.changed = true;
-      break;
-    case BTN_STYLUS2:
-      events_[current_slot_].btn_middle.down = input.value;
-      events_[current_slot_].btn_middle.changed = true;
+      events_[current_slot_].btn_stylus.down = input.value;
+      events_[current_slot_].btn_stylus.changed = true;
       break;
     case BTN_TOOL_PEN:
     case BTN_TOOL_RUBBER:
@@ -396,6 +386,11 @@ void TouchEventConverterEvdev::ProcessKey(const input_event& input) {
         events_[current_slot_].tool_code = 0;
       }
       events_[current_slot_].altered = true;
+      break;
+    case BTN_LEFT:
+    case BTN_0:
+    case BTN_STYLUS2:
+    case BTN_TOUCH:
       break;
     default:
       NOTIMPLEMENTED() << "invalid code for EV_KEY: " << input.code;
@@ -512,9 +507,11 @@ void TouchEventConverterEvdev::ReportTouchEvent(
   if (inconsistent_speed_filter_)
     timestamp = inconsistent_speed_filter_->FilterTimestamp(timestamp, event);
 
-  dispatcher_->DispatchTouchEvent(
-      TouchEventParams(input_device_.id, event.slot, event_type,
-                       gfx::PointF(event.x, event.y), details, timestamp));
+  int flags =
+      event.btn_stylus.down ? ui::TouchEventFlags::EF_STYLUS_BARREL_BUTTON : 0;
+  dispatcher_->DispatchTouchEvent(TouchEventParams(
+      input_device_.id, event.slot, event_type, gfx::PointF(event.x, event.y),
+      details, timestamp, flags));
 }
 
 void TouchEventConverterEvdev::CancelAllTouches() {
@@ -570,9 +567,7 @@ void TouchEventConverterEvdev::ReportEvents(base::TimeTicks timestamp) {
     event->was_touching = event->touching;
     event->was_delayed = event->delayed;
     event->altered = false;
-    event->btn_left.changed = false;
-    event->btn_right.changed = false;
-    event->btn_middle.changed = false;
+    event->btn_stylus.changed = false;
   }
 }
 
@@ -605,17 +600,9 @@ void TouchEventConverterEvdev::ReleaseButtons() {
   for (size_t slot = 0; slot < events_.size(); slot++) {
     InProgressTouchEvdev* event = &events_[slot];
 
-    if (event->btn_left.down) {
-      event->btn_left.down = false;
-      event->btn_left.changed = true;
-    }
-    if (event->btn_right.down) {
-      event->btn_right.down = false;
-      event->btn_right.changed = true;
-    }
-    if (event->btn_middle.down) {
-      event->btn_middle.down = false;
-      event->btn_middle.changed = true;
+    if (event->btn_stylus.down) {
+      event->btn_stylus.down = false;
+      event->btn_stylus.changed = true;
     }
   }
 

@@ -143,6 +143,12 @@ enum MouseEventFlags {
                                      // can be used to update hover state.
 };
 
+// Flags specific to touch events
+enum TouchEventFlags {
+  EF_STYLUS_BARREL_BUTTON = 1 << 15,  // Indicates if a stylus barrel button is
+                                      // pressed.
+};
+
 // Result of dispatching an event.
 enum EventResult {
   ER_UNHANDLED = 0,      // The event hasn't been handled. The event can be
