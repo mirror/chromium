@@ -23,14 +23,12 @@ const int kTestingDaysAfterPasswordsAreSynced = 1;
 const wchar_t kTestingFederatedLoginMarker[] = L"__federated__";
 
 std::unique_ptr<PasswordForm> CreatePasswordFormFromDataForTesting(
-    const PasswordFormData& form_data) {
+    const PasswordFormData& form_data,
+    bool set_unspecified_values) {
   std::unique_ptr<PasswordForm> form(new PasswordForm());
   form->scheme = form_data.scheme;
   form->preferred = form_data.preferred;
   form->date_created = base::Time::FromDoubleT(form_data.creation_time);
-  form->date_synced =
-      form->date_created +
-      base::TimeDelta::FromDays(kTestingDaysAfterPasswordsAreSynced);
   if (form_data.signon_realm)
     form->signon_realm = std::string(form_data.signon_realm);
   if (form_data.origin)
@@ -45,8 +43,6 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromDataForTesting(
     form->password_element = base::WideToUTF16(form_data.password_element);
   if (form_data.username_value) {
     form->username_value = base::WideToUTF16(form_data.username_value);
-    form->display_name = form->username_value;
-    form->skip_zero_click = true;
     if (form_data.password_value) {
       if (wcscmp(form_data.password_value, kTestingFederatedLoginMarker) == 0)
         form->federation_origin = url::Origin(GURL(kTestingFederationUrlSpec));
@@ -56,7 +52,17 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromDataForTesting(
   } else {
     form->blacklisted_by_user = true;
   }
-  form->icon_url = GURL(kTestingIconUrlSpec);
+
+  if (set_unspecified_values) {
+    form->date_synced =
+        form->date_created +
+        base::TimeDelta::FromDays(kTestingDaysAfterPasswordsAreSynced);
+    if (form_data.username_value) {
+      form->display_name = form->username_value;
+      form->skip_zero_click = true;
+    }
+    form->icon_url = GURL(kTestingIconUrlSpec);
+  }
   return form;
 }
 
