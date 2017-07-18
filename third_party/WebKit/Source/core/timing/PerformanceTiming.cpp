@@ -314,7 +314,7 @@ unsigned long long PerformanceTiming::FirstPaint() const {
   if (!timing)
     return 0;
 
-  return MonotonicTimeToIntegerMilliseconds(timing->FirstPaint());
+  return MonotonicTimeToIntegerMilliseconds(timing->FirstPaintSwap());
 }
 
 unsigned long long PerformanceTiming::FirstTextPaint() const {
@@ -322,7 +322,7 @@ unsigned long long PerformanceTiming::FirstTextPaint() const {
   if (!timing)
     return 0;
 
-  return MonotonicTimeToIntegerMilliseconds(timing->FirstTextPaint());
+  return MonotonicTimeToIntegerMilliseconds(timing->FirstTextPaintSwap());
 }
 
 unsigned long long PerformanceTiming::FirstImagePaint() const {
@@ -330,7 +330,7 @@ unsigned long long PerformanceTiming::FirstImagePaint() const {
   if (!timing)
     return 0;
 
-  return MonotonicTimeToIntegerMilliseconds(timing->FirstImagePaint());
+  return MonotonicTimeToIntegerMilliseconds(timing->FirstImagePaintSwap());
 }
 
 unsigned long long PerformanceTiming::FirstContentfulPaint() const {
@@ -338,7 +338,7 @@ unsigned long long PerformanceTiming::FirstContentfulPaint() const {
   if (!timing)
     return 0;
 
-  return MonotonicTimeToIntegerMilliseconds(timing->FirstContentfulPaint());
+  return MonotonicTimeToIntegerMilliseconds(timing->FirstContentfulPaintSwap());
 }
 
 unsigned long long PerformanceTiming::FirstMeaningfulPaint() const {
@@ -346,7 +346,7 @@ unsigned long long PerformanceTiming::FirstMeaningfulPaint() const {
   if (!timing)
     return 0;
 
-  return MonotonicTimeToIntegerMilliseconds(timing->FirstMeaningfulPaint());
+  return MonotonicTimeToIntegerMilliseconds(timing->FirstMeaningfulPaintSwap());
 }
 
 unsigned long long PerformanceTiming::ParseStart() const {
