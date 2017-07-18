@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb0d2a7_9da0f24d",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:07:00Z",
+      "side": 1,
+      "message": "Did this come from UX? What does \u0027try again\u0027 mean?",
+      "revId": "3e2afc543c1b77985ee849f1ad395e17bd11ceaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
