@@ -16,23 +16,23 @@ class Collator;
 
 namespace media_router {
 
+// IconTypes are listed in the order in which sinks should be sorted.
+// The order must stay in sync with
+// chrome/browser/resources/media_router/media_router_data.js.
+enum class IconType {
+  CAST,
+  CAST_AUDIO_GROUP,
+  CAST_AUDIO,
+  MEETING,
+  HANGOUT,
+  GENERIC
+};
+
 // Represents a sink to which media can be routed.
 // TODO(zhaobin): convert MediaSink into a struct.
 class MediaSink {
  public:
   using Id = std::string;
-
-  // IconTypes are listed in the order in which sinks should be sorted.
-  // The order must stay in sync with
-  // chrome/browser/resources/media_router/media_router_data.js.
-  enum IconType {
-    CAST,
-    CAST_AUDIO_GROUP,
-    CAST_AUDIO,
-    MEETING,
-    HANGOUT,
-    GENERIC
-  };
 
   MediaSink(const MediaSink::Id& sink_id,
             const std::string& name,
