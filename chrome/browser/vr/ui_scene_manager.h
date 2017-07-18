@@ -128,6 +128,10 @@ class UiSceneManager {
   // before we hide the splash screen. This is used in the case of WebVR
   // auto-presentation.
   bool waiting_for_first_web_vr_frame_ = false;
+  bool showing_splash_screen_ = false;
+  bool is_prompting_to_exit_ = false;
+  bool is_exiting_ = false;
+
   bool secure_origin_ = false;
   bool fullscreen_ = false;
   bool incognito_ = false;

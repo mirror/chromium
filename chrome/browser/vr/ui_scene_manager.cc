@@ -288,7 +288,7 @@ void UiSceneManager::CreateContentQuad() {
   scene_->AddUiElement(std::move(element));
 
   // Limit reticle distance to a sphere based on content distance.
-  scene_->SetBackgroundDistance(
+  scene_->set_background_distance(
       main_content_->transform_operations().Apply().matrix().get(2, 3) *
       -kBackgroundDistanceMultiplier);
 }
@@ -483,22 +483,22 @@ void UiSceneManager::ConfigureScene() {
   // We disable WebVR rendering if we're expecting to auto present so that we
   // can continue to show the 2D splash screen while the site submits the first
   // WebVR frame.
-  scene_->SetWebVrRenderingEnabled(web_vr_mode_ &&
-                                   !waiting_for_first_web_vr_frame_);
+  scene_->set_web_vr_rendering_enabled(web_vr_mode_ &&
+                                       !waiting_for_first_web_vr_frame_);
   // Splash screen.
-  scene_->set_showing_splash_screen(waiting_for_first_web_vr_frame_);
+  showing_splash_screen_ = waiting_for_first_web_vr_frame_;
   splash_screen_icon_->SetEnabled(waiting_for_first_web_vr_frame_);
 
   // Exit warning.
-  exit_warning_->SetEnabled(scene_->is_exiting());
-  screen_dimmer_->SetEnabled(scene_->is_exiting());
+  exit_warning_->SetEnabled(is_exiting_);
+  screen_dimmer_->SetEnabled(is_exiting_);
 
-  bool browsing_mode = !web_vr_mode_ && !scene_->showing_splash_screen();
+  bool browsing_mode = !web_vr_mode_ && !showing_splash_screen_;
 
   // Controls (URL bar, loading progress, etc).
   bool controls_visible = browsing_mode && !fullscreen_;
   for (UiElement* element : control_elements_) {
-    element->SetEnabled(controls_visible && !scene_->is_prompting_to_exit());
+    element->SetEnabled(controls_visible && !is_prompting_to_exit_);
   }
 
   // Close button is a special control element that needs to be hidden when in
@@ -507,7 +507,7 @@ void UiSceneManager::ConfigureScene() {
 
   // Content elements.
   for (UiElement* element : content_elements_) {
-    element->SetEnabled(browsing_mode && !scene_->is_prompting_to_exit());
+    element->SetEnabled(browsing_mode && !is_prompting_to_exit_);
   }
 
   // Background elements.
@@ -516,7 +516,7 @@ void UiSceneManager::ConfigureScene() {
   }
 
   // Exit prompt.
-  bool showExitPrompt = browsing_mode && scene_->is_prompting_to_exit();
+  bool showExitPrompt = browsing_mode && is_prompting_to_exit_;
   exit_prompt_->SetEnabled(showExitPrompt);
   exit_prompt_backplane_->SetEnabled(showExitPrompt);
 
@@ -541,14 +541,19 @@ void UiSceneManager::ConfigureScene() {
     close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
   }
 
-  scene_->SetMode(mode());
-  scene_->SetBackgroundDistance(
+  for (auto& element : scene_->GetUiElements())
+    element->SetMode(mode());
+
+  scene_->set_background_distance(
       main_content_->transform_operations().Apply().matrix().get(2, 3) *
       -kBackgroundDistanceMultiplier);
   UpdateBackgroundColor();
 
   transient_url_bar_->SetEnabled(started_for_autopresentation_ &&
-                                 !scene_->showing_splash_screen());
+                                 !showing_splash_screen_);
+
+  scene_->set_reticle_rendering_enabled(
+      !(web_vr_mode_ || is_exiting_ || showing_splash_screen_));
 
   ConfigureExclusiveScreenToast();
   ConfigureSecurityWarnings();
@@ -563,6 +568,11 @@ void UiSceneManager::UpdateBackgroundColor() {
   floor_->set_center_color(color_scheme().floor);
   floor_->set_edge_color(color_scheme().world_background);
   floor_->set_grid_color(color_scheme().floor_grid);
+
+  // Background color.
+  scene_->set_background_color(showing_splash_screen_
+                                   ? color_scheme().splash_screen_background
+                                   : color_scheme().world_background);
 }
 
 void UiSceneManager::SetSplashScreenIcon(const SkBitmap& bitmap) {
@@ -712,9 +722,8 @@ void UiSceneManager::OnExitPromptPrimaryButtonClickedForTesting() {
 }
 
 void UiSceneManager::OnSecurityIconClicked() {
-  if (scene_->is_prompting_to_exit())
+  if (is_prompting_to_exit_)
     return;
-  scene_->set_is_prompting_to_exit(true);
   ConfigureScene();
 }
 
@@ -723,9 +732,8 @@ void UiSceneManager::OnExitPromptBackplaneClicked() {
 }
 
 void UiSceneManager::CloseExitPrompt() {
-  if (!scene_->is_prompting_to_exit())
+  if (!is_prompting_to_exit_)
     return;
-  scene_->set_is_prompting_to_exit(false);
   ConfigureScene();
 }
 
@@ -751,9 +759,9 @@ void UiSceneManager::SetLoadProgress(float progress) {
 }
 
 void UiSceneManager::SetIsExiting() {
-  if (scene_->is_exiting())
+  if (is_exiting_)
     return;
-  scene_->set_is_exiting();
+  is_exiting_ = true;
   ConfigureScene();
 }
 
