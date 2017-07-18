@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e3ae2b_c90255c3",
+        "filename": "chrome/browser/chromeos/printing/doc/cups_printer_management.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T17:39:48Z",
+      "side": 1,
+      "message": "bug number?",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "e1748dfd1b0f00f21761b98d58507a4db1dc68a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2edf534_fd553388",
+        "filename": "chrome/browser/chromeos/printing/doc/cups_printer_management.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T17:39:48Z",
+      "side": 1,
+      "message": "s/,/./",
+      "range": {
+        "startLine": 65,
+        "startChar": 73,
+        "endLine": 65,
+        "endChar": 74
+      },
+      "revId": "e1748dfd1b0f00f21761b98d58507a4db1dc68a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f800d46_231ace9a",
+        "filename": "chrome/browser/chromeos/printing/doc/cups_printer_management.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T17:39:48Z",
+      "side": 1,
+      "message": "SyncedPrintersManager?",
+      "range": {
+        "startLine": 109,
+        "startChar": 32,
+        "endLine": 109,
+        "endChar": 51
+      },
+      "revId": "e1748dfd1b0f00f21761b98d58507a4db1dc68a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
