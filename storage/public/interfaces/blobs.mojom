@@ -9,10 +9,19 @@ import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
 import "url/mojo/url.mojom";
 
+struct BlobReadResult {
+  bool success;
+  int32 error; // net::Error value
+  uint64 bytes_read;
+};
+
 // This interface provides access to a blob in the blob system.
 interface Blob {
   // Creates a copy of this Blob reference.
   Clone(Blob& blob);
+
+  ReadRange(uint64 offset, uint64 length, handle<data_pipe_producer> pipe) => (BlobReadResult result);
+  ReadAll(handle<data_pipe_producer> pipe) => (BlobReadResult result);
 
   // This method is an implementation detail of the blob system. You should not
   // ever need to call it directly.
