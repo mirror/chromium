@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a6d476_10a2ba3f",
+        "filename": "chrome/common/media_router/media_sink.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:12:09Z",
+      "side": 1,
+      "message": "The C++ documentation suggests that this is convertible to int, but the fact you\u0027ve added a static_cast elsewhere suggests not.  What happens if you declare this as enum class IconType : int { ...} ?  Can you remove the static_cast?\n\nRef: http://en.cppreference.com/w/cpp/language/enum",
+      "revId": "a494c62247880c1da313538ba62468fc0fdc2fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
