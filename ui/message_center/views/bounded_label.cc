@@ -312,12 +312,16 @@ gfx::Size BoundedLabel::GetSizeForWidthAndLines(int width, int lines) {
          label_->GetSizeForWidthAndLines(width, lines) : gfx::Size();
 }
 
+void BoundedLabel::SizeToFit(int fixed_width) {
+  label_->SizeToFit(fixed_width);
+}
+
 int BoundedLabel::GetBaseline() const {
   return label_->GetBaseline();
 }
 
 gfx::Size BoundedLabel::CalculatePreferredSize() const {
-  return visible() ? label_->GetSizeForWidthAndLines(-1, -1) : gfx::Size();
+  return visible() ? label_->CalculatePreferredSize() : gfx::Size();
 }
 
 int BoundedLabel::GetHeightForWidth(int width) const {
