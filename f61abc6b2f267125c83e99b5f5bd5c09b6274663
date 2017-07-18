@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42781572_07ef832c",
+        "filename": "remoting/ios/app/help_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-18T02:27:29Z",
+      "side": 1,
+      "message": "Looks like I got warning for using /answer... I\u0027d do it after landing this CL...",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 80
+      },
+      "revId": "f61abc6b2f267125c83e99b5f5bd5c09b6274663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
