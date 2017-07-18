@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b48c27_1292cd44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:30:37Z",
+      "side": 1,
+      "message": "Could you rewrap to 80 columns?\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-change-list-descriptions",
+      "revId": "a1bf3c6e9a34e4a3d485fb2439deaa50ec738055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a2171b_20603289",
+        "filename": "components/test/data/payments/abort.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:30:37Z",
+      "side": 1,
+      "message": "I\u0027m unsure of the support of \"let\" on iOS 9.0. AFAICT, it is unsupported in Safari on iOS 9.0, so probably also unsupported on Chrome on iOS: https://caniuse.com/#search\u003dlet.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "a1bf3c6e9a34e4a3d485fb2439deaa50ec738055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
