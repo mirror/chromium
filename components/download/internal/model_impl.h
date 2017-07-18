@@ -18,7 +18,7 @@
 
 namespace download {
 
-struct Entry;
+class Entry;
 
 // The internal implementation of Model.
 class ModelImpl : public Model {

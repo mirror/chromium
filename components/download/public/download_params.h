@@ -6,9 +6,11 @@
 #define COMPONENTS_DOWNLOAD_PUBLIC_DOWNLOAD_PARAMS_H_
 
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/download/public/clients.h"
 #include "net/http/http_request_headers.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace download {
@@ -97,7 +99,8 @@ struct RequestParams {
 // The parameters that describe a download request made to the DownloadService.
 // The |client| needs to be properly created and registered for this service for
 // the download to be accepted.
-struct DownloadParams {
+class DownloadParams {
+ public:
   enum StartResult {
     // The download is accepted and persisted.
     ACCEPTED,
@@ -128,6 +131,9 @@ struct DownloadParams {
   DownloadParams(const DownloadParams& other);
   ~DownloadParams();
 
+  bool operator==(const DownloadParams& other) = delete;
+  DownloadParams& operator=(const DownloadParams& other) = delete;
+
   // The feature that is requesting this download.
   DownloadClient client;
 
@@ -146,6 +152,25 @@ struct DownloadParams {
 
   // The parameters that define the actual download request to make.
   RequestParams request_params;
+
+  bool has_traffic_annotation() const { return bool(traffic_annotation_); }
+
+  const net::NetworkTrafficAnnotationTag& get_traffic_annotation() const {
+    CHECK(traffic_annotation_);
+    return *traffic_annotation_;
+  }
+
+  void set_traffic_annotation(
+      const net::NetworkTrafficAnnotationTag traffic_annotation) {
+    traffic_annotation_ =
+        base::MakeUnique<net::NetworkTrafficAnnotationTag>(traffic_annotation);
+  }
+
+  void reset_traffic_annotation() { traffic_annotation_.reset(); }
+
+ private:
+  // Traffic annotation for the network request.
+  std::unique_ptr<net::NetworkTrafficAnnotationTag> traffic_annotation_;
 };
 
 }  // namespace download

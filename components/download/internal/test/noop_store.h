@@ -11,7 +11,7 @@
 
 namespace download {
 
-struct Entry;
+class Entry;
 
 // A Store implementation that doesn't do anything but honors the interface
 // requirements.

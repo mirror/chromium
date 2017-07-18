@@ -14,7 +14,7 @@
 
 namespace download {
 
-struct DownloadParams;
+class DownloadParams;
 struct SchedulingParams;
 struct StartupStatus;
 

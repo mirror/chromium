@@ -6,12 +6,14 @@
 
 #include "base/guid.h"
 #include "components/download/internal/test/download_params_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 namespace download {
 namespace test {
 
 DownloadParams BuildBasicDownloadParams() {
   DownloadParams params;
+  params.set_traffic_annotation(TRAFFIC_ANNOTATION_FOR_TESTS);
   params.client = DownloadClient::TEST;
   params.guid = base::GenerateGUID();
   return params;
