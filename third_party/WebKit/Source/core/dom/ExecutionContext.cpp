@@ -58,7 +58,10 @@ ExecutionContext::~ExecutionContext() {}
 
 ExecutionContext* ExecutionContext::From(const ScriptState* script_state) {
   v8::HandleScope scope(script_state->GetIsolate());
-  return ToExecutionContext(script_state->GetContext());
+  v8::Local<v8::Context> context = script_state->GetContext();
+  if (context.IsEmpty())
+    return nullptr;
+  return ToExecutionContext(context);
 }
 
 void ExecutionContext::SuspendSuspendableObjects() {
