@@ -22,6 +22,30 @@
       "revId": "7103f5dc38f4ce96ba28c9786efa9537c11e8e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd174614_b9c8eca5",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-18T14:08:31Z",
+      "side": 1,
+      "message": "Renamed the function to KeepEntryForDependentTransactions and also revised this comment.",
+      "parentUuid": "ef05f800_aa13fd5f",
+      "range": {
+        "startLine": 1136,
+        "startChar": 5,
+        "endLine": 1136,
+        "endChar": 37
+      },
+      "revId": "7103f5dc38f4ce96ba28c9786efa9537c11e8e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
