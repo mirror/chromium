@@ -64,6 +64,13 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
     InvokeWifiConnectionCallback(std::string());
   }
 
+  if (!network_state_handler_->IsTechnologyEnabled(
+          NetworkTypePattern::WiFi())) {
+    network_state_handler_->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true,
+        chromeos::network_handler::ErrorCallback());
+  }
+
   ssid_ = ssid;
   password_ = password;
   tether_network_guid_ = tether_network_guid;
