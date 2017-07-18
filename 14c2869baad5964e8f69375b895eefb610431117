@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf404ff_34f88ae9",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:29:04Z",
+      "side": 1,
+      "message": "optional: remove this and expose duration() on LinearAnimation and use it.",
+      "revId": "14c2869baad5964e8f69375b895eefb610431117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
