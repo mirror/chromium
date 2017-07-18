@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482a16d5_07c6f9d4",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2699,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-18T10:15:22Z",
+      "side": 1,
+      "message": "Please guard ARC delegates only, not the whole FileSystemBackend.",
+      "range": {
+        "startLine": 2698,
+        "startChar": 0,
+        "endLine": 2699,
+        "endChar": 58
+      },
+      "revId": "95e28c3c2d91a2d2db71a7bf6d4016aedaf83cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
