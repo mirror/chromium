@@ -26,6 +26,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/gfx/text_constants.h"
 
 class SkBitmap;
 
@@ -250,13 +251,13 @@ class UI_BASE_EXPORT ResourceBundle {
   // The result is always cached and exists for the lifetime of the process.
   const gfx::FontList& GetFontListWithDelta(
       int size_delta,
-      gfx::Font::FontStyle style = gfx::Font::NORMAL,
+      gfx::TextStyle style = gfx::TextStyle::NORMAL,
       gfx::Font::Weight weight = gfx::Font::Weight::NORMAL);
 
   // Returns the primary font from the FontList given by GetFontListWithDelta().
   const gfx::Font& GetFontWithDelta(
       int size_delta,
-      gfx::Font::FontStyle style = gfx::Font::NORMAL,
+      gfx::TextStyle style = gfx::TextStyle::NORMAL,
       gfx::Font::Weight weight = gfx::Font::Weight::NORMAL);
 
   // Deprecated. Returns fonts using hard-coded size deltas implied by |style|.

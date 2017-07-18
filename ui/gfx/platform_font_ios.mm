@@ -13,6 +13,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_render_params.h"
 #include "ui/gfx/ios/NSString+CrStringDrawing.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -21,7 +22,7 @@ namespace gfx {
 
 PlatformFontIOS::PlatformFontIOS() {
   font_size_ = [UIFont systemFontSize];
-  style_ = Font::NORMAL;
+  style_ = TextStyle::NORMAL;
   weight_ = Font::Weight::NORMAL;
   UIFont* system_font = [UIFont systemFontOfSize:font_size_];
   font_name_ = base::SysNSStringToUTF8([system_font fontName]);
@@ -31,11 +32,11 @@ PlatformFontIOS::PlatformFontIOS() {
 PlatformFontIOS::PlatformFontIOS(NativeFont native_font) {
   std::string font_name = base::SysNSStringToUTF8([native_font fontName]);
   InitWithNameSizeAndStyle(font_name, [native_font pointSize],
-                           Font::NORMAL, Font::Weight::NORMAL);
+                           TextStyle::NORMAL, Font::Weight::NORMAL);
 }
 
 PlatformFontIOS::PlatformFontIOS(const std::string& font_name, int font_size) {
-  InitWithNameSizeAndStyle(font_name, font_size, Font::NORMAL,
+  InitWithNameSizeAndStyle(font_name, font_size, TextStyle::NORMAL,
                            Font::Weight::NORMAL);
 }
 

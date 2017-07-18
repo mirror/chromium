@@ -11,6 +11,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/widget/widget.h"
@@ -57,7 +58,7 @@ void EchoDialogView::InitForEnabledEcho(const base::string16& service_name,
   label_ = new views::StyledLabel(text, this);
 
   views::StyledLabel::RangeStyleInfo service_name_style;
-  service_name_style.font_style = gfx::Font::UNDERLINE;
+  service_name_style.text_style = gfx::TextStyle::UNDERLINE;
   service_name_style.tooltip = origin;
   label_->AddStyleRange(
       gfx::Range(offsets[0], offsets[0] + service_name.length()),
@@ -65,7 +66,7 @@ void EchoDialogView::InitForEnabledEcho(const base::string16& service_name,
 
   views::StyledLabel::RangeStyleInfo link_style =
       views::StyledLabel::RangeStyleInfo::CreateForLink();
-  link_style.font_style = gfx::Font::NORMAL;
+  link_style.text_style = gfx::TextStyle::NORMAL;
   label_->AddStyleRange(gfx::Range(offsets[1], offsets[1] + link.length()),
                         link_style);
 
@@ -89,7 +90,7 @@ void EchoDialogView::InitForDisabledEcho() {
 
   views::StyledLabel::RangeStyleInfo link_style =
       views::StyledLabel::RangeStyleInfo::CreateForLink();
-  link_style.font_style = gfx::Font::NORMAL;
+  link_style.text_style = gfx::TextStyle::NORMAL;
   label_->AddStyleRange(gfx::Range(offset, offset + link.length()), link_style);
 
   SetLabelBorderAndBounds();

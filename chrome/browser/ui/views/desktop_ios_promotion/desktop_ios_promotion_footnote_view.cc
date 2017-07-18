@@ -16,6 +16,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/layout/fill_layout.h"
 
@@ -36,7 +37,7 @@ DesktopIOSPromotionFootnoteView::DesktopIOSPromotionFootnoteView(
 
   views::StyledLabel::RangeStyleInfo link_style =
       views::StyledLabel::RangeStyleInfo::CreateForLink();
-  link_style.font_style = gfx::Font::NORMAL;
+  link_style.text_style = gfx::TextStyle::NORMAL;
   AddStyleRange(gfx::Range(offset, offset + link_text.length()), link_style);
 
   views::StyledLabel::RangeStyleInfo promo_style;

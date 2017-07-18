@@ -16,6 +16,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_render_params.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -78,11 +79,11 @@ WeightSolver WeightChangeFromNormal(Font::Weight desired) {
 // Returns the font style for |font|. Disregards Font::UNDERLINE, since NSFont
 // does not support it as a trait.
 int GetFontStyleFromNSFont(NSFont* font) {
-  int font_style = Font::NORMAL;
+  int text_style = TextStyle::NORMAL;
   NSFontSymbolicTraits traits = [[font fontDescriptor] symbolicTraits];
   if (traits & NSFontItalicTrait)
-    font_style |= Font::ITALIC;
-  return font_style;
+    text_style |= TextStyle::ITALIC;
+  return text_style;
 }
 
 // Returns the Font weight for |font|.
@@ -141,13 +142,13 @@ Font::Weight GetFontWeightFromNSFont(NSFont* font) {
 // Returns an autoreleased NSFont created with the passed-in specifications.
 NSFont* NSFontWithSpec(const std::string& font_name,
                        int font_size,
-                       int font_style,
+                       int text_style,
                        Font::Weight font_weight) {
   NSFontSymbolicTraits trait_bits = 0;
   // TODO(mboc): Add support for other weights as well.
   if (font_weight >= Font::Weight::BOLD)
     trait_bits |= NSFontBoldTrait;
-  if (font_style & Font::ITALIC)
+  if (text_style & TextStyle::ITALIC)
     trait_bits |= NSFontItalicTrait;
   // The Mac doesn't support underline as a font trait, so just drop it.
   // (Underlines must be added as an attribute on an NSAttributedString.)
@@ -199,7 +200,7 @@ PlatformFontMac::PlatformFontMac(NativeFont native_font)
 PlatformFontMac::PlatformFontMac(const std::string& font_name, int font_size)
     : PlatformFontMac(font_name,
                       font_size,
-                      Font::NORMAL,
+                      TextStyle::NORMAL,
                       Font::Weight::NORMAL) {}
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -241,7 +242,7 @@ Font PlatformFontMac::DeriveFont(int size_delta,
   // This is due to an AppKit bug. See http://crbug.com/742261.
   if (style != font_style_ || weight != font_weight_) {
     NSFontTraitMask italic_trait_mask =
-        (style & Font::ITALIC) ? NSItalicFontMask : NSUnitalicFontMask;
+        (style & TextStyle::ITALIC) ? NSItalicFontMask : NSUnitalicFontMask;
     derived = [font_manager convertFont:derived toHaveTrait:italic_trait_mask];
   }
 
