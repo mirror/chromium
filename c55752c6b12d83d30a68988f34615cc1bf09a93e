@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f6a6a2_bbf488de",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T21:12:00Z",
+      "side": 1,
+      "message": "Add comment above: // static",
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2318b8_08adf528",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T21:12:00Z",
+      "side": 1,
+      "message": "Nit: Should this be set just before invoking the promo instead of after it has been dismissed?",
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86932019_729c9729",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T21:12:00Z",
+      "side": 1,
+      "message": "Could this just call NewTabTracker::RegisterProfilePrefs(registry)?",
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48bbdd7_426aa9b0",
+        "filename": "chrome/browser/profiles/chrome_browser_main_extra_parts_profiles.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T21:12:00Z",
+      "side": 1,
+      "message": "Thank you :-)",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 49
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
