@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// TODO(kelvinp): Delete this file as it is no longer used.
 #include "remoting/client/server_log_entry_client.h"
 
 #include "base/logging.h"
@@ -62,8 +63,6 @@ const char* GetValueSessionState(ConnectionToHost::State state) {
 
 const char* GetValueError(ErrorCode error) {
   switch (error) {
-    // Where possible, these are the same strings that the webapp sends for the
-    // corresponding error - see remoting/webapp/crd/js/server_log_entry.js.
     case protocol::OK:
       return "none";
     case protocol::PEER_IS_OFFLINE:
@@ -86,10 +85,10 @@ const char* GetValueError(ErrorCode error) {
       return "max-session-length";
     case protocol::HOST_CONFIGURATION_ERROR:
       return "host-configuration-error";
-    case protocol::UNKNOWN_ERROR:
-      return "unknown-error";
     case protocol::INVALID_ACCOUNT:
       return "invalid-account";
+    default:
+      return "unknown-error";
   }
   NOTREACHED();
   return nullptr;

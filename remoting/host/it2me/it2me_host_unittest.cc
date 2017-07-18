@@ -25,6 +25,7 @@
 #include "remoting/host/chromoting_host_context.h"
 #include "remoting/host/it2me/it2me_confirmation_dialog.h"
 #include "remoting/host/policy_watcher.h"
+#include "remoting/protocol/errors.h"
 #include "remoting/protocol/transport_context.h"
 #include "remoting/signaling/fake_signal_strategy.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -34,6 +35,8 @@
 #endif  // defined(OS_LINUX)
 
 namespace remoting {
+
+using protocol::ErrorCode;
 
 namespace {
 
@@ -146,6 +149,7 @@ class It2MeHostTest : public testing::Test, public It2MeHost::Observer {
                          base::TimeDelta access_code_lifetime) override;
   void OnNatPolicyChanged(bool nat_traversal_enabled) override;
   void OnStateChanged(It2MeHostState state,
+                      ErrorCode error_code,
                       const std::string& error_message) override;
 
   void SetPolicies(
@@ -246,9 +250,9 @@ void It2MeHostTest::SetPolicies(
 void It2MeHostTest::StartupHostStateHelper(const base::Closure& quit_closure) {
   if (last_host_state_ == It2MeHostState::kRequestedAccessCode) {
     network_task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&It2MeHost::SetStateForTesting, it2me_host_.get(),
-                   It2MeHostState::kReceivedAccessCode, std::string()));
+        FROM_HERE, base::Bind(&It2MeHost::SetStateForTesting, it2me_host_.get(),
+                              It2MeHostState::kReceivedAccessCode,
+                              ErrorCode::OK, std::string()));
   } else if (last_host_state_ != It2MeHostState::kStarting) {
     quit_closure.Run();
     return;
@@ -320,6 +324,7 @@ void It2MeHostTest::OnStoreAccessCode(const std::string& access_code,
 void It2MeHostTest::OnNatPolicyChanged(bool nat_traversal_enabled) {}
 
 void It2MeHostTest::OnStateChanged(It2MeHostState state,
+                                   ErrorCode error_code,
                                    const std::string& error_message) {
   last_host_state_ = state;
 

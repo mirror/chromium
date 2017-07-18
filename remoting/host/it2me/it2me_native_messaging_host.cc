@@ -45,6 +45,8 @@
 
 namespace remoting {
 
+using protocol::ErrorCode;
+
 namespace {
 
 const NameMapElement<It2MeHostState> kIt2MeHostStates[] = {
@@ -139,7 +141,8 @@ void It2MeNativeMessagingHost::OnMessage(const std::string& message) {
 
   std::string type;
   if (!message_dict->GetString("type", &type)) {
-    SendErrorAndExit(std::move(response), "'type' not found in request.");
+    SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
+                     "'type' not found in request.");
     return;
   }
 
@@ -154,7 +157,8 @@ void It2MeNativeMessagingHost::OnMessage(const std::string& message) {
   } else if (type == "incomingIq") {
     ProcessIncomingIq(std::move(message_dict), std::move(response));
   } else {
-    SendErrorAndExit(std::move(response), "Unsupported request type: " + type);
+    SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
+                     "Unsupported request type: " + type);
   }
 }
 
@@ -210,21 +214,22 @@ void It2MeNativeMessagingHost::ProcessConnect(
     // If the process cannot be started or message passing fails, then return an
     // error to the message sender.
     if (!DelegateToElevatedHost(std::move(message))) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::ELEVATION_ERROR,
                        "Failed to send message to elevated host.");
     }
     return;
   }
 
   if (it2me_host_.get()) {
-    SendErrorAndExit(std::move(response),
+    SendErrorAndExit(std::move(response), ErrorCode::UNKNOWN_ERROR,
                      "Connect can be called only when disconnected.");
     return;
   }
 
   std::string username;
   if (!message->GetString("userName", &username)) {
-    SendErrorAndExit(std::move(response), "'userName' not found in request.");
+    SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
+                     "'userName' not found in request.");
     return;
   }
 
@@ -246,7 +251,7 @@ void It2MeNativeMessagingHost::ProcessConnect(
 
     std::string auth_service_with_token;
     if (!message->GetString("authServiceWithToken", &auth_service_with_token)) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
                        "'authServiceWithToken' not found in request.");
       return;
     }
@@ -257,8 +262,9 @@ void It2MeNativeMessagingHost::ProcessConnect(
     const char kOAuth2ServicePrefix[] = "oauth2:";
     if (!base::StartsWith(auth_service_with_token, kOAuth2ServicePrefix,
                           base::CompareCase::SENSITIVE)) {
-      SendErrorAndExit(std::move(response), "Invalid 'authServiceWithToken': " +
-                                                auth_service_with_token);
+      SendErrorAndExit(
+          std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
+          "Invalid 'authServiceWithToken': " + auth_service_with_token);
       return;
     }
 
@@ -268,19 +274,19 @@ void It2MeNativeMessagingHost::ProcessConnect(
 #if !defined(NDEBUG)
     std::string address;
     if (!message->GetString("xmppServerAddress", &address)) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
                        "'xmppServerAddress' not found in request.");
       return;
     }
 
     if (!net::ParseHostAndPort(address, &xmpp_config.host, &xmpp_config.port)) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
                        "Invalid 'xmppServerAddress': " + address);
       return;
     }
 
     if (!message->GetBoolean("xmppServerUseTls", &xmpp_config.use_tls)) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
                        "'xmppServerUseTls' not found in request.");
       return;
     }
@@ -293,7 +299,8 @@ void It2MeNativeMessagingHost::ProcessConnect(
     std::string local_jid;
 
     if (!message->GetString("localJid", &local_jid)) {
-      SendErrorAndExit(std::move(response), "'localJid' not found in request.");
+      SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
+                       "'localJid' not found in request.");
       return;
     }
 
@@ -311,7 +318,7 @@ void It2MeNativeMessagingHost::ProcessConnect(
 
 #if !defined(NDEBUG)
   if (!message->GetString("directoryBotJid", &directory_bot_jid)) {
-    SendErrorAndExit(std::move(response),
+    SendErrorAndExit(std::move(response), ErrorCode::INCOMPATIBLE_PROTOCOL,
                      "'directoryBotJid' not found in request.");
     return;
   }
@@ -357,7 +364,7 @@ void It2MeNativeMessagingHost::ProcessDisconnect(
     // If the process cannot be started or message passing fails, then return an
     // error to the message sender.
     if (!DelegateToElevatedHost(std::move(message))) {
-      SendErrorAndExit(std::move(response),
+      SendErrorAndExit(std::move(response), ErrorCode::ELEVATION_ERROR,
                        "Failed to send message to elevated host.");
     }
     return;
@@ -392,12 +399,14 @@ void It2MeNativeMessagingHost::SendOutgoingIq(const std::string& iq) {
 
 void It2MeNativeMessagingHost::SendErrorAndExit(
     std::unique_ptr<base::DictionaryValue> response,
+    protocol::ErrorCode error_code,
     const std::string& description) const {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
   LOG(ERROR) << description;
 
   response->SetString("type", "error");
+  response->SetInteger("error_code", error_code);
   response->SetString("description", description);
   SendMessageToClient(std::move(response));
 
@@ -416,6 +425,7 @@ void It2MeNativeMessagingHost::SendPolicyErrorAndExit() const {
 
 void It2MeNativeMessagingHost::OnStateChanged(
     It2MeHostState state,
+    protocol::ErrorCode error_code,
     const std::string& error_message) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
@@ -446,6 +456,7 @@ void It2MeNativeMessagingHost::OnStateChanged(
       // "error" message so that errors that occur before the "connect" message
       // is sent can be communicated.
       message->SetString("type", "error");
+      message->SetInteger("error_code", error_code);
       message->SetString("description", error_message);
       break;
 
