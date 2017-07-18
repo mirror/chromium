@@ -999,6 +999,9 @@ bool DirectCompositionSurfaceWin::AreOverlaysSupported() {
 
 // static
 bool DirectCompositionSurfaceWin::IsHDRSupported() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(switches::kEnableHDR))
+    return false;
   bool hdr_monitor_found = false;
 #if defined(ENABLE_HDR_DETECTION)
   base::win::ScopedComPtr<ID3D11Device> d3d11_device =
@@ -1034,6 +1037,9 @@ bool DirectCompositionSurfaceWin::IsHDRSupported() {
     }
   }
   UMA_HISTOGRAM_BOOLEAN("GPU.Output.HDR", hdr_monitor_found);
+#else
+  // If the API is not present, make the flag always force HDR mode.
+  hdr_monitor_found = true;
 #endif
   return hdr_monitor_found;
 }

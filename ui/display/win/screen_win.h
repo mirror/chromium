@@ -111,6 +111,10 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // you are targeting.
   static float GetSystemScaleFactor();
 
+  // Called when display configuration information retrieved from the GPU
+  // process is received.
+  static void OnGPUInfoChanged(bool hdr_enabled);
+
   // Returns the HWND associated with the NativeView.
   virtual HWND GetHWNDFromNativeView(gfx::NativeView view) const;
 
@@ -140,6 +144,7 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // ColorProfileReader::Client:
   void OnColorProfilesChanged() override;
 
+  void OnGPUInfoChangedInternal(bool hdr_enabled);
   void UpdateFromDisplayInfos(const std::vector<DisplayInfo>& display_infos);
 
   // Virtual to support mocking by unit tests.
@@ -202,6 +207,9 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
 
   // A helper to read color profiles from the filesystem.
   std::unique_ptr<ColorProfileReader> color_profile_reader_;
+
+  // Set when the "HDR and advanced color" setting is enabled.
+  bool hdr_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
 };

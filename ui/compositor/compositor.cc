@@ -331,13 +331,13 @@ void Compositor::SetScaleAndSize(float scale, const gfx::Size& size_in_pixel) {
 }
 
 void Compositor::SetDisplayColorSpace(const gfx::ColorSpace& color_space) {
-  blending_color_space_ = color_space;
-  output_color_space_ = blending_color_space_;
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)) {
+  output_color_space_ = color_space;
+  if (output_color_space_.IsHDR()) {
     blending_color_space_ = gfx::ColorSpace::CreateExtendedSRGB();
-    output_color_space_ = gfx::ColorSpace::CreateSCRGBLinear();
+  } else {
+    blending_color_space_ = color_space;
   }
-  host_->SetRasterColorSpace(color_space.GetParametricApproximation());
+  host_->SetRasterColorSpace(color_space.GetRasterColorSpace());
   // Color space is reset when the output surface is lost, so this must also be
   // updated then.
   // TODO(fsamuel): Get rid of this.

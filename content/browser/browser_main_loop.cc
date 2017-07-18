@@ -167,6 +167,7 @@
 #include "content/common/sandbox_win.h"
 #include "net/base/winsock_init.h"
 #include "ui/base/l10n/l10n_util_win.h"
+#include "ui/display/win/screen_win.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -452,25 +453,23 @@ GetDefaultTaskSchedulerInitParams() {
 
 }  // namespace
 
-#if defined(USE_X11) && !defined(OS_CHROMEOS)
 namespace internal {
 
-// Forwards GPUInfo updates to ui::XVisualManager
-class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
+// Forwards GPUInfo updates to ui::
+class GpuDataManagerProxy : public GpuDataManagerObserver {
  public:
-  explicit GpuDataManagerVisualProxy(GpuDataManagerImpl* gpu_data_manager)
+  explicit GpuDataManagerProxy(GpuDataManagerImpl* gpu_data_manager)
       : gpu_data_manager_(gpu_data_manager) {
     gpu_data_manager_->AddObserver(this);
   }
 
-  ~GpuDataManagerVisualProxy() override {
-    gpu_data_manager_->RemoveObserver(this);
-  }
+  ~GpuDataManagerProxy() override { gpu_data_manager_->RemoveObserver(this); }
 
   void OnGpuInfoUpdate() override {
     if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kHeadless))
       return;
     gpu::GPUInfo gpu_info = gpu_data_manager_->GetGPUInfo();
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
     if (!ui::XVisualManager::GetInstance()->OnGPUInfoChanged(
             gpu_info.software_rendering ||
                 !gpu_data_manager_->GpuAccessAllowed(nullptr),
@@ -481,16 +480,18 @@ class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
       if (gpu_process_host)
         gpu_process_host->ForceShutdown();
     }
+#elif defined(OS_WIN)
+    display::win::ScreenWin::OnGPUInfoChanged(gpu_info.hdr);
+#endif
   }
 
  private:
   GpuDataManagerImpl* gpu_data_manager_;
 
-  DISALLOW_COPY_AND_ASSIGN(GpuDataManagerVisualProxy);
+  DISALLOW_COPY_AND_ASSIGN(GpuDataManagerProxy);
 };
 
 }  // namespace internal
-#endif
 
 // The currently-running BrowserMainLoop.  There can be one or zero.
 BrowserMainLoop* g_current_browser_main_loop = NULL;
@@ -855,12 +856,10 @@ int BrowserMainLoop::PreCreateThreads() {
 
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
 
-#if defined(USE_X11) && !defined(OS_CHROMEOS)
-  // GpuDataManagerVisualProxy() just adds itself as an observer of
+  // GpuDataManagerProxy() just adds itself as an observer of
   // |gpu_data_manager|, which is safe to do before Initialize().
-  gpu_data_manager_visual_proxy_.reset(
-      new internal::GpuDataManagerVisualProxy(gpu_data_manager));
-#endif
+  gpu_data_manager_proxy_.reset(
+      new internal::GpuDataManagerProxy(gpu_data_manager));
 
   // 1) Need to initialize in-process GpuDataManager before creating threads.
   // It's unsafe to append the gpu command line switches to the global

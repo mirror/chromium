@@ -169,6 +169,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // parametric).
   gfx::ColorSpace GetParametricApproximation() const;
 
+  // Return a parametric SDR color space suitable for rasterization or blending.
+  gfx::ColorSpace GetRasterColorSpace() const;
+
   // Return this color space with any range adjust or YUV to RGB conversion
   // stripped off.
   gfx::ColorSpace GetAsFullRangeRGB() const;

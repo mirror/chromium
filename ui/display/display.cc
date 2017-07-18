@@ -147,10 +147,6 @@ Display::Display(int64_t id, const gfx::Rect& bounds)
                                           : gfx::ColorSpace::CreateSRGB()),
       color_depth_(DEFAULT_BITS_PER_PIXEL),
       depth_per_component_(DEFAULT_BITS_PER_COMPONENT) {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)) {
-    color_depth_ = HDR_BITS_PER_PIXEL;
-    depth_per_component_ = HDR_BITS_PER_COMPONENT;
-  }
 #if defined(USE_AURA)
   SetScaleAndBounds(device_scale_factor_, bounds);
 #endif
@@ -234,6 +230,11 @@ void Display::SetSize(const gfx::Size& size_in_pixel) {
 void Display::UpdateWorkAreaFromInsets(const gfx::Insets& insets) {
   work_area_ = bounds_;
   work_area_.Inset(insets);
+}
+
+void Display::SetHDRCapable() {
+  set_color_depth(HDR_BITS_PER_PIXEL);
+  set_depth_per_component(HDR_BITS_PER_COMPONENT);
 }
 
 gfx::Size Display::GetSizeInPixel() const {

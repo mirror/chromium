@@ -11,12 +11,14 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/win/win_util.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
 #include "ui/display/display_layout_builder.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/win/display_info.h"
 #include "ui/display/win/dpi.h"
 #include "ui/display/win/scaling_util.h"
@@ -81,7 +83,8 @@ std::vector<DisplayInfo> FindAndRemoveTouchingDisplayInfos(
 }
 
 Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info,
-                                     ColorProfileReader* color_profile_reader) {
+                                     ColorProfileReader* color_profile_reader,
+                                     bool hdr_enabled) {
   Display display(display_info.id());
   float scale_factor = display_info.device_scale_factor();
   display.set_device_scale_factor(scale_factor);
@@ -92,8 +95,13 @@ Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info,
                      1.0f / scale_factor));
   display.set_rotation(display_info.rotation());
   if (!Display::HasForceColorProfile()) {
-    display.set_color_space(
-        color_profile_reader->GetDisplayColorSpace(display_info.id()));
+    if (hdr_enabled) {
+      display.set_color_space(gfx::ColorSpace::CreateSCRGBLinear());
+      display.SetHDRCapable();
+    } else {
+      display.set_color_space(
+          color_profile_reader->GetDisplayColorSpace(display_info.id()));
+    }
   }
   return display;
 }
@@ -117,7 +125,8 @@ Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info,
 // will take precedence.
 std::vector<ScreenWinDisplay> DisplayInfosToScreenWinDisplays(
     const std::vector<DisplayInfo>& display_infos,
-    ColorProfileReader* color_profile_reader) {
+    ColorProfileReader* color_profile_reader,
+    bool hdr_enabled) {
   // Find and extract the primary display.
   std::vector<DisplayInfo> display_infos_remaining = display_infos;
   auto primary_display_iter = std::find_if(
@@ -145,9 +154,10 @@ std::vector<ScreenWinDisplay> DisplayInfosToScreenWinDisplays(
 
   // Layout and create the ScreenWinDisplays.
   std::vector<Display> displays;
-  for (const auto& display_info : display_infos)
-    displays.push_back(
-        CreateDisplayFromDisplayInfo(display_info, color_profile_reader));
+  for (const auto& display_info : display_infos) {
+    displays.push_back(CreateDisplayFromDisplayInfo(
+        display_info, color_profile_reader, hdr_enabled));
+  }
 
   std::unique_ptr<DisplayLayout> layout(builder.Build());
   layout->ApplyToDisplayList(&displays, nullptr, 0);
@@ -458,7 +468,7 @@ gfx::Rect ScreenWin::DIPToScreenRectInWindow(gfx::NativeView view,
 void ScreenWin::UpdateFromDisplayInfos(
     const std::vector<DisplayInfo>& display_infos) {
   screen_win_displays_ = DisplayInfosToScreenWinDisplays(
-      display_infos, color_profile_reader_.get());
+      display_infos, color_profile_reader_.get(), hdr_enabled_);
   displays_ = ScreenWinDisplaysToDisplays(screen_win_displays_);
 }
 
@@ -526,6 +536,23 @@ void ScreenWin::OnColorProfilesChanged() {
   }
   if (!changed)
     return;
+
+  std::vector<Display> old_displays = std::move(displays_);
+  UpdateFromDisplayInfos(GetDisplayInfosFromSystem());
+  change_notifier_.NotifyDisplaysChanged(old_displays, displays_);
+}
+
+// static
+void ScreenWin::OnGPUInfoChanged(bool hdr_enabled) {
+  if (!g_screen_win_instance)
+    return;
+  g_screen_win_instance->OnGPUInfoChangedInternal(hdr_enabled);
+}
+
+void ScreenWin::OnGPUInfoChangedInternal(bool hdr_enabled) {
+  if (hdr_enabled == hdr_enabled_)
+    return;
+  hdr_enabled_ = hdr_enabled;
 
   std::vector<Display> old_displays = std::move(displays_);
   UpdateFromDisplayInfos(GetDisplayInfosFromSystem());
