@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3697afbd_d8bfc639",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T00:11:37Z",
+      "side": 1,
+      "message": "Currently, it is always true that \u0027is_android\u0027 \u003d\u003d \u0027enable_offline_pages\u0027. Being able to remove offline_pages from build on android would require a massive surgery now (because how it is unconditionally hooked up to UI, notifications, background scheduling etc). So there is no plans to set the buildflag to false on android, instead the feature is controlled by several finch flags.\n\nThe goal of pulling platform-independent code form android-specific is to get us in place where we can enable offline_pages on more platforms, moving in direction from \"not included into build\" to \"controlled by finch\"... So there is no goal to further conditionalize on android.",
+      "parentUuid": "c85f381b_56237d7f",
+      "range": {
+        "startLine": 131,
+        "startChar": 25,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46dd5b4b_95aeeaf4",
         "filename": "chrome/browser/browsing_data/cache_counter.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c50b3448_0664e3e1",
+        "filename": "chrome/browser/browsing_data/cache_counter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T00:11:37Z",
+      "side": 1,
+      "message": "Done.\n\nSwitched it back to conditional include. Did the same in couple of other files in the same CL, for consistency.",
+      "parentUuid": "46dd5b4b_95aeeaf4",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 32
+      },
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f6ba9b_65569ba3",
         "filename": "chrome/browser/net/net_error_tab_helper.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7590a252_c3e0cec8",
+        "filename": "chrome/browser/net/net_error_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T00:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f6ba9b_65569ba3",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1d4a0466_b6e6bdcf",
+        "filename": "chrome/browser/offline_pages/android/offline_page_utils_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T00:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db550cf_52adeb90",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cabab12_6327980e",
         "filename": "chrome/browser/offline_pages/offline_page_utils.h",
         "patchSetId": 7
@@ -96,6 +180,24 @@
       "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c99692f_17e1d2f0",
+        "filename": "chrome/browser/offline_pages/offline_page_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T00:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cabab12_6327980e",
+      "revId": "1eb5ecc0261e56aaad93232f155232b4a2c8c81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
