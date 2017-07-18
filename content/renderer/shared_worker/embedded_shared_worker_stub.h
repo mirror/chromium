@@ -23,7 +23,6 @@ namespace blink {
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
 class WebNotificationPresenter;
-class WebSecurityOrigin;
 class WebSharedWorker;
 }
 
@@ -71,9 +70,6 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   blink::WebNotificationPresenter* NotificationPresenter() override;
   std::unique_ptr<blink::WebApplicationCacheHost> CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient*) override;
-  std::unique_ptr<blink::WebContentSettingsClient>
-  CreateWorkerContentSettingsClient(
-      const blink::WebSecurityOrigin& origin) override;
   std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
   CreateServiceWorkerNetworkProvider() override;
   void SendDevToolsMessage(int session_id,
@@ -84,6 +80,8 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   CreateDevToolsMessageLoop() override;
   std::unique_ptr<blink::WebWorkerFetchContext> CreateWorkerFetchContext(
       blink::WebServiceWorkerNetworkProvider*) override;
+
+  int GetId() override;
 
  private:
   ~EmbeddedSharedWorkerStub() override;

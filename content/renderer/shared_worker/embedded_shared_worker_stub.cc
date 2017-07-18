@@ -27,7 +27,6 @@
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_blink_platform_impl.h"
 #include "content/renderer/service_worker/worker_fetch_context_impl.h"
-#include "content/renderer/shared_worker/embedded_shared_worker_content_settings_client_proxy.h"
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -227,14 +226,6 @@ EmbeddedSharedWorkerStub::CreateApplicationCacheHost(
   return std::move(host);
 }
 
-std::unique_ptr<blink::WebContentSettingsClient>
-EmbeddedSharedWorkerStub::CreateWorkerContentSettingsClient(
-    const blink::WebSecurityOrigin& origin) {
-  return base::MakeUnique<EmbeddedSharedWorkerContentSettingsClientProxy>(
-      url::Origin(origin).GetURL(), origin.IsUnique(), route_id_,
-      ChildThreadImpl::current()->thread_safe_sender());
-}
-
 std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
 EmbeddedSharedWorkerStub::CreateServiceWorkerNetworkProvider() {
   // Create a content::ServiceWorkerNetworkProvider for this data source so
@@ -326,6 +317,11 @@ void EmbeddedSharedWorkerStub::OnConnect(int connection_request_id,
     pending_channels_.emplace_back(
         std::make_pair(connection_request_id, std::move(channel)));
   }
+}
+
+int EmbeddedSharedWorkerStub::GetId() {
+  DCHECK_NE(MSG_ROUTING_NONE, route_id_);
+  return route_id_;
 }
 
 void EmbeddedSharedWorkerStub::OnTerminateWorkerContext() {
