@@ -16,7 +16,12 @@
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_service.mojom.h"
+#include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/shell/browser/shell_browser_context.h"
+#include "content/shell/browser/shell_browser_main_parts.h"
+#include "content/shell/browser/shell_content_browser_client.h"
+#include "content/test/test_content_browser_client.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_data_util.h"
@@ -71,6 +76,36 @@ class RenderProcessHostTest : public ContentBrowserTest,
   int process_exits_;
   int host_destructions_;
   base::Closure process_exit_callback_;
+};
+
+// A mock ContentBrowserClient that only considers a spare renderer to be a
+// suitable host.
+class SpareRendererContentBrowserClient : public TestContentBrowserClient {
+ public:
+  bool IsSuitableHost(RenderProcessHost* process_host,
+                      const GURL& site_url) override {
+    if (RenderProcessHostImpl::GetSpareRenderProcessHostForTesting()) {
+      return process_host ==
+             RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+    }
+    return true;
+  }
+};
+
+// A mock ContentBrowserClient that only considers a non-spare renderer to be a
+// suitable host, but otherwise tries to reuse processes.
+class NonSpareRendererContentBrowserClient : public TestContentBrowserClient {
+ public:
+  bool IsSuitableHost(RenderProcessHost* process_host,
+                      const GURL& site_url) override {
+    return RenderProcessHostImpl::GetSpareRenderProcessHostForTesting() !=
+           process_host;
+  }
+
+  bool ShouldTryToUseExistingProcessHost(BrowserContext* context,
+                                         const GURL& url) override {
+    return true;
+  }
 };
 
 // Sometimes the renderer process's ShutdownRequest (corresponding to the
@@ -128,6 +163,180 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
 
   // Expect that we got another process (the guest renderer was not reused).
   EXPECT_EQ(2, RenderProcessHostCount());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRenderProcessHostTaken) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->browser_context());
+  RenderProcessHost* spare_renderer =
+      RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+  EXPECT_NE(nullptr, spare_renderer);
+
+  GURL test_url = embedded_test_server()->GetURL("/simple_page.html");
+  Shell* window = CreateBrowser();
+  NavigateToURL(window, test_url);
+
+  EXPECT_EQ(spare_renderer,
+            window->web_contents()->GetMainFrame()->GetProcess());
+
+  // The spare render process host should no longer be available.
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRenderProcessHostNotTaken) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->off_the_record_browser_context());
+  RenderProcessHost* spare_renderer =
+      RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+  GURL test_url = embedded_test_server()->GetURL("/simple_page.html");
+  Shell* window = CreateBrowser();
+  NavigateToURL(window, test_url);
+
+  // There should have been another process created for the navigation.
+  EXPECT_NE(spare_renderer,
+            window->web_contents()->GetMainFrame()->GetProcess());
+
+  // The spare RenderProcessHost should have been cleaned up. Note this
+  // behavior is identical to what would have happened if the RenderProcessHost
+  // were taken.
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRenderProcessHostKilled) {
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->browser_context());
+
+  RenderProcessHost* spare_renderer =
+      RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+  mojom::TestServicePtr service;
+  ASSERT_NE(nullptr, spare_renderer);
+  BindInterface(spare_renderer, &service);
+
+  base::RunLoop run_loop;
+  set_process_exit_callback(run_loop.QuitClosure());
+  spare_renderer->AddObserver(this);  // For process_exit_callback.
+
+  // Should reply with a bad message and cause process death.
+  service->DoSomething(base::Bind(&base::DoNothing));
+  run_loop.Run();
+
+  // The spare RenderProcessHost should disappear when its process dies.
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+}
+
+// Test that the spare renderer works correctly when the limit on the maximum
+// number of processes is small.
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
+                       SpareRendererSurpressedMaxProcesses) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  SpareRendererContentBrowserClient browser_client;
+  ContentBrowserClient* old_client =
+      SetBrowserClientForTesting(&browser_client);
+
+  RenderProcessHost::SetMaxRendererProcessCount(1);
+
+  // A process is created with shell startup, so with a maximum of one renderer
+  // process the spare RPH should not be created.
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->browser_context());
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+
+  // A spare RPH should be created with a max of 2 renderer processes.
+  RenderProcessHost::SetMaxRendererProcessCount(2);
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->browser_context());
+  RenderProcessHost* spare_renderer =
+      RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+  EXPECT_NE(nullptr, spare_renderer);
+
+  // Thanks to the injected SpareRendererContentBrowserClient and the limit on
+  // processes, the spare RPH will always be used via GetExistingProcessHost()
+  // rather than picked up via MaybeTakeSpareRenderProcessHost().
+  GURL test_url = embedded_test_server()->GetURL("/simple_page.html");
+  Shell* new_window = CreateBrowser();
+  NavigateToURL(new_window, test_url);
+  // The spare RPH should have been dropped during CreateBrowser() and given to
+  // the new window.
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+  EXPECT_EQ(spare_renderer,
+            new_window->web_contents()->GetMainFrame()->GetProcess());
+
+  // Revert to the default process limit and original ContentBrowserClient.
+  RenderProcessHost::SetMaxRendererProcessCount(0);
+  SetBrowserClientForTesting(old_client);
+}
+
+class RenderProcessHostObserverForReady
+    : public content::RenderProcessHostObserver {
+ public:
+  explicit RenderProcessHostObserverForReady(
+      content::RenderProcessHost* observed_host)
+      : render_process_host_ready_(false), observed_host_(observed_host) {
+    observed_host->AddObserver(this);
+  }
+
+  void WaitUntilRenderProcessHostReady() {
+    if (render_process_host_ready_)
+      return;
+    message_loop_runner_ = new content::MessageLoopRunner;
+    message_loop_runner_->Run();
+  }
+
+ private:
+  void RenderProcessReady(content::RenderProcessHost* host) override {
+    DCHECK(observed_host_ == host);
+    render_process_host_ready_ = true;
+    observed_host_->RemoveObserver(this);
+    if (message_loop_runner_.get()) {
+      message_loop_runner_->Quit();
+    }
+  }
+
+  bool render_process_host_ready_;
+  content::RenderProcessHost* observed_host_;
+  scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderProcessHostObserverForReady);
+};
+
+// Check that the spare renderer is dropped if an existing process is reused.
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRendererOnProcessReuse) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  NonSpareRendererContentBrowserClient browser_client;
+  ContentBrowserClient* old_client =
+      SetBrowserClientForTesting(&browser_client);
+
+  RenderProcessHost::WarmupSpareRenderProcessHost(
+      ShellContentBrowserClient::Get()->browser_context());
+  RenderProcessHost* spare_renderer =
+      RenderProcessHostImpl::GetSpareRenderProcessHostForTesting();
+  EXPECT_NE(nullptr, spare_renderer);
+
+  // This should resuse the existing process and cause the spare renderer to be
+  // dropped.
+  Shell* new_browser = CreateBrowser();
+  EXPECT_EQ(shell()->web_contents()->GetMainFrame()->GetProcess(),
+            new_browser->web_contents()->GetMainFrame()->GetProcess());
+  EXPECT_NE(spare_renderer,
+            new_browser->web_contents()->GetMainFrame()->GetProcess());
+  EXPECT_EQ(nullptr,
+            RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
+
+  RenderProcessHostObserverForReady renderer_ready_observer(
+      shell()->web_contents()->GetMainFrame()->GetProcess());
+  renderer_ready_observer.WaitUntilRenderProcessHostReady();
+  SetBrowserClientForTesting(old_client);
 }
 
 class ShellCloser : public RenderProcessHostObserver {
