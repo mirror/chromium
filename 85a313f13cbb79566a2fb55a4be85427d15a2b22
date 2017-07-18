@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3f58c7_e8841714",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-18T18:39:02Z",
+      "side": 1,
+      "message": "I just happened to check the bug, is this the right bug number?",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "85a313f13cbb79566a2fb55a4be85427d15a2b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4a2f14_a8fce7ba",
+        "filename": "ios/web/web_state/context_menu_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-18T18:39:02Z",
+      "side": 1,
+      "message": "I would remove \"This header contains\" text. Also saying all keys are optional here in the dictionary means you could remove it from all the items below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "85a313f13cbb79566a2fb55a4be85427d15a2b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63404d01_1ec4337b",
+        "filename": "ios/web/web_state/context_menu_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-18T18:39:02Z",
+      "side": 1,
+      "message": "s/Represent/Represents for all comments?",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "85a313f13cbb79566a2fb55a4be85427d15a2b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a4ddfc_4af67f64",
+        "filename": "ios/web/web_state/context_menu_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-18T18:39:02Z",
+      "side": 1,
+      "message": "remove \"a\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 69,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "85a313f13cbb79566a2fb55a4be85427d15a2b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775b9fbd_b9176659",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-18T18:39:02Z",
+      "side": 1,
+      "message": "Remove \"following\"",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "85a313f13cbb79566a2fb55a4be85427d15a2b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
