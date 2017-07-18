@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b58e147_0e7c95ac",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-18T17:49:54Z",
+      "side": 1,
+      "message": "I would just move this call to inside PerformanceMonitor::StartGatherCycle(), as we\u0027ll want to unify the two eventually anyway.",
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "778ad77d_9afa805f",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 19
@@ -54,6 +71,30 @@
       "side": 1,
       "message": "I agree with Peiyong.",
       "parentUuid": "58597ad6_e0ce262a",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d23233_775946ea",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-18T17:49:54Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter for this particular test as far as I can tell, either way; and plenty of precedence with the TabManager browsertests.",
+      "parentUuid": "42bc7a53_56e0deeb",
       "range": {
         "startLine": 98,
         "startChar": 17,
