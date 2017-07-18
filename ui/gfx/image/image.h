@@ -182,14 +182,20 @@ class GFX_EXPORT Image {
 
   // Returns the ImageRep of the appropriate type or NULL if there is no
   // representation of that type (and must_exist is false).
-  internal::ImageRep* GetRepresentation(
-      RepresentationType rep_type, bool must_exist) const;
+  const internal::ImageRep* GetRepresentation(RepresentationType rep_type,
+                                              bool must_exist) const;
 
   // Stores a representation into the map. A representation of that type must
   // not already be in the map. Returns a pointer to the representation stored
   // inside the map.
-  internal::ImageRep* AddRepresentation(
+  const internal::ImageRep* AddRepresentation(
       std::unique_ptr<internal::ImageRep> rep) const;
+
+  // Getter should be used internally (unless a handle to the scoped_refptr is
+  // needed) instead of directly accessing |storage_|, to ensure logical
+  // constness is upheld.
+  const internal::ImageStorage* storage() const { return storage_.get(); }
+  internal::ImageStorage* storage() { return storage_.get(); }
 
   // Internal class that holds all the representations. This allows the Image to
   // be cheaply copied.
