@@ -127,6 +127,17 @@ class BASE_EXPORT DiscardableSharedMemory {
   // Virtual for tests.
   virtual Time Now() const;
 
+  // Marks/unmarks pages as discardable. |offset| is specified relative to the
+  // base address at which |memory| is mapped.
+  // UnlockPages() is a no-op on platforms not supporting discardable pages.
+  static void UnlockPages(const SharedMemory& memory,
+                          size_t offset,
+                          size_t length);
+  // Returns SUCCESS on platforms which do not support discardable pages.
+  static LockResult LockPages(const SharedMemory& memory,
+                              size_t offset,
+                              size_t length);
+
   SharedMemory shared_memory_;
   size_t mapped_size_;
   size_t locked_page_count_;
