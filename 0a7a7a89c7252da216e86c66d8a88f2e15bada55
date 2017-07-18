@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3689d2a3_95ac5c2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:28:44Z",
+      "side": 1,
+      "message": "Nit: Use http://crrev.com/[git has]",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "0a7a7a89c7252da216e86c66d8a88f2e15bada55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

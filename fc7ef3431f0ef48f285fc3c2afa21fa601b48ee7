@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b613f7_46a29206",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:28:44Z",
+      "side": 1,
+      "message": "This line needs to be before worker_pool-\u003eStart()",
+      "range": {
+        "startLine": 799,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 27
+      },
+      "revId": "fc7ef3431f0ef48f285fc3c2afa21fa601b48ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
