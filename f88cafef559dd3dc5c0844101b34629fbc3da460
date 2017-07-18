@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1402b32_b99cbe5e",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "nit: use explicit type in places like this, since it\u0027s not mentioned anywhere near.",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b131a5bf_f58f1e06",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "Pointers are hard :-) \"if (*session)\", I guess.",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff95085_cab025d7",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "Can reported_hosts_ be a set perhaps?",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f8cb11_a28ec6fe",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3666,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "Add \"deprecated\": true?",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9374e116_3b0bd47b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3703,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "Don\u0027t we imply that return values are not present upon error? I.e. does this have to be optional?",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faadb66_42281e6c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T21:56:47Z",
+      "side": 1,
+      "message": "\"deprecated\": true?",
+      "revId": "f88cafef559dd3dc5c0844101b34629fbc3da460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
