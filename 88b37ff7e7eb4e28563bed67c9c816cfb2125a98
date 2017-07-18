@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04c60130_124c13ac",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T18:59:55Z",
+      "side": 1,
+      "message": "The rect is used in L729. The changes prevented the rect from being modified before that line. Should I change indicator_rect back to rect and use \u0027gfx::Rect switcher_rect(GetContentsBounds())\u0027 in L729?",
+      "parentUuid": "9717bdc6_4b91f174",
+      "range": {
+        "startLine": 695,
+        "startChar": 2,
+        "endLine": 695,
+        "endChar": 38
+      },
+      "revId": "88b37ff7e7eb4e28563bed67c9c816cfb2125a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4999abbc_e92788c8",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-18T18:37:52Z",
       "side": 1,
       "message": "Could we move this to L708 or just inline:\nsuggestions_rect.Offset(CalculateTransitionOffset(0));",
+      "revId": "88b37ff7e7eb4e28563bed67c9c816cfb2125a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816e6ac1_64d88e15",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T18:59:55Z",
+      "side": 1,
+      "message": "Yes, Done.",
+      "parentUuid": "4999abbc_e92788c8",
       "revId": "88b37ff7e7eb4e28563bed67c9c816cfb2125a98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
