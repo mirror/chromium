@@ -128,6 +128,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
                       atIndex:(NSUInteger)position
                    transition:(ui::PageTransition)transition;
 
+// Add a new tab with the given url, at the given |position|,
+// and makes it the selected tab. The selected tab is returned.
+// If |position| == NSNotFound the tab will be added at the end of the stack.
+// |tabAddedCompletion| is called after the tab is added (if not nil).
+- (Tab*)addSelectedTabWithURL:(const GURL&)url
+                      atIndex:(NSUInteger)position
+                   transition:(ui::PageTransition)transition
+           tabAddedCompletion:(ProceduralBlock)tabAddedCompletion;
+
 // This will dismiss the web views on all the tabs and reload the frontmost one
 // if there is one. This is used when a userdefault changes and the web views
 // need to be re-created to pick it up.
