@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8a14f8d8_3cf2e051",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T17:53:10Z",
+      "side": 1,
+      "message": "Primitive() captures Wifi(); this is fully intended behavior AFAICT.\n\nI am also concerned about the call being async, but I haven\u0027t seen any issues with this when testing on a real device.",
+      "parentUuid": "924a33ed_a1f31650",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4add3a8c_0626e23b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
