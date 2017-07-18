@@ -8,8 +8,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/threading/sequenced_worker_pool.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "chrome/browser/chromeos/policy/device_policy_builder.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_delegate.h"
@@ -63,7 +63,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   DeviceOAuth2TokenServiceTest()
       : scoped_testing_local_state_(TestingBrowserProcess::GetGlobal()),
         request_context_getter_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::SequencedTaskRunnerHandle::Get())) {}
   ~DeviceOAuth2TokenServiceTest() override {}
 
   // Most tests just want a noop crypto impl with a dummy refresh token value in
@@ -122,7 +122,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
     oauth2_service_.reset();
     CrosSettings::Shutdown();
     TestingBrowserProcess::GetGlobal()->ShutdownBrowserPolicyConnector();
-    content::BrowserThread::GetBlockingPool()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
     DeviceSettingsService::Get()->UnsetSessionManager();
     DeviceSettingsService::Shutdown();
     SystemSaltGetter::Shutdown();
