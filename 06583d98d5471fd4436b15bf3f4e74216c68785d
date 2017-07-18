@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e00dbb_3d8f81d3",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T13:26:48Z",
+      "side": 1,
+      "message": "Did you investigate having this in a method called showPopup in AutofillPopupViewCocoa? \n\nin AutofillPopupViewCocoa:\n- (void)showPopup {\n  [super showPopup]; // Calls AutofillPopupBaseViewCocoa\u0027s showPopup.\n\n  // Lines 230-237 of your current code go here.\n}\n\nThis would avoid the base_view having to know about the touch bar. If you are worried about having access to the NSWindow in AutofillPopupViewCocoa, I believe you can get it from \n\n[controller_-\u003econtainer_view() window]",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56423ef9_067c823c",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T13:26:48Z",
+      "side": 1,
+      "message": "I appreciate the comments in this function, but the code remains difficult to grasp because of the needed knowledge in Cocoa/Touchbar. Feel free to include even more comments so that the next reader has a good understanding of the subtleties.\n\nExample:\n\n// Not setting |imageHugsTitle| will cause \u003cX\u003e, which we do not want.\nbutton.imageHugsTitle \u003d YES;",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b196d08a_04c2c5dd",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T13:26:48Z",
+      "side": 1,
+      "message": "Feel free to use/add a color in autofill_popup_base_view_cocoa: https://cs.chromium.org/chromium/src/chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.h?q\u003dautofill_popup_base_view\u0026dr\u003dC\u0026l\u003d21",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666afa38_c33fb0c7",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T13:26:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t feel like a natural place to put this controller. Did you consult with c/b/ui/cocoa owners about the best location for this? \n\nPerhaps it could live in BrowserWindowController alongside other similar controllers? But I would ask an owner first. Sorry that I can\u0027t give more precise advice. https://cs.chromium.org/chromium/src/chrome/browser/ui/cocoa/browser_window_controller.mm?rcl\u003d0238418b07cbe9ea31f40cb3804e7ebea141ab43\u0026l\u003d536",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a76fea7_793d3008",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T13:26:48Z",
+      "side": 1,
+      "message": "feel free to put this in autofill_experiments.h",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
