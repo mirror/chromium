@@ -1542,20 +1542,49 @@ void RTCPeerConnection::ContextDestroyed(ExecutionContext*) {
 }
 
 void RTCPeerConnection::ChangeSignalingState(SignalingState signaling_state) {
+  if (signaling_state_ != kSignalingStateClosed) {
+    ScheduleDispatchEvent(Event::Create(EventTypeNames::signalingstatechange),
+                          WTF::Bind(&RTCPeerConnection::SetSignalingState,
+                                    WrapPersistent(this), signaling_state));
+  }
+}
+
+bool RTCPeerConnection::SetSignalingState(SignalingState signaling_state) {
   if (signaling_state_ != kSignalingStateClosed &&
       signaling_state_ != signaling_state) {
     signaling_state_ = signaling_state;
-    ScheduleDispatchEvent(Event::Create(EventTypeNames::signalingstatechange));
+    return true;
   }
+  return false;
 }
 
 void RTCPeerConnection::ChangeIceGatheringState(
     ICEGatheringState ice_gathering_state) {
+  if (ice_connection_state_ != kICEConnectionStateClosed) {
+    ScheduleDispatchEvent(
+        Event::Create(EventTypeNames::icegatheringstatechange),
+        WTF::Bind(&RTCPeerConnection::SetIceGatheringState,
+                  WrapPersistent(this), ice_gathering_state));
+  }
+}
+
+bool RTCPeerConnection::SetIceGatheringState(
+    ICEGatheringState ice_gathering_state) {
   if (ice_connection_state_ != kICEConnectionStateClosed &&
       ice_gathering_state_ != ice_gathering_state) {
     ice_gathering_state_ = ice_gathering_state;
+    return true;
+  }
+  return false;
+}
+
+void RTCPeerConnection::ChangeIceConnectionState(
+    ICEConnectionState ice_connection_state) {
+  if (ice_connection_state_ != kICEConnectionStateClosed) {
     ScheduleDispatchEvent(
-        Event::Create(EventTypeNames::icegatheringstatechange));
+        Event::Create(EventTypeNames::iceconnectionstatechange),
+        WTF::Bind(&RTCPeerConnection::SetIceConnectionState,
+                  WrapPersistent(this), ice_connection_state));
   }
 }
 
@@ -1570,16 +1599,6 @@ bool RTCPeerConnection::SetIceConnectionState(
     return true;
   }
   return false;
-}
-
-void RTCPeerConnection::ChangeIceConnectionState(
-    ICEConnectionState ice_connection_state) {
-  if (ice_connection_state_ != kICEConnectionStateClosed) {
-    ScheduleDispatchEvent(
-        Event::Create(EventTypeNames::iceconnectionstatechange),
-        WTF::Bind(&RTCPeerConnection::SetIceConnectionState,
-                  WrapPersistent(this), ice_connection_state));
-  }
 }
 
 void RTCPeerConnection::CloseInternal() {

@@ -249,16 +249,30 @@ class MODULES_EXPORT RTCPeerConnection final
   void DispatchScheduledEvent();
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack& web_track) const;
 
+  // The "Change" methods set the state asynchronously and fire the
+  // corresponding event immediately after changing the state (if it was really
+  // changed).
+  //
+  // The "Set" methods are called asynchronously by the "Change" methods, and
+  // set the corresponding state without firing an event, returning true if the
+  // state was really changed.
+  //
+  // This is done because the standard guarantees that state changes and the
+  // corresponding events will happen in the same task; it shouldn't be
+  // possible to, for example, end up with two "icegatheringstatechange" events
+  // that are delayed somehow and cause the application to read a "complete"
+  // gathering state twice, missing the "gathering" state in the middle.
   void ChangeSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
+  bool SetSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
+
   void ChangeIceGatheringState(
       WebRTCPeerConnectionHandlerClient::ICEGatheringState);
-  // Changes the state immediately; does not fire an event.
-  // Returns true if the state was changed.
-  bool SetIceConnectionState(
-      WebRTCPeerConnectionHandlerClient::ICEConnectionState);
-  // Changes the state asynchronously and fires an event immediately after
-  // changing the state.
+  bool SetIceGatheringState(
+      WebRTCPeerConnectionHandlerClient::ICEGatheringState);
+
   void ChangeIceConnectionState(
+      WebRTCPeerConnectionHandlerClient::ICEConnectionState);
+  bool SetIceConnectionState(
       WebRTCPeerConnectionHandlerClient::ICEConnectionState);
 
   void CloseInternal();
