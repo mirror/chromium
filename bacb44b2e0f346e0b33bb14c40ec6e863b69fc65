@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "409ba0c9_94165b6b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "agree. I\u0027ll fix this up in the next patch. :) thanks",
+      "parentUuid": "81bd1df8_4139302b",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b9e95e2_a390ad8e",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b5ea35_55e550cb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b9e95e2_a390ad8e",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b9680768_ea5eb71c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52cf5e98_35d0c957",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "730deeb2_bb4a39e6",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630af50c_398229d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730deeb2_bb4a39e6",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0800018c_44c73b56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "327ee072_5e2a9b0f",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedb02a5_facc2231",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397b47f7_ec9f91b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-18T23:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cedb02a5_facc2231",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
