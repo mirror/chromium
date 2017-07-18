@@ -2858,6 +2858,7 @@ WebContents* WebContentsImpl::OpenURL(const OpenURLParams& params) {
   }
 
   if (new_contents && source_render_frame_host && new_contents != this) {
+    // TODO(csharrison): Do we need to exit fullscreen here?
     for (auto& observer : observers_) {
       observer.DidOpenRequestedURL(new_contents, source_render_frame_host,
                                    params.url, params.referrer,
