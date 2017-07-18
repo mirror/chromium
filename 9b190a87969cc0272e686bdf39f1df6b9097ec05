@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ca0fa8_1386021b",
+        "filename": "third_party/WebKit/Source/core/frame/ContentSettingsClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T04:00:00Z",
+      "side": 1,
+      "message": "How about passing ClientHintsPreferences instead of bool[]?",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87414108_c1143819",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T04:00:00Z",
+      "side": 1,
+      "message": "How about making this function non-static and updating the field instead of passing the bool[]?",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae8f605_165d6ddb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T04:00:00Z",
+      "side": 1,
+      "message": "Giving const ResourceResponse\u0026 instead of the triple (const String\u0026, const String\u0026, const KURL\u0026) seems better to me. What do you think?",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
