@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c580e42f_57aa14cd",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-18T15:44:04Z",
+      "side": 1,
+      "message": "I prefer the more conventional \"f\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9557989e_330968ca",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-18T15:44:04Z",
+      "side": 1,
+      "message": "\"line\" ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55896ee6_2723d96d",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-18T15:44:04Z",
+      "side": 1,
+      "message": "decommented \u003d build_arg.split(\u0027#\u0027, 1)[0]",
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc2be19_a2946fb4",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-18T15:44:04Z",
+      "side": 1,
+      "message": "key_and_value \u003d decommented.split(\u0027\u003d\u0027, 1)",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
