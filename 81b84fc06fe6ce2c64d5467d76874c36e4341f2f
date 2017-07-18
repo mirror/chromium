@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5462730c_cdbad39c",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-18T20:42:41Z",
+      "side": 1,
+      "message": "Derp, forgot to git add the test file.",
+      "parentUuid": "ff1b871a_972ac8ac",
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc48d1f_47074bf2",
         "filename": "components/metrics/field_trials_provider.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d84851f_7aeecfb3",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-18T20:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc48d1f_47074bf2",
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
