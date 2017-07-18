@@ -28,6 +28,8 @@ MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
 }
 
 bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
+  // If our pump is gone, or we do not have a wait operation active, then there
+  // is nothing to do here.
   if (!weak_pump_ || handle_ == MX_HANDLE_INVALID)
     return true;
 
@@ -44,7 +46,7 @@ MessagePumpFuchsia::MessagePumpFuchsia()
     : keep_running_(true), weak_factory_(this) {
   // TODO(wez): Remove MX_PORT_OPT_V2 once the SDK is rolled, or migrate
   // this implementation use ulib/port helpers.
-  CHECK_EQ(0, mx_port_create(MX_PORT_OPT_V2, &port_));
+  CHECK_EQ(MX_OK, mx_port_create(MX_PORT_OPT_V2, &port_));
 }
 
 MessagePumpFuchsia::~MessagePumpFuchsia() {
