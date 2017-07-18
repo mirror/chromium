@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81211b37_5614e05a",
+        "filename": "content/browser/memory/swap_metrics_driver_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-18T07:00:17Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "182584b883173524f42d99ad93e6044ac5fa867d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
