@@ -98,9 +98,6 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   AutocompleteMatch NavigationToMatch(
       const SearchSuggestionParser::NavigationResult& navigation);
 
-  // Fetches zero-suggest suggestions by sending a request using |suggest_url|.
-  void Run(const GURL& suggest_url);
-
   // Converts the parsed results to a set of AutocompleteMatches and adds them
   // to |matches_|.  Also update the histograms for how many results were
   // received.
@@ -115,6 +112,9 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // service for the most visited URLs during Run().  It calls back to this
   // function to return those |urls|.
   void OnMostVisitedUrlsAvailable(const history::MostVisitedURLList& urls);
+
+  void OnContextualSuggestionsFetcherAvailable(
+      std::unique_ptr<net::URLFetcher> fetcher);
 
   // Whether we can show zero suggest suggestions that are not based on
   // |current_page_url|. Also checks that other conditions for non-contextual

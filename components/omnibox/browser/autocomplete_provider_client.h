@@ -29,6 +29,10 @@ namespace bookmarks {
 class BookmarkModel;
 }
 
+namespace contextual_suggestions {
+class ContextualSuggestionsService;
+}
+
 namespace history {
 class HistoryService;
 class URLDatabase;
@@ -60,6 +64,8 @@ class AutocompleteProviderClient {
   virtual InMemoryURLIndex* GetInMemoryURLIndex() = 0;
   virtual TemplateURLService* GetTemplateURLService() = 0;
   virtual const TemplateURLService* GetTemplateURLService() const = 0;
+  virtual contextual_suggestions::ContextualSuggestionsService*
+  GetContextualSuggestionsService() const = 0;
   virtual const SearchTermsData& GetSearchTermsData() const = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackend() = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() = 0;
