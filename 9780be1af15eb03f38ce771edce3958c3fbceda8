@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a608bf_f05cee7c",
+        "filename": "chrome/browser/resources/md_bookmarks/list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-18T06:51:13Z",
+      "side": 1,
+      "message": "This still doesn\u0027t really work, since Cmd-Space triggers Spotlight.\n\nCmd-Shift-Space does work, though.",
+      "revId": "9780be1af15eb03f38ce771edce3958c3fbceda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
