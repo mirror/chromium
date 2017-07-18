@@ -54,13 +54,13 @@ class StubCompositorFrameSinkClient
   DISALLOW_COPY_AND_ASSIGN(StubCompositorFrameSinkClient);
 };
 
-// A mock implementation of mojom::FrameSinkManager.
-class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
+// A mock implementation of mojom::FrameSinkManagerImpl.
+class MockFrameSinkManager : public FrameSinkManagerImpl {
  public:
-  MockFrameSinkManagerImpl() : FrameSinkManagerImpl(false, nullptr) {}
-  ~MockFrameSinkManagerImpl() override = default;
+  MockFrameSinkManager() = default;
+  ~MockFrameSinkManager() override = default;
 
-  // cc::mojom::FrameSinkManager:
+  // cc::mojom::FrameSinkManagerImpl:
   MOCK_METHOD2(RegisterFrameSinkHierarchy,
                void(const FrameSinkId& parent, const FrameSinkId& child));
   MOCK_METHOD2(UnregisterFrameSinkHierarchy,
@@ -70,7 +70,7 @@ class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
   // TODO(kylechar): See if we can mock functions with InterfacePtr parameters.
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(MockFrameSinkManagerImpl);
+  DISALLOW_COPY_AND_ASSIGN(MockFrameSinkManager);
 };
 
 }  // namespace
@@ -82,7 +82,7 @@ class HostFrameSinkManagerTest : public testing::Test {
 
   HostFrameSinkManager& host_manager() { return *host_manager_; }
 
-  MockFrameSinkManagerImpl& manager_impl() { return *manager_impl_; }
+  MockFrameSinkManager& manager_impl() { return *manager_impl_; }
 
   bool FrameSinkIdExists(const FrameSinkId& frame_sink_id) {
     return host_manager_->frame_sink_data_map_.count(frame_sink_id) > 0;
@@ -90,7 +90,7 @@ class HostFrameSinkManagerTest : public testing::Test {
 
   // testing::Test:
   void SetUp() override {
-    manager_impl_ = base::MakeUnique<MockFrameSinkManagerImpl>();
+    manager_impl_ = base::MakeUnique<MockFrameSinkManager>();
     host_manager_ = base::MakeUnique<HostFrameSinkManager>();
 
     manager_impl_->SetLocalClient(host_manager_.get());
@@ -99,7 +99,7 @@ class HostFrameSinkManagerTest : public testing::Test {
 
  private:
   std::unique_ptr<HostFrameSinkManager> host_manager_;
-  std::unique_ptr<MockFrameSinkManagerImpl> manager_impl_;
+  std::unique_ptr<MockFrameSinkManager> manager_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(HostFrameSinkManagerTest);
 };
