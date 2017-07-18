@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b3c9449_b5ee33de",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-18T03:53:56Z",
+      "side": 1,
+      "message": "I confused myself because SafeBrowsing can be disabled by admin policy. But as you say the object always exists. I\u0027ve removed the conditional.",
+      "parentUuid": "21ee990b_69af2273",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "556bdbcf_7f6dadf1",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6ea7a935_e19723e4",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-18T03:53:56Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. Done.",
+      "parentUuid": "556bdbcf_7f6dadf1",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f9a50b2_14adac43",
         "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-14T16:46:43Z",
       "side": 1,
       "message": "MOJO_ERROR sounds like there is something wrong with Mojo. Because it is used mostly for the not-yet-supported case (the browser never tries to disconnect if the feature is supported), shall we name it \"NOT_SUPPORTED\"?\n\nActually we know exactly on what platform it is not yet supported. So maybe this value is not useful and could be removed.\n\nWDYT?",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db4992a_f71c04c3",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-18T03:53:56Z",
+      "side": 1,
+      "message": "Renamed to NOT_SUPPORTED.\n\nIt\u0027s important that it doesn\u0027t fail silently, so I have kept the value.",
+      "parentUuid": "7f9a50b2_14adac43",
       "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
