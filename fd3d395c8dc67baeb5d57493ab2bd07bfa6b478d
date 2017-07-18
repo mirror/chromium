@@ -16,6 +16,24 @@
       "revId": "fd3d395c8dc67baeb5d57493ab2bd07bfa6b478d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6139139b_96967816",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-18T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b70bfa1e_87c03b0e",
+      "revId": "fd3d395c8dc67baeb5d57493ab2bd07bfa6b478d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
