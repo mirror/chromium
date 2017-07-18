@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3eaf2ae_71d5c317",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcc3a56_b9e6424b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Instead of defining buttons, I\u0027d rather inline createEditorToolbar. This avoids extra JSDocs which don\u0027t add any value.",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a28a467_f5dd64fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Let\u0027s clear the cache in willHide.",
+      "range": {
+        "startLine": 225,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 36
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725f2392_9d5d7db6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Resources.ServiceWorkerCacheView._Response",
+      "range": {
+        "startLine": 242,
+        "startChar": 10,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e255e9_fb52c221",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Resources.ServiceWorkerCacheView._ResponseContentProvider",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c3898b_f2b1bdda",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it return something?",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 14
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8cfa9d_8a723361",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Can just inline this method below.",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 24
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975afa9d_8d877f3e",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "Persistent is a source of memory leaks. Can we make this class garbage collected?",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6c95ba_c7385a2c",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-18T22:40:17Z",
+      "side": 1,
+      "message": "That\u0027s a presubmit check? Wow!",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 84
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
