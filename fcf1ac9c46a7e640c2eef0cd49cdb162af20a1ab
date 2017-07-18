@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ddbcddc_3e58a7df",
+        "filename": "ios/build/tools/convert_gn_xcodeproj.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:04:02Z",
+      "side": 1,
+      "message": "I think this requires that setup-gn.py to be run from chomium checkout and not any other location. I\u0027d prefer this be changed so that the script can be run from any location.\n\nI would make the following changes:\n\n1.  add a --root option to the supported arguments for the script\n2.  pass args.root to ConvertGnXcodeProject (including from setup-gn.py)\n3.  pass root_dir from ConvertGnXcodeProject down to AddMarkdownToProject\n4.  change \u0027src\u0027 to os.path.join(root_dir, \u0027src\u0027), ditto for \u0027src/ios_internal\u0027",
+      "revId": "fcf1ac9c46a7e640c2eef0cd49cdb162af20a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
