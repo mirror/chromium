@@ -16,6 +16,24 @@
       "revId": "a1e36b11b6a837709e09ffcb4b4d46261c17d5c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbf66b13_0cd80187",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-18T16:43:24Z",
+      "side": 1,
+      "message": "Great point. Done.",
+      "parentUuid": "1fd82e35_fd57cbee",
+      "revId": "a1e36b11b6a837709e09ffcb4b4d46261c17d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
