@@ -209,16 +209,29 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     }
 
     /**
+     * See StartDownload(Tab, String).
+     *
+     * Starts a download of the page where origin is presumed Chrome.
+     * @param tab a tab contents of which will be saved locally.
+     */
+    public void startDownload(Tab tab) {
+        startDownload(tab, "");
+    }
+
+    /**
      * Starts download of the page currently open in the specified Tab.
      * If tab's contents are not yet loaded completely, we'll wait for it
      * to load enough for snapshot to be reasonable. If the Chrome is made
      * background and killed, the background request remains that will
      * eventually load the page in background and obtain its offline
      * snapshot.
+     *
      * @param tab a tab contents of which will be saved locally.
+     * @param origin the origin application of the tab. This is a qualified
+     *        JSON-like string with the app's package and signature on Android.
      */
-    public void startDownload(Tab tab) {
-        nativeStartDownload(mNativeOfflinePageDownloadBridge, tab);
+    public void startDownload(Tab tab, String origin) {
+        nativeStartDownload(mNativeOfflinePageDownloadBridge, tab, origin);
     }
 
     /**
@@ -319,6 +332,6 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     native void nativeResumeDownload(long nativeOfflinePageDownloadBridge, String guid);
     native void nativeDeleteItemByGuid(long nativeOfflinePageDownloadBridge, String guid);
     native long nativeGetOfflineIdByGuid(long nativeOfflinePageDownloadBridge, String guid);
-    native void nativeStartDownload(long nativeOfflinePageDownloadBridge, Tab tab);
+    native void nativeStartDownload(long nativeOfflinePageDownloadBridge, Tab tab, String origin);
     native void nativeResumePendingRequestImmediately(long nativeOfflinePageDownloadBridge);
 }

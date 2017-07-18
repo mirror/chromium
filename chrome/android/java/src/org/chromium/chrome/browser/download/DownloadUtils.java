@@ -231,17 +231,22 @@ public class DownloadUtils {
      * @param context Context to pull resources from.
      */
     public static void downloadOfflinePage(Context context, Tab tab) {
+        String origin = tab.getAppAssociatedWith();
+        if (!TextUtils.isEmpty(origin)) {
+            origin = OfflinePageUtils.createOriginString(
+                    origin, OfflinePageUtils.getAppSignaturesFor(context, origin));
+        }
         if (tab.isShowingErrorPage()) {
             // The download needs to be scheduled to happen at later time due to current network
             // error.
             final OfflinePageBridge bridge = OfflinePageBridge.getForProfile(tab.getProfile());
             bridge.scheduleDownload(tab.getWebContents(), OfflinePageBridge.ASYNC_NAMESPACE,
-                    tab.getUrl(), DownloadUiActionFlags.PROMPT_DUPLICATE);
+                    tab.getUrl(), DownloadUiActionFlags.PROMPT_DUPLICATE, origin);
         } else {
             // Otherwise, the download can be started immediately.
             final OfflinePageDownloadBridge bridge =
                     new OfflinePageDownloadBridge(tab.getProfile());
-            bridge.startDownload(tab);
+            bridge.startDownload(tab, origin);
             bridge.destroy();
             DownloadUtils.recordDownloadPageMetrics(tab);
         }
