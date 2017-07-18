@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab9c2a3_0933f91c",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-07-18T18:52:14Z",
+      "side": 1,
+      "message": "Do you know why this test is schedule again in this CL? Does re-generating these files change anything?",
+      "revId": "5fcbe0549f691ffbdc99f46023056ed8c23925b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
