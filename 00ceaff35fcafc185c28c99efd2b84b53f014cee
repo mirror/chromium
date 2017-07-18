@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a5b301_d55ffabf",
+        "filename": "chrome/browser/media/webrtc/webrtc_browsertest_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "Maybe just \"GetTrackEvents\"?",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5f7d4e_d0cb1b0e",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "May want to clarify that this just asserts that no *additional* track events have been fired.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d7848e_fadfd947",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "Thanks for adding comments like this; they help a lot.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89b0c718_d7678e51",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "Since this is called on the main thread, does this introduce a synchronous signaling thread hop?",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f59c68_416bec9b",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "Seems like an \"IsStreamReceiver\"/\"IsReceiverForStream\" helper function would be nice here.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b143b00c_5f37d05d",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "So the RTCRtpReceiver has a 1:1 relationship with a webrtc::RtpReceiverInterface, each of which have a 1:M relationship with WebRTCRtpReceivers? Just making sure I understand.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57209ddf_b9007d82",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "s/even/event",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3ec56c_0753d74b",
+        "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-18T21:49:25Z",
+      "side": 1,
+      "message": "Ok, so this piggybacks off the \"addstream\" event, in essence. But what about when there\u0027s no stream at all? Do you plan to support that in a separate CL? webrtc may not support it now, but it\u0027s only a matter of time.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
