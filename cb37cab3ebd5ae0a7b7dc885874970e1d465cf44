@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3dcc05_6cf094f2",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-18T17:02:27Z",
+      "side": 1,
+      "message": "In the hook-up CL it looks like the title and summary are used. What if you used custom_preference.xml for #setLayoutResource() and made this XML the \"widget\" (removing the title, summary and widget_frame) and set it via #setWidgetLayoutResource()?\n\nThat would be a bit more consistent with other custom Chrome preference layouts.\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/res/layout/custom_preference.xml?type\u003dcs\u0026q\u003dcustom_preference.xml\u0026l\u003d1",
+      "range": {
+        "startLine": 81,
+        "startChar": 26,
+        "endLine": 81,
+        "endChar": 27
+      },
+      "revId": "cb37cab3ebd5ae0a7b7dc885874970e1d465cf44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
