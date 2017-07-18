@@ -26,7 +26,8 @@ using content::BrowserThread;
 
 using media::mojom::RemoterPtr;
 using media::mojom::RemoterRequest;
-using media::mojom::RemotingSinkCapabilities;
+using media::mojom::RemotingSinkMetadata;
+using media::mojom::RemotingSinkMetadataPtr;
 using media::mojom::RemotingSourcePtr;
 using media::mojom::RemotingSourceRequest;
 using media::mojom::RemotingStartFailReason;
@@ -43,8 +44,17 @@ namespace {
 
 constexpr int32_t kRemotingTabId = 2;
 
-constexpr RemotingSinkCapabilities kAllCapabilities =
-    RemotingSinkCapabilities::CONTENT_DECRYPTION_AND_RENDERING;
+RemotingSinkMetadataPtr GetDefaultSinkMetadata() {
+  RemotingSinkMetadataPtr metadata = RemotingSinkMetadata::New();
+  metadata->features.push_back(media::mojom::RemotingSinkFeature::RENDERING);
+  metadata->features.push_back(
+      media::mojom::RemotingSinkFeature::CONTENT_DECRYPTION);
+  metadata->video_capabilities.push_back(
+      media::mojom::RemotingSinkVideoCapability::CODEC_VP8);
+  metadata->audio_capabilities.push_back(
+      media::mojom::RemotingSinkAudioCapability::CODEC_AAC);
+  return metadata;
+}
 
 // Implements basic functionality of a subset of the MediaRouter for use by the
 // unit tests in this module. Note that MockMediaRouter will complain at runtime
@@ -98,15 +108,22 @@ class MockRemotingSource : public media::mojom::RemotingSource {
     binding_.Bind(std::move(request));
   }
 
-  MOCK_METHOD1(OnSinkAvailable, void(RemotingSinkCapabilities));
+  int num_on_sink_available_called() const {
+    return num_on_sink_available_called_;
+  }
+
   MOCK_METHOD0(OnSinkGone, void());
   MOCK_METHOD0(OnStarted, void());
   MOCK_METHOD1(OnStartFailed, void(RemotingStartFailReason));
   MOCK_METHOD1(OnMessageFromSink, void(const std::vector<uint8_t>&));
   MOCK_METHOD1(OnStopped, void(RemotingStopReason));
+  void OnSinkAvailable(RemotingSinkMetadataPtr metadata) override {
+    ++num_on_sink_available_called_;
+  }
 
  private:
   mojo::Binding<media::mojom::RemotingSource> binding_;
+  int num_on_sink_available_called_ = 0;
 };
 
 class MockMediaRemoter : public media::mojom::MirrorServiceRemoter {
@@ -119,11 +136,7 @@ class MockMediaRemoter : public media::mojom::MirrorServiceRemoter {
   }
   ~MockMediaRemoter() final {}
 
-  void OnSinkAvailable() {
-    media::mojom::SinkCapabilitiesPtr capabilities =
-        media::mojom::SinkCapabilities::New();
-    source_->OnSinkAvailable(std::move(capabilities));
-  }
+  void OnSinkAvailable() { source_->OnSinkAvailable(GetDefaultSinkMetadata()); }
 
   void SendMessageToSource(const std::vector<uint8_t>& message) {
     source_->OnMessageFromSink(message);
@@ -151,10 +164,6 @@ class MockMediaRemoter : public media::mojom::MirrorServiceRemoter {
 class CastRemotingConnectorTest : public ::testing::Test {
  public:
   CastRemotingConnectorTest() : connector_(&media_router_, kRemotingTabId) {
-    // HACK: Override feature flags for testing.
-    const_cast<RemotingSinkCapabilities&>(connector_.enabled_features_) =
-        kAllCapabilities;
-
     EXPECT_EQ(kRemotingTabId, media_router_.tab_id());
   }
 
@@ -190,9 +199,9 @@ TEST_F(CastRemotingConnectorTest, NeverNotifiesThatSinkIsAvailable) {
   MockRemotingSource source;
   RemoterPtr remoter = CreateRemoter(&source);
 
-  EXPECT_CALL(source, OnSinkAvailable(_)).Times(0);
   EXPECT_CALL(source, OnSinkGone()).Times(AtLeast(0));
   RunUntilIdle();
+  EXPECT_EQ(0, source.num_on_sink_available_called());
 }
 
 TEST_F(CastRemotingConnectorTest, NotifiesWhenSinkIsAvailableAndThenGone) {
@@ -202,9 +211,9 @@ TEST_F(CastRemotingConnectorTest, NotifiesWhenSinkIsAvailableAndThenGone) {
   std::unique_ptr<MockMediaRemoter> media_remoter =
       base::MakeUnique<MockMediaRemoter>(&media_router_);
 
-  EXPECT_CALL(source, OnSinkAvailable(kAllCapabilities)).Times(1);
   media_remoter->OnSinkAvailable();
   RunUntilIdle();
+  EXPECT_EQ(1, source.num_on_sink_available_called());
 
   EXPECT_CALL(source, OnSinkGone()).Times(AtLeast(1));
   media_remoter.reset();
@@ -221,10 +230,10 @@ TEST_F(CastRemotingConnectorTest,
   std::unique_ptr<MockMediaRemoter> media_remoter =
       base::MakeUnique<MockMediaRemoter>(&media_router_);
 
-  EXPECT_CALL(source1, OnSinkAvailable(kAllCapabilities)).Times(1);
-  EXPECT_CALL(source2, OnSinkAvailable(kAllCapabilities)).Times(1);
   media_remoter->OnSinkAvailable();
   RunUntilIdle();
+  EXPECT_EQ(1, source1.num_on_sink_available_called());
+  EXPECT_EQ(1, source2.num_on_sink_available_called());
 
   EXPECT_CALL(source1, OnSinkGone()).Times(AtLeast(1));
   EXPECT_CALL(source2, OnSinkGone()).Times(AtLeast(1));
@@ -239,9 +248,9 @@ TEST_F(CastRemotingConnectorTest, HandlesTeardownOfRemotingSourceFirst) {
   std::unique_ptr<MockMediaRemoter> media_remoter =
       base::MakeUnique<MockMediaRemoter>(&media_router_);
 
-  EXPECT_CALL(*source, OnSinkAvailable(kAllCapabilities)).Times(1);
   media_remoter->OnSinkAvailable();
   RunUntilIdle();
+  EXPECT_EQ(1, source->num_on_sink_available_called());
 
   source.reset();
   RunUntilIdle();
@@ -254,9 +263,9 @@ TEST_F(CastRemotingConnectorTest, HandlesTeardownOfRemoterFirst) {
   std::unique_ptr<MockMediaRemoter> media_remoter =
       base::MakeUnique<MockMediaRemoter>(&media_router_);
 
-  EXPECT_CALL(source, OnSinkAvailable(kAllCapabilities)).Times(1);
   media_remoter->OnSinkAvailable();
   RunUntilIdle();
+  EXPECT_EQ(1, source.num_on_sink_available_called());
 
   remoter.reset();
   RunUntilIdle();
@@ -313,12 +322,10 @@ TEST_P(CastRemotingConnectorFullSessionTest, GoesThroughAllTheMotions) {
 
   // Both sinks should be notified when the Cast Provider tells the connector
   // a remoting sink is available.
-  EXPECT_CALL(*source, OnSinkAvailable(kAllCapabilities)).Times(1)
-      .RetiresOnSaturation();
-  EXPECT_CALL(*other_source, OnSinkAvailable(kAllCapabilities)).Times(1)
-      .RetiresOnSaturation();
   media_remoter->OnSinkAvailable();
   RunUntilIdle();
+  EXPECT_EQ(1, source->num_on_sink_available_called());
+  EXPECT_EQ(1, other_source->num_on_sink_available_called());
 
   // When |source| starts a remoting session, |other_source| is notified the
   // sink is gone, the Cast Provider is notified that remoting has started,
@@ -382,12 +389,10 @@ TEST_P(CastRemotingConnectorFullSessionTest, GoesThroughAllTheMotions) {
       // When the sink is ready, the Cast Provider sends a notification to the
       // connector. The connector will notify both sources that a sink is once
       // again available.
-      EXPECT_CALL(*source, OnSinkAvailable(kAllCapabilities)).Times(1)
-          .RetiresOnSaturation();
-      EXPECT_CALL(*other_source, OnSinkAvailable(kAllCapabilities)).Times(1)
-          .RetiresOnSaturation();
       media_remoter->OnSinkAvailable();
       RunUntilIdle();
+      EXPECT_EQ(2, source->num_on_sink_available_called());
+      EXPECT_EQ(2, other_source->num_on_sink_available_called());
 
       // When the sink is no longer available, the Cast Provider notifies the
       // connector, and both sources are then notified the sink is gone.
@@ -426,10 +431,10 @@ TEST_P(CastRemotingConnectorFullSessionTest, GoesThroughAllTheMotions) {
       // another and should not be able to exchange messages anymore. Therefore,
       // the connector will never try to notify the sources that the sink is
       // available again.
-      EXPECT_CALL(*source, OnSinkAvailable(_)).Times(0);
-      EXPECT_CALL(*other_source, OnSinkAvailable(_)).Times(0);
       media_remoter.reset();
       RunUntilIdle();
+      EXPECT_EQ(1, source->num_on_sink_available_called());
+      EXPECT_EQ(1, other_source->num_on_sink_available_called());
 
       break;
 
