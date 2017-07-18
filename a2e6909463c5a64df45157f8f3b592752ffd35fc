@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ff8b87f_5af1cf67",
+        "filename": "chrome/android/java/res/layout/connection_info.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-18T16:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7ec611_5799da14",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ef11150_37f59af8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/BluetoothChooserDialog.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T21:16:24Z",
       "side": 1,
       "message": "Are there screenshots of this in one of the bugs?\n\nI think there\u0027s probably a better way to do this e.g. setting something on the associated ItemChooserDialog, but I\u0027m not quite sure where this shows up.",
+      "range": {
+        "startLine": 317,
+        "startChar": 53,
+        "endLine": 317,
+        "endChar": 68
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcc4f7e_fc2e93bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/BluetoothChooserDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-18T16:05:19Z",
+      "side": 1,
+      "message": "The bluetooth chooser dialog screenshot is at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d723054#c6, the \"Get help\" link is changed to darker blue. I don\u0027t see there is an easy way I can set the color on the Spannable in the associated ItemChooserDialog, since from what I see, ItemChooserDialog does not handle ClickableSpan but only set the given text. One solution is to make a new class ItemChooserDialogClickableSpan in ItemChooserDialog that extends NoUnderlineClickableSpan and overrides the updateDrawState method, and let all child classes of ItemChooserDialog use ItemChooserDialogClickableSpan instead. What do you think?",
+      "parentUuid": "3ef11150_37f59af8",
       "range": {
         "startLine": 317,
         "startChar": 53,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "34c63655_e1f4b6ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-18T16:05:19Z",
+      "side": 1,
+      "message": "This line will parse the url to various emphasis components. I want to catch the scheme length and set the \"https\" text to be medium text style instead of regular at the following line.",
+      "parentUuid": "24c67161_a372c94b",
+      "range": {
+        "startLine": 415,
+        "startChar": 61,
+        "endLine": 415,
+        "endChar": 78
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8861677c_6509a437",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8396ad91_42572690",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-18T16:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8861677c_6509a437",
+      "range": {
+        "startLine": 418,
+        "startChar": 60,
+        "endLine": 418,
+        "endChar": 66
+      },
+      "revId": "a2e6909463c5a64df45157f8f3b592752ffd35fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
