@@ -61,6 +61,13 @@ void TetherConnector::ConnectToNetwork(
   PA_LOG(INFO) << "Attempting to connect to network with GUID "
                << tether_network_guid << ".";
 
+  if (!network_state_handler_->IsTechnologyEnabled(
+          NetworkTypePattern::WiFi())) {
+    network_state_handler_->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true,
+        chromeos::network_handler::ErrorCallback());
+  }
+
   const std::string device_id =
       device_id_tether_network_guid_map_->GetDeviceIdForTetherNetworkGuid(
           tether_network_guid);

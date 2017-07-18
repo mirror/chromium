@@ -131,6 +131,11 @@ class TetherConnectorTest : public NetworkStateTest {
     network_state_handler()->SetTetherTechnologyState(
         NetworkStateHandler::TECHNOLOGY_ENABLED);
 
+    network_state_handler()->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true,
+        chromeos::network_handler::ErrorCallback());
+    base::RunLoop().RunUntilIdle();
+
     fake_operation_factory_ =
         base::WrapUnique(new FakeConnectTetheringOperationFactory());
     ConnectTetheringOperation::Factory::SetInstanceForTesting(
@@ -586,6 +591,36 @@ TEST_F(TetherConnectorTest, TestSuccessfulConnection_SetupRequired) {
 
   EXPECT_FALSE(
       fake_notification_presenter_->is_setup_required_notification_shown());
+
+  EXPECT_EQ(kSuccessResult, GetResultAndReset());
+}
+
+TEST_F(TetherConnectorTest, TestSuccessfulConnection_WifiDisabled) {
+  EXPECT_CALL(*mock_host_connection_metrics_logger_,
+              RecordConnectionToHostResult(
+                  HostConnectionMetricsLogger::ConnectionToHostResult::
+                      CONNECTION_RESULT_SUCCESS));
+
+  network_state_handler()->SetTechnologyEnabled(
+      NetworkTypePattern::WiFi(), false,
+      chromeos::network_handler::ErrorCallback());
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(
+      network_state_handler()->IsTechnologyEnabled(NetworkTypePattern::WiFi()));
+
+  CallConnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(
+      network_state_handler()->IsTechnologyEnabled(NetworkTypePattern::WiFi()));
+
+  fake_tether_host_fetcher_->InvokePendingCallbacks();
+
+  fake_operation_factory_->created_operations()[0]->SendSuccessfulResponse(
+      kSsid, kPassword);
+
+  SuccessfullyJoinWifiNetwork();
 
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
 }
