@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3cdf6ab_834b64d6",
+        "filename": "content/renderer/input/widget_input_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "I propose these can be more simply written by just always posting asynchronously to main thread a Bind directly on the RenderWidget methods, regardless of whether or not we\u0027re already on the main thread.  Then these should all be basically one-liners I think?",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75104c6_19d9c0c6",
+        "filename": "content/renderer/input/widget_input_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "Is this clause (and the similar one in WidgetInputHandlerManager::RunOnMainThread) really needed?  Can the queue be null in production code?  If it\u0027s just for tests I\u0027d prefer this was subclassed on the test side or something like that.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6813faae_e2864ee3",
+        "filename": "content/renderer/input/widget_input_handler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "To avoid redundant state, I\u0027d prefer this boolean be deleted in favor of querying input_handler_manager_.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448cab90_a4185d52",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer that this (or, better, the needed Channel and TaskRunner directly) were passed directly in the constructor from someone who has a non-static handle to it instead of relying on a static method.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b4d0e4_b6b99897",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "For this and AddAssociatedInterface, why not always post asynchronously?  I don\u0027t think there\u0027s a benefit of complicating the code to sometimes call synchronously.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3228d78c_2b13d79c",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "In my opinion, changing behavior based on BelongsToCurrentThread is an antipattern (like thread-local-storage in general), as it harms threading reshuffles and testability.  Please find a way to restructure this so that it isn\u0027t needed anywhere.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6521bfd_7e3d25e4",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "For more uniformity, could this phrased as:\nTaskRunner* runner \u003d has_compositor_ ? compositor_task_runner_ : ...;\nrunner-\u003ePostTask(...)",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaaec242_d050944a",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "This boolean is redundant with compositor_task_runner_ being null, so please delete it.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b8d808_1cbbe751",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-18T02:36:59Z",
+      "side": 1,
+      "message": "nit: unnecessary newline",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
