@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6595291b_ea75b2bc",
+        "filename": "components/pdf/browser/pdf_web_contents_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:11:25Z",
+      "side": 1,
+      "message": "Is this needed? (I don\u0027t actually know)",
+      "revId": "dffc72c518915c2f54b633eb7ce8f29aec581648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
