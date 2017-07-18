@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a13067e_16016d0d",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-18T06:45:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c7812ac_0e227d70",
+      "range": {
+        "startLine": 351,
+        "startChar": 44,
+        "endLine": 351,
+        "endChar": 60
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54b8b0f9_9992619b",
         "filename": "ui/keyboard/keyboard_controller.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T06:20:43Z",
       "side": 1,
       "message": "This may be false. We start to load the content when entering the touch view mode. If a user doesn\u0027t request to show the VK while loading the content, we don\u0027t have to show the VK after finishing the content loading.",
+      "range": {
+        "startLine": 188,
+        "startChar": 67,
+        "endLine": 189,
+        "endChar": 21
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6643057e_08c0cd71",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-18T06:45:53Z",
+      "side": 1,
+      "message": "That\u0027s right, and that\u0027s what \"May\" means. If show_on_resize() flag is not set, this doesn\u0027t show the keyboard. I updated the comment.",
+      "parentUuid": "54b8b0f9_9992619b",
       "range": {
         "startLine": 188,
         "startChar": 67,
@@ -91,6 +139,30 @@
       "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea1198d_c39d2c7d",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-18T06:45:53Z",
+      "side": 1,
+      "message": "Why? Bounds is plural.",
+      "parentUuid": "b0bfb268_6e4e5058",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

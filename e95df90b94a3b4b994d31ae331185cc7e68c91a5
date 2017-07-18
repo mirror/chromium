@@ -22,6 +22,30 @@
       "revId": "e95df90b94a3b4b994d31ae331185cc7e68c91a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73c4d6a_56d7e241",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-18T06:45:53Z",
+      "side": 0,
+      "message": "We keep this if clause. See l379.",
+      "parentUuid": "67228259_6ecc299d",
+      "range": {
+        "startLine": 350,
+        "startChar": 2,
+        "endLine": 351,
+        "endChar": 11
+      },
+      "revId": "e95df90b94a3b4b994d31ae331185cc7e68c91a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
