@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09c90c53_58556302",
+        "filename": "components/safe_browsing/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T18:59:44Z",
+      "side": 1,
+      "message": "Oops. The code passed compilation and gn check locally. Didn\u0027t know that this could pass.\n\nFixed.",
+      "parentUuid": "acfe312e_c0f9ac4a",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d77577c_e7cae69a",
         "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T18:23:48Z",
       "side": 1,
       "message": "We should be able to use MakeUnique instead",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94352ce1_45d213b2",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T18:59:44Z",
+      "side": 1,
+      "message": "I couldn\u0027t use MakeUnique\u003c\u003e unless I expose the constructor.\nI think it is better to keep the constructor private and force users to use \"MaybeCreate\".",
+      "parentUuid": "3d77577c_e7cae69a",
       "range": {
         "startLine": 21,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fb4f6d15_059947bd",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T18:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c935a930_31d9a142",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f123cf67_b9144550",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b95787_8c51043a",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T18:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f123cf67_b9144550",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
