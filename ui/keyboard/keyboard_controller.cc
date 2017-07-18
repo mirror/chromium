@@ -470,16 +470,6 @@ void KeyboardController::SetKeyboardMode(KeyboardMode mode) {
   }
 }
 
-void KeyboardController::ShowKeyboard(bool lock) {
-  set_keyboard_locked(lock);
-  ShowKeyboardInternal(display::kInvalidDisplayId);
-}
-
-void KeyboardController::ShowKeyboardInDisplay(int64_t display_id) {
-  set_keyboard_locked(true);
-  ShowKeyboardInternal(display_id);
-}
-
 bool KeyboardController::IsKeyboardWindowCreated() {
   return keyboard_container_initialized() && ui_->HasContentsWindow();
 }
@@ -602,50 +592,62 @@ void KeyboardController::LoadKeyboardUiInBackground() {
   if (state_ != KeyboardControllerState::INITIAL)
     return;
 
-  // The container window should have been created already when
-  // |Shell::CreateKeyboard| is called.
-  DCHECK(container_.get());
-
   PopulateKeyboardContent(display::kInvalidDisplayId, false);
 }
 
+void KeyboardController::ShowKeyboard(bool lock) {
+  set_keyboard_locked(lock);
+  ShowKeyboardInternal(display::kInvalidDisplayId);
+}
+
+void KeyboardController::ShowKeyboardInDisplay(int64_t display_id) {
+  set_keyboard_locked(true);
+  ShowKeyboardInternal(display_id);
+}
+
 void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
-  DCHECK(container_.get());
   keyboard::MarkKeyboardLoadStarted();
   PopulateKeyboardContent(display_id, true);
 }
 
 void KeyboardController::PopulateKeyboardContent(int64_t display_id,
                                                  bool show_keyboard) {
-  TRACE_EVENT0("vk", "ShowKeyboardInternal");
+  // The container window should have been created already when
+  // |Shell::CreateKeyboard| is called.
+  DCHECK(container_.get());
+  TRACE_EVENT0("vk", "PopulateKeyboardContent");
 
+  // If the contents has not been initialized
   if (container_->children().empty()) {
-    aura::Window* keyboard = ui_->GetContentsWindow();
-    keyboard->Show();
-    container_->AddChild(keyboard);
-    keyboard->set_owned_by_parent(false);
+    aura::Window* contents = ui_->GetContentsWindow();
+    contents->Show();
+    container_->AddChild(contents);
+    contents->set_owned_by_parent(false);
   }
 
+  // Load or reload the keyboard based on the URL.
   ui_->ReloadKeyboardIfNeeded();
-  if (layout_delegate_ != nullptr) {
-    if (display_id != display::kInvalidDisplayId)
-      layout_delegate_->MoveKeyboardToDisplay(display_id);
-    else
-      layout_delegate_->MoveKeyboardToTouchableDisplay();
-  }
+  if (display_id != display::kInvalidDisplayId)
+    layout_delegate_->MoveKeyboardToDisplay(display_id);
+  else
+    layout_delegate_->MoveKeyboardToTouchableDisplay();
 
   if (keyboard_visible_) {
     return;
   } else if (!show_keyboard ||
              ui_->GetContentsWindow()->bounds().height() == 0) {
     if (show_keyboard) {
-      // show the keyboard once loading is complete.
+      // Show the keyboard once loading is complete.
       show_on_resize_ = true;
     }
     ChangeState(KeyboardControllerState::LOADING_EXTENSION);
     return;
   }
 
+  ShowKeyboardAfterContentsLoaded();
+}
+
+void KeyboardController::ShowKeyboardAfterContentsLoaded() {
   keyboard_visible_ = true;
 
   // If the controller is in the process of hiding the keyboard, do not log
@@ -722,7 +724,7 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
 }
 
 bool KeyboardController::WillHideKeyboard() const {
-  return weak_factory_.HasWeakPtrs();
+  return state_ == KeyboardControllerState::WILL_HIDE;
 }
 
 void KeyboardController::ShowAnimationFinished() {
