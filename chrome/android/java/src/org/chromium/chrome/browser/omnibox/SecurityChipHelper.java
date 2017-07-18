@@ -68,6 +68,7 @@ public class SecurityChipHelper {
         public int verboseStatusVisibility;
         public int verboseStatusColorId;
         public int verboseStatusSeparatorColorId;
+        public int verboseStatusStringId;
 
         public boolean shouldColorHttpsScheme;
         public boolean useDarkForegroundColors;
@@ -147,14 +148,22 @@ public class SecurityChipHelper {
         return !isIncognito && !isUsingBrandColor;
     }
 
+    private static boolean shouldShowVerboseStatus(int securityLevel) {
+        return securityLevel == ConnectionSecurityLevel.SECURE
+                || securityLevel == ConnectionSecurityLevel.EV_SECURE
+                || securityLevel == ConnectionSecurityLevel.DANGEROUS;
+    }
+
     /**
      * Update visibility of the verbose status based on the button type and focus state of the
      * omnibox.
      */
-    private static int getVerboseStatusVisibility(boolean isUrlBarFocused, boolean isOfflinePage) {
+    private static int getVerboseStatusVisibility(
+            boolean isUrlBarFocused, boolean isOfflinePage, int securityLevel) {
         // Because is offline page is cleared a bit slower, we also ensure that connection security
         // level is NONE or HTTP_SHOW_WARNING (http://crbug.com/671453).
-        boolean verboseStatusVisible = !isUrlBarFocused && isOfflinePage;
+        boolean verboseStatusVisible =
+                !isUrlBarFocused && (isOfflinePage || shouldShowVerboseStatus(securityLevel));
         return verboseStatusVisible ? View.VISIBLE : View.GONE;
     }
 
@@ -165,6 +174,7 @@ public class SecurityChipHelper {
      * @return Resource ID of status  color.
      */
     private static int getVerboseStatusColorId(boolean useDarkForegroundColors) {
+        // TODO(fgorski): update to use appropriate colors.
         return useDarkForegroundColors ? R.color.locationbar_status_color
                                        : R.color.locationbar_status_color_light;
     }
@@ -176,8 +186,27 @@ public class SecurityChipHelper {
      * @return Resource ID of status separator color.
      */
     private static int getVerboseStatusSeparatorColorId(boolean useDarkForegroundColors) {
+        // TODO(fgorski): update to use appropriate colors.
         return useDarkForegroundColors ? R.color.locationbar_status_separator_color
                                        : R.color.locationbar_status_separator_color_light;
+    }
+
+    private static int getVerboseStatusStringId(
+            boolean isUrlBarFocused, boolean isOfflinePage, int securityLevel) {
+        if (isUrlBarFocused) return 0;
+
+        if (isOfflinePage) return R.string.location_bar_verbose_status_offline;
+
+        if (securityLevel == ConnectionSecurityLevel.SECURE
+                || securityLevel == ConnectionSecurityLevel.EV_SECURE) {
+            return R.string.location_bar_verbose_status_secure;
+        }
+
+        if (securityLevel == ConnectionSecurityLevel.DANGEROUS) {
+            return R.string.location_bar_verbose_status_not_secure;
+        }
+
+        return 0;
     }
 
     /**
@@ -224,13 +253,15 @@ public class SecurityChipHelper {
         boolean useDarkForegroundColors = getUseDarkColors(toolbarState);
         chipState.useDarkForegroundColors = useDarkForegroundColors;
 
-        chipState.verboseStatusVisibility = getVerboseStatusVisibility(
-                toolbarState.isUrlBarFocused, toolbarState.isOfflinePage);
+        chipState.verboseStatusVisibility = getVerboseStatusVisibility(toolbarState.isUrlBarFocused,
+                toolbarState.isOfflinePage, toolbarState.securityLevel);
 
         if (chipState.verboseStatusVisibility == View.VISIBLE) {
             chipState.verboseStatusColorId = getVerboseStatusColorId(useDarkForegroundColors);
             chipState.verboseStatusSeparatorColorId =
                     getVerboseStatusSeparatorColorId(useDarkForegroundColors);
+            chipState.verboseStatusStringId = getVerboseStatusStringId(toolbarState.isUrlBarFocused,
+                    toolbarState.isOfflinePage, toolbarState.securityLevel);
         }
 
         chipState.shouldColorHttpsScheme =

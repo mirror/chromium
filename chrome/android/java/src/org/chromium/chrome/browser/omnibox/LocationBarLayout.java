@@ -1423,6 +1423,7 @@ public class LocationBarLayout extends FrameLayout
         View separator = findViewById(R.id.location_bar_verbose_status_separator);
         if (chipState.verboseStatusVisibility == VISIBLE) {
             // Update colors if verbose status is visible.
+            mVerboseStatusTextView.setText(chipState.verboseStatusStringId);
             mVerboseStatusTextView.setTextColor(
                     ApiCompatibilityUtils.getColor(getResources(), chipState.verboseStatusColorId));
             separator.setBackgroundColor(ApiCompatibilityUtils.getColor(

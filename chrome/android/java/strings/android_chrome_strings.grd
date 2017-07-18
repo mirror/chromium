@@ -2532,6 +2532,14 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Offline
       </message>
 
+      <message name="IDS_LOCATION_BAR_VERBOSE_STATUS_SECURE" desc="Verbose indication of secure status in the location bar. [CHAR-LIMIT=20]">
+        Secure
+      </message>
+
+      <message name="IDS_LOCATION_BAR_VERBOSE_STATUS_NOT_SECURE" desc="Verbose indication of not secure status in the location bar. [CHAR-LIMIT=20]">
+        Not secure
+      </message>
+
       <!-- Omnibox Placeholder Experiment -->
       <message name="IDS_SEARCH_OR_TYPE_WEB_ADDRESS" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a website. [CHAR-LIMIT=38]">
         Search or type web address
