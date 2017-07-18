@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd48c842_c29f7c92",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-18T04:08:30Z",
+      "side": 1,
+      "message": "yep; done",
+      "parentUuid": "cb8b3ea5_491f29ad",
+      "range": {
+        "startLine": 778,
+        "startChar": 25,
+        "endLine": 778,
+        "endChar": 46
+      },
+      "revId": "8da6e2638097b7df717e7c2acae984695bca7c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c0b3c0_2ab9411e",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4cbfe740_cc5b1e0c",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-18T04:08:30Z",
+      "side": 1,
+      "message": "Yes, this is the child process, though I\u0027m not sure which exec() you\u0027re referring to?\n\nThere\u0027s no malloc(), locking, or exit()s, so this code conforms to those comments.",
+      "parentUuid": "a1c0b3c0_2ab9411e",
+      "revId": "8da6e2638097b7df717e7c2acae984695bca7c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "505a191d_069edc56",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-18T01:44:10Z",
       "side": 1,
       "message": "Is this return suppose to be here?",
+      "revId": "8da6e2638097b7df717e7c2acae984695bca7c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836705a6_a6c287f9",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-18T04:08:30Z",
+      "side": 1,
+      "message": "no, it\u0027s left over debugging.  Removed",
+      "parentUuid": "505a191d_069edc56",
       "revId": "8da6e2638097b7df717e7c2acae984695bca7c08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
