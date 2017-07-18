@@ -60,7 +60,7 @@ public class SecurityChipHelper {
      * Class representing a state of the security chip.
      * TODO(fgorski): consider extending it to cover navigation icon (and animations).
      */
-    static class ChipState {
+    public static class ChipState {
         public boolean showSecurityIcon;
         public int securityIconResourceId;
         public int securityIconColorStateListId;
@@ -77,6 +77,37 @@ public class SecurityChipHelper {
 
     public SecurityChipHelper(Resources resources) {
         mResources = resources;
+    }
+
+    /**
+     * Determines the icon that should be displayed for the current security level.
+     * @param securityLevel The security level for which the resource will be returned.
+     * @param isSmallDevice Whether the device form factor is small (like a phone) or large
+     * (like a tablet).
+     * @param isOfflinePage Whether the page for which the icon is shown is an offline page.
+     * @return The resource ID of the icon that should be displayed, 0 if no icon should show.
+     */
+    public static int getSecurityIconResource(
+            int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
+        if (isOfflinePage) {
+            return R.drawable.offline_pin_round;
+        }
+        switch (securityLevel) {
+            case ConnectionSecurityLevel.NONE:
+                return isSmallDevice ? 0 : R.drawable.omnibox_info;
+            case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
+                return R.drawable.omnibox_info;
+            case ConnectionSecurityLevel.SECURITY_WARNING:
+                return R.drawable.omnibox_info;
+            case ConnectionSecurityLevel.DANGEROUS:
+                return R.drawable.omnibox_https_invalid;
+            case ConnectionSecurityLevel.SECURE:
+            case ConnectionSecurityLevel.EV_SECURE:
+                return R.drawable.omnibox_https_valid;
+            default:
+                assert false;
+        }
+        return 0;
     }
 
     /**
@@ -163,37 +194,6 @@ public class SecurityChipHelper {
         }
 
         return !ColorUtils.shouldUseLightForegroundOnBackground(toolbarState.primaryColor);
-    }
-
-    /**
-     * Determines the icon that should be displayed for the current security level.
-     * @param securityLevel The security level for which the resource will be returned.
-     * @param isSmallDevice Whether the device form factor is small (like a phone) or large
-     * (like a tablet).
-     * @param isOfflinePage Whether the page for which the icon is shown is an offline page.
-     * @return The resource ID of the icon that should be displayed, 0 if no icon should show.
-     */
-    private static int getSecurityIconResource(
-            int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
-        if (isOfflinePage) {
-            return R.drawable.offline_pin_round;
-        }
-        switch (securityLevel) {
-            case ConnectionSecurityLevel.NONE:
-                return isSmallDevice ? 0 : R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
-                return R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.SECURITY_WARNING:
-                return R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.DANGEROUS:
-                return R.drawable.omnibox_https_invalid;
-            case ConnectionSecurityLevel.SECURE:
-            case ConnectionSecurityLevel.EV_SECURE:
-                return R.drawable.omnibox_https_valid;
-            default:
-                assert false;
-        }
-        return 0;
     }
 
     /**

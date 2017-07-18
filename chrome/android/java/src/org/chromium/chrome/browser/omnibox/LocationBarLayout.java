@@ -78,7 +78,6 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
 import org.chromium.chrome.browser.toolbar.ToolbarPhone;
-import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.KeyNavigationUtil;
 import org.chromium.chrome.browser.util.ViewUtils;
@@ -164,9 +163,6 @@ public class LocationBarLayout extends FrameLayout
     // The type of the navigation button currently showing.
     private NavigationButtonType mNavigationButtonType;
 
-    // The type of the security icon currently active.
-    private int mSecurityIconResource;
-
     private final OmniboxResultsAdapter mSuggestionListAdapter;
     private OmniboxSuggestionsList mSuggestionList;
 
@@ -214,9 +210,9 @@ public class LocationBarLayout extends FrameLayout
 
     private OmniboxPrerender mOmniboxPrerender;
 
+    private SecurityChipHelper.ChipState mSecurityChipState;
+
     private boolean mSuggestionModalShown;
-    private boolean mUseDarkColors;
-    private boolean mIsEmphasizingHttpsScheme;
 
     // True if the user has just selected a suggestion from the suggestion list. This suppresses
     // the recording of the dismissal of the suggestion list. (The list is only considered to have
@@ -670,7 +666,6 @@ public class LocationBarLayout extends FrameLayout
                                                             : NavigationButtonType.EMPTY;
 
         mSecurityButton = (TintedImageButton) findViewById(R.id.security_button);
-        mSecurityIconResource = 0;
 
         mVerboseStatusTextView = (TextView) findViewById(R.id.location_bar_verbose_status);
 
@@ -711,6 +706,10 @@ public class LocationBarLayout extends FrameLayout
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        // Ensures there is always a security chip state.
+        mSecurityChipState = new SecurityChipHelper(getResources())
+                                     .calculateSecurityChipState(
+                                             getNewToolbarState(ConnectionSecurityLevel.NONE));
 
         mUrlBar.setCursorVisible(false);
 
@@ -915,8 +914,6 @@ public class LocationBarLayout extends FrameLayout
     }
 
     @LocationBarButtonType private int getLocationBarButtonToShow() {
-        boolean isOffline =
-                getCurrentTab() != null && OfflinePageUtils.isOfflinePage(getCurrentTab());
         boolean isTablet = DeviceFormFactor.isTablet();
 
         // The navigation icon type is only applicable on tablets.  While smaller form factors do
@@ -925,7 +922,7 @@ public class LocationBarLayout extends FrameLayout
         // hide the icon.
         if (mUrlHasFocus && isTablet) return BUTTON_TYPE_NAVIGATION_ICON;
 
-        return getSecurityIconResource(getSecurityLevel(), !isTablet, isOffline) != 0
+        return mSecurityChipState != null && mSecurityChipState.showSecurityIcon
                 ? BUTTON_TYPE_SECURITY_ICON
                 : BUTTON_TYPE_NONE;
     }
@@ -1062,8 +1059,8 @@ public class LocationBarLayout extends FrameLayout
             if (mUrlHasFocus) mUrlBar.selectAll();
         }
 
+        // updateVerboseStatusVisibility();
         changeLocationBarIcon();
-        updateVerboseStatusVisibility();
         updateLocationBarIconContainerVisibility();
         mUrlBar.setCursorVisible(hasFocus);
 
@@ -1302,106 +1299,68 @@ public class LocationBarLayout extends FrameLayout
     }
 
     /**
-     * Determines the icon that should be displayed for the current security level.
-     * @param securityLevel The security level for which the resource will be returned.
-     * @param isSmallDevice Whether the device form factor is small (like a phone) or large
-     * (like a tablet).
-     * @param isOfflinePage Whether the page for which the icon is shown is an offline page.
-     * @return The resource ID of the icon that should be displayed, 0 if no icon should show.
-     */
-    public static int getSecurityIconResource(
-            int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
-        if (isOfflinePage) {
-            return R.drawable.offline_pin_round;
-        }
-        switch (securityLevel) {
-            case ConnectionSecurityLevel.NONE:
-                return isSmallDevice ? 0 : R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
-                return R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.SECURITY_WARNING:
-                return R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.DANGEROUS:
-                return R.drawable.omnibox_https_invalid;
-            case ConnectionSecurityLevel.SECURE:
-            case ConnectionSecurityLevel.EV_SECURE:
-                return R.drawable.omnibox_https_valid;
-            default:
-                assert false;
-        }
-        return 0;
-    }
-
-    /**
-     * @param securityLevel The security level for which the color will be returned.
-     * @param provider The {@link ToolbarDataProvider}.
-     * @param resources The Resources for the Context.
-     * @param isOmniboxOpaque Whether the omnibox is an opaque color.
-     * @return The {@link ColorStateList} to use to tint the security state icon.
-     */
-    public static ColorStateList getColorStateList(int securityLevel, ToolbarDataProvider provider,
-            Resources resources, boolean isOmniboxOpaque) {
-        ColorStateList list = null;
-        int color = provider.getPrimaryColor();
-        boolean needLightIcon = ColorUtils.shouldUseLightForegroundOnBackground(color);
-        if (provider.isIncognito() || needLightIcon) {
-            // For a dark theme color, use light icons.
-            list = ApiCompatibilityUtils.getColorStateList(resources, R.color.light_mode_tint);
-        } else if (!ColorUtils.isUsingDefaultToolbarColor(resources, color) && !isOmniboxOpaque) {
-            // For theme colors which are not dark and are also not
-            // light enough to warrant an opaque URL bar, use dark
-            // icons.
-            list = ApiCompatibilityUtils.getColorStateList(resources, R.color.dark_mode_tint);
-        } else {
-            // For the default toolbar color, use a green or red icon.
-            if (securityLevel == ConnectionSecurityLevel.DANGEROUS) {
-                list = ApiCompatibilityUtils.getColorStateList(resources, R.color.google_red_700);
-            } else if (securityLevel == ConnectionSecurityLevel.SECURE
-                    || securityLevel == ConnectionSecurityLevel.EV_SECURE) {
-                list = ApiCompatibilityUtils.getColorStateList(resources, R.color.google_green_700);
-            } else {
-                list = ApiCompatibilityUtils.getColorStateList(resources, R.color.dark_mode_tint);
-            }
-        }
-        assert list != null : "Missing ColorStateList for Security Button.";
-        return list;
-    }
-
-    /**
      * Updates the security icon displayed in the LocationBar.
      */
     @Override
     public void updateSecurityIcon(int securityLevel) {
-        boolean isSmallDevice = !DeviceFormFactor.isTablet();
-        boolean isOfflinePage =
-                getCurrentTab() != null && OfflinePageUtils.isOfflinePage(getCurrentTab());
-        int id = getSecurityIconResource(securityLevel, isSmallDevice, isOfflinePage);
-        if (id == 0) {
+        SecurityChipHelper.ChipState newChipState =
+                new SecurityChipHelper(getResources())
+                        .calculateSecurityChipState(getNewToolbarState(securityLevel));
+
+        // State didn't change, presume everything is as expected and don't update anything.
+        if (newChipState.equals(mSecurityChipState)) return;
+
+        // TODO(fgorski): Important decision point, either set the mSecurityChipState here or at
+        // the end.
+        mSecurityChipState = newChipState;
+
+        if (!newChipState.showSecurityIcon) {
             mSecurityButton.setImageDrawable(null);
         } else {
             // ImageView#setImageResource is no-op if given resource is the current one.
-            mSecurityButton.setImageResource(id);
-            mSecurityButton.setTint(getColorStateList(securityLevel, getToolbarDataProvider(),
-                    getResources(), ColorUtils.shouldUseOpaqueTextboxBackground(
-                            getToolbarDataProvider().getPrimaryColor())));
+            mSecurityButton.setImageResource(newChipState.securityIconResourceId);
+            mSecurityButton.setTint(ApiCompatibilityUtils.getColorStateList(
+                    getResources(), newChipState.securityIconColorStateListId));
         }
 
-        updateVerboseStatusVisibility();
-
-        boolean shouldEmphasizeHttpsScheme = shouldEmphasizeHttpsScheme();
-        if (mSecurityIconResource == id
-                && mIsEmphasizingHttpsScheme == shouldEmphasizeHttpsScheme) {
-            return;
-        }
-        mSecurityIconResource = id;
-
+        updateVerboseStatusVisibility(newChipState);
         changeLocationBarIcon();
         updateLocationBarIconContainerVisibility();
+
         // Since we emphasize the scheme of the URL based on the security type, we need to
         // refresh the emphasis.
         mUrlBar.deEmphasizeUrl();
         emphasizeUrl();
-        mIsEmphasizingHttpsScheme = shouldEmphasizeHttpsScheme;
+    }
+
+    private SecurityChipHelper.ToolbarState getNewToolbarState(int securityLevel) {
+        return getNewToolbarState(
+                mToolbarDataProvider, getResources(), securityLevel, mUrlHasFocus);
+    }
+
+    public static SecurityChipHelper.ToolbarState getNewToolbarState(
+            ToolbarDataProvider toolbarDataProvider, Resources resources, int securityLevel,
+            boolean isUrlBarFocused) {
+        SecurityChipHelper.ToolbarState toolbarState = new SecurityChipHelper.ToolbarState();
+        if (toolbarDataProvider != null) {
+            toolbarState.hasTab = toolbarDataProvider.getTab() != null;
+            toolbarState.isIncognito = toolbarDataProvider.isIncognito();
+            toolbarState.isOfflinePage = toolbarState.hasTab
+                    && OfflinePageUtils.isOfflinePage(toolbarDataProvider.getTab());
+            toolbarState.isUsingBrandColor = toolbarDataProvider.isUsingBrandColor();
+            toolbarState.primaryColor = toolbarDataProvider.getPrimaryColor();
+        } else {
+            toolbarState.hasTab = false;
+            toolbarState.isIncognito = false;
+            toolbarState.isOfflinePage = false;
+            toolbarState.isUsingBrandColor = false;
+            toolbarState.primaryColor =
+                    ApiCompatibilityUtils.getColor(resources, R.color.default_primary_color);
+        }
+        toolbarState.isSmallDevice = !DeviceFormFactor.isTablet();
+        toolbarState.isUrlBarFocused = isUrlBarFocused;
+        toolbarState.securityLevel = securityLevel;
+        return toolbarState;
     }
 
     private void emphasizeUrl() {
@@ -1410,9 +1369,7 @@ public class LocationBarLayout extends FrameLayout
 
     @Override
     public boolean shouldEmphasizeHttpsScheme() {
-        ToolbarDataProvider provider = getToolbarDataProvider();
-        if (provider.isUsingBrandColor() || provider.isIncognito()) return false;
-        return true;
+        return mSecurityChipState.shouldColorHttpsScheme;
     }
 
     /**
@@ -1433,9 +1390,11 @@ public class LocationBarLayout extends FrameLayout
             case PAGE:
                 Drawable page = ApiCompatibilityUtils.getDrawable(
                         getResources(), R.drawable.ic_omnibox_page);
-                page.setColorFilter(mUseDarkColors
-                        ? ApiCompatibilityUtils.getColor(getResources(), R.color.light_normal_color)
-                        : Color.WHITE, PorterDuff.Mode.SRC_IN);
+                page.setColorFilter(mSecurityChipState.useDarkForegroundColors
+                                ? ApiCompatibilityUtils.getColor(
+                                          getResources(), R.color.light_normal_color)
+                                : Color.WHITE,
+                        PorterDuff.Mode.SRC_IN);
                 mNavigationButton.setImageDrawable(page);
                 break;
             case MAGNIFIER:
@@ -1460,29 +1419,21 @@ public class LocationBarLayout extends FrameLayout
      * Update visibility of the verbose status based on the button type and focus state of the
      * omnibox.
      */
-    private void updateVerboseStatusVisibility() {
-        // Because is offline page is cleared a bit slower, we also ensure that connection security
-        // level is NONE or HTTP_SHOW_WARNING (http://crbug.com/671453).
-        boolean verboseStatusVisible = !mUrlHasFocus && getCurrentTab() != null
-                && OfflinePageUtils.isOfflinePage(getCurrentTab())
-                && (getSecurityLevel() == ConnectionSecurityLevel.NONE
-                           || getSecurityLevel() == ConnectionSecurityLevel.HTTP_SHOW_WARNING);
-
-        int verboseStatusVisibility = verboseStatusVisible ? VISIBLE : GONE;
-
-        mVerboseStatusTextView.setTextColor(ApiCompatibilityUtils.getColor(getResources(),
-                mUseDarkColors ? R.color.locationbar_status_color
-                        : R.color.locationbar_status_color_light));
-        mVerboseStatusTextView.setVisibility(verboseStatusVisibility);
-
+    private void updateVerboseStatusVisibility(SecurityChipHelper.ChipState chipState) {
         View separator = findViewById(R.id.location_bar_verbose_status_separator);
-        separator.setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(), mUseDarkColors
-                ? R.color.locationbar_status_separator_color
-                : R.color.locationbar_status_separator_color_light));
-        separator.setVisibility(verboseStatusVisibility);
+        if (chipState.verboseStatusVisibility == VISIBLE) {
+            // Update colors if verbose status is visible.
+            mVerboseStatusTextView.setTextColor(
+                    ApiCompatibilityUtils.getColor(getResources(), chipState.verboseStatusColorId));
+            separator.setBackgroundColor(ApiCompatibilityUtils.getColor(
+                    getResources(), chipState.verboseStatusSeparatorColorId));
+        }
 
+        // Apply visibility to views of verbose status.
+        mVerboseStatusTextView.setVisibility(chipState.verboseStatusVisibility);
+        separator.setVisibility(chipState.verboseStatusVisibility);
         findViewById(R.id.location_bar_verbose_status_extra_space)
-                .setVisibility(verboseStatusVisibility);
+                .setVisibility(chipState.verboseStatusVisibility);
     }
 
     /**
@@ -2435,43 +2386,22 @@ public class LocationBarLayout extends FrameLayout
      */
     @Override
     public void updateVisualsForState() {
-        if (updateUseDarkColors() || mIsEmphasizingHttpsScheme != shouldEmphasizeHttpsScheme()) {
-            updateSecurityIcon(getSecurityLevel());
-        }
+        // If there is nothing to update, this will be a no-op.
+        updateSecurityIcon(getSecurityLevel());
+
         ColorStateList colorStateList = ApiCompatibilityUtils.getColorStateList(getResources(),
-                mUseDarkColors ? R.color.dark_mode_tint : R.color.light_mode_tint);
+                mSecurityChipState.useDarkForegroundColors ? R.color.dark_mode_tint
+                                                           : R.color.light_mode_tint);
         mMicButton.setTint(colorStateList);
         mDeleteButton.setTint(colorStateList);
 
         setNavigationButtonType(mNavigationButtonType);
-        mUrlBar.setUseDarkTextColors(mUseDarkColors);
+        mUrlBar.setUseDarkTextColors(mSecurityChipState.useDarkForegroundColors);
 
         if (mSuggestionList != null) {
             mSuggestionList.setBackground(getSuggestionPopupBackground());
         }
-        mSuggestionListAdapter.setUseDarkColors(mUseDarkColors);
-    }
-
-    /**
-     * Checks the current specs and updates {@link LocationBar#mUseDarkColors} if necessary.
-     * @return Whether {@link LocationBar#mUseDarkColors} has been updated.
-     */
-    private boolean updateUseDarkColors() {
-        Tab tab = getCurrentTab();
-        boolean brandColorNeedsLightText = false;
-        if (getToolbarDataProvider().isUsingBrandColor() && !mUrlHasFocus) {
-            int currentPrimaryColor = getToolbarDataProvider().getPrimaryColor();
-            brandColorNeedsLightText =
-                    ColorUtils.shouldUseLightForegroundOnBackground(currentPrimaryColor);
-        }
-
-        boolean useDarkColors =
-                (mToolbarDataProvider == null || !mToolbarDataProvider.isIncognito())
-                && (tab == null || !(tab.isIncognito() || brandColorNeedsLightText));
-        boolean hasChanged = useDarkColors != mUseDarkColors;
-        mUseDarkColors = useDarkColors;
-
-        return hasChanged;
+        mSuggestionListAdapter.setUseDarkColors(mSecurityChipState.useDarkForegroundColors);
     }
 
     /**

@@ -32,6 +32,13 @@ public class SecurityChipHelperTest {
     private static final int LIGHT_THEME_COLOR = 0xf9c81e;
     private static final int DEFAULT_PRIMARY_COLOR = 0xf2f2f2;
 
+    private static final boolean IS_SMALL_DEVICE = true;
+    private static final boolean IS_OFFLINE_PAGE = true;
+    private static final int[] SECURITY_LEVELS =
+            new int[] {ConnectionSecurityLevel.NONE, ConnectionSecurityLevel.HTTP_SHOW_WARNING,
+                    ConnectionSecurityLevel.SECURITY_WARNING, ConnectionSecurityLevel.DANGEROUS,
+                    ConnectionSecurityLevel.SECURE, ConnectionSecurityLevel.EV_SECURE};
+
     @Mock
     private Resources mResources;
 
@@ -43,6 +50,62 @@ public class SecurityChipHelperTest {
         doReturn(DEFAULT_PRIMARY_COLOR)
                 .when(mResources)
                 .getColor(eq(R.color.default_primary_color), eq(null));
+    }
+
+    @Test
+    public void testGetSecurityIconResource() {
+        for (int securityLevel : SECURITY_LEVELS) {
+            assertEquals(R.drawable.offline_pin_round,
+                    SecurityChipHelper.getSecurityIconResource(
+                            securityLevel, IS_SMALL_DEVICE, IS_OFFLINE_PAGE));
+            assertEquals(R.drawable.offline_pin_round,
+                    SecurityChipHelper.getSecurityIconResource(
+                            securityLevel, !IS_SMALL_DEVICE, IS_OFFLINE_PAGE));
+        }
+
+        assertEquals(0,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.NONE, IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_info,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.NONE, !IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+
+        assertEquals(R.drawable.omnibox_info,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.HTTP_SHOW_WARNING, IS_SMALL_DEVICE,
+                        !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_info,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.HTTP_SHOW_WARNING, !IS_SMALL_DEVICE,
+                        !IS_OFFLINE_PAGE));
+
+        assertEquals(R.drawable.omnibox_info,
+                SecurityChipHelper.getSecurityIconResource(ConnectionSecurityLevel.SECURITY_WARNING,
+                        IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_info,
+                SecurityChipHelper.getSecurityIconResource(ConnectionSecurityLevel.SECURITY_WARNING,
+                        !IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+
+        assertEquals(R.drawable.omnibox_https_invalid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.DANGEROUS, IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_https_invalid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.DANGEROUS, !IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+
+        assertEquals(R.drawable.omnibox_https_valid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.SECURE, IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_https_valid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.SECURE, !IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+
+        assertEquals(R.drawable.omnibox_https_valid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.EV_SECURE, IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
+        assertEquals(R.drawable.omnibox_https_valid,
+                SecurityChipHelper.getSecurityIconResource(
+                        ConnectionSecurityLevel.EV_SECURE, !IS_SMALL_DEVICE, !IS_OFFLINE_PAGE));
     }
 
     private SecurityChipHelper.ToolbarState buildBasicToolbarState() {

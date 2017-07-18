@@ -41,9 +41,9 @@ import org.chromium.chrome.browser.dom_distiller.DomDistillerServiceFactory;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerTabUtils;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
-import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
+import org.chromium.chrome.browser.omnibox.SecurityChipHelper;
 import org.chromium.chrome.browser.omnibox.UrlBar;
 import org.chromium.chrome.browser.omnibox.UrlFocusChangeListener;
 import org.chromium.chrome.browser.page_info.PageInfoPopup;
@@ -57,7 +57,6 @@ import org.chromium.components.dom_distiller.core.DomDistillerService;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.common.ContentUrlConstants;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.interpolators.BakedBezierInterpolator;
 import org.chromium.ui.widget.Toast;
@@ -127,7 +126,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     private CustomTabToolbarAnimationDelegate mAnimDelegate;
     private int mState = STATE_DOMAIN_ONLY;
     private String mFirstUrl;
-    private boolean mShowsOfflinePage;
 
     protected ToolbarDataProvider mToolbarDataProvider;
 
@@ -485,28 +483,23 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
 
         mSecurityIconType = securityLevel;
 
-        boolean isSmallDevice = !DeviceFormFactor.isTablet();
-        boolean isOfflinePage =
-                getCurrentTab() != null && OfflinePageUtils.isOfflinePage(getCurrentTab());
+        SecurityChipHelper.ChipState chipState =
+                new SecurityChipHelper(getResources())
+                        .calculateSecurityChipState(LocationBarLayout.getNewToolbarState(
+                                getToolbarDataProvider(), getResources(), securityLevel,
+                                false /* URL bar never focused */));
 
-        int id = LocationBarLayout.getSecurityIconResource(
-                securityLevel, isSmallDevice, isOfflinePage);
-        boolean showSecurityButton = true;
-        if (id == 0) {
+        if (!chipState.showSecurityIcon) {
             // Hide the button if we don't have an actual icon to display.
-            showSecurityButton = false;
             mSecurityButton.setImageDrawable(null);
         } else {
             // ImageView#setImageResource is no-op if given resource is the current one.
-            mSecurityButton.setImageResource(id);
-            mSecurityButton.setTint(
-                    LocationBarLayout.getColorStateList(securityLevel, getToolbarDataProvider(),
-                            getResources(), false /* omnibox is not opaque */));
+            mSecurityButton.setImageResource(chipState.securityIconResourceId);
+            mSecurityButton.setTint(ApiCompatibilityUtils.getColorStateList(
+                    getResources(), chipState.securityIconColorStateListId));
         }
 
-        mShowsOfflinePage = isOfflinePage;
-
-        if (showSecurityButton) {
+        if (chipState.showSecurityIcon) {
             mAnimDelegate.showSecurityButton();
         } else {
             mAnimDelegate.hideSecurityButton();
