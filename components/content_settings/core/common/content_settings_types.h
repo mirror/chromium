@@ -71,6 +71,10 @@ enum ContentSettingsType {
   // specific origin.
   CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT,
 
+  // Website setting which stores the client hints that should be sent to the
+  // specific origin.
+  CONTENT_SETTINGS_TYPE_CLIENT_HINTS,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 

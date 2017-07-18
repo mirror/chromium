@@ -41,6 +41,9 @@ bool SupportsResourceIdentifiers(ContentSettingsType content_type) {
 }
 
 bool IsValueAllowedForType(const base::Value* value, ContentSettingsType type) {
+  if (type == CONTENT_SETTINGS_TYPE_CLIENT_HINTS)
+    return value->GetType() == base::Value::Type::LIST;
+
   const content_settings::ContentSettingsInfo* info =
       content_settings::ContentSettingsRegistry::GetInstance()->Get(type);
   if (info) {
