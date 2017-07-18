@@ -127,8 +127,8 @@ class URLDataManagerBackend : public base::SupportsUserData::Data {
 };
 
 // Creates protocol handler for chrome-devtools://.
-net::URLRequestJobFactory::ProtocolHandler* CreateDevToolsProtocolHandler(
-    ResourceContext* resource_context);
+std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateDevToolsProtocolHandler(ResourceContext* resource_context);
 
 }  // namespace content
 

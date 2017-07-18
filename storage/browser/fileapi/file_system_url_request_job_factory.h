@@ -18,9 +18,9 @@ class FileSystemContext;
 // |context|'s lifetime should exceed the lifetime of the ProtocolHandler.
 // Currently, this is only used by ProfileIOData which owns |context| and the
 // ProtocolHandler.
-STORAGE_EXPORT net::URLRequestJobFactory::ProtocolHandler*
-    CreateFileSystemProtocolHandler(const std::string& storage_domain,
-                                    FileSystemContext* context);
+STORAGE_EXPORT std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateFileSystemProtocolHandler(const std::string& storage_domain,
+                                FileSystemContext* context);
 
 }  // namespace storage
 

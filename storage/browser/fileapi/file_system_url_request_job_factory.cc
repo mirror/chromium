@@ -6,6 +6,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "net/url_request/url_request.h"
 #include "storage/browser/fileapi/file_system_dir_url_request_job.h"
 #include "storage/browser/fileapi/file_system_url_request_job.h"
@@ -62,10 +63,11 @@ net::URLRequestJob* FileSystemProtocolHandler::MaybeCreateJob(
 
 }  // anonymous namespace
 
-net::URLRequestJobFactory::ProtocolHandler* CreateFileSystemProtocolHandler(
-    const std::string& storage_domain, FileSystemContext* context) {
+std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateFileSystemProtocolHandler(const std::string& storage_domain,
+                                FileSystemContext* context) {
   DCHECK(context);
-  return new FileSystemProtocolHandler(storage_domain, context);
+  return base::MakeUnique<FileSystemProtocolHandler>(storage_domain, context);
 }
 
 }  // namespace storage
