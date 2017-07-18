@@ -545,7 +545,7 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript() {
+void ServiceWorkerGlobalScopeProxy::DidLoadScript() {
   Client().WorkerScriptLoaded();
 }
 

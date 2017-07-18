@@ -454,14 +454,15 @@ void WorkerThread::InitializeOnWorkerThread(
     // TODO(shimazu): Add a post task to the main thread for setting
     // ContentSecurityPolicy and ReferrerPolicy.
 
-    // GetScriptData blocks until the script is received from the browser.
+    // GetScriptData blocks the thread until the script is received from the
+    // browser.
     auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);
     DCHECK(script_data);
     DCHECK(source_code.IsEmpty());
     DCHECK(!cached_meta_data);
     source_code = std::move(script_data->source_text);
     cached_meta_data = std::move(script_data->meta_data);
-    worker_reporting_proxy_.DidLoadInstalledScript();
+    worker_reporting_proxy_.DidLoadScript();
   } else {
     source_code = std::move(given_source_code);
     cached_meta_data = std::move(given_cached_meta_data);
