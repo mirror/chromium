@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108ca776_5a7c9f2d",
+        "filename": "base/metrics/histogram_macros_internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T10:26:32Z",
+      "side": 1,
+      "message": "Let\u0027s save std::decay\u003cdecltype(sample)\u003e::type as a type alias to reduce the amount of repetition here.",
+      "range": {
+        "startLine": 143,
+        "startChar": 22,
+        "endLine": 143,
+        "endChar": 58
+      },
+      "revId": "bcad72d1d389a955590dd34a98ab3e4f2c66a71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
