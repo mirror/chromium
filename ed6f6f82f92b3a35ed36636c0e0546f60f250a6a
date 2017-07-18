@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a2bdc45a_532e8b00",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-18T22:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33135c9c_f8f2421b",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72c49a1a_3f254453",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
         "patchSetId": 2
@@ -76,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "fed66581_e5477acb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-18T22:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c49a1a_3f254453",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08ec4e58_e6c7d29f",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
         "patchSetId": 2
@@ -90,6 +132,24 @@
       "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bef036e_ea9b8908",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-18T22:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ec4e58_e6c7d29f",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
