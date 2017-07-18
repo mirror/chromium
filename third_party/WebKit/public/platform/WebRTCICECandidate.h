@@ -57,7 +57,6 @@ class WebRTCICECandidate {
                                         const WebString& sdp_mid,
                                         unsigned short sdp_m_line_index);
   BLINK_PLATFORM_EXPORT void Reset();
-  bool IsNull() const { return private_.IsNull(); }
 
   BLINK_PLATFORM_EXPORT WebString Candidate() const;
   BLINK_PLATFORM_EXPORT WebString SdpMid() const;

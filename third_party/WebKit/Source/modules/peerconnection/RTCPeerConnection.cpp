@@ -1412,14 +1412,9 @@ void RTCPeerConnection::DidGenerateICECandidate(
     const WebRTCICECandidate& web_candidate) {
   DCHECK(!closed_);
   DCHECK(GetExecutionContext()->IsContextThread());
-  if (web_candidate.IsNull()) {
-    ScheduleDispatchEvent(
-        RTCPeerConnectionIceEvent::Create(false, false, nullptr));
-  } else {
-    RTCIceCandidate* ice_candidate = RTCIceCandidate::Create(web_candidate);
-    ScheduleDispatchEvent(
-        RTCPeerConnectionIceEvent::Create(false, false, ice_candidate));
-  }
+  RTCIceCandidate* ice_candidate = RTCIceCandidate::Create(web_candidate);
+  ScheduleDispatchEvent(
+      RTCPeerConnectionIceEvent::Create(false, false, ice_candidate));
 }
 
 void RTCPeerConnection::DidChangeSignalingState(SignalingState new_state) {
@@ -1542,8 +1537,7 @@ void RTCPeerConnection::ContextDestroyed(ExecutionContext*) {
 }
 
 void RTCPeerConnection::ChangeSignalingState(SignalingState signaling_state) {
-  if (signaling_state_ != kSignalingStateClosed &&
-      signaling_state_ != signaling_state) {
+  if (signaling_state_ != kSignalingStateClosed) {
     signaling_state_ = signaling_state;
     ScheduleDispatchEvent(Event::Create(EventTypeNames::signalingstatechange));
   }
@@ -1551,11 +1545,37 @@ void RTCPeerConnection::ChangeSignalingState(SignalingState signaling_state) {
 
 void RTCPeerConnection::ChangeIceGatheringState(
     ICEGatheringState ice_gathering_state) {
+  if (ice_connection_state_ != kICEConnectionStateClosed) {
+    ScheduleDispatchEvent(
+        Event::Create(EventTypeNames::icegatheringstatechange),
+        WTF::Bind(&RTCPeerConnection::SetIceGatheringState,
+                  WrapPersistent(this), ice_gathering_state));
+    if (ice_gathering_state == kICEGatheringStateComplete) {
+      // If ICE gathering is completed, generate a null ICE candidate, to
+      // signal end of candidates.
+      ScheduleDispatchEvent(
+          RTCPeerConnectionIceEvent::Create(false, false, nullptr));
+    }
+  }
+}
+
+bool RTCPeerConnection::SetIceGatheringState(
+    ICEGatheringState ice_gathering_state) {
   if (ice_connection_state_ != kICEConnectionStateClosed &&
       ice_gathering_state_ != ice_gathering_state) {
     ice_gathering_state_ = ice_gathering_state;
+    return true;
+  }
+  return false;
+}
+
+void RTCPeerConnection::ChangeIceConnectionState(
+    ICEConnectionState ice_connection_state) {
+  if (ice_connection_state_ != kICEConnectionStateClosed) {
     ScheduleDispatchEvent(
-        Event::Create(EventTypeNames::icegatheringstatechange));
+        Event::Create(EventTypeNames::iceconnectionstatechange),
+        WTF::Bind(&RTCPeerConnection::SetIceConnectionState,
+                  WrapPersistent(this), ice_connection_state));
   }
 }
 
@@ -1570,16 +1590,6 @@ bool RTCPeerConnection::SetIceConnectionState(
     return true;
   }
   return false;
-}
-
-void RTCPeerConnection::ChangeIceConnectionState(
-    ICEConnectionState ice_connection_state) {
-  if (ice_connection_state_ != kICEConnectionStateClosed) {
-    ScheduleDispatchEvent(
-        Event::Create(EventTypeNames::iceconnectionstatechange),
-        WTF::Bind(&RTCPeerConnection::SetIceConnectionState,
-                  WrapPersistent(this), ice_connection_state));
-  }
 }
 
 void RTCPeerConnection::CloseInternal() {
