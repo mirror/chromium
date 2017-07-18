@@ -486,6 +486,7 @@ blink_core_sources("css") {
     "properties/CSSPropertyAPIWebkitFontSizeDelta.cpp",
     "properties/CSSPropertyAPIWebkitHighlight.cpp",
     "properties/CSSPropertyAPIWebkitLineClamp.cpp",
+    "properties/CSSPropertyAPIWebkitLocale.cpp",
     "properties/CSSPropertyAPIWebkitLogicalWidthOrHeight.cpp",
     "properties/CSSPropertyAPIWebkitMargin.cpp",
     "properties/CSSPropertyAPIWebkitMaskRepeat.cpp",
