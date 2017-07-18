@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85760ec0_41c143e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-18T19:38:44Z",
+      "side": 1,
+      "message": "Bug number?",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "640755e43b484ecef3a2bf9afed7db51983b9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb0158a_f68c974f",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-18T19:38:44Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 934,
+        "startChar": 25,
+        "endLine": 934,
+        "endChar": 26
+      },
+      "revId": "640755e43b484ecef3a2bf9afed7db51983b9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
