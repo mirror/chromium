@@ -834,7 +834,7 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
     profiles.push_back(profile);
 
     personal_data_manager_->SetProfiles(&profiles);
-    base::RunLoop().Run();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
 
     std::vector<autofill::CreditCard> cards;
     autofill::CreditCard card;
@@ -849,7 +849,7 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
     cards.push_back(card);
 
     personal_data_manager_->SetCreditCards(&cards);
-    base::RunLoop().Run();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
   }
 
  private:
@@ -991,6 +991,7 @@ class ChromeBrowsingDataRemoverDelegateTest : public testing::Test {
     remover_->RemoveAndReply(
         delete_begin, delete_end, remove_mask, origin_type_mask,
         &completion_observer);
+    base::TaskScheduler::GetInstance()->FlushForTesting();
     completion_observer.BlockUntilCompletion();
   }
 
@@ -1005,6 +1006,7 @@ class ChromeBrowsingDataRemoverDelegateTest : public testing::Test {
         delete_begin, delete_end, remove_mask,
         content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
         std::move(filter_builder), &completion_observer);
+    base::TaskScheduler::GetInstance()->FlushForTesting();
     completion_observer.BlockUntilCompletion();
   }
 
