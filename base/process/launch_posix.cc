@@ -775,6 +775,45 @@ pid_t ForkWithFlags(unsigned long flags, pid_t* ptid, pid_t* ctid) {
     return CloneAndLongjmpInChild(flags, ptid, ctid, &env);
   }
 
+#if defined(OS_LINUX)
+  // Glibc 2.24 and later does not reset the global thread descriptor
+  // on clone(), but pthread depends on it being up-to-date.  This is
+  // a workaround to force glibc to update its state.
+  // TODO(jorgelo): Find a permanent solution.
+
+  // The first few fields of glibc's thread descriptor structure.  The
+  // layout of this structure is unofficially maintained.
+  struct pthread {
+    void* padding_1[24];
+    struct {
+      void* padding_1;
+      void* padding_2;
+    } padding_2;
+    pid_t tid;
+    pid_t pid;
+  };
+  pthread* self = reinterpret_cast<pthread*>(pthread_self());
+  if (self->tid != syscall(__NR_gettid) || self->pid != syscall(__NR_getpid)) {
+    // Unfortunately, directly setting self->tid and self->pid here is
+    // insufficient because a whole bunch of other state needs to get
+    // reset too.  The only way to get glibc to reset the state is
+    // with an otherwise pointless fork().
+    pid_t pid = fork();
+    switch (pid) {
+      case -1:  // Error.
+        break;
+      case 0:  // Child.
+        _exit(0);
+      default:  // Parent.
+        pid_t r = HANDLE_EINTR(waitpid(pid, nullptr, 0));
+        if (r != pid) {
+          DPLOG(ERROR) << "While waiting for " << pid
+                       << " to terminate, we got the following result: " << r;
+        }
+    }
+  }
+#endif  // defined(OS_LINUX)
+
   return 0;
 }
 #endif  // defined(OS_LINUX) || defined(OS_NACL_NONSFI)
