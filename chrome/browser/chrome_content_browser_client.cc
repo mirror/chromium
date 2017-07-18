@@ -2693,20 +2693,28 @@ void ChromeContentBrowserClient::GetAdditionalFileSystemBackends(
     std::vector<std::unique_ptr<storage::FileSystemBackend>>*
         additional_backends) {
 #if defined(OS_CHROMEOS)
-  storage::ExternalMountPoints* external_mount_points =
-      content::BrowserContext::GetMountPoints(browser_context);
-  DCHECK(external_mount_points);
-  auto backend = base::MakeUnique<chromeos::FileSystemBackend>(
-      base::MakeUnique<drive::FileSystemBackendDelegate>(),
-      base::MakeUnique<chromeos::file_system_provider::BackendDelegate>(),
-      base::MakeUnique<chromeos::MTPFileSystemBackendDelegate>(
-          storage_partition_path),
-      base::MakeUnique<arc::ArcContentFileSystemBackendDelegate>(),
-      base::MakeUnique<arc::ArcDocumentsProviderBackendDelegate>(),
-      external_mount_points, storage::ExternalMountPoints::GetSystemInstance());
-  backend->AddSystemMountPoints();
-  DCHECK(backend->CanHandleType(storage::kFileSystemTypeExternal));
-  additional_backends->push_back(std::move(backend));
+  // TODO(hidehiko): Manage lifetime of BrowserContext in the file system
+  // in better way.
+  if (arc::IsArcAllowedForProfile(
+          Profile::FromBrowserContext(browser_context))) {
+    storage::ExternalMountPoints* external_mount_points =
+        content::BrowserContext::GetMountPoints(browser_context);
+    DCHECK(external_mount_points);
+    auto backend = base::MakeUnique<chromeos::FileSystemBackend>(
+        base::MakeUnique<drive::FileSystemBackendDelegate>(),
+        base::MakeUnique<chromeos::file_system_provider::BackendDelegate>(),
+        base::MakeUnique<chromeos::MTPFileSystemBackendDelegate>(
+            storage_partition_path),
+        base::MakeUnique<arc::ArcContentFileSystemBackendDelegate>(
+            browser_context),
+        base::MakeUnique<arc::ArcDocumentsProviderBackendDelegate>(
+            browser_context),
+        external_mount_points,
+        storage::ExternalMountPoints::GetSystemInstance());
+    backend->AddSystemMountPoints();
+    DCHECK(backend->CanHandleType(storage::kFileSystemTypeExternal));
+    additional_backends->push_back(std::move(backend));
+  }
 #endif
 
   for (size_t i = 0; i < extra_parts_.size(); ++i) {

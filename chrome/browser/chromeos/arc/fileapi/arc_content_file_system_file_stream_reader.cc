@@ -38,9 +38,13 @@ int SeekFile(base::File* file, size_t offset) {
 }  // namespace
 
 ArcContentFileSystemFileStreamReader::ArcContentFileSystemFileStreamReader(
+    content::BrowserContext* context,
     const GURL& arc_url,
     int64_t offset)
-    : arc_url_(arc_url), offset_(offset), weak_ptr_factory_(this) {
+    : context_(context),
+      arc_url_(arc_url),
+      offset_(offset),
+      weak_ptr_factory_(this) {
   task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
 }
@@ -63,7 +67,7 @@ int ArcContentFileSystemFileStreamReader::Read(
     return net::ERR_IO_PENDING;
   }
   file_system_operation_runner_util::OpenFileToReadOnIOThread(
-      arc_url_,
+      context_, arc_url_,
       base::Bind(&ArcContentFileSystemFileStreamReader::OnOpenFile,
                  weak_ptr_factory_.GetWeakPtr(), make_scoped_refptr(buffer),
                  buffer_length, callback));
@@ -74,8 +78,9 @@ int64_t ArcContentFileSystemFileStreamReader::GetLength(
     const net::Int64CompletionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   file_system_operation_runner_util::GetFileSizeOnIOThread(
-      arc_url_, base::Bind(&ArcContentFileSystemFileStreamReader::OnGetFileSize,
-                           weak_ptr_factory_.GetWeakPtr(), callback));
+      context_, arc_url_,
+      base::Bind(&ArcContentFileSystemFileStreamReader::OnGetFileSize,
+                 weak_ptr_factory_.GetWeakPtr(), callback));
   return net::ERR_IO_PENDING;
 }
 

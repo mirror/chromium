@@ -26,10 +26,11 @@ constexpr DocumentsProviderSpec kDocumentsProviderWhitelist[] = {
 
 }  // namespace
 
-ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap() {
+ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(
+    content::BrowserContext* context) {
   for (auto spec : kDocumentsProviderWhitelist) {
     map_[Key(spec.authority, spec.root_document_id)] =
-        base::MakeUnique<ArcDocumentsProviderRoot>(spec.authority,
+        base::MakeUnique<ArcDocumentsProviderRoot>(context, spec.authority,
                                                    spec.root_document_id);
   }
 }

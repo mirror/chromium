@@ -27,11 +27,11 @@ void PostToIOThread(const base::Callback<void(T)>& callback, T result) {
       base::BindOnce(callback, base::Passed(std::move(result))));
 }
 
-void GetFileSizeOnUIThread(const GURL& url,
+void GetFileSizeOnUIThread(content::BrowserContext* context,
+                           const GURL& url,
                            const GetFileSizeCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -41,11 +41,11 @@ void GetFileSizeOnUIThread(const GURL& url,
   runner->GetFileSize(url, callback);
 }
 
-void OpenFileToReadOnUIThread(const GURL& url,
+void OpenFileToReadOnUIThread(content::BrowserContext* context,
+                              const GURL& url,
                               const OpenFileToReadCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -55,12 +55,12 @@ void OpenFileToReadOnUIThread(const GURL& url,
   runner->OpenFileToRead(url, callback);
 }
 
-void GetDocumentOnUIThread(const std::string& authority,
+void GetDocumentOnUIThread(content::BrowserContext* context,
+                           const std::string& authority,
                            const std::string& document_id,
                            const GetDocumentCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -70,12 +70,12 @@ void GetDocumentOnUIThread(const std::string& authority,
   runner->GetDocument(authority, document_id, callback);
 }
 
-void GetChildDocumentsOnUIThread(const std::string& authority,
+void GetChildDocumentsOnUIThread(content::BrowserContext* context,
+                                 const std::string& authority,
                                  const std::string& parent_document_id,
                                  const GetChildDocumentsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -85,13 +85,13 @@ void GetChildDocumentsOnUIThread(const std::string& authority,
   runner->GetChildDocuments(authority, parent_document_id, callback);
 }
 
-void AddWatcherOnUIThread(const std::string& authority,
+void AddWatcherOnUIThread(content::BrowserContext* context,
+                          const std::string& authority,
                           const std::string& document_id,
                           const WatcherCallback& watcher_callback,
                           const AddWatcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -101,11 +101,11 @@ void AddWatcherOnUIThread(const std::string& authority,
   runner->AddWatcher(authority, document_id, watcher_callback, callback);
 }
 
-void RemoveWatcherOnUIThread(int64_t watcher_id,
+void RemoveWatcherOnUIThread(content::BrowserContext* context,
+                             int64_t watcher_id,
                              const RemoveWatcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -115,10 +115,10 @@ void RemoveWatcherOnUIThread(int64_t watcher_id,
   runner->RemoveWatcher(watcher_id, callback);
 }
 
-void AddObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
+void AddObserverOnUIThread(content::BrowserContext* context,
+                           scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -127,10 +127,10 @@ void AddObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
   runner->AddObserver(observer.get());
 }
 
-void RemoveObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
+void RemoveObserverOnUIThread(content::BrowserContext* context,
+                              scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner =
-      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
+  auto* runner = ArcFileSystemOperationRunner::GetForBrowserContext(context);
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -167,50 +167,57 @@ void ObserverIOThreadWrapper::OnWatchersClearedOnIOThread() {
   underlying_observer_->OnWatchersCleared();
 }
 
-void GetFileSizeOnIOThread(const GURL& url,
+void GetFileSizeOnIOThread(content::BrowserContext* context,
+                           const GURL& url,
                            const GetFileSizeCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&GetFileSizeOnUIThread, url,
+      base::BindOnce(&GetFileSizeOnUIThread, base::Unretained(context), url,
                      base::Bind(&PostToIOThread<int64_t>, callback)));
 }
 
-void OpenFileToReadOnIOThread(const GURL& url,
+void OpenFileToReadOnIOThread(content::BrowserContext* context,
+                              const GURL& url,
                               const OpenFileToReadCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
-          &OpenFileToReadOnUIThread, url,
+          &OpenFileToReadOnUIThread, base::Unretained(context), url,
           base::Bind(&PostToIOThread<mojo::ScopedHandle>, callback)));
 }
 
-void GetDocumentOnIOThread(const std::string& authority,
+void GetDocumentOnIOThread(content::BrowserContext* context,
+                           const std::string& authority,
                            const std::string& document_id,
                            const GetDocumentCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
-          &GetDocumentOnUIThread, authority, document_id,
+          &GetDocumentOnUIThread, base::Unretained(context), authority,
+          document_id,
           base::Bind(&PostToIOThread<mojom::DocumentPtr>, callback)));
 }
 
-void GetChildDocumentsOnIOThread(const std::string& authority,
+void GetChildDocumentsOnIOThread(content::BrowserContext* context,
+                                 const std::string& authority,
                                  const std::string& parent_document_id,
                                  const GetChildDocumentsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
-          &GetChildDocumentsOnUIThread, authority, parent_document_id,
+          &GetChildDocumentsOnUIThread, base::Unretained(context), authority,
+          parent_document_id,
           base::Bind(
               &PostToIOThread<base::Optional<std::vector<mojom::DocumentPtr>>>,
               callback)));
 }
 
-void AddWatcherOnIOThread(const std::string& authority,
+void AddWatcherOnIOThread(content::BrowserContext* context,
+                          const std::string& authority,
                           const std::string& document_id,
                           const WatcherCallback& watcher_callback,
                           const AddWatcherCallback& callback) {
@@ -218,34 +225,40 @@ void AddWatcherOnIOThread(const std::string& authority,
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
-          &AddWatcherOnUIThread, authority, document_id,
+          &AddWatcherOnUIThread, base::Unretained(context), authority,
+          document_id,
           base::Bind(&PostToIOThread<ArcFileSystemOperationRunner::ChangeType>,
                      watcher_callback),
           base::Bind(&PostToIOThread<int64_t>, callback)));
 }
 
-void RemoveWatcherOnIOThread(int64_t watcher_id,
+void RemoveWatcherOnIOThread(content::BrowserContext* context,
+                             int64_t watcher_id,
                              const RemoveWatcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&RemoveWatcherOnUIThread, watcher_id,
-                     base::Bind(&PostToIOThread<bool>, callback)));
+      base::BindOnce(&RemoveWatcherOnUIThread, base::Unretained(context),
+                     watcher_id, base::Bind(&PostToIOThread<bool>, callback)));
 }
 
-void AddObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
+void AddObserverOnIOThread(content::BrowserContext* context,
+                           scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&AddObserverOnUIThread, observer));
+                          base::BindOnce(&AddObserverOnUIThread,
+                                         base::Unretained(context), observer));
 }
 
-void RemoveObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
+void RemoveObserverOnIOThread(content::BrowserContext* context,
+                              scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Disable the observer now to guarantee the underlying observer is never
   // called after this function returns.
   observer->Disable();
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&RemoveObserverOnUIThread, observer));
+                          base::BindOnce(&RemoveObserverOnUIThread,
+                                         base::Unretained(context), observer));
 }
 
 }  // namespace file_system_operation_runner_util
