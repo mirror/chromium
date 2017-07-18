@@ -194,6 +194,30 @@
       "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0caa7f_793ef962",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-18T19:08:15Z",
+      "side": 1,
+      "message": "Nevermind, as @csharp pointed out, the style guide says to just let it crash if it\u0027s not a security vulnerability.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED\n\nNow just a DCHECK",
+      "parentUuid": "89a36f41_225c4102",
+      "range": {
+        "startLine": 302,
+        "startChar": 18,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
