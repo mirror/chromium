@@ -29,6 +29,46 @@ FrameInfo::FrameInfo(const std::string& parent_frame_id,
       frame_id(frame_id),
       chromedriver_frame_id(chromedriver_frame_id) {}
 
+ActionObject::ActionObject(const std::string& id,
+                           const std::string& type,
+                           const std::string& subtype)
+    : id(id), type(type), subtype(subtype) {}
+
+InputSource::InputSource(const std::string& input_id,
+                         const std::string& source_type)
+    : input_id(input_id), source_type(source_type), pointer_type("mouse") {}
+
+InputSource::InputSource() {}
+
+KeyInputState::KeyInputState(std::set<std::string> pressed,
+                             bool alt,
+                             bool shift,
+                             bool ctrl,
+                             bool meta)
+    : pressed(pressed), alt(alt), shift(shift), ctrl(ctrl), meta(meta) {}
+
+KeyInputState::KeyInputState()
+    : pressed(std::set<std::string>()),
+      alt(false),
+      shift(false),
+      ctrl(false),
+      meta(false) {}
+
+KeyInputState::~KeyInputState() {}
+
+PointerInputState::PointerInputState(std::string subtype,
+                                     std::set<unsigned int> pressed,
+                                     unsigned int x,
+                                     unsigned int y)
+    : subtype(subtype), pressed(pressed), x(x), y(y) {}
+
+PointerInputState::PointerInputState()
+    : subtype("subtype"), pressed(std::set<unsigned int>()), x(0), y(0) {}
+
+PointerInputState::~PointerInputState() {}
+
+// KerInputState::KeyInputState() :
+
 const base::TimeDelta Session::kDefaultPageLoadTimeout =
     base::TimeDelta::FromMinutes(5);
 
