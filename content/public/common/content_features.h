@@ -104,6 +104,7 @@ CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
 CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;
 CONTENT_EXPORT extern const base::Feature kWebNfc;
+CONTENT_EXPORT extern const base::Feature kDisablePreferCompositingToLCDText;
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_WIN)
