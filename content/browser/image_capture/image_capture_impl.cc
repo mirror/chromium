@@ -40,11 +40,6 @@ void RunFailedGetPhotoStateCallback(
   std::move(cb).Run(std::move(empty_capabilities));
 }
 
-void RunFailedSetOptionsCallback(ImageCaptureImpl::SetOptionsCallback cb) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  std::move(cb).Run(false);
-}
-
 void RunFailedTakePhotoCallback(ImageCaptureImpl::TakePhotoCallback cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   std::move(cb).Run(media::mojom::Blob::New());
@@ -141,8 +136,7 @@ void ImageCaptureImpl::SetOptions(const std::string& source_id,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   media::ScopedResultCallback<SetOptionsCallback> scoped_callback(
-      media::BindToCurrentLoop(std::move(callback)),
-      media::BindToCurrentLoop(base::Bind(&RunFailedSetOptionsCallback)));
+      media::BindToCurrentLoop(std::move(callback)), media::DefaultArgs(false));
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
