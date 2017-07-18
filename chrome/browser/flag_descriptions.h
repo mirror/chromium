@@ -1296,6 +1296,9 @@ extern const char kEnableEncryptionMigrationDescription[];
 extern const char kEnableImeMenuName[];
 extern const char kEnableImeMenuDescription[];
 
+extern const char kEnableLockScreenAppsName[];
+extern const char kEnableLockScreenAppsDescription[];
+
 extern const char kEnableTouchSupportForScreenMagnifierName[];
 extern const char kEnableTouchSupportForScreenMagnifierDescription[];
 
@@ -1415,6 +1418,9 @@ extern const char kVoiceInputDescription[];
 
 extern const char kWakeOnPacketsName[];
 extern const char kWakeOnPacketsDescription[];
+
+extern const char kWhitelistLockScreenExtensionsPermissionName[];
+extern const char kWhitelistLockScreenExtensionsPermissionDescription[];
 
 #endif  // #if defined(OS_CHROMEOS)
 

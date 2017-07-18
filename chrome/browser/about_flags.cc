@@ -3191,6 +3191,17 @@ const FeatureEntry kFeatureEntries[] = {
      kOsDesktop,
      FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnNavigatingAway)},
 
+#if defined(OS_CHROMEOS)
+    {"enable-lock-screen-apps", flag_descriptions::kEnableLockScreenAppsName,
+     flag_descriptions::kEnableLockScreenAppsDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableLockScreenApps)},
+
+    {"whitelist-lock-screen-permission",
+     flag_descriptions::kWhitelistLockScreenExtensionsPermissionName,
+     flag_descriptions::kWhitelistLockScreenExtensionsPermissionDescription,
+     kOsCrOS, SINGLE_VALUE_TYPE("enable-whitelist-lock-screen-permission")},
+#endif
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
