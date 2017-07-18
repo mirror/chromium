@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d09744_97f1b787",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:03:12Z",
+      "side": 1,
+      "message": "Optional: As a safety, might be useful to DCHECK(!g_instance).",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "fccab25200a8ceeb3fa0630bbe65d83bea6c329d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8168fba3_06bfd7f1",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:03:12Z",
+      "side": 1,
+      "message": "Having looked at the test, this doesn\u0027t appear strictly necessary for the test to work.\nIf chrisha@ is fine with this, I\u0027m fine with this too.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 57
+      },
+      "revId": "fccab25200a8ceeb3fa0630bbe65d83bea6c329d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
