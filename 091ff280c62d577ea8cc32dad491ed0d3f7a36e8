@@ -22,6 +22,30 @@
       "revId": "091ff280c62d577ea8cc32dad491ed0d3f7a36e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99bdf40_b7a1c2c5",
+        "filename": "tools/perf/run_benchmark",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-18T23:19:53Z",
+      "side": 1,
+      "message": "From what I see online, this is fine (we also do it elsewhere in Chromium).\n\nIn the logging source, there is a removeHandler function (to remove a specific handler) that literally just removes it from the list (does call close or anything special).\nhttps://github.com/python/cpython/blob/3.6/Lib/logging/__init__.py#L1472\n\nThink this is good as is.",
+      "parentUuid": "5a5f0946_f6e58dff",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "091ff280c62d577ea8cc32dad491ed0d3f7a36e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
