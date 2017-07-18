@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b697dee7_9d76f01c",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-18T22:15:19Z",
+      "side": 1,
+      "message": "this one is really confusing, because RWHI is really confusing.. what\u0027s the difference between GotFocus and Focus? Why is there a Blur to match Focus, but not a LostFocus to match GotFocus? Any owners here know?",
+      "range": {
+        "startLine": 742,
+        "startChar": 38,
+        "endLine": 742,
+        "endChar": 46
+      },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c67d97_07100b64",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2904,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-18T22:15:19Z",
+      "side": 1,
+      "message": "comment why Unretained is safe here",
+      "range": {
+        "startLine": 2904,
+        "startChar": 55,
+        "endLine": 2904,
+        "endChar": 65
+      },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac99aa6_d7636a37",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-18T22:15:19Z",
+      "side": 1,
+      "message": "what about LostFocus?",
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
