@@ -5,6 +5,11 @@
 #ifndef CHROME_BROWSER_UI_COCOA_BROWSER_DIALOGS_VIEWS_MAC_H_
 #define CHROME_BROWSER_UI_COCOA_BROWSER_DIALOGS_VIEWS_MAC_H_
 
+// Note this intentionally allows consumers of browser_dialog_views_mac to also
+// use methods in bubble_anchor_util.h to assist in dialog anchoring without
+// introducing their own dependency on a header in c/b/ui/views.
+
+#include "chrome/browser/ui/views/bubble_anchor_util.h"
 #include "ui/gfx/native_widget_types.h"
 
 class Browser;
@@ -86,6 +91,8 @@ class ContentSettingBubbleViewsBridge {
 // Shows the import lock dialog.
 void ShowImportLockDialogViews(gfx::NativeWindow parent,
                                const base::Callback<void(bool)>& callback);
+
+void ShowFirstRunBubbleViews(Browser* browser);
 
 }  // namespace chrome
 

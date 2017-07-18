@@ -8,11 +8,16 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
+#include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 #include "components/search_engines/util.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
+#include "ui/gfx/mac/coordinate_conversion.h"
 
 @interface FirstRunKeyResponder : NSResponder
 @end
@@ -124,3 +129,19 @@
 }
 
 @end  // FirstRunBubbleController
+
+namespace chrome {
+
+void ShowFirstRunBubble(Browser* browser) {
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial())
+    return chrome::ShowFirstRunBubbleViews(browser);
+
+  NSPoint anchor = gfx::ScreenPointToNSPoint(
+      bubble_anchor_util::GetPageInfoAnchorPoint(browser));
+  [FirstRunBubbleController showAtPoint:anchor
+                           parentWindow:browser->window()->GetNativeWindow()
+                                browser:browser
+                                profile:browser->profile()];
+}
+
+}  // namespace chrome

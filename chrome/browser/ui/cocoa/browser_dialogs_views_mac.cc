@@ -7,14 +7,10 @@
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
-#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
 #include "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
-#import "chrome/browser/ui/cocoa/first_run_bubble_controller.h"
-#include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
-#include "chrome/browser/ui/views/bubble_anchor_util.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
 #include "chrome/browser/ui/views/first_run_bubble.h"
 #include "chrome/browser/ui/views/importer/import_lock_dialog_view.h"
@@ -22,8 +18,6 @@
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
 #include "chrome/browser/ui/views/task_manager_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
-#include "ui/base/material_design/material_design_controller.h"
-#include "ui/gfx/mac/coordinate_conversion.h"
 
 // This file provides definitions of desktop browser dialog-creation methods for
 // Mac where a Cocoa browser is using Views dialogs. I.e. it is included in the
@@ -133,15 +127,8 @@ void ShowImportLockDialogViews(gfx::NativeWindow parent,
   return ImportLockDialogView::Show(parent, callback);
 }
 
-void ShowFirstRunBubble(Browser* browser) {
-  if (ui::MaterialDesignController::IsSecondaryUiMaterial())
-    return first_run::ShowFirstRunBubbleViews(browser);
-  NSPoint anchor = gfx::ScreenPointToNSPoint(
-      bubble_anchor_util::GetPageInfoAnchorPoint(browser));
-  [FirstRunBubbleController showAtPoint:anchor
-                           parentWindow:browser->window()->GetNativeWindow()
-                                browser:browser
-                                profile:browser->profile()];
+void ShowFirstRunBubbleViews(Browser* browser) {
+  return first_run::ShowFirstRunBubbleViews(browser);
 }
 
 }  // namespace chrome
