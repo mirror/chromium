@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "510f58c6_ea75a35d",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-18T13:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3ec6091_d3443c22",
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c660120f_46ee5384",
         "filename": "content/renderer/media/media_stream_dispatcher.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f5a9a639_1647b7bc",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-18T13:26:07Z",
+      "side": 1,
+      "message": "Done. This is a temporary change. The idea was to use |dispatcher_host_| for unittests as well when we remove MediaStreamDispatcherHost as a subclass of BrowserMessageFilter.",
+      "parentUuid": "c660120f_46ee5384",
+      "range": {
+        "startLine": 354,
+        "startChar": 6,
+        "endLine": 354,
+        "endChar": 34
+      },
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8f0ea5_1b43fe80",
         "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-18T02:15:00Z",
       "side": 1,
       "message": "Not your fault, but I wonder what\u0027s the purpose -if any- \nof this aliases :?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 64
+      },
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacfb3d9_751f6f1c",
+        "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-18T13:26:07Z",
+      "side": 1,
+      "message": "I think we can directly use these enum values instead.",
+      "parentUuid": "9d8f0ea5_1b43fe80",
       "range": {
         "startLine": 35,
         "startChar": 0,
