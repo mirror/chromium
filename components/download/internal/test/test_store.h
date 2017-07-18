@@ -15,7 +15,7 @@
 
 namespace download {
 
-struct Entry;
+class Entry;
 
 namespace test {
 

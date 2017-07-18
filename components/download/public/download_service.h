@@ -20,7 +20,7 @@
 namespace download {
 
 class Client;
-struct DownloadParams;
+class DownloadParams;
 struct SchedulingParams;
 class ServiceConfig;
 

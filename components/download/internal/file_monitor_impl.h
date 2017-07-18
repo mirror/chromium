@@ -23,7 +23,7 @@
 
 namespace download {
 
-struct Entry;
+class Entry;
 
 // An utility class containing various file cleanup methods.
 class FileMonitorImpl : public FileMonitor {

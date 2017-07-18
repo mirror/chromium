@@ -18,7 +18,7 @@
 namespace download {
 
 class Controller;
-struct DownloadParams;
+class DownloadParams;
 struct SchedulingParams;
 
 // The internal implementation of the DownloadService.

@@ -6,6 +6,7 @@
 
 #include "base/guid.h"
 #include "components/download/internal/test/download_params_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 namespace download {
 namespace test {

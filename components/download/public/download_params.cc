@@ -24,7 +24,15 @@ RequestParams::RequestParams() : method("GET") {}
 
 DownloadParams::DownloadParams() : client(DownloadClient::INVALID) {}
 
-DownloadParams::DownloadParams(const DownloadParams& other) = default;
+DownloadParams::DownloadParams(const DownloadParams& other)
+    : client(other.client),
+      guid(other.guid),
+      callback(other.callback),
+      scheduling_params(other.scheduling_params),
+      request_params(other.request_params) {
+  if (other.has_traffic_annotation())
+    set_traffic_annotation(other.get_traffic_annotation());
+}
 
 DownloadParams::~DownloadParams() = default;
 
