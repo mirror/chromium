@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5744e41b_96fcf921",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "This can always happen without it being an issue so logging something can be confusing and it would also allow a malicious client to spam the log files. Just removing this log is fine. Or add a TRACE_EVENT if it\u0027s really important for debugging purposes.",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64cde87_880d7e94",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "This does a second lookup of serial in this function (find() call above does the first). Let\u0027s avoid that.\n\nAlso, ui::KeyEvent is a relatively large object. Can we avoid making a copy?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e41d14_2dbb6e3d",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "What if the client stopped responding or is misbehaving? Do we need a timeout at which we process event as if it was not handled?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8b6667_f3e62d0a",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "The logic below seem to be duplicated in a few places. Can we move it to a helper function in anonymous namespace?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89337e69_a3b9ed2c",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "is \"event-\u003eStopPropagation()\" not needed anymore?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0255dceb_5a54845d",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "do we need a public function for this?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35f1a74_ea6fcb8d",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "Oh, this should have a \"_\" suffix. I guess I missed that in review of previous patch. Please s/are_keyboard_key_acks_needed/are_keyboard_key_acks_needed_/",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8596c3d_d469e1fc",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "nit: let\u0027s keep the observer list at the bottom",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4e6360_c6f1ab5f",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "We should not refer to wayland here in general exo code. How about simply:\n\n// Key state changes that are expected to be acknowledged.",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91544609_fec847f6",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "s/sent_key_events_/pending_key_acks_/ as the concept of sending an even doesn\u0027t exist at this level",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fe3831_27accd45",
+        "filename": "components/exo/keyboard_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be referring to wayland here. How about:\n\n// Called when keyboard key state changed. |pressed| is true when |key|\n// was pressed and false if it was released. Should return the serial\n// number that will be used by the client to acknowledge the change in\n// key state.",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f478cba_eb605374",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:05:50Z",
+      "side": 1,
+      "message": "nit: remove \u0027const\u0027 from local variable to be consistent other exo code",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
