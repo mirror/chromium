@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acfe312e_c0f9ac4a",
+        "filename": "components/safe_browsing/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-18T18:23:48Z",
+      "side": 1,
+      "message": "Is a .h missing here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d77577c_e7cae69a",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-18T18:23:48Z",
+      "side": 1,
+      "message": "We should be able to use MakeUnique instead",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c935a930_31d9a142",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-18T18:23:48Z",
+      "side": 1,
+      "message": "Can we call this url_checker_delegate_?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f123cf67_b9144550",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-18T18:23:48Z",
+      "side": 1,
+      "message": "can we call this url_checker_delegate_?",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59b5115_c7a454f3",
+        "filename": "components/safe_browsing/browser/url_checker_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-18T18:23:48Z",
+      "side": 1,
+      "message": "I think it would be useful to list out why we need this class and/or what is the\npurpose of this class.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "136182fdabb4d7caf9ebe652e8119809ebd74947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
