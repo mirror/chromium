@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d9f9d30f_fa805de3",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-18T08:04:51Z",
+      "side": 1,
+      "message": "Made them private since they were private in the original code.",
+      "parentUuid": "13272dcd_0f625c33",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "6a8ade0fcadfb20ca5256d5e16b854e2f223b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d812cb_002fc40c",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 4
