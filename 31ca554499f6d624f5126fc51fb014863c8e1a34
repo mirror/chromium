@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ffaff15_f456783b",
+        "filename": "cc/animation/transform_operation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-18T15:25:38Z",
+      "side": 1,
+      "message": "Can\u0027t recall, honestly. Might be worth refactoring in future.",
+      "parentUuid": "f4dc70bc_4a2ac8af",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1fe0e29_7effa2c9",
         "filename": "chrome/browser/vr/animation_player.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97f6c4de_c30b1b46",
+        "filename": "chrome/browser/vr/animation_player.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-18T15:25:38Z",
+      "side": 1,
+      "message": "I\u0027d meant to document both the getter and setter, but the comment was poorly worded. I\u0027ve updated.",
+      "parentUuid": "d1fe0e29_7effa2c9",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35accfec_8ff1a81e",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-18T15:15:50Z",
       "side": 1,
       "message": "optional nit: I prefer op.translate \u003d {x, y, z};",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818e821c_8833158a",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-18T15:25:38Z",
+      "side": 1,
+      "message": "Ooh, that\u0027s nice. Done.",
+      "parentUuid": "35accfec_8ff1a81e",
       "range": {
         "startLine": 105,
         "startChar": 2,
