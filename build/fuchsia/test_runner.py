@@ -234,8 +234,8 @@ def main():
   if int(os.environ.get('CHROME_HEADLESS', 0)) != 0:
     # When running on bots (without KVM) execution is quite slow. The test
     # launcher times out a subprocess after 45s which can be too short. Make the
-    # timeout twice as long.
-    child_args.append('--test-launcher-timeout=90000')
+    # timeout 10 times as long.
+    child_args.append('--test-launcher-timeout=450000')
 
   if args.single_process_tests:
     child_args.append('--single-process-tests')
