@@ -71,10 +71,10 @@ namespace blink {
 
 ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
     ServiceWorkerThread* thread,
-    std::unique_ptr<GlobalScopeCreationParams> creation_params) {
+    std::unique_ptr<GlobalScopeCreationParams> creation_params, double time_origin) {
   ServiceWorkerGlobalScope* context = new ServiceWorkerGlobalScope(
       creation_params->script_url, creation_params->user_agent, thread,
-      MonotonicallyIncreasingTime(),
+      time_origin,
       std::move(creation_params->starter_origin_privilege_data),
       creation_params->worker_clients);
 

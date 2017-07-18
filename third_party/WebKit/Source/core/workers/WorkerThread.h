@@ -196,6 +196,8 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // out of this class.
   virtual bool IsOwningBackingThread() const { return true; }
 
+  const double time_origin_;
+
  private:
   friend class WorkerThreadTest;
   FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
