@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8b1ec1_b145b444",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T17:57:22Z",
+      "side": 1,
+      "message": "this is primitive type: typedef unsigned int SkColor;\n\nPlease use just SkColor light_vibrant",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 40
+      },
+      "revId": "9d34f56572c364b2fec76bfe0ac8ecf107510579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
