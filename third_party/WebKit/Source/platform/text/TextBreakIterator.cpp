@@ -244,6 +244,16 @@ static inline bool ShouldBreakAfterBreakAll(ULineBreak last_line_break,
   return false;
 }
 
+static inline bool ShouldKeepAfterKeepAll(UChar last_ch,
+                                          UChar ch,
+                                          UChar next_ch) {
+  UChar pre_ch = U_MASK(u_charType(ch)) & U_GC_M_MASK ? last_ch : ch;
+  return U_MASK(u_charType(pre_ch)) & (U_GC_L_MASK | U_GC_N_MASK) &&
+         !WTF::Unicode::HasLineBreakingPropertyComplexContext(pre_ch) &&
+         U_MASK(u_charType(next_ch)) & (U_GC_L_MASK | U_GC_N_MASK) &&
+         !WTF::Unicode::HasLineBreakingPropertyComplexContext(next_ch);
+}
+
 inline bool NeedsLineBreakIterator(UChar ch) {
   return ch > kAsciiLineBreakTableLastChar && ch != kNoBreakSpaceCharacter;
 }
@@ -278,64 +288,11 @@ static inline int NextBreakablePosition(
         last_line_break = line_break;
     }
 
-    if (NeedsLineBreakIterator(ch) || NeedsLineBreakIterator(last_ch)) {
-      if (next_break < i) {
-        // Don't break if positioned at start of primary context and there is no
-        // prior context.
-        if (i || prior_context_length) {
-          TextBreakIterator* break_iterator =
-              lazy_break_iterator.Get(prior_context_length);
-          if (break_iterator) {
-            next_break =
-                break_iterator->following(i - 1 + prior_context_length);
-            if (next_break >= 0) {
-              next_break -= prior_context_length;
-            }
-          }
-        }
-      }
-      if (i == next_break && !IsBreakableSpace(last_ch))
-        return i;
-    }
-
-    last_last_ch = last_ch;
-    last_ch = ch;
-  }
-
-  return len;
-}
-
-static inline bool ShouldKeepAfter(UChar last_ch, UChar ch, UChar next_ch) {
-  UChar pre_ch = U_MASK(u_charType(ch)) & U_GC_M_MASK ? last_ch : ch;
-  return U_MASK(u_charType(pre_ch)) & (U_GC_L_MASK | U_GC_N_MASK) &&
-         !WTF::Unicode::HasLineBreakingPropertyComplexContext(pre_ch) &&
-         U_MASK(u_charType(next_ch)) & (U_GC_L_MASK | U_GC_N_MASK) &&
-         !WTF::Unicode::HasLineBreakingPropertyComplexContext(next_ch);
-}
-
-static inline int NextBreakablePositionKeepAllInternal(
-    const LazyLineBreakIterator& lazy_break_iterator,
-    const UChar* str,
-    unsigned length,
-    int pos) {
-  int len = static_cast<int>(length);
-  int next_break = -1;
-
-  UChar last_last_ch =
-      pos > 1 ? str[pos - 2]
-              : static_cast<UChar>(lazy_break_iterator.SecondToLastCharacter());
-  UChar last_ch = pos > 0
-                      ? str[pos - 1]
-                      : static_cast<UChar>(lazy_break_iterator.LastCharacter());
-  unsigned prior_context_length = lazy_break_iterator.PriorContextLength();
-  for (int i = pos; i < len; i++) {
-    UChar ch = str[i];
-
-    if (IsBreakableSpace(ch) || ShouldBreakAfter(last_last_ch, last_ch, ch))
-      return i;
-
-    if (!ShouldKeepAfter(last_last_ch, last_ch, ch) &&
-        (NeedsLineBreakIterator(ch) || NeedsLineBreakIterator(last_ch))) {
+    if (lineBreakType == LineBreakType::kKeepAll &&
+        ShouldKeepAfterKeepAll(last_last_ch, last_ch, ch)) {
+      // If 'keep-all', prevent breaks between East Asian characters.
+      // https://drafts.csswg.org/css-text-3/#valdef-word-break-keep-all
+    } else if (NeedsLineBreakIterator(ch) || NeedsLineBreakIterator(last_ch)) {
       if (next_break < i) {
         // Don't break if positioned at start of primary context and there is no
         // prior context.
@@ -383,11 +340,7 @@ int LazyLineBreakIterator::NextBreakablePositionBreakAll(int pos) const {
 }
 
 int LazyLineBreakIterator::NextBreakablePositionKeepAll(int pos) const {
-  if (string_.Is8Bit())
-    return NextBreakablePosition<LChar, LineBreakType::kNormal>(
-        *this, string_.Characters8(), string_.length(), pos);
-  return NextBreakablePositionKeepAllInternal(*this, string_.Characters16(),
-                                              string_.length(), pos);
+  return NextBreakablePosition<LineBreakType::kKeepAll>(*this, string_, pos);
 }
 
 int LazyLineBreakIterator::NextBreakablePositionBreakCharacter(int pos) const {
