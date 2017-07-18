@@ -77,4 +77,12 @@ TEST_F(BufferViewTest, Shrink) {
   EXPECT_DCHECK_DEATH(buffer.shrink(kLen));
 }
 
+TEST_F(BufferViewTest, Read) {
+  ConstBufferView buffer =
+      ConstBufferView::FromRange(std::begin(bytes_), std::end(bytes_));
+
+  EXPECT_EQ(0x76543210, buffer.Read<uint32_t>(0));
+  EXPECT_EQ(0xBA987654, buffer.Read<uint32_t>(2));
+}
+
 }  // namespace zucchini
