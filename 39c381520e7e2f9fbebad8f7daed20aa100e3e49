@@ -244,6 +244,24 @@
       "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038fe6c2_e9d7be73",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T15:25:35Z",
+      "side": 1,
+      "message": "I\u0027m sorry for missing this one, but I\u0027m not sure I understand. We call this method in TestNavigationThrottleInstaller::Continue",
+      "parentUuid": "69e820f3_162fa221",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
