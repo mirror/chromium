@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1b871a_972ac8ac",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-18T20:31:30Z",
+      "side": 1,
+      "message": "can you add a TODO for unittests (can do similar to what was in metricslog",
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc48d1f_47074bf2",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-18T20:31:30Z",
+      "side": 1,
+      "message": "can you clarify more what else is missing to put in variations component",
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
