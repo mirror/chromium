@@ -279,7 +279,6 @@ Resource::Resource(const ResourceRequest& request,
       is_revalidating_(false),
       is_alive_(false),
       is_add_remove_client_prohibited_(false),
-      integrity_disposition_(ResourceIntegrityDisposition::kNotChecked),
       options_(options),
       response_timestamp_(CurrentTime()),
       cancel_timer_(
@@ -424,13 +423,6 @@ void Resource::Finish(double load_finish_time) {
 
 AtomicString Resource::HttpContentType() const {
   return GetResponse().HttpContentType();
-}
-
-void Resource::SetIntegrityDisposition(
-    ResourceIntegrityDisposition disposition) {
-  DCHECK_NE(disposition, ResourceIntegrityDisposition::kNotChecked);
-  DCHECK(type_ == Resource::kScript || type_ == Resource::kCSSStyleSheet);
-  integrity_disposition_ = disposition;
 }
 
 bool Resource::MustRefetchDueToIntegrityMetadata(

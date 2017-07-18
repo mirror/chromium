@@ -26,12 +26,10 @@
 
 #include "core/loader/resource/ScriptResource.h"
 
-#include "core/frame/SubresourceIntegrity.h"
 #include "platform/SharedBuffer.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
 #include "platform/loader/fetch/FetchParameters.h"
-#include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
@@ -46,8 +44,8 @@ ScriptResource* ScriptResource::Fetch(FetchParameters& params,
   params.SetRequestContext(WebURLRequest::kRequestContextScript);
   ScriptResource* resource = ToScriptResource(
       fetcher->RequestResource(params, ScriptResourceFactory()));
-  if (resource && !params.IntegrityMetadata().IsEmpty())
-    resource->SetIntegrityMetadata(params.IntegrityMetadata());
+  if (resource)
+    resource->SetIntegrityMetadataFrom(params);
   return resource;
 }
 
@@ -55,7 +53,10 @@ ScriptResource::ScriptResource(
     const ResourceRequest& resource_request,
     const ResourceLoaderOptions& options,
     const TextResourceDecoderOptions& decoder_options)
-    : TextResource(resource_request, kScript, options, decoder_options) {}
+    : TextIntegrityResource(resource_request,
+                            kScript,
+                            options,
+                            decoder_options) {}
 
 ScriptResource::~ScriptResource() {}
 
@@ -76,26 +77,13 @@ void ScriptResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
   Resource::OnMemoryDump(level_of_detail, memory_dump);
   const String name = GetMemoryDumpName() + "/decoded_script";
   auto dump = memory_dump->CreateMemoryAllocatorDump(name);
-  dump->AddScalar("size", "bytes", source_text_.CharactersSizeInBytes());
+  dump->AddScalar("size", "bytes", SourceTextSizeInBytes());
   memory_dump->AddSuballocation(
       dump->Guid(), String(WTF::Partitions::kAllocatedObjectPoolName));
 }
 
-const String& ScriptResource::SourceText() {
-  DCHECK(IsLoaded());
-
-  if (source_text_.IsNull() && Data()) {
-    String source_text = DecodedText();
-    ClearData();
-    SetDecodedSize(source_text.CharactersSizeInBytes());
-    source_text_ = AtomicString(source_text);
-  }
-
-  return source_text_;
-}
-
 void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
-  source_text_ = AtomicString();
+  ClearSourceText();
 }
 
 // static
@@ -116,34 +104,6 @@ AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {
     return kSharableCrossOrigin;
 
   return kNotSharableCrossOrigin;
-}
-
-void ScriptResource::CheckResourceIntegrity(Document& document) {
-  // Already checked? Retain existing result.
-  //
-  // TODO(vogelheim): If IntegrityDisposition() is kFailed, this should
-  // probably also generate a console message identical to the one produced
-  // by the CheckSubresourceIntegrity call below. See crbug.com/585267.
-  if (IntegrityDisposition() != ResourceIntegrityDisposition::kNotChecked)
-    return;
-
-  // Loading error occurred? Then result is uncheckable.
-  if (ErrorOccurred())
-    return;
-
-  // No integrity attributes to check? Then we're passing.
-  if (IntegrityMetadata().IsEmpty()) {
-    SetIntegrityDisposition(ResourceIntegrityDisposition::kPassed);
-    return;
-  }
-
-  CHECK(!!ResourceBuffer());
-  bool passed = SubresourceIntegrity::CheckSubresourceIntegrity(
-      IntegrityMetadata(), document, ResourceBuffer()->Data(),
-      ResourceBuffer()->size(), Url(), *this);
-  SetIntegrityDisposition(passed ? ResourceIntegrityDisposition::kPassed
-                                 : ResourceIntegrityDisposition::kFailed);
-  DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
 }
 
 }  // namespace blink

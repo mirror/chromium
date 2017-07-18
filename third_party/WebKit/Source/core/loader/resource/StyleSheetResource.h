@@ -32,14 +32,14 @@
 #define StyleSheetResource_h
 
 #include "core/CoreExport.h"
-#include "core/loader/resource/TextResource.h"
+#include "core/loader/resource/TextIntegrityResource.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 
 namespace blink {
 
 class StyleSheetResourceClient;
 
-class CORE_EXPORT StyleSheetResource : public TextResource {
+class CORE_EXPORT StyleSheetResource : public TextIntegrityResource {
  public:
   using ClientType = StyleSheetResourceClient;
 
@@ -47,7 +47,7 @@ class CORE_EXPORT StyleSheetResource : public TextResource {
                      Type type,
                      const ResourceLoaderOptions& options,
                      const TextResourceDecoderOptions& decoder_options)
-      : TextResource(request, type, options, decoder_options) {}
+      : TextIntegrityResource(request, type, options, decoder_options) {}
 };
 
 }  // namespace blink

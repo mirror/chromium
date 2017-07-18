@@ -27,6 +27,7 @@
 #define ScriptResource_h
 
 #include "core/CoreExport.h"
+#include "core/loader/resource/TextIntegrityResource.h"
 #include "core/loader/resource/TextResource.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
@@ -53,7 +54,7 @@ class CORE_EXPORT ScriptResourceClient : public ResourceClient {
   virtual void NotifyAppendData(ScriptResource* resource) {}
 };
 
-class CORE_EXPORT ScriptResource final : public TextResource {
+class CORE_EXPORT ScriptResource final : public TextIntegrityResource {
  public:
   using ClientType = ScriptResourceClient;
   static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
@@ -79,13 +80,9 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   void DestroyDecodedDataForFailedRevalidation() override;
 
-  const String& SourceText();
-
   static bool MimeTypeAllowedByNosniff(const ResourceResponse&);
 
   AccessControlStatus CalculateAccessControlStatus() const;
-
-  void CheckResourceIntegrity(Document&);
 
  private:
   class ScriptResourceFactory : public ResourceFactory {
@@ -105,8 +102,6 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   ScriptResource(const ResourceRequest&,
                  const ResourceLoaderOptions&,
                  const TextResourceDecoderOptions&);
-
-  AtomicString source_text_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(Script);
