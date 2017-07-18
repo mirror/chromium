@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a74c8c0_15cdfcc6",
+        "filename": "chrome/browser/permissions/permission_prompt_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T01:28:43Z",
+      "side": 1,
+      "message": "Does this mean we can remove all these checks?",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89d0a7c_3bdd7954",
+        "filename": "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T01:28:43Z",
+      "side": 1,
+      "message": "nit: we should document the params. Is the can_update_ui value always false?",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd4e284_7db252a9",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T01:28:43Z",
+      "side": 1,
+      "message": "nit: may want to update the order in the cc file",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
