@@ -191,14 +191,25 @@ void PaintTiming::RegisterNotifySwapTime(PaintEvent event) {
 void PaintTiming::RegisterNotifySwapTime(
     PaintEvent event,
     std::unique_ptr<WTF::Function<void(bool, double)>> callback) {
-  // ReportSwapTime on layerTreeView will queue a swap-promise, the callback is
-  // called when the swap for current render frame completes or fails to happen.
+  // Only queue a swap swap-promise once per frame, and use the same timestamp
+  // and result for all callbacks that are queued during that time.
+  if (!pending_swap_callbacks_.empty()) {
+    pending_swap_callbacks_.push_back(std::move(callback));
+    return;
+  }
+
+  // ReportSwapTime on layerTreeView will queue a swap-promise, the callback
+  // is called when the swap for current render frame completes or fails to
+  // happen.
   if (!GetFrame() || !GetFrame()->GetPage())
     return;
   if (WebLayerTreeView* layerTreeView =
           GetFrame()->GetPage()->GetChromeClient().GetWebLayerTreeView(
               GetFrame())) {
-    layerTreeView->NotifySwapTime(ConvertToBaseCallback(std::move(callback)));
+    pending_swap_callbacks_.push_back(std::move(callback));
+    layerTreeView->NotifySwapTime(ConvertToBaseCallback(
+        WTF::Bind(&PaintTiming::ClearPendingSwapTimeCallbacks,
+                  WrapCrossThreadWeakPersistent(this))));
   }
 }
 
@@ -222,6 +233,15 @@ void PaintTiming::ReportSwapTime(PaintEvent event,
     default:
       NOTREACHED();
   }
+}
+
+void PaintTiming::ClearPendingSwapTimeCallbacks(bool did_swap,
+                                                double timestamp) {
+  DCHECK(!pending_swap_callbacks_.empty());
+  for (const auto& callback : pending_swap_callbacks_) {
+    (*callback)(did_swap, timestamp);
+  }
+  pending_swap_callbacks_.clear();
 }
 
 }  // namespace blink

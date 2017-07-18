@@ -95,7 +95,7 @@ class CORE_EXPORT PaintTiming final
   void RegisterNotifySwapTime(
       PaintEvent,
       std::unique_ptr<WTF::Function<void(bool, double)>> callback);
-  void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
+  void ClearPendingSwapTimeCallbacks(bool did_swap, double timestamp);
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -117,6 +117,7 @@ class CORE_EXPORT PaintTiming final
   void SetFirstContentfulPaint(double stamp);
 
   void RegisterNotifySwapTime(PaintEvent);
+  void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
   void ReportUserInputHistogram(
       FirstMeaningfulPaintDetector::HadUserInput had_input);
 
@@ -131,6 +132,9 @@ class CORE_EXPORT PaintTiming final
   double first_meaningful_paint_candidate_ = 0.0;
 
   Member<FirstMeaningfulPaintDetector> fmp_detector_;
+
+  std::vector<std::unique_ptr<WTF::Function<void(bool, double)>>>
+      pending_swap_callbacks_;
 };
 
 }  // namespace blink
