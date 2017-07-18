@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "06ee8a1a_b6d9fb8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:29:52Z",
+      "side": 1,
+      "message": "Can you indent this line just eight spaces? Like e.g. line 70.",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "ebb58079dec7b145be940adef1a82ad5e80237f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5881cc_2ae9d6cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NodeVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:29:52Z",
+      "side": 1,
+      "message": "Change this parameter to the adapter, as mentioned below.",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 59
+      },
+      "revId": "ebb58079dec7b145be940adef1a82ad5e80237f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ef587d3_f2ab6479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
         "patchSetId": 4
@@ -157,6 +203,29 @@
     },
     {
       "key": {
+        "uuid": "eed9eae2_f5a45d37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:29:52Z",
+      "side": 1,
+      "message": "I think I would just call visitor.visitCarouselItem() and pass the adapter (changing the Visitor interface), so the implementation could do whatever it wants with the adapter.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "ebb58079dec7b145be940adef1a82ad5e80237f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbbe9157_5f1a93ae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
         "patchSetId": 4
@@ -174,6 +243,23 @@
         "endLine": 34,
         "endChar": 28
       },
+      "revId": "ebb58079dec7b145be940adef1a82ad5e80237f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf19ed8_1f6d61eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:29:52Z",
+      "side": 1,
+      "message": ":)",
       "revId": "ebb58079dec7b145be940adef1a82ad5e80237f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
