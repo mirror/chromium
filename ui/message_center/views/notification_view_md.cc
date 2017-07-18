@@ -325,7 +325,6 @@ views::View* NotificationViewMD::TargetForRect(views::View* root,
 void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
   CreateOrUpdateContextTitleView(notification);
   CreateOrUpdateTitleView(notification);
-  CreateOrUpdateMessageView(notification);
   CreateOrUpdateCompactTitleMessageView(notification);
   CreateOrUpdateProgressBarView(notification);
   CreateOrUpdateListItemViews(notification);
@@ -334,6 +333,9 @@ void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
   CreateOrUpdateImageView(notification);
   CreateOrUpdateCloseButtonView(notification);
   CreateOrUpdateSettingsButtonView(notification);
+  // Should be called after all right_content_ updates are finished,
+  // because right_content_->GetPreferredSize() will be used.
+  CreateOrUpdateMessageView(notification);
   UpdateViewForExpandedState(expanded_);
   // Should be called at the last because SynthesizeMouseMoveEvent() requires
   // everything is in the right location when called.
@@ -549,6 +551,18 @@ void NotificationViewMD::CreateOrUpdateMessageView(
     message_view_->SetLineLimit(kMaxLinesForMessageView);
     message_view_->SetColors(message_center::kDimTextColor,
                              kContextTextBackgroundColor);
+
+    // TODO(tetsui): Workaround https://crbug.com/682266 by explicitly setting
+    // the width.
+    // Ideally, we should fix the original bug, but it seems there's no obvious
+    // solution for the bug according to https://crbug.com/678337#c7, we should
+    // ensure that the change won't break any of the users of BoxLayout class.
+    DCHECK(right_content_);
+    int width = message_center::kNotificationWidth -
+                right_content_->GetPreferredSize().width() -
+                kContentRowPadding.left() - kContentRowPadding.right();
+    message_view_->SizeToFit(width);
+
     left_content_->AddChildView(message_view_);
   } else {
     message_view_->SetText(text);
