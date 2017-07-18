@@ -29,14 +29,10 @@ LoadingPredictor::LoadingPredictor(const LoadingPredictorConfig& config,
           stats_collector_.get(),
           config)),
       observer_(nullptr),
-      weak_factory_(this) {
-  preconnect_manager_ = base::MakeUnique<PreconnectManager>(
-      GetWeakPtr(), profile_->GetRequestContext());
-}
+      weak_factory_(this) {}
 
 LoadingPredictor::~LoadingPredictor() {
-  // Ensure that Shutdown() was called.
-  DCHECK(preconnect_manager_ == nullptr);
+  DCHECK(shutdown_);
 }
 
 void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
@@ -94,6 +90,7 @@ ResourcePrefetchPredictor* LoadingPredictor::resource_prefetch_predictor() {
 }
 
 void LoadingPredictor::Shutdown() {
+  DCHECK(!shutdown_);
   resource_prefetch_predictor_->Shutdown();
 
   std::vector<std::unique_ptr<ResourcePrefetcher>> prefetchers;
@@ -106,6 +103,7 @@ void LoadingPredictor::Shutdown() {
       base::BindOnce([](std::vector<std::unique_ptr<ResourcePrefetcher>>,
                         std::unique_ptr<PreconnectManager>) {},
                      std::move(prefetchers), std::move(preconnect_manager_)));
+  shutdown_ = true;
 }
 
 void LoadingPredictor::OnMainFrameRequest(const URLRequestSummary& summary) {
@@ -271,9 +269,14 @@ void LoadingPredictor::MaybeAddPreconnect(
     const std::vector<GURL>& preconnect_origins,
     const std::vector<GURL>& preresolve_hosts,
     HintOrigin origin) {
-  // In case Shutdown() has been already called.
-  if (!preconnect_manager_)
+  if (shutdown_)
     return;
+
+  // Initialize |preconnect_manager_| lazily.
+  if (!preconnect_manager_) {
+    preconnect_manager_ = base::MakeUnique<PreconnectManager>(
+        GetWeakPtr(), profile_->GetRequestContext());
+  }
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
@@ -283,8 +286,7 @@ void LoadingPredictor::MaybeAddPreconnect(
 }
 
 void LoadingPredictor::MaybeRemovePreconnect(const GURL& url) {
-  // In case Shutdown() has been already called.
-  if (!preconnect_manager_)
+  if (shutdown_ || !preconnect_manager_)
     return;
 
   content::BrowserThread::PostTask(
