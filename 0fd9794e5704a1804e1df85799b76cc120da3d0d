@@ -117,6 +117,30 @@
       "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5394b796_7abbed04",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T17:02:54Z",
+      "side": 1,
+      "message": "I think I agree with Michael. I don\u0027t think this CL changes the behaviour, and some of the complexity is to allow the web-content to request focus, or traversing the focused elements in views (e.g. pressing tab etc.).",
+      "parentUuid": "2587eb57_7f95236a",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
