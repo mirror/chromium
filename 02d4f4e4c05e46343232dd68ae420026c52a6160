@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a9f75c_30d80ee9",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "Use $i18n{} here too please.",
+      "range": {
+        "startLine": 2,
+        "startChar": 6,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "02d4f4e4c05e46343232dd68ae420026c52a6160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aeeb0e5_8bc681d8",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "And here ($i18nRaw{} I guess).",
+      "revId": "02d4f4e4c05e46343232dd68ae420026c52a6160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9830398_d550a704",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "And then you should not need this anymore.",
+      "revId": "02d4f4e4c05e46343232dd68ae420026c52a6160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
