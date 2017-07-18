@@ -22,6 +22,30 @@
       "revId": "4363f1c57da43db2bb95147aebeee15cabf43372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d489620_c9c50b6f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-18T21:08:50Z",
+      "side": 1,
+      "message": "Ah, thanks for the resource links--I originally went back and forth on this and never felt like I got clear insight into one over the other.  Happy to update this.  I\u0027m leaning towards std::map, but can use base::flat_map if preferred.",
+      "parentUuid": "ea577add_7271a0b9",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "4363f1c57da43db2bb95147aebeee15cabf43372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
