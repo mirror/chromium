@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fecce798_4e85f3cd",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-18T20:40:10Z",
+      "side": 1,
+      "message": "Actually, turns out DCHECK doesn\u0027t work here. This gets called from SetMessageHost, where the URLs might be invalid.",
+      "parentUuid": "cab299c9_c98901e6",
+      "range": {
+        "startLine": 256,
+        "startChar": 25,
+        "endLine": 256,
+        "endChar": 75
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e11535a9_3c174c6e",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
