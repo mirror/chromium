@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cfd9812_0bfae44e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-18T21:52:04Z",
+      "side": 1,
+      "message": "I\u0027d rather have something like getFullscreenManager() added to Layout.java.\n\nYou can do this a couple of ways:\n- Layout has a TabModelSelector so: mTabModelSelector.getCurrentTab().getActivity().getFullscreenManager();\n\n- LayoutManager is created with a LayoutManagerHost which has getFullscreenManager(). Layouts are only created by layout managers, so you could add a param to the layout constructor to include this.",
+      "range": {
+        "startLine": 422,
+        "startChar": 12,
+        "endLine": 422,
+        "endChar": 59
+      },
+      "revId": "93fac1e6cac1f8fabf4b9a033176839ec6cd4772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
