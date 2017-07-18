@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4dc70bc_4a2ac8af",
+        "filename": "cc/animation/transform_operation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T15:15:50Z",
+      "side": 1,
+      "message": "Unrelated to your CL, but why are these not gfx types?! This would make your equality comparisons much cleaner. It looks like in the .cc file we even create gfx types out of these a few times.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fe0e29_7effa2c9",
+        "filename": "chrome/browser/vr/animation_player.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T15:15:50Z",
+      "side": 1,
+      "message": "I think this comment was meant to be positioned one line down?",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35accfec_8ff1a81e",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T15:15:50Z",
+      "side": 1,
+      "message": "optional nit: I prefer op.translate \u003d {x, y, z};",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "31ca554499f6d624f5126fc51fb014863c8e1a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
