@@ -17,6 +17,7 @@
 #include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context.h"
 
 namespace content {
@@ -671,7 +672,7 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   request_ = request_details.url_request_context->CreateRequest(
       request_details.url, request_details.priority,
-      devtools_interceptor_request_job_),
+      devtools_interceptor_request_job_, TRAFFIC_ANNOTATION_FOR_TESTS),
   request_->set_method(request_details.method);
   request_->SetExtraRequestHeaders(request_details.extra_request_headers);
 
