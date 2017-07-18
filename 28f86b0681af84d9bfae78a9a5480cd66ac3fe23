@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d09864ad_229bc97b",
+        "filename": "chrome/browser/android/metrics/uma_session_stats.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-18T02:00:05Z",
+      "side": 0,
+      "message": "Is there any guarantee in the code? I added UNREACHED() on Android, tests fail and complain about the UNREACHED() check. You can see the change from the diff of Patch #8 and Patch #9.",
+      "parentUuid": "dc4f3922_c57c7ada",
+      "range": {
+        "startLine": 152,
+        "startChar": 46,
+        "endLine": 152,
+        "endChar": 47
+      },
+      "revId": "28f86b0681af84d9bfae78a9a5480cd66ac3fe23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9edba9c_730ce8b5",
         "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "28f86b0681af84d9bfae78a9a5480cd66ac3fe23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc37f6e_696e1164",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-18T02:00:05Z",
+      "side": 0,
+      "message": "Restored. I thought it is affected, but seems it isn\u0027t.",
+      "parentUuid": "e9edba9c_730ce8b5",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "28f86b0681af84d9bfae78a9a5480cd66ac3fe23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
