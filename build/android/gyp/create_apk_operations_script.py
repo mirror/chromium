@@ -21,15 +21,20 @@ import sys
 def main(args):
   script_directory = os.path.dirname(__file__)
   resolve = lambda p: os.path.abspath(os.path.join(script_directory, p))
-  apk_operations_path = resolve(${APK_OPERATIONS_PATH})
-  apk_operations_args = []
-  path_args = ${PATH_ARGS}
-  other_args = ${OTHER_ARGS}
-  for arg, path in path_args:
-    apk_operations_args.extend([arg, resolve(path)])
-  apk_operations_args.extend(other_args)
-  apk_operations_cmd = [apk_operations_path] + apk_operations_args + args
-  os.execv(apk_operations_path, apk_operations_cmd)
+  path_args_dict = ${PATH_ARGS_DICT}
+  other_dict = ${OTHER_ARGS_DICT}
+  for k, v in path_args_dict.iteritems():
+    path_args_dict[k] = resolve(v)
+  sys.path.append(resolve(${APK_OPERATIONS_DIR}))
+  import apk_operations
+  apk_operations.main(output_directory=path_args_dict.get('output_directory'),
+                      apk_path=path_args_dict.get('apk_path'),
+                      inc_apk_path=path_args_dict.get('inc_apk_path'),
+                      inc_install_script=path_args_dict.get(
+                          'inc_install_script'),
+                      command_line_flags_file=other_dict.get(
+                          'command_line_flags_file'))
+
 
 if __name__ == '__main__':
   sys.exit(main(sys.argv[1:]))
@@ -49,25 +54,21 @@ def main(args):
   def relativize(path):
     """Returns the path relative to the output script directory."""
     return os.path.relpath(path, os.path.dirname(args.script_output_path))
-
-  apk_operations_path = os.path.join(
-      os.path.dirname(__file__), os.path.pardir, 'apk_operations.py')
-  apk_operations_path = relativize(apk_operations_path)
-  path_args = [('--output-directory', '.')]
+  apk_operations_dir = os.path.join(os.path.dirname(__file__), os.path.pardir)
+  apk_operations_dir = relativize(apk_operations_dir)
+  path_args_dict = {'output_directory': '.'}
   if args.apk_path:
-    path_args.append(('--apk-path', relativize(args.apk_path)))
+    path_args_dict['apk_path'] = relativize(args.apk_path)
   if args.incremental_apk_path:
-    path_args.append(
-        ('--inc-apk-path', relativize(args.incremental_apk_path)))
-    path_args.append(
-        ('--inc-install-script', relativize(
-            args.incremental_install_script)))
-  other_args = ['--command-line-flags-file', args.command_line_flags_file]
+    path_args_dict['inc_apk_path'] = relativize(args.incremental_apk_path)
+    path_args_dict['inc_install_script'] = relativize(
+        args.incremental_install_script)
+  other_args_dict = {'command_line_flags_file': args.command_line_flags_file}
   with open(args.script_output_path, 'w') as script:
     script_dict = {
-        'APK_OPERATIONS_PATH': repr(apk_operations_path),
-        'PATH_ARGS': repr(path_args),
-        'OTHER_ARGS': repr(other_args),
+        'APK_OPERATIONS_DIR': repr(apk_operations_dir),
+        'PATH_ARGS_DICT': repr(path_args_dict),
+        'OTHER_ARGS_DICT': repr(other_args_dict),
     }
     script.write(SCRIPT_TEMPLATE.substitute(script_dict))
   os.chmod(args.script_output_path, 0750)
