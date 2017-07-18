@@ -77,15 +77,20 @@ class WebStateList {
                                      int start_index,
                                      bool use_group) const;
 
-  // Inserts the specified WebState at the specified index.
-  void InsertWebState(int index, std::unique_ptr<web::WebState> web_state);
+  // Inserts the specified WebState at the specified index. If |foreground| is
+  // true, the WebState will be activated.
+  void InsertWebState(int index,
+                      std::unique_ptr<web::WebState> web_state,
+                      bool foreground);
 
   // Inserts the specified WebState at the best position in the WebStateList
   // given the specified transition, opener, etc. It defaults to inserting the
-  // WebState at the end of the list.
+  // WebState at the end of the list. If |foreground| is true, the WebState will
+  // be activated.
   void AppendWebState(ui::PageTransition transition,
                       std::unique_ptr<web::WebState> web_state,
-                      WebStateOpener opener);
+                      WebStateOpener opener,
+                      bool foreground);
 
   // Moves the WebState at the specified index to another index.
   void MoveWebStateAt(int from_index, int to_index);
