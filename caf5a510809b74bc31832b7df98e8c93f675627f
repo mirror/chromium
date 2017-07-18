@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6574e6_088aa66d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/SourceLocation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-18T09:15:45Z",
+      "side": 1,
+      "message": "All of the ones that pass string literals don\u0027t need to copy the name (it has static lifetime). You\u0027d have to look at the call sites to see whether the first BeginArray can make that assumption, too. (If so, add a comment to this function.)\n\nThat said, is this function reachable? I don\u0027t see any call sites...",
+      "revId": "caf5a510809b74bc31832b7df98e8c93f675627f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56fdb92_9f814bef",
+        "filename": "third_party/WebKit/Source/core/css/invalidation/InvalidationSet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-18T09:15:45Z",
+      "side": 1,
+      "message": "Here and elsewhere: if the name given is a string literal, don\u0027t need copied name.",
+      "revId": "caf5a510809b74bc31832b7df98e8c93f675627f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
