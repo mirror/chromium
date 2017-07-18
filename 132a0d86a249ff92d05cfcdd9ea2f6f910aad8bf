@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b2b7b3c_5e628f79",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T07:47:21Z",
+      "side": 1,
+      "message": "note these are the implementations from permission_prompt_impl_views.cc, which have had the most scrutiny and are used a lot in the wild.",
+      "revId": "132a0d86a249ff92d05cfcdd9ea2f6f910aad8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

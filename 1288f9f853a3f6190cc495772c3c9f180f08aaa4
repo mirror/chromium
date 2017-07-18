@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "692d70ec_964f346e",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T07:47:21Z",
+      "side": 1,
+      "message": "(note this method also contains duplicated code, except for one line :/. ExtensionInstall bubbles have the same problem, so I\u0027m dealing with this already elsewhere.)",
+      "revId": "1288f9f853a3f6190cc495772c3c9f180f08aaa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

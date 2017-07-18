@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a8a532_9075684c",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T07:47:21Z",
+      "side": 0,
+      "message": "This is an intentional change in favor of consistency. (in fullscreen the device chooser would  anchor below the \"Press f11 to exit fullscreen\" bubble with a centered anchoring [on non-Mac only: on Mac it goes offscreen]). Now it will just anchor the same as permissions bubbles.",
+      "revId": "a9a937ac93b4817a226b3f01526d6e10c7b63836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
