@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94ce1a4c_7f9d64ad",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7bebcb3_4b14d167",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e5c2aca_074ddb74",
         "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1421a67b_0da98858",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5c2aca_074ddb74",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd2873f_32983be3",
         "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
         "patchSetId": 16
@@ -68,6 +116,30 @@
       "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d332a0_47cdfe60",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd2873f_32983be3",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "cbcbbb2a_e83915e6",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Because the style is applied to ButtonCompat the text will be in all caps so I had to manually set it to false in the case of \"SigninButtonBorderlessRegular\". However, the \"\u003citem name\u003d\"android:textAllCaps\"\u003etrue\u003c/item\u003e\" from \"SingInButtonCompat\" is indeed irrelevant (by applying this style to \"Button\", it will automatically make the text all caps) so I will remove that one.",
+      "parentUuid": "b0968e39_0484a0d4",
+      "range": {
+        "startLine": 606,
+        "startChar": 39,
+        "endLine": 606,
+        "endChar": 45
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f55e644_69d593cb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
         "patchSetId": 16
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "3c0ad970_1ac4e105",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f55e644_69d593cb",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42907ad6_a807d74e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
         "patchSetId": 16
@@ -160,6 +280,30 @@
       "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cfe915_2be37476",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T11:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42907ad6_a807d74e",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
