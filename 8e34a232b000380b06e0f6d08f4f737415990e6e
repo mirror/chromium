@@ -104,6 +104,24 @@
       "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffe9c812_7f0a2842",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T02:30:48Z",
+      "side": 1,
+      "message": "DidInitializeWorkerContext() should always be called after DidCreateWorkerGlobalScope() because the context initialization is always necessary at that point. As my comment before the if()[1], we should return early when the context initialization fails. \n\nAnyway, removing comments about the order from this CL would be OK. I\u0027ll clean them up in a follow-up CL\n\n[1] https://chromium.googlesource.com/chromium/src/+/226c080a029bd3ff8a6a577503cefe316c84325b/third_party/WebKit/Source/core/workers/WorkerThread.cpp#420",
+      "parentUuid": "a388d59e_505af185",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
