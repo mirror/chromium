@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eea2f18f_d94147c5",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T22:36:44Z",
+      "side": 1,
+      "message": "Oh, so when do we have a remote suggestions provider but it\u0027s disabled?",
+      "range": {
+        "startLine": 445,
+        "startChar": 40,
+        "endLine": 445,
+        "endChar": 50
+      },
+      "revId": "1709fb7b390f7a77bd7f882476849ff2b750f5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
