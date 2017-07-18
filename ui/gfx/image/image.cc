@@ -33,7 +33,10 @@
 
 namespace gfx {
 
-namespace internal {
+namespace {
+
+using RepresentationMap =
+    std::map<Image::RepresentationType, std::unique_ptr<internal::ImageRep>>;
 
 #if defined(OS_IOS)
 scoped_refptr<base::RefCountedMemory> Get1xPNGBytesFromUIImage(
@@ -163,6 +166,10 @@ scoped_refptr<base::RefCountedMemory> Get1xPNGBytesFromImageSkia(
   return png_bytes;
 }
 #endif
+
+}  // namespace
+
+namespace internal {
 
 class ImageRepPNG;
 class ImageRepSkia;
@@ -299,7 +306,7 @@ class ImageRepCocoaTouch : public ImageRep {
 
   int Height() const override { return Size().height(); }
 
-  gfx::Size Size() const override { return internal::UIImageSize(image_); }
+  gfx::Size Size() const override { return UIImageSize(image_); }
 
   UIImage* image() const { return image_; }
 
@@ -326,7 +333,7 @@ class ImageRepCocoa : public ImageRep {
 
   int Height() const override { return Size().height(); }
 
-  gfx::Size Size() const override { return internal::NSImageSize(image_); }
+  gfx::Size Size() const override { return NSImageSize(image_); }
 
   NSImage* image() const { return image_; }
 
@@ -359,7 +366,7 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
   Image::RepresentationType default_representation_type() {
     return default_representation_type_;
   }
-  Image::RepresentationMap& representations() { return representations_; }
+  RepresentationMap& representations() { return representations_; }
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   void set_default_representation_color_space(CGColorSpaceRef color_space) {
@@ -389,7 +396,7 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
 
   // All the representations of an Image. Size will always be at least one, with
   // more for any converted representations.
-  Image::RepresentationMap representations_;
+  RepresentationMap representations_;
 
   DISALLOW_COPY_AND_ASSIGN(ImageStorage);
 };
@@ -495,7 +502,7 @@ const ImageSkia* Image::ToImageSkia() const {
         internal::ImageRepPNG* png_rep =
             GetRepresentation(kImageRepPNG, true)->AsImageRepPNG();
         scoped_rep.reset(new internal::ImageRepSkia(
-            internal::ImageSkiaFromPNG(png_rep->image_reps())));
+            ImageSkiaFromPNG(png_rep->image_reps())));
         break;
       }
 #if defined(OS_IOS)
@@ -535,7 +542,7 @@ UIImage* Image::ToUIImage() const {
         internal::ImageRepPNG* png_rep =
             GetRepresentation(kImageRepPNG, true)->AsImageRepPNG();
         scoped_rep.reset(new internal::ImageRepCocoaTouch(
-            internal::CreateUIImageFromPNG(png_rep->image_reps())));
+            CreateUIImageFromPNG(png_rep->image_reps())));
         break;
       }
       case kImageRepSkia: {
@@ -566,7 +573,7 @@ NSImage* Image::ToNSImage() const {
       case kImageRepPNG: {
         internal::ImageRepPNG* png_rep =
             GetRepresentation(kImageRepPNG, true)->AsImageRepPNG();
-        scoped_rep.reset(new internal::ImageRepCocoa(internal::NSImageFromPNG(
+        scoped_rep.reset(new internal::ImageRepCocoa(NSImageFromPNG(
             png_rep->image_reps(), default_representation_color_space)));
         break;
       }
@@ -610,24 +617,22 @@ scoped_refptr<base::RefCountedMemory> Image::As1xPNGBytes() const {
 #if defined(OS_IOS)
     case kImageRepCocoaTouch: {
       internal::ImageRepCocoaTouch* cocoa_touch_rep =
-          GetRepresentation(kImageRepCocoaTouch, true)
-              ->AsImageRepCocoaTouch();
-      png_bytes = internal::Get1xPNGBytesFromUIImage(
-          cocoa_touch_rep->image());
+          GetRepresentation(kImageRepCocoaTouch, true)->AsImageRepCocoaTouch();
+      png_bytes = Get1xPNGBytesFromUIImage(cocoa_touch_rep->image());
       break;
     }
 #elif defined(OS_MACOSX)
     case kImageRepCocoa: {
       internal::ImageRepCocoa* cocoa_rep =
           GetRepresentation(kImageRepCocoa, true)->AsImageRepCocoa();
-      png_bytes = internal::Get1xPNGBytesFromNSImage(cocoa_rep->image());
+      png_bytes = Get1xPNGBytesFromNSImage(cocoa_rep->image());
       break;
     }
 #endif
     case kImageRepSkia: {
       internal::ImageRepSkia* skia_rep =
           GetRepresentation(kImageRepSkia, true)->AsImageRepSkia();
-      png_bytes = internal::Get1xPNGBytesFromImageSkia(skia_rep->image());
+      png_bytes = Get1xPNGBytesFromImageSkia(skia_rep->image());
       break;
     }
     default:

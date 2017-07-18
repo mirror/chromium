@@ -56,9 +56,6 @@ class GFX_EXPORT Image {
     kImageRepPNG,
   };
 
-  using RepresentationMap =
-      std::map<RepresentationType, std::unique_ptr<internal::ImageRep>>;
-
   // Creates an empty image with no representations.
   Image();
 
