@@ -100,12 +100,13 @@ class _MemorySystemHealthBenchmark(perf_benchmark.PerfBenchmark):
   def CreateTimelineBasedMeasurementOptions(self):
     options = timeline_based_measurement.Options(
         chrome_trace_category_filter.ChromeTraceCategoryFilter(
-            '-*,disabled-by-default-memory-infra'))
+            '-*,disabled-by-default-memory-infra,blink_gc,v8,blink,devtools.timeline,rail,navigation,disabled-by-default-devtools.timeline'))
     options.config.enable_android_graphics_memtrack = True
     options.SetTimelineBasedMetrics(['memoryMetric'])
     # Setting an empty memory dump config disables periodic dumps.
-    options.config.chrome_trace_config.SetMemoryDumpConfig(
-        chrome_trace_config.MemoryDumpConfig())
+    c = chrome_trace_config.MemoryDumpConfig()
+    c.AddTrigger('detailed', 2000)
+    options.config.chrome_trace_config.SetMemoryDumpConfig(c)
     return options
 
   def CreateStorySet(self, options):
