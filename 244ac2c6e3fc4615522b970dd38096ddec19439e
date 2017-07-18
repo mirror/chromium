@@ -16,6 +16,24 @@
       "revId": "244ac2c6e3fc4615522b970dd38096ddec19439e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907d0048_0929150a",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-18T09:01:03Z",
+      "side": 1,
+      "message": "We will see. I\u0027d prefer to keep this assignment if possible.",
+      "parentUuid": "a8b4a0a2_5e9648bb",
+      "revId": "244ac2c6e3fc4615522b970dd38096ddec19439e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
