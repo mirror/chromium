@@ -29,10 +29,6 @@ AshWindowTreeHostMus::AshWindowTreeHostMus(
 
 AshWindowTreeHostMus::~AshWindowTreeHostMus() {}
 
-void AshWindowTreeHostMus::ToggleFullScreen() {
-  NOTIMPLEMENTED();
-}
-
 bool AshWindowTreeHostMus::ConfineCursorToRootWindow() {
   // TODO: when implementing see implementation in AshWindowTreeHostPlatform
   // for how it uses |transformer_helper_|.
