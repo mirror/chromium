@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8145773_99ed5c5f",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "Should this be //components/variations?",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "99b8e0e455415af34fdee07c9c68fecd4c83e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c571886_3ea5c2ee",
+        "filename": "components/metrics/field_trials_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "nit: Please leave a blank line here.",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "99b8e0e455415af34fdee07c9c68fecd4c83e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

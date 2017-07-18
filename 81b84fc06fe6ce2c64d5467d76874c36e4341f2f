@@ -37,6 +37,52 @@
     },
     {
       "key": {
+        "uuid": "a3f54008_e8ae3e51",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "This is technically against the Chromium style guide -- DCHECK failures are not supposed to be handled.",
+      "range": {
+        "startLine": 43,
+        "startChar": 67,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285e0d32_218790db",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "Why is creation_times_ a stack?  It looks like you only ever use the last element -- could you just only keep the last element?  Or, would it be appropriate to just pass the log creation time to each provider, if there\u0027s something more nuanced going on than just wanting to track the most recent call to OnDidCreateMetricsLog()?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc48d1f_47074bf2",
         "filename": "components/metrics/field_trials_provider.h",
         "patchSetId": 1
@@ -69,6 +115,52 @@
       "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fed48c1_76276bb2",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "If it\u0027s overridable for testing, shouldn\u0027t it be protected rather than private?",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7966d4_33a91a91",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T21:46:46Z",
+      "side": 1,
+      "message": "Hmm, what does this mean?",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
