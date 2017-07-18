@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8884ae30_b5ebf755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T15:31:43Z",
+      "side": 1,
+      "message": "Pls document",
+      "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b5e149_f2df3e5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/displaystyle/UiConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T15:31:43Z",
+      "side": 1,
+      "message": "Given that this class is used in other places as well (downloads or history), we should be careful not to put too many assumptions about the UI into this class. I think it\u0027s still fine to say that this class tells a client what a \"card\" UI element or a \"tile\" UI element should look like (in particular if there is an effort to unify UI styles across Clank), but just sth to keep in mind.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
