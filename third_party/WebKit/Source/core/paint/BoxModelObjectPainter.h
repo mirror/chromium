@@ -11,6 +11,7 @@
 #include "platform/geometry/LayoutSize.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/wtf/Allocator.h"
+#include "core/layout/BoxModelPainterInterface.h"
 
 namespace blink {
 
@@ -21,13 +22,22 @@ struct PaintInfo;
 class LayoutBoxModelObject;
 class BackgroundImageGeometry;
 
+// Abstract interface between the layout and paint code for box painting.
+class BoxPainterInterface : public virtual BoxModelPainterInterface {
+ public:
+  virtual LayoutSize LocationOffset() const = 0;
+  virtual IntSize ScrollOffset() const = 0;
+  virtual LayoutSize ScrollSize() const = 0;
+  virtual LayoutRect OverflowClipRect(const LayoutPoint&) const = 0;
+};
+
 // BoxModelObjectPainter is a class that can paint either a LayoutBox or a
 // LayoutInline and allows code sharing between block and inline block painting.
 class BoxModelObjectPainter : public BoxPainterBase {
   STACK_ALLOCATED();
 
  public:
-  BoxModelObjectPainter(const LayoutBoxModelObject& box_model)
+  BoxModelObjectPainter(const BoxModelPainterInterface& box_model)
       : box_model_(box_model) {}
 
   void PaintFillLayers(const PaintInfo&,
@@ -49,15 +59,14 @@ class BoxModelObjectPainter : public BoxPainterBase {
                       const LayoutSize& = LayoutSize());
 
   static bool IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
+      const BoxModelPainterInterface*,
+      const PaintInfo&);
+  static bool IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
       const LayoutBoxModelObject*,
       const PaintInfo&);
 
  private:
-  Node* GetNode() const;
-  LayoutRectOutsets BorderOutsets(const BoxPainterBase::FillLayerInfo&) const;
-  LayoutRectOutsets PaddingOutsets(const BoxPainterBase::FillLayerInfo&) const;
-
-  const LayoutBoxModelObject& box_model_;
+  const BoxModelPainterInterface& box_model_;
 };
 
 }  // namespace blink
