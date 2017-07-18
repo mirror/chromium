@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39371f3a_30084d34",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-18T23:47:21Z",
+      "side": 1,
+      "message": "It was really hard to find out what\u0027s actually changed in this file. I guess the git command indicated that it was necessary to reformat the file? With reformatting as extensive as this one, I think it\u0027s probably better to have a separate CL just for the reformatting, or only reformat the new code for now. Don\u0027t know what others think about automated reformatting.",
+      "revId": "e25fe394f27024a7cf68e09677c2e06bc88329c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8416cc91_eba9ec65",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-18T23:47:21Z",
+      "side": 1,
+      "message": "What\u0027s the reason behind this change? |static| is unnecessary inside an anonymous namespace. It\u0027s hard to say whether using char[] instead of std::string would help. It depends on implementation details.",
+      "revId": "e25fe394f27024a7cf68e09677c2e06bc88329c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def34113_fe7bb5c5",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-18T23:47:21Z",
+      "side": 1,
+      "message": "We generally use single quotes to surround variable names in error messages, as in \"\u0027actions\u0027 must be an array\". Vertical bars are used in comments.",
+      "revId": "e25fe394f27024a7cf68e09677c2e06bc88329c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
