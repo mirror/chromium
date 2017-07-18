@@ -88,6 +88,24 @@
       "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e9da93_2b033370",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-18T18:12:13Z",
+      "side": 1,
+      "message": "Update from offline discussions:\n\nWe actually don\u0027t want to have enable_vr on by default on Linux since we currently have no plans to support actual VR features on Linux (it\u0027d just be for testing). However, the alternative of setting up new bots just for this seems excessive.\n\nA good middle ground seems to be turning on enable_vr by default on Windows and running the tests on some of those bots. Unlike Linux, we\u0027re actually in the process of adding VR support to Windows, and this will cover the \"non-Android\" requirement.\n\nAny objections to this? If not, I\u0027ll plan on getting this in on Friday after the branch cut - enabling it on Windows by default shouldn\u0027t cause issues, but better to be safe than accidentally introduce issues into the M61 branch.",
+      "parentUuid": "b8ae6881_ddfc634a",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
