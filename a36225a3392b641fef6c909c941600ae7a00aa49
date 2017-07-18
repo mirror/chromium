@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c582827_ca45730a",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4015,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-18T00:26:32Z",
+      "side": 1,
+      "message": "This looks slightly scary, so comment would be handy.",
+      "range": {
+        "startLine": 4015,
+        "startChar": 2,
+        "endLine": 4015,
+        "endChar": 19
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5371e91_8d57787a",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-18T00:26:32Z",
+      "side": 1,
+      "message": "Comment please!",
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f43ef2_61f76e7e",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-18T00:26:32Z",
+      "side": 1,
+      "message": "This include seems odd... why not base/time/time.h?",
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8c20be_3247c97e",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-18T00:26:32Z",
+      "side": 1,
+      "message": "Reasoning about how long the backing store is open is complicated because of this logic, which can probably be simplified. (I wrote it, it\u0027s bad.) It may be worth fixing that first.\n\nHowever... do we want to crawler to abort if the database is reopened?",
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec01213_6cebb073",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-18T00:26:32Z",
+      "side": 1,
+      "message": "Seems weird to hold the raw ptr and scoped ptr to the backing store. Should we let it access the db via the backing store, e.g. friend it?",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "a36225a3392b641fef6c909c941600ae7a00aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
