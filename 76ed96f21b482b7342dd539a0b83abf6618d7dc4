@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "6a8042ca_234aa91c",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T21:24:48Z",
+      "side": 1,
+      "message": "It\u0027s currently not possible to reparent frames. There\u0027s some talk of allowing it again (we used to implement this as magic iframe), but at the moment, it doesn\u0027t look likely.",
+      "parentUuid": "ff4cbb7d_674af058",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 73
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5da1c1_b4a86c27",
         "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.h",
         "patchSetId": 12
