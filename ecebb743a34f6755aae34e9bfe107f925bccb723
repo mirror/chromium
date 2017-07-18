@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc332bd9_b3485fee",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-18T17:52:17Z",
+      "side": 1,
+      "message": "ikilpatrick@: Could you please double check and make sure that the logic works?\nIn the case that you mentioned\n1. PWGS#1 registerPaint(\u0027foo\u0027, class { static inputProperties \u003d [\u0027a\u0027]; });\n2. PWGS#2 registerPaint(\u0027foo\u0027, class { static inputProperties \u003d [\u0027b\u0027]; });\n  2a. This will set DocumentDefinitionMap[\u0027foo\u0027] \u003d nullptr because it hits \"if (!existing_document_definition-\u003eEquals(*document_definition))\"\n3. Kill PWGS #1 #2 (page is backgrounded or something).\n  3a. This step should not clear the definition map, so DocumentDefinitionMap[\u0027foo\u0027] is still nullptr.\n4. PWGS#1 registerPaint(\u0027foo\u0027, class { static inputProperties \u003d [\u0027a\u0027]; });\n  4a. This will hit \"if (!existing_document_definition)\" and early return because the existing_document_definition is invalid (nullptr).\n5. PWGS#1 registerPaint(\u0027foo\u0027, class { static inputProperties \u003d [\u0027a\u0027]; });\n  5a. This will early exist the same reason as 4a.\n\nDoes the above make sense?",
+      "range": {
+        "startLine": 232,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
