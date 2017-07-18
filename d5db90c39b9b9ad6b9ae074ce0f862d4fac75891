@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33887d31_5d101af5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-18T06:44:14Z",
+      "side": 1,
+      "message": "Google-internal-only references are not good. We have many non-Googler contributors!",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "d5db90c39b9b9ad6b9ae074ce0f862d4fac75891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
