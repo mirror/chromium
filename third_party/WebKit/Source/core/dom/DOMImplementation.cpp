@@ -83,7 +83,7 @@ XMLDocument* DOMImplementation::createDocument(
     ExceptionState& exception_state) {
   XMLDocument* doc = nullptr;
   DocumentInit init =
-      DocumentInit::FromContext(GetDocument().ContextDocument());
+      DocumentInit::FromContext(NullURL(), GetDocument().ContextDocument());
   if (namespace_uri == SVGNames::svgNamespaceURI) {
     doc = XMLDocument::CreateSVG(init);
   } else if (namespace_uri == HTMLNames::xhtmlNamespaceURI) {
@@ -203,7 +203,7 @@ bool DOMImplementation::IsTextMIMEType(const String& mime_type) {
 
 HTMLDocument* DOMImplementation::createHTMLDocument(const String& title) {
   DocumentInit init =
-      DocumentInit::FromContext(GetDocument().ContextDocument())
+      DocumentInit::FromContext(NullURL(), GetDocument().ContextDocument())
           .WithRegistrationContext(GetDocument().RegistrationContext());
   HTMLDocument* d = HTMLDocument::Create(init);
   d->open();
