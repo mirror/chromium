@@ -441,11 +441,6 @@ void WebContentsViewAndroid::OnDragEnded() {
   web_contents_->GetRenderViewHost()->GetWidget()->DragSourceSystemDragEnded();
 }
 
-void WebContentsViewAndroid::GotFocus() {
-  // This is only used in the views FocusManager stuff but it bleeds through
-  // all subclasses. http://crbug.com/21875
-}
-
 // This is called when we the renderer asks us to take focus back (i.e., it has
 // iterated past the last focusable element on the page).
 void WebContentsViewAndroid::TakeFocus(bool reverse) {
