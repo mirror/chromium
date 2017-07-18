@@ -227,11 +227,20 @@ bool FrameTree::IsDescendantOf(const Frame* ancestor) const {
 }
 
 DISABLE_CFI_PERF
-Frame* FrameTree::TraverseNext(const Frame* stay_within) const {
+Frame* FrameTree::TraverseNext(const Frame* stay_within,
+                               bool stay_in_local_root) const {
+  DCHECK(!stay_in_local_root || this_frame_->IsLocalFrame());
   Frame* child = FirstChild();
   if (child) {
     DCHECK(!stay_within || child->Tree().IsDescendantOf(stay_within));
-    return child;
+
+    if (!stay_in_local_root || child->IsLocalFrame())
+      return child;
+
+    while ((child = child->Tree().NextSibling())) {
+      if (child->IsLocalFrame())
+        return child;
+    }
   }
 
   if (this_frame_ == stay_within)
@@ -240,15 +249,27 @@ Frame* FrameTree::TraverseNext(const Frame* stay_within) const {
   Frame* sibling = NextSibling();
   if (sibling) {
     DCHECK(!stay_within || sibling->Tree().IsDescendantOf(stay_within));
-    return sibling;
+
+    if (!stay_in_local_root || sibling->IsLocalFrame())
+      return sibling;
+
+    while ((sibling = sibling->Tree().NextSibling())) {
+      if (sibling->IsLocalFrame())
+        return sibling;
+    }
+
+    sibling = nullptr;
   }
 
   Frame* frame = this_frame_;
   while (!sibling && (!stay_within || frame->Tree().Parent() != stay_within)) {
     frame = frame->Tree().Parent();
-    if (!frame)
+    if (!frame || (stay_in_local_root && frame->IsRemoteFrame()))
       return nullptr;
     sibling = frame->Tree().NextSibling();
+
+    while (sibling && stay_in_local_root && sibling->IsRemoteFrame())
+      sibling = sibling->Tree().NextSibling();
   }
 
   if (frame) {
@@ -258,6 +279,61 @@ Frame* FrameTree::TraverseNext(const Frame* stay_within) const {
   }
 
   return nullptr;
+}
+
+FrameTree::Iterator FrameTree::begin() {
+  return Iterator(this_frame_);
+}
+
+FrameTree::Iterator FrameTree::end() {
+  return Iterator(nullptr);
+}
+
+FrameTree::Iterator& FrameTree::Iterator::operator++() {
+  current_frame_ = current_frame_->Tree().TraverseNext(root_);
+
+  return *this;
+}
+
+FrameTree::LocalFrameIterator& FrameTree::LocalFrameIterator::operator++() {
+  do {
+    current_frame_ =
+        current_frame_->Tree().TraverseNext(root_, stay_in_local_root_);
+  } while (current_frame_ && !current_frame_->IsLocalFrame());
+
+  return *this;
+}
+
+bool FrameTree::Iterator::operator==(const FrameTree::Iterator& rhs) const {
+  return current_frame_ == rhs.current_frame_;
+}
+
+bool FrameTree::Iterator::operator!=(const FrameTree::Iterator& rhs) const {
+  return !(*this == rhs);
+}
+
+FrameTree::Iterator::operator bool() const {
+  return !!current_frame_;
+}
+
+LocalFrame* FrameTree::LocalFrameIterator::operator*() {
+  return ToLocalFrame(current_frame_);
+}
+
+LocalFrame* FrameTree::LocalFrameIterator::operator->() {
+  return ToLocalFrame(current_frame_);
+}
+
+FrameTree::LocalFrameIterator FrameTree::LocalRootRange::begin() {
+  return LocalFrameIterator(root_, true);
+}
+
+FrameTree::LocalFrameIterator FrameTree::LocalRootRange::end() {
+  return LocalFrameIterator(nullptr);
+}
+
+FrameTree::LocalRootRange FrameTree::GetLocalRootRange() {
+  return LocalRootRange(ToLocalFrame(this_frame_));
 }
 
 DEFINE_TRACE(FrameTree) {
