@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d695ab_3d5b8b46",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T19:58:49Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "688807d33de0527d87428444060d70fec7cbb100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b209b29_bdff0195",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T19:58:49Z",
+      "side": 1,
+      "message": "And base/bind.h.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "688807d33de0527d87428444060d70fec7cbb100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
