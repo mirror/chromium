@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deeff906_5788ffa3",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ScreenOrientationDelegateManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-18T22:39:45Z",
+      "side": 1,
+      "message": "maybe paradoxically, content_public can depend on content. So only need to expose the setter which can call through to ScreenOrientationProvider to hold the delegate. No need to put the  other two methods here, because they are not called by any layer above content.\n\nalso mark this class final and with a private constructor so it\u0027s never instantiated",
+      "revId": "64ecca3dfd1b45184cd44dd3540c7e61ae5b37f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
