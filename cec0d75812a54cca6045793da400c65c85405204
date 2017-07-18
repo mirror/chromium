@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a008c374_4173d6a7",
+        "filename": "tools/metrics/histograms/extract_histograms.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T18:24:52Z",
+      "side": 1,
+      "message": "Can you put the pattern as a constant at the top file.",
+      "range": {
+        "startLine": 258,
+        "startChar": 48,
+        "endLine": 258,
+        "endChar": 58
+      },
+      "revId": "cec0d75812a54cca6045793da400c65c85405204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09ae727_f65717eb",
+        "filename": "tools/metrics/histograms/extract_histograms.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T18:24:52Z",
+      "side": 1,
+      "message": "nit: maybe \u0027.. match expected format: \"...\", found: %s.\u0027",
+      "range": {
+        "startLine": 298,
+        "startChar": 50,
+        "endLine": 298,
+        "endChar": 76
+      },
+      "revId": "cec0d75812a54cca6045793da400c65c85405204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c322cdc2_32ee38a6",
+        "filename": "tools/metrics/histograms/extract_histograms.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T18:24:52Z",
+      "side": 1,
+      "message": "I would change to \"histogram %s\".",
+      "range": {
+        "startLine": 298,
+        "startChar": 28,
+        "endLine": 298,
+        "endChar": 40
+      },
+      "revId": "cec0d75812a54cca6045793da400c65c85405204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e187b6_a4311c9f",
+        "filename": "tools/metrics/histograms/extract_histograms.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T18:24:52Z",
+      "side": 1,
+      "message": "On second thought, I think maybe YYYY/MM/DD would be better, since it\u0027s the format we use in the server variations configs.",
+      "range": {
+        "startLine": 298,
+        "startChar": 57,
+        "endLine": 298,
+        "endChar": 67
+      },
+      "revId": "cec0d75812a54cca6045793da400c65c85405204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
