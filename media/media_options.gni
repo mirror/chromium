@@ -169,6 +169,7 @@ declare_args() {
       mojo_media_services = [
         "cdm",
         "audio_decoder",
+        "video_decoder",
       ]
       mojo_media_host = "gpu"
     } else if (enable_pepper_cdms) {
