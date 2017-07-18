@@ -22,6 +22,23 @@
       "revId": "490c9ac8a337e76bca0281fa23e0226ac1eef1f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17203d23_640b9aab",
+        "filename": "build/write_build_date_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T11:42:41Z",
+      "side": 1,
+      "message": "I\u0027m a fan of reproducible builds. I don\u0027t think the build should depend on magic env vars.\n\nI thought chrome\u0027s build is already fairly reproducible -- I remember we had a very long discussion before coming up with the current approach. Did you find and read that discussion?",
+      "revId": "490c9ac8a337e76bca0281fa23e0226ac1eef1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
