@@ -30,6 +30,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -264,6 +265,14 @@ class ChromeResourceDispatcherHostDelegateBrowserTest :
     return count;
   }
 
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    InProcessBrowserTest::SetUpCommandLine(command_line);
+    // Disable GoogleUrlTracker which creates network requests to
+    // https://www.google.com to check for locale. These calls may result in
+    // recording wrong headers in tests.
+    command_line->AppendSwitch(switches::kDisableBackgroundNetworking);
+  }
+
  protected:
   // The fake URL for DMServer we are using.
   GURL dm_url_;
@@ -419,9 +428,9 @@ void ReportRequestHeaders(std::map<std::string, std::string>* request_headers,
                           const std::string& url,
                           const std::string& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  EXPECT_FALSE(base::ContainsKey(*request_headers, url));
   // Ensure that a previous value is not overwritten.
-  EXPECT_FALSE(base::ContainsKey(*request_headers, url))
-      << "URL: " << url << ", Headers: " << headers;
   (*request_headers)[url] = headers;
 }
 
@@ -486,9 +495,11 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
   root_http = root_http.AppendASCII("mirror_request_header");
 
   struct TestCase {
-    GURL original_url, redirected_to_url;
-    bool inject_header, original_url_expects_header,
-        redirected_to_url_expects_header;
+    GURL original_url;
+    GURL redirected_to_url;
+    bool inject_header;
+    bool original_url_expects_header;
+    bool redirected_to_url_expects_header;
   } all_tests[] = {
       // Neither should have the header.
       {GURL("http://www.google.com"), GURL("http://www.redirected.com"), false,
