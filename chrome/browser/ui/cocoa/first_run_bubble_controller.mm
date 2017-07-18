@@ -42,24 +42,24 @@
 
 @implementation FirstRunBubbleController
 
-+ (FirstRunBubbleController*) showForView:(NSView*)view
-                                   offset:(NSPoint)offset
-                                  browser:(Browser*)browser
-                                  profile:(Profile*)profile {
++ (FirstRunBubbleController*)showAtPoint:(NSPoint)anchorPoint
+                            parentWindow:(NSWindow*)parentWindow
+                                 browser:(Browser*)browser
+                                 profile:(Profile*)profile {
   // Autoreleases itself on bubble close.
-  return [[FirstRunBubbleController alloc] initRelativeToView:view
-                                                       offset:offset
-                                                      browser:browser
-                                                      profile:profile];
+  return [[FirstRunBubbleController alloc] initWithAnchorPoint:anchorPoint
+                                                  parentWindow:parentWindow
+                                                       browser:browser
+                                                       profile:profile];
 }
 
-- (id)initRelativeToView:(NSView*)view
-                  offset:(NSPoint)offset
-                 browser:(Browser*)browser
-                 profile:(Profile*)profile {
+- (id)initWithAnchorPoint:(NSPoint)anchorPoint
+             parentWindow:(NSWindow*)parentWindow
+                  browser:(Browser*)browser
+                  profile:(Profile*)profile {
   if ((self = [super initWithWindowNibPath:@"FirstRunBubble"
-                            relativeToView:view
-                                    offset:offset])) {
+                              parentWindow:parentWindow
+                                anchoredAt:anchorPoint])) {
     browser_ = browser;
     profile_ = profile;
 
