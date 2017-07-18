@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc71a0b_6559e7e2",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-18T07:15:23Z",
+      "side": 1,
+      "message": "Since the parent has OWNERS *, you need to also set noparent (or the correct syntax for that) if you want this to actually have an effect (other than documenting that we know things about this directory)",
+      "revId": "2eb362fffa999704612a371e425226018676be32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
