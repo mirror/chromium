@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec2e8563_babf2694",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-18T19:19:04Z",
+      "side": 1,
+      "message": "network_info_list.empty()",
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e2fa81_c90ee658",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-18T19:19:04Z",
+      "side": 1,
+      "message": "Should we drop the base::ConstRef here? It doesn\u0027t seem safe for the observers to be able to access the |network_id_| since they can live on different threads. Would it be reasonable to expect |network_id_| can be efficiently copied in typical scenarios?",
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1aa70ff_e8a15e72",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-18T19:19:04Z",
+      "side": 1,
+      "message": "nit: Move the SequenceChecker down to just before DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 98,
+        "startChar": 38,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
