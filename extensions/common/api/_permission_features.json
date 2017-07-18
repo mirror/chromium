@@ -246,17 +246,8 @@
       "0136FCB13DB29FD5CD442F56E59E53B61F1DF96F"   // http://crbug.com/642141
     ]
   }],
-  "fileSystem.directory": {
-    "channel": "stable",
-    "extension_types": ["platform_app"]
-  },
-  "fileSystem.retainEntries": {
-    "channel": "stable",
-    "extension_types": ["platform_app"]
-  },
   "fileSystem.write": [{
-    "channel": "stable",
-    "extension_types": ["platform_app"]
+    // Inherit from default_parent for platform apps.
   },{
     "channel": "stable",
     "extension_types": ["extension"],
@@ -270,8 +261,6 @@
     ]
   }],
   "fileSystem.requestFileSystem": {
-    "channel": "stable",
-    "extension_types": ["platform_app"],
     "platforms": ["chromeos"]
   },
   "hid": [
