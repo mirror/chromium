@@ -211,6 +211,9 @@ class ProfileImpl : public Profile {
   base::FilePath path_;
   base::FilePath base_cache_path_;
 
+  // Task runner used for file access in the profile path.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
   // !!! BIG HONKING WARNING !!!
   //  The order of the members below is important. Do not change it unless
   //  you know what you're doing. Also, if adding a new member here make sure
