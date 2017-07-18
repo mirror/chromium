@@ -160,6 +160,24 @@
       "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbb2e32_af0a8c0f",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T13:19:29Z",
+      "side": 1,
+      "message": "Sure. I don\u0027t think it matters much as it\u0027s not user facing. Maybe underline in another sentence that it will not block the playback but instead the user will not hear it.",
+      "parentUuid": "d8c7a351_c10f5a38",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
