@@ -63,7 +63,7 @@ class MediaEngagementScore final {
   }
 
   // Get a breakdown of the score that can be serialized by Mojo.
-  media::mojom::MediaEngagementScoreDetails GetScoreDetails() const;
+  media::mojom::MediaEngagementScoreDetailsPtr GetScoreDetails() const;
 
  private:
   friend class MediaEngagementServiceTest;
