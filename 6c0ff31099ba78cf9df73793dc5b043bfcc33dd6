@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a7671310_d6dd0c52",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-18T07:45:48Z",
+      "side": 1,
+      "message": "\u003e Looking at that, it seems it might be more correct to have the conditional bindings on the actual global instance (inner global)? Is that feasible or desirable?\n\nV8\u0027s implementation is (conceptually) like below:\n\nSetProperty(object, property) {\n  if (object is the global proxy) {\n    SetProperty(object-\u003eGetPrototype(),  // This is the global object.\n                property);\n  } else {\n    // Do something.\n  }\n}\n\nSo, actually you cannot install a property onto the global proxy itself.  It\u0027s automagically set to the global object.",
+      "parentUuid": "193e4627_72fff54c",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87a414eb_b4d84f55",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
         "patchSetId": 12
