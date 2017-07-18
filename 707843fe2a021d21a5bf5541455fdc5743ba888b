@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8db893cf_c2bea298",
+        "filename": "ash/drag_drop/drag_drop_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:56:23Z",
+      "side": 1,
+      "message": "Clarification: How is it ensured that |drag_data_| is alive here?",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23b59fb_fa4ebfa4",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:56:23Z",
+      "side": 1,
+      "message": "nit/style: Could you elide braces for consistency? Ditto for below.",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a105be23_13dab79a",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:56:23Z",
+      "side": 1,
+      "message": "If this is for testing only, ForTesting suffix would help you to check if this is not used in production.",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bdd9fc_b5c38286",
+        "filename": "ui/aura/mus/drag_drop_controller_mus_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:56:23Z",
+      "side": 1,
+      "message": "nit/optional: You can initialize the var here, so that you can drop ctor declaration.",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188e85ca_3d265314",
+        "filename": "ui/aura/mus/drag_drop_controller_mus_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:56:23Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
