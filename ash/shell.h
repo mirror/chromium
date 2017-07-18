@@ -555,17 +555,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   // TODO(oshima): Investigate if we can merge this and |OnLoginStateChanged|.
   void UpdateAfterLoginStatusChange(LoginStatus status);
 
-  // Notifies observers that maximize mode has started, windows might still
-  // animate.
-  void NotifyMaximizeModeStarted();
-
-  // Notifies observers that maximize mode is about to end.
-  void NotifyMaximizeModeEnding();
-
-  // Notifies observers that maximize mode has ended, windows might still be
-  // returning to their original position.
-  void NotifyMaximizeModeEnded();
-
   // Notifies observers that overview mode is about to be started (before the
   // windows get re-arranged).
   void NotifyOverviewModeStarting();

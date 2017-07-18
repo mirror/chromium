@@ -9,7 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/shell_observer.h"
+#include "ash/wm/maximize_mode/maximize_mode_observer.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
@@ -31,7 +31,7 @@ class ASH_EXPORT ScreenOrientationController
       public aura::WindowObserver,
       public chromeos::AccelerometerReader::Observer,
       public WindowTreeHostManager::Observer,
-      public ShellObserver {
+      public MaximizeModeObserver {
  public:
   // Observer that reports changes to the state of ScreenOrientationProvider's
   // rotation lock.
@@ -118,7 +118,7 @@ class ASH_EXPORT ScreenOrientationController
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
 
-  // ShellObserver:
+  // MaximizeModeObserver:
   void OnMaximizeModeStarted() override;
   void OnMaximizeModeEnding() override;
 

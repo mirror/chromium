@@ -15,6 +15,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/accelerometer/accelerometer_types.h"
@@ -38,6 +39,7 @@ class Vector3dF;
 namespace ash {
 
 class ScopedDisableInternalMouseAndKeyboard;
+class MaximizeModeObserver;
 class MaximizeModeWindowManager;
 
 // MaximizeModeController listens to accelerometer events and automatically
@@ -86,9 +88,10 @@ class ASH_EXPORT MaximizeModeController
   // Binds the mojom::TouchViewManager interface request to this object.
   void BindRequest(mojom::TouchViewManagerRequest request);
 
+  void AddObserver(MaximizeModeObserver* observer);
+  void RemoveObserver(MaximizeModeObserver* observer);
+
   // ShellObserver:
-  void OnMaximizeModeStarted() override;
-  void OnMaximizeModeEnded() override;
   void OnShellInitialized() override;
 
   // WindowTreeHostManager::Observer:
@@ -212,6 +215,8 @@ class ASH_EXPORT MaximizeModeController
   ForceTabletMode force_tablet_mode_ = ForceTabletMode::NONE;
 
   ScopedSessionObserver scoped_session_observer_;
+
+  base::ObserverList<MaximizeModeObserver> maximize_mode_observers_;
 
   base::WeakPtrFactory<MaximizeModeController> weak_factory_;
 
