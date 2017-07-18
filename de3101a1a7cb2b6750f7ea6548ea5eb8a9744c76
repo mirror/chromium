@@ -22,6 +22,30 @@
       "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12510756_d6d79237",
+        "filename": "components/variations/service/variations_field_trial_creator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-18T20:18:21Z",
+      "side": 1,
+      "message": "I\u0027ll try to explain the bug better:\n\nIn the VariationsService constructor I first called std::move(client) and then client.get(), the .get() call returns nullptr on some platforms, so VariationsFieldTrialCreator\u0027s client_ was nullptr. The crash didn\u0027t actually occur until an attempt to dereference client_ inside GetClientFilterableStateForVersion().",
+      "parentUuid": "c6eb8109_d18f6d5d",
+      "range": {
+        "startLine": 281,
+        "startChar": 62,
+        "endLine": 281,
+        "endChar": 63
+      },
+      "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
