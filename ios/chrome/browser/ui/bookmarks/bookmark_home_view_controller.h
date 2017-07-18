@@ -16,9 +16,26 @@ namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
 
+namespace bookmarks {
+class BookmarkModelBridge;
+class BookmarkNode;
+}  // namespace bookmarks
+
 // Class to navigate the bookmark hierarchy, needs subclassing for tablet /
 // handset case.
-@interface BookmarkHomeViewController : UIViewController
+@interface BookmarkHomeViewController : UIViewController {
+ @protected
+  // The following 2 ivars both represent the set of nodes being edited.
+  // The set is for fast lookup.
+  // The vector maintains the order that edit nodes were added.
+  // Use the relevant instance methods to modify these two ivars in tandem.
+  // DO NOT modify these two ivars directly.
+  std::set<const bookmarks::BookmarkNode*> _editNodes;
+  std::vector<const bookmarks::BookmarkNode*> _editNodesOrdered;
+
+  // Bridge to register for bookmark changes.
+  std::unique_ptr<bookmarks::BookmarkModelBridge> _bridge;
+}
 
 - (instancetype)initWithNibName:(NSString*)nibNameOrNil
                          bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
@@ -27,6 +44,12 @@ class ChromeBrowserState;
 - (instancetype)initWithLoader:(id<UrlLoader>)loader
                   browserState:(ios::ChromeBrowserState*)browserState
     NS_DESIGNATED_INITIALIZER;
+
+@end
+
+@interface BookmarkHomeViewController (ExposedForTesting)
+
+- (const std::set<const bookmarks::BookmarkNode*>&)editNodes;
 
 @end
 
