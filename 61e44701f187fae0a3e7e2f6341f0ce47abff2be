@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "400145b1_47f986a8",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-18T18:02:56Z",
+      "side": 1,
+      "message": "Do we already have logic for filling on-device entries first, and only then uninstalled ones? Where does it live?",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "61e44701f187fae0a3e7e2f6341f0ce47abff2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
