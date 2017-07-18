@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "86bdd538_f4cc1c02",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T02:09:50Z",
+      "side": 1,
+      "message": "OK thanks for the info. Yeah if the renderer is keeping its own bitset it seems much simpler to just report the new histograms verbatim as they come in.\n\nOf course, if you are nervous that the IPCs could be wrong and you want to be doubly sure that the browser process only records one for each type of counter, I am OK with keeping the bitset here. Another option would be to add a debug step which validates this, in debug builds only.\n\nUp to you, I think all three solutions are reasonable.",
+      "parentUuid": "b9785d41_dd09ecf8",
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9833556_f5437a89",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
         "patchSetId": 23
@@ -303,6 +321,30 @@
       "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b06125_d2db1aac",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T02:09:50Z",
+      "side": 1,
+      "message": "ha, overzealous :)",
+      "parentUuid": "369f2401_06088b85",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "70e765605b23bf84f2e29f3b057b2240131d726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
