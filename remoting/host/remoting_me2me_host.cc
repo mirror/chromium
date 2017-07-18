@@ -177,6 +177,9 @@ const char kSignalParentSwitchName[] = "signal-parent";
 // Command line switch used to enable VP9 encoding.
 const char kEnableVp9SwitchName[] = "enable-vp9";
 
+// Command line switch used to enable hardware H264 encoding.
+const char kEnableHardwareH264SwitchName[] = "enable-hardware-h264";
+
 const char kWindowIdSwitchName[] = "window-id";
 
 // Maximum time to wait for clean shutdown to occur, before forcing termination
@@ -375,6 +378,7 @@ class HostProcess : public ConfigWatcher::Delegate,
   std::string host_owner_email_;
   bool use_service_account_ = false;
   bool enable_vp9_ = false;
+  bool enable_hardware_h264_ = false;
 
   std::unique_ptr<PolicyWatcher> policy_watcher_;
   PolicyState policy_state_ = POLICY_INITIALIZING;
@@ -1008,6 +1012,15 @@ bool HostProcess::ApplyConfig(const base::DictionaryValue& config) {
     enable_vp9_ = true;
   } else {
     config.GetBoolean(kEnableVp9ConfigPath, &enable_vp9_);
+  }
+
+  // Allow offering of hardware H264 encoding to be overridden by the command
+  // line.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          kEnableHardwareH264SwitchName)) {
+    enable_hardware_h264_ = true;
+  } else {
+    config.GetBoolean(kEnableHardwareH264SwitchName, &enable_hardware_h264_);
   }
 
   return true;
