@@ -10,9 +10,11 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/component_updater/component_patcher_operation_out_of_process.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -20,6 +22,14 @@
 #include "content/public/browser/browser_thread.h"
 #include "courgette/courgette.h"
 #include "courgette/third_party/bsdiff/bsdiff.h"
+
+namespace {
+
+constexpr base::TaskTraits kTaskTraits = {
+    base::MayBlock(), base::TaskPriority::BACKGROUND,
+    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
+
+}  // namespace
 
 class OutOfProcessPatchTest : public InProcessBrowserTest {
  public:
@@ -44,10 +54,10 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
 
     base::RunLoop run_loop;
     base::PostTaskWithTraitsAndReply(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+        FROM_HERE, kTaskTraits,
         base::BindOnce(&OutOfProcessPatchTest::CopyFile, TestFile(name), path),
         run_loop.QuitClosure());
-
+    scoped_task_environment_.RunUntilIdle();
     run_loop.Run();
     return path;
   }
@@ -57,10 +67,10 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
 
     base::RunLoop run_loop;
     base::PostTaskWithTraitsAndReply(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+        FROM_HERE, kTaskTraits,
         base::BindOnce(&OutOfProcessPatchTest::CopyFile, TestFile(name), path),
         run_loop.QuitClosure());
-
+    scoped_task_environment_.RunUntilIdle();
     run_loop.Run();
     return path;
   }
@@ -82,12 +92,12 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
     quit_closure_ = run_loop.QuitClosure();
     done_called_ = false;
 
-    content::BrowserThread::PostBlockingPoolSequencedTask(
-        "OutOfProcessPatchTest::PatchAsyncSequencedTaskRunner", FROM_HERE,
+    base::PostTaskWithTraits(
+        FROM_HERE, kTaskTraits,
         base::BindOnce(&OutOfProcessPatchTest::PatchAsyncSequencedTaskRunner,
                        base::Unretained(this), operation, input, patch, output,
                        expected_result));
-
+    scoped_task_environment_.RunUntilIdle();
     run_loop.Run();
     EXPECT_TRUE(done_called_);
   }
@@ -98,13 +108,10 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
                                      const base::FilePath& patch,
                                      const base::FilePath& output,
                                      int expected_result) {
-    scoped_refptr<base::SequencedTaskRunner> task_runner =
-        base::SequencedTaskRunnerHandle::Get();
-
     scoped_refptr<update_client::OutOfProcessPatcher> patcher =
-        make_scoped_refptr(new component_updater::ChromeOutOfProcessPatcher);
+        base::MakeRefCounted<component_updater::ChromeOutOfProcessPatcher>();
 
-    patcher->Patch(operation, task_runner, input, patch, output,
+    patcher->Patch(operation, input, patch, output,
                    base::Bind(&OutOfProcessPatchTest::PatchDone,
                               base::Unretained(this), expected_result));
   }
@@ -112,8 +119,8 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
   void PatchDone(int expected, int result) {
     EXPECT_EQ(expected, result);
     done_called_ = true;
-    content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                     quit_closure_);
+    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+        ->PostTask(FROM_HERE, quit_closure_);
   }
 
   static void CopyFile(const base::FilePath& source,
@@ -121,6 +128,7 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
     EXPECT_TRUE(base::CopyFile(source, target));
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir installed_dir_;
   base::ScopedTempDir input_dir_;
   base::ScopedTempDir unpack_dir_;

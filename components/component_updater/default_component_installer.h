@@ -21,7 +21,7 @@
 #include "components/update_client/update_client.h"
 
 namespace base {
-class SequencedTaskRunner;
+class TaskRunner;
 class SingleThreadTaskRunner;
 }  // namespace base
 
@@ -169,10 +169,9 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
   std::string current_fingerprint_;
 
   std::unique_ptr<ComponentInstallerTraits> installer_traits_;
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  scoped_refptr<base::TaskRunner> task_runner_;
 
-  // Used to post responses back to the main thread. Initialized on the main
-  // loop but accessed from the task runner.
+  // Used to post responses back to the main thread.
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 
   base::ThreadChecker thread_checker_;

@@ -33,7 +33,6 @@ class ActionRunner {
       base::Callback<void(bool succeeded, int error_code, int extra_code1)>;
 
   ActionRunner(const Component& component,
-               const scoped_refptr<base::SequencedTaskRunner>& task_runner,
                const std::vector<uint8_t>& key_hash);
   ~ActionRunner();
 
@@ -50,7 +49,6 @@ class ActionRunner {
   void WaitForCommand(base::Process process);
 
   const Component& component_;
-  const scoped_refptr<base::SequencedTaskRunner>& task_runner_;
 
   // Contains the key hash of the CRX this object is allowed to run. This value
   // is using during the unpacking of the CRX to verify its integrity.

@@ -14,8 +14,10 @@
 #include "base/json/json_file_value_serializer.h"
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "components/update_client/component_patcher_operation.h"
+#include "components/update_client/task_traits.h"
 #include "components/update_client/update_client.h"
 #include "components/update_client/update_client_errors.h"
 
@@ -45,23 +47,21 @@ ComponentPatcher::ComponentPatcher(
     const base::FilePath& input_dir,
     const base::FilePath& unpack_dir,
     scoped_refptr<CrxInstaller> installer,
-    scoped_refptr<OutOfProcessPatcher> out_of_process_patcher,
-    scoped_refptr<base::SequencedTaskRunner> task_runner)
+    scoped_refptr<OutOfProcessPatcher> out_of_process_patcher)
     : input_dir_(input_dir),
       unpack_dir_(unpack_dir),
       installer_(installer),
-      out_of_process_patcher_(out_of_process_patcher),
-      task_runner_(task_runner) {
-}
+      out_of_process_patcher_(out_of_process_patcher) {}
 
 ComponentPatcher::~ComponentPatcher() {
 }
 
 void ComponentPatcher::Start(const Callback& callback) {
   callback_ = callback;
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(&ComponentPatcher::StartPatching,
-                                    scoped_refptr<ComponentPatcher>(this)));
+  base::PostTaskWithTraits(
+      FROM_HERE, kTaskTraits,
+      base::BindOnce(&ComponentPatcher::StartPatching,
+                     scoped_refptr<ComponentPatcher>(this)));
 }
 
 void ComponentPatcher::StartPatching() {
@@ -97,8 +97,7 @@ void ComponentPatcher::PatchNextFile() {
   }
   current_operation_->Run(command_args, input_dir_, unpack_dir_, installer_,
                           base::Bind(&ComponentPatcher::DonePatchingFile,
-                                     scoped_refptr<ComponentPatcher>(this)),
-                          task_runner_);
+                                     scoped_refptr<ComponentPatcher>(this)));
 }
 
 void ComponentPatcher::DonePatchingFile(UnpackerError error,
@@ -113,8 +112,8 @@ void ComponentPatcher::DonePatchingFile(UnpackerError error,
 
 void ComponentPatcher::DonePatching(UnpackerError error, int extended_error) {
   current_operation_ = NULL;
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(callback_, error, extended_error));
+  base::PostTaskWithTraits(FROM_HERE, kTaskTraits,
+                           base::BindOnce(callback_, error, extended_error));
   callback_.Reset();
 }
 
