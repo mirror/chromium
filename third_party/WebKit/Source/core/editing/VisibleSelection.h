@@ -156,7 +156,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   // Support methods for Validate()
   void AdjustSelectionToAvoidCrossingShadowBoundaries();
-  void AdjustSelectionToAvoidCrossingEditingBoundaries();
   void UpdateSelectionType();
 
   // We need to store these as Positions because VisibleSelection is
