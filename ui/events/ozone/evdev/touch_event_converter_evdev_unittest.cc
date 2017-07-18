@@ -1116,4 +1116,69 @@ TEST_F(TouchEventConverterEvdevTest, ActiveStylusMotion) {
   EXPECT_EQ(0.f / 1024, event.pointer_details.force);
 }
 
+TEST_F(TouchEventConverterEvdevTest, StylusInconsistentSpeedFilter) {
+  ui::MockTouchEventConverterEvdev* dev = device();
+  EventDeviceInfo devinfo;
+  EXPECT_TRUE(CapabilitiesToDeviceInfo(kEveStylus, &devinfo));
+  dev->Initialize(devinfo);
+
+  struct input_event mock_kernel_queue[]{
+      {{0, 520571}, EV_KEY, BTN_TOOL_PEN, 1},
+      {{0, 520571}, EV_KEY, BTN_TOUCH, 1},
+      {{0, 520571}, EV_ABS, ABS_X, 10912},
+      {{0, 520571}, EV_ABS, ABS_Y, 8388},
+      {{0, 520571}, EV_SYN, SYN_REPORT, 0},
+      {{0, 523097}, EV_ABS, ABS_X, 10983},
+      {{0, 523097}, EV_SYN, SYN_REPORT, 0},  // dt=2.52, dx=71, vx=28.10
+      {{0, 525587}, EV_ABS, ABS_X, 11054},
+      {{0, 525587}, EV_SYN, SYN_REPORT, 0},  // dt=2.49, dx=71, vx=28.51
+      {{0, 528067}, EV_ABS, ABS_X, 11124},
+      {{0, 528067}, EV_SYN, SYN_REPORT, 0},  // dt=2.48, dx=70, vx=28.22
+      {{0, 530622}, EV_ABS, ABS_X, 11195},
+      {{0, 530622}, EV_ABS, ABS_Y, 8389},
+      {{0, 530622}, EV_SYN, SYN_REPORT, 0},  // dt=2.55, dx=71, vx=27.78
+      {{0, 532966}, EV_ABS, ABS_X, 11264},
+      {{0, 532966}, EV_ABS, ABS_Y, 8388},
+      {{0, 532966}, EV_SYN, SYN_REPORT, 0},  // dt=2.34, dx=69, vx=29.43
+      {{0, 543072}, EV_ABS, ABS_X, 11353},
+      {{0, 543072}, EV_ABS, ABS_Y, 8387},
+      {{0, 543072}, EV_SYN, SYN_REPORT, 0},  // dt=10.1, dx=89, vx=8.80
+      {{0, 545522}, EV_ABS, ABS_X, 11423},
+      {{0, 545522}, EV_ABS, ABS_Y, 8385},
+      {{0, 545522}, EV_SYN, SYN_REPORT, 0},  // dt=2.45, dx=70, vx=28.57
+      {{0, 547976}, EV_ABS, ABS_X, 11493},
+      {{0, 547976}, EV_ABS, ABS_Y, 8382},
+      {{0, 547976}, EV_SYN, SYN_REPORT, 0},  // dt=2.45, dx=70, vx=28.52
+      {{0, 550444}, EV_ABS, ABS_X, 11562},
+      {{0, 550444}, EV_ABS, ABS_Y, 8380},
+      {{0, 550444}, EV_SYN, SYN_REPORT, 0},  // dt=2.46, dx=69, vx=27.95
+      {{0, 552992}, EV_ABS, ABS_X, 11632},
+      {{0, 552992}, EV_ABS, ABS_Y, 8378},
+      {{0, 552992}, EV_SYN, SYN_REPORT, 0},  // dt=2.54, dx=70, vx=27.47
+      {{0, 555376}, EV_KEY, BTN_TOUCH, 0},
+      {{0, 555376}, EV_KEY, BTN_TOOL_PEN, 0},
+      {{0, 555376}, EV_SYN, SYN_REPORT, 0},
+  };
+
+  dev->ConfigureReadMock(mock_kernel_queue, arraysize(mock_kernel_queue), 0);
+  dev->ReadNow();
+
+  EXPECT_EQ(12u, size());
+
+  ui::TouchEventParams initial_event = dispatched_touch_event(0);
+  float prev_x = initial_event.location.x();
+  base::TimeTicks prev_t = initial_event.timestamp;
+  for (size_t i = 1; i < size(); ++i) {
+    ui::TouchEventParams event = dispatched_touch_event(i);
+    float dx = event.location.x() - prev_x;
+    float dt = (event.timestamp - prev_t).InMillisecondsF();
+    float vx = dx / dt;
+
+    // The actual speed is around 27 px/ms. Verify that all reports are
+    // within 3 px/ms of that.
+    EXPECT_LT(24.0f, vx);
+    EXPECT_GT(30.0f, vx);
+  }
+}
+
 }  // namespace ui
