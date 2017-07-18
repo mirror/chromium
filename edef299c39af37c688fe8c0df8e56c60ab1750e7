@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c653581f_00b5b062",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-18T12:54:30Z",
+      "side": 1,
+      "message": "Reading this comment got me thinking whether we should actually silently update the branding info here. Branding Info is not really part of the equivalance class, so I would expect |Store| to succeed if the equivalence class stays the same, but the branding info is updated. Given that currently |Store| is only called from |StoreAndRemoveConflicting| this is not critical to update user\u0027s databases to include Branding Info, but maybe it is something we should address anyway. What is your opinion on this?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "edef299c39af37c688fe8c0df8e56c60ab1750e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
