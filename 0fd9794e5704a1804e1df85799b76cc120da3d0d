@@ -141,6 +141,30 @@
       "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32fb1d5_f02a804b",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T18:08:02Z",
+      "side": 1,
+      "message": "I\u0027ve undone the changes to GotFocus, so that should alleviate the risk of doing a bunch of extra work, and added Android support for GotFocus.\n\nI think the only real changes here for WebContentsObservers now are that the fullscreen widget restriction is gone, the event now fires on Android, and it adds the RWH arg.",
+      "parentUuid": "5394b796_7abbed04",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
