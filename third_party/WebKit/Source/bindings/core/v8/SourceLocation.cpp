@@ -173,7 +173,7 @@ SourceLocation::~SourceLocation() {}
 void SourceLocation::ToTracedValue(TracedValue* value, const char* name) const {
   if (!stack_trace_ || stack_trace_->isEmpty())
     return;
-  value->BeginArray(name);
+  value->BeginArrayWithName(name);
   value->BeginDictionary();
   value->SetString("functionName",
                    ToCoreString(stack_trace_->topFunctionName()));
