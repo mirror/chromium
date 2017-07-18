@@ -16,6 +16,24 @@
       "revId": "a537c70769325e606d21d758661fe9abd847a972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ff0090_916857e6",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-18T19:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ad9579_b77823cd",
+      "revId": "a537c70769325e606d21d758661fe9abd847a972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

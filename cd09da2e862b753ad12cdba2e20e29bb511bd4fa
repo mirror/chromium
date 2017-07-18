@@ -16,6 +16,24 @@
       "revId": "cd09da2e862b753ad12cdba2e20e29bb511bd4fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d38ae8f_d974f9c1",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-18T19:27:37Z",
+      "side": 1,
+      "message": "I hadn\u0027t thought of this before, but I\u0027ve done it this way now.",
+      "parentUuid": "90d332bd_c856f3a0",
+      "revId": "cd09da2e862b753ad12cdba2e20e29bb511bd4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
