@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b741a487_56e89a27",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T22:49:43Z",
+      "side": 1,
+      "message": "Since this is only called in one place, maybe just put the code in ToMXTime()?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 68
+      },
+      "revId": "e5e2af92169b8fcff20f6a3a2a53a78b69f4e5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fbfc9f_995e4748",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T22:49:43Z",
+      "side": 1,
+      "message": "Unlike the conversion from nanos→usecs, going the other way could cause overflow (in extreme situations, granted). Consider using base::CheckedNumeric\u003cmx_time_t\u003e (e.g., https://cs.chromium.org/chromium/src/base/time/time.cc?rcl\u003d628e9d0922332d94629b3fec38f1a1d274eff042\u0026l\u003d107).",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "e5e2af92169b8fcff20f6a3a2a53a78b69f4e5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acd9c77_7c3fa2cb",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T22:49:43Z",
+      "side": 1,
+      "message": "Please use us_ (private member) rather than ToInternalValue(). If only because I am trying to eliminate To/FromInternalValue() (http://crbug.com/634507). :)",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "e5e2af92169b8fcff20f6a3a2a53a78b69f4e5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
