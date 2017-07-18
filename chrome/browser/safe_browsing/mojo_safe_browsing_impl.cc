@@ -70,7 +70,6 @@ void MojoSafeBrowsingImpl::Create(
     scoped_refptr<SafeBrowsingDatabaseManager> database_manager,
     scoped_refptr<SafeBrowsingUIManager> ui_manager,
     int render_process_id,
-    const service_manager::BindSourceInfo& source_info,
     mojom::SafeBrowsingRequest request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   mojo::MakeStrongBinding(base::MakeUnique<MojoSafeBrowsingImpl>(
