@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b07de2c4_e1501690",
+        "filename": "components/filesystem/lock_table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T01:27:29Z",
+      "side": 1,
+      "message": "If we think this isn\u0027t really necessary, should we remove it on all platforms?",
+      "revId": "c1c4262dab0c8a088c5561a98756d79894727756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
