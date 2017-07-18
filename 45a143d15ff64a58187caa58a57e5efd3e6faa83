@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bacec457_013d115b",
+        "filename": "chrome/browser/ui/views/apps/app_window_easy_resize_window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T21:14:51Z",
+      "side": 1,
+      "message": "Since you are here, remove else?",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816de2c5_3b062240",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T21:14:51Z",
+      "side": 1,
+      "message": "Don\u0027t need else",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606e6ab6_99268704",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T21:14:51Z",
+      "side": 1,
+      "message": "Maybe DCHECK instead that the out-params are non-null?",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639ab024_e98fcee2",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T21:14:51Z",
+      "side": 1,
+      "message": "We can just get rid of the override?",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
