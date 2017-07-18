@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "7fda283d_28d36894",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "I\u0027ve always seen 2 space indentations for these, are you following some style guide to use 4?",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 6
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2749756e_c3f71a87",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "Does this have to be exactly \"sub_frame\"? we use subframe as one word in our codebase IIRC.",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca812c0_443e2c3b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "Is it a requirement for this to be hacker case vs \"firstParty\"?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a96697bd_e3e0e743",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -66,6 +135,29 @@
     },
     {
       "key": {
+        "uuid": "44410a53_79ee60fe",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "isUrlFilterCaseSensitive?",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fa75dc7_c11678d0",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -94,6 +186,98 @@
       "writtenOn": "2017-07-18T22:17:47Z",
       "side": 1,
       "message": "Hmm... if domainType is optional (which I think it should be) do we need to have the \"any\" value?  Or could we instead do:\n\n// Specifies whether the network request is first-party or third-party to\n// the domain from which it originated. If omitted, all requests are\n// accepted.\nDomainType? domainType;\n\nIs there benefit in having the `any` type?",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62027a1c_b5fb4119",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "nit: Only valid if |type| \u003d\u003d \u0027redirect\u0027",
+      "range": {
+        "startLine": 97,
+        "startChar": 27,
+        "endLine": 97,
+        "endChar": 31
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542f6fea_efdd2a7c",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "nit: \"greater than or equal to 0\" -\u003e simply \"\u003e\u003d 0\", easier to read?",
+      "range": {
+        "startLine": 102,
+        "startChar": 21,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e44a98_92fc3575",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "if these are unsigned, can we specify unsigned long in idl?",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2182af8c_538d60ac",
+        "filename": "extensions/common/api/schema.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T23:43:42Z",
+      "side": 1,
+      "message": "Sort",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 26
+      },
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
