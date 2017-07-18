@@ -20,7 +20,7 @@
 @synthesize label = _label;
 
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
+              arrowDirection:(BubbleArrowDirection)direction
                    alignment:(BubbleAlignment)alignment {
   self = [super initWithFrame:CGRectZero];
   return self;
