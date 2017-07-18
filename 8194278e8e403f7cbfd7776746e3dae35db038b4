@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27ada556_21fd3d32",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-18T14:20:56Z",
+      "side": 1,
+      "message": "Are you referring to this comment?\n\n// Versions 16 and below (prior to April 2017) used ntohs() to byte-swap SSV\n// data when converting it to the wire format. This was a historical accient.\n\nApril 2017 sounds fairly recent -- I imagine there are still installations with this wire format?",
+      "parentUuid": "6feda9f1_d7278b98",
+      "revId": "8194278e8e403f7cbfd7776746e3dae35db038b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c565a455_f1d1e9ff",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "367c0bf1_a402a112",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-18T14:20:56Z",
+      "side": 1,
+      "message": "\u003e What is this change for?\n\nTo unify the code paths, and allow use of a common helper (SwapWiredDataIfNeeded).\n\n\u003e Previously we didn\u0027t need to allocate StringBuffer if IsByteSwappedWiredData returns false, right?\n\nRight, but there was still a hidden copy in the String constructor.  Now we make a copy upfront, into a StringBuffer, and then adopt it into a String -- so it should be equivalent allocation-wise AFAICT.",
+      "parentUuid": "c565a455_f1d1e9ff",
+      "revId": "8194278e8e403f7cbfd7776746e3dae35db038b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffd68fd1_786ad45a",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T13:41:14Z",
       "side": 1,
       "message": "If you\u0027re going to touch this code, could you directly create a suitable buffer? This constructor does another copy (the internal representation is no longer WTF::String), which is unfortunate.",
+      "revId": "8194278e8e403f7cbfd7776746e3dae35db038b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d1d156_3fd7a868",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-18T14:20:56Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll take a look.  But I\u0027d prefer a separate CL for clarity.",
+      "parentUuid": "ffd68fd1_786ad45a",
       "revId": "8194278e8e403f7cbfd7776746e3dae35db038b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
