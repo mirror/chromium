@@ -16,6 +16,24 @@
       "revId": "865d25fe0585384f10421d974147cfa91fd19d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4972407_ff74c596",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T08:32:23Z",
+      "side": 1,
+      "message": "Could you help clarifying: Do I understand correctly you suggest to put a DCHECK for IsNumber() into GetDoubleValue()? \n\nI think IsNumber() is too strict for GetDoubleValue(). Even if the UnitType is something other than kNumber it makes sense to retrieve a value thorugh GetDoubleValue(), for example for kPercentage or other. But here, in the font weight context, I\u0027d like to make sure that that the unit type is not anything else.",
+      "parentUuid": "9c8b108c_8cbc5a89",
+      "revId": "865d25fe0585384f10421d974147cfa91fd19d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

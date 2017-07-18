@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d1f20fe_de4061c8",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T08:32:23Z",
+      "side": 0,
+      "message": "Yes, or I\u0027ll remove it from the parent CL where it was added spuriously.",
+      "parentUuid": "8dd7239e_2c017103",
+      "revId": "17633bc6dd6cec6cf8dcc4b072d63815b0ba40fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4928070_a2e8837c",
         "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T04:13:47Z",
       "side": 0,
       "message": "Please update test expectation for fast/css/css2-system-fonts.html",
+      "revId": "17633bc6dd6cec6cf8dcc4b072d63815b0ba40fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0ee321_743479b2",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T08:32:23Z",
+      "side": 0,
+      "message": "I\u0027ll do that.",
+      "parentUuid": "c4928070_a2e8837c",
       "revId": "17633bc6dd6cec6cf8dcc4b072d63815b0ba40fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
