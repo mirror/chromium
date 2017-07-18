@@ -15,6 +15,9 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/command_updater.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
@@ -772,6 +775,18 @@ void OmniboxViewViews::OnFocus() {
   // Focus changes can affect the visibility of any keyword hint.
   if (model()->is_keyword_hint())
     location_bar_view_->Layout();
+
+  // The user must be starting a session in the same tab as a previous one
+  // in order to display the new tab in-product help promo.
+  // While focusing the omnibox is not always a precursor to starting a new
+  // session, we don't want to wait until the user is in the middle of editing
+  // or navigating, because we'd like to show them the promo at the time when
+  // it would be immediately useful.
+  if (controller()->GetToolbarModel()->ShouldDisplayURL()) {
+    feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+        ->GetForProfile(location_bar_view_->profile())
+        ->OnOmniboxFocused();
+  }
 }
 
 void OmniboxViewViews::OnBlur() {

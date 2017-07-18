@@ -17,6 +17,8 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/tab_helper.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper_delegate.h"
@@ -906,6 +908,10 @@ void TabStripModel::ExecuteContextMenuCommand(
       UMA_HISTOGRAM_ENUMERATION("Tab.NewTab",
                                 TabStripModel::NEW_TAB_CONTEXT_MENU,
                                 TabStripModel::NEW_TAB_ENUM_COUNT);
+      feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+          ->GetForProfile(profile_)
+          ->OnNewTabOpened();
+
       delegate()->AddTabAt(GURL(), context_index + 1, true);
       break;
 
