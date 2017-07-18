@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d597990f_4320a634",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T09:46:33Z",
+      "side": 1,
+      "message": "What happens if we don\u0027t add the excluded sources?\n\nI\u0027m a bit concerned that this makes GN files complex and less maintainable.",
+      "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
