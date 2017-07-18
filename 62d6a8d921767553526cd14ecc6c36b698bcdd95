@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdff27c0_8744980a",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-18T17:57:48Z",
+      "side": 1,
+      "message": "So, in the excludes you list the pylib.utils.proguard module. Is this still necessary?",
+      "revId": "62d6a8d921767553526cd14ecc6c36b698bcdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d16c93_609ec6cb",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-18T17:57:48Z",
+      "side": 1,
+      "message": "check if this is still necessary after the bug fixes",
+      "revId": "62d6a8d921767553526cd14ecc6c36b698bcdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9a7a7b_c3391291",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-18T17:57:48Z",
+      "side": 1,
+      "message": "nit: add another empty line",
+      "revId": "62d6a8d921767553526cd14ecc6c36b698bcdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f746ff52_15133145",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-18T17:57:48Z",
+      "side": 1,
+      "message": "add a comment saying something like \"Exclude tracing even when an excluded module calls back into an included module.\"",
+      "revId": "62d6a8d921767553526cd14ecc6c36b698bcdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
