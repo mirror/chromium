@@ -57,7 +57,7 @@ bool GetAppOutputInternal(const StringPiece16& cl,
 
   // Create the pipe for the child process's STDOUT.
   if (!CreatePipe(&out_read, &out_write, &sa_attr, 0)) {
-    NOTREACHED() << "Failed to create pipe";
+    NOTREACHED() << "Failed to create pipe when executing " << cl.as_string();
     return false;
   }
 
@@ -67,7 +67,8 @@ bool GetAppOutputInternal(const StringPiece16& cl,
 
   // Ensure the read handles to the pipes are not inherited.
   if (!SetHandleInformation(out_read, HANDLE_FLAG_INHERIT, 0)) {
-    NOTREACHED() << "Failed to disabled pipe inheritance";
+    NOTREACHED() << "Failed to disabled pipe inheritance when executing "
+                 << cl.as_string();
     return false;
   }
 
@@ -93,7 +94,7 @@ bool GetAppOutputInternal(const StringPiece16& cl,
                      nullptr,
                      TRUE,  // Handles are inherited.
                      0, nullptr, nullptr, &start_info, &temp_process_info)) {
-    NOTREACHED() << "Failed to start process";
+    NOTREACHED() << "Failed to start process " << cl.as_string();
     return false;
   }
 
