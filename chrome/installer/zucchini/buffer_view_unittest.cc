@@ -77,4 +77,24 @@ TEST_F(BufferViewTest, Shrink) {
   EXPECT_DCHECK_DEATH(buffer.shrink(kLen));
 }
 
+TEST_F(BufferViewTest, Read) {
+  ConstBufferView buffer =
+      ConstBufferView::FromRange(std::begin(bytes_), std::end(bytes_));
+
+  EXPECT_EQ(0x76543210, buffer.Read<uint32_t>(0));
+  EXPECT_EQ(0xBA987654, buffer.Read<uint32_t>(2));
+}
+
+TEST_F(BufferViewTest, Write) {
+  MutableBufferView buffer =
+      MutableBufferView::FromRange(std::begin(bytes_), std::end(bytes_));
+
+  buffer.Write<uint32_t>(0, 0x01234567);
+  buffer.Write<uint32_t>(4, 0x89ABCDEF);
+  EXPECT_EQ(std::vector<uint8_t>(
+                {0x67, 0x45, 0x23, 0x01, 0xEF, 0xCD, 0xAB, 0x89, 0x10, 0x00}),
+            std::vector<uint8_t>(buffer.begin(), buffer.end()));
+  EXPECT_DEATH(buffer.Write<uint32_t>(8, 0xFFFFFFFF), "Check failed");
+}
+
 }  // namespace zucchini
