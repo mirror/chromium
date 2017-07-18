@@ -65,7 +65,7 @@ class WebStateListFastEnumerationHelperTest : public PlatformTest {
       test_web_state->SetCurrentURL(GURL(urls[index]));
 
       web_state_list_.InsertWebState(web_state_list_.count(),
-                                     std::move(test_web_state));
+                                     std::move(test_web_state), false);
     }
   }
 

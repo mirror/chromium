@@ -4673,7 +4673,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 }
 
-
 #pragma mark - InfoBarControllerDelegate
 
 - (void)infoBarContainerStateChanged:(bool)isAnimating {

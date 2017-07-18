@@ -179,7 +179,7 @@
   std::unique_ptr<web::WebState> webState =
       web::WebState::Create(webStateCreateParams);
   self.webStateList.InsertWebState(self.webStateList.count(),
-                                   std::move(webState));
+                                   std::move(webState), false);
   [self showTabGridTabAtIndex:self.webStateList.count() - 1];
 }
 

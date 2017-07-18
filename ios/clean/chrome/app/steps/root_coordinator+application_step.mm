@@ -58,8 +58,8 @@ const char kRootCoordinatorContainerKey[] = "root_coordinator";
     WebStateList& webStateList = self.browser->web_state_list();
     web::WebState::CreateParams webStateCreateParams(
         self.browser->browser_state());
-    webStateList.InsertWebState(0, web::WebState::Create(webStateCreateParams));
-    webStateList.ActivateWebStateAt(0);
+    webStateList.InsertWebState(0, web::WebState::Create(webStateCreateParams),
+                                true);
   }
 
   [self start];
