@@ -60,7 +60,6 @@
     <color name="app_banner_install_button_bg">#0F9D58</color>
 
     <!-- Connection Info Popup colors -->
-    <color name="connection_info_popup_reset_cert_decisions_button">#000000</color>
     <color name="connection_info_popup_text">#444444</color>
 
     <!-- Page Info Popup colors -->

@@ -7,23 +7,19 @@ package org.chromium.chrome.browser.page_info;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.provider.Browser;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ResourceId;
@@ -36,8 +32,6 @@ import org.chromium.content_public.browser.WebContentsObserver;
 public class ConnectionInfoPopup implements OnClickListener {
     private static final String TAG = "ConnectionInfoPopup";
 
-    private static final String HELP_URL =
-            "https://support.google.com/chrome/answer/95617";
     private static final int DESCRIPTION_TEXT_SIZE_SP = 12;
     private final Context mContext;
     private final Dialog mDialog;
@@ -45,10 +39,8 @@ public class ConnectionInfoPopup implements OnClickListener {
     private final WebContents mWebContents;
     private final int mPaddingWide, mPaddingThin;
     private final long mNativeConnectionInfoPopup;
-    private TextView mCertificateViewer, mMoreInfoLink;
+    private TextView mCertificateViewer, mResetCertLink;
     private ViewGroup mCertificateLayout, mDescriptionLayout;
-    private Button mResetCertDecisionsButton;
-    private String mLinkUrl;
 
     private ConnectionInfoPopup(Context context, WebContents webContents) {
         mContext = context;
@@ -95,32 +87,14 @@ public class ConnectionInfoPopup implements OnClickListener {
     }
 
     /**
-     * Adds certificate section, which contains an icon, a headline, a
-     * description and a label for certificate info link.
+     * Add a an explanation section with the given icon, headline, and
+     * description paragraph. If |isCertificateSection| is set, records that
+     * this is the (unique) explanation regarding the site's SSL
+     * certificate.
      */
     @CalledByNative
-    private void addCertificateSection(int enumeratedIconId, String headline, String description,
-            String label) {
-        View section = addSection(enumeratedIconId, headline, description);
-        assert mCertificateLayout == null;
-        mCertificateLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
-        if (label != null && !label.isEmpty()) {
-            setCertificateViewer(label);
-        }
-    }
-
-    /**
-     * Adds Description section, which contains an icon, a headline, and a
-     * description. Most likely headline for description is empty
-     */
-    @CalledByNative
-    private void addDescriptionSection(int enumeratedIconId, String headline, String description) {
-        View section = addSection(enumeratedIconId, headline, description);
-        assert mDescriptionLayout == null;
-        mDescriptionLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
-    }
-
-    private View addSection(int enumeratedIconId, String headline, String description) {
+    private View addExplanation(int enumeratedIconId, String headline, String description,
+            boolean isCertificateSection) {
         View section = LayoutInflater.from(mContext).inflate(R.layout.connection_info,
                 null);
         ImageView i = (ImageView) section.findViewById(R.id.connection_info_icon);
@@ -136,55 +110,67 @@ public class ConnectionInfoPopup implements OnClickListener {
         d.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
         if (TextUtils.isEmpty(description)) d.setVisibility(View.GONE);
 
+        if (isCertificateSection) {
+            assert mCertificateLayout == null;
+            mCertificateLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
+        }
+
         mContainer.addView(section);
         return section;
     }
 
-    private void setCertificateViewer(String label) {
+    /**
+     * Add a certificate viewer link to the given section, with the given
+     * label. Must be called after addExplanation() was called with
+     * isCertificateSection set to true.
+     */
+    @CalledByNative
+    private void addCertificateViewerLink(String label) {
         assert mCertificateViewer == null;
+        assert mCertificateLayout != null;
+
         mCertificateViewer = new TextView(mContext);
         mCertificateViewer.setText(label);
         mCertificateViewer.setTextColor(ApiCompatibilityUtils.getColor(
                 mContext.getResources(), R.color.page_info_popup_text_link));
         mCertificateViewer.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
         mCertificateViewer.setOnClickListener(this);
-        mCertificateViewer.setPadding(0, mPaddingThin, 0, 0);
+        mCertificateViewer.setPadding(0, 0, 0, 0);
         mCertificateLayout.addView(mCertificateViewer);
     }
 
+    /**
+     * Add a reset cert decisions link to the given section, with the given
+     * label. Must be called after addExplanation() was called with
+     * isCertificateSection set to true.
+     */
     @CalledByNative
-    private void addResetCertDecisionsButton(String label) {
-        assert mNativeConnectionInfoPopup != 0;
-        assert mResetCertDecisionsButton == null;
-
-        mResetCertDecisionsButton = new Button(mContext);
-        mResetCertDecisionsButton.setText(label);
-        mResetCertDecisionsButton.setBackgroundResource(
-                R.drawable.connection_info_reset_cert_decisions);
-        mResetCertDecisionsButton.setTextColor(ApiCompatibilityUtils.getColor(
-                mContext.getResources(),
-                R.color.connection_info_popup_reset_cert_decisions_button));
-        mResetCertDecisionsButton.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
-        mResetCertDecisionsButton.setOnClickListener(this);
+    private void addResetCertDecisionsButton(String description, String linkLabel) {
+        assert mResetCertLink == null;
+        assert mCertificateLayout != null;
 
         LinearLayout container = new LinearLayout(mContext);
         container.setOrientation(LinearLayout.VERTICAL);
-        container.addView(mResetCertDecisionsButton);
-        container.setPadding(0, 0, 0, mPaddingWide);
-        mContainer.addView(container);
-    }
+        container.setPadding(0, mPaddingThin, 0, 0);
 
-    @CalledByNative
-    private void addMoreInfoLink(String linkText) {
-        mMoreInfoLink = new TextView(mContext);
-        mLinkUrl = HELP_URL;
-        mMoreInfoLink.setText(linkText);
-        mMoreInfoLink.setTextColor(ApiCompatibilityUtils.getColor(
+        TextView resetCertDescription = new TextView(mContext);
+        resetCertDescription.setText(description);
+        resetCertDescription.setTextColor(ApiCompatibilityUtils.getColor(
+                mContext.getResources(), R.color.page_info_popup_text));
+        resetCertDescription.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
+        resetCertDescription.setPadding(0, 0, 0, 0);
+        container.addView(resetCertDescription);
+
+        mResetCertLink = new TextView(mContext);
+        mResetCertLink.setText(linkLabel);
+        mResetCertLink.setTextColor(ApiCompatibilityUtils.getColor(
                 mContext.getResources(), R.color.page_info_popup_text_link));
-        mMoreInfoLink.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
-        mMoreInfoLink.setPadding(0, mPaddingThin, 0, 0);
-        mMoreInfoLink.setOnClickListener(this);
-        mDescriptionLayout.addView(mMoreInfoLink);
+        mResetCertLink.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
+        mResetCertLink.setOnClickListener(this);
+        mResetCertLink.setPadding(0, 0, 0, 0);
+        container.addView(mResetCertLink);
+
+        mCertificateLayout.addView(container);
     }
 
     /** Displays the ConnectionInfoPopup. */
@@ -203,7 +189,7 @@ public class ConnectionInfoPopup implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (mResetCertDecisionsButton == v) {
+        if (mResetCertLink == v) {
             nativeResetCertDecisions(mNativeConnectionInfoPopup, mWebContents);
             mDialog.dismiss();
         } else if (mCertificateViewer == v) {
@@ -214,17 +200,6 @@ public class ConnectionInfoPopup implements OnClickListener {
                 return;
             }
             CertificateViewer.showCertificateChain(mContext, certChain);
-        } else if (mMoreInfoLink == v) {
-            mDialog.dismiss();
-            try {
-                Intent i = Intent.parseUri(mLinkUrl, Intent.URI_INTENT_SCHEME);
-                i.putExtra(Browser.EXTRA_CREATE_NEW_TAB, true);
-                i.putExtra(Browser.EXTRA_APPLICATION_ID, mContext.getPackageName());
-                mContext.startActivity(i);
-            } catch (Exception ex) {
-                // Do nothing intentionally.
-                Log.w(TAG, "Bad URI %s", mLinkUrl, ex);
-            }
         }
     }
 
