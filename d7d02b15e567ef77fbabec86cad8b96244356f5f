@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e7c12b9_5abbd3d3",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-18T18:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad6e796_bbd6ba25",
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af643b6d_09a5061a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "230c1250_ccc89add",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-18T18:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af643b6d_09a5061a",
+      "range": {
+        "startLine": 1218,
+        "startChar": 20,
+        "endLine": 1218,
+        "endChar": 25
+      },
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d1c92d1_2684f545",
         "filename": "cc/tiles/software_image_decode_cache.h",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a04297_e9962f34",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-18T18:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1c92d1_2684f545",
+      "range": {
+        "startLine": 325,
+        "startChar": 21,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
