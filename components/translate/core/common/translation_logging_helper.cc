@@ -6,8 +6,8 @@
 
 #include "base/logging.h"
 #include "base/time/time.h"
-#include "components/metrics/proto/translate_event.pb.h"
 #include "components/sync/protocol/user_event_specifics.pb.h"
+#include "services/metrics/public/proto/translate_event.pb.h"
 
 using Translation = sync_pb::UserEventSpecifics::Translation;
 

@@ -12,13 +12,13 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
-#include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/search_engines/search_engines_switches.h"
 #include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/testing_search_terms_data.h"
 #include "net/base/url_util.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
+#include "services/metrics/public/proto/omnibox_input_type.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::ASCIIToUTF16;

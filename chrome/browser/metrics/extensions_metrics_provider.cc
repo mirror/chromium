@@ -18,10 +18,10 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "components/metrics/metrics_log.h"
 #include "components/metrics/metrics_state_manager.h"
-#include "components/metrics/proto/system_profile.pb.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension_set.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 #include "third_party/smhasher/src/City.h"
 
 namespace {
@@ -42,7 +42,7 @@ const size_t kExtensionListBuckets = 1024;
 // FROM_STORE_UNVERIFIED. The state of the two profiles together will be
 // FROM_STORE_UNVERIFIED.
 // This enum should be kept in sync with the corresponding enum in
-// components/metrics/proto/system_profile.proto
+// services/metrics/public/proto/system_profile.proto
 enum ExtensionState {
   NO_EXTENSIONS,
   FROM_STORE_VERIFIED,

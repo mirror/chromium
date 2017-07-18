@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "base/time/time.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 namespace tracked_objects {
 struct ProcessDataPhaseSnapshot;

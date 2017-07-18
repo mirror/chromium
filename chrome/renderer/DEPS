@@ -14,7 +14,7 @@ include_rules = [
   "+components/grit",
   "+components/guest_view/renderer",
   "+components/metrics/leak_detector",
-  "+components/metrics/proto",
+  "+services/metrics/public/proto",
   "+components/nacl/common",
   "+components/nacl/renderer",
   "+components/network_hints/renderer",

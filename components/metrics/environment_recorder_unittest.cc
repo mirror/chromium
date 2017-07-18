@@ -5,8 +5,8 @@
 #include "components/metrics/environment_recorder.h"
 
 #include "components/metrics/metrics_pref_names.h"
-#include "components/metrics/proto/system_profile.pb.h"
 #include "components/prefs/testing_pref_service.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {

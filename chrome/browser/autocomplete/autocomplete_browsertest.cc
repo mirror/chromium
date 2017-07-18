@@ -29,7 +29,6 @@
 #include "chrome/test/base/search_test_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/history/core/browser/history_service.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
@@ -38,6 +37,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {

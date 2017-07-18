@@ -16,7 +16,7 @@
 #include "base/metrics/histogram_flattener.h"
 #include "base/metrics/histogram_snapshot_manager.h"
 #include "base/synchronization/lock.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 namespace cronet {
 

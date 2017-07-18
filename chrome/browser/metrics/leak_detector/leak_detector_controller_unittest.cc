@@ -8,8 +8,8 @@
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "components/metrics/proto/memory_leak_report.pb.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "services/metrics/public/proto/memory_leak_report.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {

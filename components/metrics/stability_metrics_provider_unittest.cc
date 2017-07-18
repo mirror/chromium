@@ -4,8 +4,8 @@
 
 #include "components/metrics/stability_metrics_provider.h"
 
-#include "components/metrics/proto/system_profile.pb.h"
 #include "components/prefs/testing_pref_service.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {

@@ -5,10 +5,10 @@
 #include "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h"
 
 #include "base/macros.h"
-#include "components/metrics/proto/system_profile.pb.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/prefs/testing_pref_service.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {

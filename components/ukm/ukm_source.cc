@@ -5,7 +5,7 @@
 #include "components/ukm/ukm_source.h"
 
 #include "base/hash.h"
-#include "components/metrics/proto/ukm/source.pb.h"
+#include "services/metrics/public/proto/ukm/source.pb.h"
 
 namespace ukm {
 

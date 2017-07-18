@@ -11,8 +11,8 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_match.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "url/gurl.h"
 
 class AutocompleteInput;

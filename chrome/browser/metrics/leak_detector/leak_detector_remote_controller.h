@@ -10,8 +10,8 @@
 
 #include "base/macros.h"
 #include "components/metrics/leak_detector/leak_detector.mojom.h"
-#include "components/metrics/proto/memory_leak_report.pb.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/metrics/public/proto/memory_leak_report.pb.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace metrics {

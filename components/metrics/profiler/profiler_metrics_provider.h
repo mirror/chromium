@@ -9,7 +9,7 @@
 #include "base/macros.h"
 #include "components/metrics/metrics_provider.h"
 #include "components/metrics/profiler/tracking_synchronizer_observer.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 namespace tracked_objects {
 struct ProcessDataPhaseSnapshot;

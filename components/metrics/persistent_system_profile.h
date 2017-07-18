@@ -9,7 +9,7 @@
 
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_checker.h"
-#include "components/metrics/proto/system_profile.pb.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 
 namespace base {
 template <typename T>

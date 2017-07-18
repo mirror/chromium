@@ -7,8 +7,8 @@
 
 #include "base/macros.h"
 #include "components/metrics/metrics_provider.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
 #include "components/omnibox/browser/omnibox_event_global_tracker.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 struct OmniboxLog;
 

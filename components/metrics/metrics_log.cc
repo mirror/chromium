@@ -26,12 +26,12 @@
 #include "components/metrics/metrics_provider.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/persistent_system_profile.h"
-#include "components/metrics/proto/histogram_event.pb.h"
-#include "components/metrics/proto/system_profile.pb.h"
-#include "components/metrics/proto/user_action_event.pb.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/variations/active_field_trials.h"
+#include "services/metrics/public/proto/histogram_event.pb.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
+#include "services/metrics/public/proto/user_action_event.pb.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"

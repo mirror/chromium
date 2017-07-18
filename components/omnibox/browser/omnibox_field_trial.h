@@ -13,9 +13,9 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 
 namespace base {
 struct Feature;
