@@ -128,6 +128,11 @@ class VIEWS_EXPORT DesktopWindowTreeHost {
 
   virtual void SetVisibilityChangedAnimationsEnabled(bool value) = 0;
 
+  // Determines whether the window to be created will have its animations
+  // handled by the OS, and so we should disable our animations.
+  virtual bool ShouldDisableWindowAnimations(
+      const Widget::InitParams& params) const = 0;
+
   virtual NonClientFrameView* CreateNonClientFrameView() = 0;
 
   // Determines whether the window should use native title bar and borders.

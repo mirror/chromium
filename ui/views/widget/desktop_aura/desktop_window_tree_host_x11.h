@@ -137,6 +137,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
       Widget::MoveLoopEscapeBehavior escape_behavior) override;
   void EndMoveLoop() override;
   void SetVisibilityChangedAnimationsEnabled(bool value) override;
+  bool ShouldDisableWindowAnimations(
+      const Widget::InitParams& params) const override;
   NonClientFrameView* CreateNonClientFrameView() override;
   bool ShouldUseNativeFrame() const override;
   bool ShouldWindowContentsBeTransparent() const override;
