@@ -117,6 +117,30 @@
       "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "303726e6_a3c45016",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T06:31:34Z",
+      "side": 1,
+      "message": "All existing callers using kFetchRequestModeCORSWithForcedPreflight use DocumentThreadableLoader, so when both modes are kFetchRequestModeCORSWithForcedPreflight, both cors_handling_by_resource_fetcher must be kDisabledCORSHandlingByResourceFetcher, I meant.\n\nAnyway, PS10 doesn\u0027t rely on the fact. PTAL.",
+      "parentUuid": "6eb1d408_85023f13",
+      "range": {
+        "startLine": 880,
+        "startChar": 38,
+        "endLine": 880,
+        "endChar": 59
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
