@@ -22,6 +22,30 @@
       "revId": "179fea64bf2f72188214eaf6a3e7dcd669c25b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b758ec5_80fc0ecd",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T20:03:06Z",
+      "side": 1,
+      "message": "Rather than removing owner_delegate_-\u003eRenderWidgetGotFocus(), which sounds scary, I\u0027ve implemented WebContentsViewAndroid::GotFocus() and reverted the WebContentsImpl fullscreen change.",
+      "parentUuid": "27ac5ca5_29866084",
+      "range": {
+        "startLine": 778,
+        "startChar": 21,
+        "endLine": 778,
+        "endChar": 41
+      },
+      "revId": "179fea64bf2f72188214eaf6a3e7dcd669c25b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
