@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "881ff716_7f171e54",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T21:39:36Z",
+      "side": 1,
+      "message": "nit: add TODO() to remove this in nearest time once testing is complete if you think this  is not useful after release or happens too frequent.",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 8
+      },
+      "revId": "1e1a1b1a36531eab05ebfcf9f313abfaaf373249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9406cdcd_b6195010",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T21:39:36Z",
+      "side": 1,
+      "message": "nit: add something like: \"Failed to navigate. HasCom\"...",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 7
+      },
+      "revId": "1e1a1b1a36531eab05ebfcf9f313abfaaf373249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb4377e_32279bda",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T21:39:36Z",
+      "side": 1,
+      "message": "remove else\n\nLOG(ERROR)\nreturn false;",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 8
+      },
+      "revId": "1e1a1b1a36531eab05ebfcf9f313abfaaf373249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3fd607_5fb79cea",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T21:39:36Z",
+      "side": 1,
+      "message": "nit: Here and below: \"Failed to parse response headers, \"....",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 7
+      },
+      "revId": "1e1a1b1a36531eab05ebfcf9f313abfaaf373249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab0a5d3_82f64777",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T21:39:36Z",
+      "side": 1,
+      "message": "nit:\nconstexpr kSearchAnswerHasResult \u003d \"SearchAnswer-HasResult\" and use this in logging. The same below.",
+      "range": {
+        "startLine": 233,
+        "startChar": 31,
+        "endLine": 233,
+        "endChar": 55
+      },
+      "revId": "1e1a1b1a36531eab05ebfcf9f313abfaaf373249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
