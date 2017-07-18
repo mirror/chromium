@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52df0228_d5fd4e6c",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-18T19:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48e29e3f_786960ed",
+      "revId": "62ded8fe60f6a46fe9512609b7f92febf34bc3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5c2be03_e678f579",
         "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.h",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "62ded8fe60f6a46fe9512609b7f92febf34bc3f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b1ab0_7c104386",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-18T19:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c2be03_e678f579",
+      "range": {
+        "startLine": 14,
+        "startChar": 61,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "62ded8fe60f6a46fe9512609b7f92febf34bc3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
