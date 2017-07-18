@@ -16,6 +16,24 @@
       "revId": "bb5c37714beb6e0c05481de1d4ae3f4f143effba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f88658_26dee283",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T09:31:01Z",
+      "side": 1,
+      "message": "Thanks, I will fix it in https://chromium-review.googlesource.com/c/575112/.",
+      "parentUuid": "4521cb03_47f592bb",
+      "revId": "bb5c37714beb6e0c05481de1d4ae3f4f143effba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
