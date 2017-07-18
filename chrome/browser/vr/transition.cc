@@ -6,7 +6,14 @@
 
 namespace vr {
 
-Transition::Transition() {}
+namespace {
+static constexpr int kDefaultTransitionDurationMS = 120;
+}  // namespace
+
+Transition::Transition()
+    : duration(
+          base::TimeDelta::FromMilliseconds(kDefaultTransitionDurationMS)) {}
+
 Transition::~Transition() {}
 
 }  // namespace vr
