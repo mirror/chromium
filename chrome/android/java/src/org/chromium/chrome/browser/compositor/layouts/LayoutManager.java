@@ -419,6 +419,11 @@ public abstract class LayoutManager implements LayoutUpdateHost, LayoutProvider 
         }
 
         onViewportChanged();
+        if (getActiveLayout() instanceof ToolbarSwipeLayout) {
+            ToolbarSwipeLayout toolbarSwipeLayout = (ToolbarSwipeLayout) getActiveLayout();
+            toolbarSwipeLayout.setFullScreenManager(fullscreenManager);
+        }
+
         getActiveLayout().show(time(), animate);
         mHost.setContentOverlayVisibility(getActiveLayout().shouldDisplayContentOverlay());
         mHost.requestRender();
