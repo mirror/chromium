@@ -16,6 +16,24 @@
       "revId": "464484c20e0e39761dd7c55c15b6abb4d6473fc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836e7157_d2075524",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-18T17:16:49Z",
+      "side": 1,
+      "message": "Done.\n\nI was a bit more ambitious and unconditionally CHECK(source_text_.IsEmpty()) further up; since really the only case where we should already have source_text_ is the case where we have previously passed the integrity check.\n\nLet\u0027s hope this doesn\u0027t find more edge cases... :-)",
+      "parentUuid": "f260ba2d_c43941da",
+      "revId": "464484c20e0e39761dd7c55c15b6abb4d6473fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
