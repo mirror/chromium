@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae7e0ac_71995fc2",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-18T18:47:13Z",
+      "side": 1,
+      "message": "Does this need to be \"IsEmpty()\"? That is, does CHECK(source_text_.IsNull()) crash?\n\nIsNull() asserts that source_text_ is not set by ScriptResource::SourceText().\nIsEmpty() additionally allows source_text_ is set to an empty string in SourceText().\nIf you intentionally allow empty cases, could you add a comment that when/why source_text_ can\nbe empty?",
+      "revId": "c88103f24897254f33a9c6f903aef65b981956e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
