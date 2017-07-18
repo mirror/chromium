@@ -13,6 +13,7 @@
 #include "core/paint/BlockPainter.h"
 #include "core/paint/BoxModelObjectPainter.h"
 #include "core/paint/BoxPainter.h"
+#include "core/paint/LayoutBoxModelObjectPainterInterface.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
@@ -212,7 +213,8 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   }
 
   BackgroundImageGeometry geometry(layout_view_);
-  BoxModelObjectPainter box_model_painter(layout_view_);
+  LayoutBoxModelObjectPainterInterface interface(layout_view_);
+  BoxModelObjectPainter box_model_painter(interface);
   for (auto it = reversed_paint_list.rbegin(); it != reversed_paint_list.rend();
        ++it) {
     DCHECK((*it)->Clip() == kBorderFillBox);
