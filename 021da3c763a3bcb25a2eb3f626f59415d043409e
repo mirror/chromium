@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e99277_10703bc5",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-18T21:08:59Z",
+      "side": 1,
+      "message": "The virtual methods AdjustForScrolledContent and PaintFillLayerTextFillBox allows layout-specific logic to be moved out of PaintFillLayer. \nThey\u0027re both overriden in BoxModelPainter.",
+      "revId": "021da3c763a3bcb25a2eb3f626f59415d043409e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
