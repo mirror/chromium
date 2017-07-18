@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db58d955_9bacc7a1",
+        "filename": "chrome/browser/resources/options/options_polymer.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-18T17:47:15Z",
+      "side": 0,
+      "message": "Removed this per comment https://bugs.chromium.org/p/chromium/issues/detail?id\u003d744902#c11.",
+      "revId": "4d5e7b4bd61189728e95142c83ed285b74178c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
