@@ -46,6 +46,30 @@
       "revId": "d1b7d93b7f6134dd91fcb61bf50622116893c1b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee0df5e_dc4c782e",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-18T17:58:23Z",
+      "side": 1,
+      "message": "My original thought process was that it would require logging in multiple cases. Looking at it now, I think creating a ReportGestureEventFiltered function in TouchActionFilter makes sense.\n\nWould you prefer that function being called once after the initial check for touchscreens in TouchActionFilter::FilterGesture event? Then we pass the event to ReportGestureEventFiltered, and compare if the event is one of the three we want to report. If it is, log |suppress_maninpulation_events_|.\ni.e.\n    ReportGestureEventFiltered(event) {if event is scroll end, fling start, or pinch end log |suppress_manipulation_events_| }\n\n\nOR \n\nWe call ReportGestureEventFiltered from the scroll end, fling start, and pinch end cases in the switch case.\ni.e.\n    ReportGestureEventFiltered() { log suppress_manipulation_events_| }\n    TouchActionFilter::FilterGesture {\n       ....\n       case scroll end: ReportGestureEventFiltered();\n       case fling start: ReportGestureEventFiltered();\n       etc...\n    }",
+      "parentUuid": "c0b688e7_2e04ac17",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 52
+      },
+      "revId": "d1b7d93b7f6134dd91fcb61bf50622116893c1b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
