@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e4efc2f2_8d15fc9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-18T18:02:21Z",
+      "side": 1,
+      "message": "That is how Gerrit works however you can see that the commit message that was landed does not have the lines wrapped to 72 characters:\n\nhttps://chromium.googlesource.com/chromium/src/+/8fdeaa3887eeb93be6094c8cf577737f6c444500",
+      "parentUuid": "8ef60bfe_ea9f9b8b",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 134
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a92395_911b6fea",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 4
