@@ -9,6 +9,7 @@
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxModelObjectPainter.h"
 #include "core/paint/BoxPainter.h"
+#include "core/paint/LayoutBoxModelObjectPainterInterface.h"
 #include "core/paint/NinePieceImagePainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
@@ -82,7 +83,8 @@ void InlineFlowBoxPainter::PaintFillLayer(const PaintInfo& paint_info,
   BackgroundImageGeometry geometry(*box_model);
   StyleImage* img = fill_layer.GetImage();
   bool has_fill_image = img && img->CanRender();
-  BoxModelObjectPainter box_model_painter(*box_model);
+  LayoutBoxModelObjectPainterInterface interface(*box_model);
+  BoxModelObjectPainter box_model_painter(interface);
   if ((!has_fill_image &&
        !inline_flow_box_.GetLineLayoutItem().Style()->HasBorderRadius()) ||
       (!inline_flow_box_.PrevLineBox() && !inline_flow_box_.NextLineBox()) ||

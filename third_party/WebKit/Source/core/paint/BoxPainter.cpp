@@ -14,6 +14,7 @@
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/BoxModelObjectPainter.h"
+#include "core/paint/LayoutBoxPainterInterface.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/NinePieceImagePainter.h"
 #include "core/paint/ObjectPainter.h"
@@ -193,7 +194,8 @@ void BoxPainter::PaintBackground(const PaintInfo& paint_info,
   if (layout_box_.BackgroundIsKnownToBeObscured())
     return;
   BackgroundImageGeometry geometry(layout_box_);
-  BoxModelObjectPainter box_model_painter(layout_box_);
+  LayoutBoxPainterInterface interface(layout_box_);
+  BoxModelObjectPainter box_model_painter(interface);
   box_model_painter.PaintFillLayers(paint_info, background_color,
                                     layout_box_.Style()->BackgroundLayers(),
                                     paint_rect, geometry, bleed_avoidance);
@@ -247,7 +249,8 @@ void BoxPainter::PaintMaskImages(const PaintInfo& paint_info,
 
   if (all_mask_images_loaded) {
     BackgroundImageGeometry geometry(layout_box_);
-    BoxModelObjectPainter box_model_painter(layout_box_);
+    LayoutBoxPainterInterface interface(layout_box_);
+    BoxModelObjectPainter box_model_painter(interface);
     box_model_painter.PaintFillLayers(paint_info, Color::kTransparent,
                                       layout_box_.Style()->MaskLayers(),
                                       paint_rect, geometry);
