@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0eb2e30b_0afa2ace",
+        "filename": "content/renderer/input/widget_input_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T20:17:34Z",
+      "side": 1,
+      "message": "Actually I had to undo this. Widgets that are popups (html 5 select, datepicker, etc) don\u0027t call InitializeLayerTreeView so they don\u0027t have an input_event_queue.",
+      "parentUuid": "f5b563f4_9ba92110",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6813faae_e2864ee3",
         "filename": "content/renderer/input/widget_input_handler_impl.h",
         "patchSetId": 2
