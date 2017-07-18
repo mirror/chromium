@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58597ad6_e0ce262a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-18T16:38:23Z",
+      "side": 1,
+      "message": "I would still recommend us using https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc?l\u003d310 if possible.\n\nFor TabManager browsertest, all it matter is to track the behavior of tab opening, but for us, we actually want to simulate a little bit better.\n\nBut I don\u0027t have a strong opinion here, I will leave it to Zhen.",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
