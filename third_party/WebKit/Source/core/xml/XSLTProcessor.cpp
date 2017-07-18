@@ -69,7 +69,8 @@ Document* XSLTProcessor::CreateDocumentFromSource(
   String document_source = source_string;
 
   Document* result = nullptr;
-  DocumentInit init(source_is_document ? owner_document->Url() : KURL(), frame);
+  DocumentInit init(source_is_document ? owner_document->Url() : KURL(), frame,
+                    nullptr, nullptr, nullptr);
 
   bool force_xhtml = source_mime_type == "text/plain";
   if (force_xhtml)
