@@ -742,6 +742,9 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
 void MenuManager::SanitizeRadioList(const MenuItem::OwnedList& item_list) {
   auto i = item_list.begin();
   while (i != item_list.end()) {
+    // TODO(catmullings): We should not be breaking from the loop at the
+    // first instance of a non-radio item because this prevents sanitization of
+    // other radio lists in the context menu. Instead, we should 'continue'.
     if ((*i)->type() != MenuItem::RADIO) {
       ++i;
       break;
@@ -788,7 +791,7 @@ bool MenuManager::ItemUpdated(const MenuItem::Id& id) {
       NOTREACHED();
       return false;
     }
-    SanitizeRadioList(i->second);
+    RadioItemSelected(menu_item);
   }
 
   return true;
