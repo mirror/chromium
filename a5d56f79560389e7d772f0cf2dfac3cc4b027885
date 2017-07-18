@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc77dc5b_6cb4b171",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2696,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "Per offline discussion, guarded by IsArcAllowedForProfile.",
+      "parentUuid": "73177f40_5d38b3cf",
+      "range": {
+        "startLine": 2693,
+        "startChar": 0,
+        "endLine": 2696,
+        "endChar": 27
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5ff78bd_439cda27",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_backend_delegate.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ecf6c5_dcf80ca1",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_backend_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ff78bd_439cda27",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3f8f1d24_51ae840d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_file_stream_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b044f8a9_b8694c35",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8571e8d0_25f75682",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cb481d08_8e4f3d50",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8571e8d0_25f75682",
+      "range": {
+        "startLine": 221,
+        "startChar": 27,
+        "endLine": 221,
+        "endChar": 35
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ad461d_fe5ae871",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-18T07:49:29Z",
       "side": 1,
       "message": "This sounds scary. I want a dedicated bug for it and a pointer to crbug here.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cef9a89_4f90d2fe",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "I agreed, and that\u0027s what we\u0027re working on.\nI expect that the TODO will be actually addressed within a day or two, and this patterned-comment is used widely. So, please let me keep this as is. Hope it is not very painful.",
+      "parentUuid": "51ad461d_fe5ae871",
       "range": {
         "startLine": 108,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "44df556b_3092115b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac065537_199548e8",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 32
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46869ca6_71b6d938",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-18T07:49:29Z",
       "side": 1,
       "message": "Why did you move this before SetInstance()? This order looks odd. If you have a reason please leave a comment.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 52
+      },
+      "revId": "a5d56f79560389e7d772f0cf2dfac3cc4b027885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16933b66_7eeec9fc",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T10:10:28Z",
+      "side": 1,
+      "message": "As we chatted offline, this is the order in real situation.\n-\u003e ArcServiceManager instantiation (ArcServiceLauncher::Initialize())\n-\u003e Create KeyedServices (ArcServiceLauncher::OnPrimaryUserProfilePrepared())\n-\u003e then, SetInstance(), which runs after ARC container starts and ArcBridgeService is established.",
+      "parentUuid": "46869ca6_71b6d938",
       "range": {
         "startLine": 39,
         "startChar": 0,
