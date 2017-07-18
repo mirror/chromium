@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc3c360d_fa584ef4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-18T06:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9928dfbe_2d37e5be",
+      "revId": "cbe1281f9a024038221fab8d376b8fe425dfb94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ec00ef_c1f88f28",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "cbe1281f9a024038221fab8d376b8fe425dfb94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d36be7_bdc71936",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-18T06:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ec00ef_c1f88f28",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "cbe1281f9a024038221fab8d376b8fe425dfb94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
