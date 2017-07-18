@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a2c0da_d647ad72",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-18T23:41:44Z",
+      "side": 1,
+      "message": "What happens if the unload handler is removed from an image? I think the intent here is to permanently veto the image, but I wonder if we should either document this somewhere or change the name to something that reflects this.",
+      "revId": "9775f23c4ce2de57539adc9b6a28e66c9c3f6271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6878489_b72d6dfb",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-18T23:41:44Z",
+      "side": 1,
+      "message": "Can you leave a comment where you set this that says \"If the onload handler is removed, we still want to keep the flag on the PaintImage to indicate that it has once had an onload handler\"",
+      "revId": "9775f23c4ce2de57539adc9b6a28e66c9c3f6271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
