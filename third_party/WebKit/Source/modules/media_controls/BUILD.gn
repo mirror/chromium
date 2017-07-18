@@ -3,6 +3,8 @@
 # found in the LICENSE file.
 
 import("//third_party/WebKit/Source/modules/modules.gni")
+import("//third_party/WebKit/Source/modules/modules_idl_files.gni")
+import("//tools/grit/grit_rule.gni")
 
 blink_modules_sources("media_controls") {
   sources = [
@@ -69,5 +71,29 @@ blink_modules_sources("media_controls") {
     "//device/screen_orientation/public/interfaces:interfaces_blink",
     "//services/device/public/interfaces:constants_blink",
     "//services/service_manager/public/cpp",
+    ":media_controls_resources",
+  ]
+}
+
+resources_out_dir = "$blink_modules_output_dir/media_controls/resources/"
+
+image_resources = [
+  "resources/pause_128x.png",
+  "resources/play_128x.png",
+]
+
+copy("copy_image_resources") {
+  sources = image_resources
+  outputs = [
+    "$resources_out_dir/{{source_file_part}}",
+  ]
+}
+
+grit("media_controls_resources") {
+  output_dir = "$resources_out_dir"
+  source = "resources/media_controls_resources.grd"
+  outputs = [
+    "grit/media_controls_resources.h",
+    "media_controls_resources.pak",
   ]
 }

@@ -28,6 +28,7 @@ bool MediaControlPlayButtonElement::WillRespondToMouseClickEvents() {
 void MediaControlPlayButtonElement::UpdateDisplayType() {
   SetDisplayType(MediaElement().paused() ? kMediaPlayButton
                                          : kMediaPauseButton);
+  setAttribute("class", MediaElement().paused() ? "play" : "pause", ASSERT_NO_EXCEPTION);
   UpdateOverflowString();
 }
 

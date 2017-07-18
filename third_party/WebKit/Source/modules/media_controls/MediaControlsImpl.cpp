@@ -650,6 +650,8 @@ void MediaControlsImpl::UpdatePlayState() {
   if (is_paused_for_scrubbing_)
     return;
 
+  panel_->setAttribute("class", "paused", ASSERT_NO_EXCEPTION);
+
   if (overlay_play_button_)
     overlay_play_button_->UpdateDisplayType();
   play_button_->UpdateDisplayType();

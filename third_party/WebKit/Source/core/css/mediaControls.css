@@ -250,7 +250,12 @@ video::-internal-media-controls-overlay-cast-button {
 }
 
 audio::-webkit-media-controls-play-button, video::-webkit-media-controls-play-button {
-    -webkit-appearance: media-play-button;
+    /*-webkit-appearance: media-play-button;*/
+    -webkit-appearance: none;
+    background-image: url(../../../public/default_100_percent/blink/mediaplayer_play.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     display: flex;
     flex: none;
     box-sizing: border-box;
@@ -260,6 +265,11 @@ audio::-webkit-media-controls-play-button, video::-webkit-media-controls-play-bu
     border-width: 0px;
     background-color: initial;
     color: inherit;
+}
+
+audio::-webkit-media-controls-play-button.paused,
+video::-webkit-media-controls-play-button.paused {
+  background-image: url(../../../public/default_100_percent/blink/mediaplayer_pause.png);
 }
 
 audio::-webkit-media-controls-timeline-container, video::-webkit-media-controls-timeline-container {

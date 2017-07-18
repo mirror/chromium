@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grit latest_public_release="0" current_release="1" output_all_resource_defines="false">
+  <outputs>
+    <output filename="grit/media_controls_resources.h" type="rc_header">
+      <emit emit_type='prepend'></emit>
+    </output>
+    <output filename="media_controls_resources.pak" type="data_package"/>
+  </outputs>
+  <release seq="1">
+    <includes>
+      <include name="MEDIA_CONTROLS_PAUSE" file="pause_128px.png" type="BINDATA" />
+      <include name="MEDIA_CONTROLS_PLAY" file="play_128px.png" type="BINDATA" />
+    </includes>
+  </release>
+</grit>
