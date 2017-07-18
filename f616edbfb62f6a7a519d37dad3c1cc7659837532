@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc18a712_5c52d6d7",
+        "filename": "ui/touch_selection/touch_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-18T14:19:42Z",
+      "side": 1,
+      "message": "When I tested, I didn\u0027t see any issue related to animation while hiding handles after clearing text selection.",
+      "parentUuid": "c0878111_9746dea7",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e84426a5_42614183",
         "filename": "ui/touch_selection/touch_handle.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e040147_97a5519b",
+        "filename": "ui/touch_selection/touch_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-18T14:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e84426a5_42614183",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d14fbfc4_01699bcf",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-18T14:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0141eb_a312c9cd",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c5d8563_c3cdf277",
         "filename": "ui/touch_selection/touch_selection_controller.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4708311_ef2e452e",
+        "filename": "ui/touch_selection/touch_selection_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-18T14:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5d8563_c3cdf277",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
