@@ -19,6 +19,63 @@
     },
     {
       "key": {
+        "uuid": "cf95fa87_b2a79c8e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-18T04:50:21Z",
+      "side": 1,
+      "message": "Would you document why this should be the case?",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ef1e02_b37da47f",
+        "filename": "third_party/WebKit/Source/core/css/MediaValuesCached.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-18T04:50:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this logic is correct. I feel like this should be ContextDocument()-\u003eGetFrame()",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad60925_d3b39638",
+        "filename": "third_party/WebKit/Source/core/css/MediaValuesDynamic.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-18T04:50:21Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "347614e1_c6558a08",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 4
@@ -47,6 +104,24 @@
       "writtenOn": "2017-07-18T04:14:56Z",
       "side": 1,
       "message": "Nit: At first glance, I don\u0027t know any idea what \u0027effective\u0027 means here.\nIt would be better to be more explicit, if you can.",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2f37e9_d8a3222b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-18T04:50:21Z",
+      "side": 1,
+      "message": "Looking at the places where we refer this GetEffectiveFrame(), I feel like they should refer to contextDocument()-\u003eGetFrame().\nWould you check spec text for each callsites if this change is actually correct?\nAt least for loading related refs, the \"settings object\" which we\u0027d want to refer from the frame is very likely contextDocument().",
+      "parentUuid": "6d36896e_2d2f5922",
       "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
