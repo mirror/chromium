@@ -410,6 +410,11 @@ const base::Feature kServiceWorkerPaymentApps{
 // Controls whether the WebNFC API is enabled:
 // https://w3c.github.io/web-nfc/
 const base::Feature kWebNfc{"WebNFC", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Controls whether PreferCompositingToLCDText is forced off, even for
+// screens with high resolution.
+const base::Feature kDisablePreferCompositingToLCDText{
+    "DisablePreferCompositingToLCDText", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_WIN)
