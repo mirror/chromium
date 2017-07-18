@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac8ee3a5_633c5a84",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T13:48:56Z",
+      "side": 1,
+      "message": "Why does ContextIsValid not work? Our programming rule is that \"we should check ContextIsValid before using ScriptState\". Can we follow that rule here?\n\nAlso it is not nice that some caller sites are expecting that GetExecutionContext never returns null. Would it make more sense to move the ContextIsValid check to the caller sites?",
+      "revId": "91cdf0b728d540491a2fdcd52d1cc670e6336b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
