@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ffbbd5d_43d63fb6",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-18T12:52:37Z",
+      "side": 1,
+      "message": "Please fix formatting. \nEasy way is to put the whole comment on a single line and run \"git cl format\".",
+      "range": {
+        "startLine": 386,
+        "startChar": 14,
+        "endLine": 386,
+        "endChar": 17
+      },
+      "revId": "fd840a9858fd2585a72618d20b5093ffe8e1405a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
