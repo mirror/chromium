@@ -94,6 +94,30 @@
       "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc9f69d_d9449d85",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-18T22:41:12Z",
+      "side": 1,
+      "message": "I believe that you need a few more flags to run update.py exactly as package.py runs it, see https://cs.chromium.org/chromium/src/tools/clang/scripts/package.py?l\u003d226",
+      "parentUuid": "02eb00f4_514a4cba",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
