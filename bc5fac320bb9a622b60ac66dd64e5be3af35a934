@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "717736d2_c544cd07",
+        "filename": "chrome/installer/zucchini/patch_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "939c4845_543cd2d9",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5e13a5b_e14b1ffc",
         "filename": "chrome/installer/zucchini/patch_sink.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T22:49:24Z",
       "side": 1,
       "message": "why is this a uint instead of an int?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7d8a89_4323a673",
+        "filename": "chrome/installer/zucchini/patch_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Implicit assumption that equivalence are sorted is not explicit.",
+      "parentUuid": "f5e13a5b_e14b1ffc",
       "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99ca3a16_15ca7585",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "No reason, fixed it.",
+      "parentUuid": "c1560172_4e0984a4",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95a6aa32_605acddf",
         "filename": "chrome/installer/zucchini/patch_sink.h",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-14T22:49:24Z",
       "side": 1,
       "message": "can you describe why you need 3 vectors here?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968b9a4f_7d950147",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "I\u0027ll try.\nWhat we\u0027re doing here is a \u0027partial\u0027 encoding into 3 different buffer (using EncodeVarInt). These 3 buffers are then concatenated together upon SerializeInto(). This is convenient when we need to know the SerializedSize(). \nNote there there are other ways to do this, one being just storing a vector of equivalence, and serialize them upon SerializeInto().",
+      "parentUuid": "95a6aa32_605acddf",
       "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab5260e9_006e6132",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "They all have the interface SerializedSize() and SerializeInto() in common. \nThe main difference between sinks is how data gets written into the underlying buffers (src_skip_, dst_skip_, etc) via PutNext(). Since different sinks have varying number of buffers, the implementation of Serialize* also varies a bit. These implementations are really simple, so I don\u0027t think it\u0027s worth trying to bring together common code.\nWe could also use inheritance for pure interface on Serialize*, but we don\u0027t need dynamic dispatching, so I don\u0027t think we would benefit from this.",
+      "parentUuid": "6a8ba662_d1482dd1",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0c6193_0ca49f6c",
         "filename": "chrome/installer/zucchini/patch_sink.h",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-14T22:49:24Z",
       "side": 1,
       "message": "can we call them something that is not Sink(s) then?\n\nMaybe...Serializer?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8175a51_2b1f31e2",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "I\u0027ll go with Writer/Reader",
+      "parentUuid": "ed0c6193_0ca49f6c",
       "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "71347953_45a590a1",
+        "filename": "chrome/installer/zucchini/patch_sink_source_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "It works!",
+      "parentUuid": "eae2d913_8ed3473e",
+      "range": {
+        "startLine": 445,
+        "startChar": 34,
+        "endLine": 445,
+        "endChar": 42
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3c41cd3_594cac8c",
         "filename": "chrome/installer/zucchini/patch_source.cc",
         "patchSetId": 9
@@ -138,6 +270,30 @@
       "writtenOn": "2017-07-15T01:32:48Z",
       "side": 1,
       "message": "Does this compile for 32-bit on Windows? Better to use safe_conversions.h and explicitly convert to size_t.",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3aa41a_dfbae382",
+        "filename": "chrome/installer/zucchini/patch_source.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Surprisingly, it compile on 32-bit (on my machine). I\u0027m fine with using checked_cast.",
+      "parentUuid": "e3c41cd3_594cac8c",
       "range": {
         "startLine": 29,
         "startChar": 25,
@@ -196,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "2aa7b726_8db6b011",
+        "filename": "chrome/installer/zucchini/patch_source.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edcfea54_4a382fa2",
+      "range": {
+        "startLine": 176,
+        "startChar": 43,
+        "endLine": 176,
+        "endChar": 44
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "850b37c1_eb1d6c2e",
         "filename": "chrome/installer/zucchini/patch_source.cc",
         "patchSetId": 9
@@ -207,6 +387,30 @@
       "writtenOn": "2017-07-15T01:32:48Z",
       "side": 1,
       "message": "\u003c ?",
+      "range": {
+        "startLine": 214,
+        "startChar": 25,
+        "endLine": 214,
+        "endChar": 27
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569a29b0_8dcca1ab",
+        "filename": "chrome/installer/zucchini/patch_source.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "I\u0027m used to iterators too much...",
+      "parentUuid": "850b37c1_eb1d6c2e",
       "range": {
         "startLine": 214,
         "startChar": 25,
@@ -239,6 +443,30 @@
       "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb27d34_27becb74",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afa1799_c6ce3e6b",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +533,72 @@
     },
     {
       "key": {
+        "uuid": "9e7823f8_d6fca87c",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41a6179_f5f73f84",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa4c54b4_08897040",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Note that |source| also get modified, but I guess that it is not purely an output.",
+      "parentUuid": "8b76b35f_075c9c44",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54d5f6eb_6d0fa733",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5327808_6f294a9d",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787f3e9d_5d1e4a9d",
         "filename": "chrome/installer/zucchini/patch_source.h",
         "patchSetId": 9
@@ -322,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "0891279a_c4d60bfb",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "|source| gets modified because reading data from it advances its cursor.\nI don\u0027t think these should be methods on BufferSource (which is also used to parse binaries) as it add extra dependencies on BufferSource, and formatting is rather specific to zucchini patch.",
+      "parentUuid": "787f3e9d_5d1e4a9d",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb91cd58_1bb5ec60",
         "filename": "chrome/installer/zucchini/patch_source.h",
         "patchSetId": 9
@@ -333,6 +645,24 @@
       "writtenOn": "2017-07-14T22:49:24Z",
       "side": 1,
       "message": "so...this is intended to be called exactly once? Maybe InitializeAndParse() ?\n\nDoes this actually do any parsing?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c0d9ef_44fc26ea",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-18T00:13:03Z",
+      "side": 1,
+      "message": "It does a bit of the parsing job to find size and content for each stream, without decoding them.\nI\u0027m fine with Initialize.",
+      "parentUuid": "fb91cd58_1bb5ec60",
       "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
