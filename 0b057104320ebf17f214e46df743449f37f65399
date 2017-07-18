@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9778c8_89c9e13b",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-18T22:45:19Z",
+      "side": 1,
+      "message": "So, I realized there\u0027s no way to trigger this for low-end Android only via Finch config (just for all Android). I think we need:\n\nif (base::SysInfo::IsLowEndDevice() \u0026\u0026 baseFeatureList::IsEnabled....\n\n*Maybe* we should rename the feature to indicate low-end only? Up to you though.",
+      "range": {
+        "startLine": 339,
+        "startChar": 12,
+        "endLine": 339,
+        "endChar": 23
+      },
+      "revId": "0b057104320ebf17f214e46df743449f37f65399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
