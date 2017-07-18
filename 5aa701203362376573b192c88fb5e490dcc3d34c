@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "3e017fe8_8aa861a3",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T18:06:55Z",
+      "side": 1,
+      "message": "make_and_model is actually the field reported by most network printers.  That\u0027s the representation that we\u0027ve standardized on to record this information provided by a printer.  In the particular case of USB, we\u0027re fitting the provided information into this model and treating it as information provided by the device.  In this particular case, it\u0027s possible to rearrange this information for display.  But in others, it is not.  We\u0027re generally trying to treat this string as an opaque identifier for a particular type of printer.  There may be a separate questions as to what users should see to help identify their printer.",
+      "parentUuid": "7b44d531_c7cc7918",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1

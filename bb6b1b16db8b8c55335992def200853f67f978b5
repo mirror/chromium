@@ -16,6 +16,24 @@
       "revId": "bb6b1b16db8b8c55335992def200853f67f978b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05576a44_1c02e6c7",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-18T18:06:55Z",
+      "side": 1,
+      "message": "The intention is not to localize this string as its primary purpose is not for display to the user.  It\u0027s to identify the printer.  More details in the other comment.",
+      "parentUuid": "3f6de232_412d35e7",
+      "revId": "bb6b1b16db8b8c55335992def200853f67f978b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
