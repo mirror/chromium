@@ -53,6 +53,7 @@ import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.util.TestWebServer;
+import org.chromium.policy.test.annotations.Policies;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.IOException;
@@ -495,6 +496,15 @@ public class NewTabPageTest {
                 Assert.assertEquals(View.GONE, ntpView.getPlaceholder().getVisibility());
             }
         });
+    }
+
+    /** Test for https://crbug.com/742056. */
+    @Test
+    @SmallTest
+    @Policies.Add(@Policies.Item(key = "NTPContentSuggestionsEnabled", string = "false"))
+    public void testRemoteSuggestionsEnabledWhenDisabledByPolicy() {
+        Assert.assertFalse(
+                mNtp.getManagerForTesting().getSuggestionsSource().areRemoteSuggestionsEnabled());
     }
 
     private void assertThumbnailInvalidAndRecapture() {
