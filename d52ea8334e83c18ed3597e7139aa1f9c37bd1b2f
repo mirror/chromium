@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9354f24_6d6c44a1",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T06:07:18Z",
+      "side": 1,
+      "message": "If the event-\u003etarget() is set, and it\u0027s not the active window, should we abort processing the window?\n\nAlternatively, should this attempt to activate |event-\u003etarget()| instead first, before dispatching the event to it?\n\nOr, if event-\u003etarget() is set, should we dispatch to its root-window, instead of the \u0027active root window\u0027? The comment above (lines 806:808) seems to imply the exact root-window we select here is not particularly relevant. If selecting |event-\u003etarget()-\u003eGetRootWindow()| here fixes the crash, maybe we can do that instead?",
+      "revId": "d52ea8334e83c18ed3597e7139aa1f9c37bd1b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
