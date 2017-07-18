@@ -167,6 +167,40 @@
     },
     {
       "key": {
+        "uuid": "7f8e37cd_1fa80156",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-18T14:35:26Z",
+      "side": 1,
+      "message": "can those be const (here and everywhere else)?",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede840c8_60ad98bc",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-18T14:35:26Z",
+      "side": 1,
+      "message": "DEFINE_THREAD_SAFE_STATIC_LOCAL here and everywhere else.",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dbb6ec_f247bbb0",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypesTest.cpp",
         "patchSetId": 18
