@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "924eeee0_59a4aa55",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-18T19:05:34Z",
+      "side": 1,
+      "message": "Why use base::Unretained? The URLRequestContextGetter is a ref counted object, so you shouldn\u0027t need a base::Unretained wrapper, which will lead to incorrect ref count on the object, since the base::Bind call will keep a reference to it.",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "6bfddf1ed1d7e869a2689520bfc5cef23c0ab6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
