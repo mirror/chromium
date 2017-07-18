@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c504b6_5cd92c0c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/wasm_service_worker_test.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-18T01:54:51Z",
+      "side": 1,
+      "message": "As in the other review, this should be enforced by naming the file .https.html, not with a JavaScript redirect.",
+      "revId": "41521e927510550d62e8fff97e6824b840a16eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
