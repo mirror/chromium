@@ -93,8 +93,8 @@ class DriveBackendSyncTest : public testing::Test,
         content::BrowserThread::IO);
     worker_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
         {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
-    file_task_runner_ = content::BrowserThread::GetTaskRunnerForThread(
-        content::BrowserThread::FILE);
+    file_task_runner_ =
+        base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()});
     scoped_refptr<base::SequencedTaskRunner> drive_task_runner =
         base::CreateSequencedTaskRunnerWithTraits(
             {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
