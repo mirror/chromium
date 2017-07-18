@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0347df62_b0fadcf3",
+        "filename": "chrome/renderer/content_settings_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T17:46:10Z",
+      "side": 1,
+      "message": "nit: Add parameter name.",
+      "range": {
+        "startLine": 91,
+        "startChar": 26,
+        "endLine": 91,
+        "endChar": 62
+      },
+      "revId": "c992d4feb4fc04e396b6d1a4e88ef421444e6d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
