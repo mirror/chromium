@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83e1748d_6b037d44",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-18T17:10:07Z",
+      "side": 1,
+      "message": "Can\u0027t we just use AddUrlInterceptor instead of AddHostnameInterceptor, in MirrorMockJobInterceptor::Register?  We aren\u0027t see multiple requests for the URLs we care about, are we?",
+      "parentUuid": "c244972c_1decc3d8",
+      "revId": "16fa8857f545a650fd4e6c47e26abad1221c3bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71cb16ea_741af0f2",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
         "patchSetId": 8
