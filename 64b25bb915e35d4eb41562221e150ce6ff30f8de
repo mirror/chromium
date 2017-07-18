@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab758d5_49af24e8",
+        "filename": "ui/message_center/views/bounded_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-18T05:57:13Z",
+      "side": 1,
+      "message": "Is this change intended (necessary)?",
+      "range": {
+        "startLine": 324,
+        "startChar": 29,
+        "endLine": 324,
+        "endChar": 51
+      },
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aba3e4e_b615b83c",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-18T05:57:13Z",
+      "side": 1,
+      "message": "nit: Could you move this just below SetText(), as they are similar methods?(wires to views::Label methods)",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e1a59a_e65db654",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-18T05:57:13Z",
+      "side": 1,
+      "message": "Can\u0027t we call SizeToFit for a fixed width outside Layout()? (e.g. when instantiating the BoundedLabel?)",
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
