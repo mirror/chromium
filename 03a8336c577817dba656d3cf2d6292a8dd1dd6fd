@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d86e13_f14ded63",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "So we don\u0027t care about \u003c1 hour cases?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd37c6c_57a23f42",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "So we don\u0027t care about \u003c1 hour cases?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bdcc68_fcbec3a2",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "s/kMaxSlientTime/kMaxAudioSilentTime/ Make it more specific. Video can also be silent. I think this will only be used for audio?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d128948_b5e5a28f",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "Comments needed for what this is recording.",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e723446c_eaa22685",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "Why do we need to check if it is bool?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24685fe_f2c61200",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what is recorded here.\n\nIs it recording how long it takes to start playing audio after a tab becomes background? Why is this interesting? And why do we have this one minute threshold?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7982f9_dcbf130d",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "I think tests are needed. This file is likely to change when more use cases come in. It is better to have some guard against it.",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5926f344_1b9497d6",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:33:11Z",
+      "side": 1,
+      "message": "Here you can use GetChildCoordinationUnitsOfType from CoordinationUnitImpl.",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
