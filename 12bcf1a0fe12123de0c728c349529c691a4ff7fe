@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcb4897_72db33e7",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-18T20:53:45Z",
+      "side": 1,
+      "message": "Will remove this. Is it ok to refer to adblock documentation in our docs/code? \n\nAlso, the documentation should be improved, will do that once we set up the docs page for the API.",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
