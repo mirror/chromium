@@ -5,12 +5,18 @@
 package org.chromium.chrome.browser.widget.displaystyle;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.view.View;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.ui.widget.Toast;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +25,28 @@ import java.util.Locale;
  * Exposes general configuration info about the display style for a given reference View.
  */
 public class UiConfig {
+    /**
+     * The maximum number of tiles to try and fit in a row. On smaller screens, there may not be
+     * enough space to fit all of them.
+     */
+    private static final int MAX_TILE_COLUMNS_CHROME_HOME = 4;
+
+    /** Experiment parameter for whether to use the condensed tile layout on small screens. */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED =
+            "condensed_tile_layout_for_small_screens_enabled";
+
+    /** Experiment parameter for whether to use the condensed tile layout on large screens. */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED =
+            "condensed_tile_layout_for_large_screens_enabled";
+
+    /** Experiment parameter for the maximum number of tile suggestion rows to show. */
+    private static final String PARAM_NTP_MAX_TILE_ROWS = "ntp_max_tile_rows";
+
+    /**
+     * Experiment parameter for the maximum number of tile suggestion rows to show.
+     */
+    private static final String PARAM_CHROME_HOME_MAX_TILE_ROWS = "chrome_home_max_tile_rows";
+
     public static final int NARROW_DISPLAY_STYLE_MAX_WIDTH_DP = 320;
     public static final int WIDE_DISPLAY_STYLE_MIN_WIDTH_DP = 600;
     public static final int FLAT_DISPLAY_STYLE_MAX_HEIGHT_DP = 320;
@@ -30,6 +58,14 @@ public class UiConfig {
 
     private final List<DisplayStyleObserver> mObservers = new ArrayList<>();
     private final Context mContext;
+
+    @IntDef({TileStyle.CLASSIC, TileStyle.CONDENSED, TileStyle.MODERN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TileStyle {
+        int CLASSIC = 0;
+        int CONDENSED = 1;
+        int MODERN = 2;
+    }
 
     /**
      * @param referenceView the View we observe to deduce the configuration from.
@@ -78,6 +114,59 @@ public class UiConfig {
     @VisibleForTesting
     public void setDisplayStyleForTesting(DisplayStyle displayStyle) {
         updateDisplayStyle(displayStyle);
+    }
+
+    /**
+     * Returns the current tile style, that depends on the enabled features and the screen size.
+     */
+    @UiConfig.TileStyle
+    public int getCurrentTileStyle() {
+        if (SuggestionsConfig.useModern()) return TileStyle.MODERN;
+        if (FeatureUtilities.isChromeHomeEnabled()) return TileStyle.CLASSIC;
+
+        if (getCurrentDisplayStyle().isSmall()) {
+            if (ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                        ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                        PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED, false)) {
+                return TileStyle.CONDENSED;
+            }
+        } else if (ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                           ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                           PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false)) {
+            return TileStyle.CONDENSED;
+        }
+
+        return TileStyle.CLASSIC;
+    }
+
+    public int getMaxTileRowsWithDefaults(int defaultValue) {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                    ChromeFeatureList.CHROME_HOME, PARAM_CHROME_HOME_MAX_TILE_ROWS, defaultValue);
+        }
+
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_MAX_TILE_ROWS, defaultValue);
+    }
+
+    public int getMaxTileRows() {
+        return getMaxTileRowsWithDefaults(2);
+    }
+
+    /**
+     * Determines The maximum number of tiles to try and fit in a row. On smaller screens, there
+     * may not be enough space to fit all of them.
+     */
+    public int getMaxTileColumns() {
+        if (FeatureUtilities.isChromeHomeEnabled()) return MAX_TILE_COLUMNS_CHROME_HOME;
+
+        if (!mCurrentDisplayStyle.isSmall()
+                && ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                           ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                           PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false)) {
+            return 5;
+        }
+        return 4;
     }
 
     private void updateDisplayStyle(DisplayStyle displayStyle) {

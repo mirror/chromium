@@ -62,26 +62,9 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     private static final long SNAP_SCROLL_DELAY_MS = 30;
 
     /**
-     * Experiment parameter for the maximum number of tile suggestion rows to show.
-     */
-    private static final String PARAM_NTP_MAX_TILE_ROWS = "ntp_max_tile_rows";
-
-    /**
      * Experiment parameter for the number of tile title lines to show.
      */
     private static final String PARAM_NTP_TILE_TITLE_LINES = "ntp_tile_title_lines";
-
-    /**
-     * Experiment parameter for whether to use the condensed tile layout on small screens.
-     */
-    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED =
-            "condensed_tile_layout_for_small_screens_enabled";
-
-    /**
-     * Experiment parameter for whether to use the condensed tile layout on large screens.
-     */
-    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED =
-            "condensed_tile_layout_for_large_screens_enabled";
 
     /**
      * Experiment parameter for whether to show the logo in the condensed layout.
@@ -258,14 +241,18 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         OfflinePageBridge offlinePageBridge =
                 OfflinePageBridge.getForProfile(Profile.getLastUsedProfile());
 
-        mTileGridLayout = (TileGridLayout) mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
-        mTileGridLayout.setMaxRows(getMaxTileRows(searchProviderHasLogo));
-        mTileGridLayout.setMaxColumns(getMaxTileColumns());
+        int maxTileGridRows = mUiConfig.getMaxTileRowsWithDefaults(
+                ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)
+                                || searchProviderHasLogo ? 2 : 3);
+        int maxTileGridColumns = mUiConfig.getMaxTileColumns();
+        mTileGridLayout = mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
+        mTileGridLayout.setMaxRows(maxTileGridRows);
+        mTileGridLayout.setMaxColumns(maxTileGridColumns);
         mTileGroup = new TileGroup(mActivity, mManager, mContextMenuManager, tileGroupDelegate,
-                /* observer = */ this, offlinePageBridge, getTileTitleLines());
+                /* observer = */ this, offlinePageBridge, getTileTitleLines(),
+                mUiConfig.getCurrentTileStyle());
 
-        mSearchProviderLogoView =
-                (LogoView) mNewTabPageLayout.findViewById(R.id.search_provider_logo);
+        mSearchProviderLogoView = mNewTabPageLayout.findViewById(R.id.search_provider_logo);
         int experimentalLogoHeightDp = ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_CONDENSED_LAYOUT_LOGO_HEIGHT, 0);
         if (experimentalLogoHeightDp > 0) {
@@ -287,7 +274,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         setSearchProviderHasLogo(searchProviderHasLogo);
         mSearchProviderLogoView.showSearchProviderInitialView();
 
-        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
+        mTileGroup.startObserving(maxTileGridRows * maxTileGridColumns);
 
         mRecyclerView.init(mUiConfig, mContextMenuManager);
 
@@ -850,29 +837,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         }
     }
 
-    private static int getMaxTileRows(boolean searchProviderHasLogo) {
-        int defaultValue = 2;
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)
-                && !searchProviderHasLogo) {
-            defaultValue = 3;
-        }
-        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
-                ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_MAX_TILE_ROWS, defaultValue);
-    }
-
-    /**
-     * Determines The maximum number of tiles to try and fit in a row. On smaller screens, there
-     * may not be enough space to fit all of them.
-     */
-    private int getMaxTileColumns() {
-        if (!mUiConfig.getCurrentDisplayStyle().isSmall()
-                && ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
-                           ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
-                           PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false)) {
-            return 5;
-        }
-        return 4;
-    }
 
     private static int getTileTitleLines() {
         int defaultValue = 2;
@@ -881,17 +845,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         }
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_TILE_TITLE_LINES, defaultValue);
-    }
-
-    private boolean shouldUseCondensedTileLayout() {
-        if (mUiConfig.getCurrentDisplayStyle().isSmall()) {
-            return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
-                    ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
-                    PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED, false);
-        }
-        return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
-                ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
-                PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false);
     }
 
     private boolean shouldShowLogo() {
@@ -927,7 +880,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     @Override
     public void onTileDataChanged() {
-        mTileGroup.renderTileViews(mTileGridLayout, shouldUseCondensedTileLayout());
+        mTileGroup.renderTileViews(mTileGridLayout);
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page

@@ -95,8 +95,8 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         if (tileGroupDelegate == null) {
             mTileGrid = null;
         } else {
-            mTileGrid = new TileGrid(
-                    uiDelegate, mContextMenuManager, tileGroupDelegate, offlinePageBridge);
+            mTileGrid = new TileGrid(uiDelegate, mContextMenuManager, tileGroupDelegate,
+                    offlinePageBridge, uiConfig);
             mRoot.addChild(mTileGrid);
         }
         mRoot.addChildren(mSections, mSigninPromo, mAllDismissed, mFooter);
@@ -130,7 +130,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                 return new NewTabPageViewHolder(mAboveTheFoldView);
 
             case ItemViewType.TILE_GRID:
-                return new TileGrid.ViewHolder(mRecyclerView);
+                return new TileGrid.ViewHolder(mRecyclerView, mUiConfig);
 
             case ItemViewType.HEADER:
                 return new SectionHeaderViewHolder(mRecyclerView, mUiConfig);

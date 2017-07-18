@@ -16,21 +16,12 @@ import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeVisitor;
 import org.chromium.chrome.browser.ntp.cards.OptionalLeaf;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
 /**
  * The model and controller for a group of site suggestion tiles that will be rendered in a grid.
  */
 public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
-    /**
-     * The maximum number of tiles to try and fit in a row. On smaller screens, there may not be
-     * enough space to fit all of them.
-     */
-    private static final int MAX_TILE_COLUMNS = 4;
-
-    /**
-     * Experiment parameter for the maximum number of tile suggestion rows to show.
-     */
-    private static final String PARAM_CHROME_HOME_MAX_TILE_ROWS = "chrome_home_max_tile_rows";
 
     /**
      * Experiment parameter for the number of tile title lines to show.
@@ -40,11 +31,13 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     private final TileGroup mTileGroup;
 
     public TileGrid(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
-            TileGroup.Delegate tileGroupDelegate, OfflinePageBridge offlinePageBridge) {
+            TileGroup.Delegate tileGroupDelegate, OfflinePageBridge offlinePageBridge,
+            UiConfig uiConfig) {
         mTileGroup = new TileGroup(ContextUtils.getApplicationContext(), uiDelegate,
                 contextMenuManager, tileGroupDelegate,
-                /* observer = */ this, offlinePageBridge, getTileTitleLines());
-        mTileGroup.startObserving(getMaxTileRows() * MAX_TILE_COLUMNS);
+                /* observer = */ this, offlinePageBridge, getTileTitleLines(),
+                uiConfig.getCurrentTileStyle());
+        mTileGroup.startObserving(uiConfig.getMaxTileRows() * uiConfig.getMaxTileColumns());
     }
 
     @Override
@@ -89,12 +82,6 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
         return mTileGroup;
     }
 
-    private static int getMaxTileRows() {
-        int defaultValue = 2;
-        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
-                ChromeFeatureList.CHROME_HOME, PARAM_CHROME_HOME_MAX_TILE_ROWS, defaultValue);
-    }
-
     private static int getTileTitleLines() {
         int defaultValue = 1;
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
@@ -107,16 +94,16 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     public static class ViewHolder extends NewTabPageViewHolder {
         private final TileGridLayout mLayout;
 
-        public ViewHolder(ViewGroup parentView) {
+        public ViewHolder(ViewGroup parentView, UiConfig uiConfig) {
             super(LayoutInflater.from(parentView.getContext())
                             .inflate(R.layout.suggestions_site_tile_grid, parentView, false));
             mLayout = (TileGridLayout) itemView;
-            mLayout.setMaxRows(getMaxTileRows());
-            mLayout.setMaxColumns(MAX_TILE_COLUMNS);
+            mLayout.setMaxRows(uiConfig.getMaxTileRows());
+            mLayout.setMaxColumns(uiConfig.getMaxTileColumns());
         }
 
         public void updateTiles(TileGroup tileGroup) {
-            tileGroup.renderTileViews(mLayout, /* condensed = */ false);
+            tileGroup.renderTileViews(mLayout);
         }
 
         public void updateIconView(Tile tile) {

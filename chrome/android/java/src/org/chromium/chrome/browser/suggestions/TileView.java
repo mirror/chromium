@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.TitleUtil;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig.TileStyle;
 
 /**
  * The view for a site suggestion tile. Displays the title of the site beneath a large icon. If a
@@ -39,10 +40,10 @@ public class TileView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mTitleView = (TextView) findViewById(R.id.tile_view_title);
-        mIconBackgroundView = (View) findViewById(R.id.tile_view_icon_background);
-        mIconView = (ImageView) findViewById(R.id.tile_view_icon);
-        mBadgeView = (ImageView) findViewById(R.id.offline_badge);
+        mTitleView = findViewById(R.id.tile_view_title);
+        mIconBackgroundView = findViewById(R.id.tile_view_icon_background);
+        mIconView = findViewById(R.id.tile_view_icon);
+        mBadgeView = findViewById(R.id.offline_badge);
     }
 
     /**
@@ -50,15 +51,15 @@ public class TileView extends FrameLayout {
      * after inflation.
      * @param tile The tile that holds the data to populate this view.
      * @param titleLines The number of text lines to use for the tile title.
-     * @param condensed Whether to use a condensed layout.
+     * @param tileStyle The visual style of the tile.
      */
-    public void initialize(Tile tile, int titleLines, boolean condensed) {
+    public void initialize(Tile tile, int titleLines, @TileStyle int tileStyle) {
         mTitleView.setLines(titleLines);
         mUrl = tile.getUrl();
 
         Resources res = getResources();
 
-        if (SuggestionsConfig.useModern()) {
+        if (tileStyle == TileStyle.MODERN) {
             mIconBackgroundView.setVisibility(View.VISIBLE);
             LayoutParams iconParams = (LayoutParams) mIconView.getLayoutParams();
             iconParams.width = res.getDimensionPixelOffset(R.dimen.tile_view_icon_size_modern);
@@ -66,8 +67,7 @@ public class TileView extends FrameLayout {
             iconParams.setMargins(
                     0, res.getDimensionPixelOffset(R.dimen.tile_view_icon_margin_top_modern), 0, 0);
             mIconView.setLayoutParams(iconParams);
-        } else if (condensed) {
-            // TODO(mvanouwerkerk): Move this code to xml - https://crbug.com/695817.
+        } else if (tileStyle == TileStyle.CONDENSED) {
             setPadding(0, 0, 0, 0);
             LayoutParams tileParams = (LayoutParams) getLayoutParams();
             tileParams.width = res.getDimensionPixelOffset(R.dimen.tile_view_width_condensed);
