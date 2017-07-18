@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03b5f157_eb1d98c6",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Yes, the statistics recorded are unchanged, though I guess you cannot switch from mode to mode anymore. Added a comment.",
+      "parentUuid": "a18582bf_d2ee5f14",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08be9d89_3f9a5931",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "02c3d792_2745cda9",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "I am in favour of Jacob\u0027s approach. I will keep it this way since you don\u0027t feel strongly.",
+      "parentUuid": "dcaf2ca5_0a818a47",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df8dd94_7b71a301",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 4
@@ -83,6 +119,24 @@
       "writtenOn": "2017-07-17T22:59:29Z",
       "side": 1,
       "message": "Just to double-check: Does this change tab-key behavior when navigating with keyboard and/or spoken feedback?",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25751ba2_314a471f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Just tested manually, AFAICT no changes.",
+      "parentUuid": "8df8dd94_7b71a301",
       "revId": "885bf91df483588a830410cda63547c70c775a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a39fb97e_80c3a48b",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb9cde3e_69194278",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabb3811_6d2804c0",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 4
@@ -120,6 +192,24 @@
       "revId": "885bf91df483588a830410cda63547c70c775a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b32453e_27df3212",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Ack. I see it, I\u0027ll wait for that first.",
+      "parentUuid": "dabb3811_6d2804c0",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "3250f1c2_ae3aae1b",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f34ce2c_12aeac7b",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80120940_9f7c0a69",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 4
@@ -151,6 +259,24 @@
       "writtenOn": "2017-07-17T22:59:29Z",
       "side": 1,
       "message": "Thanks for adding tests! Also, I like the comment/action/expectation pattern you used.",
+      "revId": "885bf91df483588a830410cda63547c70c775a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4688a5a2_ffe2c92c",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T00:29:16Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "80120940_9f7c0a69",
       "revId": "885bf91df483588a830410cda63547c70c775a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
