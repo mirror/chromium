@@ -46,6 +46,30 @@
       "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c460798_b8042caa",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-18T20:31:11Z",
+      "side": 1,
+      "message": "Is that intentional? We can link with Xcode shipped compiler_rt if necessary.  Or should package.py be updated to build iOS too?",
+      "parentUuid": "d3ad0952_2a772966",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
