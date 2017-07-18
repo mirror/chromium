@@ -9,13 +9,20 @@
 
 namespace content {
 
+struct HttpResponseInfoIOBuffer;
+class ServiceWorkerContextCore;
+class ServiceWorkerVersion;
+
 // ServiceWorkerInstalledScriptsSender serves the service worker's installed
 // scripts from ServiceWorkerStorage to the renderer through Mojo data pipes.
 // ServiceWorkerInstalledScriptsSender is owned by ServiceWorkerVersion. It is
 // created for worker startup and lives as long as the worker is running.
-class ServiceWorkerInstalledScriptsSender {
+class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
  public:
-  ServiceWorkerInstalledScriptsSender();
+  ServiceWorkerInstalledScriptsSender(
+      ServiceWorkerVersion* owner,
+      const GURL& main_script_url,
+      base::WeakPtr<ServiceWorkerContextCore> context);
   ~ServiceWorkerInstalledScriptsSender();
 
   // Creates a Mojo struct (mojom::ServiceWorkerInstalledScriptsInfo) and sets
@@ -23,8 +30,53 @@ class ServiceWorkerInstalledScriptsSender {
   // on the renderer.
   mojom::ServiceWorkerInstalledScriptsInfoPtr CreateInfoAndBind();
 
+  // Starts streaming installed scripts to the worker.
+  void Start();
+
  private:
+  class Sender;
+
+  enum class Status {
+    kSuccess,
+    kNoHttpInfoError,
+    kCreateDataPipeError,
+    kConnectionError,
+    kResponseReaderError,
+    kMetaDataTransferError,
+  };
+
+  enum class State {
+    kNotStarted,
+    kStreamingMainScript,
+    kStreamingImportedScript,
+    kFinished,
+  };
+
+  void StartPushScript(int64_t resource_id);
+
+  // Called from |running_sender_|.
+  void StartScriptTransfer(std::string encoding,
+                           std::unordered_map<std::string, std::string> headers,
+                           mojo::ScopedDataPipeConsumerHandle meta_data_handle,
+                           mojo::ScopedDataPipeConsumerHandle body_handle);
+  void OnHttpInfoRead(scoped_refptr<HttpResponseInfoIOBuffer> http_info);
+  void OnFinishScriptTransfer();
+  void OnAbortScriptTransfer(Status status);
+
+  const GURL& CurrentStreamingURL();
+
+  ServiceWorkerVersion* owner_;
+  const GURL main_script_url_;
+  int main_script_id_;
+
   mojom::ServiceWorkerInstalledScriptsManagerPtr manager_;
+  std::unique_ptr<Sender> running_sender_;
+  State state_;
+  std::map<int64_t /* resource_id */, GURL> imported_urls_;
+  std::map<int64_t /* resource_id */, GURL>::iterator current_streaming_script_;
+  base::WeakPtr<ServiceWorkerContextCore> context_;
+
+  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerInstalledScriptsSender);
 };
 
 }  // namespace content

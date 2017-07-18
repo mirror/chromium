@@ -59,32 +59,30 @@ class CORE_EXPORT WorkerReportingProxy {
                                     SourceLocation*) {}
   virtual void PostMessageToPageInspector(int session_id, const String&) {}
 
-  // Invoked when the new WorkerGlobalScope is created on
-  // WorkerThread::InitializeOnWorkerThread.
+  // Invoked when the new WorkerGlobalScope is created. This is called after
+  // DidLoadWorkerScript().
   virtual void DidCreateWorkerGlobalScope(WorkerOrWorkletGlobalScope*) {}
 
-  // Invoked when the WorkerGlobalScope is initialized on
-  // WorkerThread::InitializeOnWorkerThread.
+  // Invoked when the WorkerGlobalScope is initialized. This is called after
+  // DidCreateWorkerGlobalScope().
   virtual void DidInitializeWorkerContext() {}
 
-  // Invoked when the worker's main script is loaded on
-  // WorkerThread::InitializeOnWorkerThread. Only invoked when the script was
-  // loaded on the worker thread, i.e., via InstalledScriptsManager rather than
-  // via ResourceLoader.
-  virtual void DidLoadInstalledScript() {}
+  // Invoked when the worker script is loaded on the worker thread. This is
+  // called after DidInitializeWorkerContext().
+  virtual void DidLoadScript() {}
 
-  // Invoked when the worker script is about to be evaluated on
-  // WorkerThread::InitializeOnWorkerThread.
+  // Invoked when the worker script is about to be evaluated. This is called
+  // after DidInitializeWorkerContext() or DidLoadScript().
   virtual void WillEvaluateWorkerScript(size_t script_size,
                                         size_t cached_metadata_size) {}
 
-  // Invoked when an imported script is about to be evaluated.
+  // Invoked when an imported script is about to be evaluated. This is called
+  // after WillEvaluateWorkerScript().
   virtual void WillEvaluateImportedScript(size_t script_size,
                                           size_t cached_metadata_size) {}
 
-  // Invoked when the worker script is evaluated on
-  // WorkerThread::InitializeOnWorkerThread. |success| is true if the evaluation
-  // completed with no uncaught exception.
+  // Invoked when the worker script is evaluated. |success| is true if the
+  // evaluation completed with no uncaught exception.
   virtual void DidEvaluateWorkerScript(bool success) {}
 
   // Invoked when close() is invoked on the worker context.
