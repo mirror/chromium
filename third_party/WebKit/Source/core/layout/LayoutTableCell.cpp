@@ -454,9 +454,9 @@ int LayoutTableCell::CellBaselinePosition() const {
   // cell, or the first in-flow table-row in the cell, whichever comes first. If
   // there is no such line box or table-row, the baseline is the bottom of
   // content edge of the cell box.
-  int first_line_baseline = FirstLineBoxBaseline();
+  LayoutUnit first_line_baseline = FirstLineBoxBaseline();
   if (first_line_baseline != -1)
-    return first_line_baseline;
+    return first_line_baseline.ToInt();
   return (BorderBefore() + PaddingBefore() + ContentLogicalHeight()).ToInt();
 }
 
