@@ -70,6 +70,30 @@
       "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085044c4_112f2ced",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T21:40:37Z",
+      "side": 0,
+      "message": "Done with an adapter as discussed offline. Thanks for the suggestion.",
+      "parentUuid": "6244bdc0_9b43a8b0",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "776937c7_c1194509",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T21:40:37Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "f1909f5f_ff40c24e",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 78
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd85e810_24a91e5b",
         "filename": "media/mojo/interfaces/remoting_common.mojom",
         "patchSetId": 1
@@ -390,6 +414,30 @@
       "side": 1,
       "message": "IIUC, this will be false if the feature flag was disabled. So, if the feature is disabled, we would not want remoting to ever start.",
       "parentUuid": "8ff3995d_b08bcd8e",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0f1076_e4574c7b",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T21:40:37Z",
+      "side": 1,
+      "message": "This logic is removed now. :)",
+      "parentUuid": "754b5540_2a76ebf6",
       "range": {
         "startLine": 303,
         "startChar": 0,
