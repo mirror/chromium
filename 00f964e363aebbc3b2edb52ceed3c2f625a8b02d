@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52c3a3b3_acd46304",
+        "filename": "ash/system/brightness/tray_brightness.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T19:50:09Z",
+      "side": 1,
+      "message": "maximize_mode_controller is nullptr for many of these ui things on deletion. These are the ones that crashed when running tests.",
+      "parentUuid": "d801a478_7aec49a1",
+      "range": {
+        "startLine": 124,
+        "startChar": 40,
+        "endLine": 124,
+        "endChar": 64
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "078dfd8d_1de519c7",
         "filename": "ash/system/overview/overview_button_tray.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T19:15:09Z",
       "side": 1,
       "message": "Similar question about conditional.",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f39c73_a372809f",
+        "filename": "ash/system/overview/overview_button_tray.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T19:50:09Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "078dfd8d_1de519c7",
       "range": {
         "startLine": 50,
         "startChar": 10,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b36514bf_58fe781f",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T19:50:09Z",
+      "side": 1,
+      "message": "thanks for catching this. i did change this per msw@ suggestion but i messed up the last rebase..",
+      "parentUuid": "c6100d83_a9fd16fa",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18ad2c91_863a7351",
         "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
         "patchSetId": 5
@@ -114,6 +186,30 @@
       "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6dc690_846d911c",
+        "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-18T19:50:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18ad2c91_863a7351",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
