@@ -22,6 +22,16 @@
       "xctest": true
     },
     {
+      "app": "ios_chrome_payments_egtests",
+      "test args": [
+        "--enable-features=WebPayments"
+      ],
+      "device type": "iPhone 6s",
+      "os": "10.0",
+      "xcode version": "8.0",
+      "xctest": true
+    },
+    {
       "app": "ios_chrome_reading_list_egtests",
       "test args": [
         "--enable-reading-list"
@@ -47,9 +57,6 @@
     },
     {
       "app": "ios_chrome_ui_egtests",
-      "test args": [
-        "--enable-features=WebPayments"
-      ],
       "device type": "iPhone 6s",
       "os": "10.0",
       "xcode version": "8.0",
@@ -84,6 +91,16 @@
       "xctest": true
     },
     {
+      "app": "ios_chrome_payments_egtests",
+      "test args": [
+        "--enable-features=WebPayments"
+      ],
+      "device type": "iPad Air 2",
+      "os": "10.0",
+      "xcode version": "8.0",
+      "xctest": true
+    },
+    {
       "app": "ios_chrome_reading_list_egtests",
       "test args": [
         "--enable-reading-list"
@@ -109,9 +126,6 @@
     },
     {
       "app": "ios_chrome_ui_egtests",
-      "test args": [
-        "--enable-features=WebPayments"
-      ],
       "device type": "iPad Air 2",
       "os": "10.0",
       "xcode version": "8.0",
