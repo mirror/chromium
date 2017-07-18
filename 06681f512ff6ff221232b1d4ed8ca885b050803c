@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5b4788d6_dd961191",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T13:24:40Z",
+      "side": 1,
+      "message": "I\u0027ve already been sent two CLs that convert \"var\" to \"let\" for file that are used or planned to be used on iOS:\n\n- https://chromium-review.googlesource.com/c/572104/\n- https://chromium-review.googlesource.com/c/575206/\n\nIIUC, \"let\" is not allowed yet, but some people already try to use it. Can we land the presubmit check before landing the current CL?",
+      "parentUuid": "ae5a629a_e55c4ea9",
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e3dbf52_786efb36",
         "filename": "docs/es6_chromium.md",
         "patchSetId": 5
