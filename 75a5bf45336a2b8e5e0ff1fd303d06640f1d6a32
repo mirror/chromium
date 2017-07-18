@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1874e686_99b0fdbc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2695,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-18T00:21:17Z",
+      "side": 1,
+      "message": "With a high DPI mixed background, it shouldn\u0027t matter which GraphicsLayer we use since we are repainting on every scroll regardless?\n\nAnd on high DPI with an entirely fixed or entirely non-fixed background we already get the right answer from LayoutBoxModelObject::GetBackgroundPaintLocation.\n\nSo I think \"low DPI \u003d\u003e scrolling contents layer\" is the only condition that needs to be added here.  On low DPI we don\u0027t care whether the background is fixed, non-fixed, or mixed; we want LCD text at the cost of repaints on scroll.\n\nBut getting fixed backgrounds painting correctly into the scrolling contents layer is not trivial, it needs some changes to invalidation and painting code too.  So I want to do that separately and limit the scope of this change to resolving the regression for simple (non-fixed) backgrounds.",
+      "parentUuid": "40bb9710_9288fb65",
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c6cc4c_c4dc962a",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
         "patchSetId": 5
