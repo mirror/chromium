@@ -51,7 +51,6 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "core/svg/SVGSVGElement.h"
-#include "platform/EventDispatchForbiddenScope.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -1685,7 +1684,6 @@ void Range::UpdateSelectionIfAddedToSelection() {
   DCHECK(startContainer()->GetDocument() == OwnerDocument());
   DCHECK(endContainer()->isConnected());
   DCHECK(endContainer()->GetDocument() == OwnerDocument());
-  EventDispatchForbiddenScope no_events;
   selection.SetSelection(SelectionInDOMTree::Builder()
                              .Collapse(StartPosition())
                              .Extend(EndPosition())

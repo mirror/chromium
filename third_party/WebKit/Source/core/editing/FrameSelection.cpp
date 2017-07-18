@@ -292,7 +292,7 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
   NotifyAccessibilityForSelectionChange();
   NotifyCompositorForSelectionChange();
   NotifyEventHandlerForSelectionChange();
-  frame_->DomWindow()->EnqueueDocumentEvent(
+  frame_->DomWindow()->document()->DispatchEvent(
       Event::Create(EventTypeNames::selectionchange));
 }
 
