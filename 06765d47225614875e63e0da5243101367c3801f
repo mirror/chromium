@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85e6623f_535f5964",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T20:32:33Z",
+      "side": 1,
+      "message": "Ack. This also requires the change in media/media_options.gni. Will do in a separate CL.",
+      "parentUuid": "05ce33ce_f7bd92c3",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 24
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af028b13_374d9a80",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "06765d47225614875e63e0da5243101367c3801f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1357d9a_a0c2fd25",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T20:32:33Z",
+      "side": 1,
+      "message": "Done. Added some unit tests.",
+      "parentUuid": "af028b13_374d9a80",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 227,
+        "endChar": 58
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "93a5cc0c_2b7be04a",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T20:32:33Z",
+      "side": 1,
+      "message": "Yes, you are right. Actually, it is already checked in OnSinkAvailable(). So the check in the RendererController is not useful and is removed now.",
+      "parentUuid": "725b031d_4a65bbc3",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd98731_9d01ae1a",
         "filename": "media/remoting/sink_availability_observer.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-18T01:54:20Z",
       "side": 1,
       "message": "Hmm...This code is duplicated: this is the same as the code in SharedSession. Can you consolidate it?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d75837_ec9508c6",
+        "filename": "media/remoting/sink_availability_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T20:32:33Z",
+      "side": 1,
+      "message": "As discussed offline, leave it as is now since it is only used for encrypted contents, and we are going to remove all the related codes until we start support remoting encrypted contents in future.",
+      "parentUuid": "8dd98731_9d01ae1a",
       "range": {
         "startLine": 17,
         "startChar": 0,
