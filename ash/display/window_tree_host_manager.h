@@ -75,6 +75,13 @@ class ASH_EXPORT WindowTreeHostManager
         AshWindowTreeHost* window_tree_host,
         const display::Display& display) {}
 
+    // Called when the primary display is changed to an existing display. This
+    // results in swapping the display ids the two WindowTreeHosts are
+    // associated with. At the time this is called the ids have already been
+    // swapped.
+    virtual void OnWindowTreeHostsSwappedDisplays(AshWindowTreeHost* host1,
+                                                  AshWindowTreeHost* host2) {}
+
    protected:
     virtual ~Observer() {}
   };
