@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db73dfe0_7706e8e0",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:16:49Z",
+      "side": 1,
+      "message": "since kDeaultAltURL and kRandomKeyword are const, just make this:\nDCHECK(offset !\u003d std::string::npos);",
+      "revId": "f7596057f940b13a71d3541833e4143bcbd04b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d96b06_0ed85b8e",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:16:49Z",
+      "side": 1,
+      "message": "This is wasteful and confusing to read; instead:\n\nGURL test_url \u003d !portal_test_url_.is_empty() ? portal_test_url_ : GetRandomizedTestURL();",
+      "revId": "f7596057f940b13a71d3541833e4143bcbd04b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
