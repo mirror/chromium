@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b070a707_6baca4c6",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T19:42:04Z",
+      "side": 1,
+      "message": "Hmmm, I think the break here is correct, given items:\nradio1\nradio2\nnon-radio item\nradio3\n\nwe treat radio1 and radio2 as a grouped radio list and radio3 as a separate one. So the break; here would ensure we don\u0027t look past one group when we are dealing with a radio item from one group.",
+      "range": {
+        "startLine": 745,
+        "startChar": 5,
+        "endLine": 745,
+        "endChar": 6
+      },
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d77d5a53_3af829ab",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 1
@@ -47,6 +70,24 @@
       "writtenOn": "2017-07-18T18:40:06Z",
       "side": 1,
       "message": "Is ItemUpdated only called for radio button updates?  If not, do we need to call RadioItemSelected() (or SanitizeRadioList()) for non-radio items?  If so, can we make that explicit?",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9787f4a8_c4f2376f",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-18T19:42:04Z",
+      "side": 1,
+      "message": "+1, I don\u0027t think ItemUpdated would be called for only radio item, but any item. See context_menus_api_helpers.h\n\nAlso UpdateItem for a particular item that is radio item doesn\u0027t necessarily mean that we have selected/checked that item. So calling RadioItemSelected is a bit incorrect.\n\ne.g if I have radio1 and radio2 and radio1 checked, then if I call\nchrome.contextMenus.update(radio1, {\u0027checked\u0027: false}), this CL will call RadioItemSelected for radio1, after unselecting radio1, then RadioItemSelected will clear all other items: we will end up with no radio items selected, which is wrong I think. The intent of SanitizeRadioList is to ensure we at least have one radio item selected in group (see my comment in SanitizeRadioList for group).\n\nYou\u0027d need two cases to handle here unfortunately. If\n|menu_item| was checked, then RadioItemSelected should be fine.\nHowever if it was not unchecked, then we would still need to call SanitizeRadioList.\n\nAs Devlin points out we would need to do the same for line 787 above. Something like:\n\nif (menu_item-\u003eparent_id()) {\n  list \u003d \u0026(GetItemById(*menu_item-\u003eparent_id())-\u003echildren());\nelse {\n  auto i \u003d context_items_.find(menu_item-\u003eid().extension_key);\n  if (i \u003d\u003d context_items_.end()) {\n    NOTREACHED();\n    return false;\n  }\n  list \u003d \u0026(i-\u003esecond);\n}\n\n// If we selected a radio item, unselect all other items in its group.\nif (menu_item-\u003etype() \u003d\u003d RADIO \u0026\u0026 menu_item-\u003echecked())\n  RadioItemSelected(menu_item)\nelse\n  SanitizeRadioItemList(*list)",
+      "parentUuid": "4dcd9fcf_fb3b9309",
       "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
