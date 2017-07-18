@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c220d9_2dce00d0",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-18T16:34:36Z",
+      "side": 1,
+      "message": "Unless codesearch is failing me, it looks like this is only used for a DCHECK in DragController.cpp? If so, I think we can clean this up to return a bool or just remove it entirely.",
+      "revId": "b9fb8aca34906bb8f97040ebf84b3b08f6b66336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
