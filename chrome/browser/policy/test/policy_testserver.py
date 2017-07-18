@@ -723,14 +723,18 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       assert type(field_value) == bool
     elif field.type == field.TYPE_STRING:
       assert type(field_value) == str or type(field_value) == unicode
-    elif field.type == field.TYPE_INT64:
+    elif field.type == field.TYPE_INT64 or
+         field.type == field.TYPE_INT32 or
+         field.type == field.TYPE_ENUM:
       assert type(field_value) == int
-    elif (field.type == field.TYPE_MESSAGE and
-          field.message_type.name == 'StringList'):
-      assert type(field_value) == list
-      entries = group_message.__getattribute__(field.name).entries
-      for list_item in field_value:
-        entries.append(list_item)
+    elif field.type == field.TYPE_MESSAGE:
+      assert type(field_value) == dict
+      sub_message = group_message.__getattribute__(field.name)
+      for sub_value in field_value:
+        for sub_field in sub_message.DESCRIPTOR.fields:
+          if sub_field.name in sub_value:
+            value = field_value[sub_field.name]
+            self.SetProtobufMessageField(sub_message, sub_field, value)
       return
     else:
       raise Exception('Unknown field type %s' % field.type)
@@ -1423,43 +1427,46 @@ class PolicyServerRunner(testserver_base.TestServerRunner):
     testserver_base.TestServerRunner.add_options(self)
     self.option_parser.add_option('--client-state', dest='client_state_file',
                                   help='File that client state should be '
-                                  'persisted to. This allows the server to be '
-                                  'seeded by a list of pre-registered clients '
-                                  'and restarts without abandoning registered '
-                                  'clients.')
+                                       'persisted to. This allows the server '
+                                       'to be seeded by a list of '
+                                       'pre-registered clients and restarts '
+                                       'without abandoning registered clients.')
     self.option_parser.add_option('--policy-key', action='append',
                                   dest='policy_keys',
                                   help='Specify a path to a PEM-encoded '
-                                  'private key to use for policy signing. May '
-                                  'be specified multiple times in order to '
-                                  'load multiple keys into the server. The '
-                                  'server will use a canned key if none is '
-                                  'specified on the command line. The test '
-                                  'server will also look for a verification '
-                                  'signature file in the same location: '
-                                  '<filename>.sig and if present will add the '
-                                  'signature to the policy blob as appropriate '
-                                  'via the '
-                             'new_public_key_verification_signature_deprecated '
-                                  'field.')
+                                       'private key to use for policy signing. '
+                                       'May be specified multiple times in '
+                                       'order to load multiple keys into the '
+                                       'server. The server will use a canned '
+                                       'key if none is specified on the '
+                                       'command line. The test server will '
+                                       'also look for a verification signature '
+                                       'file in the same location: '
+                                       '<filename>.sig and if present will add '
+                                       'the signature to the policy blob as '
+                                       'appropriate via the '
+                                       'new_public_key_verification_'
+                                       'signature_deprecated field.')
     self.option_parser.add_option('--rotate-policy-keys-automatically',
                                   action='store_true',
                                   dest='rotate_keys_automatically',
                                   help='If present, then the policy keys will '
-                                  'be rotated in a round-robin fashion for '
-                                  'each policy request (by default, either the '
-                                  'key specified in the config or the first '
-                                  'key will be used for all requests).')
+                                       'be rotated in a round-robin fashion '
+                                       'for each policy request (by default, '
+                                       'either the key specified in the config '
+                                       'or the first key will be used for '
+                                       'all requests).')
     self.option_parser.add_option('--log-level', dest='log_level',
                                   default='WARN',
                                   help='Log level threshold to use.')
     self.option_parser.add_option('--config-file', dest='config_file',
                                   help='Specify a configuration file to use '
-                                  'instead of the default '
-                                  '<data_dir>/device_management')
+                                       'instead of the default '
+                                       '<data_dir>/device_management')
     self.option_parser.add_option('--server-base-url', dest='server_base_url',
                                   help='The server base URL to use when '
-                                  'constructing URLs to return to the client.')
+                                       'constructing URLs to return '
+                                       'to the client.')
 
   def run_server(self):
     logger = logging.getLogger()
