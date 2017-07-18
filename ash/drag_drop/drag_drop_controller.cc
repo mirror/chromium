@@ -224,6 +224,10 @@ int DragDropController::StartDragAndDrop(
   if (cancel_animation_)
     cancel_animation_->End();
 
+  aura::Env* const instance = aura::Env::GetInstance();
+  if (instance)
+    instance->NotifyDragStarted(drag_data_);
+
   if (should_block_during_drag_drop_) {
     base::RunLoop run_loop;
     quit_closure_ = run_loop.QuitClosure();
@@ -570,6 +574,9 @@ void DragDropController::ForwardPendingLongTap() {
 }
 
 void DragDropController::Cleanup() {
+  aura::Env* const instance = aura::Env::GetInstance();
+  if (instance)
+    instance->NotifyDragEnded(drag_data_);
   if (drag_window_)
     drag_window_->RemoveObserver(this);
   drag_window_ = NULL;
