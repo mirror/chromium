@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991c69ae_ce842542",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T17:44:29Z",
+      "side": 1,
+      "message": "sequence checker please.",
+      "range": {
+        "startLine": 454,
+        "startChar": 15,
+        "endLine": 454,
+        "endChar": 16
+      },
+      "revId": "f50a537d979cdba8082de27343c23719be8126a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e354cd_41c75418",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T17:44:29Z",
+      "side": 1,
+      "message": "nit: may be opted_out_\nmeaning user opted out on this page load.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "f50a537d979cdba8082de27343c23719be8126a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a753a6d_3ce8097b",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T17:44:29Z",
+      "side": 1,
+      "message": "Initialize to false in ctor.",
+      "range": {
+        "startLine": 359,
+        "startChar": 7,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "f50a537d979cdba8082de27343c23719be8126a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c815ce_f4cf0173",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_pingback_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T17:44:29Z",
+      "side": 1,
+      "message": "nit: move to .cc file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "f50a537d979cdba8082de27343c23719be8126a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
