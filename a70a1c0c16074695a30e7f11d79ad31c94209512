@@ -106,6 +106,24 @@
       "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db3f5c9_de251b3e",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:16:06Z",
+      "side": 1,
+      "message": "Default on windows + running tests there + doing so after the branch point all seem fine to me.",
+      "parentUuid": "e4e9da93_2b033370",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
