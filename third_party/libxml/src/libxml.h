@@ -96,7 +96,7 @@ int __xmlRandom(void);
 #endif
 
 XMLPUBFUN xmlChar * XMLCALL xmlEscapeFormatString(xmlChar **msg);
-int xmlNop(void);
+int xmlNop(void *context, char *buffer, int len);
 
 #ifdef IN_LIBXML
 #ifdef __GNUC__
