@@ -333,4 +333,9 @@ Status ExecuteTakeHeapSnapshot(Session* session,
                                std::unique_ptr<base::Value>* value,
                                Timeout* timeout);
 
+Status ExecutePerformActions(Session* session,
+                             WebView* web_view,
+                             const base::DictionaryValue& params,
+                             std::unique_ptr<base::Value>* value,
+                             Timeout* timeout);
 #endif  // CHROME_TEST_CHROMEDRIVER_WINDOW_COMMANDS_H_

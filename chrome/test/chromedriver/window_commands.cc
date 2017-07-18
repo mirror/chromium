@@ -36,7 +36,7 @@
 
 namespace {
 
-const std::string kUnreachableWebDataURL = "data:text/html,chromewebdata";
+static const char kUnreachableWebDataURL[] = "data:text/html,chromewebdata";
 
 // Defaults to 20 years into the future when adding a cookie.
 const double kDefaultCookieExpiryTime = 20*365*24*60*60;
@@ -728,6 +728,168 @@ Status ExecuteTouchPinch(Session* session,
   if (!params.GetDouble("scale", &scale_factor))
     return Status(kUnknownError, "'scale' must be an integer");
   return web_view->SynthesizePinchGesture(location.x, location.y, scale_factor);
+}
+
+Status ProcessInputActionSequence(Session* session,
+                                  const base::DictionaryValue* action_sequence,
+                                  const base::ListValue* result) {
+  std::string id;
+  std::string type;
+  InputSource source;
+  const base::DictionaryValue* parameters = NULL;
+  std::list<InputSource> active_inputs;
+
+  if (!action_sequence->GetString("type", &type) ||
+      ((type != "key") && (type != "pointer") && (type != "none"))) {
+    return Status(
+        kInvalidArgument,
+        "|type| must be one of the strings 'key', 'pointer' or 'none'");
+  }
+
+  if (!action_sequence->GetString("id", &id))
+    return Status(kInvalidArgument, "|id| must be a string");
+
+  if (type == "pointer") {
+    if (!action_sequence->GetDictionary("parameters", &parameters)) {
+      return Status(kInvalidArgument, "|parameters| must be a dictionary");
+    }
+    // TODO(kereliuk): process pointer parameters
+  }
+
+  active_inputs = session->active_input_sources;
+  bool found = false;
+  for (std::list<InputSource>::iterator it = active_inputs.begin();
+       it != active_inputs.end(); it++) {
+    if (it->input_id == id) {
+      source = *it;
+      found = true;
+    }
+  }
+  // if we found no matching active input source
+  if (!found) {
+    // create input source
+    source = InputSource(id, type);
+
+    // add it to the list of active input sourcees
+    active_inputs.push_back(source);
+
+    if (type == "none") {
+      InputState null_state;
+      session->input_state_table[id] = null_state;
+    }
+    // something
+    if (type == "key") {
+      KeyInputState key_state;
+      session->input_state_table[id] = key_state;
+    }
+    // something
+    if (type == "pointer") {
+      PointerInputState pointer_state;
+      session->input_state_table[id] = pointer_state;
+    }
+  } else {
+    if (source.source_type != type) {
+      return Status(kInvalidArgument,
+                    "input state with same id has a different type");
+    }
+  }
+
+  if (type == "pointer") {
+    std::string pointer_type;
+    // TODO(kereliuk): figure what the standard name is here
+    if (!parameters->GetString("pointerType", &pointer_type) ||
+        pointer_type != source.pointer_type) {
+      return Status(
+          kInvalidArgument,
+          "pointerType must be a string that matches sources pointer type");
+    }
+  }
+
+  const base::ListValue* actions;
+  if (!action_sequence->GetList("actions", &actions)) {
+    return Status(kInvalidArgument, "actions must be an array");
+  }
+
+  for (size_t i = 0; i < actions->GetSize(); i++) {
+    const base::DictionaryValue* action_item;
+    if (!actions->GetDictionary(i, &action_item))
+      return Status(
+          kInvalidArgument,
+          "each argument in the action sequence must be a dictionary");
+
+    if (type == "none") {
+      // process null action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) || subtype != "pause")
+        return Status(kInvalidArgument,
+                      "type of action must be the string 'pause'");
+
+      ActionObject action(id, "none", subtype);
+      // TODO(kereliuk): process null action
+    }
+    if (type == "key") {
+      // process key action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) ||
+          (subtype != "keyUp" && subtype != "keyDown" && subtype != "pause"))
+        return Status(
+            kInvalidArgument,
+            "type of action must be the string 'keyUp', 'keyDown' or 'pause'");
+
+      ActionObject action(id, "key", subtype);
+      // TODO(kereliuk): process key action
+    }
+    if (type == "pointer") {
+      // process key action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) ||
+          (subtype != "pointerUp" && subtype != "pointerDown" &&
+           subtype != "pointerMove" && subtype != "pause"))
+        return Status(kInvalidArgument,
+                      "type of action must be the string 'pointerUp', "
+                      "'pointerDown', 'pointerMove' or 'pause'");
+
+      ActionObject action(id, "pointer", subtype);
+      // TODO(kereliuk): process pointer action
+    }
+    // actions->Append(action)
+  }
+
+  return Status(kOk);
+}
+
+Status ExecutePerformActions(Session* session,
+                             WebView* web_view,
+                             const base::DictionaryValue& params,
+                             std::unique_ptr<base::Value>* value,
+                             Timeout* timeout) {
+  // TODO(kereliuk): check if the current browsing context is still open
+  // or if this error check is handled elsewhere
+
+  // TODO(kereliuk): handle prompts
+
+  // extract action sequence
+  const base::ListValue* actions;
+  if (!params.GetList("actions", &actions))
+    return Status(kInvalidArgument, "|actions| must be an array");
+
+  // const base::ListValue* actions_by_tick;
+  const base::ListValue* input_source_actions;
+  for (size_t i = 0; i < actions->GetSize(); i++) {
+    // proccess input action sequence
+    const base::DictionaryValue* action_sequence;
+    if (!actions->GetDictionary(i, &action_sequence))
+      return Status(kInvalidArgument, "each argument must be a dictionary");
+
+    Status status = ProcessInputActionSequence(session, action_sequence,
+                                               input_source_actions);
+    if (status.IsError())
+      return Status(kInvalidArgument, status);
+  }
+
+  // dispatch actions
+
+  return Status(kOk);
 }
 
 Status ExecuteSendCommand(Session* session,
