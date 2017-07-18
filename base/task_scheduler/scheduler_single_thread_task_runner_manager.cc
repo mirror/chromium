@@ -92,9 +92,11 @@ class SchedulerWorkerDelegate : public SchedulerWorker::Delegate {
 
   TimeDelta GetSleepTimeout() override { return TimeDelta::Max(); }
 
-  bool CanDetach(SchedulerWorker* worker) override { return false; }
+  bool CanTimeout(SchedulerWorker* worker) override { return false; }
 
-  void OnDetach() override { NOTREACHED(); }
+  void OnTimeout() override { NOTREACHED(); }
+
+  void RemoveWorker(SchedulerWorker* worker) override {}
 
   bool RunsTasksInCurrentSequence() {
     // We check the thread ref instead of the sequence for the benefit of COM
