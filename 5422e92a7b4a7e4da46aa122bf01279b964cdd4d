@@ -16,6 +16,24 @@
       "revId": "5422e92a7b4a7e4da46aa122bf01279b964cdd4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db44bf4_5181e986",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-18T05:34:37Z",
+      "side": 1,
+      "message": "Thanks - I didn\u0027t know this was a thing! Done.",
+      "parentUuid": "c8224d93_c2e04126",
+      "revId": "5422e92a7b4a7e4da46aa122bf01279b964cdd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
