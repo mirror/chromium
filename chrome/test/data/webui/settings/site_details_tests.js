@@ -76,23 +76,23 @@ suite('SiteDetails', function() {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
+            source: 'extension',
           },
         ],
         geolocation: [
           {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
+            setting: settings.ContentSetting.BLOCK,
+            source: 'policy',
           },
         ],
         images: [
           {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'default',
+            setting: settings.ContentSetting.DEFAULT,
+            source: 'preference',
           },
         ],
         javascript: [
@@ -115,8 +115,8 @@ suite('SiteDetails', function() {
           {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.BLOCK,
-            source: 'policy',
+            setting: settings.ContentSetting.ALLOW,
+            source: 'preference',
           },
         ],
         plugins: [
@@ -124,15 +124,15 @@ suite('SiteDetails', function() {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
-            source: 'extension',
+            source: 'preference',
           },
         ],
         popups: [
           {
             embeddingOrigin: 'https://foo-allow.com:443',
             origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.BLOCK,
-            source: 'default',
+            setting: settings.ContentSetting.DEFAULT,
+            source: 'preference',
           },
         ],
         unsandboxed_plugins: [
@@ -188,33 +188,19 @@ suite('SiteDetails', function() {
           .forEach(function(siteDetailsPermission) {
             // Verify settings match the values specified in |prefs|.
             var expectedSetting = settings.ContentSetting.ALLOW;
-            var expectedSource = 'preference';
-            var expectedMenuValue = settings.ContentSetting.ALLOW;
-
-            // For all the categories with non-user-set 'Allow' preferences,
-            // update expected values.
             if (siteDetailsPermission.category ==
-                    settings.ContentSettingsTypes.NOTIFICATIONS ||
-                siteDetailsPermission.category ==
-                    settings.ContentSettingsTypes.PLUGINS ||
-                siteDetailsPermission.category ==
-                    settings.ContentSettingsTypes.JAVASCRIPT ||
+                settings.ContentSettingsTypes.GEOLOCATION) {
+              expectedSetting = settings.ContentSetting.BLOCK;
+            } else if (
                 siteDetailsPermission.category ==
                     settings.ContentSettingsTypes.IMAGES ||
                 siteDetailsPermission.category ==
                     settings.ContentSettingsTypes.POPUPS) {
-              expectedSetting =
-                  prefs.exceptions[siteDetailsPermission.category][0].setting;
-              expectedSource =
-                  prefs.exceptions[siteDetailsPermission.category][0].source;
-              expectedMenuValue = (expectedSource == 'default') ?
-                  settings.ContentSetting.DEFAULT :
-                  expectedSetting;
+              expectedSetting = settings.ContentSetting.DEFAULT;
             }
             assertEquals(expectedSetting, siteDetailsPermission.site.setting);
-            assertEquals(expectedSource, siteDetailsPermission.site.source);
             assertEquals(
-                expectedMenuValue, siteDetailsPermission.$.permission.value);
+                expectedSetting, siteDetailsPermission.$.permission.value);
           });
     });
   });

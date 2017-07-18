@@ -319,12 +319,10 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
         contentType = 'unsandboxed_plugins';
       }
 
-      var setting;
-      var source;
+      var setting = undefined;
       this.prefs_.exceptions[contentType].some(function(originPrefs) {
         if (originPrefs.origin == origin) {
           setting = originPrefs.setting;
-          source = originPrefs.source;
           return true;
         }
       });
@@ -339,7 +337,7 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
         origin: origin,
         displayName: '',
         setting: setting,
-        source: source,
+        source: undefined
       })
     }, this);
     return Promise.resolve(exceptionList);

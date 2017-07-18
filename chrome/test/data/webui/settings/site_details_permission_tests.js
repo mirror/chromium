@@ -122,44 +122,34 @@ suite('SiteDetailsPermission', function() {
     testElement.site = {
       origin: origin,
       embeddingOrigin: '',
-      setting: settings.ContentSetting.ALLOW,
     };
 
     return browserProxy.whenCalled('getDefaultValueForContentType')
         .then(function() {
-          // The default option will always be the first in the menu.
           assertEquals(
-              'Allow (default)', testElement.$.permission.options[0].text,
+              'Allow (default)', testElement.defaultSettingString_,
               'Default setting string should match prefs');
           browserProxy.resetResolver('getDefaultValueForContentType');
           prefs.defaults.camera.setting = settings.ContentSetting.BLOCK;
           browserProxy.setPrefs(prefs);
           // Trigger a call to siteChanged_() by touching |testElement.site|.
-          testElement.site = {
-            origin: origin,
-            embeddingOrigin: '',
-            setting: settings.ContentSetting.BLOCK
-          };
+          testElement.site = {origin: origin, embeddingOrigin: ''};
           return browserProxy.whenCalled('getDefaultValueForContentType');
         })
         .then(function() {
           assertEquals(
-              'Block (default)', testElement.$.permission.options[0].text,
+              'Block (default)', testElement.defaultSettingString_,
               'Default setting string should match prefs');
           browserProxy.resetResolver('getDefaultValueForContentType');
           prefs.defaults.camera.setting = settings.ContentSetting.ASK;
           browserProxy.setPrefs(prefs);
           // Trigger a call to siteChanged_() by touching |testElement.site|.
-          testElement.site = {
-            origin: origin,
-            embeddingOrigin: '',
-            setting: settings.ContentSetting.ASK
-          };
+          testElement.site = {origin: origin, embeddingOrigin: ''};
           return browserProxy.whenCalled('getDefaultValueForContentType');
         })
         .then(function() {
           assertEquals(
-              'Ask (default)', testElement.$.permission.options[0].text,
+              'Ask (default)', testElement.defaultSettingString_,
               'Default setting string should match prefs');
         });
   });
