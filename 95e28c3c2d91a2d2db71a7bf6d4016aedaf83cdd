@@ -22,6 +22,30 @@
       "revId": "95e28c3c2d91a2d2db71a7bf6d4016aedaf83cdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ce067e_dd4cbf92",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2699,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T12:20:54Z",
+      "side": 1,
+      "message": "Thank you for pointing this out.\nAfter offline discussion, it turned out the lifetime of browser_context used here is actually not a easily solved problem.\nFiled a bug crbug.com/745648, and we agreed to use ArcServiceManager::browser_context() in file_system_operation_runner_util.cc to obtain ArcFileSystemOperationRunner, to make the goal clearly separate into two, 1) Migrate ArcService into KeyedService, and 2) use proper BrowserContext in ARC file system operations.\nNote that there should not be regressions with this. (If the instance is returned for wrong context, it was, too.)",
+      "parentUuid": "482a16d5_07c6f9d4",
+      "range": {
+        "startLine": 2698,
+        "startChar": 0,
+        "endLine": 2699,
+        "endChar": 58
+      },
+      "revId": "95e28c3c2d91a2d2db71a7bf6d4016aedaf83cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
