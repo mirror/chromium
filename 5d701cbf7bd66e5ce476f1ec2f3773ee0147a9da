@@ -94,6 +94,30 @@
       "revId": "5d701cbf7bd66e5ce476f1ec2f3773ee0147a9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd00d23_789389cf",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-18T21:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bdc42f_8ad2457e",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "5d701cbf7bd66e5ce476f1ec2f3773ee0147a9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
