@@ -424,28 +424,21 @@ class AXPosition {
 
     AXPositionInstance child_position;
     AXPositionInstance tree_position = AsTreePosition();
-    // If we get an "after children" position, we should return an "after
-    // children" position on the last child and recurse.
-    if (tree_position->AtEndOfAnchor()) {
-      child_position =
-          tree_position->CreateChildPositionAt(AnchorChildCount() - 1);
-      // Affinity needs to be maintained, because we are not moving the position
-      // but simply changing the anchor to the deepest leaf.
-      child_position->affinity_ = affinity_;
-      return child_position->CreatePositionAtEndOfAnchor()
-          ->AsLeafTextPosition();
-    }
-
     // Adjust the text offset.
     // No need to check for "before text" positions here because they are only
     // present on leaf anchor nodes.
     int adjusted_offset = AsTextPosition()->text_offset_;
-    for (int i = 0; i < tree_position->child_index_; ++i) {
+    // Blink doesn't always remove all deleted whitespace at the end of a
+    // textarea even though it will have adjusted its value attribute, because
+    // the extra layout objects are invisible. Therefore, we will stop at the
+    // last child that we can reach with the current text offset and ignore any
+    // remaining children.
+    for (int i = 0; i < tree_position->child_index_ && adjusted_offset >= 0;
+         ++i) {
       child_position = tree_position->CreateChildPositionAt(i);
       DCHECK(child_position);
       adjusted_offset -= child_position->MaxTextOffsetInParent();
     }
-    DCHECK_GE(adjusted_offset, 0);
 
     child_position =
         tree_position->CreateChildPositionAt(tree_position->child_index_)
