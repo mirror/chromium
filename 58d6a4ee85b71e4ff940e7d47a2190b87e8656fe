@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf10028_c7e7f9a5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-18T00:07:52Z",
+      "side": 1,
+      "message": "Optional: We could add extract `extension \u003d filesystem.splitext(filename)[1]` above to avoid repeating that expression.",
+      "revId": "58d6a4ee85b71e4ff940e7d47a2190b87e8656fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
