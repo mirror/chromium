@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66a0ed91_ec770097",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d7edfa_9d13fbf0",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ddeff0_174729b4",
         "filename": "build/android/adb_gdb",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T18:48:19Z",
       "side": 1,
       "message": "Should this be \"...; echo $?\" rather than \"... \u0026\u0026 echo $?\"?",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f52e9f_03314744",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 1,
+      "message": "noticed there\u0027s an adb_shell function above to deal with this. Switched usage to that.",
+      "parentUuid": "91ddeff0_174729b4",
       "revId": "34be9e2655786435f98ab629414fcea445d0decf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "340694d1_bf1c1681",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 1,
+      "message": "it\u0027s used by ndk-gdb, and afaict, fixes the issue I was seeing where after disconnecting, trying to debug again fails with \"another session in progress\"",
+      "parentUuid": "ad18c6ae_0f336a90",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3a319a_5810a1a2",
         "filename": "build/android/adb_gdb",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-18T18:48:19Z",
       "side": 1,
       "message": "I\u0027m a little concerned about trying to use a domain socket with gdbserver given how new the functionality appears to be -- which version did you try this out against locally?",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa7c152_07a00725",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 1,
+      "message": "Trying it on an O device. There\u0027s no conditional logic here though:\nthird_party/android_tools/ndk/python-packages/gdbrunner/__init__.py\n\nI suspect the domain socket is what makes you not need setenforce 0. (I was seeing permission denied when trying to run gdbserver before this change)",
+      "parentUuid": "bd3a319a_5810a1a2",
       "revId": "34be9e2655786435f98ab629414fcea445d0decf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "34be9e2655786435f98ab629414fcea445d0decf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5497672_64acaaee",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7948296c_6b0069ad",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

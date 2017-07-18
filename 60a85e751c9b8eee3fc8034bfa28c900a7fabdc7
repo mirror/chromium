@@ -16,6 +16,24 @@
       "revId": "60a85e751c9b8eee3fc8034bfa28c900a7fabdc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e89a19_431216d4",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-18T19:47:13Z",
+      "side": 0,
+      "message": "There\u0027s no mention of setenforce in ndk-gdb.py nor gdbrunner/__init__.py within the ndk.",
+      "parentUuid": "ab4fa10c_5f798253",
+      "revId": "60a85e751c9b8eee3fc8034bfa28c900a7fabdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
