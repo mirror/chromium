@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7986998b_bcb6a530",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T18:39:57Z",
+      "side": 1,
+      "message": "How about keeping the old class around for a safe roll to downstream code?\n\nMaybe just keeping around:\n\n  public class AccountManagerHelper {\n    public static AccoundManagerFacade get() {\n      return AccountManagerFacade.get();\n    }\n  }",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "511d5a6f4abed684d42a55573ba2ab442732378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
