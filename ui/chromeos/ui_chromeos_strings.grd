@@ -167,6 +167,48 @@
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_33" desc="Description of the default user icon with a picture of a cat">
         Cat
       </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_34" desc="Description of the default user icon with a picture of a penguin">
+        Penguin
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_35" desc="Description of the default user icon with a picture of a fox">
+        Fox
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_36" desc="Description of the default user icon with a picture of a snail">
+        Snail
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_37" desc="Description of the default user icon with a picture of a red butter fly">
+        Red butter fly
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_38" desc="Description of the default user icon with a picture of a cat">
+        Cat
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_39" desc="Description of the default user icon with a picture of a corgi">
+        Corgi
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_40" desc="Description of the default user icon with a picture of a rabbit">
+        Rabbit
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_41" desc="Description of the default user icon with a picture of a pink butter fly">
+        Pink butter fly
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_42" desc="Description of the default user icon with a picture of a monkey">
+        Monkey
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_43" desc="Description of the default user icon with a picture of a dragon">
+        Dragon
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_44" desc="Description of the default user icon with a picture of a elephant">
+        Elephant
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_45" desc="Description of the default user icon with a picture of a panda">
+        Panda
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_46" desc="Description of the default user icon with a picture of a unicorn">
+        Unicorn
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_47" desc="Description of the default user icon with a picture of butterflies">
+        Butterflies
+      </message>
 
       <!-- Attribution strings for stock user images, not translateable. -->
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR">
@@ -252,6 +294,34 @@
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_33">
         Ivan Podogov
       </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_34">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_35">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_36">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_37">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_38">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_39">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_40">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_41">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_42">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_43">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_44">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_45">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_46">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_47">
+      </message>
 
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE">
       </message>
@@ -334,6 +404,34 @@
         http://www.magdawasiczek.pl
       </message>
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_33">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_34">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_35">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_36">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_37">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_38">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_39">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_40">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_41">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_42">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_43">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_44">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_45">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_46">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_47">
       </message>
 
       <!-- Input method strings. -->
