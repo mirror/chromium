@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b24150db_9c40c159",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:04:13Z",
+      "side": 1,
+      "message": "Is it possible to pass 0 when the tracing isn\u0027t on, so we don\u0027t do the work of calling Now() in that case? Same for other production clients",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baac50c_39aaf995",
+        "filename": "content/browser/renderer_host/offscreen_canvas_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:04:13Z",
+      "side": 1,
+      "message": "()",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f25fdae_e4e99b19",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2587,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:04:13Z",
+      "side": 1,
+      "message": "same here, only do this if the trace category is enabled?",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b402e3_1fc13807",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2728,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:04:13Z",
+      "side": 1,
+      "message": "and here?",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
