@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d8e60b57_87c18c5a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Thanks, NetToMojoPendingBuffer looks useful. Replaced WriterIOBuffer to NetToMojoPendingBuffer.",
+      "parentUuid": "6a240215_ba8cc5b5",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52775978_e5b69230",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 13
@@ -51,6 +69,24 @@
       "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22263592_57319681",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Sounds good. Added more statuses and a TODO comment.",
+      "parentUuid": "52775978_e5b69230",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a1e9c442_ae1b6efe",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Thanks, it seems good. Renamed CompleteTransfer to CompleteTransferIfNeeded instead.",
+      "parentUuid": "f1fd00f0_10ab7e7f",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa8d7747_ca4881a0",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 13
@@ -85,6 +139,24 @@
       "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdd4212_3c3c296d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Ah, that\u0027s right. Changed.",
+      "parentUuid": "aa8d7747_ca4881a0",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a1189c91_40215994",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635f8d40_20ee7923",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600440da_317bc303",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 13
@@ -119,6 +209,24 @@
       "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011c094a_d054cc0b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600440da_317bc303",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "5bac15ed_0358524d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Thanks. I agree that code around |current_streamed_url_| seems a bit too complicated. I\u0027ve tried to simplify them by adding |state_|.",
+      "parentUuid": "d9c664ad_cc5cb9d6",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21497950_4590de93",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 13
@@ -153,6 +279,24 @@
       "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daa6735_d375787c",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T06:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21497950_4590de93",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
