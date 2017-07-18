@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4779503_a593387a",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T22:31:46Z",
+      "side": 1,
+      "message": "pane-\u003epage",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "06c81556f6829609a461ccdf737da31c12254b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53616b9_2d5cba9b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T22:31:46Z",
+      "side": 1,
+      "message": "This name is a concatenation of 2 verbs. ImportExternalPage? Also nice to add comment explaining how it is going to be used.",
+      "revId": "06c81556f6829609a461ccdf737da31c12254b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d88eae_2cf1d518",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-18T22:31:46Z",
+      "side": 1,
+      "message": "It\u0027d be hard to override the PrefetchImporter for test purposes. Could you follow the same pattern as other dependencies in this class?",
+      "revId": "06c81556f6829609a461ccdf737da31c12254b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
