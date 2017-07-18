@@ -16,6 +16,24 @@
       "revId": "0d02025ea3d21034b0f4ad10f86c0fbf2dfdb18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd98dea_421f67b0",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-18T07:23:15Z",
+      "side": 1,
+      "message": "Your concern is totally valid.\nI confirmed IE11, Edge, and Firefox accepts numbers like \".5\".  I filed a specification issue; https://github.com/whatwg/html/issues/2844\n\nI updated the patch so that we continue to accept \".5\".",
+      "parentUuid": "2c6534b1_fba39427",
+      "revId": "0d02025ea3d21034b0f4ad10f86c0fbf2dfdb18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
