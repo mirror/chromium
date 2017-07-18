@@ -87,6 +87,13 @@ public class OfflinePageBridgeTest {
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 
+    private static class OfflinePageUtilsInternal extends OfflinePageUtils.OfflinePageUtilsImpl {
+        @Override
+        public Signature[] getSignatures(Context context, String appName) {
+            return new Signature[] {new Signature("signature" + appName)};
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
@@ -103,6 +110,8 @@ public class OfflinePageBridgeTest {
         });
 
         initializeBridgeForProfile(false);
+
+        OfflinePageUtils.setInstanceForTesting(new OfflinePageUtilsInternal());
 
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
@@ -359,6 +368,18 @@ public class OfflinePageBridgeTest {
                 offlineIdToIgnore, asyncPages.get(0).getOfflineId());
     }
 
+    @Test
+    @SmallTest
+    public void testDownloadPage() throws Exception {
+        String appName = "abc.xyz";
+        mActivityTestRule.loadUrl(mTestPage);
+        mActivityTestRule.getActivity().getActivityTab().setAppAssociatedWith(appName);
+        DownloadUtils.downloadOfflinePage(
+                mActivityTestRule.getActivity(), mActivityTestRule.getActivity().getActivityTab());
+
+        List<OfflinePageItem> pages;
+    }
+
     // Returns offline ID.
     private long savePage(final int expectedResult, final String expectedUrl)
             throws InterruptedException {
@@ -580,5 +601,26 @@ public class OfflinePageBridgeTest {
         });
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
         return ref.get();
+    }
+
+    private void waitForPageWithRequestOrigin(final String requestOrigin) {
+        if (getAllPages().size() > 0) return;
+
+        final Semaphore semaphore = new Semaphore(0);
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mOfflinePageBridge.addObserver(new OfflinePageModelObserver() {
+                    @Override
+                    public void offlinePageAdded(OfflinePageItem newPage) {
+                        if (newPage.getRequestOrigin().equals(requestOrigin)) {
+                            mOfflinePageBridge.removeObserver(this);
+                            semaphore.release();
+                        }
+                    }
+                });
+            }
+        });
+        Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 }
