@@ -334,6 +334,7 @@ executable("demo") {
 test("aura_unittests") {
   sources = [
     "gestures/gesture_recognizer_unittest.cc",
+    "mus/drag_drop_controller_mus_unittest.cc",
     "mus/input_method_mus_unittest.cc",
     "mus/os_exchange_data_provider_mus_unittest.cc",
     "mus/property_converter_unittest.cc",

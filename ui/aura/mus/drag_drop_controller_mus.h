@@ -38,6 +38,10 @@ class DragDropControllerMus : public client::DragDropClient {
                         ui::mojom::WindowTree* window_tree);
   ~DragDropControllerMus() override;
 
+  void set_should_block_during_drag_drop(bool should_block_during_drag_drop) {
+    should_block_during_drag_drop_ = should_block_during_drag_drop;
+  }
+
   // Returns true if a drag was initiated and |id| identifies the change if of
   // the drag.
   bool DoesChangeIdMatchDragChangeId(uint32_t id) const;
@@ -104,6 +108,10 @@ class DragDropControllerMus : public client::DragDropClient {
 
   // Used to track the current drop target.
   WindowTracker drop_target_window_tracker_;
+
+  // Indicates whether the caller should be blocked on a drag/drop session.
+  // Only be used for tests.
+  bool should_block_during_drag_drop_;
 
   DISALLOW_COPY_AND_ASSIGN(DragDropControllerMus);
 };
