@@ -34,6 +34,24 @@
       "revId": "5fcbe0549f691ffbdc99f46023056ed8c23925b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01165786_b09c4fed",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-07-18T20:21:31Z",
+      "side": 1,
+      "message": "Oh whoops. I looked at the wrong diff. This is fine then :)",
+      "parentUuid": "61fd2c88_efe04a0c",
+      "revId": "5fcbe0549f691ffbdc99f46023056ed8c23925b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
