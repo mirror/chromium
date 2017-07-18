@@ -6,7 +6,9 @@
 #define CHROME_TEST_CHROMEDRIVER_SESSION_H_
 
 #include <list>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -41,6 +43,75 @@ struct FrameInfo {
   std::string chromedriver_frame_id;
 };
 
+// TODO(kereliuk): make this a base::Value subclass
+struct ActionObject {
+  ActionObject(const std::string& id,
+               const std::string& type,
+               const std::string& subtype);
+
+  const std::string id;
+  const std::string type;
+  const std::string subtype;
+};
+
+struct InputSource {
+  InputSource();
+  InputSource(const std::string& input_id, const std::string& source_type);
+  // InputSource(const std::string& input_id, const std::string& source_type,
+  // const std::string& pointer_type);
+
+  std::string input_id;
+  // one of 'key', 'pointer' or 'none'
+  std::string source_type;
+  // one of 'mouse', 'pen' or 'touch'
+  std::string pointer_type;
+};
+
+struct PointerInputSource : InputSource {
+  PointerInputSource(const std::string& input_id,
+                     const std::string& source_type,
+                     const std::string& pointer_type);
+
+  std::string input_id;
+  // one of 'key', 'pointer' or 'none'
+  std::string source_type;
+  std::string pointer_type;
+};
+
+struct InputState {};
+
+struct KeyInputState : InputState {
+  KeyInputState();
+  KeyInputState(std::set<std::string> pressed,
+                bool alt,
+                bool shift,
+                bool ctrl,
+                bool meta);
+  ~KeyInputState();
+
+  // strings representing the currently pressed keys
+  std::set<std::string> pressed;
+  bool alt;
+  bool shift;
+  bool ctrl;
+  bool meta;
+};
+
+struct PointerInputState : InputState {
+  PointerInputState();
+  PointerInputState(std::string subtype,
+                    std::set<unsigned int> pressed,
+                    unsigned int x,
+                    unsigned int y);
+  ~PointerInputState();
+
+  // one of "mouse", "pen" or "touch"
+  std::string subtype;
+  std::set<unsigned int> pressed;
+  unsigned int x;
+  unsigned int y;
+};
+
 struct Session {
   static const base::TimeDelta kDefaultPageLoadTimeout;
 
@@ -66,6 +137,12 @@ struct Session {
   std::unique_ptr<Chrome> chrome;
   std::string window;
   int sticky_modifiers;
+  // List of |InputSource|s for each active input. Everytime a new input source
+  // is added, there must be a corresponding entry made in input_state_table.
+  std::list<InputSource> active_input_sources;
+  // Map between input id and input source state for the corresponding input
+  // source. One entry for each item in active_input_sources
+  std::map<std::string, InputState> input_state_table;
   // List of |FrameInfo|s for each frame to the current target frame from the
   // first frame element in the root document. If target frame is window.top,
   // this list will be empty.
