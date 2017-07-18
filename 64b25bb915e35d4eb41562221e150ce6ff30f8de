@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f57f52e_4f504f96",
+        "filename": "ui/message_center/views/bounded_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:34:32Z",
+      "side": 1,
+      "message": "It was also not correct as we discussed offline. (for example, returns height for 6 lines instead of 4 lines limit)",
+      "parentUuid": "4ab758d5_49af24e8",
+      "range": {
+        "startLine": 324,
+        "startChar": 29,
+        "endLine": 324,
+        "endChar": 51
+      },
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aba3e4e_b615b83c",
         "filename": "ui/message_center/views/bounded_label.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c80488a8_b6862748",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aba3e4e_b615b83c",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3e1a59a_e65db654",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa893bdd_92e778fc",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e1a59a_e65db654",
+      "revId": "64b25bb915e35d4eb41562221e150ce6ff30f8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
