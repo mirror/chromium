@@ -116,6 +116,7 @@ test("device_unittests") {
       "serial/serial_io_handler_posix_unittest.cc",
       "u2f/u2f_apdu_unittest.cc",
       "u2f/u2f_hid_device_unittest.cc",
+      "u2f/u2f_live_unittest.cc",
       "u2f/u2f_message_unittest.cc",
       "u2f/u2f_register_unittest.cc",
       "u2f/u2f_request_unittest.cc",
