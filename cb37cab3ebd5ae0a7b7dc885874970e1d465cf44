@@ -22,6 +22,30 @@
       "revId": "cb37cab3ebd5ae0a7b7dc885874970e1d465cf44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e518a07e_b5a64a6a",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-18T17:32:12Z",
+      "side": 1,
+      "message": "Sounds good. Modified it.",
+      "parentUuid": "3f3dcc05_6cf094f2",
+      "range": {
+        "startLine": 81,
+        "startChar": 26,
+        "endLine": 81,
+        "endChar": 27
+      },
+      "revId": "cb37cab3ebd5ae0a7b7dc885874970e1d465cf44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
