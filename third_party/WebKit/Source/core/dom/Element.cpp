@@ -3622,11 +3622,17 @@ void Element::SetIntegralAttribute(const QualifiedName& attribute_name,
 
 void Element::SetUnsignedIntegralAttribute(const QualifiedName& attribute_name,
                                            unsigned value) {
+  SetUnsignedIntegralAttribute(attribute_name, value, 0);
+}
+
+void Element::SetUnsignedIntegralAttribute(const QualifiedName& attribute_name,
+                                           unsigned value,
+                                           unsigned default_value) {
   // Range restrictions are enforced for unsigned IDL attributes that
   // reflect content attributes,
   //   http://www.whatwg.org/specs/web-apps/current-work/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes
   if (value > 0x7fffffffu)
-    value = 0;
+    value = default_value;
   setAttribute(attribute_name, AtomicString::Number(value));
 }
 
