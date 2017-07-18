@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "897e698c_13d1395d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-18T11:09:29Z",
+      "side": 1,
+      "message": "That\u0027s a good idea! But you might want to do a bit more than plain string comparison. Maybe exclude the anchors, after the # sign? Websites can change it as you scroll down a page for example.\nWould be fine as a follow up CL, if we can just make sure we eventually get around to doing it.",
+      "parentUuid": "0e7c5b2f_dbf6065f",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "2913711fba2d761d032d3595eceb9240393c0300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd9b9e4_4f9f4437",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 3
