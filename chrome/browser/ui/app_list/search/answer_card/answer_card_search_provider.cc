@@ -133,13 +133,18 @@ content::WebContents* AnswerCardSearchProvider::OpenURLFromTab(
 void AnswerCardSearchProvider::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle->GetURL() != current_request_url_) {
+    VLOG(1) << "DidFinishNavigation: Another request started";
     RecordRequestResult(
         SearchAnswerRequestResult::REQUEST_RESULT_ANOTHER_REQUEST_STARTED);
     return;
   }
 
+  VLOG(1) << "DidFinishNavigation: Latest request completed";
   if (!navigation_handle->HasCommitted() || navigation_handle->IsErrorPage() ||
       !navigation_handle->IsInMainFrame()) {
+    LOG(ERROR) << "HasCommitted=" << navigation_handle->HasCommitted()
+               << ", IsErrorPage=" << navigation_handle->IsErrorPage()
+               << ", IsInMainFrame=" << navigation_handle->IsInMainFrame();
     RecordRequestResult(
         SearchAnswerRequestResult::REQUEST_RESULT_REQUEST_FAILED);
     return;
@@ -180,8 +185,14 @@ bool AnswerCardSearchProvider::IsCardSizeOk() const {
   if (features::IsAnswerCardDarkRunEnabled())
     return true;
 
-  return preferred_size_.width() <= features::AnswerCardMaxWidth() &&
-         preferred_size_.height() <= features::AnswerCardMaxHeight();
+  if (preferred_size_.width() <= features::AnswerCardMaxWidth() &&
+      preferred_size_.height() <= features::AnswerCardMaxHeight()) {
+    return true;
+  } else {
+    LOG(ERROR) << "Card is too large: width=" << preferred_size_.width()
+               << ", height=" << preferred_size_.height();
+    return false;
+  }
 }
 
 void AnswerCardSearchProvider::RecordReceivedAnswerFinalResult() {
@@ -211,14 +222,27 @@ void AnswerCardSearchProvider::OnResultAvailable(bool is_available) {
 
 bool AnswerCardSearchProvider::ParseResponseHeaders(
     const net::HttpResponseHeaders* headers) {
-  if (!headers || headers->response_code() != net::HTTP_OK)
+  if (!headers) {
+    LOG(ERROR) << "no headers";
     return false;
-  if (!headers->HasHeaderValue("SearchAnswer-HasResult", "true"))
+  }
+  if (headers->response_code() != net::HTTP_OK) {
+    LOG(ERROR) << "response code=" << headers->response_code();
     return false;
-  if (!headers->GetNormalizedHeader("SearchAnswer-OpenResultUrl", &result_url_))
+  }
+  if (!headers->HasHeaderValue("SearchAnswer-HasResult", "true")) {
+    VLOG(1) << "SearchAnswer-HasResult header != true";
     return false;
-  if (!headers->GetNormalizedHeader("SearchAnswer-Title", &result_title_))
+  }
+  if (!headers->GetNormalizedHeader("SearchAnswer-OpenResultUrl",
+                                    &result_url_)) {
+    LOG(ERROR) << "SearchAnswer-OpenResultUrl header is not present";
     return false;
+  }
+  if (!headers->GetNormalizedHeader("SearchAnswer-Title", &result_title_)) {
+    LOG(ERROR) << "SearchAnswer-Title header is not present";
+    return false;
+  }
   return true;
 }
 
