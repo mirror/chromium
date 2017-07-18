@@ -1,0 +1,24 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "mojo/common/string16.mojom";
+import "url/mojo/url.mojom";
+
+// Created on the browser process.
+// This interface is for checking content settings for shared workers.
+// Each method is called when every relevant web exposed API is called,
+// and the result should be returned synchronously because the web exposed
+// APIs are synchronous.
+// The connection is established on each method calls, and destructed just after
+// used.
+interface SharedWorkerContentSettingsProxy {
+  [Sync]
+  AllowIndexedDB(url.mojom.Url url, mojo.common.mojom.String16 name, int64 route_id)
+    => (bool result);
+  [Sync]
+  RequestFileSystemAccessSync(url.mojom.Url url, int64 route_id)
+    => (bool result);
+};

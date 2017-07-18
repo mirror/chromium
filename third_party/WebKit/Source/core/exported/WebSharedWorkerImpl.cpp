@@ -45,6 +45,7 @@
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
+#include "core/workers/SharedWorkerContentSettingsProxy.h"
 #include "core/workers/SharedWorkerGlobalScope.h"
 #include "core/workers/SharedWorkerThread.h"
 #include "core/workers/WorkerContentSettingsClient.h"
@@ -326,11 +327,12 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
 
   WorkerClients* worker_clients = WorkerClients::Create();
   WorkerClientsInitializer<WebSharedWorkerImpl>::Run(worker_clients);
-
-  WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
   ProvideContentSettingsClientToWorker(
       worker_clients,
-      client_->CreateWorkerContentSettingsClient(web_security_origin));
+      WTF::MakeUnique<SharedWorkerContentSettingsProxy>(
+          KURL(NullURL(), loading_document_->GetSecurityOrigin()->ToString()),
+          loading_document_->GetSecurityOrigin()->IsUnique(),
+          client_->GetId()));
 
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
