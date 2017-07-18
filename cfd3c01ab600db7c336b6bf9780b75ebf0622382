@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "422199b3_6ea09d2e",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:24:27Z",
+      "side": 1,
+      "message": "Thanks. Done to add to chromeos::FakeCryptohomeClient, as it will be reused in private API tests, too.\n\nNote that, I added the flag to control DoesKeyExist, but not for IsPrepared, because IsPrepared is called at first so SetServiceIsAvailable() still works.",
+      "parentUuid": "be0cee14_68acd619",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 50
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdaa8be2_5cab4987",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
         "patchSetId": 3
@@ -117,6 +141,30 @@
       "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ddd2bd_cee5a030",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:24:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fdaa8be2_5cab4987",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 67
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
