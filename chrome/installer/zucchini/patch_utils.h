@@ -19,7 +19,7 @@ enum class PatchType : uint32_t {
   kRawPatch = 0,
   kSinglePatch = 1,
   kEnsemblePatch = 2,
-  kUnrecognisedPatch,
+  kUnrecognisedPatch
 };
 
 // A Zucchini 'ensemble' patch is the concatenation of a patch header with a
