@@ -93,6 +93,30 @@
       "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2587eb57_7f95236a",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-18T00:18:20Z",
+      "side": 1,
+      "message": "This code is very confusing indeed, and my understanding might be off, but I\u0027m not sure this was restricted just to fullscreen: it seems from RWHI::GotFocus() (or Focus() after this CL), there were two ways to get here:\n1) via owner_delegate_-\u003eRenderWidgetGotFocus() -\u003e RenderViewHostImpl::RenderWidgetGotFocus -\u003e WebContentsView(Aura|Mac)::GotFocus() -\u003e unconditionally call WebContentsImpl::NotifyWebContentsFocused()\n2) delegate_-\u003eRenderWidgetGotFocus() -\u003e WebContentsImpl::RenderWidgetGotFocus() -\u003e calls WebContentsImpl::NotifyWebContentsFocused only for fullscreen views\n\nSo weren\u0027t we already always getting here via (1), and then additionally for fullscreen via (2)? (Also, the CL description mentioned this fires for Aura only - I\u0027m not sure about that either, since (1) has a path for Mac as well in WebContentsViewMac::GotFocus.)\n\nI think I follow Michael\u0027s description of the flow here, though getting into the loop a second time until it\u0027s broken is a bit concerning because it\u0027s broken so late.  For example, are we now going to sometimes execute RenderWidgetHostImpl::Focus() twice, since that happens before the second iteration is broken in SetFocusedViewWithReason?  That seems like a bunch of extra work: for example, RWHI::Focus unconditionally sends a bunch of page focus IPCs to the renderer(s) (which I think will harmlessly ignore duplicate page focus messages eventually, but it still seems wasteful).  Or is the second iteration stopped earlier somewhere?\n\nAlso, I\u0027m a bit fuzzy on why it\u0027s necessary to trigger OnWebContentsFocused() from RWHI::Focus() rather than than RWHI::GotFocus()?  (The concern being that RWHI::Focus() seems to have many more call sites, e.g. on every key or mouse event.)",
+      "parentUuid": "9cd832d1_06053251",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
