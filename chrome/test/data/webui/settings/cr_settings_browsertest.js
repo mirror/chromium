@@ -426,6 +426,8 @@ CrSettingsPeoplePageTest.prototype = {
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
     'people_page_test.js',
+    'test_profile_info_browser_proxy.js',
+    'test_sync_browser_proxy.js'
   ]),
 };
 
