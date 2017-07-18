@@ -4,14 +4,16 @@
 
 #include "chrome/browser/media/media_engagement_score.h"
 
+#include <utility>
+
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 
-const char* MediaEngagementScore::kVisitsKey = "visits";
-const char* MediaEngagementScore::kMediaPlaybacksKey = "mediaPlaybacks";
-const char* MediaEngagementScore::kLastMediaPlaybackTimeKey =
+const char MediaEngagementScore::kVisitsKey[] = "visits";
+const char MediaEngagementScore::kMediaPlaybacksKey[] = "mediaPlaybacks";
+const char MediaEngagementScore::kLastMediaPlaybackTimeKey[] =
     "lastMediaPlaybackTime";
 
 const int MediaEngagementScore::kScoreMinVisits = 5;

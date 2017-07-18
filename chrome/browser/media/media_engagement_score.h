@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_MEDIA_MEDIA_ENGAGEMENT_SCORE_H_
 #define CHROME_BROWSER_MEDIA_MEDIA_ENGAGEMENT_SCORE_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/clock.h"
@@ -23,9 +25,9 @@ class MediaEngagementScore final {
   // will store the number of media playbacks on an origin.
   // kLastMediaPlaybackTimeKey will store the timestamp of the last
   // media playback on an origin.
-  static const char* kVisitsKey;
-  static const char* kMediaPlaybacksKey;
-  static const char* kLastMediaPlaybackTimeKey;
+  static const char kVisitsKey[];
+  static const char kMediaPlaybacksKey[];
+  static const char kLastMediaPlaybackTimeKey[];
 
   // Origins with a number of visits less than this number will recieve
   // a score of zero.
