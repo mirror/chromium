@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "576dbac7_f4c7da67",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T23:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90547c94_5593005a",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 1
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924a33ed_a1f31650",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 2
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "429f8f02_0f7869da",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T23:59:06Z",
+      "side": 1,
+      "message": "Done. This required a little weirdness with RunLoops in the test, PTAL.",
+      "parentUuid": "b81d970b_55fabc01",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4add3a8c_0626e23b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
@@ -116,6 +164,30 @@
       "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebcc75f_87de0ca0",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T23:59:06Z",
+      "side": 1,
+      "message": "This should be fine now that we\u0027ve changed the implementation.",
+      "parentUuid": "4add3a8c_0626e23b",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 33
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
