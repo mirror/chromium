@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "837d91d8_9c213245",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Should specify from another app.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cea2398_3c6d2dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "I think this should just list places where notify event was added, not all possible tab entry points.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33673b64_3a686c52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "You can get rid of the specific entry points, and move this justification to why only user initiated actions are included.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5370c971_f791c84e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Reason not to include entry points outside of chrome was that it did not demonstrate that user knew how to use in-app ui to handle tabs. If you add that justification to the first paragraph for why only in-app new tabs are included, you can delete this paragraph.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45dbbcb_d9972f59",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2621,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Comment needed to explain why we can assume that the isOffTheRecord variable indicates the kind of new tab the context menu is opening.",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99cc263_9c39b9cb",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4155,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Is this also called when user opens incognito tab from overscroll in incognito mode?",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc2cb43_dd5a30c8",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "The reader of this comment does not know the different webPageOrderedOpen APIs, so it will not be clear exactly what this comment is referencing.\n\nI think the main point to get across is that |inIncognito| can be assumed to be NO because...\nBe sure to answer why it matters that GoogleLandingViewController is never displayed in incognito state.",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9236634e_7136c5b9",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Second sentence should not be in an in-code comment, as not really relevant to this api call itself.\n\nYou instead can include in the CL description that api calls are being changed to use inIncognito for the tracking.",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce17eee_86642cb6",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T18:58:34Z",
+      "side": 1,
+      "message": "Why is there a switch statement here inside another switch statement?",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
