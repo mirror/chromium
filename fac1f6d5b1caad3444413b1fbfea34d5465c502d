@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb507a18_79e576ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-18T16:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26d2a4e_3eeac019",
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376227b6_5b202b19",
         "filename": "media/audio/cras/audio_manager_cras.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40303bca_3da1c40a",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-18T16:12:31Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the beam forming, it\u0027s done in Cras as far as I know. Probably, someone on the Chrome OS audio team implemented it. Anyways, the beamforming devices names are set by GetAudioDeviceNamesImpl, which calls AddBeamformingDevices in case there are multiple internal microphones, so this logic should be correct.",
+      "parentUuid": "376227b6_5b202b19",
+      "range": {
+        "startLine": 276,
+        "startChar": 56,
+        "endLine": 276,
+        "endChar": 0
+      },
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
