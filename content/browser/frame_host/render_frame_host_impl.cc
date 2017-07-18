@@ -2901,7 +2901,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
 #if BUILDFLAG(ENABLE_VR)
   GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(
-      base::Bind(&device::VRServiceImpl::Create));
+      base::Bind(&device::VRServiceImpl::Create, base::Unretained(this)));
 #else
   GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(
       base::Bind(&IgnoreInterfaceRequest<device::mojom::VRService>));
