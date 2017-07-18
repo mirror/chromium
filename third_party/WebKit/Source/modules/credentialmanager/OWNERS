@@ -2,5 +2,8 @@ engedy@chromium.org
 mkwst@chromium.org
 vasilii@chromium.org
 
+per-file *.typemap=set noparent
+per-file *.typemap=file://ipc/SECURITY_OWNERS
+
 # COMPONENT: Blink>SecurityFeature>CredentialManagement
 # TEAM: identity-dev@chromium.org

@@ -187,7 +187,7 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
         pending_request_
             ? mojom::CredentialManagerError::PENDINGREQUEST
             : mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
-        base::nullopt);
+        CredentialInfo());
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_REJECTED,
                                   mediation);
     return;
@@ -260,7 +260,7 @@ void CredentialManagerImpl::SendPasswordForm(
     const autofill::PasswordForm* form) {
   CredentialInfo info;
   if (form) {
-    password_manager::CredentialType type_to_return =
+    CredentialType type_to_return =
         form->federation_origin.unique()
             ? CredentialType::CREDENTIAL_TYPE_PASSWORD
             : CredentialType::CREDENTIAL_TYPE_FEDERATED;

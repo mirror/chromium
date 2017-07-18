@@ -4,7 +4,6 @@
 
 #include "modules/credentialmanager/CredentialsContainer.h"
 
-#include <memory>
 #include <utility>
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -14,7 +13,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/frame/Frame.h"
+#include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/FrameTree.h"
@@ -28,11 +27,9 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebCredential.h"
 #include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
-#include "public/platform/WebFederatedCredential.h"
-#include "public/platform/WebPasswordCredential.h"
+#include "public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
 
 namespace blink {
 
@@ -68,7 +65,7 @@ class NotificationCallbacks
   ~NotificationCallbacks() override {}
 
   void OnSuccess() override {
-    Frame* frame =
+    LocalFrame* frame =
         ToDocument(ExecutionContext::From(resolver_->GetScriptState()))
             ->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
@@ -92,12 +89,12 @@ class RequestCallbacks : public CredentialManagerClient::RequestCallbacks {
       : resolver_(resolver) {}
   ~RequestCallbacks() override {}
 
-  void OnSuccess(std::unique_ptr<WebCredential> credential) override {
+  void OnSuccess(Credential* credential) override {
     ExecutionContext* context =
         ExecutionContext::From(resolver_->GetScriptState());
     if (!context)
       return;
-    Frame* frame = ToDocument(context)->GetFrame();
+    LocalFrame* frame = ToDocument(context)->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
     if (!credential || !frame) {
@@ -105,16 +102,10 @@ class RequestCallbacks : public CredentialManagerClient::RequestCallbacks {
       return;
     }
 
-    DCHECK(credential->IsPasswordCredential() ||
-           credential->IsFederatedCredential());
+    DCHECK(credential->IsPassword() || credential->IsFederated());
     UseCounter::Count(ExecutionContext::From(resolver_->GetScriptState()),
                       WebFeature::kCredentialManagerGetReturnedCredential);
-    if (credential->IsPasswordCredential())
-      resolver_->Resolve(PasswordCredential::Create(
-          static_cast<WebPasswordCredential*>(credential.get())));
-    else
-      resolver_->Resolve(FederatedCredential::Create(
-          static_cast<WebFederatedCredential*>(credential.get())));
+    resolver_->Resolve(credential);
   }
 
   void OnError(WebCredentialManagerError reason) override {
@@ -132,8 +123,9 @@ CredentialsContainer* CredentialsContainer::Create() {
 CredentialsContainer::CredentialsContainer() {}
 
 static bool CheckBoilerplate(ScriptPromiseResolver* resolver) {
-  Frame* frame = ToDocument(ExecutionContext::From(resolver->GetScriptState()))
-                     ->GetFrame();
+  LocalFrame* frame =
+      ToDocument(ExecutionContext::From(resolver->GetScriptState()))
+          ->GetFrame();
   if (!frame || frame != frame->Tree().Top()) {
     resolver->Reject(DOMException::Create(kSecurityError,
                                           "CredentialContainer methods may "
@@ -232,11 +224,8 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
   if (!CheckBoilerplate(resolver))
     return promise;
 
-  auto web_credential =
-      WebCredential::Create(credential->GetPlatformCredential());
   CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchStore(std::move(web_credential),
-                      new NotificationCallbacks(resolver));
+      ->DispatchStore(credential, new NotificationCallbacks(resolver));
   return promise;
 }
 

@@ -8,8 +8,9 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/page/Page.h"
+#include "core/frame/LocalFrame.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Functional.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
@@ -65,7 +66,7 @@ class RequestCallbacksWrapper {
 
   ~RequestCallbacksWrapper();
 
-  void NotifySuccess(std::unique_ptr<WebCredential>);
+  void NotifySuccess(Credential*);
   void NotifyError(WebCredentialManagerError);
 
  private:
@@ -82,12 +83,11 @@ RequestCallbacksWrapper::~RequestCallbacksWrapper() {
     callbacks_->OnError(kWebCredentialManagerUnknownError);
 }
 
-void RequestCallbacksWrapper::NotifySuccess(
-    std::unique_ptr<WebCredential> credential) {
+void RequestCallbacksWrapper::NotifySuccess(Credential* credential) {
   // Call onSuccess() and reset callbacks to avoid calling onError() in
   // destructor.
   if (callbacks_) {
-    callbacks_->OnSuccess(std::move(credential));
+    callbacks_->OnSuccess(credential);
     callbacks_.reset();
   }
 }
@@ -106,9 +106,9 @@ void RespondToNotificationCallback(
 
 void RespondToRequestCallback(RequestCallbacksWrapper* callbacks_wrapper,
                               WebCredentialManagerError error,
-                              std::unique_ptr<WebCredential> credential) {
+                              const Persistent<Credential>& credential) {
   if (error == kWebCredentialManagerNoError) {
-    callbacks_wrapper->NotifySuccess(std::move(credential));
+    callbacks_wrapper->NotifySuccess(credential.Get());
   } else {
     DCHECK(!credential);
     callbacks_wrapper->NotifyError(error);
@@ -164,16 +164,15 @@ void CredentialManagerClient::ProvideToExecutionContext(
 }
 
 void CredentialManagerClient::DispatchFailedSignIn(
-    std::unique_ptr<WebCredential> credential,
+    Credential* credential,
     NotificationCallbacks* callbacks) {
-  /* Not implemented anymore */
+  // TODO(engedy): Figure out when this was removed from the spec.
 }
 
-void CredentialManagerClient::DispatchStore(
-    std::unique_ptr<WebCredential> credential,
-    NotificationCallbacks* callbacks) {
+void CredentialManagerClient::DispatchStore(Credential* credential,
+                                            NotificationCallbacks* callbacks) {
   mojo_cm_service_->Store(
-      std::move(credential),
+      credential,
       ConvertToBaseCallback(
           WTF::Bind(&RespondToNotificationCallback,
                     WTF::Passed(new NotificationCallbacksWrapper(callbacks)))));

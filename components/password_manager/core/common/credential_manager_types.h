@@ -60,10 +60,10 @@ struct CredentialInfo {
   // Corresponds to WebCredential's icon property.
   GURL icon;
 
-  // Corresponds to WebPasswordCredential's password property.
+  // Corresponds to PasswordCredential's password property.
   base::string16 password;
 
-  // Corresponds to WebFederatedCredential's provider property.
+  // Corresponds to FederatedCredential's provider property.
   url::Origin federation;
 };
 

@@ -160,7 +160,6 @@ source_set("blink_headers") {
     "platform/WebContentSettingCallbacks.h",
     "platform/WebContentSettingsClient.h",
     "platform/WebCookieJar.h",
-    "platform/WebCredential.h",
     "platform/WebCredentialManagerError.h",
     "platform/WebCredentialMediationRequirement.h",
     "platform/WebCrypto.h",
@@ -191,7 +190,6 @@ source_set("blink_headers") {
     "platform/WebExternalTextureLayer.h",
     "platform/WebFallbackThemeEngine.h",
     "platform/WebFeaturePolicy.h",
-    "platform/WebFederatedCredential.h",
     "platform/WebFileError.h",
     "platform/WebFileInfo.h",
     "platform/WebFileSystem.h",
@@ -270,7 +268,6 @@ source_set("blink_headers") {
     "platform/WebNonCopyable.h",
     "platform/WebOriginTrialTokenStatus.h",
     "platform/WebPageVisibilityState.h",
-    "platform/WebPasswordCredential.h",
     "platform/WebPlatformEventListener.h",
     "platform/WebPlatformEventType.h",
     "platform/WebPluginListBuilder.h",
@@ -709,6 +706,14 @@ grit("image_resources") {
   ]
 }
 
+group("forwarder_for_mojo_bindings_in_modules") {
+  visibility = [ "//content/*" ]
+  public_deps = [
+    # Only the vanilla C++ bindings.
+    # "//third_party/WebKit/Source/modules:mojo_bindings",
+  ]
+}
+
 mojom("mojo_bindings") {
   visibility = [ "//content/*" ]
   visibility_blink = [
@@ -724,7 +729,6 @@ mojom("mojo_bindings") {
     "platform/modules/bluetooth/web_bluetooth.mojom",
     "platform/modules/broadcastchannel/broadcast_channel.mojom",
     "platform/modules/budget_service/budget_service.mojom",
-    "platform/modules/credentialmanager/credential_manager.mojom",
     "platform/modules/fetch/fetch_api_request.mojom",
     "platform/modules/hyphenation/hyphenation.mojom",
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
@@ -757,6 +761,13 @@ mojom("mojo_bindings") {
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
+
+  # Make the build target corresponding to the vanilla C++ flavor of these
+  # bindings also depend on the vanilla C++ flavor of the bindings defines in
+  # Source/modules. This way, users like content/ need only depend on one
+  # target and do not need to care about this distinction.
+  overridden_deps = []
+  component_deps = [ "//third_party/WebKit/Source/modules:mojo_bindings" ]
 
   component_output_prefix = "blink_mojo_bindings"
 
@@ -845,6 +856,8 @@ group("generate_mojo_bindings") {
     ":mojo_bindings__generator",
     ":mojo_bindings_blink__generator",
     ":offscreen_canvas_mojo_bindings_blink__generator",
+    "//third_party/WebKit/Source/modules:mojo_bindings__generator",
+    "//third_party/WebKit/Source/modules:mojo_bindings_blink__generator",
   ]
 }
 

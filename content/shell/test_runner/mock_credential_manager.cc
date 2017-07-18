@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/strings/utf_string_conversions.h"
-#include "third_party/WebKit/public/platform/WebCredential.h"
 
 namespace test_runner {
 

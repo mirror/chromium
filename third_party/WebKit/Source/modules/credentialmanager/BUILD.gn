@@ -6,16 +6,27 @@ import("//third_party/WebKit/Source/modules/modules.gni")
 
 blink_modules_sources("credentialmanager") {
   sources = [
-    "Credential.cpp",
-    "Credential.h",
     "CredentialManagerClient.cpp",
     "CredentialManagerClient.h",
     "CredentialsContainer.cpp",
     "CredentialsContainer.h",
+    "NavigatorCredentials.cpp",
+  ]
+  deps = [
+    ":credentialmanager_types",
+    "//third_party/WebKit/Source/modules:mojo_bindings_blink",
+  ]
+}
+
+# Split out the types used in Mojo type maps, so that the Mojo bindings can
+# depend on them, without creating a circular dependency when the bindings
+# themselves are pulled into the `credentialmanager` target.
+blink_modules_sources("credentialmanager_types") {
+  sources = [
+    "Credential.cpp",
+    "Credential.h",
     "FederatedCredential.cpp",
     "FederatedCredential.h",
-    "NavigatorCredentials.cpp",
-    "NavigatorCredentials.h",
     "PasswordCredential.cpp",
     "PasswordCredential.h",
   ]
