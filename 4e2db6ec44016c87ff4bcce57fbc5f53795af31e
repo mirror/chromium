@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "3fa16ea8_a658e59b",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:37:17Z",
+      "side": 1,
+      "message": "Given this function is empty, nuke it.",
+      "range": {
+        "startLine": 334,
+        "startChar": 12,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d28921_035b53d7",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:37:17Z",
+      "side": 1,
+      "message": "Why is unretained safe here?",
+      "range": {
+        "startLine": 874,
+        "startChar": 25,
+        "endLine": 874,
+        "endChar": 35
+      },
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30c124c5_d08384d7",
         "filename": "chrome/browser/browser_process_impl.h",
         "patchSetId": 4
