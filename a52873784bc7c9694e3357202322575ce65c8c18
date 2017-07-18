@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c3121abd_b0174a09",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:19:18Z",
+      "side": 1,
+      "message": "No else case needed. Just put a NOTREACHED() at the end.",
+      "parentUuid": "33761778_a646534d",
+      "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ea794d1_e29c241c",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 6
