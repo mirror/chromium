@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8c2fa3_47ab87db",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-18T00:43:36Z",
+      "side": 1,
+      "message": "Can you move this to L76 to be consistent with others?",
+      "revId": "1e2e363e80b92ee34167a809721b8a48ad8e6c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
