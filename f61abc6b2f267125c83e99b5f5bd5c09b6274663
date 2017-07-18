@@ -22,6 +22,30 @@
       "revId": "f61abc6b2f267125c83e99b5f5bd5c09b6274663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c220d51e_b1b26f06",
+        "filename": "remoting/ios/app/help_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-18T15:34:06Z",
+      "side": 1,
+      "message": "Yeah I saw them when I first landed this but it was not clear if our page could get a shortcut.",
+      "parentUuid": "42781572_07ef832c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 80
+      },
+      "revId": "f61abc6b2f267125c83e99b5f5bd5c09b6274663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
