@@ -62,6 +62,8 @@
 #include "content/public/browser/session_storage_namespace.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
+#include "content/public/browser/web_contents_user_data.h"
 #include "content/public/common/page_state.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension_set.h"
@@ -86,10 +88,39 @@ bool HasSingleNewTabPage(Browser* browser) {
          search::IsInstantNTP(active_tab);
 }
 
-class SessionRestoreImpl;
-
 // Pointers to SessionRestoreImpls which are currently restoring the session.
 std::set<SessionRestoreImpl*>* active_session_restorers = nullptr;
+
+}  // namespace
+
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(ForeignTabRestoreObserver);
+
+class ForeignTabRestoreObserver
+    : public content::WebContentsObserver,
+      public content::WebContentsUserData<ForeignTabRestoreObserver> {
+ public:
+  // content::WebContentsObserver:
+  void DidStopLoading() override { NotifyForeignTabRestoreFinished(); }
+
+  void WebContentsDestroyed() override { NotifyForeignTabRestoreFinished(); }
+
+ private:
+  friend class content::WebContentsUserData<ForeignTabRestoreObserver>;
+
+  explicit ForeignTabRestoreObserver(content::WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+
+  void NotifyForeignTabRestoreFinished() {
+    if (notified_)
+      return;
+    SessionRestore::NotifySessionRestoreFinishedLoadingTabs();
+    notified_ = true;
+  }
+
+  bool notified_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(ForeignTabRestoreObserver);
+};
 
 // SessionRestoreImpl ---------------------------------------------------------
 
@@ -217,6 +248,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
                            ? new Browser(Browser::CreateParams(profile_, true))
                            : browser_;
 
+    SessionRestore::NotifySessionRestoreStartedLoadingTabs();
+
     RecordAppLaunchForTab(browser, tab, selected_index);
 
     WebContents* web_contents;
@@ -236,6 +269,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
       // Start loading the tab immediately.
       web_contents->GetController().LoadIfNecessary();
     }
+
+    ForeignTabRestoreObserver::CreateForWebContents(web_contents);
 
     if (use_new_window) {
       browser->tab_strip_model()->ActivateTabAt(0, true);
@@ -450,7 +485,6 @@ class SessionRestoreImpl : public content::NotificationObserver {
 
       RestoreTabsToBrowser(*(*i), browser, initial_tab_count,
                            selected_tab_index, created_contents);
-      NotifySessionServiceOfRestoredTabs(browser, initial_tab_count);
       // This needs to be done after restore because closing the last tab will
       // close the whole window.
       if (close_active_tab)
@@ -598,6 +632,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
     // See crbug.com/154129.
     if (tab.navigations.empty())
       return nullptr;
+
+    SessionRestore::NotifySessionRestoreStartedLoadingTabs();
     int selected_index = GetNavigationIndexToSelect(tab);
 
     RecordAppLaunchForTab(browser, tab, selected_index);
@@ -739,8 +775,6 @@ class SessionRestoreImpl : public content::NotificationObserver {
   DISALLOW_COPY_AND_ASSIGN(SessionRestoreImpl);
 };
 
-}  // namespace
-
 // SessionRestore -------------------------------------------------------------
 
 // static
@@ -849,12 +883,32 @@ SessionRestore::CallbackSubscription
 
 // static
 void SessionRestore::AddObserver(SessionRestoreObserver* observer) {
-  observers().AddObserver(observer);
+  observers()->AddObserver(observer);
 }
 
 // static
 void SessionRestore::RemoveObserver(SessionRestoreObserver* observer) {
-  observers().RemoveObserver(observer);
+  observers()->RemoveObserver(observer);
+}
+
+// static
+void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
+  if (session_restore_started_)
+    return;
+
+  session_restore_started_ = true;
+  for (auto& observer : *observers())
+    observer.OnSessionRestoreStartedLoadingTabs();
+}
+
+// static
+void SessionRestore::NotifySessionRestoreFinishedLoadingTabs() {
+  if (!session_restore_started_)
+    return;
+
+  session_restore_started_ = false;
+  for (auto& observer : *SessionRestore::observers())
+    observer.OnSessionRestoreFinishedLoadingTabs();
 }
 
 // static
@@ -864,3 +918,6 @@ base::CallbackList<void(int)>*
 // static
 base::ObserverList<SessionRestoreObserver>* SessionRestore::observers_ =
     nullptr;
+
+// static
+bool SessionRestore::session_restore_started_ = false;

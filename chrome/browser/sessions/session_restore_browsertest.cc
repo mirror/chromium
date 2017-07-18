@@ -28,6 +28,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/sessions/session_restore.h"
+#include "chrome/browser/sessions/session_restore_observer.h"
 #include "chrome/browser/sessions/session_restore_test_helper.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_service_factory.h"
@@ -1516,6 +1517,118 @@ IN_PROC_BROWSER_TEST_F(SessionRestoreTest, TabWithDownloadDoesNotGetRestored) {
                                  downloads[1]->GetURL()};
     std::set<GURL> expected_urls{first_download_url, second_download_url};
     EXPECT_EQ(expected_urls, download_urls);
+  }
+}
+
+class MockSessionRestoreObserver : public SessionRestoreObserver {
+ public:
+  MockSessionRestoreObserver() {}
+
+  void OnSessionRestoreStartedLoadingTabs() override {
+    ASSERT_FALSE(is_session_restore_loading_tabs_);
+    is_session_restore_loading_tabs_ = true;
+  }
+
+  void OnSessionRestoreFinishedLoadingTabs() override {
+    ASSERT_TRUE(is_session_restore_loading_tabs_);
+    is_session_restore_loading_tabs_ = false;
+  }
+
+  bool is_session_restore_loading_tabs() const {
+    return is_session_restore_loading_tabs_;
+  }
+
+ private:
+  bool is_session_restore_loading_tabs_ = false;
+  DISALLOW_COPY_AND_ASSIGN(MockSessionRestoreObserver);
+};
+
+IN_PROC_BROWSER_TEST_F(SessionRestoreTest,
+                       SessionRestoreObserverForForeignTabRestore) {
+  GURL url1("http://google.com");
+  GURL url2("http://google2.com");
+  SerializedNavigationEntry nav1 =
+      SerializedNavigationEntryTestHelper::CreateNavigation(url1.spec(), "one");
+  SerializedNavigationEntry nav2 =
+      SerializedNavigationEntryTestHelper::CreateNavigation(url2.spec(), "two");
+
+  // Set up the restore data.
+  sync_pb::SessionTab sync_data;
+  sync_data.set_tab_visual_index(0);
+  sync_data.set_current_navigation_index(1);
+  sync_data.set_pinned(false);
+  sync_data.add_navigation()->CopyFrom(nav1.ToSyncData());
+  sync_data.add_navigation()->CopyFrom(nav2.ToSyncData());
+
+  std::unique_ptr<MockSessionRestoreObserver> session_restore_observer =
+      base::MakeUnique<MockSessionRestoreObserver>();
+  SessionRestore::AddObserver(session_restore_observer.get());
+
+  sessions::SessionTab tab;
+  tab.SetFromSyncData(sync_data, base::Time::Now());
+
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+
+  // Restore in the current tab.
+  {
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_START,
+        content::NotificationService::AllSources());
+    SessionRestore::RestoreForeignSessionTab(
+        browser()->tab_strip_model()->GetActiveWebContents(), tab,
+        WindowOpenDisposition::CURRENT_TAB);
+    observer.Wait();
+    EXPECT_TRUE(session_restore_observer->is_session_restore_loading_tabs());
+  }
+
+  {
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::NotificationService::AllSources());
+    observer.Wait();
+    EXPECT_FALSE(session_restore_observer->is_session_restore_loading_tabs());
+  }
+
+  // Restore in a new tab.
+  {
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_START,
+        content::NotificationService::AllSources());
+    SessionRestore::RestoreForeignSessionTab(
+        browser()->tab_strip_model()->GetActiveWebContents(), tab,
+        WindowOpenDisposition::NEW_BACKGROUND_TAB);
+    observer.Wait();
+    EXPECT_TRUE(session_restore_observer->is_session_restore_loading_tabs());
+  }
+
+  {
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::NotificationService::AllSources());
+    observer.Wait();
+    EXPECT_FALSE(session_restore_observer->is_session_restore_loading_tabs());
+  }
+
+  // Restore in a new window.
+  {
+    ui_test_utils::BrowserAddedObserver browser_observer;
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_START,
+        content::NotificationService::AllSources());
+    SessionRestore::RestoreForeignSessionTab(
+        browser()->tab_strip_model()->GetActiveWebContents(), tab,
+        WindowOpenDisposition::NEW_WINDOW);
+    browser_observer.WaitForSingleNewBrowser();
+    observer.Wait();
+    EXPECT_TRUE(session_restore_observer->is_session_restore_loading_tabs());
+  }
+
+  {
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::NotificationService::AllSources());
+    observer.Wait();
+    EXPECT_FALSE(session_restore_observer->is_session_restore_loading_tabs());
   }
 }
 

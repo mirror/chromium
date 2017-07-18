@@ -661,24 +661,57 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   tab_strip2.CloseAllTabs();
 }
 
-TEST_F(TabManagerTest, OnSessionRestoreStartedAndFinishedLoadingTabs) {
-  std::unique_ptr<content::WebContents> test_contents(
-      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
+TEST_F(TabManagerTest, HistogramsSessionRestoreSwitchToTab) {
+  const char kHistogramName[] = "TabManager.SessionRestore.SwitchToTab";
 
-  std::vector<SessionRestoreDelegate::RestoredTab> restored_tabs{
-      SessionRestoreDelegate::RestoredTab(test_contents.get(), false, false,
-                                          false)};
+  TabManager tab_manager;
+  TabStripDummyDelegate delegate;
+  TabStripModel tab_strip(&delegate, profile());
+  WebContents* tab = CreateWebContents();
+  tab_strip.AppendWebContents(tab, true);
 
-  TabManager* tab_manager = g_browser_process->GetTabManager();
-  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
+  auto* data = tab_manager.GetWebContentsData(tab);
 
-  TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());
-  EXPECT_TRUE(tab_manager->IsSessionRestoreLoadingTabs());
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount(kHistogramName, 0);
 
-  WebContentsTester::For(test_contents.get())
-      ->NavigateAndCommit(GURL("about:blank"));
-  WebContentsTester::For(test_contents.get())->TestSetIsLoading(false);
-  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
+  data->SetTabLoadingState(TAB_IS_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  // Nothing should happen until we're in a session restore
+  histograms.ExpectTotalCount(kHistogramName, 0);
+
+  tab_manager.OnSessionRestoreStartedLoadingTabs();
+
+  data->SetTabLoadingState(TAB_IS_NOT_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  histograms.ExpectTotalCount(kHistogramName, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+
+  data->SetTabLoadingState(TAB_IS_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  histograms.ExpectTotalCount(kHistogramName, 5);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
+
+  data->SetTabLoadingState(TAB_IS_LOADED);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  histograms.ExpectTotalCount(kHistogramName, 9);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADED, 4);
+
+  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
+  tab_strip.CloseAllTabs();
 }
 
 TEST_F(TabManagerTest, MaybeThrottleNavigation) {
@@ -787,6 +820,26 @@ TEST_F(TabManagerTest, OnDelayedTabSelected) {
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_));
   EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+}
+
+TEST_F(TabManagerTest, OnSessionRestoreStartedAndFinishedLoadingTabs) {
+  std::unique_ptr<content::WebContents> test_contents(
+      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
+
+  std::vector<SessionRestoreDelegate::RestoredTab> restored_tabs{
+      SessionRestoreDelegate::RestoredTab(test_contents.get(), false, false,
+                                          false)};
+
+  TabManager* tab_manager = g_browser_process->GetTabManager();
+  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
+
+  TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());
+  EXPECT_TRUE(tab_manager->IsSessionRestoreLoadingTabs());
+
+  WebContentsTester::For(test_contents.get())
+      ->NavigateAndCommit(GURL("about:blank"));
+  WebContentsTester::For(test_contents.get())->TestSetIsLoading(false);
+  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
 }
 
 }  // namespace resource_coordinator
