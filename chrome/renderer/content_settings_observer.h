@@ -24,6 +24,7 @@
 #include "url/gurl.h"
 
 namespace blink {
+struct WebEnabledClientHints;
 class WebFrame;
 class WebSecurityOrigin;
 class WebURL;
@@ -88,6 +89,10 @@ class ContentSettingsObserver
                                    const blink::WebURL& url) override;
   bool AllowAutoplay(bool default_value) override;
   void PassiveInsecureContentFound(const blink::WebURL&) override;
+  void PersistClientHints(
+      const blink::WebEnabledClientHints& enabled_client_hints,
+      int64_t duration_seconds,
+      const blink::WebURL& url) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ContentSettingsObserverTest, WhitelistedSchemes);
