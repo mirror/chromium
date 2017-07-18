@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc321b2_acfede66",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T22:33:08Z",
+      "side": 1,
+      "message": "Yikes. We have mojom interfaces that end in Impl?",
+      "revId": "05b9392aba2ec69e1520174cf3b9f1b60dc1f007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
