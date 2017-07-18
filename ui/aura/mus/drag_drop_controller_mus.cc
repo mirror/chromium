@@ -16,6 +16,7 @@
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/client/drag_drop_delegate.h"
+#include "ui/aura/env.h"
 #include "ui/aura/mus/drag_drop_controller_host.h"
 #include "ui/aura/mus/mus_types.h"
 #include "ui/aura/mus/os_exchange_data_provider_mus.h"
@@ -155,6 +156,11 @@ int DragDropControllerMus::StartDragAndDrop(
   std::map<std::string, std::vector<uint8_t>> drag_data =
       static_cast<const aura::OSExchangeDataProviderMus&>(data.provider())
           .GetData();
+
+  aura::Env* const instance = aura::Env::GetInstance();
+  if (instance)
+    instance->NotifyDragStarted(&data);
+
   window_tree_->PerformDragDrop(
       change_id, root_window_mus->server_id(), screen_location,
       mojo::MapToUnorderedMap(drag_data),
@@ -162,6 +168,9 @@ int DragDropControllerMus::StartDragAndDrop(
       data.provider().GetDragImageOffset(), drag_operations, mojo_source);
 
   run_loop.Run();
+
+  if (instance)
+    instance->NotifyDragEnded(&data);
 
   return current_drag_state.completed_action;
 }
