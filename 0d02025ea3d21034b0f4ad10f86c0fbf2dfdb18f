@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c6534b1_fba39427",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-18T06:47:29Z",
+      "side": 1,
+      "message": "IIUC we used to allow \".5\" as 0.5seconds for refresh - but this change\nwill break the existing sites depending on the parsing behavior.\n\nProbably it\u0027s okay to be strict, but I also think returning 0 here saves\nlots of misuses on the web (and we allow \"0.5\" or \"1.2\" here, right?).",
+      "revId": "0d02025ea3d21034b0f4ad10f86c0fbf2dfdb18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
