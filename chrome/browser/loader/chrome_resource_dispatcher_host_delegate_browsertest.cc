@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -21,6 +22,7 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/scoped_command_line.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_browsertest.h"
@@ -30,6 +32,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -264,6 +267,14 @@ class ChromeResourceDispatcherHostDelegateBrowserTest :
     return count;
   }
 
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    InProcessBrowserTest::SetUpCommandLine(command_line);
+    // Disable GoogleUrlTracker which creates network requests to
+    // https://www.google.com to check for locale. These calls may result in
+    // recording wrong headers in tests.
+    command_line->AppendSwitch(switches::kDisableBackgroundNetworking);
+  }
+
  protected:
   // The fake URL for DMServer we are using.
   GURL dm_url_;
@@ -419,9 +430,9 @@ void ReportRequestHeaders(std::map<std::string, std::string>* request_headers,
                           const std::string& url,
                           const std::string& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  EXPECT_FALSE(base::ContainsKey(*request_headers, url));
   // Ensure that a previous value is not overwritten.
-  EXPECT_FALSE(base::ContainsKey(*request_headers, url))
-      << "URL: " << url << ", Headers: " << headers;
   (*request_headers)[url] = headers;
 }
 
