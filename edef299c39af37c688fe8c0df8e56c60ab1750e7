@@ -22,6 +22,30 @@
       "revId": "edef299c39af37c688fe8c0df8e56c60ab1750e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9afb47_dc05124e",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:12:24Z",
+      "side": 1,
+      "message": "Can we just make this an internal implementation detail? It doesn\u0027t look like anybody should call this externally outside of tests.",
+      "parentUuid": "c653581f_00b5b062",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "edef299c39af37c688fe8c0df8e56c60ab1750e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
