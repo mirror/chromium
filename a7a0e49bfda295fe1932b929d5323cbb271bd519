@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e23cb5d_d8634843",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f17744_391eef66",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5490a88a_9d13a4f3",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6311fc7a_91025a37",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Add a class description.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eec9cf_66b6632f",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cchromeos::tether::ActiveUsersLogger\u003e(profile_-\u003eGetPrefs())",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 47
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49fc38f_4d2253b6",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "These need to switch places. Destructors are called in reverse order of where the fields are listed (i.e., |active_users_logger_| will be destroyed before |daily_event_|), so there is a possibility that this race condition occurs:\n\n1) |active_users_logger_| destroyed.\n2) |daily_event_| fires an event to observers.\n3) ActiveUsersDailyEventObserver handles the event, which calls on |active_users_logger_|.\n4) Segfault.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 76
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494b6846_e8cb8e1a",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72aca191_0a18c365",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Records when the user was last active and reports this metric to UMA.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4427c06d_f79a6d6b",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "nit: Comment seems unnecessary. If you want to keep it around, maybe say something like \"this does not actually log to UMA\" and mention ReportUserActivity().\n\nYou also might want to add a clarifying comment to ReportUserActivity() as well.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f59b1c_1e4545b9",
+        "filename": "chromeos/components/tether/initializer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T00:19:10Z",
+      "side": 1,
+      "message": "Just pass test_pref_service.get().",
+      "range": {
+        "startLine": 211,
+        "startChar": 42,
+        "endLine": 211,
+        "endChar": 49
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
