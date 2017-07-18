@@ -494,8 +494,8 @@ class Document::NetworkStateObserver final
 };
 
 Document* Document::Create(const Document& document) {
-  Document* new_document = new Document(
-      DocumentInit::FromContext(const_cast<Document*>(&document), BlankURL()));
+  Document* new_document = new Document(DocumentInit(
+      BlankURL(), nullptr, nullptr, const_cast<Document*>(&document), nullptr));
   new_document->SetSecurityOrigin(document.GetSecurityOrigin());
   new_document->SetContextFeatures(document.GetContextFeatures());
   return new_document;
@@ -4072,7 +4072,7 @@ Node* Document::cloneNode(bool deep, ExceptionState&) {
 }
 
 Document* Document::CloneDocumentWithoutChildren() {
-  DocumentInit init = DocumentInit::FromContext(ContextDocument(), Url());
+  DocumentInit init(Url(), nullptr, nullptr, ContextDocument(), nullptr);
   if (IsXMLDocument()) {
     if (IsXHTMLDocument())
       return XMLDocument::CreateXHTML(
@@ -5828,17 +5828,18 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     // load local resources. The latter lets about:blank iframes in
     // file:// URL documents load images and other resources from
     // the file system.
-    if (initializer.Owner() &&
-        initializer.Owner()->GetSecurityOrigin()->IsPotentiallyTrustworthy())
-      GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
-    if (initializer.Owner() &&
-        initializer.Owner()->GetSecurityOrigin()->CanLoadLocalResources())
-      GetSecurityOrigin()->GrantLoadLocalResources();
-  } else if (initializer.Owner()) {
-    cookie_url_ = initializer.Owner()->CookieURL();
+    Document* owner = initializer.OwnerDocument();
+    if (owner) {
+      if (owner->GetSecurityOrigin()->IsPotentiallyTrustworthy())
+        GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+      if (owner->GetSecurityOrigin()->CanLoadLocalResources())
+        GetSecurityOrigin()->GrantLoadLocalResources();
+    }
+  } else if (Document* owner = initializer.OwnerDocument()) {
+    cookie_url_ = owner->CookieURL();
     // We alias the SecurityOrigins to match Firefox, see Bug 15313
     // https://bugs.webkit.org/show_bug.cgi?id=15313
-    SetSecurityOrigin(initializer.Owner()->GetSecurityOrigin());
+    SetSecurityOrigin(owner->GetSecurityOrigin());
   } else {
     cookie_url_ = url_;
     SetSecurityOrigin(SecurityOrigin::Create(url_));
@@ -6644,11 +6645,13 @@ Document& Document::EnsureTemplateDocument() {
     return *template_document_;
 
   if (IsHTMLDocument()) {
-    DocumentInit init = DocumentInit::FromContext(ContextDocument(), BlankURL())
-                            .WithNewRegistrationContext();
+    DocumentInit init =
+        DocumentInit(BlankURL(), nullptr, nullptr, ContextDocument(), nullptr)
+            .WithNewRegistrationContext();
     template_document_ = HTMLDocument::Create(init);
   } else {
-    template_document_ = Document::Create(DocumentInit(BlankURL()));
+    template_document_ = Document::Create(
+        DocumentInit(BlankURL(), nullptr, nullptr, nullptr, nullptr));
   }
 
   template_document_->template_document_host_ = this;  // balanced in dtor.
