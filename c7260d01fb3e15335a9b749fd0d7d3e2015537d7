@@ -96,6 +96,53 @@
     },
     {
       "key": {
+        "uuid": "809cc471_8e27d7b0",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "See comment below (about early-return check).",
+      "parentUuid": "2bd02a2f_a1fb140a",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d19fa25_e2ed7f32",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "Part of my confusion (last round of comments) was because I made a wrong assumption about this early return here. I was thinking we were also early-returning while in the delayed start state. Meaning: should_be_remoting is true AND remote_rendering_started_ is false AND delayed_start_timer_.IsRunning().\n\nIMHO, it would simplify things here and elsewhere if we changed this early-return to something like:\n\n  if ((remote_rendering_started_ || delayed_start_timer_.IsRunning()) \u003d\u003d should_be_remoting) {\n    return;\n  }\n\nThen, the StopTransition() (L324) be moved down to the else clause (L349), where all the other \"shutdown stuff\" already is. And then, this would also mean StartTransition() cannot not be called multiple times during the delayed start phase.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ffb38ed_210a78eb",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -178,6 +225,30 @@
       "side": 1,
       "message": "I feel better to use the if condition here. For example, if for some reason OnRemoteDisplaybackDisabled(true) was called twice, this will be called in the middle of the delayed start. Seems it is not guaranteed that this is only called once at the first time when ShouldBeRemoting() returns true.",
       "parentUuid": "4f530ba9_12be61f7",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d37ec7_9179b530",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "I see where I was mistaken: This can be called multiple times from UpdateAndMaybeSwitch(). That probably means UpdateAndMaybeSwitch() needs an early return (see new comment in UpdateAndMaybeSwitch()).",
+      "parentUuid": "68a015c3_e4ad4e50",
       "range": {
         "startLine": 376,
         "startChar": 0,
@@ -378,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "42352ed0_7250468b",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "3ea0c7c8_05934b7a",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a44422a6_a6aa2758",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -422,6 +517,30 @@
       "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174a945f_fa82222a",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "Sounds good. However, in your other CL, we would need to ensure UpdateAndMaybeSwitch() is called whenever the capabilities change.",
+      "parentUuid": "0580a08c_06771a85",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

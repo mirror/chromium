@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c08b2469_647dc9dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "s/transition process/delayed start mechanism to monitor that all requirements are met and held stable for a short period of time/",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c44ff81_37ecd3f9",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "Every where you say \"will be canceled if the video element stops being dominant,\" you\u0027ll want to change that to something that says that ANY requirement/precondition changes in such a way as to prevent remoting from starting.",
+      "range": {
+        "startLine": 18,
+        "startChar": 52,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d226511b_4d90e2b6",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "nit: Comment needs adjusting. Something like, \"Returns true if all of the technical requirements for the media pipeline and remote rendering are being met. This does not include environmental conditions, such as the content being dominant in the viewport, available network bandwidth, etc.\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 95,
+        "endChar": 57
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac91421_54b57317",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "Instead of \"and wait for...to start the remoting.\" how about: \"to ensure all preconditions are met and held stable for a short time before starting remoting.\"",
+      "range": {
+        "startLine": 105,
+        "startChar": 44,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d57087_335de1d8",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "nit: s/switching to/that the media pipeline switch to/",
+      "range": {
+        "startLine": 114,
+        "startChar": 23,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae46d4ab_fcd827fc",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "\"...or other preconditions change that do not allow for remoting.\"",
+      "range": {
+        "startLine": 166,
+        "startChar": 60,
+        "endLine": 166,
+        "endChar": 61
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f967bb7c_4f242af0",
+        "filename": "media/remoting/renderer_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T21:51:04Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t needed since callback.Run() will crash if callback is null.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "f1e4d37f10fbe8ceb57e71c60aae1e69b16a3252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
