@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632dc662_30051cb0",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "For convention, could you add ARC?\nSuggestion: AreArcAllOptInPreferenceIgnorableForProfile()",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48bd836_54c1c461",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Looks stale. Could you update?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b2fd90_f35735ad",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "So, this if (!terms_of_service_negotiator_) is conceptually a guard for L766. Would you mind to keep it?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5e30f7_202efc6c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Looks like the condition gets more complicated.\nSo, could you embed the expected bool in the INSTANTIATE_TEST_CASE_P parameter?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87301b20_2e959eee",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "\"errorMessage\" please.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc070a3_fc47d954",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "As you touch here, could you replace \"AD\" by \"ActiveDirectory\" wherever possible?\nAbbreviation term is good to avoid so that new reader can easily understand what it is.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598ae6fb_bb607545",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Hmm... what does DM mean...?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dc95a2_f8ed4ed9",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Can these be merged into one call?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da346f97_ec013f63",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5db262_478dfda2",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "nice! :-)",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b819e103_bcb2f9da",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this.\nYou just can declare local vars, and bind them to a lambda.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a44dcfd_26eab0c7",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Also, I\u0027d prefer to inline expectations. Specifically, better to avoid conditional expectations as much as possible.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10580196_013d2698",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Maybe not continue on assertion failure in CheckOnActiveDirectoryAuthPageAndVerify?\nDitto for below.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd071b2f_c3494139",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Clarification: didn\u0027t RunLoop::RunUntilIdle() work for those cases?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5e09f2_2e864428",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Could you avoid crashing here?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac3bb6f_7542d909",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Please use Browser\u0027s profile. browser()-\u003eprofile()",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af15014f_cdbaff17",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Could you split checking expectations and running task into separate methods at least?\nThen, you don\u0027t need conditional expectations.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e9c686_a52284bb",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "unused.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a00406_2bb3f188",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "token_fetcher_-\u003eFetch(\n  base::BindOnce([]() { FAIL() \u003c\u003c \"...\"; }));\nrun_loop-\u003eRun();\n\nIn caller:\nASSERT_NO_FATAL_FAILURE(FetchEnrollmentTokenAndExpectNotCallbackReached());",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c138d5e0_9aecca0e",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Maybe: s/Closed/Changed/?\n\nAlso please consider to make this Observer, rather than just a callback.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651e3581_7b71b455",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "Suggestion: maybeCloseWindow() because it won\u0027t close if not exist.",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085041a7_ff1c4f94",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T07:54:31Z",
+      "side": 1,
+      "message": "As this is a new page, could you make this a class?",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
