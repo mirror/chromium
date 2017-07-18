@@ -71,8 +71,8 @@ class UiScene {
 
   std::vector<const UiElement*> GetWorldElements() const;
   std::vector<const UiElement*> GetOverlayElements() const;
-  std::vector<const UiElement*> GetHeadLockedElements() const;
-  bool HasVisibleHeadLockedElements() const;
+  std::vector<const UiElement*> GetViewportAwareElements() const;
+  bool HasVisibleViewportAwareElements() const;
 
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const;

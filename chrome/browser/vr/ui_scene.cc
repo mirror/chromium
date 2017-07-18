@@ -148,7 +148,7 @@ std::vector<const UiElement*> UiScene::GetOverlayElements() const {
   return elements;
 }
 
-std::vector<const UiElement*> UiScene::GetHeadLockedElements() const {
+std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
   std::vector<const UiElement*> elements;
   for (const auto& element : ui_elements_) {
     if (element->IsVisible() && element->lock_to_fov()) {
@@ -158,8 +158,8 @@ std::vector<const UiElement*> UiScene::GetHeadLockedElements() const {
   return elements;
 }
 
-bool UiScene::HasVisibleHeadLockedElements() const {
-  return !GetHeadLockedElements().empty();
+bool UiScene::HasVisibleViewportAwareElements() const {
+  return !GetViewportAwareElements().empty();
 }
 
 void UiScene::SetMode(ColorScheme::Mode mode) {
