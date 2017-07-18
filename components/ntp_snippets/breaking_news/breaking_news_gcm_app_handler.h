@@ -6,6 +6,8 @@
 #define COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_GCM_APP_HANDLER_H_
 
 #include "base/memory/weak_ptr.h"
+#include "base/time/clock.h"
+#include "base/timer/timer.h"
 #include "components/gcm_driver/gcm_app_handler.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
 #include "components/ntp_snippets/breaking_news/breaking_news_listener.h"
@@ -25,9 +27,11 @@ class InstanceIDDriver;
 
 namespace ntp_snippets {
 
-// Handler for pushed GCM breaking news. It retrieves a subscription token
-// from the GCM server and registers/unregisters itself with the GCM service to
-// be called upon received push breaking news.
+// Handler for pushed GCM breaking news. It retrieves a subscription token from
+// the GCM server and registers/unregisters itself with the GCM service to be
+// called upon received push breaking news. When there is a listener, the token
+// is periodically validated. The validation may happen during StartListening if
+// enough time has passed since the previous validation.
 class BreakingNewsGCMAppHandler : public BreakingNewsListener,
                                   public gcm::GCMAppHandler {
  public:
@@ -48,7 +52,8 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
       instance_id::InstanceIDDriver* instance_id_driver,
       PrefService* pref_service_,
       std::unique_ptr<SubscriptionManager> subscription_manager,
-      const ParseJSONCallback& parse_json_callback);
+      const ParseJSONCallback& parse_json_callback,
+      std::unique_ptr<base::Clock> clock);
 
   // If still listening, calls StopListening()
   ~BreakingNewsGCMAppHandler() override;
@@ -71,14 +76,24 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
  private:
-  // Retrieves a subscription token that allows the content suggestions server
-  // to push content via GCM messages. Calling this method multiple times is not
-  // necessary but does not harm since the same token is returned everytime.
-  void Subscribe();
+  // If there is no subscription token or |force_token_retrieval|, retrieves a
+  // GCM subscription token and subscribes to our server with it. Otherwise,
+  // subscribes to our server with the existing token.
+  void Subscribe(bool force_token_retrieval);
 
-  // Called after the subscription is obtained from the GCM server.
-  void DidSubscribe(const std::string& subscription_token,
-                    instance_id::InstanceID::Result result);
+  // Called when subscription token is obtained from the GCM.
+  void OnTokenRetrieval(const std::string& subscription_token,
+                        instance_id::InstanceID::Result result);
+
+  // Called periodically to validate the subscription token (it is stored on
+  // disk and may become corrupted) and resubscribe with the new token if the
+  // old one is invalid.
+  void ResubscribeIfInvalidToken();
+
+  // Called when token validation response is obtained from the GCM.
+  void OnTokenValidation(bool is_valid);
+
+  void ScheduleNextTokenValidation();
 
   // Called after successfully parsing the received suggestion JSON.
   void OnJsonSuccess(std::unique_ptr<base::Value> content);
@@ -92,10 +107,13 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
   PrefService* const pref_service_;
   const std::unique_ptr<SubscriptionManager> subscription_manager_;
   const ParseJSONCallback parse_json_callback_;
+  std::unique_ptr<base::Clock> clock_;
 
   // Called after every time a new message is received in OnMessage() to notify
   // the content provider.
   OnNewContentCallback on_new_content_callback_;
+
+  base::OneShotTimer token_validation_timer_;
 
   base::WeakPtrFactory<BreakingNewsGCMAppHandler> weak_ptr_factory_;
 
