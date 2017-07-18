@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c66a24_fae6c92d",
+        "filename": "extensions/browser/value_store/value_store_frontend.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:13:29Z",
+      "side": 1,
+      "message": "Should we check that deletion is happening on the correct sequence?",
+      "revId": "a6fd66427e77bdf2a5b0c91c776d8e1401fdb8a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

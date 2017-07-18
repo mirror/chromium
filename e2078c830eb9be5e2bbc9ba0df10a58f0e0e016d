@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb0a3ac_d4f82faf",
+        "filename": "chrome/browser/extensions/api/declarative/rules_registry_with_cache_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:13:29Z",
+      "side": 0,
+      "message": "nit: why this change?",
+      "revId": "e2078c830eb9be5e2bbc9ba0df10a58f0e0e016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
