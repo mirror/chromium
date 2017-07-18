@@ -125,5 +125,17 @@ TEST_F(PDFResourceTest, SaveAs) {
       PpapiHostMsg_PDF_SaveAs::ID, &params, &msg));
 }
 
+TEST_F(PDFResourceTest, SelectionChanged) {
+  const PPB_PDF* pdf_iface = thunk::GetPPB_PDF_Thunk();
+
+  pdf_iface->SelectionChanged(pp_instance(), PP_FloatPoint(), 0,
+                              PP_FloatPoint(), 0);
+
+  ResourceMessageCallParams params;
+  IPC::Message msg;
+  ASSERT_TRUE(sink().GetFirstResourceCallMatching(
+      PpapiHostMsg_PDF_SelectionChanged::ID, &params, &msg));
+}
+
 }  // namespace proxy
 }  // namespace ppapi
