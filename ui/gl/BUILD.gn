@@ -15,7 +15,7 @@ declare_args() {
                        (target_cpu == "x86" || target_cpu == "x64")
 }
 
-use_egl = is_win || is_android || is_linux || is_fuchsia
+use_egl = is_win || is_android || is_linux || is_mac
 use_glx = use_x11 || ozone_platform_x11
 
 if (is_android) {
@@ -285,6 +285,11 @@ component("gl") {
       "IOSurface.framework",
       "OpenGL.framework",
       "Quartz.framework",
+    ]
+
+    data_deps += [
+      "//third_party/angle:libEGL",
+      "//third_party/angle:libGLESv2",
     ]
   }
   if (is_android) {

@@ -27,7 +27,8 @@ namespace gl {
 
 class GL_EXPORT GLImageIOSurface : public GLImage {
  public:
-  GLImageIOSurface(const gfx::Size& size, unsigned internalformat);
+  static GLImageIOSurface* Create(const gfx::Size& size,
+                                  unsigned internalformat);
 
   bool Initialize(IOSurfaceRef io_surface,
                   gfx::GenericSharedMemoryId io_surface_id,
@@ -77,9 +78,10 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   static GLImageIOSurface* FromGLImage(GLImage* image);
 
  protected:
+  GLImageIOSurface(const gfx::Size& size, unsigned internalformat);
   ~GLImageIOSurface() override;
+  virtual bool BindTexImageImpl(unsigned target, unsigned internalformat);
 
- private:
   Type GetType() const override;
   class RGBConverter;
 
@@ -99,6 +101,18 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   base::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(GLImageIOSurface);
+};
+
+class GL_EXPORT GLImageIOSurfaceEGL : public GLImageIOSurface {
+ public:
+  using GLImageIOSurface::GLImageIOSurface;
+
+ protected:
+  ~GLImageIOSurfaceEGL() override = default;
+  bool BindTexImageImpl(unsigned target, unsigned internalformat) override;
+
+ private:
+  void* surface_ = nullptr;
 };
 
 }  // namespace gl

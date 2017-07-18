@@ -16,6 +16,8 @@
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/gl_surface_egl.h"
+#include "ui/gl/gl_version_info.h"
 #include "ui/gl/scoped_binders.h"
 #include "ui/gl/yuv_to_rgb_converter.h"
 
@@ -187,6 +189,16 @@ GLenum ConvertRequestedInternalFormat(GLenum internalformat) {
 
 }  // namespace
 
+// static
+GLImageIOSurface* GLImageIOSurface::Create(const gfx::Size& size,
+                                           unsigned internalformat) {
+  if (GLContext::GetCurrent()->GetVersionInfo()->is_angle) {
+    return new GLImageIOSurfaceEGL(size, internalformat);
+  } else {
+    return new GLImageIOSurface(size, internalformat);
+  }
+}
+
 GLImageIOSurface::GLImageIOSurface(const gfx::Size& size,
                                    unsigned internalformat)
     : size_(size),
@@ -268,10 +280,21 @@ bool GLImageIOSurface::BindTexImageWithInternalformat(unsigned target,
     return false;
   }
 
+  DCHECK(io_surface_);
+
+  if (!BindTexImageImpl(target, internalformat)) {
+    return false;
+  }
+
+  UMA_HISTOGRAM_TIMES("GPU.IOSurface.TexImageTime",
+                      base::TimeTicks::Now() - start_time);
+  return true;
+}
+
+bool GLImageIOSurface::BindTexImageImpl(unsigned target,
+                                        unsigned internalformat) {
   CGLContextObj cgl_context =
       static_cast<CGLContextObj>(GLContext::GetCurrent()->GetHandle());
-
-  DCHECK(io_surface_);
 
   GLenum texture_format =
       internalformat ? internalformat : TextureFormat(format_);
@@ -284,8 +307,6 @@ bool GLImageIOSurface::BindTexImageWithInternalformat(unsigned target,
     return false;
   }
 
-  UMA_HISTOGRAM_TIMES("GPU.IOSurface.TexImageTime",
-                      base::TimeTicks::Now() - start_time);
   return true;
 }
 
@@ -429,6 +450,31 @@ GLImageIOSurface* GLImageIOSurface::FromGLImage(GLImage* image) {
   if (!image || image->GetType() != Type::IOSURFACE)
     return nullptr;
   return static_cast<GLImageIOSurface*>(image);
+}
+#define EGL_IOSURFACE_ANGLE 0x3454
+bool GLImageIOSurfaceEGL::BindTexImageImpl(unsigned target,
+                                           unsigned internalformat) {
+  EGLSurface* pbuffer = reinterpret_cast<EGLSurface*>(&surface_);
+  EGLDisplay display = GLSurfaceEGL::GetHardwareDisplay();
+  if (*pbuffer == EGL_NO_SURFACE) {
+    EGLint attribs[] = {
+        EGL_TEXTURE_FORMAT, EGL_TEXTURE_RGBA, EGL_TEXTURE_TARGET,
+        EGL_TEXTURE_2D,     EGL_NONE,         EGL_NONE,
+    };
+    EGLConfig config = nullptr;
+    EGLint numConfigs = 0;
+    auto result = eglChooseConfig(display, nullptr, &config, 1, &numConfigs);
+    CHECK(result == EGL_TRUE);
+    CHECK(numConfigs = 1);
+
+    *pbuffer = eglCreatePbufferFromClientBuffer(
+        display, EGL_IOSURFACE_ANGLE, io_surface_.get(), config, attribs);
+    CHECK(*pbuffer != EGL_NO_SURFACE);
+  }
+
+  auto result = eglBindTexImage(display, *pbuffer, EGL_BACK_BUFFER);
+  CHECK(result == EGL_TRUE);
+  return true;
 }
 
 }  // namespace gl
