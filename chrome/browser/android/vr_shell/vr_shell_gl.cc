@@ -1066,14 +1066,16 @@ void VrShellGl::OnVSync() {
   if (vsync_interval_.is_zero())
     return;
 
-  base::TimeTicks now = base::TimeTicks::Now();
-  base::TimeTicks target;
-  target = now + vsync_interval_;
-  int64_t intervals = (target - vsync_timebase_) / vsync_interval_;
-  target = vsync_timebase_ + intervals * vsync_interval_;
+  base::TimeDelta now = base::TimeTicks::Now() - base::TimeTicks();
+  base::TimeDelta target = now + vsync_interval_;
+  base::TimeDelta timebase = vsync_timebase_ - base::TimeTicks();
+  double intervalsF =
+      (target - timebase).InSecondsF() / vsync_interval_.InSecondsF();
+  uint64_t intervals = static_cast<int64_t>(std::round(intervalsF));
+  target = timebase + intervals * vsync_interval_;
+  base::TimeDelta current = target - vsync_interval_;
   task_runner_->PostDelayedTask(FROM_HERE, vsync_task_.callback(),
                                 target - now);
-  base::TimeDelta current = target - vsync_interval_ - base::TimeTicks();
   if (!callback_.is_null()) {
     SendVSync(current, base::ResetAndReturn(&callback_));
   } else {
