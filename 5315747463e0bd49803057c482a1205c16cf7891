@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "60fe157e_db72a287",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Acknowledged, thanks for the explanation.",
+      "parentUuid": "75a390ee_2879ea1d",
+      "range": {
+        "startLine": 228,
+        "startChar": 27,
+        "endLine": 228,
+        "endChar": 48
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0502b16f_793f890a",
         "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
         "patchSetId": 17
@@ -166,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "a29648c4_4f9c87ef",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Okay, it would be nice to reduce code complexity and have more consistent behavior, but it\u0027s not important for this CL.",
+      "parentUuid": "ec14869b_d69c8a91",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5bbcede_a84a2ac1",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 17
@@ -201,6 +243,30 @@
       "side": 1,
       "message": "I think so? I used two displays and tried to swiping on each display, it opened app list in each display.",
       "parentUuid": "b5bbcede_a84a2ac1",
+      "range": {
+        "startLine": 1111,
+        "startChar": 29,
+        "endLine": 1111,
+        "endChar": 30
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a546aa11_4b2fb623",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Good, thanks for testing.",
+      "parentUuid": "33f3c5fc_b28644c2",
       "range": {
         "startLine": 1111,
         "startChar": 29,
@@ -365,6 +431,30 @@
       "side": 1,
       "message": "I think it is needed. This is used to make it has at least one visible window to make sure the visibility of the shelf can be changed.",
       "parentUuid": "faabd0bc_b1187422",
+      "range": {
+        "startLine": 332,
+        "startChar": 9,
+        "endLine": 332,
+        "endChar": 15
+      },
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a7aced_73d47c82",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Ah, right, thanks for adding the comment (it\u0027s confusing without that explanation).",
+      "parentUuid": "9a894d33_ece17fcd",
       "range": {
         "startLine": 332,
         "startChar": 9,
@@ -564,6 +654,24 @@
     },
     {
       "key": {
+        "uuid": "9a5ff466_43167a63",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Weird... that probably shouldn\u0027t happen. I suggest adding a TODO and filing a bug to investigate.",
+      "parentUuid": "23f4cd8d_024619ce",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d53ecc4_23f42f7b",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 17
@@ -733,6 +841,24 @@
       "side": 1,
       "message": "I think Maybe it is not so good to combine this two funcs? |initial_drag_point_| in UpdateDrag has no relationship with this func. I think UpdateDrag is for dragging of the opened app list, it has different logic to set the bounds of the app list(not exactly stick to the dragging point). What I added here is for dragging from shelf. Even combine this two funcs, I think one more argument is needed to distinguish this two different draggings.\nFollow-on I will add some animation for this process. That means I will add some logic in this func, and maybe restore the UpdateDrag to its original impl.",
       "parentUuid": "f47bb182_e7d77851",
+      "revId": "5315747463e0bd49803057c482a1205c16cf7891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859fafce_3f478318",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "Okay... I guess it\u0027s fine to keep them separate.",
+      "parentUuid": "3c454396_eeb2539e",
       "revId": "5315747463e0bd49803057c482a1205c16cf7891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

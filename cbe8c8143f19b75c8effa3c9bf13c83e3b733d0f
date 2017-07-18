@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da470327_54673b19",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "optional nit: add a trailing comma, to let future authors know that it\u0027s okay to add more values.",
+      "range": {
+        "startLine": 343,
+        "startChar": 34,
+        "endLine": 343,
+        "endChar": 35
+      },
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630977da_62b85b1c",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "optional nit: add a blank line above this.",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d02c2f_e39dfb6e",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "nit: consider just saying \"Note: A window must be visible in order to hide the shelf.\"",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1250e37a_82f7ac8a",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think the window needs to be maximized. If not, remove this and the |widget| local pointer to the return value of CreateTestWidget(). ie. consider just doing |CreateTestWidget();|.",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d6a3f3_87b84e1c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "nit: ultimately",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef6ff08_6350ca5f",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "nit: s/to/should/ \"Swiping down on the shelf should hide it.\"",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6397c9_0944f6f9",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T22:51:07Z",
+      "side": 1,
+      "message": "optional nit: inline this as new_widget_bounds.set_y(std::max(y_position_in_screen, 0));",
+      "revId": "cbe8c8143f19b75c8effa3c9bf13c83e3b733d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
