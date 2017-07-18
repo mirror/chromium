@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7707d1a_d0b258d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-18T23:55:03Z",
+      "side": 1,
+      "message": "The commit message was not changed.",
+      "parentUuid": "7d5167f2_24be0c71",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 79
+      },
+      "revId": "1f9e606962530574d5d26ac102ae358bcd97b253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895ece97_ed929fb7",
         "filename": "components/plugins/renderer/webview_plugin.h",
         "patchSetId": 1
