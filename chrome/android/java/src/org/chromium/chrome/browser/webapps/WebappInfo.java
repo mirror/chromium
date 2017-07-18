@@ -71,11 +71,11 @@ public class WebappInfo {
         return new WebappInfo();
     }
 
-    protected static String urlFromIntent(Intent intent) {
+    public static String urlFromIntent(Intent intent) {
         return IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_URL);
     }
 
-    protected static int sourceFromIntent(Intent intent) {
+    public static int sourceFromIntent(Intent intent) {
         int source = IntentUtils.safeGetIntExtra(
                 intent, ShortcutHelper.EXTRA_SOURCE, ShortcutSource.UNKNOWN);
         if (source >= ShortcutSource.COUNT) {
