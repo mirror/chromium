@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1db547cd_789ea7cc",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d1fc889_20e4926f",
+      "range": {
+        "startLine": 1069,
+        "startChar": 8,
+        "endLine": 1069,
+        "endChar": 17
+      },
+      "revId": "d1e8ea04c1d3843ddefd6b4b61ecc77e5cd17618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71457bc9_0d16a764",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fb8d1c1c_96836ec9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T20:39:21Z",
+      "side": 1,
+      "message": "Sweet, didn\u0027t know that was a thing.",
+      "parentUuid": "71457bc9_0d16a764",
+      "range": {
+        "startLine": 1074,
+        "startChar": 23,
+        "endLine": 1074,
+        "endChar": 34
+      },
+      "revId": "d1e8ea04c1d3843ddefd6b4b61ecc77e5cd17618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63093b60_94eafdad",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "d1e8ea04c1d3843ddefd6b4b61ecc77e5cd17618",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17324cc9_2606ffef",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-18T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63093b60_94eafdad",
+      "range": {
+        "startLine": 1076,
+        "startChar": 18,
+        "endLine": 1076,
+        "endChar": 25
+      },
+      "revId": "d1e8ea04c1d3843ddefd6b4b61ecc77e5cd17618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
