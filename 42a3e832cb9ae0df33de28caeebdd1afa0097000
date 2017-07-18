@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376e2c7f_c64d2344",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:54:28Z",
+      "side": 1,
+      "message": "How about renaming this to DidLoadInstalledScript()?",
+      "revId": "42a3e832cb9ae0df33de28caeebdd1afa0097000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
