@@ -70,6 +70,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void Network2QuietTimerFired(TimerBase*);
   void ReportHistograms();
   void RegisterNotifySwapTime(PaintEvent);
+  void ReportNetworkQuietBeforeSwapPromise(bool was_already_quiet);
 
   bool next_paint_is_meaningful_ = false;
   HadUserInput had_user_input_ = kNoUserInput;

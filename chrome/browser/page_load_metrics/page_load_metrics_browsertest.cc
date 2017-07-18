@@ -734,11 +734,9 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoDocumentWriteScript) {
 }
 
 // TODO(crbug.com/712935): Flaky on Linux dbg.
-#if defined(OS_LINUX) && !defined(NDEBUG)
+// Update: Now flaky on all builds after crrev.com/????
+// TODO(shaseley): Reference CL.
 #define MAYBE_BadXhtml DISABLED_BadXhtml
-#else
-#define MAYBE_BadXhtml BadXhtml
-#endif
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, MAYBE_BadXhtml) {
   ASSERT_TRUE(embedded_test_server()->Start());
 

@@ -255,6 +255,8 @@ void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
 void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
                                                   bool did_swap,
                                                   double timestamp) {
+  paint_timing_->ReportSwapPromiseSucceededHistorgram(did_swap);
+  ReportNetworkQuietBeforeSwapPromise(network2_quiet_reached_);
   // TODO(shaseley): Add UMAs here to see how often either of the following
   // happen. In the first case, the FMP will be 0.0 if this is the provisional
   // timestamp we end up using. In the second case, a swap timestamp of 0.0 is
@@ -271,6 +273,15 @@ void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
     default:
       NOTREACHED();
   }
+}
+
+void FirstMeaningfulPaintDetector::ReportNetworkQuietBeforeSwapPromise(
+    bool was_already_quiet) {
+  DEFINE_STATIC_LOCAL(
+      BooleanHistogram, network_quiet_before_swap_promise_histogram,
+      ("PageLoad.Internal.Renderer.FirstMeaningfulPaintDetector."
+       "NetworkQuietBeforeSwapPromise"));
+  network_quiet_before_swap_promise_histogram.Count(was_already_quiet);
 }
 
 DEFINE_TRACE(FirstMeaningfulPaintDetector) {

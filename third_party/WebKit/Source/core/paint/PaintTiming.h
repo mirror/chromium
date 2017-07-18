@@ -32,17 +32,17 @@ class CORE_EXPORT PaintTiming final
 
   static PaintTiming& From(Document&);
 
-  // mark*() methods record the time for the given paint event, record a trace
-  // event, and notify that paint timing has changed. These methods do nothing
+  // Mark*() methods record the time for the given paint event and queue a swap
+  // promise to record the |first_*_swap_| timestamp. These methods do nothing
   // (early return) if a time has already been recorded for the given paint
   // event.
   void MarkFirstPaint();
 
-  // markFirstTextPaint, markFirstImagePaint, and markFirstContentfulPaint
+  // MarkFirstTextPaint, MarkFirstImagePaint, and MarkFirstContentfulPaint
   // will also record first paint if first paint hasn't been recorded yet.
   void MarkFirstContentfulPaint();
 
-  // markFirstTextPaint and markFirstImagePaint will also record first
+  // MarkFirstTextPaint and MarkFirstImagePaint will also record first
   // contentful paint if first contentful paint hasn't been recorded yet.
   void MarkFirstTextPaint();
   void MarkFirstImagePaint();
@@ -58,27 +58,43 @@ class CORE_EXPORT PaintTiming final
   // given paint event has not yet occurred. See the comments for
   // monotonicallyIncreasingTime in wtf/CurrentTime.h for additional details.
 
-  // firstPaint returns the first time that anything was painted for the
+  // FirstPaint returns the first time that anything was painted for the
   // current document.
   double FirstPaint() const { return first_paint_; }
+  // FirstPaintSwap returns the timestamp of the next GPU buffer swap after
+  // |first_paint_| is set.
+  double FirstPaintSwap() const { return first_paint_swap_; }
 
-  // firstContentfulPaint returns the first time that 'contentful' content was
+  // FirstContentfulPaint returns the first time that 'contentful' content was
   // painted. For instance, the first time that text or image content was
   // painted.
   double FirstContentfulPaint() const { return first_contentful_paint_; }
+  // FirstContentfulPaintSwap returns the timestamp of the next GPU buffer swap
+  // after |first_contentful_paint_| is set.
   double FirstContentfulPaintSwap() const {
     return first_contentful_paint_swap_;
   }
 
   // firstTextPaint returns the first time that text content was painted.
   double FirstTextPaint() const { return first_text_paint_; }
+  // FirstTextPaintSwap returns the timestamp of the next GPU buffer swap
+  // after |first_text_paint_| is set.
+  double FirstTextPaintSwap() const { return first_text_paint_swap_; }
 
-  // firstImagePaint returns the first time that image content was painted.
+  // FirstImagePaint returns the first time that image content was painted.
   double FirstImagePaint() const { return first_image_paint_; }
+  // FirstImagePaintSwap returns the timestamp of the next GPU buffer swap
+  // after |first_image_paint_| is set.
+  double FirstImagePaintSwap() const { return first_image_paint_swap_; }
 
-  // firstMeaningfulPaint returns the first time that page's primary content
+  // FirstMeaningfulPaint returns the first time that page's primary content
   // was painted.
   double FirstMeaningfulPaint() const { return first_meaningful_paint_; }
+  // FirstMeaningfulPaintSwap returns the timestamp of the next GPU buffer swap
+  // after |first_meaningful_paint_| is set.
+  double FirstMeaningfulPaintSwap() const {
+    return first_meaningful_paint_swap_;
+  }
 
   // firstMeaningfulPaintCandidate indicates the first time we considered a
   // paint to qualify as the potentially first meaningful paint. Unlike
@@ -97,6 +113,8 @@ class CORE_EXPORT PaintTiming final
       std::unique_ptr<WTF::Function<void(bool, double)>> callback);
   void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
 
+  void ReportSwapPromiseSucceededHistorgram(bool did_swap);
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -104,26 +122,40 @@ class CORE_EXPORT PaintTiming final
   LocalFrame* GetFrame() const;
   void NotifyPaintTimingChanged();
 
-  // set*() set the timing for the given paint event to the given timestamp
-  // and record a trace event if the value is currently zero, but do not
-  // notify that paint timing changed. These methods can be invoked from other
-  // mark*() or set*() methods to make sure that first paint is marked as part
-  // of marking first contentful paint, or that first contentful paint is
-  // marked as part of marking first text/image paint, for example.
+  // TODO: Change these comments
+
+  // Set*() set the timing for the given paint event to the given timestamp if
+  // the value is currently zero, and queue a swap promise to record the
+  // |first_*_swap_| timestamp. These methods can be invoked from other Mark*()
+  // or Set*() methods to make sure that first paint is marked as part of
+  // marking first contentful paint, or that first contentful paint is marked as
+  // part of marking first text/image paint, for example.
   void SetFirstPaint(double stamp);
 
   // setFirstContentfulPaint will also set first paint time if first paint
   // time has not yet been recorded.
   void SetFirstContentfulPaint(double stamp);
 
+  // Set*Swap() are called when the GPU swap promise is fulfilled and the swap
+  // timestamp available. These methods will record trace events and notify that
+  // the paint timing changed.
+  void SetFirstPaintSwap(double stamp);
+  void SetFirstContentfulPaintSwap(double stamp);
+  void SetFirstImagePaintSwap(double stamp);
+  void SetFirstTextPaintSwap(double stamp);
+
   void RegisterNotifySwapTime(PaintEvent);
   void ReportUserInputHistogram(
       FirstMeaningfulPaintDetector::HadUserInput had_input);
+  void ReportSwapTimestampDiffHistogram(double timestamp,
+                                        double swap_timestamp);
 
   double first_paint_ = 0.0;
   double first_paint_swap_ = 0.0;
   double first_text_paint_ = 0.0;
+  double first_text_paint_swap_ = 0.0;
   double first_image_paint_ = 0.0;
+  double first_image_paint_swap_ = 0.0;
   double first_contentful_paint_ = 0.0;
   double first_contentful_paint_swap_ = 0.0;
   double first_meaningful_paint_ = 0.0;
