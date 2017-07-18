@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7e8aea_fbe00c0a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-18T19:07:09Z",
+      "side": 1,
+      "message": "Nit: Merge these into a single line.",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "1b7a4c17fd77ba34fa0e4d89f8d5e14e7c83109f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7963d67a_7d713ecf",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-18T19:07:09Z",
+      "side": 1,
+      "message": "Since the expand button handles toggling, why is this needed? What else could fire a toggling event in this context? Tests?",
+      "range": {
+        "startLine": 174,
+        "startChar": 41,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "1b7a4c17fd77ba34fa0e4d89f8d5e14e7c83109f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
