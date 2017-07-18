@@ -245,8 +245,13 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
                             blink::WebString::FromUTF8(pair.second));
   }
   if (!response.blob_uuid.empty()) {
+    auto blob = storage::BlobWrapper(response.blob).ExtractPtr();
+    auto blob_info = blob.PassInterface();
+    storage::mojom::blink::BlobPtr web_blob;
+    web_blob.Bind(storage::mojom::blink::BlobPtrInfo(blob_info.PassHandle(),
+                                                     blob_info.version()));
     web_response->SetBlob(blink::WebString::FromASCII(response.blob_uuid),
-                          response.blob_size);
+                          response.blob_size, std::move(web_blob));
   }
   web_response->SetError(response.error);
   web_response->SetResponseTime(response.response_time);

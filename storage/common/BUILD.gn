@@ -11,6 +11,8 @@ component("common") {
     "blob_storage/blob_item_bytes_response.h",
     "blob_storage/blob_storage_constants.cc",
     "blob_storage/blob_storage_constants.h",
+    "blob_storage/blob_wrapper.cc",
+    "blob_storage/blob_wrapper.h",
     "data_element.cc",
     "data_element.h",
     "database/database_connections.cc",
@@ -45,6 +47,7 @@ component("common") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//net",
+    "//storage/public/interfaces",
     "//third_party/WebKit/public:blink_headers",
     "//url",
   ]
