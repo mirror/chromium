@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96256865_3c35d8ed",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T18:35:10Z",
+      "side": 1,
+      "message": "Let\u0027s EXPECT that |actual_features_| doesn\u0027t contain |feature| before we do the insert. The way the code is now, it seems easy to miss duplicates since they get coalesced here.",
+      "revId": "231cbd967292474f1189fd5225cbe7e3ffae2936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce4d0bc_5f4bc128",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T18:35:10Z",
+      "side": 1,
+      "message": "nit: remove (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "231cbd967292474f1189fd5225cbe7e3ffae2936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5211bd_8f6d5f59",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T18:35:10Z",
+      "side": 1,
+      "message": "nit: whitespace after this include. (system headers come as a group before chrome headers).",
+      "revId": "231cbd967292474f1189fd5225cbe7e3ffae2936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e1397e_0109e582",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T18:35:10Z",
+      "side": 1,
+      "message": "nit: include \u003cvector\u003e",
+      "revId": "231cbd967292474f1189fd5225cbe7e3ffae2936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
