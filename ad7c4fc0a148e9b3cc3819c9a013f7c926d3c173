@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf3714b1_9a9f62f1",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T22:12:28Z",
+      "side": 1,
+      "message": "[Maybe this doesn\u0027t need to block you from landing this CL, but I think it is worth discussing.]\n\nOne thing of chaining mojom::URLLoaderFactory is that this adds an in-process mojo call.\n\nI am wondering whether it makes sense to provide a URLLoaderFactoryWrapper interface (better name needed!). It may be backed by a mojom::URLLoaderFactory mojo connection, or maybe not (e.g., in the CORS case it could be a local object). And it returns URLLoaderWrapper objects, which may or may not be backed by a mojom::URLLoader.\n\nThrottlingURLLoader could be a subclass of the URLLoaderWrapper interface, for example.\n\nAnd then we could change most of the references to mojom::URLLoader[Factory] to URLLoader[Factory]Wrapper.\n\nI just CCed you when I commented on a design doc \"Network Service Downloads Integration\". I think the issue there could be solved by this idea.\n\nWDYT?",
+      "revId": "ad7c4fc0a148e9b3cc3819c9a013f7c926d3c173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
