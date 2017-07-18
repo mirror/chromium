@@ -342,6 +342,10 @@ void LoadingDataCollector::RecordMainFrameLoadComplete(
   if (navigation_id.main_frame_url.is_empty())
     return;
 
+  // Force to initialize |predictor_| after NTP was opened.
+  if (predictor_)
+    predictor_->StartInitialization();
+
   NavigationMap::iterator nav_it = inflight_navigations_.find(navigation_id);
   if (nav_it == inflight_navigations_.end())
     return;
@@ -359,9 +363,8 @@ void LoadingDataCollector::RecordMainFrameLoadComplete(
   if (stats_collector_)
     stats_collector_->RecordPageRequestSummary(*summary);
 
-  if (predictor_) {
+  if (predictor_)
     predictor_->RecordPageRequestSummary(std::move(summary));
-  }
 }
 
 void LoadingDataCollector::RecordFirstContentfulPaint(
