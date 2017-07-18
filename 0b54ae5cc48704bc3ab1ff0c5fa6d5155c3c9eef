@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebfde8d0_db1d1b0e",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-18T17:27:36Z",
+      "side": 1,
+      "message": "I see libclang_rt.osx.a, but not the ios equivalent in the package.  Is this correct?",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
