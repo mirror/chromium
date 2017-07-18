@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c684454b_5f04b984",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T11:25:03Z",
+      "side": 1,
+      "message": "s/Singin/Signin",
+      "range": {
+        "startLine": 192,
+        "startChar": 9,
+        "endLine": 192,
+        "endChar": 15
+      },
+      "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
