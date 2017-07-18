@@ -7,6 +7,7 @@
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/Range.h"
+#include "core/editing/EditingTestBase.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionController.h"
@@ -32,6 +33,7 @@ class EventHandlerTest : public ::testing::Test {
     return GetDocument().GetFrame()->Selection();
   }
   void SetHtmlInnerHTML(const char* html_content);
+  ShadowRoot* SetShadowContent(const char* shadow_content, const char* host);
 
  protected:
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
@@ -89,6 +91,14 @@ void EventHandlerTest::SetUp() {
 void EventHandlerTest::SetHtmlInnerHTML(const char* html_content) {
   GetDocument().documentElement()->setInnerHTML(String::FromUTF8(html_content));
   GetDocument().View()->UpdateAllLifecyclePhases();
+}
+
+ShadowRoot* EventHandlerTest::SetShadowContent(const char* shadow_content,
+                                               const char* host) {
+  ShadowRoot* shadow_root =
+      EditingTestBase::CreateShadowRootForElementWithIDAndSetInnerHTML(
+          GetDocument(), host, shadow_content);
+  return shadow_root;
 }
 
 TEST_F(EventHandlerTest, dragSelectionAfterScroll) {
@@ -336,8 +346,115 @@ TEST_F(EventHandlerTest, HitOnTextShowsIBeam) {
   HitTestResult hit =
       GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
           location);
+  EXPECT_TRUE(text->CanStartSelection());
   EXPECT_TRUE(
       GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, HitOnUserSelectNoneTextDoesNotShowIBeam) {
+  SetHtmlInnerHTML("<span style='user-select: none'>blabla</span>");
+  Node* text = GetDocument().body()->firstChild()->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_FALSE(text->CanStartSelection());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, ChildCanOverrideUserSelectNone) {
+  SetHtmlInnerHTML(
+      "<div style='user-select: none'>"
+      "<span style='user-select: text'>blabla</span>"
+      "</div>");
+  Node* text = GetDocument().body()->firstChild()->firstChild()->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_TRUE(text->CanStartSelection());
+  EXPECT_TRUE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, ShadowChildCanOverrideUserSelectNone) {
+  SetHtmlInnerHTML("<p style='user-select: none' id='host'></p>");
+  ShadowRoot* shadow_root = SetShadowContent(
+      "<span style='user-select: text' id='bla'>blabla</span>", "host");
+
+  Node* const text = shadow_root->getElementById("bla")->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_TRUE(text->CanStartSelection());
+  EXPECT_TRUE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, ChildCanOverrideUserSelectText) {
+  SetHtmlInnerHTML(
+      "<div style='user-select: text'>"
+      "<span style='user-select: none'>blabla</span>"
+      "</div>");
+  Node* text = GetDocument().body()->firstChild()->firstChild()->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_FALSE(text->CanStartSelection());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, ShadowChildCanOverrideUserSelectText) {
+  SetHtmlInnerHTML("<p style='user-select: text' id='host'></p>");
+  ShadowRoot* shadow_root = SetShadowContent(
+      "<span style='user-select: none' id='bla'>blabla</span>", "host");
+
+  Node* const text = shadow_root->getElementById("bla")->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_FALSE(text->CanStartSelection());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, InputFieldsCanStartSelection) {
+  SetHtmlInnerHTML("<input value='blabla'>");
+  Element* field = ToElement(GetDocument().body()->firstChild());
+  ShadowRoot* shadow_root = field->UserAgentShadowRoot();
+
+  Element* const text = shadow_root->getElementById("inner-editor");
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_TRUE(text->CanStartSelection());
+  EXPECT_TRUE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, ImagesCannotStartSelection) {
+  SetHtmlInnerHTML("<img>");
+  Element* img = ToElement(GetDocument().body()->firstChild());
+  LayoutPoint location = img->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_FALSE(img->CanStartSelection());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(img,
                                                                          hit));
 }
 
