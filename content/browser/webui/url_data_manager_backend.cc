@@ -745,9 +745,9 @@ DevToolsJobFactory::MaybeCreateJob(
 
 }  // namespace
 
-net::URLRequestJobFactory::ProtocolHandler* CreateDevToolsProtocolHandler(
-    ResourceContext* resource_context) {
-  return new DevToolsJobFactory(resource_context);
+std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateDevToolsProtocolHandler(ResourceContext* resource_context) {
+  return base::MakeUnique<DevToolsJobFactory>(resource_context);
 }
 
 }  // namespace content

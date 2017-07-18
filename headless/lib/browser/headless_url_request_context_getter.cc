@@ -43,9 +43,7 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
   std::swap(protocol_handlers_, *protocol_handlers);
 
   for (auto& pair : context_protocol_handlers) {
-    protocol_handlers_[pair.first] =
-        linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
-            pair.second.release());
+    protocol_handlers_[pair.first] = std::move(pair.second);
   }
   context_protocol_handlers.clear();
 
