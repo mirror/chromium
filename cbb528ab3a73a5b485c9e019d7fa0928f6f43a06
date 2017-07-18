@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6521e658_c8fea121",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17f7bf4_fb93980f",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "How about calling origin_url_.Copy() instead of the KURL ctor?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f1ec14_859f32f1",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2a897c_023a529d",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "\"then\" -\u003e \"and then\"",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bea91d8_e4a4fd83",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "offered -\u003e provided?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae7298c_9f8921b4",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "\"each method calls\" -\u003e \"each method call\"",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ea6558_cec6a955",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "KURL::Copy() instead of String::IsolatedCopy()?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd738e9f_bf580c4a",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "\"because this pointer can be used only in the process which made it.\"\n\nI think this comment is not necessary. Generally, a function shouldn\u0027t assume/specify how a returned value is used because it impairs code reusability. How about like this?\n\n// Establishes a new Mojo connection and returns an initialized ptr.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3630e10_233080fb",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "\"each method calls\" -\u003e \"each method call\"\n\nWhen AllowIndexedDB() defined in this file is called, the connection has already been established, right? What does \"each method call\" indicate?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a078df_302495de",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T03:51:51Z",
+      "side": 1,
+      "message": "Can you add a blank line between line 20-21?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
