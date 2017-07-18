@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9717bdc6_4b91f174",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T18:37:52Z",
+      "side": 1,
+      "message": "In your new code rect is not used.\nIt seems you may just at L699 gfx::Rect indicator_rect(GetContentsBounds());\nand also possible to rename indicator_rect back to rect.",
+      "range": {
+        "startLine": 695,
+        "startChar": 2,
+        "endLine": 695,
+        "endChar": 38
+      },
+      "revId": "88b37ff7e7eb4e28563bed67c9c816cfb2125a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4999abbc_e92788c8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T18:37:52Z",
+      "side": 1,
+      "message": "Could we move this to L708 or just inline:\nsuggestions_rect.Offset(CalculateTransitionOffset(0));",
+      "revId": "88b37ff7e7eb4e28563bed67c9c816cfb2125a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
