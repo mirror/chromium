@@ -559,6 +559,8 @@
     },
     {
       name: "-webkit-locale",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       custom_value: true,
       font: true,
       inherited: true,
