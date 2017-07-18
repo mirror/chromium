@@ -16,6 +16,7 @@
 #include "components/metrics/enabled_state_provider.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_service_client.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -101,6 +102,8 @@ class CastMetricsServiceClient : public ::metrics::MetricsServiceClient,
   std::string client_id_;
   std::string force_client_id_;
   bool client_info_loaded_;
+
+  ::metrics::mojom::HistogramCollectorPtr histogram_collector_;
 
 #if defined(OS_LINUX)
   ExternalMetrics* external_metrics_;

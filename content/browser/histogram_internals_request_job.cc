@@ -6,14 +6,31 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
-#include "content/browser/histogram_synchronizer.h"
+#include "content/browser/service_manager/service_manager_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/url_request.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "url/gurl.h"
 
 namespace content {
+namespace {
+
+void OnHistogramsUpdatedCB(
+    metrics::mojom::HistogramCollectorPtr histogram_collector,
+    const GURL url,
+    std::string* data,
+    const net::CompletionCallback& callback,
+    bool complete) {
+  *data = HistogramInternalsRequestJob::GenerateHTML(url);
+  callback.Run(net::OK);
+}
+
+}  // namespace
 
 HistogramInternalsRequestJob::HistogramInternalsRequestJob(
     net::URLRequest* request,
@@ -33,8 +50,6 @@ std::string HistogramInternalsRequestJob::GenerateHTML(const GURL& url) {
   std::string path;
   if (offset < static_cast<int>(spec.size()))
     path = spec.substr(offset);
-
-  HistogramSynchronizer::FetchHistograms();
 
   std::string unescaped_query;
   std::string unescaped_title("About Histograms");
@@ -82,8 +97,19 @@ int HistogramInternalsRequestJob::GetData(
   mime_type->assign("text/html");
   charset->assign("UTF8");
 
-  *data = GenerateHTML(url_);
-  return net::OK;
+  metrics::mojom::HistogramCollectorPtr histogram_collector;
+  ServiceManagerContext::GetConnectorForIOThread()->BindInterface(
+      metrics::mojom::kServiceName, &histogram_collector);
+
+  // Passing ownership of the |histogram_collector| here is a trick to
+  // work around the const-qualifier on this method. Ideally, this class would
+  // own the |histogram_controller|, but that would require changing the func
+  // signature. For now, bind the histogram_collector to this callback.
+  histogram_collector->UpdateHistograms(
+      base::TimeDelta::FromMinutes(1),
+      base::Bind(&OnHistogramsUpdatedCB, base::Passed(&histogram_collector),
+                 url_, data, callback));
+  return net::ERR_IO_PENDING;
 }
 
 void HistogramInternalsRequestJob::StartUrlRequest() {

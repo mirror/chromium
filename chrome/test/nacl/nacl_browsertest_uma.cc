@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/metrics/statistics_recorder.h"
 #include "base/test/histogram_tester.h"
 #include "build/build_config.h"
-#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/test/nacl/nacl_browsertest_util.h"
 #include "components/nacl/browser/nacl_browser.h"
 #include "components/nacl/renderer/platform_info.h"
@@ -60,7 +60,7 @@ bool IsSubzeroSupportedForArch() {
 void FetchHistogramsFromChildProcesses() {
   // Support both traditional IPC and new "shared memory" channels.
   content::FetchHistogramsFromChildProcesses();
-  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  base::StatisticsRecorder::ImportProvidedHistograms();
 }
 
 NACL_BROWSER_TEST_F(NaClBrowserTest, SuccessfulLoadUMA, {

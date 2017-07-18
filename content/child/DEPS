@@ -12,6 +12,7 @@ include_rules = [
   "+services/device/public/cpp/device_features.h",
   "+services/device/public/cpp/power_monitor",
   "+services/device/public/interfaces",
+  "+services/metrics/public/cpp/histogram_collector_client.h",
   "+services/resource_coordinator",
   "+services/service_manager",
   "+v8/include/v8.h"

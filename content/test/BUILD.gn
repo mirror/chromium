@@ -276,6 +276,7 @@ static_library("test_support") {
     "//media/capture/mojo:image_capture",
     "//mojo/edk/system",
     "//net:test_support",
+    "//services/metrics/public/interfaces",
     "//services/service_manager/public/cpp",
     "//skia",
     "//storage/browser",

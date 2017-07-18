@@ -36,8 +36,11 @@
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/histogram_fetcher.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_LINUX)
 #include "chromecast/browser/metrics/external_metrics.h"
@@ -89,6 +92,10 @@ GetReleaseChannelFromUpdateChannelName(const std::string& channel_name) {
   return ::metrics::SystemProfileProto::CHANNEL_BETA;
 }
 #endif  // !defined(OS_ANDROID)
+
+void OnHistogramsUpdated(const base::Closure& callback, bool complete) {
+  callback.Run();
+}
 
 }  // namespace
 
@@ -220,12 +227,19 @@ void CastMetricsServiceClient::InitializeSystemProfileMetrics(
 
 void CastMetricsServiceClient::CollectFinalMetricsForLog(
     const base::Closure& done_callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+
   // Asynchronously fetch metrics data from child processes. Since this method
   // is called on log upload, metrics that occur between log upload and child
   // process termination will not be uploaded.
-  content::FetchHistogramsAsynchronously(
-      task_runner_, done_callback,
-      base::TimeDelta::FromSeconds(kMetricsFetchTimeoutSeconds));
+  if (!histogram_collector_.is_bound()) {
+    content::ServiceManagerConnection::GetForProcess()
+        ->GetConnector()
+        ->BindInterface(::metrics::mojom::kServiceName, &histogram_collector_);
+  }
+  histogram_collector_->UpdateHistograms(
+      base::TimeDelta::FromSeconds(kMetricsFetchTimeoutSeconds),
+      base::Bind(&OnHistogramsUpdated, done_callback));
 }
 
 std::string CastMetricsServiceClient::GetMetricsServerUrl() {

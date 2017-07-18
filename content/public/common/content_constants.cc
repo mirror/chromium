@@ -36,6 +36,4 @@ const char kStatsFilename[] = "ChromiumStats2";
 const int kStatsMaxThreads = 32;
 const int kStatsMaxCounters = 3000;
 
-const int kHistogramSynchronizerReservedSequenceNumber = 0;
-
 }  // namespace content

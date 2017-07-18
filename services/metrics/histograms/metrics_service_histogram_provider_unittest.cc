@@ -1,8 +1,8 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/metrics/subprocess_metrics_provider.h"
+#include "services/metrics/histograms/metrics_service_histogram_provider.h"
 
 #include <memory>
 #include <string>
@@ -14,9 +14,9 @@
 #include "base/metrics/persistent_histogram_allocator.h"
 #include "base/metrics/persistent_memory_allocator.h"
 #include "base/metrics/statistics_recorder.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace metrics {
 namespace {
 
 const uint32_t TEST_MEMORY_SIZE = 64 << 10;  // 64 KiB
@@ -56,32 +56,30 @@ class HistogramFlattenerDeltaRecorder : public base::HistogramFlattener {
 
 }  // namespace
 
-class SubprocessMetricsProviderTest : public testing::Test {
+class MetricsServiceHistogramProviderTest : public testing::Test {
  protected:
-  SubprocessMetricsProviderTest()
-      : thread_bundle_(content::TestBrowserThreadBundle::DEFAULT) {
+  MetricsServiceHistogramProviderTest() {
     // Get this first so it isn't created inside a persistent allocator.
     base::PersistentHistogramAllocator::GetCreateHistogramResultHistogram();
 
-    // MergeHistogramDeltas needs to be called beause it uses a histogram
-    // macro which caches a pointer to a histogram. If not done before setting
-    // a persistent global allocator, then it would point into memory that
-    // will go away.
-    provider_.MergeHistogramDeltas();
+    // MergeHistogramDeltas() uses a histogram macro which caches a pointer
+    // to a histogram. If not called before setting a persistent global
+    // allocator, then it would point into memory that will go away.
+    provider_.MergeHistogramDeltasForTest();
 
     // Create a dedicated StatisticsRecorder for this test.
     test_recorder_ = base::StatisticsRecorder::CreateTemporaryForTesting();
 
     // Create a global allocator using a block of memory from the heap.
-    base::GlobalHistogramAllocator::CreateWithLocalMemory(TEST_MEMORY_SIZE,
-                                                          0, "");
+    base::GlobalHistogramAllocator::CreateWithLocalMemory(TEST_MEMORY_SIZE, 0,
+                                                          "");
   }
 
-  ~SubprocessMetricsProviderTest() override {
+  ~MetricsServiceHistogramProviderTest() override {
     base::GlobalHistogramAllocator::ReleaseForTesting();
   }
 
-  SubprocessMetricsProvider* provider() { return &provider_; }
+  MetricsServiceHistogramProvider* provider() { return &provider_; }
 
   std::unique_ptr<base::PersistentHistogramAllocator> CreateDuplicateAllocator(
       base::PersistentHistogramAllocator* allocator) {
@@ -94,7 +92,7 @@ class SubprocessMetricsProviderTest : public testing::Test {
 
   size_t GetSnapshotHistogramCount() {
     // Merge the data from the allocator into the StatisticsRecorder.
-    provider_.MergeHistogramDeltas();
+    provider_.MergeHistogramDeltasForTest();
 
     // Flatten what is known to see what has changed since the last time.
     HistogramFlattenerDeltaRecorder flattener;
@@ -106,32 +104,22 @@ class SubprocessMetricsProviderTest : public testing::Test {
     return flattener.GetRecordedDeltaHistogramNames().size();
   }
 
-  void EnableRecording() { provider_.OnRecordingEnabled(); }
-  void DisableRecording() { provider_.OnRecordingDisabled(); }
-
-  void RegisterSubprocessAllocator(
+  void RegisterAllocator(
       int id,
       std::unique_ptr<base::PersistentHistogramAllocator> allocator) {
-    provider_.RegisterSubprocessAllocator(id, std::move(allocator));
+    provider_.RegisterAllocator(id, std::move(allocator));
   }
 
-  void DeregisterSubprocessAllocator(int id) {
-    provider_.DeregisterSubprocessAllocator(id);
-  }
+  void DeregisterAllocator(int id) { provider_.DeregisterAllocator(id); }
 
  private:
-  // A thread-bundle makes the tests appear on the UI thread, something that is
-  // checked in methods called from the SubprocessMetricsProvider class under
-  // test. This must be constructed before the |provider_| field.
-  content::TestBrowserThreadBundle thread_bundle_;
-
-  SubprocessMetricsProvider provider_;
+  MetricsServiceHistogramProvider provider_;
   std::unique_ptr<base::StatisticsRecorder> test_recorder_;
 
-  DISALLOW_COPY_AND_ASSIGN(SubprocessMetricsProviderTest);
+  DISALLOW_COPY_AND_ASSIGN(MetricsServiceHistogramProviderTest);
 };
 
-TEST_F(SubprocessMetricsProviderTest, SnapshotMetrics) {
+TEST_F(MetricsServiceHistogramProviderTest, SnapshotMetrics) {
   base::HistogramBase* foo = base::Histogram::FactoryGet("foo", 1, 100, 10, 0);
   base::HistogramBase* bar = base::Histogram::FactoryGet("bar", 1, 100, 10, 0);
   base::HistogramBase* baz = base::Histogram::FactoryGet("baz", 1, 100, 10, 0);
@@ -143,8 +131,7 @@ TEST_F(SubprocessMetricsProviderTest, SnapshotMetrics) {
   // a new allocator that duplicates the global one.
   std::unique_ptr<base::GlobalHistogramAllocator> global_allocator(
       base::GlobalHistogramAllocator::ReleaseForTesting());
-  RegisterSubprocessAllocator(123,
-                              CreateDuplicateAllocator(global_allocator.get()));
+  RegisterAllocator(123, CreateDuplicateAllocator(global_allocator.get()));
 
   // Recording should find the two histograms created in persistent memory.
   EXPECT_EQ(2U, GetSnapshotHistogramCount());
@@ -161,7 +148,7 @@ TEST_F(SubprocessMetricsProviderTest, SnapshotMetrics) {
   // Ensure that deregistering does a final merge of the data.
   foo->Add(10);
   bar->Add(20);
-  DeregisterSubprocessAllocator(123);
+  DeregisterAllocator(123);
   EXPECT_EQ(2U, GetSnapshotHistogramCount());
 
   // Further snapshots should be empty even if things have changed.
@@ -169,3 +156,5 @@ TEST_F(SubprocessMetricsProviderTest, SnapshotMetrics) {
   bar->Add(20);
   EXPECT_EQ(0U, GetSnapshotHistogramCount());
 }
+
+}  // namespace metrics
