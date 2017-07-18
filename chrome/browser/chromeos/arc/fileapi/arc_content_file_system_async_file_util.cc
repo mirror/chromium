@@ -30,8 +30,9 @@ void OnGetFileSize(const storage::AsyncFileUtil::GetFileInfoCallback& callback,
 
 }  // namespace
 
-ArcContentFileSystemAsyncFileUtil::ArcContentFileSystemAsyncFileUtil() =
-    default;
+ArcContentFileSystemAsyncFileUtil::ArcContentFileSystemAsyncFileUtil(
+    content::BrowserContext* context)
+    : context_(context) {}
 
 ArcContentFileSystemAsyncFileUtil::~ArcContentFileSystemAsyncFileUtil() =
     default;
@@ -75,7 +76,8 @@ void ArcContentFileSystemAsyncFileUtil::GetFileInfo(
     const GetFileInfoCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   file_system_operation_runner_util::GetFileSizeOnIOThread(
-      FileSystemUrlToArcUrl(url), base::Bind(&OnGetFileSize, callback));
+      context_, FileSystemUrlToArcUrl(url),
+      base::Bind(&OnGetFileSize, callback));
 }
 
 void ArcContentFileSystemAsyncFileUtil::ReadDirectory(

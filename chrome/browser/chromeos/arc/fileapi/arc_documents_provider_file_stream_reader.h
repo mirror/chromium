@@ -15,10 +15,12 @@
 
 class GURL;
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace storage {
-
 class FileSystemURL;
-
 }  // namespace storage
 
 namespace arc {
@@ -31,7 +33,8 @@ class ArcDocumentsProviderRootMap;
 class ArcDocumentsProviderFileStreamReader : public storage::FileStreamReader {
  public:
   // |roots| can be released soon after the constructor returns.
-  ArcDocumentsProviderFileStreamReader(const storage::FileSystemURL& url,
+  ArcDocumentsProviderFileStreamReader(content::BrowserContext* context,
+                                       const storage::FileSystemURL& url,
                                        int64_t offset,
                                        ArcDocumentsProviderRootMap* roots);
   ~ArcDocumentsProviderFileStreamReader() override;
@@ -49,6 +52,7 @@ class ArcDocumentsProviderFileStreamReader : public storage::FileStreamReader {
                       const net::CompletionCallback& callback);
   void RunPendingGetLength(const net::Int64CompletionCallback& callback);
 
+  content::BrowserContext* const context_;
   const int64_t offset_;
   bool content_url_resolved_;
   std::unique_ptr<storage::FileStreamReader> underlying_reader_;

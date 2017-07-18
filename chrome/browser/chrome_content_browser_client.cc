@@ -2701,8 +2701,10 @@ void ChromeContentBrowserClient::GetAdditionalFileSystemBackends(
       base::MakeUnique<chromeos::file_system_provider::BackendDelegate>(),
       base::MakeUnique<chromeos::MTPFileSystemBackendDelegate>(
           storage_partition_path),
-      base::MakeUnique<arc::ArcContentFileSystemBackendDelegate>(),
-      base::MakeUnique<arc::ArcDocumentsProviderBackendDelegate>(),
+      base::MakeUnique<arc::ArcContentFileSystemBackendDelegate>(
+          browser_context),
+      base::MakeUnique<arc::ArcDocumentsProviderBackendDelegate>(
+          browser_context),
       external_mount_points, storage::ExternalMountPoints::GetSystemInstance());
   backend->AddSystemMountPoints();
   DCHECK(backend->CanHandleType(storage::kFileSystemTypeExternal));
