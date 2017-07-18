@@ -252,10 +252,10 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     // break at every grapheme cluster boundary.
     if (is_overflow && break_if_overflow_ &&
         IsFirstBreakOpportunity(item_result->end_offset, results)) {
-      DCHECK_EQ(break_iterator_.BreakType(), LineBreakType::kNormal);
+      LineBreakType saved_type = break_iterator_.BreakType();
       break_iterator_.SetBreakType(LineBreakType::kBreakCharacter);
       BreakText(item_result, item, available_width - position_);
-      break_iterator_.SetBreakType(LineBreakType::kNormal);
+      break_iterator_.SetBreakType(saved_type);
       next_position = position_ + item_result->inline_size;
       is_overflow = next_position > available_width;
     }
@@ -622,10 +622,13 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
   if (auto_wrap_) {
     break_iterator_.SetLocale(style.LocaleForLineBreakIterator());
 
+    bool break_after_space = style.BreakOnlyAfterWhiteSpace();
     switch (style.WordBreak()) {
       case EWordBreak::kNormal:
         break_if_overflow_ = style.OverflowWrap() == EOverflowWrap::kBreakWord;
-        break_iterator_.SetBreakType(LineBreakType::kNormal);
+        break_iterator_.SetBreakType(
+            !break_after_space ? LineBreakType::kNormal
+                               : LineBreakType::kNormalBreakAfterSpace);
         break;
       case EWordBreak::kBreakAll:
         break_if_overflow_ = false;

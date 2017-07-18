@@ -83,6 +83,10 @@ enum class LineBreakType {
   // word-break:keep-all doesn't allow breaks between all kind of
   // letters/numbers except some south east asians'.
   kKeepAll,
+
+  kNormalBreakAfterSpace,
+  kBreakAllBreakAfterSpace,
+  kKeepAllBreakAfterSpace,
 };
 
 PLATFORM_EXPORT std::ostream& operator<<(std::ostream&, LineBreakType);
@@ -91,22 +95,13 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
   STACK_ALLOCATED();
 
  public:
-  LazyLineBreakIterator()
-      : iterator_(0),
-        cached_prior_context_(0),
-        cached_prior_context_length_(0),
-        break_type_(LineBreakType::kNormal) {
-    ResetPriorContext();
-  }
+  LazyLineBreakIterator() { ResetPriorContext(); }
 
   LazyLineBreakIterator(String string,
                         const AtomicString& locale = AtomicString(),
                         LineBreakType break_type = LineBreakType::kNormal)
       : string_(string),
         locale_(locale),
-        iterator_(0),
-        cached_prior_context_(0),
-        cached_prior_context_length_(0),
         break_type_(break_type) {
     ResetPriorContext();
   }
@@ -214,20 +209,7 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
                           int& next_breakable,
                           LineBreakType line_break_type) const {
     if (pos > next_breakable) {
-      switch (line_break_type) {
-        case LineBreakType::kBreakAll:
-          next_breakable = NextBreakablePositionBreakAll(pos);
-          break;
-        case LineBreakType::kKeepAll:
-          next_breakable = NextBreakablePositionKeepAll(pos);
-          break;
-        case LineBreakType::kNormal:
-          next_breakable = NextBreakablePositionIgnoringNBSP(pos);
-          break;
-        case LineBreakType::kBreakCharacter:
-          next_breakable = NextBreakablePositionBreakCharacter(pos);
-          break;
-      }
+      next_breakable = NextBreakablePosition(pos, line_break_type);
     }
     return pos == next_breakable;
   }
@@ -256,19 +238,21 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
     cached_prior_context_length_ = 0;
   }
 
-  int NextBreakablePositionIgnoringNBSP(int pos) const;
-  int NextBreakablePositionBreakAll(int pos) const;
-  int NextBreakablePositionKeepAll(int pos) const;
+  template <typename CharacterType, LineBreakType, bool>
+  int NextBreakablePosition(int pos, const CharacterType* str) const;
+  template <LineBreakType, bool>
+  int NextBreakablePosition(int pos) const;
   int NextBreakablePositionBreakCharacter(int pos) const;
+  int NextBreakablePosition(int pos, LineBreakType) const;
 
   static const unsigned kPriorContextCapacity = 2;
   String string_;
   AtomicString locale_;
-  mutable TextBreakIterator* iterator_;
+  mutable TextBreakIterator* iterator_ = nullptr;
   UChar prior_context_[kPriorContextCapacity];
-  mutable const UChar* cached_prior_context_;
-  mutable unsigned cached_prior_context_length_;
-  LineBreakType break_type_;
+  mutable const UChar* cached_prior_context_ = nullptr;
+  mutable unsigned cached_prior_context_length_ = 0;
+  LineBreakType break_type_ = LineBreakType::kNormal;
 };
 
 // Iterates over "extended grapheme clusters", as defined in UAX #29.
