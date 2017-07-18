@@ -688,8 +688,8 @@ class CONTENT_EXPORT RenderThreadImpl
   // shuts down Blink.
   std::unique_ptr<base::MessageLoop> main_message_loop_;
 
-  // A lazily initiated thread on which file operations are run.
-  std::unique_ptr<base::Thread> file_thread_;
+  // A thread on which file operations are run.
+  std::unique_ptr<blink::scheduler::WebThreadBase> file_thread_;
 
   // May be null if overridden by ContentRendererClient.
   std::unique_ptr<blink::scheduler::WebThreadBase> compositor_thread_;
