@@ -672,7 +672,7 @@ void DocumentLoader::EnsureWriter(const AtomicString& mime_type,
     if (owner_frame && owner_frame->IsLocalFrame())
       owner = ToLocalFrame(owner_frame)->GetDocument();
   }
-  DocumentInit init(owner, Url(), frame_);
+  DocumentInit init(Url(), frame_, owner, nullptr, nullptr);
   init.WithNewRegistrationContext();
   DCHECK(frame_->GetPage());
 

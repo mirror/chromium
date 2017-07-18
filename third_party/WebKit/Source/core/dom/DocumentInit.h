@@ -49,15 +49,13 @@ class CORE_EXPORT DocumentInit final {
   STACK_ALLOCATED();
 
  public:
-  DocumentInit(const KURL& = KURL(),
-               LocalFrame* = nullptr,
-               Document* context_document = nullptr,
-               HTMLImportsController* = nullptr);
-  DocumentInit(Document* owner_document,
-               const KURL&,
+  // Used mainly for testing, but also e.g. by DOMPatchSupport.
+  DocumentInit();
+  DocumentInit(const KURL&,
                LocalFrame*,
-               Document* context_document = nullptr,
-               HTMLImportsController* = nullptr);
+               Document* owner_document,
+               Document* context_document,
+               HTMLImportsController*);
   DocumentInit(const DocumentInit&);
   ~DocumentInit();
 
@@ -77,8 +75,7 @@ class CORE_EXPORT DocumentInit final {
   WebInsecureRequestPolicy GetInsecureRequestPolicy() const;
   SecurityContext::InsecureNavigationsSet* InsecureNavigationsToUpgrade() const;
 
-  Document* Parent() const { return parent_.Get(); }
-  Document* Owner() const { return owner_.Get(); }
+  Document* OwnerDocument() const { return owner_document_.Get(); }
   KURL ParentBaseURL() const;
   LocalFrame* OwnerFrame() const;
   Settings* GetSettings() const;
@@ -88,16 +85,13 @@ class CORE_EXPORT DocumentInit final {
   V0CustomElementRegistrationContext* RegistrationContext(Document*) const;
   Document* ContextDocument() const;
 
-  static DocumentInit FromContext(Document* context_document,
-                                  const KURL& = KURL());
-
  private:
   LocalFrame* FrameForSecurityContext() const;
 
   KURL url_;
   Member<LocalFrame> frame_;
-  Member<Document> parent_;
-  Member<Document> owner_;
+  Member<Document> parent_document_;
+  Member<Document> owner_document_;
   Member<Document> context_document_;
   Member<HTMLImportsController> imports_controller_;
   Member<V0CustomElementRegistrationContext> registration_context_;

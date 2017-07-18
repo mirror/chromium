@@ -65,11 +65,11 @@ void DOMPatchSupport::PatchDocument(const String& markup) {
   if (GetDocument().IsHTMLDocument())
     new_document = HTMLDocument::Create();
   else if (GetDocument().IsSVGDocument())
-    new_document = XMLDocument::CreateSVG();
+    new_document = XMLDocument::CreateSVG(DocumentInit());
   else if (GetDocument().IsXHTMLDocument())
-    new_document = XMLDocument::CreateXHTML();
+    new_document = XMLDocument::CreateXHTML(DocumentInit());
   else if (GetDocument().IsXMLDocument())
-    new_document = XMLDocument::Create();
+    new_document = XMLDocument::Create(DocumentInit());
 
   DCHECK(new_document);
   new_document->SetContextFeatures(GetDocument().GetContextFeatures());

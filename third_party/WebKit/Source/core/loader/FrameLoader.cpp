@@ -407,7 +407,8 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
 
   // Prepare a DocumentInit before clearing the frame, because it may need to
   // inherit an aliased security context.
-  DocumentInit init(owner_document, frame_->GetDocument()->Url(), frame_);
+  DocumentInit init(frame_->GetDocument()->Url(), frame_, owner_document,
+                    nullptr, nullptr);
   init.WithNewRegistrationContext();
 
   StopAllLoaders();
