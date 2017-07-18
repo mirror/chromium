@@ -32,6 +32,8 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
 
   // CoordinationUnitGraphObserver implementation.
   bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
+  void OnBeforeCoordinationUnitDestroyed(
+      const CoordinationUnitImpl* coordination_unit) override;
   void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
                          const mojom::PropertyType property_type,
                          const base::Value& value) override;
@@ -41,11 +43,32 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
       resource_coordinator::mojom::TabSignalGeneratorRequest request);
 
  private:
+  class MetricsCollector {
+   public:
+    MetricsCollector();
+    ~MetricsCollector();
+    void CoordinationUnitRemoved(CoordinationUnitID);
+    void OnFramePropertyChanged(
+        const FrameCoordinationUnitImpl* coordination_unit,
+        const mojom::PropertyType property_type,
+        const base::Value& value);
+
+   private:
+    struct FrameData {
+      base::TimeTicks last_blurt_time_;
+      base::TimeTicks last_invisible_time_;
+    };
+    std::map<CoordinationUnitID, FrameData> frame_data_map_;
+
+    DISALLOW_COPY_AND_ASSIGN(MetricsCollector);
+  };
+
   void OnFramePropertyChanged(
       const FrameCoordinationUnitImpl* coordination_unit,
       const mojom::PropertyType property_type,
       const base::Value& value);
 
+  std::unique_ptr<MetricsCollector> metrics_collector_;
   mojo::BindingSet<mojom::TabSignalGenerator> bindings_;
   mojo::InterfacePtrSet<mojom::TabSignalObserver> observers_;
   DISALLOW_COPY_AND_ASSIGN(TabSignalGeneratorImpl);
