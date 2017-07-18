@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "fee068fc_7b864f4e",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-18T16:25:10Z",
+      "side": 1,
+      "message": "No, I\u0027m not sure we understand the problem, this is a best guess from the data available in the call stack of the crash report.\n\nLooking at the call stack in the crash report, it appears that the base_callback\u0027s member variable bind_state_ is invalid (0x00000004) when we try to invoke the callback.  The call stack references a line in callback_internal.h, but says the function is NotifyUIThreadOfRequestStarted (without giving an appropriate line number.  I\u0027m guessing the call to \"Run\" on line 379 below).  It seems to happen only rarely, so most of the time it works as expected.  My conclusion (and I\u0027m open to other ideas) is that on some paths the callback object is not getting initialized.  Another possibility is that I somehow made an error in the base bind syntax (Line 525 below) and never constructed the callback properly.",
+      "parentUuid": "bf0b0cfb_e770df94",
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76f621dd_223fdda5",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 1
@@ -108,6 +126,30 @@
       "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaee18b_8be6aa54",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-18T16:25:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76f621dd_223fdda5",
+      "range": {
+        "startLine": 525,
+        "startChar": 32,
+        "endLine": 525,
+        "endChar": 40
+      },
+      "revId": "d6605f875ce819d47c6883363ddbe7c8130776d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
