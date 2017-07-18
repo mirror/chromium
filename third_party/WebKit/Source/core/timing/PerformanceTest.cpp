@@ -116,10 +116,10 @@ TEST_F(PerformanceTest, NavigateAway) {
   EXPECT_TRUE(ObservingLongTasks());
 
   // Simulate navigation commit.
-  DocumentInit init(NullURL(), GetFrame());
+  DocumentInit init = DocumentInit::FromFrame(GetFrame(), NullURL(), nullptr);
   GetDocument()->Shutdown();
   GetFrame()->SetDOMWindow(LocalDOMWindow::Create(*GetFrame()));
-  GetFrame()->DomWindow()->InstallNewDocument(AtomicString(), init);
+  GetFrame()->DomWindow()->InstallNewDocument(AtomicString(), init, false);
 
   // m_performance is still alive, and should not crash when notified.
   SimulateDidProcessLongTask();
@@ -150,7 +150,9 @@ TEST(PerformanceLifetimeTest, SurviveContextSwitch) {
   // Simulate changing the document while keeping the window.
   page_holder->GetDocument().Shutdown();
   page_holder->GetFrame().DomWindow()->InstallNewDocument(
-      AtomicString(), DocumentInit(NullURL(), &page_holder->GetFrame()));
+      AtomicString(),
+      DocumentInit::FromFrame(&page_holder->GetFrame(), NullURL(), nullptr),
+      false);
 
   EXPECT_EQ(perf, DOMWindowPerformance::performance(
                       *page_holder->GetFrame().DomWindow()));
