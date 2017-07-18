@@ -20,6 +20,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
+#include "components/captive_portal/features.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/flags_ui/feature_entry.h"
 #include "components/flags_ui/feature_entry_macros.h"
@@ -93,6 +94,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"web-payments", flag_descriptions::kWebPaymentsName,
      flag_descriptions::kWebPaymentsDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(payments::features::kWebPayments)},
+    {"ios-captive-portal", flag_descriptions::kIosCaptivePortalName,
+     flag_descriptions::kIosCaptivePortalDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(captive_portal::kIosCaptivePortal)},
+
 };
 
 // Add all switches from experimental flags to |command_line|.
