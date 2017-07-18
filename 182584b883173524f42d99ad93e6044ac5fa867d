@@ -16,6 +16,24 @@
       "revId": "182584b883173524f42d99ad93e6044ac5fa867d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e463d9_c2bcfd98",
+        "filename": "content/browser/memory/swap_metrics_driver_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-18T22:06:57Z",
+      "side": 1,
+      "message": "Yes, good catch. Removed SetFailOnUpdate() and fail_on_update().",
+      "parentUuid": "81211b37_5614e05a",
+      "revId": "182584b883173524f42d99ad93e6044ac5fa867d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
