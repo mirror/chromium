@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed27d69b_3136b273",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-18T23:47:59Z",
+      "side": 1,
+      "message": "I\u0027m kinda on the fence whether this flag is needed - maybe we should just enable the permission on dev channel.\nwdyt?",
+      "range": {
+        "startLine": 315,
+        "startChar": 28,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "0716739a8ac0da3da0cf16123e6329e4274b0195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
