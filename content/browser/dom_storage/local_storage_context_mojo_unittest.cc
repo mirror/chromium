@@ -781,8 +781,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    registry_.BindInterface(source_info, interface_name,
-                            std::move(interface_pipe));
+    registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
@@ -794,7 +793,6 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void BindServiceFactoryRequest(
-      const service_manager::BindSourceInfo& source_info,
       service_manager::mojom::ServiceFactoryRequest request) {
     service_factory_bindings_.AddBinding(this, std::move(request));
   }
@@ -1125,8 +1123,7 @@ class MockLevelDBService : public leveldb::mojom::LevelDBService {
   };
   std::vector<DestroyRequest> destroy_requests_;
 
-  void Bind(const service_manager::BindSourceInfo& source_info,
-            const std::string& interface_name,
+  void Bind(const std::string& interface_name,
             mojo::ScopedMessagePipeHandle interface_pipe) {
     bindings_.AddBinding(
         this, leveldb::mojom::LevelDBServiceRequest(std::move(interface_pipe)));

@@ -22,10 +22,6 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/types/display_constants.h"
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace display {
 
 class DisplayChangeObserver;
@@ -90,15 +86,12 @@ class ScreenManagerOzoneInternal : public ScreenManager,
   DisplayConfigurator* display_configurator() override;
 
   void BindDisplayControllerRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::DisplayControllerRequest request);
 
   void BindOutputProtectionRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::OutputProtectionRequest request);
 
   void BindTestDisplayControllerRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::TestDisplayControllerRequest request);
 
   DisplayConfigurator display_configurator_;
