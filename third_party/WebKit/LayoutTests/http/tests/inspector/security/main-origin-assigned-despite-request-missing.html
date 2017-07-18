@@ -5,9 +5,7 @@
 <script>
   function test()
   {
-    //** @type {!Protocol.Security.InsecureContentStatus} */
-    var insecureContentStatus = { ranMixedContent: false, displayedMixedContent: false, ranContentWithCertErrors: false, displayedContentWithCertErrors: false, ranInsecureContentStyle: Protocol.Security.SecurityState.Insecure, displayedInsecureContentStyle: Protocol.Security.SecurityState.Neutral };
-    InspectorTest.mainTarget.model(Security.SecurityModel).dispatchEventToListeners(Security.SecurityModel.Events.SecurityStateChanged, new Security.PageSecurityState(Protocol.Security.SecurityState.Secure, true, [], insecureContentStatus, null));
+    InspectorTest.mainTarget.model(Security.SecurityModel).dispatchEventToListeners(Security.SecurityModel.Events.SecurityStateChanged, new Security.PageSecurityState(Protocol.Security.SecurityState.Secure, true, [], InspectorTest.insecureContentStatusForTesting(), null));
 
     const page_url = InspectorTest.resourceTreeModel.mainFrame.url;
     const page_origin =  Common.ParsedURL.extractOrigin(page_url);

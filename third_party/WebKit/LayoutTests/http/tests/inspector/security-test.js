@@ -22,4 +22,11 @@ InspectorTest.dispatchRequestFinished = function(request) {
     InspectorTest.networkManager.dispatchEventToListeners(SDK.NetworkManager.Events.RequestFinished, request);
 }
 
+/**
+ * @return {!Protocol.Security.InsecureContentStatus}
+ */
+InspectorTest.insecureContentStatusForTesting = function() {
+    return /** @type {!Protocol.Security.InsecureContentStatus} */{ ranInsecureContentStyle: Protocol.Security.SecurityState.Insecure, displayedInsecureContentStyle: Protocol.Security.SecurityState.Neutral };
+}
+
 }

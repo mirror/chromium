@@ -31,24 +31,6 @@ struct SecurityStyleExplanations {
       const SecurityStyleExplanations& other);
   CONTENT_EXPORT ~SecurityStyleExplanations();
 
-  // True if the page was loaded over HTTPS and ran mixed (HTTP) content
-  // such as scripts.
-  bool ran_mixed_content;
-  // True if the page was loaded over HTTPS and displayed mixed (HTTP)
-  // content such as images.
-  bool displayed_mixed_content;
-  // True if the page was loaded over HTTPS and contained a form targeting a
-  // nonsecure url.
-  bool contained_mixed_form;
-  // True if the page was loaded over HTTPS without certificate errors,
-  // but ran subresources, such as scripts, that were loaded over HTTPS
-  // with certificate errors.
-  bool ran_content_with_cert_errors;
-  // True if the page was loaded over HTTPS without certificate errors,
-  // but displayed subresources, such as images, that were loaded over HTTPS
-  // with certificate errors.
-  bool displayed_content_with_cert_errors;
-
   // The SecurityStyle assigned to a page that runs or displays insecure
   // content, respectively. Insecure content can be either HTTP
   // subresources loaded on an HTTPS page (mixed content), or HTTPS
