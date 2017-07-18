@@ -16,6 +16,24 @@
       "revId": "7629799d81063a7c3c2b5c7fd712cbc0f87d53b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c088d7f1_6afb1b6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-18T00:26:57Z",
+      "side": 1,
+      "message": "Done. Not really, it just causes an unnecessary query to the webstore.",
+      "parentUuid": "af9010ce_a6ac052f",
+      "revId": "7629799d81063a7c3c2b5c7fd712cbc0f87d53b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
