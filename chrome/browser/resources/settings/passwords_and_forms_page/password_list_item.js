@@ -32,6 +32,25 @@ Polymer({
 
   /**
    * Opens the password action menu.
+   * @param {!Event} event
+   * @private
+   */
+  onShowPasswordTap_: function(event) {
+    var password = this.$$('#password');
+    if (password.type === 'text') {
+      password.type = 'password';
+      this.$.showPasswordButton.className = 'icon-visibility';
+      password.value =
+          this.getEmptyPassword_(this.item.numCharactersInPassword);
+    } else {
+      password.type = 'text';
+      this.$.showPasswordButton.className = 'icon-visibility-off';
+      this.fire('reveal-password', {target: password, item: this.item});
+    }
+  },
+
+  /**
+   * Opens the password action menu.
    * @private
    */
   onPasswordMenuTap_: function() {

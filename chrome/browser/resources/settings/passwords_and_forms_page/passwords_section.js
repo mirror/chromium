@@ -211,6 +211,7 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'reveal-password': 'onRevealPassword_',
   },
 
   /**
@@ -366,6 +367,19 @@ Polymer({
             event.detail.item);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
+  },
+
+  /**
+   * Opens the password action menu.
+   * @param {!Event} event
+   * @private
+   */
+  onRevealPassword_: function(event) {
+    this.passwordManager_.getPlaintextPassword(
+        /** @type {!PasswordManager.LoginPair} */ (event.detail.item.loginPair),
+        function(item) {
+          event.detail.target.value = item.plaintextPassword;
+        }.bind(this));
   },
 
   /**
