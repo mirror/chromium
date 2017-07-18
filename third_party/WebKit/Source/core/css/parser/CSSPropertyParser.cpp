@@ -723,21 +723,6 @@ static void AddBackgroundValue(CSSValue*& list, CSSValue* value) {
   }
 }
 
-static CSSValueList* ConsumeCommaSeparatedBackgroundComponent(
-    CSSPropertyID unresolved_property,
-    CSSParserTokenRange& range,
-    const CSSParserContext* context) {
-  CSSValueList* result = CSSValueList::CreateCommaSeparated();
-  do {
-    CSSValue* value =
-        ConsumeBackgroundComponent(unresolved_property, range, context);
-    if (!value)
-      return nullptr;
-    result->Append(*value);
-  } while (ConsumeCommaIncludingWhitespace(range));
-  return result;
-}
-
 static CSSValue* ConsumeFitContent(CSSParserTokenRange& range,
                                    CSSParserMode css_parser_mode) {
   CSSParserTokenRange range_copy = range;
@@ -1275,25 +1260,44 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return CSSPropertyBorderImageUtils::ConsumeWebkitBorderImage(range_,
                                                                    context_);
     case CSSPropertyBackgroundAttachment:
+      return ConsumeCommaSeparatedList(ConsumeBackgroundAttachment, range_);
     case CSSPropertyBackgroundBlendMode:
+      return ConsumeCommaSeparatedList(ConsumeBackgroundBlendMode, range_);
     case CSSPropertyBackgroundClip:
-    case CSSPropertyBackgroundImage:
     case CSSPropertyBackgroundOrigin:
-    case CSSPropertyBackgroundPositionX:
-    case CSSPropertyBackgroundPositionY:
-    case CSSPropertyBackgroundSize:
-    case CSSPropertyMaskSourceType:
-    case CSSPropertyWebkitBackgroundClip:
-    case CSSPropertyWebkitBackgroundOrigin:
-    case CSSPropertyWebkitMaskClip:
-    case CSSPropertyWebkitMaskComposite:
+      return ConsumeCommaSeparatedList(ConsumeBackgroundBox, range_);
+    case CSSPropertyBackgroundImage:
     case CSSPropertyWebkitMaskImage:
-    case CSSPropertyWebkitMaskOrigin:
+      return ConsumeCommaSeparatedList(ConsumeImageOrNone, range_, context_);
+    case CSSPropertyBackgroundPositionX:
     case CSSPropertyWebkitMaskPositionX:
+      return ConsumeCommaSeparatedList(
+          CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueLeft,
+                                                            CSSValueRight>,
+          range_, context_->Mode());
+    case CSSPropertyBackgroundPositionY:
     case CSSPropertyWebkitMaskPositionY:
+      return ConsumeCommaSeparatedList(
+          CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueTop,
+                                                            CSSValueBottom>,
+          range_, context_->Mode());
+    case CSSPropertyBackgroundSize:
     case CSSPropertyWebkitMaskSize:
-      return ConsumeCommaSeparatedBackgroundComponent(unresolved_property,
-                                                      range_, context_);
+      return ConsumeCommaSeparatedList(ConsumeBackgroundSize, range_,
+                                       context_->Mode(),
+                                       false /* use_legacy_parsing */);
+    case CSSPropertyMaskSourceType:
+      return ConsumeCommaSeparatedList(ConsumeMaskSourceType, range_);
+    case CSSPropertyWebkitBackgroundClip:
+    case CSSPropertyWebkitMaskClip:
+      return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
+                                       context_, true /* allow_text_valua */);
+    case CSSPropertyWebkitBackgroundOrigin:
+    case CSSPropertyWebkitMaskOrigin:
+      return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
+                                       context_, false /* allow_text_valua */);
+    case CSSPropertyWebkitMaskComposite:
+      return ConsumeCommaSeparatedList(ConsumeBackgroundComposite, range_);
     case CSSPropertyWebkitMaskRepeatX:
     case CSSPropertyWebkitMaskRepeatY:
       return nullptr;
