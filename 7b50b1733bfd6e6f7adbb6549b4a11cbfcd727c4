@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd66ec2_115e021a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T18:28:37Z",
+      "side": 1,
+      "message": "I assume it\u0027s only the address profiles for the chrome profile being loaded?",
+      "revId": "7b50b1733bfd6e6f7adbb6549b4a11cbfcd727c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
