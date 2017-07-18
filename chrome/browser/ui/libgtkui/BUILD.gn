@@ -5,21 +5,14 @@
 assert(is_linux, "This file should only be referenced on Linux")
 
 import("//build/config/features.gni")
-import("//build/config/linux/gtk/gtk.gni")
 import("//printing/features/features.gni")
 
 # Automatically depends on the GTK version associated with the current build
 # flags.
 group("libgtkui") {
-  if (use_gtk3) {
-    public_deps = [
-      ":libgtk3ui",
-    ]
-  } else {
-    public_deps = [
-      ":libgtk2ui",
-    ]
-  }
+  public_deps = [
+    ":libgtk3ui",
+  ]
 }
 
 template("libgtkui") {
@@ -122,26 +115,13 @@ template("libgtkui") {
   }
 }
 
-if (use_gtk3) {
-  libgtkui("libgtk3ui") {
-    sources = [
-      "native_theme_gtk3.cc",
-      "native_theme_gtk3.h",
-    ]
-    deps = [
-      "//build/config/linux/gtk3",
-      "//build/config/linux/gtk3:gtkprint3",
-    ]
-  }
-} else {
-  libgtkui("libgtk2ui") {
-    sources = [
-      "native_theme_gtk2.cc",
-      "native_theme_gtk2.h",
-    ]
-    deps = [
-      "//build/config/linux/gtk2",
-      "//build/config/linux/gtk2:gtkprint2",
-    ]
-  }
+libgtkui("libgtk3ui") {
+  sources = [
+    "native_theme_gtk3.cc",
+    "native_theme_gtk3.h",
+  ]
+  deps = [
+    "//build/config/linux/gtk3",
+    "//build/config/linux/gtk3:gtkprint3",
+  ]
 }
