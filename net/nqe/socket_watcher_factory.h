@@ -46,6 +46,7 @@ class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
   SocketWatcherFactory(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       base::TimeDelta min_notification_interval,
+      bool use_localhost_requests,
       OnUpdatedRTTAvailableCallback updated_rtt_observation_callback,
       base::TickClock* tick_clock);
 
@@ -53,7 +54,12 @@ class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
 
   // SocketPerformanceWatcherFactory implementation:
   std::unique_ptr<SocketPerformanceWatcher> CreateSocketPerformanceWatcher(
-      const Protocol protocol) override;
+      const Protocol protocol,
+      const AddressList& address_list) override;
+
+  void SetUseLocalHostRequestsForTesting(bool use_localhost_requests) {
+    use_localhost_requests_ = use_localhost_requests;
+  }
 
  private:
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
@@ -61,6 +67,8 @@ class SocketWatcherFactory : public SocketPerformanceWatcherFactory {
   // Minimum interval betweeen consecutive notifications to the socket watchers
   // created by this factory.
   const base::TimeDelta min_notification_interval_;
+
+  bool use_localhost_requests_;
 
   // Called every time a new RTT observation is available.
   OnUpdatedRTTAvailableCallback updated_rtt_observation_callback_;
