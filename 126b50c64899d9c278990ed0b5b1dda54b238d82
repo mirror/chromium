@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464da472_aa5612dd",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-18T23:59:18Z",
+      "side": 1,
+      "message": "Why not to use:\nstd::string GetRandomizedTestURL() {\n  return  base::StringgPrintf(\"http://alt%d.gstatic.com/generate_204\", base::RandInt(kMinRandomHost, kMaxRandomHost));\n}",
+      "revId": "126b50c64899d9c278990ed0b5b1dda54b238d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
