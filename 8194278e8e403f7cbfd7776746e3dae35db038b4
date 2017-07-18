@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd68fd1_786ad45a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-18T13:41:14Z",
+      "side": 1,
+      "message": "If you\u0027re going to touch this code, could you directly create a suitable buffer? This constructor does another copy (the internal representation is no longer WTF::String), which is unfortunate.",
+      "revId": "8194278e8e403f7cbfd7776746e3dae35db038b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
