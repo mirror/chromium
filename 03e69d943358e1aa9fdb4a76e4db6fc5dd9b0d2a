@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5a285a8_ad88bb83",
+        "filename": "components/precache/android/javatests/src/org/chromium/components/precache/DeviceStateTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-18T07:04:15Z",
+      "side": 1,
+      "message": "this is a new file, while the CL description says you\u0027re just converting the junit framework used. Why is that?",
+      "revId": "03e69d943358e1aa9fdb4a76e4db6fc5dd9b0d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
