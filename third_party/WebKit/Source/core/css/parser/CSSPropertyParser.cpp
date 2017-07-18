@@ -1552,39 +1552,6 @@ bool CSSPropertyParser::ParseViewportDescriptor(CSSPropertyID prop_id,
   }
 }
 
-bool CSSPropertyParser::ConsumeShorthandGreedily(
-    const StylePropertyShorthand& shorthand,
-    bool important) {
-  // Existing shorthands have at most 6 longhands.
-  DCHECK_LE(shorthand.length(), 6u);
-  const CSSValue* longhands[6] = {nullptr, nullptr, nullptr,
-                                  nullptr, nullptr, nullptr};
-  const CSSPropertyID* shorthand_properties = shorthand.properties();
-  do {
-    bool found_longhand = false;
-    for (size_t i = 0; !found_longhand && i < shorthand.length(); ++i) {
-      if (longhands[i])
-        continue;
-      longhands[i] = ParseSingleValue(shorthand_properties[i], shorthand.id());
-      if (longhands[i])
-        found_longhand = true;
-    }
-    if (!found_longhand)
-      return false;
-  } while (!range_.AtEnd());
-
-  for (size_t i = 0; i < shorthand.length(); ++i) {
-    if (longhands[i]) {
-      AddParsedProperty(shorthand_properties[i], shorthand.id(), *longhands[i],
-                        important);
-    } else {
-      AddParsedProperty(shorthand_properties[i], shorthand.id(),
-                        *CSSInitialValue::Create(), important);
-    }
-  }
-  return true;
-}
-
 bool CSSPropertyParser::ConsumeBorder(bool important) {
   CSSValue* width = nullptr;
   const CSSValue* style = nullptr;
@@ -1625,23 +1592,6 @@ bool CSSPropertyParser::ConsumeBorder(bool important) {
   AddExpandedPropertyForValue(CSSPropertyBorderColor, *color, important);
   AddExpandedPropertyForValue(CSSPropertyBorderImage,
                               *CSSInitialValue::Create(), important);
-
-  return range_.AtEnd();
-}
-
-bool CSSPropertyParser::Consume2Values(const StylePropertyShorthand& shorthand,
-                                       bool important) {
-  DCHECK_EQ(shorthand.length(), 2u);
-  const CSSPropertyID* longhands = shorthand.properties();
-  const CSSValue* start = ParseSingleValue(longhands[0], shorthand.id());
-  if (!start)
-    return false;
-
-  const CSSValue* end = ParseSingleValue(longhands[1], shorthand.id());
-  if (!end)
-    end = start;
-  AddParsedProperty(longhands[0], shorthand.id(), *start, important);
-  AddParsedProperty(longhands[1], shorthand.id(), *end, important);
 
   return range_.AtEnd();
 }
@@ -2328,9 +2278,6 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
     case CSSPropertyTransition:
       return ConsumeAnimationShorthand(transitionShorthandForParsing(), false,
                                        important);
-    case CSSPropertyTextDecoration:
-      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
-      return ConsumeShorthandGreedily(textDecorationShorthand(), important);
     case CSSPropertyPadding:
       return Consume4Values(paddingShorthand(), important);
     case CSSPropertyMarker: {
@@ -2345,26 +2292,12 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
                         important);
       return true;
     }
-    case CSSPropertyFlexFlow:
-      return ConsumeShorthandGreedily(flexFlowShorthand(), important);
-    case CSSPropertyColumnRule:
-      return ConsumeShorthandGreedily(columnRuleShorthand(), important);
-    case CSSPropertyListStyle:
-      return ConsumeShorthandGreedily(listStyleShorthand(), important);
     case CSSPropertyBorderColor:
       return Consume4Values(borderColorShorthand(), important);
     case CSSPropertyBorderStyle:
       return Consume4Values(borderStyleShorthand(), important);
     case CSSPropertyBorderWidth:
       return Consume4Values(borderWidthShorthand(), important);
-    case CSSPropertyBorderTop:
-      return ConsumeShorthandGreedily(borderTopShorthand(), important);
-    case CSSPropertyBorderRight:
-      return ConsumeShorthandGreedily(borderRightShorthand(), important);
-    case CSSPropertyBorderBottom:
-      return ConsumeShorthandGreedily(borderBottomShorthand(), important);
-    case CSSPropertyBorderLeft:
-      return ConsumeShorthandGreedily(borderLeftShorthand(), important);
     case CSSPropertyBorder:
       return ConsumeBorder(important);
     case CSSPropertyPageBreakAfter:
