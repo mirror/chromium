@@ -51,6 +51,8 @@
 #include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/translate/translate_bubble_view_state_transition.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/upgrade_detector.h"
 #include "chrome/common/content_restriction.h"
 #include "chrome/common/features.h"
@@ -278,6 +280,36 @@ bool IsShowingWebContentsModalDialog(Browser* browser) {
   const web_modal::WebContentsModalDialogManager* manager =
       web_modal::WebContentsModalDialogManager::FromWebContents(web_contents);
   return manager && manager->IsDialogActive();
+}
+
+// The duration of revealing the tabstrip when the browser is in immersive full
+// screen mode.
+constexpr base::TimeDelta kTabstripRevealerDelay =
+    base::TimeDelta::FromMilliseconds(1000);
+
+// Deletes the given |revealer|.
+void DeleteRevealer(std::unique_ptr<ImmersiveRevealedLock> revealer) {
+  revealer.reset();
+}
+
+// If |browser| is in immersive full screen mode, it will reveal the tabstrip
+// for a duration of kTabstripRevealerDelay.
+void RevealTabStripIfNeeded(Browser* browser) {
+  BrowserView* browser_view =
+      BrowserView::GetBrowserViewForNativeWindow(
+          browser->window()->GetNativeWindow());
+
+  ImmersiveModeController* immersive_controller =
+      browser_view->immersive_mode_controller();
+  if (!immersive_controller->IsEnabled())
+    return;
+
+  std::unique_ptr<ImmersiveRevealedLock> revealer(
+      immersive_controller->GetRevealedLock(
+          ImmersiveModeController::ANIMATE_REVEAL_YES));
+  base::MessageLoopForUI::current()->task_runner()->PostDelayedTask(FROM_HERE,
+      base::BindOnce(&DeleteRevealer, std::move(revealer)),
+      kTabstripRevealerDelay);
 }
 
 #if BUILDFLAG(ENABLE_BASIC_PRINT_DIALOG)
@@ -640,11 +672,13 @@ TabStripModelDelegate::RestoreTabType GetRestoreTabType(
 
 void SelectNextTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectNextTab"));
+  RevealTabStripIfNeeded(browser);
   browser->tab_strip_model()->SelectNextTab();
 }
 
 void SelectPreviousTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectPrevTab"));
+  RevealTabStripIfNeeded(browser);
   browser->tab_strip_model()->SelectPreviousTab();
 }
 
@@ -661,12 +695,14 @@ void MoveTabPrevious(Browser* browser) {
 void SelectNumberedTab(Browser* browser, int index) {
   if (index < browser->tab_strip_model()->count()) {
     base::RecordAction(UserMetricsAction("SelectNumberedTab"));
+    RevealTabStripIfNeeded(browser);
     browser->tab_strip_model()->ActivateTabAt(index, true);
   }
 }
 
 void SelectLastTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectLastTab"));
+  RevealTabStripIfNeeded(browser);
   browser->tab_strip_model()->SelectLastTab();
 }
 

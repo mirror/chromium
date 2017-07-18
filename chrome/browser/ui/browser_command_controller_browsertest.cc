@@ -22,6 +22,8 @@
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/tab_modal_confirm_dialog_browsertest.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/signin/core/common/profile_management_switches.h"
@@ -113,4 +115,50 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
   #else
     EXPECT_TRUE(command_updater->IsCommandEnabled(IDC_SHOW_AVATAR_MENU));
   #endif
+}
+
+// Tests IDC_SELECT_TAB_0, IDC_SELECT_NEXT_TAB, IDC_SELECT_PREVIOUS_TAB and
+// IDC_SELECT_LAST_TAB when the browser is in immersive fullscreen mode.
+IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
+                       TabNavigationAcceleratorsFullscreenBrowser) {
+  GURL about_blank(url::kAboutBlankURL);
+
+  // Create three tabs other than the existing one that browser tests start
+  // with.
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+
+  // Select the second tab.
+  browser()->tab_strip_model()->ActivateTabAt(1, false);
+
+  // Toggle fullscreen mode.
+  chrome::ToggleFullscreenMode(browser());
+  BrowserView* browser_view = BrowserView::GetBrowserViewForNativeWindow(
+      browser()->window()->GetNativeWindow());
+  ImmersiveModeController* immersive_controller =
+      browser_view->immersive_mode_controller();
+  EXPECT_TRUE(immersive_controller->IsEnabled());
+
+  CommandUpdater* updater = browser()->command_controller()->command_updater();
+
+  // Navigate to the first tab using an accelerator.
+  updater->ExecuteCommand(IDC_SELECT_TAB_0);
+  EXPECT_TRUE(immersive_controller->IsEnabled());
+  ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
+
+  // Navigate to the second tab using the next accelerators.
+  updater->ExecuteCommand(IDC_SELECT_NEXT_TAB);
+  EXPECT_TRUE(immersive_controller->IsEnabled());
+  ASSERT_EQ(1, browser()->tab_strip_model()->active_index());
+
+  // Navigate back to the first tab using the previous accelerators.
+  updater->ExecuteCommand(IDC_SELECT_PREVIOUS_TAB);
+  EXPECT_TRUE(immersive_controller->IsEnabled());
+  ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
+
+  // Navigate to the last tab using the select last accelerator.
+  updater->ExecuteCommand(IDC_SELECT_LAST_TAB);
+  EXPECT_TRUE(immersive_controller->IsEnabled());
+  ASSERT_EQ(3, browser()->tab_strip_model()->active_index());
 }
