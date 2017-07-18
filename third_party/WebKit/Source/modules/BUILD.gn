@@ -43,7 +43,13 @@ make_names("module_names") {
   deps = []  # Don't use default deps (otherwise it will be circular).
 }
 
-target(modules_target_type, "modules") {
+if (modules_target_type == "component") {
+  jumbo_target_type = "jumbo_component"
+} else {
+  jumbo_target_type = "jumbo_target"
+}
+target(jumbo_target_type, "modules") {
+  target_type = modules_target_type
   output_name = "blink_modules"
 
   if (modules_target_type == "split_static_library") {
