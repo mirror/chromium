@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233b13e6_4cbbc0d9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83731,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-18T15:53:17Z",
+      "side": 1,
+      "message": "nit: Do you intent to just track DD home or auto present in general if we ever support it? If DD home only perhaps change the string to make it more clear.\nAlso, it might worth mention that we only track the case the we are initially entering VR mode to presenting WebVR.",
+      "revId": "a5a7183e513df72855719e5ede8cd98dd200da6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
