@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac4deb4_6693df00",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-18T21:05:15Z",
+      "side": 1,
+      "message": "nit: Maybe\n\n !configured_only /* visible_only */\n\nto make it clearer",
+      "range": {
+        "startLine": 417,
+        "startChar": 45,
+        "endLine": 417,
+        "endChar": 60
+      },
+      "revId": "8b247591a26e36f0617db86337a0987bbab48bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a9dc17_404b410f",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-18T21:05:15Z",
+      "side": 1,
+      "message": "Ping on this. It\u0027s impossible to return a null list nowadays.",
+      "range": {
+        "startLine": 420,
+        "startChar": 58,
+        "endLine": 421,
+        "endChar": 70
+      },
+      "revId": "8b247591a26e36f0617db86337a0987bbab48bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
