@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0453f55e_32f1ea94",
+        "filename": "cc/ipc/quads.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "For SQS it\u0027s a stable ID of the SQS, so the name \"stable_id\" seems good. Here it\u0027s referring to the stable idea in the SQS, rather than a stable id for each quad. Can you capture that in the name here (and in the DrawQuad class)",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8004cf22_a8e06764",
+        "filename": "cc/ipc/render_pass_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "is this used or should it in be in the .cc or something?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dd62a3_5aa26cdc",
+        "filename": "cc/ipc/shared_quad_state.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Can you explain what makes it stable without referring to layers, as this is relevant to things other than layer compositors?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f5439a_6d965c7c",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Test the stable_id?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d6d551_3af41c63",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Test the stable_id?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e181bbf7_e0d06160",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Test the stable_id?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8865cc28_479e721c",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Should we test the stable_id for these quads?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a74a4c_1edbb5bb",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "test the stable id?  Also we\u0027re not setting a stable_id on a DrawQuad directly in here, but should we not test the stable_id when we test the other proporties of DrawQuads as well?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67837ba_5f7d7a09",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "This can be static, and you could make it a \"GenerateLayerId()\" or something, and then have the Layer constructor use it also?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff83f2d_05f134b3",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "What prevents this id from colliding with layer ids? Do we have a unit test to show that it wont?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e9978f_50b3c7e7",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "constructor-init this, and then it can be a const member",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bf7593_9dece09c",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Should this take stable_id and set it? That would make it harder to forget.",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3114505_bcbbca14",
+        "filename": "cc/layers/surface_layer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "nit: whitespace afetr",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea2b739_f9ca4e60",
+        "filename": "cc/layers/surface_layer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Why not EXPECT? The test won\u0027t crash and more info may be helpful in debugging?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2823b5_a95b33c2",
+        "filename": "cc/layers/video_layer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "Grabbing the SQS front into a local var would make this read nicer",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983daa52_a36b2610",
+        "filename": "cc/layers/video_layer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "same",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23667303_0f283c92",
+        "filename": "cc/layers/video_layer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "same.. etc",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe1b881_55f6843f",
+        "filename": "cc/output/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "size_t, no?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6062524_6479c957",
+        "filename": "cc/output/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:15:38Z",
+      "side": 1,
+      "message": "size_t?",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
