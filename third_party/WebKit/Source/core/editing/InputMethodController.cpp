@@ -26,6 +26,7 @@
 
 #include "core/editing/InputMethodController.h"
 
+#include "build/build_config.h"
 #include "core/InputModeNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/Document.h"
@@ -46,6 +47,8 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/FocusController.h"
+#include "core/page/Page.h"
 
 namespace blink {
 
@@ -1134,6 +1137,16 @@ int InputMethodController::TextInputFlags() const {
         NOTREACHED();
     }
   }
+
+#if defined(OS_ANDROID)
+  if (GetDocument().GetPage()->GetFocusController().NextFocusableElementInForm(
+          element, kWebFocusTypeForward))
+    flags |= kWebTextInputFlagHaveNextFocusableElement;
+
+  if (GetDocument().GetPage()->GetFocusController().NextFocusableElementInForm(
+          element, kWebFocusTypeBackward))
+    flags |= kWebTextInputFlagHavePreviousFocusableElement;
+#endif
 
   return flags;
 }
