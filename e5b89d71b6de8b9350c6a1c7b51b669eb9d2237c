@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82d40052_e76c76ba",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d13e23_a704d404",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bc4b77_7764eec2",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 40
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "Can you address my comment regarding the test in output_test.extjs? There\u0027s a test-time validation that most rules contain $state and $description. Since you split restriction from state, we need to extend the test to also check this.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2106d42c_5e98237f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 40
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22bc4b77_7764eec2",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29dc0b08_8d3f45d4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64135d61_10594f5e",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e005c3ec_a451f349",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
         "patchSetId": 40
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "nit: remove references to control since it\u0027s clear we have no clear definition of what a control is.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a98eba0_5d7b3140",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e005c3ec_a451f349",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "78c63831_ce75491f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "I went through it and all looks good. Gridcell isn\u0027t missing, it\u0027s just that we use kCellRole for ordinary \u003ctd\u003e as well as role\u003d\"gridcell\".\n\nFYI I\u0027ll be posting a followup CL to deal with the inheritance aria-readonly on a grid to its cells.",
+      "parentUuid": "86c812da_bcbc33ec",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08faa88d_a3a609a7",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 40
@@ -138,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "6a036327_aaf5b5de",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3aa4a6a_e14b1cab",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012f2fdc_0fe0a992",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 40
@@ -149,6 +257,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "Ditto: remove control. e.g. A node which is not read only or disabled.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20025798_f2483ac4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "012f2fdc_0fe0a992",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -172,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "a8c67de2_b09c4646",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ceb908d_0c2fe08c",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1d4f6a_3c621792",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.h",
         "patchSetId": 40
@@ -183,6 +327,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "Doesn\u0027t C++ virtual dispatch already handle this? Rmove.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb5aece_e764865c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1d4f6a_3c621792",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "be896619_e70e0abd",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "FWIW this is not a change from what we had previously. I did change RoleValue to AriaRoleAttribute so that the comment was correct. \n\nHere\u0027s where the code was before:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp?type\u003dcs\u0026q\u003dcansetfocusattr\u0026sq\u003dpackage:chromium\u0026l\u003d1368",
+      "parentUuid": "ffd23a21_5c65232e",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5efc237c_4acebe94",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 40
@@ -217,6 +397,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "Preexisting misspelling suport. I\u0027m also wondering, do we still need this?",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "726048ca_f4ca7c46",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "We still need it. Tests fail if I remove it.",
+      "parentUuid": "5efc237c_4acebe94",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "5884831a_b97a0b5d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Ok, I will remove the CanSetFocusAttribute() restriction",
+      "parentUuid": "5ef87092_e3fa8f0e",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f692c637_5921ce7f",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 40
@@ -251,6 +467,24 @@
       "writtenOn": "2017-07-18T18:12:52Z",
       "side": 1,
       "message": "Alphabetize this and place one role per line. Also, audit this list against ARIAConfig.js. You are, for example, missing textbox. The audit I did was to enumerate all subclasses of the widget abstract class (which includes composite). I would recommend reading the json into a file and listing all subclasses of widget.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6e61e99_fd5a112d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-18T20:55:16Z",
+      "side": 1,
+      "message": "Textbox is not a subwidget. A subwidget is something that requires a container widget. A textbox can stand on its own. I\u0027ve added a comment to the declaration in the header file.",
+      "parentUuid": "f692c637_5921ce7f",
       "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
