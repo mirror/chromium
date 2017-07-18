@@ -16,6 +16,108 @@
       "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14f241f_28abece9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "Add static or put the method in an anonymous namespace?",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089050eb_c2d5de9b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "Just to confirm: This is no-op since [SecureContext] is not yet supported in workers, right?",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae60f0d5_aecff600",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "Add static or put the method in an anonymous namespace?",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c33dfc_26044b35",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "Why do we need to separate *OnWindow from *OnGlobal?\n\nWon\u0027t the following code work?\n\nvoid InstallConditionalFeaturesOnGlobal() {  // Both Window and Workers call this method\n  ...;\n  if (script_state-\u003eWorld().IsMainWorld())  // Worker won\u0027t hit this condition\n    InstallConditionalFeatures();\n}",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10786e10_5fc33200",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "Don\u0027t we need to move this code into the IsMainWorld block?",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b6369d_5c442abf",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T17:00:22Z",
+      "side": 1,
+      "message": "InstallConditionalFeatures()",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
