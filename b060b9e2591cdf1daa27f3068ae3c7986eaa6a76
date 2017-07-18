@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40ca2af0_de4f7125",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "Done; thanks for catching this!",
+      "parentUuid": "41ac0ffd_86e5d51e",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97ff55e_a3d35ad0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "796d4a02_e6c196b5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "I edited this comment so it\u0027s clear that |frame| is the frame of the UI element, not the frame of the bubble.",
+      "parentUuid": "c97ff55e_a3d35ad0",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "840c9641_8026482b",
         "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T21:21:24Z",
       "side": 1,
       "message": "Let\u0027s group the adding of the childVC with the addition of the view below.",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1399ce8_eb3f77b7",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "840c9641_8026482b",
       "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "39bd1106_e7b47f3d",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b736ce_7da756b0",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 73
+      },
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9a5d7f4_54f2f6b8",
         "filename": "ios/showcase/text_badge_view/sc_text_badge_view_egtest.mm",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-18T21:21:24Z",
       "side": 1,
       "message": "Why move this?",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491f2e8a_c78a5534",
+        "filename": "ios/showcase/text_badge_view/sc_text_badge_view_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "I think I saw a file that placed the EarlGrey/other framework imports after some header file imports and misunderstood. I checked the style guide and changed it back.",
+      "parentUuid": "f9a5d7f4_54f2f6b8",
       "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

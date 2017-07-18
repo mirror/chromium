@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "f05c96f8_7f5cc48b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "|frame| is the frame of the target UI element. I realize now that my parenthetical phrase makes it look like a list of three parameters...fixed the sentence structure so it\u0027s more clear.",
+      "parentUuid": "6020491d_dce3de71",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb471ef_66a49b1a",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "No, only its frame.",
+      "parentUuid": "4f61ea60_1038115e",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a82a1c1d_3316173e",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-18T20:51:47Z",
       "side": 1,
       "message": "In which coordinate system is this point? The superview of the bubble, or the bubble itself?",
+      "range": {
+        "startLine": 19,
+        "startChar": 59,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126bd38a_e4a7cc7b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T23:25:11Z",
+      "side": 1,
+      "message": "The calculation doesn\u0027t make any assumptions about the coordinate system; the returned origin is in the same coordinate system as |anchorPoint| regardless of what it is. It would make sense for |anchorPoint| to be in the coordinate system of the bubble\u0027s superview, but the coordinate system conversion can happen before or after this method is called.\n\nI edited the comment to reflect this.",
+      "parentUuid": "a82a1c1d_3316173e",
       "range": {
         "startLine": 19,
         "startChar": 59,
