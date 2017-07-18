@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4cf60d_e06aab39",
+        "filename": "components/test/data/payments/payment_request.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T08:05:04Z",
+      "side": 1,
+      "message": "AFAICT \"let\" is not available in Safari (thus Chrome) running on iOS version below 10.2 (https://caniuse.com/#search\u003dlet). Could you please use \"var\" instead if the file is still intended to be shared with iOS?",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 5
+      },
+      "revId": "a21f3627435dbc36c36893a0551c399453b9a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
