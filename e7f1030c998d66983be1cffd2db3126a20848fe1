@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0e6b98a_fe92d0b6",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLPreloadScanner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T21:10:26Z",
+      "side": 1,
+      "message": "It is a little uglier than that, since at that point we might not know if the link is a stylesheet if the markup were \u003clink integrity\u003d.... rel\u003d\u0027stylesheet\u0027.",
+      "parentUuid": "3bb12836_79dbcf3b",
+      "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db7d7e09_952e3aed",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T20:27:37Z",
       "side": 1,
       "message": "This doesn\u0027t work correctly in the following cases:\n\n1. When a client is added in the middle of loading.\ndata_clearer incorrectly sets |decoded_sheet_text_| to a decoded string of data received so far and calls ClearData(), and thus results in corrupt |decoded_sheet_text_| and Data().\n\n2. When the added client is not LinkStyle.\ndata_clearer clears ClearData() here, and when LinkStyle is added later, the integrity check result will be wrong.\n\nWhen to ClearData() and set |decoded_sheet_text_| is a subtle problem, and I\u0027d like to make that happen in CheckNotify(). Moving it to another location that depends on the order of CheckNotify(), LinkStyle\u0027s AddClient() etc. makes it much harder to infer when Data() is guaranteed to be non-null.\n\nIf this is not urgent, I\u0027d like to refactor integrity-related code to move integrity checks to CheckNotify(), and then commit this CL (without changes in CSSStyleSheetResource). WDYT?\nThere are multiple (three? including this issue) related issues around integrity/CSP checks and I feel some refactoring is anyway needed...",
+      "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77f2306_5c843969",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T21:10:26Z",
+      "side": 1,
+      "message": "Wow. Thank you for that detailed information. I am saddened that tests did not catch all these errors :(\n\nThis patch is not urgent. Your plan sounds good to me.",
+      "parentUuid": "db7d7e09_952e3aed",
       "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
