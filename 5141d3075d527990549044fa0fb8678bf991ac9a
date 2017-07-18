@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad3da99_42e830e9",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-18T01:52:21Z",
+      "side": 1,
+      "message": "nit: any reason to not make this *const too?",
+      "revId": "5141d3075d527990549044fa0fb8678bf991ac9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
