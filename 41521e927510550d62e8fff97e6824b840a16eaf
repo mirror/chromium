@@ -16,6 +16,40 @@
       "revId": "41521e927510550d62e8fff97e6824b840a16eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc32971_8cf8ac96",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-18T14:01:31Z",
+      "side": 1,
+      "message": "nit: Capitalize \"IndexedDB\", and end the sentence with a period.",
+      "revId": "41521e927510550d62e8fff97e6824b840a16eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888381cb_8813a4d8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-18T14:01:31Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we usually advertise unshipped features in exception messages. This wording makes it sound like it\u0027s a supported but opt-in feature, whereas it\u0027s really an unsupported feature until we officially ship it. I don\u0027t know if there\u0027s a policy on this, though.",
+      "revId": "41521e927510550d62e8fff97e6824b840a16eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
