@@ -23,7 +23,7 @@ class PaintFlags;
 // A PaintCanvas derived class that passes PaintCanvas APIs through to
 // an SkCanvas.  This is more efficient than recording to a PaintRecord
 // and then playing back to an SkCanvas.
-class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
+class CC_PAINT_EXPORT SkiaPaintCanvas : public PaintCanvas {
  public:
   explicit SkiaPaintCanvas(SkCanvas* canvas);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap);
