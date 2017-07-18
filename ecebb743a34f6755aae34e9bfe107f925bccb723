@@ -2,6 +2,331 @@
   "comments": [
     {
       "key": {
+        "uuid": "21d19ee2_ac2acb3c",
+        "filename": "third_party/WebKit/Source/core/css/CSSSyntaxDescriptor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "This is a vector equality check which I believe is non-trivial and so shouldn\u0027t be inlined.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc60f2da_2ed701fe",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "Now that the index is given by the static instance_count we should be checking somehow that anytime we create global scopes the instance_count starts at 0. i.e. what if we somehow destroy global scope #1, then we would create a second global scope #2.",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 37
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4e7e52_0ee96e54",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "The CSSPaintDefinition can swap in the properties can\u0027t it? Isn\u0027t there a 1:1 correspondence with calls to registerPaint? This would mean that the CSSPaintDefinition can take ownership of the properties, but the DocumentPaintDefinition may need to copy them.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ef210c_1fb99bf1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "Are empty names valid?",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ef3755_02a8fe94",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "If you replace this with ::Matches(const CSSPaintDefinition\u0026 definition) then we don\u0027t need to create a DocumentPaintDefinition the second time when we already have one just for the comparison.",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84501b53_d81289a0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "const refs since these can\u0027t be swapped in?",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17bcd42_064acb69",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "Would it maybe make more sense for this to hold references to the CSSPaintDefinitions? It could then just return the properties and arguments from the first one (since it would have already asserted that they are all the same)?",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b74231_9321ef5f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "if (document_definition \u003d\u003d kInvalidDefinition)",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9b780e_22ba2123",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "You should DCHECK this result, it should always exist if we get this far.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1432c98_6e869b5b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "A CSSPaintDefinition implies which global scope it runs in because the function it includes belongs to a particular global scope. If we want to decide here this should get a DocumentPaintDefinition and then select one of the CSSPaintDefinitions.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0791b4e_9ccddb9f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "private consts should be in the .cpp file and use constant naming convention, i.e. static const kNumGlobalScopes \u003d 2; Also add a comment to the constant.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb98edc7_c460495e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "1 is an odd initial value (we don\u0027t have any instances to start), can you set to 0 and use preincrements instead?",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21914215_4672df55",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "Check that instance count is never greater than 2?",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b3efef_c89a7001",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "Maybe CSSPaintDefinition doesn\u0027t need the list of properties, we only need to store this once, so we could store it in the DocumentPaintDefinition.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8931e69b_293df269",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "We only need to create a DocumentPaintDefinition if we don\u0027t have one in the map.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40aa5e00_0957842f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "if (existing_document_definition \u003d\u003d kInvalidDocumentDefinition)",
+      "range": {
+        "startLine": 223,
+        "startChar": 9,
+        "endLine": 223,
+        "endChar": 37
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4489cd8f_c04e0ba4",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "nit: Use constant at top of file or in header file if used externally.",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc332bd9_b3485fee",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 17
@@ -18,6 +343,46 @@
         "startChar": 5,
         "endLine": 232,
         "endChar": 0
+      },
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e57822_aec9abc2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "This is assuming exactly 2 paint worklet global scopes, maybe DocumentPaintDefinition should keep a count of registered definitions and check against the expected global scope count?",
+      "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474228f6_829376d1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T18:30:18Z",
+      "side": 1,
+      "message": "nit: s/instance_count/instance_count_",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 27
       },
       "revId": "ecebb743a34f6755aae34e9bfe107f925bccb723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
