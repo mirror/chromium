@@ -17,6 +17,14 @@
 
 namespace arc {
 
+namespace {
+
+// Android's connectivity notification id, see
+// com.android.server.connectivity.NetworkNotificationManager.
+constexpr char kConnectivityNotificationId[] = "Connectivity.Notification";
+
+}  // namespace
+
 ArcNotificationManager::ArcNotificationManager(ArcBridgeService* bridge_service,
                                                const AccountId& main_profile_id)
     : ArcNotificationManager(bridge_service,
@@ -65,6 +73,12 @@ void ArcNotificationManager::OnInstanceClosed() {
 void ArcNotificationManager::OnNotificationPosted(
     mojom::ArcNotificationDataPtr data) {
   const std::string& key = data->key;
+
+  // Filter android's connectivity notification out.
+  auto found = key.find(kConnectivityNotificationId);
+  if (found != std::string::npos)
+    return;
+
   auto it = items_.find(key);
   if (it == items_.end()) {
     // Show a notification on the primary logged-in user's desktop.
