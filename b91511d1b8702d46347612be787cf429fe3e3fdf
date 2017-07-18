@@ -122,6 +122,30 @@
       "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb93cfd_ec029855",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-18T11:18:21Z",
+      "side": 1,
+      "message": "Yes pretty much. This happens after we\u0027ve received a CommitNavigation IPC. Technically though the commit could still fail so I guess it\u0027s still a provisional Document Loader? We do plan on eventually removing this failures paths, and then we\u0027ll be able to remove the concept of a provisional DocumentLoader.",
+      "parentUuid": "2e0046c4_5dd05b08",
+      "range": {
+        "startLine": 1394,
+        "startChar": 39,
+        "endLine": 1394,
+        "endChar": 79
+      },
+      "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
