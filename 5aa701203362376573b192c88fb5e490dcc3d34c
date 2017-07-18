@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "c7dc07fb_0516d7eb",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-18T18:33:40Z",
+      "side": 1,
+      "message": "Oh, got it now. It\u0027s akin to a file name or hash value or a key; just for lookup and not presentation. I was not getting that before.\n\nPlease add some of this information to the CL description. Like something about how make_and_model is for internal reference only and is not presented to users, or something that explains that more. Or, maybe a comment in the code. Maybe a comment like: // Note: do not present to user, this is not localized.",
+      "parentUuid": "3e017fe8_8aa861a3",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
