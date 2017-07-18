@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19237799_b164c415",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-18T09:06:12Z",
+      "side": 1,
+      "message": "You can still put me / anyone else who is also a core OWNER here if you want for documentation about who to contact.",
+      "revId": "e3f246c340418c2cda436547a88a125e90ad3bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
