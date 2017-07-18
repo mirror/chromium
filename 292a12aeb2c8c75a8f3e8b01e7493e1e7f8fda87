@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f840bdeb_14de1daf",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-18T11:27:19Z",
+      "side": 1,
+      "message": "Nit: missing space.",
+      "range": {
+        "startLine": 4,
+        "startChar": 30,
+        "endLine": 4,
+        "endChar": 33
+      },
+      "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8878eb2_45267ba0",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-18T11:27:19Z",
+      "side": 1,
+      "message": "Nit: period is still missing.",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c684454b_5f04b984",
         "filename": "chrome/android/java/res/values/dimens.xml",
         "patchSetId": 17
@@ -18,6 +64,52 @@
         "startChar": 9,
         "endLine": 192,
         "endChar": 15
+      },
+      "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbfd249_19a3016f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-18T11:27:19Z",
+      "side": 1,
+      "message": "Quotation marks are a bit misleading here, because the text on this button can be different from this one. I think it makes sense to call it \u0027signin button\u0027 instead.",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 43
+      },
+      "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a8006a_d087cbaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-18T11:27:19Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 50
       },
       "revId": "292a12aeb2c8c75a8f3e8b01e7493e1e7f8fda87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
