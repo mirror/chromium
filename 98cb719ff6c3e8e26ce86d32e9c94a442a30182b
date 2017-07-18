@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963a26f2_6fbdb56a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-18T12:47:43Z",
+      "side": 1,
+      "message": "nit: add comma after load",
+      "range": {
+        "startLine": 634,
+        "startChar": 152,
+        "endLine": 634,
+        "endChar": 153
+      },
+      "revId": "98cb719ff6c3e8e26ce86d32e9c94a442a30182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
