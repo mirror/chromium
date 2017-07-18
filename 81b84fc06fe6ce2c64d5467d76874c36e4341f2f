@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a06905cb_8605c1af",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T23:00:47Z",
+      "side": 1,
+      "message": "It looks like there\u0027s a test-specific subclass that overrides this method.  I thought methods need to be at least protected in order to be overridable -- no?",
+      "parentUuid": "eb0a0ba1_f47b75c2",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af7966d4_33a91a91",
         "filename": "components/metrics/field_trials_provider.h",
         "patchSetId": 1
@@ -224,6 +248,30 @@
       "side": 1,
       "message": "There was a thread about this: https://groups.google.com/a/google.com/d/topic/uma-users/yDL9WSKvbRE/discussion\n\nBasically, initial metrics log is actually created in the middle of first ongoing log, since it pauses that one with a new log.  Pausing logs basically creates a two log stack.\n\nI don\u0027t think that behavior actually makes sense, but I\u0027m emulating it to avoid creating functional changes.",
       "parentUuid": "af7966d4_33a91a91",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b6f9e4_bdc72563",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-18T23:00:47Z",
+      "side": 1,
+      "message": "Could you please expand this comment within the header, so that it makes sense to future readers of this code?  It\u0027s currently quite mysterious.\n\nAlso, a lot of providers report some value if it\u0027s been consistent over the lifetime of the log, and report something like \"ambiguous\" if that value ever changed.  Are all of those providers basically broken for the two initial logs?  I\u0027m not convinced that it\u0027s worth adding extra complexity to maintain a weird/broken state.  Do we actually want MetricsProviders to provide data for the initial log at all?",
+      "parentUuid": "0c091fa6_5213ae98",
       "range": {
         "startLine": 39,
         "startChar": 56,
