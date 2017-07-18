@@ -266,6 +266,11 @@ void RenderViewHostTestHarness::SetUp() {
   // MaterialDesignController in unit_tests suite.
   ui::test::MaterialDesignControllerTestAPI::Uninitialize();
   ui::MaterialDesignController::Initialize();
+
+  // The TestBrowserThreadBundle is compatible with an existing
+  // ScopedTaskEnvironment if the main message loop is of UI type.
+  scoped_task_environment_.reset(new base::test::ScopedTaskEnvironment(
+      base::test::ScopedTaskEnvironment::MainThreadType::UI));
   thread_bundle_.reset(new TestBrowserThreadBundle(thread_bundle_options_));
 
   rvh_test_enabler_.reset(new RenderViewHostTestEnabler);

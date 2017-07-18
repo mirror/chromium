@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -281,6 +282,10 @@ class RenderViewHostTestHarness : public testing::Test {
     thread_bundle_options_ = options;
   }
 
+  base::test::ScopedTaskEnvironment* scoped_task_environment() {
+    return scoped_task_environment_.get();
+  }
+
   TestBrowserThreadBundle* thread_bundle() { return thread_bundle_.get(); }
 
 #if defined(USE_AURA)
@@ -291,6 +296,8 @@ class RenderViewHostTestHarness : public testing::Test {
   void SetRenderProcessHostFactory(RenderProcessHostFactory* factory);
 
  private:
+  std::unique_ptr<base::test::ScopedTaskEnvironment> scoped_task_environment_;
+
   int thread_bundle_options_;
   std::unique_ptr<TestBrowserThreadBundle> thread_bundle_;
 
