@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffc8562_b1fb7f06",
+        "filename": "ash/fast_pointer/fast_pointer_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:38:11Z",
+      "side": 1,
+      "message": "remove \u0027laser\u0027",
+      "revId": "ed15d7f0c9dd1aad3111976e62c9b8287a0fdaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836de3dc_d86a6161",
+        "filename": "ash/fast_pointer/fast_pointer_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:38:11Z",
+      "side": 1,
+      "message": "remove \u0027laser\u0027",
+      "revId": "ed15d7f0c9dd1aad3111976e62c9b8287a0fdaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7bdbe9_7270713c",
+        "filename": "ash/fast_pointer/fast_pointer_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:38:11Z",
+      "side": 1,
+      "message": "remove \u0027laser\u0027",
+      "revId": "ed15d7f0c9dd1aad3111976e62c9b8287a0fdaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adee8795_d39620c5",
+        "filename": "ash/fast_pointer/fast_pointer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T20:38:11Z",
+      "side": 1,
+      "message": "FastInk or FastPointer? I like FastInk as that doesn\u0027t confuse or limit it to pointer events. Either way, please update include guards to match the final name.",
+      "revId": "ed15d7f0c9dd1aad3111976e62c9b8287a0fdaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
