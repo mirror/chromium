@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d13e23_a704d404",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "nit: no need for is_enabled anymore. (i.e. revert this change back to \n  if (!GetBooleanProperty(node, AXBooleanProperty::ENABLED)).",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22bc4b77_7764eec2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 40
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Can you address my comment regarding the test in output_test.extjs? There\u0027s a test-time validation that most rules contain $state and $description. Since you split restriction from state, we need to extend the test to also check this.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64135d61_10594f5e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "nit: ends with period.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e005c3ec_a451f349",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "nit: remove references to control since it\u0027s clear we have no clear definition of what a control is.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc070283_3a44a21a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXListBoxOption.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "I would have expected the base impl to handle the disabled case? Can you remove this method override?",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86c812da_bcbc33ec",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Can you make a pass through ARIAConfig.js? You\u0027re missing gridcell, for example. If that\u0027s wrong, then correct ARIAConfig.js.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08faa88d_a3a609a7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "We should talk offline about the focus thing. We clearly disagree on this point.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3aa4a6a_e14b1cab",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "nit: periods at end of all sentences.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "012f2fdc_0fe0a992",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Ditto: remove control. e.g. A node which is not read only or disabled.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ceb908d_0c2fe08c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Commentary: uncaught by previous reviewer :).",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e1d4f6a_3c621792",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Doesn\u0027t C++ virtual dispatch already handle this? Rmove.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffd23a21_5c65232e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "I think this bit of the definition of can set focus is misleading. I know why it was added, but it confuses the notion of DOM focus with accessibility focus. In theory, a screen reader can and does set its focus to any node in the accessibility tree. System focus is different and obeys the rules in the DOM regarding focus.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5efc237c_4acebe94",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Preexisting misspelling suport. I\u0027m also wondering, do we still need this?",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ef87092_e3fa8f0e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "With your change patched in, this line (the can set focus bit) regresses the sheets prototype (which sets aria selected on a cell). I also disagree with that condition and it also appears ARIAConfig.js does not impose any such restriction. This is why I wanted this change split up. Can set focus has nothing to do with selectability from the screen reader\u0027s interpretation of the DOM.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f692c637_5921ce7f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-18T18:12:52Z",
+      "side": 1,
+      "message": "Alphabetize this and place one role per line. Also, audit this list against ARIAConfig.js. You are, for example, missing textbox. The audit I did was to enumerate all subclasses of the widget abstract class (which includes composite). I would recommend reading the json into a file and listing all subclasses of widget.",
+      "revId": "e5b89d71b6de8b9350c6a1c7b51b669eb9d2237c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
