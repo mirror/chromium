@@ -63,6 +63,8 @@ static_library("cryptauth") {
     "remote_device.h",
     "remote_device_loader.cc",
     "remote_device_loader.h",
+    "remote_device_provider.cc",
+    "remote_device_provider.h",
     "secure_channel.cc",
     "secure_channel.h",
     "secure_context.h",
