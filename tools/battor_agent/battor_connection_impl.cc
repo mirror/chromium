@@ -29,11 +29,10 @@ const char kSerialLogPathSwitch[] = "battor-serial-log";
 
 // Serial configuration parameters for the BattOr.
 const uint32_t kBattOrBitrate = 2000000;
-const device::serial::DataBits kBattOrDataBits =
-    device::serial::DataBits::EIGHT;
-const device::serial::ParityBit kBattOrParityBit =
-    device::serial::ParityBit::NONE;
-const device::serial::StopBits kBattOrStopBit = device::serial::StopBits::ONE;
+const device::mojom::DataBits kBattOrDataBits = device::mojom::DataBits::EIGHT;
+const device::mojom::ParityBit kBattOrParityBit =
+    device::mojom::ParityBit::NONE;
+const device::mojom::StopBits kBattOrStopBit = device::mojom::StopBits::ONE;
 const bool kBattOrCtsFlowControl = true;
 const bool kBattOrHasCtsFlowControl = true;
 // The maximum BattOr message is 50kB long.
@@ -87,7 +86,7 @@ void BattOrConnectionImpl::Open() {
 
   io_handler_ = CreateIoHandler();
 
-  device::serial::ConnectionOptions options;
+  device::mojom::ConnectionOptions options;
   options.bitrate = kBattOrBitrate;
   options.data_bits = kBattOrDataBits;
   options.parity_bit = kBattOrParityBit;
@@ -184,7 +183,7 @@ void BattOrConnectionImpl::ReadMessage(BattOrMessageType type) {
 
 void BattOrConnectionImpl::CancelReadMessage() {
   LogSerial("Canceling read due to timeout.");
-  io_handler_->CancelRead(device::serial::ReceiveError::TIMEOUT);
+  io_handler_->CancelRead(device::mojom::ReceiveError::TIMEOUT);
 }
 
 void BattOrConnectionImpl::Flush() {
@@ -212,8 +211,8 @@ void BattOrConnectionImpl::BeginReadBytes(size_t max_bytes_to_read) {
 }
 
 void BattOrConnectionImpl::OnBytesRead(int bytes_read,
-                                       device::serial::ReceiveError error) {
-  if (error != device::serial::ReceiveError::NONE) {
+                                       device::mojom::ReceiveError error) {
+  if (error != device::mojom::ReceiveError::NONE) {
     LogSerial(StringPrintf(
         "Read failed due to serial read failure with error code: %d.",
         static_cast<int>(error)));
@@ -341,8 +340,8 @@ BattOrConnectionImpl::ParseMessageError BattOrConnectionImpl::ParseMessage(
 }
 
 void BattOrConnectionImpl::OnBytesSent(int bytes_sent,
-                                       device::serial::SendError error) {
-  bool success = (error == device::serial::SendError::NONE) &&
+                                       device::mojom::SendError error) {
+  bool success = (error == device::mojom::SendError::NONE) &&
                  (pending_write_length_ == static_cast<size_t>(bytes_sent));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,

@@ -87,7 +87,7 @@ void SerialGetDevicesFunction::Work() {
 
   std::unique_ptr<device::SerialDeviceEnumerator> enumerator =
       device::SerialDeviceEnumerator::Create();
-  std::vector<device::serial::DeviceInfoPtr> devices = enumerator->GetDevices();
+  std::vector<device::mojom::DeviceInfoPtr> devices = enumerator->GetDevices();
   results_ = serial::GetDevices::Results::Create(
       mojo::ConvertTo<std::vector<serial::DeviceInfo>>(devices));
 }
@@ -452,8 +452,8 @@ namespace mojo {
 // static
 extensions::api::serial::DeviceInfo TypeConverter<
     extensions::api::serial::DeviceInfo,
-    device::serial::DeviceInfoPtr>::Convert(const device::serial::DeviceInfoPtr&
-                                                device) {
+    device::mojom::DeviceInfoPtr>::Convert(const device::mojom::DeviceInfoPtr&
+                                               device) {
   extensions::api::serial::DeviceInfo info;
   info.path = device->path;
   if (device->has_vendor_id)

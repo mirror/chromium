@@ -45,7 +45,7 @@ class SendBuffer : public device::ReadOnlyBuffer {
  public:
   SendBuffer(
       const std::vector<char>& data,
-      const base::Callback<void(int, device::serial::SendError)>& callback);
+      const base::Callback<void(int, device::mojom::SendError)>& callback);
   ~SendBuffer() override;
 
   const char* GetData() override;
@@ -55,7 +55,7 @@ class SendBuffer : public device::ReadOnlyBuffer {
 
  private:
   const std::vector<char> data_;
-  const base::Callback<void(int, device::serial::SendError)> callback_;
+  const base::Callback<void(int, device::mojom::SendError)> callback_;
 };
 
 // A useful basic implementation of a WritableBuffer in which the data is
@@ -65,7 +65,7 @@ class ReceiveBuffer : public device::WritableBuffer {
   ReceiveBuffer(
       scoped_refptr<net::IOBuffer> buffer,
       uint32_t size,
-      const base::Callback<void(int, device::serial::ReceiveError)>& callback);
+      const base::Callback<void(int, device::mojom::ReceiveError)>& callback);
   ~ReceiveBuffer() override;
 
   char* GetData() override;
@@ -76,7 +76,7 @@ class ReceiveBuffer : public device::WritableBuffer {
  private:
   scoped_refptr<net::IOBuffer> buffer_;
   const uint32_t size_;
-  const base::Callback<void(int, device::serial::ReceiveError)> callback_;
+  const base::Callback<void(int, device::mojom::ReceiveError)> callback_;
 };
 
 }  // namespace device

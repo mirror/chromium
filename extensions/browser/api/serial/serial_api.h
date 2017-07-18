@@ -279,9 +279,9 @@ namespace mojo {
 
 template <>
 struct TypeConverter<extensions::api::serial::DeviceInfo,
-                     device::serial::DeviceInfoPtr> {
+                     device::mojom::DeviceInfoPtr> {
   static extensions::api::serial::DeviceInfo Convert(
-      const device::serial::DeviceInfoPtr& input);
+      const device::mojom::DeviceInfoPtr& input);
 };
 
 }  // namespace mojo

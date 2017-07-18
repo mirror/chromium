@@ -26,7 +26,7 @@ scoped_refptr<SerialIoHandler> TestSerialIoHandler::Create() {
 }
 
 void TestSerialIoHandler::Open(const std::string& port,
-                               const serial::ConnectionOptions& options,
+                               const mojom::ConnectionOptions& options,
                                const OpenCompleteCallback& callback) {
   DCHECK(!opened_);
   opened_ = true;
@@ -44,7 +44,7 @@ void TestSerialIoHandler::ReadImpl() {
       std::min(buffer_.size(), static_cast<size_t>(pending_read_buffer_len()));
   memcpy(pending_read_buffer(), buffer_.c_str(), num_bytes);
   buffer_ = buffer_.substr(num_bytes);
-  ReadCompleted(static_cast<uint32_t>(num_bytes), serial::ReceiveError::NONE);
+  ReadCompleted(static_cast<uint32_t>(num_bytes), mojom::ReceiveError::NONE);
 }
 
 void TestSerialIoHandler::CancelReadImpl() {
@@ -59,7 +59,7 @@ void TestSerialIoHandler::WriteImpl() {
     return;
   }
   buffer_ += std::string(pending_write_buffer(), pending_write_buffer_len());
-  WriteCompleted(pending_write_buffer_len(), serial::SendError::NONE);
+  WriteCompleted(pending_write_buffer_len(), mojom::SendError::NONE);
   if (pending_read_buffer())
     ReadImpl();
 }
@@ -77,14 +77,14 @@ bool TestSerialIoHandler::ConfigurePortImpl() {
   return true;
 }
 
-serial::DeviceControlSignalsPtr TestSerialIoHandler::GetControlSignals() const {
-  serial::DeviceControlSignalsPtr signals(serial::DeviceControlSignals::New());
+mojom::DeviceControlSignalsPtr TestSerialIoHandler::GetControlSignals() const {
+  mojom::DeviceControlSignalsPtr signals(mojom::DeviceControlSignals::New());
   *signals = device_control_signals_;
   return signals;
 }
 
-serial::ConnectionInfoPtr TestSerialIoHandler::GetPortInfo() const {
-  serial::ConnectionInfoPtr info(serial::ConnectionInfo::New());
+mojom::ConnectionInfoPtr TestSerialIoHandler::GetPortInfo() const {
+  mojom::ConnectionInfoPtr info(mojom::ConnectionInfo::New());
   *info = info_;
   return info;
 }
@@ -95,7 +95,7 @@ bool TestSerialIoHandler::Flush() const {
 }
 
 bool TestSerialIoHandler::SetControlSignals(
-    const serial::HostControlSignals& signals) {
+    const mojom::HostControlSignals& signals) {
   if (signals.has_dtr)
     dtr_ = signals.dtr;
   if (signals.has_rts)
