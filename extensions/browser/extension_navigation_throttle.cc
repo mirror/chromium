@@ -13,6 +13,7 @@
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h"
 #include "extensions/browser/url_request_util.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -65,6 +66,17 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
     // code once that's supported. https://crbug.com/649869
     return content::NavigationThrottle::BLOCK_REQUEST;
   }
+
+  content::NavigationThrottle::ThrottleCheckResult pdf_navigation_result;
+  if (MimeHandlerViewManagerHost::MaybeDeferNavigation(
+          navigation_handle(), &pdf_navigation_result)) {
+    // If the navigation is to the PDF viewer extension, we might have to defer
+    // the navigation to when the corresponding PDF resource is available as a
+    // stream.
+    return pdf_navigation_result;
+  }
+
+  return content::NavigationThrottle::PROCEED;
 
   // Hosted apps don't have any associated resources outside of icons, so
   // block any requests to URLs in their extension origin.
@@ -179,8 +191,6 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
     if (parent_extension && parent_extension->is_platform_app())
       return content::NavigationThrottle::BLOCK_REQUEST;
   }
-
-  return content::NavigationThrottle::PROCEED;
 }
 
 content::NavigationThrottle::ThrottleCheckResult

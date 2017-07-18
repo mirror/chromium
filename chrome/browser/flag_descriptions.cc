@@ -917,6 +917,13 @@ const char kPasswordImportExportName[] = "Password import and export";
 const char kPasswordImportExportDescription[] =
     "Import and Export functionality in password settings.";
 
+const char kPdfExtensionInOutOfProcessFrameName[] =
+    "Load PDF extension inside an out-of-process frame.";
+const char kPdfExtensionInOutOfProcessFrameDescription[] =
+    "Instead of using BrowserPlugin and MimeHandlerViewGuest, a frame is "
+    "navigated to the PDF Viewer Extension. The frame will then be in different"
+    " process than the embedder document.";
+
 const char kPermissionActionReportingName[] = "Permission Action Reporting";
 const char kPermissionActionReportingDescription[] =
     "Enables permission action reporting to Safe Browsing servers for opted in "
