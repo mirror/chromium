@@ -111,73 +111,73 @@ KIOSK_MACHINE_IDS = [ 'KIOSK' ]
 #   }
 # }
 SIGNING_KEYS = [
-    # Key1
-    {'key':
-       'MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA2c3KzcPqvnJ5HCk3OZkf1'
-       'LMO8Ht4dw4FO2U0EmKvpo0zznj4RwUdmKobH1AFWzwZP4CDY2M67MsukE/1Jnbx1QIDAQ'
-       'ABAkBkKcLZa/75hHVz4PR3tZaw34PATlfxEG6RiRIwXlf/FFlfGIZOSxdW/I1A3XRl0/9'
-       'nZMuctBSKBrcTRZQWfT/hAiEA9g8xbQbMO6BEH/XCRSsQbPlvj4c9wDtVEzeAzZ/ht9kC'
-       'IQDiml+/lXS1emqml711jJcYJNYJzdy1lL/ieKogR59oXQIhAK+Pl4xa1U2VxAWpq7r+R'
-       'vH55wdZT03hB4p2h4gvEzXBAiAkw9kvE0eZPiBZoRrrHIFTOH7FnnHlwBmV2+/2RsiVPQ'
-       'IhAKqx/4qisivvmoM/xbzUagfoxwsu1A/4mGjhBKiS0BCq',
-     'signatures':
-       {'example.com':
-          'l+sT5mziei/GbmiP7VtRCCfwpZcg7uKbW2OlnK5B/TTELutjEIAMdHduNBwbO44qOn'
-          '/5c7YrtkXbBehaaDYFPGI6bGTbDmG9KRxhS+DaB7opgfCQWLi79Gn/jytKLZhRN/VS'
-          'y+PEbezqMi3d1/xDxlThwWZDNwnhv9ER/Nu/32ZTjzgtqonSn2CQtwXCIILm4FdV/1'
-          '/BdmZG+Ge4i4FTqYtInir5YFe611KXU/AveGhQGBIAXo4qYg1IqbVrvKBSU9dlI6Sl'
-          '9TJJLbJ3LGaXuljgFhyMAl3gcy7ftC9MohEmwa+sc7y2mOAgYQ5SSmyAtQwQgAkX9J'
-          '3+tfxjmoA/dg==',
-        'chromepolicytest.com':
-          'TzBiigZKwBdr6lyP6tUDsw+Q9wYO1Yepyxm0O4JZ4RID32L27sWzC1/hwC51fRcCvP'
-          'luEVIW6mH+BFODXMrteUFWfbbG7jgV+Wg+QdzMqgJjxhNKFXPTsZ7/286LAd1vBY/A'
-          'nGd8Wog6AhzfrgMbLNsH794GD0xIUwRvXUWFNP8pClj5VPgQnJrIA9aZwW8FNGbteA'
-          'HacFB0T/oqP5s7XT4Qvkj14RLmCgTwEM8Vcpqy5teJaF8yN17wniveddoOQGH6s0HC'
-          'ocprEccrH5fP/WVAPxCfx4vVYQY5q4CZ4K3f6dTC2FV4IDelM6dugEkvSS02YCzDaO'
-          'N+Z7IwElzTKg==',
-        'managedchrome.com':
-          'T0wXC5w3GXyovA09pyOLX7ui/NI603UfbZXYyTbHI7xtzCIaHVPH35Nx4zdqVrdsej'
-          'ErQ12yVLDDIJokY4Yl+/fj/zrkAPxThI+TNQ+jo0i+al05PuopfpzvCzIXiZBbkbyW'
-          '3XfedxXP3IPN2XU2/3vX+ZXUNG6pxeETem64kGezkjkUraqnHw3JVzwJYHhpMcwdLP'
-          'PYK6V23BbEHEVBtQZd/ledXacz7gOzm1zGni4e+vxA2roAdJWyhbjU0dTKNNUsZmMv'
-          'ryQH9Af1Jw+dqs0RAbhcJXm2i8EUWIgNv6aMn1Z2DzZwKKjXsKgcYSRo8pdYa8RZAo'
-          'UExd9roA9a5w==',
-        }
-     },
-    # Key2
-    {'key':
-       'MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAmZhreV04M3knCi6wibr49'
-       'oDesHny1G33PKOX9ko8pcxAiu9ZqsKCj7wNW2PGqnLi81fddACwQtYn5xdhCtzB9wIDAQ'
-       'ABAkA0z8m0cy8N08xundspoFZWO71WJLgv/peSDBYGI0RzJR1l9Np355EukQUQwRs5XrL'
-       '3vRQZy2vDqeiR96epkAhRAiEAzJ4DVI8k3pAl7CGv5icqFkJ02viExIwehhIEXBcB6p0C'
-       'IQDAKmzpoRpBEZRQ9xrTvPOi+Ea8Jnd478BU7CI/LFfgowIgMfLIoVWoDGRnvXKju60Hy'
-       'xNB70oHLut9cADp64j6QMkCIDrgxN4QbmrhaAAmtiGKE1wrlgCwCIsVamiasSOKAqLhAi'
-       'EAo/ItVcFtQPod97qG71CY/O4JzOciuU6AMhprs181vfM=',
-     'signatures':
-       # Key2 signatures
-       {'example.com':
-          'cO0nQjRptkeefKDw5QpJSQDavHABxUvbR9Wvoa235OG9Whw1RFqq2ye6pKnI3ezW6/'
-          '7b4ANcpi5a7HV5uF8K7gWyYdxY8NHLeyrbwXxg5j6HAmHmkP1UZcf/dAnWqo7cW8g4'
-          'DIQOhC43KkveMYJ2HnelwdXt/7zqkbe8/3Yj4nhjAUeARx86Sb8Nzydwkrvqs5Jw/x'
-          '5LG+BODExrXXcGu/ubDlW4ivJFqfNUPQysqBXSMY2XCHPJDx3eECLGVVN/fFAWWgjM'
-          'HFObAriAt0b18cc9Nr0mAt4Qq1oDzWcAHCPHE+5dr8Uf46BUrMLJRNRKCY7rrsoIin'
-          '9Be9gs3W+Aww==',
-        'chromepolicytest.com':
-          'mr+9CCYvR0cTvPwlzkxqlpGYy55gY7cPiIkPAPoql51yHK1tkMTOSFru8Dy/nMt+0o'
-          '4z7WO60F1wnIBGkQxnTj/DsO6QpCYi7oHqtLmZ2jsLQFlMyvPGUtpJEFvRwjr/TNbh'
-          '6RqUtz1LQFuJQ848kBrx7nkte1L8SuPDExgx+Q3LtbNj4SuTdvMUBMvEERXiLuwfFL'
-          'BefGjtsqfWETQVlJTCW7xcqOLedIX8UYgEDBpDOZ23A3GzCShuBsIut5m87R5mODht'
-          'EUmKNDK1+OMc6SyDpf+r48Wph4Db1bVaKy8fcpSNJOwEgsrmH7/+owKPGcN7I5jYAF'
-          'Z2PGxHTQ9JNA==',
-        'managedchrome.com':
-          'o5MVSo4bRwIJ/aooGyXpRXsEsWPG8fNA2UTG8hgwnLYhNeJCCnLs/vW2vdp0URE8jn'
-          'qiG4N8KjbuiGw0rJtO1EygdLfpnMEtqYlFjrOie38sy92l/AwohXj6luYzMWL+FqDu'
-          'WQeXasjgyY4s9BOLQVDEnEj3pvqhrk/mXvMwUeXGpbxTNbWAd0C8BTZrGOwU/kIXxo'
-          'vAMGg8L+rQaDwBTEnMsMZcvlrIyqSg5v4BxCWuL3Yd2xvUqZEUWRp1aKetsHRnz5hw'
-          'H7WK7DzvKepDn06XjPG9lchi448U3HB3PRKtCzfO3nD9YXMKTuqRpKPF8PeK11CWh1'
-          'DBvBYwi20vbQ==',
-       },
-    },
+  # Key1
+  {'key':
+     'MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA2c3KzcPqvnJ5HCk3OZkf1'
+     'LMO8Ht4dw4FO2U0EmKvpo0zznj4RwUdmKobH1AFWzwZP4CDY2M67MsukE/1Jnbx1QIDAQ'
+     'ABAkBkKcLZa/75hHVz4PR3tZaw34PATlfxEG6RiRIwXlf/FFlfGIZOSxdW/I1A3XRl0/9'
+     'nZMuctBSKBrcTRZQWfT/hAiEA9g8xbQbMO6BEH/XCRSsQbPlvj4c9wDtVEzeAzZ/ht9kC'
+     'IQDiml+/lXS1emqml711jJcYJNYJzdy1lL/ieKogR59oXQIhAK+Pl4xa1U2VxAWpq7r+R'
+     'vH55wdZT03hB4p2h4gvEzXBAiAkw9kvE0eZPiBZoRrrHIFTOH7FnnHlwBmV2+/2RsiVPQ'
+     'IhAKqx/4qisivvmoM/xbzUagfoxwsu1A/4mGjhBKiS0BCq',
+   'signatures':
+     {'example.com':
+        'l+sT5mziei/GbmiP7VtRCCfwpZcg7uKbW2OlnK5B/TTELutjEIAMdHduNBwbO44qOn'
+        '/5c7YrtkXbBehaaDYFPGI6bGTbDmG9KRxhS+DaB7opgfCQWLi79Gn/jytKLZhRN/VS'
+        'y+PEbezqMi3d1/xDxlThwWZDNwnhv9ER/Nu/32ZTjzgtqonSn2CQtwXCIILm4FdV/1'
+        '/BdmZG+Ge4i4FTqYtInir5YFe611KXU/AveGhQGBIAXo4qYg1IqbVrvKBSU9dlI6Sl'
+        '9TJJLbJ3LGaXuljgFhyMAl3gcy7ftC9MohEmwa+sc7y2mOAgYQ5SSmyAtQwQgAkX9J'
+        '3+tfxjmoA/dg==',
+      'chromepolicytest.com':
+        'TzBiigZKwBdr6lyP6tUDsw+Q9wYO1Yepyxm0O4JZ4RID32L27sWzC1/hwC51fRcCvP'
+        'luEVIW6mH+BFODXMrteUFWfbbG7jgV+Wg+QdzMqgJjxhNKFXPTsZ7/286LAd1vBY/A'
+        'nGd8Wog6AhzfrgMbLNsH794GD0xIUwRvXUWFNP8pClj5VPgQnJrIA9aZwW8FNGbteA'
+        'HacFB0T/oqP5s7XT4Qvkj14RLmCgTwEM8Vcpqy5teJaF8yN17wniveddoOQGH6s0HC'
+        'ocprEccrH5fP/WVAPxCfx4vVYQY5q4CZ4K3f6dTC2FV4IDelM6dugEkvSS02YCzDaO'
+        'N+Z7IwElzTKg==',
+      'managedchrome.com':
+        'T0wXC5w3GXyovA09pyOLX7ui/NI603UfbZXYyTbHI7xtzCIaHVPH35Nx4zdqVrdsej'
+        'ErQ12yVLDDIJokY4Yl+/fj/zrkAPxThI+TNQ+jo0i+al05PuopfpzvCzIXiZBbkbyW'
+        '3XfedxXP3IPN2XU2/3vX+ZXUNG6pxeETem64kGezkjkUraqnHw3JVzwJYHhpMcwdLP'
+        'PYK6V23BbEHEVBtQZd/ledXacz7gOzm1zGni4e+vxA2roAdJWyhbjU0dTKNNUsZmMv'
+        'ryQH9Af1Jw+dqs0RAbhcJXm2i8EUWIgNv6aMn1Z2DzZwKKjXsKgcYSRo8pdYa8RZAo'
+        'UExd9roA9a5w==',
+      }
+   },
+  # Key2
+  {'key':
+     'MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAmZhreV04M3knCi6wibr49'
+     'oDesHny1G33PKOX9ko8pcxAiu9ZqsKCj7wNW2PGqnLi81fddACwQtYn5xdhCtzB9wIDAQ'
+     'ABAkA0z8m0cy8N08xundspoFZWO71WJLgv/peSDBYGI0RzJR1l9Np355EukQUQwRs5XrL'
+     '3vRQZy2vDqeiR96epkAhRAiEAzJ4DVI8k3pAl7CGv5icqFkJ02viExIwehhIEXBcB6p0C'
+     'IQDAKmzpoRpBEZRQ9xrTvPOi+Ea8Jnd478BU7CI/LFfgowIgMfLIoVWoDGRnvXKju60Hy'
+     'xNB70oHLut9cADp64j6QMkCIDrgxN4QbmrhaAAmtiGKE1wrlgCwCIsVamiasSOKAqLhAi'
+     'EAo/ItVcFtQPod97qG71CY/O4JzOciuU6AMhprs181vfM=',
+   'signatures':
+   # Key2 signatures
+     {'example.com':
+        'cO0nQjRptkeefKDw5QpJSQDavHABxUvbR9Wvoa235OG9Whw1RFqq2ye6pKnI3ezW6/'
+        '7b4ANcpi5a7HV5uF8K7gWyYdxY8NHLeyrbwXxg5j6HAmHmkP1UZcf/dAnWqo7cW8g4'
+        'DIQOhC43KkveMYJ2HnelwdXt/7zqkbe8/3Yj4nhjAUeARx86Sb8Nzydwkrvqs5Jw/x'
+        '5LG+BODExrXXcGu/ubDlW4ivJFqfNUPQysqBXSMY2XCHPJDx3eECLGVVN/fFAWWgjM'
+        'HFObAriAt0b18cc9Nr0mAt4Qq1oDzWcAHCPHE+5dr8Uf46BUrMLJRNRKCY7rrsoIin'
+        '9Be9gs3W+Aww==',
+      'chromepolicytest.com':
+        'mr+9CCYvR0cTvPwlzkxqlpGYy55gY7cPiIkPAPoql51yHK1tkMTOSFru8Dy/nMt+0o'
+        '4z7WO60F1wnIBGkQxnTj/DsO6QpCYi7oHqtLmZ2jsLQFlMyvPGUtpJEFvRwjr/TNbh'
+        '6RqUtz1LQFuJQ848kBrx7nkte1L8SuPDExgx+Q3LtbNj4SuTdvMUBMvEERXiLuwfFL'
+        'BefGjtsqfWETQVlJTCW7xcqOLedIX8UYgEDBpDOZ23A3GzCShuBsIut5m87R5mODht'
+        'EUmKNDK1+OMc6SyDpf+r48Wph4Db1bVaKy8fcpSNJOwEgsrmH7/+owKPGcN7I5jYAF'
+        'Z2PGxHTQ9JNA==',
+      'managedchrome.com':
+        'o5MVSo4bRwIJ/aooGyXpRXsEsWPG8fNA2UTG8hgwnLYhNeJCCnLs/vW2vdp0URE8jn'
+        'qiG4N8KjbuiGw0rJtO1EygdLfpnMEtqYlFjrOie38sy92l/AwohXj6luYzMWL+FqDu'
+        'WQeXasjgyY4s9BOLQVDEnEj3pvqhrk/mXvMwUeXGpbxTNbWAd0C8BTZrGOwU/kIXxo'
+        'vAMGg8L+rQaDwBTEnMsMZcvlrIyqSg5v4BxCWuL3Yd2xvUqZEUWRp1aKetsHRnz5hw'
+        'H7WK7DzvKepDn06XjPG9lchi448U3HB3PRKtCzfO3nD9YXMKTuqRpKPF8PeK11CWh1'
+        'DBvBYwi20vbQ==',
+      },
+   },
 ]
 
 class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -285,9 +285,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     # Check server side requirements, as defined in
     # device_management_backend.proto.
     if (self.GetUniqueParam('devicetype') != '2' or
-        self.GetUniqueParam('apptype') != 'Chrome' or
-        (self.GetUniqueParam('deviceid') is not None and
-         len(self.GetUniqueParam('deviceid')) >= 64)):
+            self.GetUniqueParam('apptype') != 'Chrome' or
+          (self.GetUniqueParam('deviceid') is not None and
+               len(self.GetUniqueParam('deviceid')) >= 64)):
       return (400, 'Invalid request parameter')
     if request_type == 'register':
       response = self.ProcessRegister(rmsg.register_request)
@@ -389,7 +389,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       return (500, 'Error in config - no managed users')
     username = self.server.ResolveUser(auth)
     if ('*' not in policy['managed_users'] and
-        username not in policy['managed_users']):
+            username not in policy['managed_users']):
       return (403, 'Unmanaged')
 
     return self.RegisterDeviceAndSendResponse(msg, username)
@@ -414,7 +414,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       return(400, 'Invalid request')
 
     # TODO(drcrash): Check the certificate itself.
-    if req.certificate_type != dm.CertificateBasedDeviceRegistrationData.\
+    if req.certificate_type != dm.CertificateBasedDeviceRegistrationData. \
         ENTERPRISE_ENROLLMENT_CERTIFICATE:
       return(403, 'Invalid registration certificate type')
 
@@ -436,7 +436,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     # Send back the reply.
     response = dm.DeviceManagementResponse()
     response.register_response.device_management_token = (
-        token_info['device_token'])
+      token_info['device_token'])
     response.register_response.machine_name = token_info['machine_name']
     response.register_response.enrollment_type = token_info['enrollment_mode']
 
@@ -538,17 +538,17 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     response = dm.DeviceManagementResponse()
     for request in msg.policy_request.request:
       if (request.policy_type in
-             ('google/android/user',
-              'google/chromeos/device',
-              'google/chromeos/publicaccount',
-              'google/chromeos/user',
-              'google/chrome/user',
-              'google/ios/user')):
+            ('google/android/user',
+             'google/chromeos/device',
+             'google/chromeos/publicaccount',
+             'google/chromeos/user',
+             'google/chrome/user',
+             'google/ios/user')):
         fetch_response = response.policy_response.response.add()
         self.ProcessCloudPolicy(request, token_info, fetch_response, username)
       elif (request.policy_type in
-             ('google/chrome/extension',
-              'google/chromeos/signinextension')):
+              ('google/chrome/extension',
+               'google/chromeos/signinextension')):
         self.ProcessCloudPolicyForExtensions(
             request, response.policy_response, token_info, username)
       else:
@@ -611,8 +611,8 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     if client is not None:
       state = self.server.GetPolicies().get('device_state', {})
       FIELDS = [
-          'management_domain',
-          'restore_mode',
+        'management_domain',
+        'restore_mode',
       ]
       for field in FIELDS:
         if field in state:
@@ -649,7 +649,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """
     response = dm.DeviceManagementResponse()
     response.device_attribute_update_permission_response.result = (
-        dm.DeviceAttributeUpdatePermissionResponse.ATTRIBUTE_UPDATE_ALLOWED)
+      dm.DeviceAttributeUpdatePermissionResponse.ATTRIBUTE_UPDATE_ALLOWED)
 
     return (200, response)
 
@@ -661,7 +661,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """
     response = dm.DeviceManagementResponse()
     response.device_attribute_update_response.result = (
-        dm.DeviceAttributeUpdateResponse.ATTRIBUTE_UPDATE_SUCCESS)
+      dm.DeviceAttributeUpdateResponse.ATTRIBUTE_UPDATE_SUCCESS)
 
     return (200, response)
 
@@ -723,14 +723,17 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       assert type(field_value) == bool
     elif field.type == field.TYPE_STRING:
       assert type(field_value) == str or type(field_value) == unicode
-    elif field.type == field.TYPE_INT64:
+    elif field.type == field.TYPE_INT64 or field.type == field.TYPE_INT32 \
+        or field.type == field.TYPE_ENUM:
       assert type(field_value) == int
-    elif (field.type == field.TYPE_MESSAGE and
-          field.message_type.name == 'StringList'):
-      assert type(field_value) == list
-      entries = group_message.__getattribute__(field.name).entries
-      for list_item in field_value:
-        entries.append(list_item)
+    elif field.type == field.TYPE_MESSAGE:
+      assert type(field_value) == dict
+      sub_message = group_message.__getattribute__(field.name)
+      for sub_value in field_value:
+        for sub_field in sub_message.DESCRIPTOR.fields:
+          if sub_field.name in sub_value:
+            value = field_value[sub_field.name]
+            self.SetProtobufMessageField(sub_message, sub_field, value)
       return
     else:
       raise Exception('Unknown field type %s' % field.type)
@@ -791,7 +794,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       settings.__getattribute__(field.name).CopyFrom(policy_message)
 
   def ProcessCloudPolicyForExtensions(self, request, response, token_info,
-                                      username=None):
+      username=None):
     """Handles a request for policy for extensions.
 
     A request for policy for extensions is slightly different from the other
@@ -859,6 +862,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if payload is None:
           self.GatherDevicePolicySettings(settings, policy.get(policy_key, {}))
           payload = settings.SerializeToString()
+          # TODO HERE
       elif msg.policy_type in ('google/chrome/extension',
                                'google/chromeos/signinextension'):
         settings = ep.ExternalPolicyData()
@@ -949,9 +953,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
           if verification_sig:
             assert len(verification_sig) == 256, \
-                'bad signature size: %d' % len(verification_sig)
+              'bad signature size: %d' % len(verification_sig)
             response.new_public_key_verification_signature_deprecated = (
-                verification_sig)
+              verification_sig)
 
         if client_key is not None:
           response.new_public_key_signature = bytes(
@@ -1001,8 +1005,8 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     else:
       token_info = self.server.LookupToken(dmtoken)
       if (not token_info or
-          not request_device_id or
-          token_info['device_id'] != request_device_id):
+            not request_device_id or
+              token_info['device_id'] != request_device_id):
         error = 410
       else:
         return (token_info, None)
@@ -1021,7 +1025,7 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
   """Handles requests and keeps global service state."""
 
   def __init__(self, server_address, data_dir, policy_path, client_state_file,
-               private_key_paths, rotate_keys_automatically, server_base_url):
+      private_key_paths, rotate_keys_automatically, server_base_url):
     """Initializes the server.
 
     Args:
@@ -1171,7 +1175,8 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
     token_info_url = config.get('token_info_url')
     if token_info_url is not None:
       try:
-        token_info = urllib2.urlopen(token_info_url + '?' +
+        token_info = urllib2.urlopen(
+            token_info_url + '?' +
             urllib.urlencode({'access_token': auth_token})).read()
         return json.loads(token_info)['email']
       except Exception as e:
@@ -1194,24 +1199,24 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
     dmtoken = ''.join(dmtoken_chars)
     allowed_policy_types = {
       dm.DeviceRegisterRequest.BROWSER: [
-          'google/chrome/user',
-          'google/chrome/extension'
+        'google/chrome/user',
+        'google/chrome/extension'
       ],
       dm.DeviceRegisterRequest.USER: [
-          'google/chromeos/user',
-          'google/chrome/extension'
+        'google/chromeos/user',
+        'google/chrome/extension'
       ],
       dm.DeviceRegisterRequest.DEVICE: [
-          'google/chromeos/device',
-          'google/chromeos/publicaccount',
-          'google/chrome/extension',
-          'google/chromeos/signinextension'
+        'google/chromeos/device',
+        'google/chromeos/publicaccount',
+        'google/chrome/extension',
+        'google/chromeos/signinextension'
       ],
       dm.DeviceRegisterRequest.ANDROID_BROWSER: [
-          'google/android/user'
+        'google/android/user'
       ],
       dm.DeviceRegisterRequest.IOS_BROWSER: [
-          'google/ios/user'
+        'google/ios/user'
       ],
       dm.DeviceRegisterRequest.TT: ['google/chromeos/user',
                                     'google/chrome/user'],
@@ -1423,43 +1428,46 @@ class PolicyServerRunner(testserver_base.TestServerRunner):
     testserver_base.TestServerRunner.add_options(self)
     self.option_parser.add_option('--client-state', dest='client_state_file',
                                   help='File that client state should be '
-                                  'persisted to. This allows the server to be '
-                                  'seeded by a list of pre-registered clients '
-                                  'and restarts without abandoning registered '
-                                  'clients.')
+                                       'persisted to. This allows the server '
+                                       'to be seeded by a list of '
+                                       'pre-registered clients and restarts '
+                                       'without abandoning registered clients.')
     self.option_parser.add_option('--policy-key', action='append',
                                   dest='policy_keys',
                                   help='Specify a path to a PEM-encoded '
-                                  'private key to use for policy signing. May '
-                                  'be specified multiple times in order to '
-                                  'load multiple keys into the server. The '
-                                  'server will use a canned key if none is '
-                                  'specified on the command line. The test '
-                                  'server will also look for a verification '
-                                  'signature file in the same location: '
-                                  '<filename>.sig and if present will add the '
-                                  'signature to the policy blob as appropriate '
-                                  'via the '
-                             'new_public_key_verification_signature_deprecated '
-                                  'field.')
+                                       'private key to use for policy signing. '
+                                       'May be specified multiple times in '
+                                       'order to load multiple keys into the '
+                                       'server. The server will use a canned '
+                                       'key if none is specified on the '
+                                       'command line. The test server will '
+                                       'also look for a verification signature '
+                                       'file in the same location: '
+                                       '<filename>.sig and if present will add '
+                                       'the signature to the policy blob as '
+                                       'appropriate via the '
+                                       'new_public_key_verification_'
+                                       'signature_deprecated field.')
     self.option_parser.add_option('--rotate-policy-keys-automatically',
                                   action='store_true',
                                   dest='rotate_keys_automatically',
                                   help='If present, then the policy keys will '
-                                  'be rotated in a round-robin fashion for '
-                                  'each policy request (by default, either the '
-                                  'key specified in the config or the first '
-                                  'key will be used for all requests).')
+                                       'be rotated in a round-robin fashion '
+                                       'for each policy request (by default, '
+                                       'either the key specified in the config '
+                                       'or the first key will be used for '
+                                       'all requests).')
     self.option_parser.add_option('--log-level', dest='log_level',
                                   default='WARN',
                                   help='Log level threshold to use.')
     self.option_parser.add_option('--config-file', dest='config_file',
                                   help='Specify a configuration file to use '
-                                  'instead of the default '
-                                  '<data_dir>/device_management')
+                                       'instead of the default '
+                                       '<data_dir>/device_management')
     self.option_parser.add_option('--server-base-url', dest='server_base_url',
                                   help='The server base URL to use when '
-                                  'constructing URLs to return to the client.')
+                                       'constructing URLs to return '
+                                       'to the client.')
 
   def run_server(self):
     logger = logging.getLogger()
