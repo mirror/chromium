@@ -36,7 +36,7 @@ SettingsAccessibilityTest.runAudit = function(opt_options={}) {
       var violationCount = results.violations.length;
       if (violationCount) {
         // Pretty print out the violations detected by the audit.
-        console.log(JSON.stringify(results.violations, null, 4));
+        // console.log(JSON.stringify(results.violations, null, 4));
         reject('Found ' + violationCount + ' accessibility violations.');
       } else {
         resolve();
@@ -55,7 +55,7 @@ SettingsAccessibilityTest.prototype = {
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
       'ensure_lazy_loaded.js',
       'passwords_and_autofill_fake_data.js',
-      'passwords_a11y_test.js'
+      'settings_accessibility_test.js'
   ]),
 
   // TODO(hcarmona): Remove once ADT is not longer in the testing infrastructure
@@ -67,7 +67,62 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-TEST_F('SettingsAccessibilityTest', 'All', function() {
-  mocha.run();
+// TODO(quacht): Add SIGN_OUT route once test is written.
+var routes = [
+   'BASIC',
+   'ABOUT',
+   'IMPORT_DATA',
+   'APPEARANCE',
+   'FONTS',
+   'DEFAULT_BROWSER',
+   'SEARCH',
+   'SEARCH_ENGINES',
+   'ON_STARTUP',
+   'STARTUP_URLS',
+   'PEOPLE',
+   'SYNC',
+   'MANAGE_PROFILE',
+   'ADVANCED',
+   'CLEAR_BROWSER_DATA',
+   'PRIVACY',
+   'CERTIFICATES',
+   'SITE_SETTINGS',
+   'SITE_SETTINGS_HANDLERS',
+   'SITE_SETTINGS_ADS',
+   'SITE_SETTINGS_AUTOMATIC_DOWNLOADS',
+   'SITE_SETTINGS_BACKGROUND_SYNC',
+   'SITE_SETTINGS_CAMERA',
+   'SITE_SETTINGS_COOKIES',
+   'SITE_SETTINGS_DATA_DETAILS',
+   'SITE_SETTINGS_IMAGES',
+   'SITE_SETTINGS_JAVASCRIPT',
+   'SITE_SETTINGS_LOCATION',
+   'SITE_SETTINGS_MICROPHONE',
+   'SITE_SETTINGS_NOTIFICATIONS',
+   'SITE_SETTINGS_FLASH',
+   'SITE_SETTINGS_POPUPS',
+   'SITE_SETTINGS_UNSANDBOXED_PLUGINS',
+   'SITE_SETTINGS_MIDI_DEVICES',
+   'SITE_SETTINGS_USB_DEVICES',
+   'SITE_SETTINGS_ZOOM_LEVELS',
+   'SITE_SETTINGS_PDF_DOCUMENTS',
+   'SITE_SETTINGS_PROTECTED_CONTENT',
+   'PASSWORDS',
+   'AUTOFILL',
+   'MANAGE_PASSWORDS',
+   'LANGUAGES',
+   'EDIT_DICTIONARY',
+   'DOWNLOADS',
+   'PRINTING',
+   'CLOUD_PRINTERS',
+   'ACCESSIBILITY',
+   'SYSTEM',
+   'RESET',
+   'RESET_DIALOG',
+   'TRIGGERED_RESET_DIALOG'
+ ].forEach(function(route) {
+  TEST_F('SettingsAccessibilityTest', route, function() {
+    mocha.grep(new RegExp(route)).run();
+  });
 });
 
