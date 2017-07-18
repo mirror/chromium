@@ -16,6 +16,24 @@
       "revId": "62ba04c10ec2aa047348e52357f927a94fd8a9ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a25edb_07df5f40",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T02:12:22Z",
+      "side": 1,
+      "message": "Ahh, thanks, I edited the file in another working directory...",
+      "parentUuid": "e78bf298_573caa58",
+      "revId": "62ba04c10ec2aa047348e52357f927a94fd8a9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
