@@ -3407,10 +3407,11 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
 
   CHECK(!ShouldThrottleRendering());
   CHECK(frame_->GetDocument()->IsActive());
-  CHECK(!nested_layout_count_);
 
-  if (NeedsLayout())
+  if (NeedsLayout()) {
+    CHECK(!nested_layout_count_);
     UpdateLayout();
+  }
 
   CheckDoesNotNeedLayout();
 

@@ -731,6 +731,12 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
     return;
   }
 
+  if (Style()->GetPosition() == EPosition::kSticky &&
+      GetDocument().Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean) {
+    GetDocument().EnsurePaintLocationDataValidForNode(GetNode());
+    new_rect.Move(StickyPositionOffset());
+  }
+
   if (GetFrame()
           ->GetPage()
           ->GetAutoscrollController()
