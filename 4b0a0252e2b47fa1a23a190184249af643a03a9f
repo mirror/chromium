@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38afde32_3a9432d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabAppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-18T02:05:28Z",
+      "side": 0,
+      "message": "FYI: This refactoring primarily aims to avoid weird code flows like this else statement, which relies on the fact that CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER and CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST hide open in chrome and bookmark items, in order to skip initializing them.\n\nEngineer adding a new UI type might be tempted to add another else if {} here, which could cause issues if they for example didn\u0027t hide bookmark item and didn\u0027t refactor the rest.\n\nThe if statement with FirstRunStatus.getFirstRunFlowComplete() hiding things we already might have initialized is also a little dirty.\n\nWe might go even further and add methods e.g. isOpenInChromeVisible(), which controls the rest... Up to you.",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "4b0a0252e2b47fa1a23a190184249af643a03a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
