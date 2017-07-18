@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eafa2671_fa134527",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-18T16:08:12Z",
+      "side": 1,
+      "message": "I\u0027m getting crashes on this assert on ToT now:\n\n07-18 09:06:21.902 15968 15986 W chromium: [0718/090621.902290:WARNING:trace_config_file.cc(80)] The trace config file does not exist.\n07-18 09:06:21.902 15968 15986 I chromium: [INFO:library_loader_hooks.cc(136)] Chromium logging enabled: level \u003d 0, default verbosity \u003d 0\n07-18 09:06:21.969 15819 15819 W System.err: java.lang.AssertionError\n07-18 09:06:21.969 15819 15819 W System.err: \tat org.chromium.chrome.browser.suggestions.SuggestionsBinder.fadeThumbnailIn(SuggestionsBinder.java:278)\n07-18 09:06:21.969 15819 15819 W System.err: \tat org.chromium.chrome.browser.suggestions.SuggestionsBinder.access$300(SuggestionsBinder.java:41)\n07-18 09:06:21.969 15819 15819 W System.err: \tat org.chromium.chrome.browser.suggestions.SuggestionsBinder$FetchThumbnailCallback.onResult(SuggestionsBinder.java:367)\n07-18 09:06:21.969 15819 15819 W System.err: \tat org.chromium.chrome.browser.suggestions.SuggestionsBinder$FetchThumbnailCallback.onResult(SuggestionsBinder.java:330)\n07-18 09:06:21.969 15819 15819 W System.err: \tat org.chromium.base.Callback.onResultFromNative(Callback.java:23)\n07-18 09:06:21.970 15819 15819 W System.err: \tat org.chromium.base.SystemMessageHandler.nativeDoRunLoopOnce(Native Method)\n07-18 09:06:21.970 15819 15819 W System.err: \tat org.chromium.base.SystemMessageHandler.handleMessage(SystemMessageHandler.java:41)\n07-18 09:06:21.970 15819 15819 W System.err: \tat android.os.Handler.dispatchMessage(Handler.java:102)\n07-18 09:06:21.970 15819 15819 W System.err: \tat android.os.Looper.loop(Looper.java:154)\n07-18 09:06:21.970 15819 15819 W System.err: \tat android.app.ActivityThread.main(ActivityThread.java:6119)\n07-18 09:06:21.970 15819 15819 W System.err: \tat java.lang.reflect.Method.invoke(Native Method)\n07-18 09:06:21.970 15819 15819 W System.err: \tat com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)\n07-18 09:06:21.970 15819 15819 W System.err: \tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)\n07-18 09:06:22.009 15819 15819 F chromium: [FATAL:jni_android.cc(243)] Please include Java exception stack in crash report",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "056ecfbd6e74ff772fea5f4b945ab30a26e859b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
