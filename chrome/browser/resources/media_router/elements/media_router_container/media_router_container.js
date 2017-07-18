@@ -300,17 +300,6 @@ Polymer({
     },
 
     /**
-     * Whether the search input should be padded as if it were at the bottom of
-     * the dialog.
-     * @type {boolean}
-     */
-    searchUseBottomPadding: {
-      type: Boolean,
-      reflectToAttribute: true,
-      value: true,
-    },
-
-    /**
      * Whether to show the user domain of sinks associated with identity.
      * @type {boolean|undefined}
      */
@@ -1430,7 +1419,6 @@ Polymer({
         this.getElementVerticalPadding_(search);
     var searchPadding = searchInitialPaddingBottom + searchInitialPaddingTop;
     var searchHeight = search.offsetHeight - searchPadding;
-    this.searchUseBottomPadding = true;
     var searchFinalPaddingBottom, searchFinalPaddingTop;
     [searchFinalPaddingBottom, searchFinalPaddingTop] =
         this.getElementVerticalPadding_(search);
@@ -1549,6 +1537,8 @@ Polymer({
     var search = this.$$('#sink-search');
     var view = this.$['sink-list-view'];
 
+    results.style.maxHeight = this.sinkListMaxHeight_ + 'px';
+
     // Saves current search container |offsetHeight| which includes bottom
     // padding.
     var searchInitialOffsetHeight = search.offsetHeight;
@@ -1562,8 +1552,6 @@ Polymer({
         this.getElementVerticalPadding_(search);
     var searchPadding = searchInitialPaddingBottom + searchInitialPaddingTop;
     var searchHeight = search.offsetHeight - searchPadding;
-    this.searchUseBottomPadding =
-        this.shouldSearchUseBottomPadding_(deviceMissing);
     var searchFinalPaddingBottom, searchFinalPaddingTop;
     [searchFinalPaddingBottom, searchFinalPaddingTop] =
         this.getElementVerticalPadding_(search);
@@ -1910,7 +1898,6 @@ Polymer({
     var list = this.$$('#sink-list');
     var resultsContainer = this.$$('#search-results-container');
     var view = this.$['sink-list-view'];
-    this.searchUseBottomPadding = true;
     search.style['top'] = '';
     if (resultsContainer) {
       resultsContainer.style['position'] = '';
@@ -1954,11 +1941,11 @@ Polymer({
     var search = this.$$('#sink-search');
     var view = this.$['sink-list-view'];
 
+    results.style.maxHeight = this.sinkListMaxHeight_ + 'px';
+
     // If there is a height mismatch between where the animation calculated the
     // height should be and where it is now because the search results changed
     // during the animation, correct it with... another animation.
-    this.searchUseBottomPadding =
-        this.shouldSearchUseBottomPadding_(deviceMissing);
     var resultsPadding = this.computeElementVerticalPadding_(results);
     var finalHeight = this.computeTotalSearchHeight_(
         deviceMissing, noMatches, results, search.offsetHeight,
@@ -2364,16 +2351,6 @@ Polymer({
   },
 
   /**
-   * @param {?Element} deviceMissing Device missing message element.
-   * @return {boolean} Whether the search input should use vertical padding as
-   *     if it were the lowest (at the very bottom) item in the dialog.
-   * @private
-   */
-  shouldSearchUseBottomPadding_: function(deviceMissing) {
-    return !deviceMissing.hasAttribute('hidden');
-  },
-
-  /**
    * Shows the cast mode list.
    *
    * @private
@@ -2538,17 +2515,16 @@ Polymer({
           firstRunFlowHeight + headerHeight + 'px';
 
       var sinkList = this.$$('#sink-list');
-      if (hasSearch && sinkList) {
-        // This would need to be reset to '' if search could be disabled again,
-        // but once it's enabled it can't be disabled again.
-        this.$$('#sink-list-paper-menu').style.paddingBottom = '0';
-      }
       var sinkListPadding =
           sinkList ? this.computeElementVerticalPadding_(sinkList) : 0;
 
       this.sinkListMaxHeight_ = this.dialogHeight_ - headerHeight -
           firstRunFlowHeight - issueHeight - searchHeight + searchPadding -
           sinkListPadding;
+      var maxSinkItems = hasSearch ? 4 : 5;
+      var heightPerSinkItem = 41;
+      this.sinkListMaxHeight_ =
+          Math.min(heightPerSinkItem * maxSinkItems, this.sinkListMaxHeight_);
       if (sinkList) {
         sinkList.style.maxHeight = this.sinkListMaxHeight_ + 'px';
         var searchResults = this.$$('#search-results');
