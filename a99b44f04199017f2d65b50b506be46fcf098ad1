@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c14f53a8_7b5ed7ae",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "status_callback",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54e08a7_73702ede",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "why the explicit base::OnceCallback constructor call? Can\u0027t you just pass std::move(callback) directly?",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc41be43_8a4e439d",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "status_callback_",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227bf543_18f08aa7",
+        "filename": "content/browser/payments/payment_app_provider_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "coding style requires status_callback",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda67af1_46276234",
+        "filename": "content/public/browser/payment_app_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "nit: base::RepeatingCallback",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51755d50_696c7b69",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "is this safe? Is there any guarantee that the even still exists in payment_invoke_callbacks? I might have missed it, but I don\u0027t see what guarantees that this method isn\u0027t called after RespondToPaymentRequestEvent is called.",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a3744b_0174b7f7",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "The name of this method seems wrong. You don\u0027t call this method to check if the payment request is cancelled, you call it with the result of checking if the payment request is cancelled.",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105514c2_22b68f60",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-18T18:19:03Z",
+      "side": 1,
+      "message": "I know blink code style tells you to leave out redundant argument names in method declarations, but without a name I have no idea what this string is supposed to be.",
+      "revId": "a99b44f04199017f2d65b50b506be46fcf098ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
