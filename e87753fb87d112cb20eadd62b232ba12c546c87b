@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "578c4153_e551b29b",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T16:00:25Z",
+      "side": 1,
+      "message": "nit: Make",
+      "range": {
+        "startLine": 233,
+        "startChar": 9,
+        "endLine": 233,
+        "endChar": 14
+      },
+      "revId": "e87753fb87d112cb20eadd62b232ba12c546c87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
