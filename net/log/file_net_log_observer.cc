@@ -75,7 +75,8 @@ size_t WriteToFile(FILE* file,
 }
 
 // Copies all of the data at |source_path| and appends it to |destination_file|,
-// then deletes |source_path|.
+// then deletes |source_path|. |read_buffer| is a buffer of size
+// |read_buffer_size| which will be used for reading the source file in chunks.
 void AppendToFileThenDelete(const base::FilePath& source_path,
                             FILE* destination_file,
                             char* read_buffer,
@@ -84,7 +85,7 @@ void AppendToFileThenDelete(const base::FilePath& source_path,
   if (!source_file)
     return;
 
-  // Read |source_path|'s contents in chunks of read_buffer_size and append
+  // Read |source_path|'s contents in chunks of |read_buffer_size| and append
   // to |destination_file|.
   size_t num_bytes_read;
   while ((num_bytes_read =
@@ -551,16 +552,26 @@ void FileNetLogObserver::BoundedFileWriter::CreateInprogressDirectory() const {
     return;
   }
 
+  // It is OK if the path is wrong due to encoding - this is really just a
+  // convenience display for the user in understanding what the file means.
+  std::string in_progress_path = GetInprogressDirectory().AsUTF8Unsafe();
+
   // Since |final_log_file_| will not be written to until the very end, leave
   // some data in it explaining that the real data is currently in the
   // .inprogress directory. This ordinarily won't be visible (overwritten when
   // stopping) however if logging does not end gracefully the comments are
   // useful for recovery.
-  //
-  // TODO(eroman): Give a better description, including instructions on how
-  // to stitch the files manually if logging did not end gracefully.
-  WriteToFile(final_log_file_.get(),
-              "Log data is being written to the XXX.inprogress directory");
+  WriteToFile(
+      final_log_file_.get(), "Logging is in progress writing data to:\n    ",
+      in_progress_path,
+      "\n\n"
+      "That data will be flattened into this file once logging has stopped.\n"
+      "\n"
+      "If logging was interrupted, you can assemble a NetLog file from\n"
+      "the left-over .inprogress directory using:\n"
+      "\n"
+      "https://chromium.googlesource.com/chromium/src/+/master/net/log/"
+      "stitch_net_log_files.py");
   fflush(final_log_file_.get());
 }
 
