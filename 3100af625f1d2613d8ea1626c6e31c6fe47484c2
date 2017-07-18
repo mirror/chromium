@@ -22,6 +22,30 @@
       "revId": "3100af625f1d2613d8ea1626c6e31c6fe47484c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348a19ff_c4dc25a1",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T16:14:56Z",
+      "side": 1,
+      "message": "Now, it is guarded in the factory\u0027s BuildServiceInstanceFor().",
+      "parentUuid": "3d79f857_c76a987c",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 48
+      },
+      "revId": "3100af625f1d2613d8ea1626c6e31c6fe47484c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
