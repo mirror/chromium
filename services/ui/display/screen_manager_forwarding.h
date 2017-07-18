@@ -16,10 +16,6 @@
 #include "ui/display/mojo/native_display_delegate.mojom.h"
 #include "ui/display/types/native_display_observer.h"
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace display {
 
 class FakeDisplayController;
@@ -80,10 +76,8 @@ class ScreenManagerForwarding : public ScreenManager,
 
  private:
   void BindNativeDisplayDelegateRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::NativeDisplayDelegateRequest request);
   void BindTestDisplayControllerRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::TestDisplayControllerRequest request);
 
   // Forwards results from GetDisplays() back with |callback|.

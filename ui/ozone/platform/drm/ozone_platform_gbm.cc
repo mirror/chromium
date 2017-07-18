@@ -18,7 +18,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/base/cursor/ozone/bitmap_cursor_factory_ozone.h"
 #include "ui/base/ui_features.h"
@@ -112,8 +111,7 @@ class OzonePlatformGbm : public OzonePlatform {
         base::Bind(&OzonePlatformGbm::Create, base::Unretained(this)),
         gpu_task_runner_);
   }
-  void Create(const service_manager::BindSourceInfo& source_info,
-              ozone::mojom::DeviceCursorRequest request) {
+  void Create(ozone::mojom::DeviceCursorRequest request) {
     if (drm_thread_proxy_)
       drm_thread_proxy_->AddBinding(std::move(request));
     else

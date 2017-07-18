@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "ui/events/devices/input_device.h"
 #include "ui/events/devices/touchscreen_device.h"
 #include "ui/events/keycodes/dom/dom_code.h"
@@ -162,7 +161,6 @@ void InputDeviceController::NotifyObserver(
 }
 
 void InputDeviceController::BindInputDeviceControllerRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::InputDeviceControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
