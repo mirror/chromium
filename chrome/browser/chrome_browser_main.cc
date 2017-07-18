@@ -280,6 +280,9 @@
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #endif
 
+// TODO(sebmarchand): Add the proper ifdefs.
+#include "chrome/browser/metrics/tab_stats_tracker.h"
+
 using content::BrowserThread;
 
 namespace {
@@ -763,6 +766,7 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
 #if defined(OS_WIN) || defined(OS_MACOSX) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
   metrics::DesktopSessionDurationTracker::Initialize();
+  metrics::TabStatsTracker::Initialize();
 #endif
   metrics::RendererUptimeTracker::Initialize();
 }
