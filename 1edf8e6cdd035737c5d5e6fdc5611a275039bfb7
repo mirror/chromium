@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "976d846c_47401c21",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-18T09:08:31Z",
+      "side": 1,
+      "message": "Actually, those methods are not \"Public\", more like \"Protected\". Can you change the pragma?",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "1edf8e6cdd035737c5d5e6fdc5611a275039bfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
