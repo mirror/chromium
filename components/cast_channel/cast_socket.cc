@@ -51,8 +51,8 @@
 // Helper for logging data with remote host IP and authentication state.
 // Assumes |ip_endpoint_| of type net::IPEndPoint and |channel_auth_| of enum
 // type ChannelAuthType are available in the current scope.
-#define CONNECTION_INFO()                                 \
-  "[" << ip_endpoint_.ToString() << ", auth=SSL_VERIFIED" \
+#define CONNECTION_INFO()                                        \
+  "[" << config_.ip_endpoint.ToString() << ", auth=SSL_VERIFIED" \
       << "] "
 #define VLOG_WITH_CONNECTION(level) VLOG(level) << CONNECTION_INFO()
 #define LOG_WITH_CONNECTION(level) LOG(level) << CONNECTION_INFO()
@@ -86,49 +86,28 @@ class FakeCertVerifier : public net::CertVerifier {
 
 }  // namespace
 
-CastSocketImpl::CastSocketImpl(const net::IPEndPoint& ip_endpoint,
-                               net::NetLog* net_log,
-                               base::TimeDelta timeout,
-                               base::TimeDelta liveness_timeout,
-                               base::TimeDelta ping_interval,
-                               const scoped_refptr<Logger>& logger,
-                               uint64_t device_capabilities)
-    : CastSocketImpl(ip_endpoint,
-                     net_log,
-                     timeout,
-                     liveness_timeout,
-                     ping_interval,
-                     logger,
-                     device_capabilities,
-                     AuthContext::Create()) {}
+CastSocketImpl::CastSocketImpl(const CastSocketConfig& config,
+                               const scoped_refptr<Logger>& logger)
+    : CastSocketImpl(config, logger, AuthContext::Create()) {}
 
-CastSocketImpl::CastSocketImpl(const net::IPEndPoint& ip_endpoint,
-                               net::NetLog* net_log,
-                               base::TimeDelta timeout,
-                               base::TimeDelta liveness_timeout,
-                               base::TimeDelta ping_interval,
+CastSocketImpl::CastSocketImpl(const CastSocketConfig& config,
                                const scoped_refptr<Logger>& logger,
-                               uint64_t device_capabilities,
                                const AuthContext& auth_context)
     : channel_id_(0),
-      ip_endpoint_(ip_endpoint),
-      net_log_(net_log),
-      liveness_timeout_(liveness_timeout),
-      ping_interval_(ping_interval),
+      config_(config),
       logger_(logger),
       auth_context_(auth_context),
-      connect_timeout_(timeout),
       connect_timeout_timer_(new base::OneShotTimer),
       is_canceled_(false),
-      device_capabilities_(device_capabilities),
       audio_only_(false),
       connect_state_(ConnectionState::START_CONNECT),
       error_state_(ChannelError::NONE),
       ready_state_(ReadyState::NONE),
       auth_delegate_(nullptr) {
-  DCHECK(net_log_);
+  DCHECK(config.ip_endpoint.address().IsValid());
+  DCHECK(config_.net_log);
   net_log_source_.type = net::NetLogSourceType::SOCKET;
-  net_log_source_.id = net_log_->NextID();
+  net_log_source_.id = config_.net_log->NextID();
 }
 
 CastSocketImpl::~CastSocketImpl() {
@@ -150,7 +129,7 @@ ChannelError CastSocketImpl::error_state() const {
 }
 
 const net::IPEndPoint& CastSocketImpl::ip_endpoint() const {
-  return ip_endpoint_;
+  return config_.ip_endpoint;
 }
 
 int CastSocketImpl::id() const {
@@ -162,7 +141,7 @@ void CastSocketImpl::set_id(int id) {
 }
 
 bool CastSocketImpl::keep_alive() const {
-  return liveness_timeout_ > base::TimeDelta();
+  return config_.liveness_timeout > base::TimeDelta();
 }
 
 bool CastSocketImpl::audio_only() const {
@@ -170,9 +149,9 @@ bool CastSocketImpl::audio_only() const {
 }
 
 std::unique_ptr<net::TCPClientSocket> CastSocketImpl::CreateTcpSocket() {
-  net::AddressList addresses(ip_endpoint_);
-  return std::unique_ptr<net::TCPClientSocket>(
-      new net::TCPClientSocket(addresses, nullptr, net_log_, net_log_source_));
+  net::AddressList addresses(config_.ip_endpoint);
+  return std::unique_ptr<net::TCPClientSocket>(new net::TCPClientSocket(
+      addresses, nullptr, config_.net_log, net_log_source_));
   // Options cannot be set on the TCPClientSocket yet, because the
   // underlying platform socket will not be created until Bind()
   // or Connect() is called.
@@ -197,7 +176,7 @@ std::unique_ptr<net::SSLClientSocket> CastSocketImpl::CreateSslSocket(
       new net::ClientSocketHandle);
   connection->SetSocket(std::move(socket));
   net::HostPortPair host_and_port =
-      net::HostPortPair::FromIPEndPoint(ip_endpoint_);
+      net::HostPortPair::FromIPEndPoint(config_.ip_endpoint);
 
   return net::ClientSocketFactory::GetDefaultFactory()->CreateSSLClientSocket(
       std::move(connection), host_and_port, ssl_config, context);
@@ -214,7 +193,7 @@ scoped_refptr<net::X509Certificate> CastSocketImpl::ExtractPeerCert() {
 bool CastSocketImpl::VerifyChannelPolicy(const AuthResult& result) {
   audio_only_ = (result.channel_policies & AuthResult::POLICY_AUDIO_ONLY) != 0;
   if (audio_only_ &&
-      (device_capabilities_ & CastDeviceCapability::VIDEO_OUT) != 0) {
+      (config_.device_capabilities & CastDeviceCapability::VIDEO_OUT) != 0) {
     LOG_WITH_CONNECTION(ERROR)
         << "Audio only channel policy enforced for video out capable device";
     return false;
@@ -275,11 +254,11 @@ void CastSocketImpl::Connect() {
   SetConnectState(ConnectionState::TCP_CONNECT);
 
   // Set up connection timeout.
-  if (connect_timeout_.InMicroseconds() > 0) {
+  if (config_.connect_timeout.InMicroseconds() > 0) {
     DCHECK(connect_timeout_callback_.IsCancelled());
     connect_timeout_callback_.Reset(
         base::Bind(&CastSocketImpl::OnConnectTimeout, base::Unretained(this)));
-    GetTimer()->Start(FROM_HERE, connect_timeout_,
+    GetTimer()->Start(FROM_HERE, config_.connect_timeout,
                       connect_timeout_callback_.callback());
   }
 
@@ -448,7 +427,7 @@ int CastSocketImpl::DoSslConnectComplete(int result) {
       // Create a channel transport if one wasn't already set (e.g. by test
       // code).
       transport_.reset(new CastTransportImpl(this->socket_.get(), channel_id_,
-                                             ip_endpoint_, logger_));
+                                             config_.ip_endpoint, logger_));
     }
     auth_delegate_ = new AuthTransportDelegate(this);
     transport_->SetReadDelegate(base::WrapUnique(auth_delegate_));
@@ -562,9 +541,9 @@ void CastSocketImpl::DoConnectCallback() {
   if (error_state_ == ChannelError::NONE) {
     SetReadyState(ReadyState::OPEN);
     if (keep_alive()) {
-      auto* keep_alive_delegate =
-          new KeepAliveDelegate(this, logger_, std::move(delegate_),
-                                ping_interval_, liveness_timeout_);
+      auto* keep_alive_delegate = new KeepAliveDelegate(
+          this, logger_, std::move(delegate_), config_.ping_interval,
+          config_.liveness_timeout);
       delegate_.reset(keep_alive_delegate);
     }
     transport_->SetReadDelegate(std::move(delegate_));
@@ -654,6 +633,27 @@ void CastSocketImpl::CastSocketMessageDelegate::OnMessage(
 }
 
 void CastSocketImpl::CastSocketMessageDelegate::Start() {}
+
+CastSocketConfig::CastSocketConfig(const net::IPEndPoint& ip_endpoint,
+                                   net::NetLog* net_log,
+                                   base::TimeDelta connect_timeout)
+    : ip_endpoint(ip_endpoint),
+      net_log(net_log),
+      connect_timeout(connect_timeout),
+      device_capabilities(cast_channel::CastDeviceCapability::NONE) {}
+
+CastSocketConfig::CastSocketConfig(const net::IPEndPoint& ip_endpoint,
+                                   net::NetLog* net_log,
+                                   base::TimeDelta connect_timeout,
+                                   base::TimeDelta liveness_timeout,
+                                   base::TimeDelta ping_interval,
+                                   uint64_t device_capabilities)
+    : ip_endpoint(ip_endpoint),
+      net_log(net_log),
+      connect_timeout(connect_timeout),
+      liveness_timeout(liveness_timeout),
+      ping_interval(ping_interval),
+      device_capabilities(device_capabilities) {}
 
 }  // namespace cast_channel
 #undef VLOG_WITH_CONNECTION

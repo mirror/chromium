@@ -134,6 +134,37 @@ class CastSocket {
   virtual void RemoveObserver(Observer* observer) = 0;
 };
 
+// A config struct containing cast socket related settings, e.g. ip endpoint,
+// connect timeout, liveness timeout, etc.
+struct CastSocketConfig {
+  // IP endpoint of the remote host.
+  net::IPEndPoint ip_endpoint;
+
+  // Log of socket events.
+  net::NetLog* net_log;
+
+  // Connection timeout interval.
+  base::TimeDelta connect_timeout;
+
+  //  Amount of idle time to wait before disconnecting.
+  base::TimeDelta liveness_timeout;
+
+  // Amount of idle time to wait before pinging the receiver
+  base::TimeDelta ping_interval;
+
+  uint64_t device_capabilities;
+
+  CastSocketConfig(const net::IPEndPoint& ip_endpoint,
+                   net::NetLog* net_log,
+                   base::TimeDelta connect_timeout);
+  CastSocketConfig(const net::IPEndPoint& ip_endpoint,
+                   net::NetLog* net_log,
+                   base::TimeDelta connect_timeout,
+                   base::TimeDelta liveness_timeout,
+                   base::TimeDelta ping_interval,
+                   uint64_t device_capabilities);
+};
+
 // This class implements a channel between Chrome and a Cast device using a TCP
 // socket with SSL.  The channel may authenticate that the receiver is a genuine
 // Cast device.  All CastSocketImpl objects must be used only on the IO thread.
@@ -142,31 +173,11 @@ class CastSocket {
 // code.
 class CastSocketImpl : public CastSocket {
  public:
-  // Creates a new CastSocket that connects to |ip_endpoint|.
-  // Parameters:
-  // |ip_endpoint|: IP address of the remote host.
-  // |net_log|: Log of socket events.
-  // |connect_timeout|: Connection timeout interval.
-  // |liveness_timeout|: Amount of idle time to wait before disconnecting.
-  // |ping_interval|: Amount of idle time to wait before pinging the receiver.
-  // |logger|: Log of cast channel events.
-  CastSocketImpl(const net::IPEndPoint& ip_endpoint,
-                 net::NetLog* net_log,
-                 base::TimeDelta connect_timeout,
-                 base::TimeDelta liveness_timeout,
-                 base::TimeDelta ping_interval,
-                 const scoped_refptr<Logger>& logger,
-                 uint64_t device_capabilities);
+  CastSocketImpl(const CastSocketConfig& config,
+                 const scoped_refptr<Logger>& logger);
 
-  // For test-only.
-  // This constructor allows for setting a custom AuthContext.
-  CastSocketImpl(const net::IPEndPoint& ip_endpoint,
-                 net::NetLog* net_log,
-                 base::TimeDelta connect_timeout,
-                 base::TimeDelta liveness_timeout,
-                 base::TimeDelta ping_interval,
+  CastSocketImpl(const CastSocketConfig& config,
                  const scoped_refptr<Logger>& logger,
-                 uint64_t device_capabilities,
                  const AuthContext& auth_context);
 
   // Ensures that the socket is closed.
@@ -313,20 +324,12 @@ class CastSocketImpl : public CastSocket {
 
   // The id of the channel.
   int channel_id_;
-  // The IP endpoint that the the channel is connected to.
-  net::IPEndPoint ip_endpoint_;
-  // The NetLog for this service.
-  net::NetLog* net_log_;
+
   // The NetLog source for this service.
   net::NetLogSource net_log_source_;
 
-  // Amount of idle time to wait before disconnecting. If |liveness_timeout_| is
-  // set, wraps |delegate_| with a KeepAliveDelegate.
-  base::TimeDelta liveness_timeout_;
-
-  // Amount of idle time to wait before pinging the receiver, used to create
-  // KeepAliveDelegate.
-  base::TimeDelta ping_interval_;
+  // Cast socket related settings.
+  CastSocketConfig config_;
 
   // Shared logging object, used to log CastSocket events for diagnostics.
   scoped_refptr<Logger> logger_;
@@ -361,18 +364,12 @@ class CastSocketImpl : public CastSocket {
   // Callback invoked by |connect_timeout_timer_| to cancel the connection.
   base::CancelableClosure connect_timeout_callback_;
 
-  // Duration to wait before timing out.
-  base::TimeDelta connect_timeout_;
-
   // Timer invoked when the connection has timed out.
   std::unique_ptr<base::Timer> connect_timeout_timer_;
 
   // Set when a timeout is triggered and the connection process has
   // canceled.
   bool is_canceled_;
-
-  // Capabilities declared by the cast device.
-  uint64_t device_capabilities_;
 
   // Whether the channel is audio only as identified by the device
   // certificate during channel authentication.
