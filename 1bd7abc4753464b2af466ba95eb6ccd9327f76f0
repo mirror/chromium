@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4a24ff_2dbd64a8",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-07-18T01:16:01Z",
+      "side": 0,
+      "message": "These few lines can be deleted.",
+      "range": {
+        "startLine": 634,
+        "startChar": 6,
+        "endLine": 634,
+        "endChar": 22
+      },
+      "revId": "1bd7abc4753464b2af466ba95eb6ccd9327f76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
