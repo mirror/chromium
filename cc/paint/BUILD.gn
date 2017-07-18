@@ -16,6 +16,7 @@ cc_component("paint") {
     "image_id.h",
     "paint_canvas.cc",
     "paint_canvas.h",
+    "paint_canvas_mock.h",
     "paint_export.h",
     "paint_flags.cc",
     "paint_flags.h",
