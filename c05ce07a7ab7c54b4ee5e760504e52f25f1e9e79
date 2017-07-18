@@ -142,6 +142,30 @@
       "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c9b89c_26b594b9",
+        "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-18T16:08:02Z",
+      "side": 1,
+      "message": "The basic question was \"what do you want to test here\".\n\nMy guess was that you wanted to make sure that loading page will not trigger\nsoftware keyboard. My suggestion above is that if that\u0027s what you want,\nit\u0027ll also makes sense to set the focus onload (www.google.com does it for example), and makes sure it does not trigger keyboard.",
+      "parentUuid": "cfcd83a1_9e2fe6e6",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
