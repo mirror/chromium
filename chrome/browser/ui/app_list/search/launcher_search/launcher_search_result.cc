@@ -38,9 +38,9 @@ LauncherSearchResult::LauncherSearchResult(
   DCHECK_LE(discrete_value_relevance,
             chromeos::launcher_search_provider::kMaxSearchResultScore);
 
-  icon_image_loader_.reset(new LauncherSearchIconImageLoaderImpl(
+  icon_image_loader_ = base::MakeUnique<LauncherSearchIconImageLoaderImpl>(
       icon_url, profile, extension, GetPreferredIconDimension(),
-      std::move(error_reporter)));
+      std::move(error_reporter));
   icon_image_loader_->LoadResources();
 
   Initialize();
@@ -52,11 +52,11 @@ LauncherSearchResult::~LauncherSearchResult() {
 }
 
 std::unique_ptr<SearchResult> LauncherSearchResult::Duplicate() const {
-  LauncherSearchResult* duplicated_result =
-      new LauncherSearchResult(item_id_, discrete_value_relevance_, profile_,
-                               extension_, icon_image_loader_);
+  auto duplicated_result = base::MakeUnique<LauncherSearchResult>(
+      item_id_, discrete_value_relevance_, profile_, extension_,
+      icon_image_loader_);
   duplicated_result->set_title(title());
-  return base::WrapUnique(duplicated_result);
+  return duplicated_result;
 }
 
 void LauncherSearchResult::Open(int event_flags) {
@@ -83,7 +83,7 @@ LauncherSearchResult::LauncherSearchResult(
     const int discrete_value_relevance,
     Profile* profile,
     const extensions::Extension* extension,
-    const linked_ptr<LauncherSearchIconImageLoader>& icon_image_loader)
+    const std::unique_ptr<LauncherSearchIconImageLoader>& icon_image_loader)
     : item_id_(item_id),
       discrete_value_relevance_(discrete_value_relevance),
       profile_(profile),
