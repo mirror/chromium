@@ -16,6 +16,24 @@
       "revId": "a31e0fae56e0c3ed7410e8e75a15adb7743bec82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01c2f17_91221db6",
+        "filename": "chrome/browser/sessions/session_restore_observer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-18T23:25:31Z",
+      "side": 1,
+      "message": "Yes. I moved it in the next patch set. It is useful to check that the session restore start signal is before the TabLoader::RestoreTabs().",
+      "parentUuid": "9a50a808_1756e625",
+      "revId": "a31e0fae56e0c3ed7410e8e75a15adb7743bec82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
