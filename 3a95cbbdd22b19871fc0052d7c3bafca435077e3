@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bec81a7_2f51f37a",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:57:11Z",
+      "side": 1,
+      "message": "Is there a reason to move this down here? I would rather keep it where it was.",
+      "range": {
+        "startLine": 430,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 30
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f4b92b_29f0c93e",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:57:11Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 432,
+        "startChar": 13,
+        "endLine": 432,
+        "endChar": 26
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0865b0_aa5f932b",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:57:11Z",
+      "side": 1,
+      "message": "Sorry for not suggesting this last time. It seems like less code to put the disabling logic in DesktopWindowTreeHost::Init. WDYT?",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 35
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
