@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8aaa34_66daa918",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2527,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-18T01:11:01Z",
+      "side": 1,
+      "message": "Suggestion: \"five items, including search.\":",
+      "range": {
+        "startLine": 2527,
+        "startChar": 43,
+        "endLine": 2527,
+        "endChar": 72
+      },
+      "revId": "7ef3a0736276629a9fa7354c58824375a2cd6a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
