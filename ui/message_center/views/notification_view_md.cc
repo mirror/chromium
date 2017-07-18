@@ -393,6 +393,18 @@ NotificationViewMD::~NotificationViewMD() {}
 void NotificationViewMD::Layout() {
   MessageView::Layout();
 
+  if (message_view_) {
+    // TODO(tetsui): Workaround https://crbug.com/682266 by explicitly setting
+    // the width.
+    // Ideally, we should fix the original bug, but it seems there's no obvious
+    // solution for the bug according to https://crbug.com/678337#c7, we should
+    // ensure that the change won't break any of the users of BoxLayout class.
+    DCHECK(left_content_);
+    gfx::Rect bounds = left_content_->bounds();
+    bounds.Inset(left_content_->GetInsets());
+    message_view_->SizeToFit(bounds.width());
+  }
+
   // We need to call IsExpandable() at the end of Layout() call, since whether
   // we should show expand button or not depends on the current view layout.
   // (e.g. Show expand button when |message_view_| exceeds one line.)
