@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "790809da_039150db",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Yep, we can do that!",
+      "parentUuid": "4704f726_2b2a1a35",
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "689bc3b6_6d97566c",
         "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aec9d131_63cb6900",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "689bc3b6_6d97566c",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 72
+      },
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f417a1e_7b8743cd",
         "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9d72e0_848e96f8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f417a1e_7b8743cd",
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2d4bd173_83570b60",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "fe1d052d_a1ac6fa1",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d26595_b875b609",
         "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
         "patchSetId": 2
@@ -102,6 +186,30 @@
       "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b23695d_df6af5f6",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d26595_b875b609",
+      "range": {
+        "startLine": 12,
+        "startChar": 43,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9a6baf50_dac9acaa",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8027f187_03ec4165",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98198051_15d78175",
         "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
         "patchSetId": 2
@@ -139,6 +271,30 @@
       "writtenOn": "2017-07-18T15:56:42Z",
       "side": 1,
       "message": "Do you think it\u0027s worth having a web::PaymentRequest member variable with an accessor that subclasses can alter? In some tests we might need a slightly altered web::PaymentRequest.",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "e5ff8bccc3f9c4a74751015dceb106edbbf8e3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde1d234_2583fe86",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_unittest_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-18T18:58:41Z",
+      "side": 1,
+      "message": "Sure, as a further improvement if needed :)",
+      "parentUuid": "98198051_15d78175",
       "range": {
         "startLine": 43,
         "startChar": 33,
