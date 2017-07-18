@@ -4,6 +4,7 @@
 
 #include "content/common/resource_messages.h"
 
+#include "ipc/ipc_mojo_message_helper.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_response_headers.h"
 
@@ -353,6 +354,55 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
 void ParamTraits<storage::DataElement>::Log(const param_type& p,
                                             std::string* l) {
   l->append("<storage::DataElement>");
+}
+
+void ParamTraits<scoped_refptr<storage::BlobHandle>>::GetSize(
+    base::PickleSizer* s,
+    const param_type& p) {
+  s->AddBool();
+  if (p) {
+    s->AddUInt32();
+    s->AddAttachment();
+  }
+}
+
+void ParamTraits<scoped_refptr<storage::BlobHandle>>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  WriteParam(m, p != nullptr);
+  if (p) {
+    auto info = p->Clone().PassInterface();
+    m->WriteUInt32(info.version());
+    MojoMessageHelper::WriteMessagePipeTo(m, info.PassHandle());
+  }
+}
+
+bool ParamTraits<scoped_refptr<storage::BlobHandle>>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* r) {
+  bool is_not_null;
+  if (!ReadParam(m, iter, &is_not_null))
+    return false;
+  if (!is_not_null)
+    return true;
+
+  uint32_t version;
+  if (!ReadParam(m, iter, &version))
+    return false;
+  mojo::ScopedMessagePipeHandle handle;
+  if (!MojoMessageHelper::ReadMessagePipeFrom(m, iter, &handle))
+    return false;
+  DCHECK(handle.is_valid());
+  storage::mojom::BlobPtr blob;
+  blob.Bind(storage::mojom::BlobPtrInfo(std::move(handle), version));
+  *r = base::MakeRefCounted<storage::BlobHandle>(std::move(blob));
+  return true;
+}
+
+void ParamTraits<scoped_refptr<storage::BlobHandle>>::Log(const param_type& p,
+                                                          std::string* l) {
+  l->append("<storage::BlobHandle>");
 }
 
 void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::GetSize(

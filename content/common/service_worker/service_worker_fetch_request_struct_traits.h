@@ -118,6 +118,13 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
     return request.blob_size;
   }
 
+  static storage::mojom::BlobPtr blob(
+      const content::ServiceWorkerFetchRequest& request) {
+    if (!request.blob)
+      return nullptr;
+    return request.blob->Clone();
+  }
+
   static const content::Referrer& referrer(
       const content::ServiceWorkerFetchRequest& request) {
     return request.referrer;

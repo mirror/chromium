@@ -82,11 +82,21 @@ void GetServiceWorkerHeaderMapFromWebRequest(
 
 ServiceWorkerResponse GetServiceWorkerResponseFromWebResponse(
     const blink::WebServiceWorkerResponse& web_response) {
+  scoped_refptr<storage::BlobHandle> blob;
+  auto web_blob = web_response.Blob();
+  if (web_blob) {
+    auto blob_info = web_blob.PassInterface();
+    storage::mojom::BlobPtr blob_ptr;
+    blob_ptr.Bind(storage::mojom::BlobPtrInfo(blob_info.PassHandle(),
+                                              blob_info.version()));
+    blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+  }
+
   return ServiceWorkerResponse(
       GetURLList(web_response.UrlList()), web_response.Status(),
       web_response.StatusText().Utf8(), web_response.ResponseType(),
       GetHeaderMap(web_response), web_response.BlobUUID().Utf8(),
-      web_response.BlobSize(), web_response.GetError(),
+      web_response.BlobSize(), std::move(blob), web_response.GetError(),
       web_response.ResponseTime(),
       !web_response.CacheStorageCacheName().IsNull(),
       web_response.CacheStorageCacheName().Utf8(),
