@@ -672,8 +672,7 @@ void DocumentLoader::EnsureWriter(const AtomicString& mime_type,
     if (owner_frame && owner_frame->IsLocalFrame())
       owner = ToLocalFrame(owner_frame)->GetDocument();
   }
-  DocumentInit init(owner, Url(), frame_);
-  init.WithNewRegistrationContext();
+  bool should_reuse_default_view = frame_->ShouldReuseDefaultView(Url());
   DCHECK(frame_->GetPage());
 
   ParserSynchronizationPolicy parsing_policy = kAllowAsynchronousParsing;
@@ -681,9 +680,9 @@ void DocumentLoader::EnsureWriter(const AtomicString& mime_type,
       !Document::ThreadedParsingEnabledForTesting())
     parsing_policy = kForceSynchronousParsing;
 
-  InstallNewDocument(init, mime_type, encoding,
-                     InstallNewDocumentReason::kNavigation, parsing_policy,
-                     overriding_url);
+  InstallNewDocument(Url(), frame_, owner, should_reuse_default_view, mime_type,
+                     encoding, InstallNewDocumentReason::kNavigation,
+                     parsing_policy, overriding_url);
   writer_->SetDocumentWasLoadedAsPartOfNavigation();
   frame_->GetDocument()->MaybeHandleHttpRefresh(
       response_.HttpHeaderField(HTTPNames::Refresh),
@@ -1039,13 +1038,16 @@ bool DocumentLoader::ShouldPersistUserGestureValue(
 }
 
 void DocumentLoader::InstallNewDocument(
-    const DocumentInit& init,
+    const KURL& url,
+    LocalFrame* frame,
+    Document* owner,
+    bool should_reuse_default_view,
     const AtomicString& mime_type,
     const AtomicString& encoding,
     InstallNewDocumentReason reason,
     ParserSynchronizationPolicy parsing_policy,
     const KURL& overriding_url) {
-  DCHECK_EQ(init.GetFrame(), frame_);
+  DCHECK_EQ(frame, frame_);
   DCHECK(!frame_->GetDocument() || !frame_->GetDocument()->IsActive());
   DCHECK_EQ(frame_->Tree().ChildCount(), 0u);
 
@@ -1058,13 +1060,23 @@ void DocumentLoader::InstallNewDocument(
   if (frame_->GetDocument())
     previous_security_origin = frame_->GetDocument()->GetSecurityOrigin();
 
-  if (!init.ShouldReuseDefaultView())
+  // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For
+  // example, when a script calls window.open("..."), the browser gives
+  // JavaScript a window synchronously but kicks off the load in the window
+  // asynchronously. Web sites expect that modifications that they make to the
+  // window object synchronously won't be blown away when the network load
+  // commits. To make that happen, we "securely transition" the existing
+  // LocalDOMWindow to the Document that results from the network load. See also
+  // SecurityContext::isSecureTransitionTo.
+  if (!should_reuse_default_view)
     frame_->SetDOMWindow(LocalDOMWindow::Create(*frame_));
 
   bool user_gesture_bit_set = frame_->HasReceivedUserGesture() ||
                               frame_->HasReceivedUserGestureBeforeNavigation();
 
-  Document* document = frame_->DomWindow()->InstallNewDocument(mime_type, init);
+  DocumentInit init(url, frame, owner, nullptr, nullptr);
+  Document* document = frame_->DomWindow()->InstallNewDocument(
+      mime_type, init.WithNewRegistrationContext());
 
   // Persist the user gesture state between frames.
   if (user_gesture_bit_set) {
@@ -1124,10 +1136,13 @@ const AtomicString& DocumentLoader::MimeType() const {
 // This is only called by
 // FrameLoader::replaceDocumentWhileExecutingJavaScriptURL()
 void DocumentLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
-    const DocumentInit& init,
+    const KURL& url,
+    LocalFrame* frame,
+    Document* owner_document,
+    bool should_reuse_default_view,
     const String& source) {
-  InstallNewDocument(init, MimeType(),
-                     writer_ ? writer_->Encoding() : g_empty_atom,
+  InstallNewDocument(url, frame, owner_document, should_reuse_default_view,
+                     MimeType(), writer_ ? writer_->Encoding() : g_empty_atom,
                      InstallNewDocumentReason::kJavascriptURL,
                      kForceSynchronousParsing, NullURL());
   if (!source.IsNull())

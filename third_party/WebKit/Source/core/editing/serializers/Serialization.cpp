@@ -402,7 +402,8 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
                                    node_after_context))
     return nullptr;
 
-  Document* tagged_document = Document::Create();
+  Document* tagged_document = Document::Create(
+      DocumentInit(NullURL(), nullptr, nullptr, nullptr, nullptr));
   tagged_document->SetContextFeatures(document.GetContextFeatures());
 
   Element* root = Element::Create(QualifiedName::Null(), tagged_document);
