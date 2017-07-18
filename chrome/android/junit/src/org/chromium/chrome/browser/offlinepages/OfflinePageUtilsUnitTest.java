@@ -14,6 +14,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+import android.content.pm.Signature;
 import android.os.Environment;
 
 import org.junit.Before;
@@ -54,6 +56,8 @@ public class OfflinePageUtilsUnitTest {
     private OfflinePageBridge mOfflinePageBridge;
     @Mock
     private OfflinePageUtils.Internal mOfflinePageUtils;
+    @Mock
+    private Context mContext;
 
     @Before
     public void setUp() throws Exception {
@@ -203,6 +207,16 @@ public class OfflinePageUtilsUnitTest {
                 OfflinePageUtils.rewriteOfflineFileName(directoryPath + "cs.chromium!.org#.mhtml"));
         // If there is no dot other than file extension, nothing changes.
         assertEquals("chromium.mhtml", OfflinePageUtils.rewriteOfflineFileName("chromium.mhtml"));
+    }
+
+    @Test
+    public void testGetAppSignaturesFor() {
+        String appName = "someAppName";
+        Signature[] list = new Signature[] {new Signature("FooBarBazCommaX")};
+        doReturn(list).when(mOfflinePageUtils).getSignatures(any(Context.class), eq(appName));
+
+        String[] sigHash = new String[] {"abcde"};
+        assertEquals(sigHash, OfflinePageUtils.getAppSignaturesFor(mContext, appName));
     }
 
     /** A shadow/wrapper of android.os.Environment that allows injecting a test directory. */

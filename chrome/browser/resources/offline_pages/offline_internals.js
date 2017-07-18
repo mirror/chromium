@@ -64,6 +64,10 @@ cr.define('offlineInternals', function() {
       cell.textContent = pages[i].isExpired;
       row.appendChild(cell);
 
+      cell = document.createElement('td');
+      cell.textContent = pages[i].requestOrigin;
+      row.appendChild(cell);
+
       storedPagesTable.appendChild(row);
     }
     offlinePages = pages;
@@ -100,6 +104,10 @@ cr.define('offlineInternals', function() {
 
       cell = document.createElement('td');
       cell.textContent = requests[i].status;
+      row.appendChild(cell);
+
+      cell = document.createElement('td');
+      cell.textContent = requests[i].requestOrigin;
       row.appendChild(cell);
 
       requestQueueTable.appendChild(row);

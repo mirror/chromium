@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.offlinepages;
 
+import android.content.Context;
+import android.content.pm.Signature;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
@@ -20,6 +22,7 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.OfflinePageModelObserver;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.SavePageCallback;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -87,6 +90,13 @@ public class OfflinePageBridgeTest {
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 
+    private static class OfflinePageUtilsInternal extends OfflinePageUtils.OfflinePageUtilsImpl {
+        @Override
+        public Signature[] getSignatures(Context context, String appName) {
+            return new Signature[] {new Signature("signature" + appName)};
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
@@ -103,6 +113,8 @@ public class OfflinePageBridgeTest {
         });
 
         initializeBridgeForProfile(false);
+
+        OfflinePageUtils.setInstanceForTesting(new OfflinePageUtilsInternal());
 
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
@@ -359,6 +371,21 @@ public class OfflinePageBridgeTest {
                 offlineIdToIgnore, asyncPages.get(0).getOfflineId());
     }
 
+    @Test
+    @SmallTest
+    public void testDownloadPage() throws Exception {
+        String appName = "abc.xyz";
+        mActivityTestRule.loadUrl(mTestPage);
+        mActivityTestRule.getActivity().getActivityTab().setAppAssociatedWith(appName);
+        DownloadUtils.downloadOfflinePage(
+                mActivityTestRule.getActivity(), mActivityTestRule.getActivity().getActivityTab());
+
+        waitForPageWithRequestOrigin(appName);
+
+        List<OfflinePageItem> pages = getAllPages();
+        Assert.assertEquals("[abc.xyz,[foobar]]", pages.get(0).getRequestOrigin());
+    }
+
     // Returns offline ID.
     private long savePage(final int expectedResult, final String expectedUrl)
             throws InterruptedException {
@@ -580,5 +607,27 @@ public class OfflinePageBridgeTest {
         });
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
         return ref.get();
+    }
+
+    private void waitForPageWithRequestOrigin(final String requestOrigin)
+            throws InterruptedException {
+        if (getAllPages().size() > 0) return;
+
+        final Semaphore semaphore = new Semaphore(0);
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mOfflinePageBridge.addObserver(new OfflinePageModelObserver() {
+                    @Override
+                    public void offlinePageAdded(OfflinePageItem newPage) {
+                        if (newPage.getRequestOrigin().contains(requestOrigin)) {
+                            mOfflinePageBridge.removeObserver(this);
+                            semaphore.release();
+                        }
+                    }
+                });
+            }
+        });
+        Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 }
