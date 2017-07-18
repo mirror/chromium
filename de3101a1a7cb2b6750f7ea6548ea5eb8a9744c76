@@ -46,6 +46,30 @@
       "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd07c11e_6fdbd095",
+        "filename": "components/variations/service/variations_field_trial_creator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-18T20:21:54Z",
+      "side": 1,
+      "message": "Ah, that makes sense. So then we just need to trigger the same codepath in the unit test - i.e. the one that calls GetClientFilterableStateForVersion().",
+      "parentUuid": "12510756_d6d79237",
+      "range": {
+        "startLine": 281,
+        "startChar": 62,
+        "endLine": 281,
+        "endChar": 63
+      },
+      "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
