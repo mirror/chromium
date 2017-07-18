@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2108983_31db64ab",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T08:33:38Z",
+      "side": 0,
+      "message": "This is again a behavior change - drainUntilIdle is no longer called. Is this safe?",
+      "range": {
+        "startLine": 299,
+        "startChar": 31,
+        "endLine": 299,
+        "endChar": 38
+      },
+      "revId": "92e87bfc27d3ee093edc668c8dcdcf607309aa41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

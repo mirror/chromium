@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54b22e25_3d6c3178",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T08:33:38Z",
+      "side": 1,
+      "message": "I think this is a behavior change - before we were waiting for the Done button to appear and now we\u0027re just tapping it.\n\nNote that this was done in CL https://codereview.chromium.org/2906313004/diff/180001/ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm to attempt to fix a flaky test. May I ask you to double check with jlebel@ (the author of that CL) to see if it if fine to revert this change.",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 13
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f9fc5b_a86a0ec0",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-18T08:33:38Z",
+      "side": 1,
+      "message": "Personal preference: I personally think that [self dismissSettings] makes the test step more clear (settings are dismissed) than [[[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()] performAction:grey_tap()]",
+      "range": {
+        "startLine": 309,
+        "startChar": 13,
+        "endLine": 309,
+        "endChar": 61
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
