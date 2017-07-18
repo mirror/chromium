@@ -92,6 +92,14 @@ HidService::~HidService() {
 
 void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  // If the |platform_device_id| already exists in the map, do nothing.
+  if (FindDeviceIdByPlatformDeviceId(device_info->platform_device_id()) !=
+      kInvalidHidDeviceId)
+    return;
+
+  device_id_map_[device_info->device_id()] = device_info->platform_device_id();
+
   if (!base::ContainsKey(devices_, device_info->device_id())) {
     devices_[device_info->device_id()] = device_info;
 
@@ -101,7 +109,7 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
                   << ", productId=" << device_info->product_id() << ", name='"
                   << device_info->product_name() << "', serial='"
                   << device_info->serial_number() << "', deviceId='"
-                  << device_info->device_id() << "'";
+                  << device_info->platform_device_id() << "'";
 
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
@@ -110,11 +118,17 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   }
 }
 
-void HidService::RemoveDevice(const HidDeviceId& device_id) {
+void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  HidDeviceId device_id = FindDeviceIdByPlatformDeviceId(platform_device_id);
+  if (device_id == kInvalidHidDeviceId)
+    return;
+  device_id_map_.erase(device_id);
+
   DeviceMap::iterator it = devices_.find(device_id);
   if (it != devices_.end()) {
-    HID_LOG(USER) << "HID device removed: deviceId='" << device_id << "'";
+    HID_LOG(USER) << "HID device removed: deviceId='" << platform_device_id
+                  << "'";
 
     scoped_refptr<HidDeviceInfo> device = it->second;
     if (enumeration_ready_) {
@@ -143,6 +157,16 @@ void HidService::FirstEnumerationComplete() {
     }
     pending_enumerations_.clear();
   }
+}
+
+HidDeviceId HidService::FindDeviceIdByPlatformDeviceId(
+    const HidPlatformDeviceId& platform_device_id) {
+  for (auto it = device_id_map_.begin(); it != device_id_map_.end(); ++it) {
+    if (it->second == platform_device_id) {
+      return it->first;
+    }
+  }
+  return kInvalidHidDeviceId;
 }
 
 }  // namespace device

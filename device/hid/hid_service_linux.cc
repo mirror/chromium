@@ -99,7 +99,7 @@ class HidServiceLinux::BlockingTaskHelper : public UdevWatcher::Observer {
     const char* device_path = udev_device_get_syspath(device.get());
     if (!device_path)
       return;
-    HidDeviceId device_id = device_path;
+    HidPlatformDeviceId device_id = device_path;
 
     const char* subsystem = udev_device_get_subsystem(device.get());
     if (!subsystem || strcmp(subsystem, kHidrawSubsystem) != 0)
