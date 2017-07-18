@@ -5,6 +5,7 @@
 #ifndef WebContentSettingsClient_h
 #define WebContentSettingsClient_h
 
+#include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebContentSettingCallbacks.h"
 
 namespace blink {
@@ -100,6 +101,13 @@ class WebContentSettingsClient {
   // Notifies the client that the frame would have executed script if script
   // were enabled.
   virtual void DidNotAllowScript() {}
+
+  // Called to persist the received client hint preferences when |url| was
+  // fetched. The preferences should be persisted for |duration|.
+  virtual void PersistClientHints(
+      const WebEnabledClientHints& enabled_client_hints,
+      base::TimeDelta duration,
+      const blink::WebURL& url) {}
 
   virtual ~WebContentSettingsClient() {}
 };
