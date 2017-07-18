@@ -252,7 +252,7 @@ CGFloat minFaviconSizePt = 16;
 #pragma mark - BookmarkHomePrimaryView
 
 - (void)changeOrientation:(UIInterfaceOrientation)orientation {
-  [self updateCollectionView];
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (CGFloat)contentPositionInPortraitOrientation {
