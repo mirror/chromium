@@ -1620,7 +1620,7 @@
     },
 
     'cfi_full': {
-      'gn_args': 'use_cfi_cast=true',
+      'gn_args': 'use_cfi_cast=true use_cfi_icall=true',
       'mixins': ['cfi'],
     },
 

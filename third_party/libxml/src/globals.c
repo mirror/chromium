@@ -64,6 +64,11 @@ void xmlCleanupGlobals(void)
     __xmlGlobalInitMutexDestroy();
 }
 
+static char *charStrdup(const char *s)
+{
+    return xmlStrdup(s);
+}
+
 /************************************************************************
  *									*
  *	All the user accessible global variables of the library		*
@@ -131,7 +136,7 @@ xmlReallocFunc xmlRealloc = (xmlReallocFunc) realloc;
  *
  * Returns the copy of the string or NULL in case of error
  */
-xmlStrdupFunc xmlMemStrdup = (xmlStrdupFunc) xmlStrdup;
+xmlStrdupFunc xmlMemStrdup = charStrdup;
 #endif /* DEBUG_MEMORY_LOCATION || DEBUG_MEMORY */
 
 #include <libxml/threads.h>
@@ -536,7 +541,7 @@ xmlInitializeGlobalState(xmlGlobalStatePtr gs)
     gs->xmlMalloc = (xmlMallocFunc) malloc;
     gs->xmlMallocAtomic = (xmlMallocFunc) malloc;
     gs->xmlRealloc = (xmlReallocFunc) realloc;
-    gs->xmlMemStrdup = (xmlStrdupFunc) xmlStrdup;
+    gs->xmlMemStrdup = charStrdup;
 #endif
     gs->xmlGetWarningsDefaultValue = xmlGetWarningsDefaultValueThrDef;
     gs->xmlIndentTreeOutput = xmlIndentTreeOutputThrDef;

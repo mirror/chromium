@@ -491,16 +491,18 @@ config("compiler") {
       # linker jobs. This is still suboptimal to a potential dynamic
       # resource allocation scheme, but should be good enough.
       if (use_lld) {
-        ldflags += [
-          "-Wl,--thinlto-jobs=8",
-          "-Wl,--thinlto-cache-dir=" +
-              rebase_path("$root_out_dir/thinlto-cache", root_build_dir),
+        ldflags += [ "-Wl,--thinlto-jobs=8" ]
+        if (!use_cfi_icall) {
+          ldflags += [
+            "-Wl,--thinlto-cache-dir=" +
+                rebase_path("$root_out_dir/thinlto-cache", root_build_dir),
 
-          # Limit the size of the ThinLTO cache to 10% of available disk space.
-          # TODO(pcc): Change the limit from a percentage to an absolute size
-          # (10-20GB) once that feature lands in LLVM.
-          "-Wl,--thinlto-cache-policy,cache_size=10%",
-        ]
+            # Limit the size of the ThinLTO cache to 10% of available disk space.
+            # TODO(pcc): Change the limit from a percentage to an absolute size
+            # (10-20GB) once that feature lands in LLVM.
+            "-Wl,--thinlto-cache-policy,cache_size=10%",
+          ]
+        }
       } else {
         ldflags += [ "-Wl,-plugin-opt,jobs=8" ]
       }

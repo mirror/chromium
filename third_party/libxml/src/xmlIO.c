@@ -808,7 +808,7 @@ xmlCheckFilename (const char *path)
  * Returns zero
  */
 int
-xmlNop(void) {
+xmlNop(void *context, char *buffer, int len) {
     return(0);
 }
 
@@ -3033,7 +3033,7 @@ xmlParserInputBufferCreateMem(const char *mem, int size, xmlCharEncoding enc) {
     ret = xmlAllocParserInputBuffer(enc);
     if (ret != NULL) {
         ret->context = (void *) mem;
-	ret->readcallback = (xmlInputReadCallback) xmlNop;
+	ret->readcallback = xmlNop;
 	ret->closecallback = NULL;
 	errcode = xmlBufAdd(ret->buffer, (const xmlChar *) mem, size);
 	if (errcode != 0) {
