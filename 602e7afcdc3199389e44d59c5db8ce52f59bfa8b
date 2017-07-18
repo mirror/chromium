@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbe2762f_da152d04",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T05:54:48Z",
+      "side": 1,
+      "message": "Yes, it causes OfferVirtualMemory to return an invalid-parameter error.",
+      "parentUuid": "069dbe15_2111044f",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "517cda61_929bbc12",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a3d8d7d1_eb1929d8",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T05:54:48Z",
+      "side": 1,
+      "message": "I don\u0027t think that makes sense - there are two valid results (success, and was-purged) and everything else is an error, so we need to check for the was-purged value before we handle the rest of the failure error code space.",
+      "parentUuid": "517cda61_929bbc12",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a225343c_b27a1001",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf36dce_4edd4f75",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T05:54:48Z",
+      "side": 1,
+      "message": "Alas, that won\u0027t work, since EBUSY is also !\u003d ERROR_SUCCESS.",
+      "parentUuid": "a225343c_b27a1001",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

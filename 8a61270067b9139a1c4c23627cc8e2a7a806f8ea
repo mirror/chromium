@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "cde90928_e5352dcf",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T05:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2b9d54b_dafb9608",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a380e177_a99c064d",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -158,6 +176,24 @@
       "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ad3918_513a4ecf",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T05:54:48Z",
+      "side": 1,
+      "message": "OK, I\u0027ve gone with DCHECK, so we\u0027ll crash in DCHECK_IS_ON() builds but Release builds will be unaffected.",
+      "parentUuid": "7c281039_dbe837be",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
