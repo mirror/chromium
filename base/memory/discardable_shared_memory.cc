@@ -116,6 +116,15 @@ void UnlockPages(const SharedMemory& memory, size_t offset, size_t length) {
     int unpin_result = ashmem_unpin_region(handle.GetHandle(), offset, length);
     DCHECK_EQ(0, unpin_result);
   }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    if (length) {
+      DWORD offer_result =
+          OfferVirtualMemory(reinterpret_cast<char*>(memory.memory()) + offset,
+                             length, VmOfferPriorityNormal);
+      DCHECK_EQ(static_cast<DWORD>(ERROR_SUCCESS), offer_result);
+    }
+  }
 #endif
 }
 
@@ -131,6 +140,15 @@ DiscardableSharedMemory::LockResult LockPages(const SharedMemory& memory,
       return DiscardableSharedMemory::PURGED;
     if (pin_result < 0)
       return DiscardableSharedMemory::FAILED;
+  }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    DWORD reclaim_result = ReclaimVirtualMemory(
+        reinterpret_cast<char*>(memory.memory()) + offset, length);
+    if (reclaim_result == EBUSY)
+      return PURGED;
+    if (reclaim_result != ERROR_SUCCESS)
+      return FAILED;
   }
 #endif
   return DiscardableSharedMemory::SUCCESS;
@@ -383,12 +401,14 @@ bool DiscardableSharedMemory::Purge(Time current_time) {
     DPLOG(ERROR) << "madvise() failed";
   }
 #elif defined(OS_WIN)
-  // MEM_DECOMMIT the purged pages to release the physical storage,
-  // either in memory or in the paging file on disk.  Pages remain RESERVED.
-  if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
-                       AlignToPageSize(sizeof(SharedState)),
-                   AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
-    DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+  if (base::win::GetVersion() < base::win::VERSION_WIN8_1) {
+    // MEM_DECOMMIT the purged pages to release the physical storage,
+    // either in memory or in the paging file on disk.  Pages remain RESERVED.
+    if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
+                         AlignToPageSize(sizeof(SharedState)),
+                     AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
+      DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+    }
   }
 #endif
 
