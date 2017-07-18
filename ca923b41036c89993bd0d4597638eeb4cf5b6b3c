@@ -69,6 +69,24 @@
       "revId": "ca923b41036c89993bd0d4597638eeb4cf5b6b3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "362293c5_cd94ea5b",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T05:36:53Z",
+      "side": 1,
+      "message": "I have gone back to using the WeakPtr. But instead of updating it here in every call to AllocateGpuMemoryBuffer(), I initialize it in the ctor. I think that makes this simpler, and not confusing anymore. WDYT?",
+      "parentUuid": "b2b77339_173d7566",
+      "revId": "ca923b41036c89993bd0d4597638eeb4cf5b6b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
