@@ -261,6 +261,7 @@ DownloadRequestCore::CreateDownloadCreateInfo(DownloadInterruptReason result) {
   create_info->transient = transient_;
   create_info->response_headers = request()->response_headers();
   create_info->offset = create_info->save_info->offset;
+  create_info->initiator = request()->initiator();
   return create_info;
 }
 

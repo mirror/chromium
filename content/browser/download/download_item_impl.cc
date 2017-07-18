@@ -57,6 +57,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
+#include "net/http/http_content_disposition.h"
 #include "net/http/http_response_headers.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_event_type.h"
@@ -300,6 +301,7 @@ DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
       last_modified_time_(info.last_modified),
       etag_(info.etag),
       net_log_(net_log),
+      initiator_(info.initiator),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   Init(true /* actively downloading */, SRC_ACTIVE_DOWNLOAD);
@@ -1279,6 +1281,22 @@ void DownloadItemImpl::Init(bool active,
     // From the URL file name.
     if (file_name.empty())
       file_name = GetURL().ExtractFileName();
+
+    // Force prompting the user for cross origin downloads that didn't have a
+    // content disposition header.
+    GURL url_chain_back = request_info_.url_chain.back();
+    if (!url_chain_back.SchemeIsBlob() &&
+        !url_chain_back.SchemeIs(url::kAboutScheme) &&
+        !url_chain_back.SchemeIs(url::kDataScheme) && initiator_.has_value() &&
+        initiator_->GetURL() != url_chain_back.GetOrigin() &&
+        (content_disposition_.empty() ||
+         !net::HttpContentDisposition(content_disposition_, std::string())
+              .is_attachment())) {
+      DVLOG(20) << __func__
+                << "() forcing save-as prompt for cross origin download";
+      destination_info_.target_disposition =
+          DownloadItem::TARGET_DISPOSITION_PROMPT;
+    }
   }
 
   net::NetLogParametersCallback active_data =
@@ -1456,7 +1474,8 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
 
   destination_info_.target_path = target_path;
   destination_info_.target_disposition = disposition;
-  SetDangerType(danger_type);
+  if (danger_type != DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS)
+    SetDangerType(danger_type);
 
   // This was an interrupted download that was looking for a filename. Resolve
   // early without performing the intermediate rename. If there is a
