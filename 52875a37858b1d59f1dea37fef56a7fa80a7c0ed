@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b445de_89a5a4ec",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-18T08:09:38Z",
+      "side": 1,
+      "message": "unrelated cleanup; changed the counter to a bool since that\u0027s all we were using it for",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 22
+      },
+      "revId": "52875a37858b1d59f1dea37fef56a7fa80a7c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
