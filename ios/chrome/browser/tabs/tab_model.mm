@@ -120,19 +120,6 @@ void CleanCertificatePolicyCache(
                  base::Unretained(web_state_list)));
 }
 
-// Factory of WebState for DeserializeWebStateList that wraps the method
-// web::WebState::CreateWithStorageSession and sets the WebState usage
-// enabled flag from |web_usage_enabled|.
-std::unique_ptr<web::WebState> CreateWebState(
-    BOOL web_usage_enabled,
-    web::WebState::CreateParams create_params,
-    CRWSessionStorage* session_storage) {
-  std::unique_ptr<web::WebState> web_state =
-      web::WebState::CreateWithStorageSession(create_params, session_storage);
-  web_state->SetWebUsageEnabled(web_usage_enabled);
-  return web_state;
-}
-
 }  // anonymous namespace
 
 @interface TabModelWebStateProxyFactory : NSObject<WebStateProxyFactory>
@@ -305,7 +292,8 @@ std::unique_ptr<web::WebState> CreateWebState(
           base::MakeUnique<TabUsageRecorderWebStateListObserver>(
               _tabUsageRecorder.get()));
     }
-    _webStateListObservers.push_back(base::MakeUnique<TabParentingObserver>());
+    _webStateListObservers.push_back(
+        base::MakeUnique<TabParentingObserver>(self));
 
     TabModelSelectedTabObserver* tabModelSelectedTabObserver =
         [[TabModelSelectedTabObserver alloc] initWithTabModel:self];
@@ -475,13 +463,14 @@ std::unique_ptr<web::WebState> CreateWebState(
 
   web::WebState* webStatePtr = webState.get();
   if (index == TabModelConstants::kTabPositionAutomatically) {
-    _webStateList->AppendWebState(loadParams.transition_type,
-                                  std::move(webState),
-                                  WebStateOpener(parentTab.webState));
+    _webStateList->AppendWebState(
+        loadParams.transition_type, std::move(webState),
+        WebStateOpener(parentTab.webState), !inBackground);
   } else {
     DCHECK_LE(index, static_cast<NSUInteger>(INT_MAX));
     const int insertion_index = static_cast<int>(index);
-    _webStateList->InsertWebState(insertion_index, std::move(webState));
+    _webStateList->InsertWebState(insertion_index, std::move(webState),
+                                  !inBackground);
     if (parentTab.webState) {
       _webStateList->SetOpenerOfWebStateAt(insertion_index,
                                            WebStateOpener(parentTab.webState));
@@ -491,29 +480,12 @@ std::unique_ptr<web::WebState> CreateWebState(
   Tab* tab = LegacyTabHelper::GetTabForWebState(webStatePtr);
   DCHECK(tab);
 
-  webStatePtr->SetWebUsageEnabled(_webUsageEnabled ? true : false);
-
-  if (!inBackground && _tabUsageRecorder)
-    _tabUsageRecorder->TabCreatedForSelection(tab);
-
   webStatePtr->GetNavigationManager()->LoadURLWithParams(loadParams);
 
   // Force the page to start loading even if it's in the background.
   // TODO(crbug.com/705819): Remove this call.
   if (_webUsageEnabled)
     webStatePtr->GetView();
-
-  NSDictionary* userInfo = @{
-    kTabModelTabKey : tab,
-    kTabModelOpenInBackgroundKey : @(inBackground),
-  };
-  [[NSNotificationCenter defaultCenter]
-      postNotificationName:kTabModelNewTabWillOpenNotification
-                    object:self
-                  userInfo:userInfo];
-
-  if (!inBackground)
-    [self setCurrentTab:tab];
 
   return tab;
 }
@@ -733,7 +705,8 @@ std::unique_ptr<web::WebState> CreateWebState(
   web::WebState::CreateParams createParams(_browserState);
   DeserializeWebStateList(
       _webStateList.get(), window,
-      base::BindRepeating(&CreateWebState, _webUsageEnabled, createParams));
+      base::BindRepeating(&web::WebState::CreateWithStorageSession,
+                          createParams));
 
   DCHECK_GT(_webStateList->count(), oldCount);
   int restoredCount = _webStateList->count() - oldCount;
@@ -748,8 +721,6 @@ std::unique_ptr<web::WebState> CreateWebState(
   for (int index = oldCount; index < _webStateList->count(); ++index) {
     web::WebState* webState = _webStateList->GetWebStateAt(index);
     Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-
-    webState->SetWebUsageEnabled(_webUsageEnabled ? true : false);
     tab.webController.usePlaceholderOverlay = YES;
 
     // Restore the CertificatePolicyCache (note that webState is invalid after
