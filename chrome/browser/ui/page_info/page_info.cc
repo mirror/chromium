@@ -40,6 +40,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
+#include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
@@ -54,12 +55,17 @@
 #include "components/content_settings/core/common/content_settings_utils.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
+#include "components/security_state/content/content_utils.h"
+#include "components/security_state/core/security_state.h"
 #include "components/ssl_errors/error_info.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/security_style_explanation.h"
+#include "content/public/browser/security_style_explanations.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "net/cert/cert_status_flags.h"
@@ -806,5 +812,10 @@ void PageInfo::PresentSiteIdentity() {
   info.identity_status_description = UTF16ToUTF8(site_identity_details_);
   info.certificate = certificate_;
   info.show_ssl_decision_revoke_button = show_ssl_decision_revoke_button_;
+  // TODO(crbug.com/646201): Pass security summary color based on
+  // the returned security style.
+  web_contents()->GetDelegate()->GetSecurityStyle(
+      web_contents(), &info.security_style_explanations);
+
   ui_->SetIdentityInfo(info);
 }

@@ -9,6 +9,9 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
+#include "chrome/browser/ssl/security_state_tab_helper.h"
+#include "components/security_state/content/content_utils.h"
+#include "components/security_state/core/security_state.h"
 #include "components/web_contents_delegate_android/color_chooser_android.h"
 #include "components/web_contents_delegate_android/validation_message_bubble_android.h"
 #include "content/public/browser/color_chooser.h"
@@ -398,6 +401,19 @@ void WebContentsDelegateAndroid::MoveValidationMessage(
     return;
   validation_message_bubble_->ShowAtPositionRelativeToAnchor(
       web_contents->GetNativeView(), anchor_in_root_view);
+}
+
+// TODO: Deduplicate with browser.cc?
+blink::WebSecurityStyle WebContentsDelegateAndroid::GetSecurityStyle(
+    WebContents* web_contents,
+    content::SecurityStyleExplanations* security_style_explanations) {
+  SecurityStateTabHelper* helper =
+      SecurityStateTabHelper::FromWebContents(web_contents);
+  DCHECK(helper);
+  security_state::SecurityInfo security_info;
+  helper->GetSecurityInfo(&security_info);
+  return security_state::GetSecurityStyle(security_info,
+                                          security_style_explanations);
 }
 
 void WebContentsDelegateAndroid::RequestAppBannerFromDevTools(

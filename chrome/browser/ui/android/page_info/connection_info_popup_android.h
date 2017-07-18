@@ -11,7 +11,9 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/page_info/page_info.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
+#include "content/public/browser/security_style_explanation.h"
 
 namespace content {
 class WebContents;
@@ -46,6 +48,12 @@ class ConnectionInfoPopupAndroid : public PageInfoUI {
 
   // The java prompt implementation.
   base::android::ScopedJavaGlobalRef<jobject> popup_jobject_;
+
+  // TODO: comment
+  void AddExplanations(
+      JNIEnv* env,
+      PageInfo::SiteIdentityStatus status,
+      const std::vector<content::SecurityStyleExplanation>& explanations);
 
   DISALLOW_COPY_AND_ASSIGN(ConnectionInfoPopupAndroid);
 };

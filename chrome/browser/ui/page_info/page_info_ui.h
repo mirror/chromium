@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/page_info/page_info.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "content/public/browser/security_style_explanations.h"
 #include "ui/gfx/native_widget_types.h"
 
 #if !defined(OS_ANDROID)
@@ -133,6 +134,8 @@ class PageInfoUI {
     // connection area of the page info will include an option for the user to
     // revoke their decision to bypass the SSL error for this host.
     bool show_ssl_decision_revoke_button;
+
+    content::SecurityStyleExplanations security_style_explanations;
   };
 
   using CookieInfoList = std::vector<CookieInfo>;

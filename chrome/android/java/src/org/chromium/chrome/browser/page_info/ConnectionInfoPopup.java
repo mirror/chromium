@@ -94,32 +94,38 @@ public class ConnectionInfoPopup implements OnClickListener {
         });
     }
 
-    /**
-     * Adds certificate section, which contains an icon, a headline, a
-     * description and a label for certificate info link.
-     */
-    @CalledByNative
-    private void addCertificateSection(int enumeratedIconId, String headline, String description,
-            String label) {
-        View section = addSection(enumeratedIconId, headline, description);
-        assert mCertificateLayout == null;
-        mCertificateLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
-        if (label != null && !label.isEmpty()) {
-            setCertificateViewer(label);
-        }
-    }
+    // /**
+    //  * Adds certificate section, which contains an icon, a headline, a
+    //  * description and a label for certificate info link.
+    //  */
+    // @CalledByNative
+    // private void addCertificateSection(int enumeratedIconId, String headline, String description,
+    //         String label) {
+    //     View section = addSection(enumeratedIconId, headline, description);
+    //     assert mCertificateLayout == null;
+    //     mCertificateLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
+    //     if (label != null && !label.isEmpty()) {
+    //         setCertificateViewer(label);
+    //     }
+    // }
+
+    // /**
+    //  * Adds Description section, which contains an icon, a headline, and a
+    //  * description. Most likely headline for description is empty
+    //  */
+    // @CalledByNative
+    // private void addDescriptionSection(int enumeratedIconId, String headline, String description)
+    // {
+    //     Log.e(TAG, "addDescriptionSection");
+    //     View section = addSection(enumeratedIconId, headline, description);
+    //     assert mDescriptionLayout == null;
+    //     mDescriptionLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
+    // }
 
     /**
-     * Adds Description section, which contains an icon, a headline, and a
-     * description. Most likely headline for description is empty
+     *  TODO: document
      */
     @CalledByNative
-    private void addDescriptionSection(int enumeratedIconId, String headline, String description) {
-        View section = addSection(enumeratedIconId, headline, description);
-        assert mDescriptionLayout == null;
-        mDescriptionLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
-    }
-
     private View addSection(int enumeratedIconId, String headline, String description) {
         View section = LayoutInflater.from(mContext).inflate(R.layout.connection_info,
                 null);
@@ -152,40 +158,40 @@ public class ConnectionInfoPopup implements OnClickListener {
         mCertificateLayout.addView(mCertificateViewer);
     }
 
-    @CalledByNative
-    private void addResetCertDecisionsButton(String label) {
-        assert mNativeConnectionInfoPopup != 0;
-        assert mResetCertDecisionsButton == null;
+    // @CalledByNative
+    // private void addResetCertDecisionsButton(String label) {
+    //     assert mNativeConnectionInfoPopup != 0;
+    //     assert mResetCertDecisionsButton == null;
 
-        mResetCertDecisionsButton = new Button(mContext);
-        mResetCertDecisionsButton.setText(label);
-        mResetCertDecisionsButton.setBackgroundResource(
-                R.drawable.connection_info_reset_cert_decisions);
-        mResetCertDecisionsButton.setTextColor(ApiCompatibilityUtils.getColor(
-                mContext.getResources(),
-                R.color.connection_info_popup_reset_cert_decisions_button));
-        mResetCertDecisionsButton.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
-        mResetCertDecisionsButton.setOnClickListener(this);
+    //     mResetCertDecisionsButton = new Button(mContext);
+    //     mResetCertDecisionsButton.setText(label);
+    //     mResetCertDecisionsButton.setBackgroundResource(
+    //             R.drawable.connection_info_reset_cert_decisions);
+    //     mResetCertDecisionsButton.setTextColor(ApiCompatibilityUtils.getColor(
+    //             mContext.getResources(),
+    //             R.color.connection_info_popup_reset_cert_decisions_button));
+    //     mResetCertDecisionsButton.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
+    //     mResetCertDecisionsButton.setOnClickListener(this);
 
-        LinearLayout container = new LinearLayout(mContext);
-        container.setOrientation(LinearLayout.VERTICAL);
-        container.addView(mResetCertDecisionsButton);
-        container.setPadding(0, 0, 0, mPaddingWide);
-        mContainer.addView(container);
-    }
+    //     LinearLayout container = new LinearLayout(mContext);
+    //     container.setOrientation(LinearLayout.VERTICAL);
+    //     container.addView(mResetCertDecisionsButton);
+    //     container.setPadding(0, 0, 0, mPaddingWide);
+    //     mContainer.addView(container);
+    // }
 
-    @CalledByNative
-    private void addMoreInfoLink(String linkText) {
-        mMoreInfoLink = new TextView(mContext);
-        mLinkUrl = HELP_URL;
-        mMoreInfoLink.setText(linkText);
-        mMoreInfoLink.setTextColor(ApiCompatibilityUtils.getColor(
-                mContext.getResources(), R.color.page_info_popup_text_link));
-        mMoreInfoLink.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
-        mMoreInfoLink.setPadding(0, mPaddingThin, 0, 0);
-        mMoreInfoLink.setOnClickListener(this);
-        mDescriptionLayout.addView(mMoreInfoLink);
-    }
+    // @CalledByNative
+    // private void addMoreInfoLink(String linkText) {
+    //     mMoreInfoLink = new TextView(mContext);
+    //     mLinkUrl = HELP_URL;
+    //     mMoreInfoLink.setText(linkText);
+    //     mMoreInfoLink.setTextColor(ApiCompatibilityUtils.getColor(
+    //             mContext.getResources(), R.color.page_info_popup_text_link));
+    //     mMoreInfoLink.setTextSize(DESCRIPTION_TEXT_SIZE_SP);
+    //     mMoreInfoLink.setPadding(0, mPaddingThin, 0, 0);
+    //     mMoreInfoLink.setOnClickListener(this);
+    //     mDescriptionLayout.addView(mMoreInfoLink);
+    // }
 
     /** Displays the ConnectionInfoPopup. */
     @CalledByNative
