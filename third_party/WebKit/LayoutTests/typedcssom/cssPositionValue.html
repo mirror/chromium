@@ -4,18 +4,34 @@
 
 <script>
 
-test(function() {
-  assert_equals(new CSSPositionValue(new CSSUnitValue(50, 'px'),
-    new CSSCalcValue({px: -10, em: -3.2, pt: 0})).toString(), '50px calc((-3.2em - 10px) + 0pt)');
-  assert_equals(new CSSPositionValue(new CSSUnitValue(50, 'px'),
-    new CSSUnitValue(2, 'em')).toString(), '50px 2em');
-  assert_equals(new CSSPositionValue(new CSSCalcValue({px: -10, em: -3.2, pt: 0}),
-    new CSSCalcValue({px: -10, em: 3.2})).toString(), 'calc((-3.2em - 10px) + 0pt) calc(3.2em - 10px)');
-  assert_equals(new CSSPositionValue(new CSSCalcValue({px: -10, em: -3.2, pt: 0}),
-    new CSSUnitValue(10, 'percent')).toString(), 'calc((-3.2em - 10px) + 0pt) 10%');
-}, "toString() returns a string with the x and y positions cssStrings separated by a space");
+test(() => {
+  assert_throws(new TypeError(), () => {
+    new CSSPositionValue(CSS.deg(1), CSS.px(1));
+  });
+  assert_throws(new TypeError(), () => {
+    new CSSPositionValue(CSS.px(1), CSS.deg(1));
+  });
+}, "Constructor throws if a CSSNumericValue that is not a length or " +
+    "percentage is given");
+
+test(() => {
+  let position = new CSSPositionValue(CSS.px(1), CSS.percent(2));
+  assert_equals(position.x.value, 1);
+  assert_equals(position.y.value, 2);
+  assert_equals(position.x.unit, 'px');
+  assert_equals(position.y.unit, 'percent');
+
+  position.x = CSS.em(3);
+  position.y = CSS.pt(4);
+  assert_equals(position.x.value, 3);
+  assert_equals(position.y.value, 4);
+  assert_equals(position.x.unit, 'em');
+  assert_equals(position.y.unit, 'pt');
+}, "Can set x and y");
+
+test(() => {
+  assert_equals(
+      new CSSPositionValue(CSS.px(50), CSS.em(2)).toString(), '50px 2em');
+}, "toString returns the x and y cssText separated by a space");
 
 </script>
-
-<body>
-</body>
