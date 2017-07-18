@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "81a6f8ff_15bf3ae2",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-18T00:02:57Z",
+      "side": 1,
+      "message": "The histogram using this enum is newly added in this CL. So we still can tweak the enum here. \nAfter xml changes has been checked in, we won\u0027t remove entries.",
+      "parentUuid": "dffecb8c_3c1a8a63",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ea9ee06_d4218fed",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
