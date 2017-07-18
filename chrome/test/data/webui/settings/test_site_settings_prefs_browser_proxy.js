@@ -76,9 +76,10 @@ var TestSiteSettingsPrefsBrowserProxy = function() {
     'removeProtocolHandler',
     'removeUsbDevice',
     'removeZoomLevel',
-    'resetCategoryPermissionForOrigin',
-    'setCategoryPermissionForOrigin',
+    'resetCategoryPermissionForPattern',
+    'setCategoryPermissionForPattern',
     'setDefaultValueForContentType',
+    'setOriginPermissions',
     'setProtocolDefault',
     'updateIncognitoStatus',
   ]);
@@ -163,6 +164,12 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   setDefaultValueForContentType: function(contentType, defaultValue) {
     this.methodCalled(
         'setDefaultValueForContentType', [contentType, defaultValue]);
+  },
+
+  /** @override */
+  setOriginPermissions: function(origin, contentTypes, blanketSetting) {
+    this.methodCalled(
+        'setOriginPermissions', [origin, contentTypes, blanketSetting]);
   },
 
   /** @override */
@@ -289,9 +296,10 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   },
 
   /** @override */
-  resetCategoryPermissionForOrigin: function(
+  resetCategoryPermissionForPattern: function(
       primaryPattern, secondaryPattern, contentType, incognito) {
-    this.methodCalled('resetCategoryPermissionForOrigin',
+    this.methodCalled(
+        'resetCategoryPermissionForPattern',
         [primaryPattern, secondaryPattern, contentType, incognito]);
     return Promise.resolve();
   },
@@ -319,12 +327,10 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
         contentType = 'unsandboxed_plugins';
       }
 
-      var setting;
-      var source;
+      var setting = undefined;
       this.prefs_.exceptions[contentType].some(function(originPrefs) {
         if (originPrefs.origin == origin) {
           setting = originPrefs.setting;
-          source = originPrefs.source;
           return true;
         }
       });
@@ -339,16 +345,17 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
         origin: origin,
         displayName: '',
         setting: setting,
-        source: source,
+        source: undefined
       })
     }, this);
     return Promise.resolve(exceptionList);
   },
 
   /** @override */
-  setCategoryPermissionForOrigin: function(
+  setCategoryPermissionForPattern: function(
       primaryPattern, secondaryPattern, contentType, value, incognito) {
-    this.methodCalled('setCategoryPermissionForOrigin',
+    this.methodCalled(
+        'setCategoryPermissionForPattern',
         [primaryPattern, secondaryPattern, contentType, value, incognito]);
     return Promise.resolve();
   },

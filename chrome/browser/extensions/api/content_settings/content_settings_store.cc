@@ -339,6 +339,7 @@ void ContentSettingsStore::SetExtensionContentSettingFromList(
     bool result = content_settings::ContentSettingFromString(
         content_setting_string, &setting);
     DCHECK(result);
+    DCHECK_NE(CONTENT_SETTING_DEFAULT, setting);
 
     SetExtensionContentSetting(extension_id,
                                primary_pattern,

@@ -204,6 +204,7 @@ ContentSettingsContentSettingSetFunction::Run() {
   ContentSetting setting;
   EXTENSION_FUNCTION_VALIDATE(
       content_settings::ContentSettingFromString(setting_str, &setting));
+  DCHECK_NE(CONTENT_SETTING_DEFAULT, setting);
   EXTENSION_FUNCTION_VALIDATE(
       content_settings::ContentSettingsRegistry::GetInstance()
           ->Get(content_type)

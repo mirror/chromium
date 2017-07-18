@@ -20,11 +20,11 @@ Polymer({
     site: Object,
 
     /**
-     * The default setting for this permission category.
-     * @type {settings.ContentSetting}
+     * The default setting string for this permission category.
+     * @type {string}
      * @private
      */
-    defaultSetting_: String,
+    defaultSettingString_: String,
   },
 
   observers: ['siteChanged_(site, category)'],
@@ -56,14 +56,14 @@ Polymer({
    */
   siteChanged_: function(site) {
     if (site.source == 'default') {
-      this.defaultSetting_ = site.setting;
+      this.updateDefaultSettingString_(site.setting);
       this.$.permission.value = settings.ContentSetting.DEFAULT;
       return;
     }
     // The default setting is unknown, so consult the C++ backend for it.
     this.browserProxy.getDefaultValueForContentType(this.category)
         .then((defaultValue) => {
-          this.defaultSetting_ = defaultValue.setting;
+          this.updateDefaultSettingString_(defaultValue.setting);
         });
     this.$.permission.value = site.setting;
   },
@@ -90,47 +90,33 @@ Polymer({
   },
 
   /**
-   * Resets the category permission for this origin.
-   */
-  resetPermission: function() {
-    this.browserProxy.resetCategoryPermissionForOrigin(
-        this.site.origin, this.site.embeddingOrigin, this.category,
-        this.site.incognito);
-  },
-
-  /**
    * Handles the category permission changing for this origin.
    * @private
    */
   onPermissionSelectionChange_: function() {
-    if (this.$.permission.value == settings.ContentSetting.DEFAULT) {
-      this.resetPermission();
-      return;
-    }
-    this.browserProxy.setCategoryPermissionForOrigin(
-        this.site.origin, this.site.embeddingOrigin, this.category,
-        this.$.permission.value, this.site.incognito);
+    this.browserProxy.setOriginPermissions(
+        this.site.origin, [this.category], this.$.permission.value);
   },
 
   /**
    * Updates the string used for this permission category's default setting.
-   * @param {!settings.ContentSetting} defaultSetting Value of the default
-   *    setting for this permission category.
-   * @param {string} askString 'Ask' label, e.g. 'Ask (default)'.
-   * @param {string} allowString 'Allow' label, e.g. 'Allow (default)'.
-   * @param {string} blockString 'Block' label, e.g. 'Blocked (default)'.
+   * @param {!settings.ContentSetting} defaultSetting The default setting, if
+   *    known.
    * @private
    */
-  defaultSettingString_(defaultSetting, askString, allowString, blockString) {
+  updateDefaultSettingString_: function(defaultSetting) {
+    var stringId;
     if (defaultSetting == settings.ContentSetting.ASK ||
         defaultSetting == settings.ContentSetting.IMPORTANT_CONTENT) {
-      return askString;
+      stringId = 'siteSettingsActionAskDefault';
     } else if (defaultSetting == settings.ContentSetting.ALLOW) {
-      return allowString;
+      stringId = 'siteSettingsActionAllowDefault';
     } else if (defaultSetting == settings.ContentSetting.BLOCK) {
-      return blockString;
+      stringId = 'siteSettingsActionBlockDefault';
     }
-    assertNotReached(
+    assert(
+        stringId,
         `No string for ${this.category}'s default of ${defaultSetting}`);
+    this.defaultSettingString_ = loadTimeData.getString(stringId);
   },
 });
