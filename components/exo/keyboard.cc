@@ -144,13 +144,40 @@ bool Keyboard::AreKeyboardKeyAcksNeeded() const {
 }
 
 void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
-  // TODO(yhanada): Implement this method. See http://b/28104183.
+  if (sent_key_events_.find(serial) == sent_key_events_.end()) {
+    VLOG(1) << "Focus already moved to another window";
+    return;
+  }
+
+  ui::KeyEvent event = sent_key_events_.at(serial);
+  sent_key_events_.erase(serial);
+
+  views::Widget* widget =
+      focus_ ? views::Widget::GetTopLevelWidgetForNativeView(focus_->window())
+             : nullptr;
+  if (widget && !handled) {
+    views::FocusManager* focus_manager = widget->GetFocusManager();
+    focus_manager->ProcessAccelerator(ui::Accelerator(event));
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // ui::EventHandler overrides:
 
 void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
+  // Pass accelerators to ShellSurfaceWidget before sending it to Android if ack
+  // key event is not needed.
+  if (!AreKeyboardKeyAcksNeeded()) {
+    views::Widget* widget =
+        focus_ ? views::Widget::GetTopLevelWidgetForNativeView(focus_->window())
+               : nullptr;
+    if (widget) {
+      views::FocusManager* focus_manager = widget->GetFocusManager();
+      if (focus_manager->ProcessAccelerator(ui::Accelerator(*event)))
+        return;
+    }
+  }
+
   // These modifiers reflect what Wayland is aware of.  For example,
   // EF_SCROLL_LOCK_ON is missing because Wayland doesn't support scroll lock.
   const int kModifierMask = ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN |
@@ -174,8 +201,12 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
       auto it =
           std::find(pressed_keys_.begin(), pressed_keys_.end(), event->code());
       if (it == pressed_keys_.end()) {
-        if (focus_ && !consumed_by_ime)
-          delegate_->OnKeyboardKey(event->time_stamp(), event->code(), true);
+        if (focus_ && !consumed_by_ime) {
+          uint32_t serial = delegate_->OnKeyboardKey(event->time_stamp(),
+                                                     event->code(), true);
+          if (are_keyboard_key_acks_needed)
+            RecordSentKey(serial, event);
+        }
 
         pressed_keys_.push_back(event->code());
       }
@@ -184,8 +215,12 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
       auto it =
           std::find(pressed_keys_.begin(), pressed_keys_.end(), event->code());
       if (it != pressed_keys_.end()) {
-        if (focus_ && !consumed_by_ime)
-          delegate_->OnKeyboardKey(event->time_stamp(), event->code(), false);
+        if (focus_ && !consumed_by_ime) {
+          uint32_t serial = delegate_->OnKeyboardKey(event->time_stamp(),
+                                                     event->code(), false);
+          if (are_keyboard_key_acks_needed)
+            RecordSentKey(serial, event);
+        }
 
         pressed_keys_.erase(it);
       }
@@ -208,6 +243,7 @@ void Keyboard::OnWindowFocused(aura::Window* gained_focus,
       delegate_->OnKeyboardLeave(focus_);
       focus_->RemoveSurfaceObserver(this);
       focus_ = nullptr;
+      sent_key_events_.clear();
     }
     if (gained_focus_surface) {
       delegate_->OnKeyboardModifiers(modifier_flags_);
@@ -265,6 +301,10 @@ Surface* Keyboard::GetEffectiveFocus(aura::Window* window) const {
 
   return focus && delegate_->CanAcceptKeyboardEventsForSurface(focus) ? focus
                                                                       : nullptr;
+}
+
+void Keyboard::RecordSentKey(uint32_t serial, ui::KeyEvent* event) {
+  sent_key_events_.insert({serial, ui::KeyEvent(*event)});
 }
 
 }  // namespace exo

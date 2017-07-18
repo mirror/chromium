@@ -33,9 +33,10 @@ class KeyboardDelegate {
 
   // Called when keyboard key state changed. |pressed| is true when |key|
   // was pressed and false if it was released.
-  virtual void OnKeyboardKey(base::TimeTicks time_stamp,
-                             ui::DomCode key,
-                             bool pressed) = 0;
+  // Returns the serial of the sent wayland event.
+  virtual uint32_t OnKeyboardKey(base::TimeTicks time_stamp,
+                                 ui::DomCode key,
+                                 bool pressed) = 0;
 
   // Called when keyboard modifier state changed.
   virtual void OnKeyboardModifiers(int modifier_flags) = 0;

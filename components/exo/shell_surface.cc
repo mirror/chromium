@@ -6,11 +6,13 @@
 
 #include <algorithm>
 
+#include "ash/accelerators/accelerator_controller.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/shell.h"
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
@@ -187,10 +189,6 @@ class ShellSurfaceWidget : public views::Widget {
   void OnKeyEvent(ui::KeyEvent* event) override {
     // TODO(hidehiko): Handle ESC + SHIFT + COMMAND accelerator key
     // to escape pinned mode.
-    // Handle only accelerators. Do not call Widget::OnKeyEvent that eats focus
-    // management keys (like the tab key) as well.
-    if (GetFocusManager()->ProcessAccelerator(ui::Accelerator(*event)))
-      event->StopPropagation();
   }
 
  private:
