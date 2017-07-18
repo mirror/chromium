@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f9efec_57137fae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/cachestorage/read-cached-response.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T18:02:44Z",
+      "side": 1,
+      "message": "nit: make it name-agnostic, i.e. url.replace(/\\/[^/]*$/, ...)",
+      "revId": "26534bcfc33899639925b4e098abcf12f9594ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e150c763_445e614e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/cachestorage/read-cached-response.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T18:02:44Z",
+      "side": 1,
+      "message": "resolve(...",
+      "revId": "26534bcfc33899639925b4e098abcf12f9594ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bcea5f_ade9dfa9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/cachestorage/read-cached-response.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T18:02:44Z",
+      "side": 1,
+      "message": "do { ... } while (!versions.length || versions[0][\"status\"] !\u003d\u003d \"activated\") ?",
+      "revId": "26534bcfc33899639925b4e098abcf12f9594ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28192589_3ce56b81",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/cachestorage/read-cached-response.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-18T18:02:44Z",
+      "side": 1,
+      "message": "nit: can you add something like Inspector.log(\"Using null/bogus cacheId/path\") before each of the following dumps, so the expectations come annotated.",
+      "revId": "26534bcfc33899639925b4e098abcf12f9594ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
