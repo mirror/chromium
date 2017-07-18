@@ -405,10 +405,21 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   UseCounter::Count(*frame_->GetDocument(),
                     WebFeature::kReplaceDocumentViaJavaScriptURL);
 
+  const KURL& url = frame_->GetDocument()->Url();
+
+  // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For
+  // example, when a script calls window.open("..."), the browser gives
+  // JavaScript a window synchronously but kicks off the load in the window
+  // asynchronously. Web sites expect that modifications that they make to the
+  // window object synchronously won't be blown away when the network load
+  // commits. To make that happen, we "securely transition" the existing
+  // LocalDOMWindow to the Document that results from the network load. See also
+  // SecurityContext::isSecureTransitionTo.
+  // FIXME: This is for DocumentWriter creation, not for one of Document.
+  bool should_reuse_default_view = frame_->ShouldReuseDefaultView(url);
+
   // Prepare a DocumentInit before clearing the frame, because it may need to
   // inherit an aliased security context.
-  DocumentInit init(owner_document, frame_->GetDocument()->Url(), frame_);
-  init.WithNewRegistrationContext();
 
   StopAllLoaders();
   // Don't allow any new child frames to load in this frame: attaching a new
@@ -424,7 +435,8 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
     return;
 
   Client()->TransitionToCommittedForNewPage();
-  document_loader->ReplaceDocumentWhileExecutingJavaScriptURL(init, source);
+  document_loader->ReplaceDocumentWhileExecutingJavaScriptURL(
+      url, frame_, owner_document, should_reuse_default_view, source);
 }
 
 void FrameLoader::FinishedParsing() {
