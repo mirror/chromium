@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640d6e18_5f69a6e9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36318,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T22:13:32Z",
+      "side": 1,
+      "message": "Please add a brief explanation to the end of the description:\n* what\u0027s a service?\n* what makes a service \"alternative\"?\n* how is broken identified?\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Understandable-to-Everyone\n\n(These answer will also help me understand why you think the histogram should have a max of 1000.  That seems like a lot of \"services\" to me!)",
+      "range": {
+        "startLine": 36318,
+        "startChar": 36,
+        "endLine": 36318,
+        "endChar": 37
+      },
+      "revId": "33215fdd227abbb6ac0397638be979b35586bb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b18ade_fd20295a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36318,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T22:13:32Z",
+      "side": 1,
+      "message": "nit: omit \"This counts\"",
+      "range": {
+        "startLine": 36318,
+        "startChar": 16,
+        "endLine": 36318,
+        "endChar": 19
+      },
+      "revId": "33215fdd227abbb6ac0397638be979b35586bb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b16b10_932cc555",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36319,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T22:13:32Z",
+      "side": 1,
+      "message": "When is this recorded?\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded",
+      "range": {
+        "startLine": 36319,
+        "startChar": 9,
+        "endLine": 36319,
+        "endChar": 0
+      },
+      "revId": "33215fdd227abbb6ac0397638be979b35586bb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa129867_df4d488d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36341,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T22:13:32Z",
+      "side": 1,
+      "message": "All comments above apply here,\nplus explain how \"recently broken\" is determined.",
+      "range": {
+        "startLine": 36341,
+        "startChar": 11,
+        "endLine": 36341,
+        "endChar": 15
+      },
+      "revId": "33215fdd227abbb6ac0397638be979b35586bb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
