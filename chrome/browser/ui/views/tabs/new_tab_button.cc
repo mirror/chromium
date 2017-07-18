@@ -69,11 +69,14 @@ int NewTabButton::GetTopOffset() {
          GetLayoutSize(NEW_TAB_BUTTON).height();
 }
 
-void NewTabButton::ShowPromo() {
+bool NewTabButton::ShowPromo(const std::string& promo_string_specifier) {
   // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  NewTabPromo* new_tab_promo = NewTabPromo::CreateSelfOwned(GetVisibleBounds());
+  NewTabPromo* new_tab_promo =
+      NewTabPromo::CreateSelfOwned(GetVisibleBounds(), promo_string_specifier);
   new_tab_promo_observer_.Add(new_tab_promo->GetWidget());
   NewTabButton::SchedulePaint();
+
+  return new_tab_promo->IsPromoVisible();
 }
 
 #if defined(OS_WIN)
