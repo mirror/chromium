@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b18be0fb_e9aa35e6",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "nit: const auto",
+      "range": {
+        "startLine": 376,
+        "startChar": 4,
+        "endLine": 376,
+        "endChar": 11
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be75fab5_5f455ec7",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "nit: Should we mention that this covers all UI entry points, like bubbles, forms, form fields, context menus, etc.?",
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87985a27_c2badb25",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "nit: ... in relation to a given password form.",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 70
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4c9cd7_af69384e",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "naming nit: How about IsDeduplicatedUserAction? Or maybe turn it around and call the opposite IsRepeatedUserAction?",
+      "range": {
+        "startLine": 335,
+        "startChar": 16,
+        "endLine": 335,
+        "endChar": 29
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52049754_f64f25ff",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "nit: const (2x)",
+      "range": {
+        "startLine": 572,
+        "startChar": 2,
+        "endLine": 572,
+        "endChar": 20
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ba971a_279f8c64",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-18T14:35:52Z",
+      "side": 1,
+      "message": "other piece of password manager UI that corresponds to the form.",
+      "range": {
+        "startLine": 849,
+        "startChar": 48,
+        "endLine": 849,
+        "endChar": 67
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
