@@ -226,6 +226,13 @@ public class TabRedirectHandler {
     }
 
     /**
+     * @return whether the initial intent is explicitly heading to Chrome.
+     */
+    public boolean isInitialIntentHeadingToChrome() {
+        return mIsInitialIntentHeadingToChrome;
+    }
+
+    /**
      * @return whether we should stay in Chrome or not.
      */
     public boolean shouldNotOverrideUrlLoading() {

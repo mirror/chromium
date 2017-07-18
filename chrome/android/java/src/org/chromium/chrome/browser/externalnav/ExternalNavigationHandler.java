@@ -269,9 +269,12 @@ public class ExternalNavigationHandler {
         // http://crbug.com/181186: We need to show the intent picker when we receive a redirect
         // following a form submit.
         boolean isRedirectFromFormSubmit = isFormSubmit && params.isRedirect();
+        boolean isInitialIntentHeadingToChrome = params.getRedirectHandler() == null
+                ? true : params.getRedirectHandler().isInitialIntentHeadingToChrome();
 
         if (!typedRedirectToExternalProtocol) {
-            if (!linkNotFromIntent && !incomingIntentRedirect && !isRedirectFromFormSubmit) {
+            if (isInitialIntentHeadingToChrome && !linkNotFromIntent && !incomingIntentRedirect
+                    && !isRedirectFromFormSubmit) {
                 if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Incoming intent (not a redirect)");
                 return OverrideUrlLoadingResult.NO_OVERRIDE;
             }
