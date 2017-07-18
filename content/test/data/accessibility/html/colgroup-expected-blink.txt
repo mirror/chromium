@@ -1,17 +1,17 @@
 rootWebArea
 ++table
-++++row
-++++++columnHeader name='Single'
+++++row selectable
+++++++columnHeader selectable name='Single'
 ++++++++staticText name='Single'
 ++++++++++inlineTextBox name='Single'
-++++++columnHeader name='Pair'
+++++++columnHeader selectable name='Pair'
 ++++++++staticText name='Pair'
 ++++++++++inlineTextBox name='Pair'
-++++row
-++++++cell name='A'
+++++row selectable
+++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
-++++++cell name='AA'
+++++++cell selectable name='AA'
 ++++++++staticText name='AA'
 ++++++++++inlineTextBox name='AA'
 ++++column
