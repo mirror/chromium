@@ -68,12 +68,12 @@ def get_sanitizer_env(cmd, asan, lsan, msan, tsan, cfi_diag):
   symbolizer_path = os.path.join(ROOT_DIR,
       'third_party', 'llvm-build', 'Release+Asserts', 'bin', 'llvm-symbolizer')
 
-  if lsan or tsan:
+  if lsan:
     # LSan is not sandbox-compatible, so we can use online symbolization. In
     # fact, it needs symbolization to be able to apply suppressions.
     symbolization_options = ['symbolize=1',
                              'external_symbolizer_path=%s' % symbolizer_path]
-  elif (asan or msan or cfi_diag) and sys.platform not in ['win32', 'cygwin']:
+  elif (asan or msan or tsan or cfi_diag) and sys.platform not in ['win32', 'cygwin']:
     # ASan uses a script for offline symbolization, except on Windows.
     # Important note: when running ASan with leak detection enabled, we must use
     # the LSan symbolization options above.
@@ -197,7 +197,7 @@ def run_executable(cmd, env):
   else:
     # LSan doesn't support sandboxing yet, so we use the in-process symbolizer.
     # Note that ASan and MSan can work together with LSan.
-    use_symbolization_script = (asan or msan or cfi_diag) and not lsan
+    use_symbolization_script = (asan or msan or tsan or cfi_diag) and not lsan
 
   if asan or lsan or msan or tsan or cfi_diag:
     extra_env.update(get_sanitizer_env(cmd, asan, lsan, msan, tsan, cfi_diag))
