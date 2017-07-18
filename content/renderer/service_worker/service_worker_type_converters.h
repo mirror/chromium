@@ -22,6 +22,13 @@ struct CONTENT_EXPORT TypeConverter<content::ServiceWorkerStatusCode,
 };
 
 template <>
+struct TypeConverter<blink::CanMakePaymentEventData,
+                     payments::mojom::CanMakePaymentEventDataPtr> {
+  static blink::WebCanMakePaymentEventData Convert(
+      const payments::mojom::CanMakePaymentEventDataPtr& input);
+};
+
+template <>
 struct TypeConverter<blink::WebPaymentRequestEventData,
                      payments::mojom::PaymentRequestEventDataPtr> {
   static blink::WebPaymentRequestEventData Convert(

@@ -364,6 +364,16 @@ struct ServiceWorkerContextClient::WorkerContextData {
   // Pending callbacks for Background Sync Events.
   SyncEventCallbacksMap sync_event_callbacks;
 
+  // Pending callbacks for result of CanMakePayment.
+  std::map<int /* can_make_payment_event_id */,
+           payments::mojom::BooleanResponseCallbackPtr>
+      can_make_payment_result_callbacks;
+
+  // Pending callbacks for CanMakePayment Events.
+  std::map<int /* can_make_payment_event_id */,
+           DispatchCanMakePaymentEventCallback>
+      can_make_payment_event_callbacks;
+
   // Pending callbacks for Payment App Response.
   std::map<int /* payment_request_id */,
            payments::mojom::PaymentHandlerResponseCallbackPtr>
@@ -1081,6 +1091,28 @@ void ServiceWorkerContextClient::DidHandleSyncEvent(
   context_->sync_event_callbacks.Remove(request_id);
 }
 
+void ServiceWorkerContextClient::RespondToCanMakePaymentEvent(
+    int event_id,
+    bool can_make_payment,
+    double dispatch_event_time) {
+  const payments::mojom::BooleanResponseCallbackPtr& result_callback =
+      context_->can_make_payment_result_callbacks[event_id];
+  result_callback->OnBooleanResponse(
+      can_make_payment, base::Time::FromDoubleT(dispatch_event_time));
+  context_->can_make_payment_result_callbacks.erase(event_id);
+}
+
+void ServiceWorkerContextClient::DidHandleCanMakePaymentEvent(
+    int event_id,
+    blink::WebServiceWorkerEventResult result,
+    double dispatch_event_time) {
+  DispatchCanMakePaymentEventCallback callback =
+      std::move(context_->can_make_payment_event_callbacks[event_id]);
+  std::move(callback).Run(EventResultToStatus(result),
+                          base::Time::FromDoubleT(dispatch_event_time));
+  context_->can_make_payment_event_callbacks.erase(event_id);
+}
+
 void ServiceWorkerContextClient::RespondToPaymentRequestEvent(
     int payment_request_id,
     const blink::WebPaymentHandlerResponse& web_response,
@@ -1226,6 +1258,12 @@ void ServiceWorkerContextClient::DispatchSyncEvent(
   proxy_->DispatchSyncEvent(request_id, blink::WebString::FromUTF8(tag),
                             web_last_chance);
 }
+
+void ServiceWorkerContextClient::DispatchCanMakePaymentEvent(
+    int event_id,
+    payments::mojom::CanMakePaymentEventDataPtr eventData,
+    payments::mojom::BooleanResponseCallbackPtr result_of_can_make_payment,
+    DispatchCanMakePaymentEventCallback callback) {}
 
 void ServiceWorkerContextClient::DispatchPaymentRequestEvent(
     int payment_request_id,
