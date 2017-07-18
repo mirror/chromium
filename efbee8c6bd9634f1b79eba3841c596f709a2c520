@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3de098d_0f1e05c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T18:32:48Z",
+      "side": 1,
+      "message": "Should we probably check the value with CheckNumeric?",
+      "revId": "efbee8c6bd9634f1b79eba3841c596f709a2c520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
