@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ac0ffd_86e5d51e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T21:21:24Z",
+      "side": 1,
+      "message": "In case where BubbleAlignmentTrailing is used:\nThis would put bubble origin at the top right hand corner. IIUC, the origin coordinate system does not also reverse with autolayout.\nInstead, the opposite case should be used for leadingOffset. So, if alignment is set to Trailing, the value for leading should be used. I would probably move the if rtl condition to the setting of leadingOffset instead.",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97ff55e_a3d35ad0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T21:21:24Z",
+      "side": 1,
+      "message": "These two tests assume alignment is center.",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840c9641_8026482b",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T21:21:24Z",
+      "side": 1,
+      "message": "Let\u0027s group the adding of the childVC with the addition of the view below.",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b736ce_7da756b0",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T21:21:24Z",
+      "side": 1,
+      "message": "This is really just the width -20.",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 73
+      },
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a5d7f4_54f2f6b8",
+        "filename": "ios/showcase/text_badge_view/sc_text_badge_view_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T21:21:24Z",
+      "side": 1,
+      "message": "Why move this?",
+      "revId": "b060b9e2591cdf1daa27f3068ae3c7986eaa6a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
