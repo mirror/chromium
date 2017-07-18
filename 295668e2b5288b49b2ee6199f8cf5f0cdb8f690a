@@ -16,6 +16,24 @@
       "revId": "295668e2b5288b49b2ee6199f8cf5f0cdb8f690a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ecc626_937c686b",
+        "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-07-18T01:50:35Z",
+      "side": 1,
+      "message": "Right. I\u0027ve moved Init() to private.",
+      "parentUuid": "f5c75b65_b9d51636",
+      "revId": "295668e2b5288b49b2ee6199f8cf5f0cdb8f690a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
