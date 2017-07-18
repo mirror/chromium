@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b933be1_8e91373f",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "Holds parameters necessary to open a Cast channel (CastSocket) to a Cast device.",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5cacce_f6755150",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "Bikeshed: maybe CastSocketOpenParams, since it\u0027s only passed to OpenSocket()?",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213f280f_9909a02b",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "s/remote host/Cast device/",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9caf2cff_68e7aa6d",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "Document what the default value means (since it\u0027s not required by a ctor).",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3481862_a18a233d",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "Similar comment here",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633fab09_3f192c94",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "s/receiver/Cast device./",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11e117_1bd7bd79",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-18T20:26:17Z",
+      "side": 1,
+      "message": "Please document this and point out where the capability bits are defined.",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
