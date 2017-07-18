@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d88404e4_1b9cf186",
+        "filename": "ios/web/webui/web_ui_mojo_inttest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-18T16:04:05Z",
+      "side": 1,
+      "message": "[UIThread mainThread] ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 45,
+        "endLine": 158,
+        "endChar": 53
+      },
+      "revId": "f3d64ce3c299fbca4877262a32d1b958a23031ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
