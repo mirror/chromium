@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ad9579_b77823cd",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-07-18T18:31:19Z",
+      "side": 1,
+      "message": "nit: I would write this as |return client_ \u0026\u0026 local_state_;|.",
+      "revId": "a537c70769325e606d21d758661fe9abd847a972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

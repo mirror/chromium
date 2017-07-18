@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90d332bd_c856f3a0",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-07-18T18:31:19Z",
+      "side": 1,
+      "message": "VariationsSeedStore seems to have its own |local_state_|, why do you think it is better to have another pointer here instead of adding a method to VariationsSeedStore?",
+      "revId": "cd09da2e862b753ad12cdba2e20e29bb511bd4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
