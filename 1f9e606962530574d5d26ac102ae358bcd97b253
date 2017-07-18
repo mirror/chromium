@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d5167f2_24be0c71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-18T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814c9077_e043004a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 79
+      },
+      "revId": "1f9e606962530574d5d26ac102ae358bcd97b253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895ece97_ed929fb7",
         "filename": "components/plugins/renderer/webview_plugin.h",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "1f9e606962530574d5d26ac102ae358bcd97b253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a139c3d_15d45a20",
+        "filename": "components/plugins/renderer/webview_plugin.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-18T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361a9958_89d03ebb",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 19
+      },
+      "revId": "1f9e606962530574d5d26ac102ae358bcd97b253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
