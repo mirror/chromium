@@ -16,6 +16,24 @@
       "revId": "7ee288fd995c98068a9426c9a80c8601890819ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d155a54_bc6a5ecb",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-18T13:38:48Z",
+      "side": 1,
+      "message": "Agreed that this might a little bit not ideal, that\u0027s why I renamed this class. Thought to maintain the callback separately but looks not good for this reason.\n\n\u0027Syncing the status to PaymentManager\u0027 looks even stranger to me under current structure since it is dedicated to manager payment instruments registration/unregistration. And we have difficult to uniquely identify a payment request instance, note that |payment_request_id| is not necessary unique among all payment requests and can be reused.",
+      "parentUuid": "1fce2d35_37990448",
+      "revId": "7ee288fd995c98068a9426c9a80c8601890819ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
