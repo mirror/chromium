@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6411fc3_3081890b",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-18T20:33:49Z",
+      "side": 1,
+      "message": "I actually wanted the AutofillPopupBaseViewCocoa to handle the touch bar in case the other subclasses also want to support it. However, now that you pointed it out, that is a bit overhead. I\u0027ll move it to AutofillPopupViewCocoa.",
+      "parentUuid": "a2e00dbb_3d8f81d3",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56423ef9_067c823c",
         "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec337df9_8cbbec4f",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-18T20:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56423ef9_067c823c",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e89e000_43a9da09",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-18T20:33:49Z",
+      "side": 1,
+      "message": "Done. I added it in autofill_popup_view_cocoa",
+      "parentUuid": "b196d08a_04c2c5dd",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666afa38_c33fb0c7",
         "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-18T13:26:48Z",
       "side": 1,
       "message": "This doesn\u0027t feel like a natural place to put this controller. Did you consult with c/b/ui/cocoa owners about the best location for this? \n\nPerhaps it could live in BrowserWindowController alongside other similar controllers? But I would ask an owner first. Sorry that I can\u0027t give more precise advice. https://cs.chromium.org/chromium/src/chrome/browser/ui/cocoa/browser_window_controller.mm?rcl\u003d0238418b07cbe9ea31f40cb3804e7ebea141ab43\u0026l\u003d536",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb908c5_e4777447",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-18T20:33:49Z",
+      "side": 1,
+      "message": "No worries! The reason why this isn\u0027t placed in the BWC is because the NSTouchBarDelegate protocol was disabled in it due to a bug. Thanks to that, the system won\u0027t discover the touch bar if it\u0027s placed there\n\nTo determine which touch bar should be shown, the system traverses up the responder chain. This may seem like a weird place, but the touch bar is placed here so that it\u0027ll displayed when the web contents are focused. Note that WebTextfieldTouchBarController currently only provides a touch bar for credit card autofill. Once this is in, I\u0027ll be adding more touch bar stuff for it (like text suggestions).\n\nI can\u0027t put the touch bar with the RenderWidgetHostViewCocoa, which the touch bar is for, but I can put it here. This location lets us cleanly display the default Chrome touch bar when this isn\u0027t focused, or if there\u0027s no touch bar provided by the web contents. Let me know if you have any questions!",
+      "parentUuid": "666afa38_c33fb0c7",
       "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c7cbe2_990a55fb",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-18T20:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a76fea7_793d3008",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
