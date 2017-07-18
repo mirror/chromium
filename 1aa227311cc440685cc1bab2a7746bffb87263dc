@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b81d970b_55fabc01",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T18:14:08Z",
+      "side": 1,
+      "message": "Correct. \"Primitive\" describes any single Shill type.\n\nHowever, this code needs to wait until WiFi is actually enabled before proceeding. While it is *likely* that this will work as is, it could fail, and there is no error handling here.\n\nThe correct way to do this is to set some local state (e.g. \u0027waiting_to_connect_ssid_ \u003d ssid), then in NEtworkStateHandlerObsverer::DeviceListChanged() check whether WiFi is enabled and once it is initiate the WiFi connection.",
+      "parentUuid": "8a14f8d8_3cf2e051",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4add3a8c_0626e23b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
