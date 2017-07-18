@@ -153,7 +153,7 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
                const content::NotificationDetails& details) override;
 
   virtual void OnRadioClicked(int radio_index) {}
-  virtual void OnListItemClicked(int index) {}
+  virtual void OnListItemClicked(int index, int event_flags) {}
   virtual void OnCustomLinkClicked() {}
   virtual void OnManageLinkClicked() {}
   virtual void OnManageCheckboxChecked(bool is_checked) {}

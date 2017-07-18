@@ -62,6 +62,8 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/base/window_open_disposition.h"
+#include "ui/events/event_constants.h"
 #include "ui/resources/grit/ui_resources.h"
 
 using base::UserMetricsAction;
@@ -552,7 +554,7 @@ class ContentSettingPopupBubbleModel : public ContentSettingSingleRadioGroup {
   ~ContentSettingPopupBubbleModel() override;
 
  private:
-  void OnListItemClicked(int index) override;
+  void OnListItemClicked(int index, int event_flags) override;
 
   int32_t item_id_from_item_index(int index) const {
     return bubble_content().list_items[index].item_id;
@@ -592,10 +594,16 @@ ContentSettingPopupBubbleModel::ContentSettingPopupBubbleModel(
       content_settings::POPUPS_ACTION_DISPLAYED_BUBBLE);
 }
 
-void ContentSettingPopupBubbleModel::OnListItemClicked(int index) {
+void ContentSettingPopupBubbleModel::OnListItemClicked(int index,
+                                                       int event_flags) {
   if (web_contents()) {
     auto* helper = PopupBlockerTabHelper::FromWebContents(web_contents());
-    helper->ShowBlockedPopup(item_id_from_item_index(index));
+    if (event_flags == ui::EF_LEFT_MOUSE_BUTTON) {
+      helper->ShowBlockedPopup(item_id_from_item_index(index));
+    } else {
+      helper->ShowBlockedPopup(item_id_from_item_index(index),
+                               ui::DispositionFromEventFlags(event_flags));
+    }
 
     content_settings::RecordPopupsAction(
         content_settings::POPUPS_ACTION_CLICKED_LIST_ITEM_CLICKED);

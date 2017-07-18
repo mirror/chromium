@@ -501,7 +501,8 @@ void ContentSettingBubbleContents::LinkClicked(views::Link* source,
 
   ListItemLinks::const_iterator i(list_item_links_.find(source));
   DCHECK(i != list_item_links_.end());
-  content_setting_bubble_model_->OnListItemClicked(i->second);
+  content_setting_bubble_model_->OnListItemClicked(i->second, event_flags);
+  GetWidget()->Close();
 }
 
 void ContentSettingBubbleContents::OnPerformAction(views::Combobox* combobox) {

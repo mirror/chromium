@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/blocked_content/blocked_window_params.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "ui/base/window_open_disposition.h"
 
 namespace chrome {
 struct NavigateParams;
@@ -53,6 +54,11 @@ class PopupBlockerTabHelper
 
   // Creates the blocked popup with |popup_id|.
   void ShowBlockedPopup(int32_t popup_id);
+
+#if !defined(OS_ANDROID)
+  // Same with ShowBlockedPopup(). But use alternative WindowOpenDisposition.
+  void ShowBlockedPopup(int32_t popup_id, WindowOpenDisposition disposition);
+#endif
 
   // Returns the number of blocked popups.
   size_t GetBlockedPopupsCount() const;
