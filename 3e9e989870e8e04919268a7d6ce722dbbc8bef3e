@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d97b177_db1a8692",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-18T08:21:52Z",
+      "side": 1,
+      "message": "nit: put this in { } as condition spans in multiple lines. if (xxx) { yyy; }",
+      "range": {
+        "startLine": 296,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 28
+      },
+      "revId": "3e9e989870e8e04919268a7d6ce722dbbc8bef3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
