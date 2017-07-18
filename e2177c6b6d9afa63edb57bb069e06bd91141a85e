@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9816df7c_88c81b98",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T15:58:06Z",
+      "side": 1,
+      "message": "this is private f. and you use only one color from this array. Why not to pass one color directly? The same applies for SetSearchBoxColor",
+      "range": {
+        "startLine": 713,
+        "startChar": 31,
+        "endLine": 713,
+        "endChar": 47
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05fa3e7_c18cd4ce",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T15:58:06Z",
+      "side": 1,
+      "message": "const std::vector\u003cSkColor\u003e\u0026 here and L144",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87998ca7_f5f99dd7",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-18T15:58:06Z",
+      "side": 1,
+      "message": "nit: const ... here, L303 and other places?",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 307,
+        "endChar": 28
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
