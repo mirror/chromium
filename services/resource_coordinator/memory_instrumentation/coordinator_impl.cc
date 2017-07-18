@@ -114,10 +114,9 @@ service_manager::Identity CoordinatorImpl::GetClientIdentityForCurrentRequest()
 }
 
 void CoordinatorImpl::BindCoordinatorRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::CoordinatorRequest request) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  bindings_.AddBinding(this, std::move(request), source_info.identity);
+  bindings_.AddBinding(this, std::move(request), service_manager::Identity());
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDump(

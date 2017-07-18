@@ -8,7 +8,6 @@
 
 #include "base/bind.h"
 #include "chromeos/system/devicemode.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/display/screen_base.h"
 #include "ui/display/types/display_constants.h"
@@ -229,14 +228,12 @@ void ScreenManagerForwarding::ToggleAddRemoveDisplay() {
 }
 
 void ScreenManagerForwarding::BindNativeDisplayDelegateRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::NativeDisplayDelegateRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 }
 
 void ScreenManagerForwarding::BindTestDisplayControllerRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::TestDisplayControllerRequest request) {
   DCHECK(!test_controller_binding_.is_bound());
   test_controller_binding_.Bind(std::move(request));

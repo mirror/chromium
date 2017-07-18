@@ -11,10 +11,6 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/ui/public/interfaces/input_devices/input_device_controller.mojom.h"
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace ui {
 
 class InputController;
@@ -69,7 +65,6 @@ class InputDeviceController : public mojom::InputDeviceController {
   void NotifyObserver(mojom::KeyboardDeviceObserver* observer);
 
   void BindInputDeviceControllerRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::InputDeviceControllerRequest request);
 
   mojo::BindingSet<mojom::InputDeviceController> bindings_;
