@@ -521,6 +521,8 @@ source_set("ios_web_navigation_unittests") {
   ]
 
   sources = [
+    "navigation/crw_back_forward_list_mock.h",
+    "navigation/crw_back_forward_list_mock.mm",
     "navigation/crw_navigation_item_storage_unittest.mm",
     "navigation/crw_session_controller_unittest.mm",
     "navigation/crw_session_storage_unittest.mm",
@@ -531,6 +533,7 @@ source_set("ios_web_navigation_unittests") {
     "navigation/navigation_manager_util_unittest.mm",
     "navigation/nscoder_util_unittest.mm",
     "navigation/serializable_user_data_manager_impl_unittest.mm",
+    "navigation/wk_based_navigation_manager_impl_unittest.mm",
   ]
 }
 
