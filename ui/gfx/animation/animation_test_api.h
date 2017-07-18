@@ -6,7 +6,6 @@
 #define UI_GFX_ANIMATION_ANIMATION_TEST_API_H_
 
 #include <memory>
-
 #include "base/auto_reset.h"
 #include "base/macros.h"
 #include "ui/gfx/animation/animation.h"
@@ -17,8 +16,8 @@ namespace gfx {
 // Class to provide access to Animation internals for testing.
 class AnimationTestApi {
  public:
-  // Sets the rich animation rendering mode. Allows rich animations to be force
-  // enabled/disabled during tests.
+  // Sets the rich animation rendering mode. Allows rich animations to be
+  // force enabled/disabled during tests.
   static std::unique_ptr<base::AutoReset<Animation::RichAnimationRenderMode>>
   SetRichAnimationRenderMode(Animation::RichAnimationRenderMode mode);
 

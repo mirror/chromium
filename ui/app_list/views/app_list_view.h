@@ -94,10 +94,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // hiding the app list when a modal dialog is being shown).
   void SetAppListOverlayVisible(bool visible);
 
-  views::Widget* search_box_widget() const { return search_box_widget_; }
-
-  SearchBoxView* search_box_view() { return search_box_view_; }
-
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
@@ -108,8 +104,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool ShouldDescendIntoChildForEventHandling(
       gfx::NativeView child,
       const gfx::Point& location) override;
-
-  AppListMainView* app_list_main_view() { return app_list_main_view_; }
 
   // Gets the PaginationModel owned by this view's apps grid.
   PaginationModel* GetAppsPaginationModel();
@@ -122,9 +116,15 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Changes the app list state.
   void SetState(AppListState new_state);
 
+  // Kicks off the proper animation for the state change.
+  void SetStateAnimation(AppListState new_state);
+
   // Changes the app list state depending on the current |app_list_state_| and
   // whether the search box is empty.
   void SetStateFromSearchBoxView(bool search_box_is_empty);
+
+  // Called when maximize mode starts and ends.
+  void OnMaximizeModeChanged(bool started);
 
   bool is_fullscreen() const {
     return app_list_state_ == FULLSCREEN_ALL_APPS ||
@@ -132,9 +132,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   }
 
   AppListState app_list_state() const { return app_list_state_; }
-
-  // Called when maximize mode starts and ends.
-  void OnMaximizeModeChanged(bool started);
+  AppListMainView* app_list_main_view() { return app_list_main_view_; }
+  views::Widget* search_box_widget() const { return search_box_widget_; }
+  SearchBoxView* search_box_view() { return search_box_view_; }
 
   // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
   bool HandleScroll(const ui::Event* event);
@@ -221,7 +221,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool processing_scroll_event_series_;
   // The state of the app list, controlled via SetState().
   AppListState app_list_state_;
-
   // An observer that notifies AppListView when the display has changed.
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
 
@@ -230,6 +229,12 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   views::View* overlay_view_;
 
   std::unique_ptr<HideViewAnimationObserver> animation_observer_;
+
+  // The position in screen coordinates of the last drag event in a series of
+  // drag events.
+  int animation_start_y_;
+  // The goal position in screen coordinates of the current |animation_|.
+  int animation_end_y_;
 
   // For UMA and testing. If non-null, triggered when the app list is painted.
   base::Closure next_paint_callback_;
