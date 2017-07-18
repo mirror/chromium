@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "306627fa_c1c010d5",
+        "filename": "testing/buildbot/filters/fuchsia.mojo_js_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-18T00:54:29Z",
+      "side": 1,
+      "message": "I think the bug linked from this CL implies that the tests should pass without a filter.\nAdded TODO anyway.\n\nLooks like I forgot to add mojo_js_unittests to chromium,fyi.json. Fixed now.",
+      "parentUuid": "7e74749d_7d0f8f92",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8f1ffc_d2e42de5",
         "filename": "testing/buildbot/filters/fuchsia.mojo_system_unittests.filter",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c329e5_a51a3a7c",
+        "filename": "testing/buildbot/filters/fuchsia.mojo_system_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-18T00:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8f1ffc_d2e42de5",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
