@@ -72,6 +72,7 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
 
     private final BlackHoleEventFilter mBlackHoleEventFilter;
     private final TabListSceneLayer mSceneLayer;
+    private ChromeFullscreenManager mFullscreenManager;
 
     private final Interpolator mEdgeInterpolator = new DecelerateInterpolator();
 
@@ -195,10 +196,16 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
     private void prepareLayoutTabForSwipe(LayoutTab layoutTab, boolean anonymizeToolbar) {
         assert layoutTab != null;
         if (layoutTab.shouldStall()) layoutTab.setSaturation(0.0f);
+        float heightDp = layoutTab.getOriginalContentHeight();
+        if (mFullscreenManager.areBrowserControlsAtBottom()) {
+            float density = Resources.getSystem().getDisplayMetrics().density;
+            heightDp = heightDp - mFullscreenManager.getBottomControlsHeight() / density;
+        }
         layoutTab.setScale(1.f);
         layoutTab.setBorderScale(1.f);
         layoutTab.setDecorationAlpha(0.f);
         layoutTab.setY(0.f);
+        layoutTab.setClipSize(layoutTab.getOriginalContentWidth(), heightDp);
         layoutTab.setShowToolbar(mMoveToolbar);
         layoutTab.setAnonymizeToolbar(anonymizeToolbar && ANONYMIZE_NON_FOCUSED_TAB);
     }
@@ -381,5 +388,9 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
         // contentViewport is intentionally passed for both parameters below.
         mSceneLayer.pushLayers(getContext(), contentViewport, contentViewport, this,
                 layerTitleCache, tabContentManager, resourceManager, fullscreenManager);
+    }
+
+    public void setFullScreenManager(ChromeFullscreenManager fullscreenManager) {
+        mFullscreenManager = fullscreenManager;
     }
 }
