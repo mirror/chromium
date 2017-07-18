@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "fd4f59dd_599f53dc",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T09:11:21Z",
+      "side": 1,
+      "message": "Thanks, this was a useful suggestion and I learned something about these safer math types. Since clamping to the 8191.75 value is not really meaningful for this type, I changed the backing type to CheckedNumerics\u003cint16_t; type now (hopefully using it correctly) and added some DEATH tests. We can still clamp in the parsing stage if needed or rely on the checked numerics there.",
+      "parentUuid": "30ff1562_c98a86ff",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dbb6ec_f247bbb0",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypesTest.cpp",
         "patchSetId": 18
