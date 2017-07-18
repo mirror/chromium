@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6719f05_e1407a15",
+        "filename": "content/renderer/input/widget_input_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done. The reason I did it this way was I wanted to reduce the API surface on render_widget in the long run. If you look at CursorVisibilityChange when we actually remove the ChromeIPC code we\u0027d remove a bunch of methods that are useless. But granted look at this having two impls for CursorVisibilityState isn\u0027t good. So we can cross cleanup of this code eventually in the future.",
+      "parentUuid": "e3cdf6ab_834b64d6",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d75104c6_19d9c0c6",
         "filename": "content/renderer/input/widget_input_handler_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b563f4_9ba92110",
+        "filename": "content/renderer/input/widget_input_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d75104c6_19d9c0c6",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4697c077_3556ba19",
+        "filename": "content/renderer/input/widget_input_handler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6813faae_e2864ee3",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448cab90_a4185d52",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "14f8770e_1bec6638",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448cab90_a4185d52",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b4d0e4_b6b99897",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-18T02:36:59Z",
       "side": 1,
       "message": "For this and AddAssociatedInterface, why not always post asynchronously?  I don\u0027t think there\u0027s a benefit of complicating the code to sometimes call synchronously.",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7082910d_ee5f4ce3",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Because the binding needs to take place on the thread that is going to receive the IPC data on. If we bound it on the main thread then the IPC data would get sent to the main thread defeating the whole point of threaded compositing.",
+      "parentUuid": "34b4d0e4_b6b99897",
       "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ea4cb073_dcf384f0",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3228d78c_2b13d79c",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6521bfd_7e3d25e4",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-18T02:36:59Z",
       "side": 1,
       "message": "For more uniformity, could this phrased as:\nTaskRunner* runner \u003d has_compositor_ ? compositor_task_runner_ : ...;\nrunner-\u003ePostTask(...)",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea4eaeb_62f12fe5",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "I\u0027ve gotten rid of has_compositor_",
+      "parentUuid": "a6521bfd_7e3d25e4",
       "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "28ec9841_ad70b09a",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaaec242_d050944a",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b8d808_1cbbe751",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4485b5af_d2d8b3f6",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-18T18:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b8d808_1cbbe751",
+      "revId": "18c3daf2a6679e7bf2daffcf591263df8192fcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
