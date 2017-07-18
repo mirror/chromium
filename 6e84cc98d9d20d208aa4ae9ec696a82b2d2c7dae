@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38135df3_a24b45e8",
+        "filename": "media/blink/webremoteplaybackclient_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:08:09Z",
+      "side": 1,
+      "message": "Looks like this new file isn\u0027t needed anymore?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "6e84cc98d9d20d208aa4ae9ec696a82b2d2c7dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0747137_fa1f1fad",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:08:09Z",
+      "side": 1,
+      "message": "...and now we don\u0027t need to add this, right?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "6e84cc98d9d20d208aa4ae9ec696a82b2d2c7dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

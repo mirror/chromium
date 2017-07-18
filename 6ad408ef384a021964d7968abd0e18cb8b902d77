@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f57a64_65eceb49",
+        "filename": "media/base/renderer_factory_selector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:08:09Z",
+      "side": 0,
+      "message": "Why was this DCHECK() removed? You may want to consult tguilbert@ if you decide to proceed with deleting these LOC.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 62
+      },
+      "revId": "6ad408ef384a021964d7968abd0e18cb8b902d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
