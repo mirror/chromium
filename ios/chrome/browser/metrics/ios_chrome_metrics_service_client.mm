@@ -137,14 +137,6 @@ std::string IOSChromeMetricsServiceClient::GetVersionString() {
   return metrics::GetVersionString();
 }
 
-void IOSChromeMetricsServiceClient::InitializeSystemProfileMetrics(
-    const base::Closure& done_callback) {
-  finished_init_task_callback_ = done_callback;
-  drive_metrics_provider_->GetDriveMetrics(
-      base::Bind(&IOSChromeMetricsServiceClient::OnInitTaskGotDriveMetrics,
-                 weak_ptr_factory_.GetWeakPtr()));
-}
-
 void IOSChromeMetricsServiceClient::CollectFinalMetricsForLog(
     const base::Closure& done_callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -255,10 +247,6 @@ void IOSChromeMetricsServiceClient::Initialize() {
 
   metrics_service_->RegisterMetricsProvider(
       base::MakeUnique<translate::TranslateRankerMetricsProvider>());
-}
-
-void IOSChromeMetricsServiceClient::OnInitTaskGotDriveMetrics() {
-  finished_init_task_callback_.Run();
 }
 
 bool IOSChromeMetricsServiceClient::ShouldIncludeProfilerDataInLog() {
