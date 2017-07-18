@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e17c1b61_24489780",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:03:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t check that the network type is Tether. It also seems fragile.",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca2a5d4_6f40c859",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:03:10Z",
+      "side": 1,
+      "message": "This is an awful lot of explanation for the code. Put the problem details in a bug instead and reference that here.",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42040dfe_a7fc8b3a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:03:10Z",
+      "side": 1,
+      "message": "Can you explain how we are getting two detail pages on the route stack? That seems like the root problem here; preventing that would be a more robust fix.\n\nAlso, if we can\u0027t easily prevent that, we should be able to strip out the query params instead of adding this hacky variable.",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
