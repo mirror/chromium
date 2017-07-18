@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a96697bd_e3e0e743",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:17:47Z",
+      "side": 1,
+      "message": "nit: s/non empty/non-empty",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afcb4897_72db33e7",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -19,6 +36,64 @@
         "endLine": 62,
         "endChar": 16
       },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ca1c03_52ee3d63",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:17:47Z",
+      "side": 1,
+      "message": "\u003e Will remove this. Is it ok to refer to adblock documentation in our docs/code? \n\nTo be safe, I wouldn\u0027t.  We don\u0027t have control over that content (or its stability).",
+      "parentUuid": "afcb4897_72db33e7",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa75dc7_c11678d0",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:17:47Z",
+      "side": 1,
+      "message": "nit: Maybe \"is empty or omitted\"?",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ab462c_81bf7b0b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:17:47Z",
+      "side": 1,
+      "message": "Hmm... if domainType is optional (which I think it should be) do we need to have the \"any\" value?  Or could we instead do:\n\n// Specifies whether the network request is first-party or third-party to\n// the domain from which it originated. If omitted, all requests are\n// accepted.\nDomainType? domainType;\n\nIs there benefit in having the `any` type?",
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
