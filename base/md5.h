@@ -5,6 +5,8 @@
 #ifndef BASE_MD5_H_
 #define BASE_MD5_H_
 
+// TEST TEST TEST WUBALUBADUBDUB!
+
 #include <stddef.h>
 #include <stdint.h>
 
