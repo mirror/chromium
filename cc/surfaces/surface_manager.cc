@@ -215,6 +215,11 @@ SurfaceManager::GetSurfacesThatReferenceChild(
   return iter->second.parents;
 }
 
+bool SurfaceManager::HasTemporaryReference(
+    const viz::SurfaceId& surface_id) const {
+  return temporary_references_.count(surface_id) != 0;
+}
+
 void SurfaceManager::GarbageCollectSurfaces() {
   if (surfaces_to_destroy_.empty())
     return;
@@ -366,11 +371,6 @@ void SurfaceManager::RemoveAllSurfaceReferences(
 
     references_.erase(iter);
   }
-}
-
-bool SurfaceManager::HasTemporaryReference(
-    const viz::SurfaceId& surface_id) const {
-  return temporary_references_.count(surface_id) != 0;
 }
 
 void SurfaceManager::AddTemporaryReference(const viz::SurfaceId& surface_id) {

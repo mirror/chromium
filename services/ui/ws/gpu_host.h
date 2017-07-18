@@ -45,7 +45,7 @@ class GpuHost {
   virtual void OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) = 0;
   virtual void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) = 0;
 
-  // Requests a cc::mojom::FrameSinkManager interface from mus-gpu.
+  // Requests a cc::mojom::FrameSinkManagerImpl interface from mus-gpu.
   virtual void CreateFrameSinkManager(
       cc::mojom::FrameSinkManagerRequest request,
       cc::mojom::FrameSinkManagerClientPtr client) = 0;

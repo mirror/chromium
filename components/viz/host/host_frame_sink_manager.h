@@ -37,7 +37,7 @@ namespace test {
 class HostFrameSinkManagerTest;
 }
 
-// Browser side wrapper of mojom::FrameSinkManager, to be used from the
+// Browser side wrapper of mojom::FrameSinkManagerImpl, to be used from the
 // UI thread. Manages frame sinks and is intended to replace SurfaceManager.
 class VIZ_HOST_EXPORT HostFrameSinkManager
     : public NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient),
@@ -129,11 +129,11 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // calls.
   cc::mojom::FrameSinkManager* frame_sink_manager_ = nullptr;
 
-  // Mojo connection to the FrameSinkManager. If this is bound then
+  // Mojo connection to the FrameSinkManagerImpl. If this is bound then
   // |frame_sink_manager_impl_| must be null.
   cc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr_;
 
-  // Mojo connection back from the FrameSinkManager.
+  // Mojo connection back from the FrameSinkManagerImpl.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
 
   // A direct connection to FrameSinkManagerImpl. If this is set then

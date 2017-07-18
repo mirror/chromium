@@ -41,8 +41,6 @@ viz_component("service") {
     "frame_sinks/frame_eviction_manager.h",
     "frame_sinks/frame_evictor.cc",
     "frame_sinks/frame_evictor.h",
-    "frame_sinks/frame_sink_manager.cc",
-    "frame_sinks/frame_sink_manager.h",
     "frame_sinks/frame_sink_manager_client.h",
     "frame_sinks/frame_sink_manager_impl.cc",
     "frame_sinks/frame_sink_manager_impl.h",
