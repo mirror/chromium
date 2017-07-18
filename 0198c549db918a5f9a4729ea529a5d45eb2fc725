@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed2387a_bc31ccfd",
+        "filename": "ui/arc/notification/arc_notification_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-18T12:20:23Z",
+      "side": 1,
+      "message": "What is the exact task to do? It looks this comment isn\u0027t a todo but an explanation of the current status.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 68
+      },
+      "revId": "0198c549db918a5f9a4729ea529a5d45eb2fc725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
