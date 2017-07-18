@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e3099a_263cc42b",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10152,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T17:58:34Z",
+      "side": 1,
+      "message": "merge mishap?",
+      "range": {
+        "startLine": 10152,
+        "startChar": 18,
+        "endLine": 10152,
+        "endChar": 26
+      },
+      "revId": "e010f3bbe312af661ddd71e55c4a235237246339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
