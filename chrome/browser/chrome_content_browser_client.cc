@@ -2918,7 +2918,9 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
                                       base::RetainedRef(context)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (safe_browsing_service_) {
+    // TODO(ricea): Maybe modify TestingBrowserProcess to always return a valid
+    // pointer here.
     registry->AddInterface(
         base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
                    safe_browsing_service_->database_manager(),
