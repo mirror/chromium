@@ -57,7 +57,6 @@ class PLATFORM_EXPORT ResourceError final {
       const String& failing_url,
       ResourceRequestBlockedReason);
 
-  // Only for Blink internal usage.
   static ResourceError CacheMissError(const String& failing_url);
 
   ResourceError()
@@ -68,7 +67,6 @@ class PLATFORM_EXPORT ResourceError final {
         is_timeout_(false),
         stale_copy_in_cache_(false),
         was_ignored_by_handler_(false),
-        is_cache_miss_(false),
         should_collapse_initiator_(false) {}
 
   ResourceError(const String& domain,
@@ -85,7 +83,6 @@ class PLATFORM_EXPORT ResourceError final {
         is_timeout_(false),
         stale_copy_in_cache_(false),
         was_ignored_by_handler_(false),
-        is_cache_miss_(false),
         should_collapse_initiator_(false) {}
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
@@ -121,8 +118,7 @@ class PLATFORM_EXPORT ResourceError final {
   }
   bool WasIgnoredByHandler() const { return was_ignored_by_handler_; }
 
-  void SetIsCacheMiss(bool is_cache_miss) { is_cache_miss_ = is_cache_miss; }
-  bool IsCacheMiss() const { return is_cache_miss_; }
+  bool IsCacheMiss() const;
   bool WasBlockedByResponse() const {
     return error_code_ == net::ERR_BLOCKED_BY_RESPONSE;
   }
@@ -150,7 +146,6 @@ class PLATFORM_EXPORT ResourceError final {
   bool is_timeout_;
   bool stale_copy_in_cache_;
   bool was_ignored_by_handler_;
-  bool is_cache_miss_;
   bool should_collapse_initiator_;
 };
 
