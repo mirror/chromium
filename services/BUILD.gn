@@ -19,6 +19,7 @@ service_test("services_unittests") {
   # section below. If you are unsure, contact blundell@chromium.org.
   deps = [
     "//services/identity:tests",
+    "//services/viz/public/interfaces/compositing:tests",
   ]
 
   if (!is_ios) {
