@@ -22,6 +22,30 @@
       "revId": "67d5702dadc3af9a7b0e523922899af8bb07647a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec598bc7_72207a2b",
+        "filename": "remoting/host/policy_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-18T02:49:30Z",
+      "side": 1,
+      "message": "It is referenced by the Me2Me and It2Me NMH which are built for ChromeOS (though not released).  I could ifdef the calls there as well but wanted to limit the number of platform ifdefs if possible.",
+      "parentUuid": "3f3e5702_34f22204",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 74
+      },
+      "revId": "67d5702dadc3af9a7b0e523922899af8bb07647a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
