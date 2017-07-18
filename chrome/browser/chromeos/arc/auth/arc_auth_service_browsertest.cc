@@ -93,6 +93,7 @@ class ArcAuthServiceTest : public InProcessBrowserTest {
         base::MakeUnique<chromeos::ScopedUserManagerEnabler>(
             new chromeos::FakeChromeUserManager());
     // Init ArcSessionManager for testing.
+    ArcServiceLauncher::Get()->OnPrimaryUserProfileBeingDestroyed();
     ArcServiceLauncher::Get()->Shutdown();
     ArcServiceLauncher::Get()->Initialize();
     ArcSessionManager::DisableUIForTesting();
@@ -159,6 +160,7 @@ class ArcAuthServiceTest : public InProcessBrowserTest {
     // fixture destruction (because it is initialized with the original Profile
     // instance in fixture, once), but it should be no op.
     // TODO(hidehiko): Think about a way to test the code cleanly.
+    ArcServiceLauncher::Get()->OnPrimaryUserProfileBeingDestroyed();
     ArcServiceLauncher::Get()->Shutdown();
     profile_.reset();
     user_manager_enabler_.reset();
