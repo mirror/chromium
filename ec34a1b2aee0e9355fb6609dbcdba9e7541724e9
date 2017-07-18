@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "58a1bc72_4ae596e2",
+        "filename": "chrome/browser/chromeos/file_manager/arc_file_tasks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e04bd95_7a1a879f",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb8f8c47_7000d753",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 1
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "47657050_b9d9dd1c",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "I think passing the |context_| reduces the assumption?\n(BrowserContext* is alive while UI thread message loop is running, v.s. BrowserContext* and ArcIntentHelperBridge* are alive)\n\nHmm, practically those are same, though. WDYT?",
+      "parentUuid": "bb8f8c47_7000d753",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e815078d_ca628ef7",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 1
@@ -100,6 +136,24 @@
       "writtenOn": "2017-07-14T10:30:02Z",
       "side": 1,
       "message": "L157 probably works fine because the returned object is relatively short-lived. The returned object is kept in an OpenWithMenuObserver object (chrome/browser/renderer_context_menu/open_with_menu_factory_ash.cc) but the object is live only while Chrome\u0027s right-click menu is shown.\n\nAnyway, I\u0027m not very familiar with BrowserContext. What can we assume about |context_|\u0027s lifetime?",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51662a2_6ed544ef",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "As long as the context is touched on UI thread, it should work, as mentioned by Luis, in this case.",
+      "parentUuid": "e815078d_ca628ef7",
       "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -129,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "1945cb0a_4c39a938",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97891fb_f5b72b7f",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d047eaa_64ade96c",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 1
@@ -152,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "31fb0eca_b8212876",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d047eaa_64ade96c",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf53f96_c636ae0d",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 1
@@ -166,6 +268,24 @@
       "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5d25c7_19d11d20",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T09:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf53f96_c636ae0d",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
