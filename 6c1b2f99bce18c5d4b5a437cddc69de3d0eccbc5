@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4f0b4a_f5cd3923",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_line_box_fragment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-18T16:19:38Z",
+      "side": 1,
+      "message": ".nit (can be fixed in next cl in series), place below BaselinePosition method for consistency.",
+      "revId": "6c1b2f99bce18c5d4b5a437cddc69de3d0eccbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a015fe_406a07a0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-18T16:19:38Z",
+      "side": 1,
+      "message": ".nit place just above ToString()",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 8
+      },
+      "revId": "6c1b2f99bce18c5d4b5a437cddc69de3d0eccbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
