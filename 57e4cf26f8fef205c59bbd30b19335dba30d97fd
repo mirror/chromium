@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84913316_970669d5",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-18T14:26:41Z",
+      "side": 1,
+      "message": "In my local Machine(Ubuntu16.04), I found it is flaky here.\nFrom the log it shows HidService::RemoveDevice() is called as expected, \nbut sometimes the WaitUntilSatisfied() never returns.\nI\u0027m still looking into this.",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 0
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
