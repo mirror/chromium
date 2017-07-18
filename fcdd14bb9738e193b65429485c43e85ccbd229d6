@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d0a869_7a00150a",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T22:54:51Z",
+      "side": 1,
+      "message": "nit: Comment just explains the code which is pretty readable. (The variable is already named kIdsWhichOpenSettingsOnClick :P); remove.",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 10
+      },
+      "revId": "fcdd14bb9738e193b65429485c43e85ccbd229d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
