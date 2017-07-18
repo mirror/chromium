@@ -1125,7 +1125,11 @@ willPositionSheet:(NSWindow*)sheet
   static const bool fullscreen_low_power_disabled_at_command_line =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableFullscreenLowPowerMode);
-  if (!fullscreen_low_power_disabled_at_command_line) {
+  if (
+      // Temporarily disabled on 10.13 because the window turns black when
+      // exiting FSLP. See https://crbug.com/742691 for progress.
+      !base::mac::IsAtLeastOS10_13() &&
+      !fullscreen_low_power_disabled_at_command_line) {
     WebContents* webContents = [self webContents];
     if (webContents && webContents->GetRenderWidgetHostView()) {
       fullscreenLowPowerCoordinator_.reset(
