@@ -135,6 +135,29 @@
       "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1ec9c8_838e6f64",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T22:43:53Z",
+      "side": 1,
+      "message": "One question of visibility here. Do we always get visibility signal once a tab is created? That is, we can always trust the visibility property being set here?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
