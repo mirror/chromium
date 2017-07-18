@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9686f44d_79076b03",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T06:53:01Z",
+      "side": 1,
+      "message": "I made a diff to capture what I had on the brain - https://chromium-review.googlesource.com/c/575728/\n\nI did encounter something unexpected - it added a requirement for first_run_bubble_controller to #include chrome/browser/ui/views/bubble_anchor_util.h, which it can\u0027t with the current DEPS rule.\n\nThis is actually a problem. Cocoa will never want to call `GetPageInfoAnchorView`. But we *do* want Cocoa code to have easy access to GetPageInfoAnchorPoint. Since, that\u0027s what Cocoa AND Views bubbles on Mac should be using so they can share code.\n\nI pulled this thread and encountered a lot of duplicated code, which the CL here duplicates again, which is not good.\n\nSo I\u0027ve made https://chromium-review.googlesource.com/c/575791/ \"Consolidate PageInfo bubble anchoring logic.\"\n\nIt moves GetPageInfoAnchorPoint to chrome/browser/ui/bubble_anchor_util.h so that everything can have at it, including the first run bubble :)",
+      "parentUuid": "9f4bd1b2_868bb280",
+      "revId": "60e3b78c0e35974b462639a850347269048461c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "322e9b42_f6b8c21c",
         "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
         "patchSetId": 6
