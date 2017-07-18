@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f61ea60_1038115e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T20:51:47Z",
+      "side": 1,
+      "message": "Is this supposed to be a parameter?",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6020491d_dce3de71",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T20:51:47Z",
+      "side": 1,
+      "message": "What is frame supposed to be?",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82a1c1d_3316173e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-18T20:51:47Z",
+      "side": 1,
+      "message": "In which coordinate system is this point? The superview of the bubble, or the bubble itself?",
+      "range": {
+        "startLine": 19,
+        "startChar": 59,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "7bac17a5247112b20938491bcedf4089c90c4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
