@@ -70,6 +70,30 @@
       "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02eb00f4_514a4cba",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-18T22:22:30Z",
+      "side": 1,
+      "message": "When I run ./tools/clang/scripts/update.py --force-local-build I see libclang_rt.ios.a, but it\u0027s not in the package.  Any ideas?",
+      "parentUuid": "9c460798_b8042caa",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
