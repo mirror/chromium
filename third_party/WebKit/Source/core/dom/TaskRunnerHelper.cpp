@@ -33,12 +33,12 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
     // or provide a mechanism that web pages can opt-out it if throttling is not
     // desirable.
     case TaskType::kDatabaseAccess:
+    case TaskType::kMediaElementEvent:
       return frame ? frame->FrameScheduler()->SuspendableTaskRunner()
                    : Platform::Current()->CurrentThread()->GetWebTaskRunner();
     case TaskType::kDOMManipulation:
     case TaskType::kHistoryTraversal:
     case TaskType::kEmbed:
-    case TaskType::kMediaElementEvent:
     case TaskType::kCanvasBlobSerialization:
     case TaskType::kRemoteEvent:
     case TaskType::kWebSocket:
