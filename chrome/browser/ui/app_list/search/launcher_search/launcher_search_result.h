@@ -43,7 +43,7 @@ class LauncherSearchResult : public SearchResult,
       const int discrete_value_relevance,
       Profile* profile,
       const extensions::Extension* extension,
-      const linked_ptr<LauncherSearchIconImageLoader>& icon_image_loader);
+      const std::unique_ptr<LauncherSearchIconImageLoader>& icon_image_loader);
   void Initialize();
 
   // Returns search result ID. The search result ID is comprised of the
@@ -56,7 +56,7 @@ class LauncherSearchResult : public SearchResult,
   const int discrete_value_relevance_;
   Profile* profile_;
   const extensions::Extension* extension_;
-  linked_ptr<LauncherSearchIconImageLoader> icon_image_loader_;
+  std::unique_ptr<LauncherSearchIconImageLoader> icon_image_loader_;
 
   DISALLOW_COPY_AND_ASSIGN(LauncherSearchResult);
 };
