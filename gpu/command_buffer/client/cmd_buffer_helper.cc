@@ -98,8 +98,10 @@ void CommandBufferHelper::CalcImmediateEntries(int waiting_count) {
   }
 }
 
-bool CommandBufferHelper::AllocateRingBuffer() {
+bool CommandBufferHelper::AllocateRingBuffer(bool debug) {
   if (!usable()) {
+    if (debug)
+      LOG(ERROR)<<"JR no usable\n";
     return false;
   }
 
@@ -113,6 +115,8 @@ bool CommandBufferHelper::AllocateRingBuffer() {
   if (id < 0) {
     ClearUsable();
     DCHECK(context_lost_);
+    if(debug)
+      LOG(ERROR)<<"JR negative id, context_lost_ "<<context_lost_<<"\n";
     return false;
   }
 
@@ -148,9 +152,9 @@ void CommandBufferHelper::FreeRingBuffer() {
   FreeResources();
 }
 
-bool CommandBufferHelper::Initialize(int32_t ring_buffer_size) {
+bool CommandBufferHelper::Initialize(int32_t ring_buffer_size, bool debug) {
   ring_buffer_size_ = ring_buffer_size;
-  return AllocateRingBuffer();
+  return AllocateRingBuffer(debug);
 }
 
 CommandBufferHelper::~CommandBufferHelper() {
