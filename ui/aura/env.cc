@@ -141,6 +141,18 @@ void Env::SetWindowTreeClient(WindowTreeClient* window_tree_client) {
   window_tree_client_ = window_tree_client;
 }
 
+void Env::NotifyDragStarted(const ui::OSExchangeData* data) {
+  for (EnvObserver& observer : observers_) {
+    observer.OnDragStarted(data);
+  }
+}
+
+void Env::NotifyDragEnded(const ui::OSExchangeData* data) {
+  for (EnvObserver& observer : observers_) {
+    observer.OnDragEnded(data);
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Env, private:
 
