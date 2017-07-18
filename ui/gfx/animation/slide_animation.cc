@@ -21,8 +21,7 @@ SlideAnimation::SlideAnimation(AnimationDelegate* target)
       value_current_(0),
       slide_duration_(kDefaultDurationMs) {}
 
-SlideAnimation::~SlideAnimation() {
-}
+SlideAnimation::~SlideAnimation() {}
 
 void SlideAnimation::Reset() {
   Reset(0);
@@ -47,7 +46,7 @@ void SlideAnimation::Show() {
   if (slide_duration_ == 0) {
     AnimateToState(1.0);  // Skip to the end of the animation.
     return;
-  } else if (value_current_ == value_end_)  {
+  } else if (value_current_ == value_end_) {
     return;
   }
 
