@@ -23,17 +23,20 @@ enum HidBusType {
   kHIDBusTypeBluetooth = 1,
 };
 
-#if defined(OS_MACOSX)
-typedef uint64_t HidDeviceId;
-const uint64_t kInvalidHidDeviceId = -1;
-#else
 typedef std::string HidDeviceId;
 extern const char kInvalidHidDeviceId[];
+
+#if defined(OS_MACOSX)
+typedef uint64_t HidPlatformDeviceId;
+const uint64_t kInvalidHidPlatformDeviceId = -1;
+#else
+typedef std::string HidPlatformDeviceId;
+extern const char kInvalidHidPlatformDeviceId[];
 #endif
 
 class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
  public:
-  HidDeviceInfo(const HidDeviceId& device_id,
+  HidDeviceInfo(const HidPlatformDeviceId& platform_device_id,
                 uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
@@ -41,7 +44,7 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
                 HidBusType bus_type,
                 const std::vector<uint8_t> report_descriptor);
 
-  HidDeviceInfo(const HidDeviceId& device_id,
+  HidDeviceInfo(const HidPlatformDeviceId& platform_device_id,
                 uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
@@ -53,7 +56,10 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
                 size_t max_feature_report_size);
 
   // Device identification.
-  const HidDeviceId& device_id() const { return device_id_; }
+  const HidDeviceId& device_guid() const { return guid_; }
+  const HidPlatformDeviceId& platform_device_id() const {
+    return platform_device_id_;
+  }
   uint16_t vendor_id() const { return vendor_id_; }
   uint16_t product_id() const { return product_id_; }
   const std::string& product_name() const { return product_name_; }
@@ -80,8 +86,9 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
  private:
   friend class base::RefCountedThreadSafe<HidDeviceInfo>;
 
-  // Device identification.
-  HidDeviceId device_id_;
+  // Device identification for client.
+  HidDeviceId guid_;
+  HidPlatformDeviceId platform_device_id_;
   uint16_t vendor_id_;
   uint16_t product_id_;
   std::string product_name_;

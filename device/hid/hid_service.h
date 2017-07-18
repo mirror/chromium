@@ -63,14 +63,14 @@ class HidService {
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Fills in a DeviceInfo struct with info for the given device_id.
-  // Returns |nullptr| if |device_id| is invalid.
+  // Fills in a DeviceInfo struct with info for the given |device_guid|.
+  // Returns |nullptr| if |device_guid| is invalid.
   scoped_refptr<HidDeviceInfo> GetDeviceInfo(
-      const HidDeviceId& device_id) const;
+      const HidDeviceId& device_guid) const;
 
   // Opens a connection to a device. The callback will be run with null on
   // failure.
-  virtual void Connect(const HidDeviceId& device_id,
+  virtual void Connect(const HidDeviceId& device_guid,
                        const ConnectCallback& callback) = 0;
 
  protected:
@@ -81,7 +81,7 @@ class HidService {
   HidService();
 
   void AddDevice(scoped_refptr<HidDeviceInfo> info);
-  void RemoveDevice(const HidDeviceId& device_id);
+  void RemoveDevice(const HidPlatformDeviceId& platform_device_id);
   void FirstEnumerationComplete();
 
   const DeviceMap& devices() const { return devices_; }
@@ -89,7 +89,11 @@ class HidService {
   base::ThreadChecker thread_checker_;
 
  private:
+  HidDeviceId FindDeviceIdByPlatformDeviceId(
+      const HidPlatformDeviceId& platform_device_id);
+
   DeviceMap devices_;
+
   bool enumeration_ready_ = false;
   std::vector<GetDevicesCallback> pending_enumerations_;
   base::ObserverList<Observer, true> observer_list_;

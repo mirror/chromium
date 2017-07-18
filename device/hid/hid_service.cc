@@ -73,11 +73,11 @@ void HidService::RemoveObserver(HidService::Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-// Fills in the device info struct of the given device_id.
+// Fills in the device info struct of the given device_guid.
 scoped_refptr<HidDeviceInfo> HidService::GetDeviceInfo(
-    const HidDeviceId& device_id) const {
+    const HidDeviceId& device_guid) const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DeviceMap::const_iterator it = devices_.find(device_id);
+  DeviceMap::const_iterator it = devices_.find(device_guid);
   if (it == devices_.end()) {
     return nullptr;
   }
@@ -92,8 +92,11 @@ HidService::~HidService() {
 
 void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (!base::ContainsKey(devices_, device_info->device_id())) {
-    devices_[device_info->device_id()] = device_info;
+
+  HidDeviceId device_guid =
+      FindDeviceIdByPlatformDeviceId(device_info->platform_device_id());
+  if (device_guid == kInvalidHidDeviceId) {
+    devices_[device_info->device_guid()] = device_info;
 
     HID_LOG(USER) << "HID device "
                   << (enumeration_ready_ ? "added" : "detected")
@@ -101,7 +104,7 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
                   << ", productId=" << device_info->product_id() << ", name='"
                   << device_info->product_name() << "', serial='"
                   << device_info->serial_number() << "', deviceId='"
-                  << device_info->device_id() << "'";
+                  << device_info->platform_device_id() << "'";
 
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
@@ -110,18 +113,20 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   }
 }
 
-void HidService::RemoveDevice(const HidDeviceId& device_id) {
+void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DeviceMap::iterator it = devices_.find(device_id);
-  if (it != devices_.end()) {
-    HID_LOG(USER) << "HID device removed: deviceId='" << device_id << "'";
 
-    scoped_refptr<HidDeviceInfo> device = it->second;
+  HidDeviceId device_guid = FindDeviceIdByPlatformDeviceId(platform_device_id);
+  if (device_guid != kInvalidHidDeviceId) {
+    HID_LOG(USER) << "HID device removed: deviceId='" << platform_device_id
+                  << "'";
+
+    scoped_refptr<HidDeviceInfo> device = devices_[device_guid];
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
         observer.OnDeviceRemoved(device);
     }
-    devices_.erase(it);
+    devices_.erase(device_guid);
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
         observer.OnDeviceRemovedCleanup(device);
@@ -143,6 +148,16 @@ void HidService::FirstEnumerationComplete() {
     }
     pending_enumerations_.clear();
   }
+}
+
+HidDeviceId HidService::FindDeviceIdByPlatformDeviceId(
+    const HidPlatformDeviceId& platform_device_id) {
+  for (auto it = devices_.begin(); it != devices_.end(); ++it) {
+    if (it->second->platform_device_id() == platform_device_id) {
+      return it->first;
+    }
+  }
+  return kInvalidHidDeviceId;
 }
 
 }  // namespace device

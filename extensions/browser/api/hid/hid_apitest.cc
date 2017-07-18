@@ -26,6 +26,7 @@ using base::ThreadTaskRunnerHandle;
 using device::HidCollectionInfo;
 using device::HidDeviceId;
 using device::HidDeviceInfo;
+using device::HidPlatformDeviceId;
 using device::HidUsageAndPage;
 using device::MockDeviceClient;
 using net::IOBuffer;
@@ -179,10 +180,10 @@ class HidApiTest : public ShellApiTest {
         base::Bind(&HidApiTest::LazyFirstEnumeration, base::Unretained(this)));
   }
 
-  void Connect(const HidDeviceId& device_id,
+  void Connect(const HidDeviceId& device_guid,
                const device::HidService::ConnectCallback& callback) {
     const auto& devices = device_client_->hid_service()->devices();
-    const auto& device_entry = devices.find(device_id);
+    const auto& device_entry = devices.find(device_guid);
     scoped_refptr<MockHidConnection> connection;
     if (device_entry != devices.end()) {
       connection = new MockHidConnection(device_entry->second);
@@ -199,7 +200,7 @@ class HidApiTest : public ShellApiTest {
     device_client_->hid_service()->FirstEnumerationComplete();
   }
 
-  void AddDevice(const HidDeviceId& device_id,
+  void AddDevice(const HidPlatformDeviceId& platform_device_id,
                  int vendor_id,
                  int product_id,
                  bool report_id) {
@@ -212,9 +213,9 @@ class HidApiTest : public ShellApiTest {
       report_descriptor.insert(report_descriptor.begin(), kReportDescriptor,
                                kReportDescriptor + sizeof(kReportDescriptor));
     }
-    device_client_->hid_service()->AddDevice(
-        new HidDeviceInfo(device_id, vendor_id, product_id, "Test Device", "A",
-                          device::kHIDBusTypeUSB, report_descriptor));
+    device_client_->hid_service()->AddDevice(new HidDeviceInfo(
+        platform_device_id, vendor_id, product_id, "Test Device", "A",
+        device::kHIDBusTypeUSB, report_descriptor));
   }
 
  protected:
