@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbcc94cb_5e6c82ec",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1133705
+      },
+      "writtenOn": "2017-07-18T12:53:28Z",
+      "side": 1,
+      "message": "Just to be safe, please move this after the check for IsOffTheRecord() (since now you\u0027re actually doing something when a SettingNavigationController is already shown).",
+      "range": {
+        "startLine": 1924,
+        "startChar": 2,
+        "endLine": 1927,
+        "endChar": 3
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec2dadc_400f5745",
+        "filename": "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133705
+      },
+      "writtenOn": "2017-07-18T12:53:28Z",
+      "side": 1,
+      "message": "the commands",
+      "range": {
+        "startLine": 78,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad726c6a_36ea157e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133705
+      },
+      "writtenOn": "2017-07-18T12:53:28Z",
+      "side": 1,
+      "message": "Nit: Use dispatcher_ to be consistent with the rest of the file?",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
