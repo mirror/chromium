@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c01285dc_89976488",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20271ca0_661fef23",
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1b7adb9_45a441ed",
         "filename": "extensions/renderer/ipc_message_sender.h",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-17T18:21:10Z",
       "side": 1,
       "message": "You can remove |extension_id| param from most if not all methods and let IPCMessageSender use context-\u003eGetExtensionId(), similar to SendAddFilteredEventListenerIPC",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f358523_878e4ff3",
+        "filename": "extensions/renderer/ipc_message_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Yeah... my original thinking was that callers might want to cache extension id across calls to AddUnfiltered and AddUnfilteredLazy, but the implementation of GetExtensionID is pretty simple, so shouldn\u0027t be a big deal to call twice.  Done.",
+      "parentUuid": "a1b7adb9_45a441ed",
       "range": {
         "startLine": 42,
         "startChar": 15,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5ca8e168_470f5ba2",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcbfcc1_f90ed352",
+      "range": {
+        "startLine": 709,
+        "startChar": 7,
+        "endLine": 709,
+        "endChar": 11
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbab656c_2e5162a0",
         "filename": "extensions/renderer/native_extension_bindings_system.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdbcdc0_118a9542",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbab656c_2e5162a0",
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "9f33f819_0de137bb",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Moot here, but done in event_bindings.cc",
+      "parentUuid": "7e1894bc_ec624591",
+      "range": {
+        "startLine": 727,
+        "startChar": 9,
+        "endLine": 727,
+        "endChar": 15
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "617399d7_3c38cebf",
         "filename": "extensions/renderer/native_extension_bindings_system.cc",
         "patchSetId": 3
@@ -116,6 +224,30 @@
       "writtenOn": "2017-07-17T18:21:10Z",
       "side": 1,
       "message": "if (remove_lazy_listener) ?",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 31
+      },
+      "revId": "7dc8c1fa6d902a87f11dd7140f119c748bcd5414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1cbf37_9bd7bcf6",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T19:02:29Z",
+      "side": 1,
+      "message": "Whoops, done.",
+      "parentUuid": "617399d7_3c38cebf",
       "range": {
         "startLine": 745,
         "startChar": 0,
