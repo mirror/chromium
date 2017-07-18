@@ -69,6 +69,30 @@
       "revId": "99b8e0e455415af34fdee07c9c68fecd4c83e767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e936a94f_f984e08c",
+        "filename": "components/metrics/field_trials_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-18T23:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c571886_3ea5c2ee",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "99b8e0e455415af34fdee07c9c68fecd4c83e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
