@@ -81,7 +81,6 @@ ResourceError ResourceError::Copy() const {
   error_copy.failing_url_ = failing_url_.IsolatedCopy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_null_ = is_null_;
-  error_copy.is_cancellation_ = is_cancellation_;
   error_copy.is_access_check_ = is_access_check_;
   error_copy.is_timeout_ = is_timeout_;
   error_copy.was_ignored_by_handler_ = was_ignored_by_handler_;
@@ -133,15 +132,18 @@ void ResourceError::InitializeWebURLError(WebURLError* error,
   error->reason = reason;
   error->stale_copy_in_cache = stale_copy_in_cache;
   error->unreachable_url = url;
-  if (reason == net::ERR_ABORTED) {
-    error->is_cancellation = true;
-  } else if (reason == net::ERR_TEMPORARILY_THROTTLED) {
+  if (reason == net::ERR_TEMPORARILY_THROTTLED) {
     error->localized_description =
         WebString::FromASCII(kThrottledErrorDescription);
   } else {
     error->localized_description =
         WebString::FromASCII(net::ErrorToString(reason));
   }
+}
+
+bool ResourceError::IsCancellation() const {
+  return domain_ == String(net::kErrorDomain) &&
+         error_code_ == net::ERR_ABORTED;
 }
 
 bool ResourceError::IsCacheMiss() const {
