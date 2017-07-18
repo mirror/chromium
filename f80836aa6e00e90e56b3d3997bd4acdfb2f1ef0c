@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd793d5_300e712d",
+        "filename": "components/offline_pages/core/prefetch/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-18T21:27:50Z",
+      "side": 1,
+      "message": "Drop design. It\u0027s cleaner.",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "f80836aa6e00e90e56b3d3997bd4acdfb2f1ef0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36ef21b_e05d380e",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-18T21:27:50Z",
+      "side": 1,
+      "message": "So you want it to fail for now. Is that correct?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "f80836aa6e00e90e56b3d3997bd4acdfb2f1ef0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
