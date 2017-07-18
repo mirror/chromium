@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3a3d1d_d5882900",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T01:48:10Z",
+      "side": 1,
+      "message": "This was the callsite I was thinking of. Sorry for being vague. We need to validate that setting !\u003d CONTENT_SETTING_DEFAULT. We should probably also update the DCHECK here: https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/content_settings/content_settings_store.cc?rcl\u003d5c3feaef653f0f612759f9fb7fc35d1f67a8cbf7\u0026l\u003d341",
+      "revId": "698b6ad79d312f36ecdcac81a44177d1ae768a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
