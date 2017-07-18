@@ -22,6 +22,30 @@
       "revId": "dd827ae06e5d935e9ca41de853ccc73480c60307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0cfa77_ef36d6a4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-18T00:38:11Z",
+      "side": 1,
+      "message": "Done\nThanks for the tip!\nI removed loadingSpinnerBackgroundView.\nI created BOOL _spinnerVisible which prevents the spinnerbackground from recreating (that makes spinner blink because onSyncStateChanged is called a few times when syncing).",
+      "parentUuid": "641d9e32_aa6f1263",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 27
+      },
+      "revId": "dd827ae06e5d935e9ca41de853ccc73480c60307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
