@@ -873,8 +873,9 @@ void HttpCache::DoneWithEntry(ActiveEntry* entry,
                               bool is_partial) {
   // |should_restart| is true if there may be other transactions dependent on
   // this transaction and they will need to be restarted.
-  bool should_restart = process_cancel && HasDependentTransactions(
+  bool should_restart = process_cancel && KeepEntryForDependentTransactions(
                                               entry, transaction, is_partial);
+
   if (should_restart && is_partial)
     entry->disk_entry->CancelSparseIO();
 
@@ -1118,9 +1119,9 @@ bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
   return true;
 }
 
-bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
-                                         Transaction* transaction,
-                                         bool is_partial) const {
+bool HttpCache::KeepEntryForDependentTransactions(ActiveEntry* entry,
+                                                  Transaction* transaction,
+                                                  bool is_partial) const {
   if (transaction->method() == "HEAD" || transaction->method() == "DELETE")
     return false;
 
@@ -1132,6 +1133,17 @@ bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
                              transaction->mode() == Transaction::NONE;
   if (!writing_transaction)
     return false;
+
+  // Do not keep the entry if the response headers or code sent by the server
+  // is garbled. (crbug.com/739112)
+  const HttpResponseInfo* response_info = transaction->GetResponseInfo();
+
+  if (!response_info->headers.get())
+    return false;
+
+  if (!is_partial && response_info->headers->response_code() != 200) {
+    return false;
+  }
 
   // If transaction is not in add_to_entry_queue and has a WRITE bit set or is
   // NONE, then there may be other transactions depending on it to completely
