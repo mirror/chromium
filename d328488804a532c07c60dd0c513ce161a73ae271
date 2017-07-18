@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90c3d309_b7b381ad",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T20:26:26Z",
+      "side": 1,
+      "message": "ActivationState is a struct, shouldn\u0027t we be passing by reference if we can? Same for the other comment.",
+      "parentUuid": "96e5bc76_426309ab",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "d328488804a532c07c60dd0c513ce161a73ae271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d5f0e5_5cd8da69",
         "filename": "components/subresource_filter/core/common/document_subresource_filter.h",
         "patchSetId": 13
