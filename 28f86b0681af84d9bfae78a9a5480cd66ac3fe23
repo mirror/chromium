@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8c6c7648_18253b10",
+        "filename": "chrome/browser/android/metrics/uma_session_stats.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-18T21:43:37Z",
+      "side": 0,
+      "message": "it\u0027s possible that unit tests are unnecessarily/incorrectly checking this on android?",
+      "parentUuid": "d09864ad_229bc97b",
+      "range": {
+        "startLine": 152,
+        "startChar": 46,
+        "endLine": 152,
+        "endChar": 47
+      },
+      "revId": "28f86b0681af84d9bfae78a9a5480cd66ac3fe23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9edba9c_730ce8b5",
         "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
         "patchSetId": 7
