@@ -317,6 +317,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void SetSelectionControllerClientForTesting(
       std::unique_ptr<ui::TouchSelectionControllerClient> client);
 
+  void GotFocus();
+
  private:
   void RunAckCallbacks();
 
@@ -367,6 +369,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                             float mouse_down_y);
 
   WebContentsAccessibilityAndroid* GetWebContentsAccessibilityAndroid() const;
+
+  void OnFocusInternal();
 
   // The model object.
   RenderWidgetHostImpl* host_;

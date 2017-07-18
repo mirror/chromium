@@ -739,7 +739,7 @@ void ContentViewCore::SetFocusInternal(bool focused) {
     return;
 
   if (focused)
-    GetRenderWidgetHostViewAndroid()->Focus();
+    GetRenderWidgetHostViewAndroid()->GotFocus();
   else
     GetRenderWidgetHostViewAndroid()->Blur();
 }
