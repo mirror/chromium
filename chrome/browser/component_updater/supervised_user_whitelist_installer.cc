@@ -25,6 +25,8 @@
 #include "base/scoped_observer.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/value_conversions.h"
 #include "base/values.h"
@@ -62,6 +64,10 @@ const char kExtensionName[] = "name";
 const char kExtensionShortName[] = "short_name";
 const char kExtensionIcons[] = "icons";
 const char kExtensionLargeIcon[] = "128";
+
+constexpr base::TaskTraits kTaskTraits = {
+    base::MayBlock(), base::TaskPriority::BACKGROUND,
+    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
 
 base::string16 GetWhitelistTitle(const base::DictionaryValue& manifest) {
   base::string16 title;
@@ -448,9 +454,9 @@ bool SupervisedUserWhitelistInstallerImpl::UnregisterWhitelistInternal(
   bool result = cus_->UnregisterComponent(crx_id);
   DCHECK(result);
 
-  cus_->GetSequencedTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&DeleteFileOnTaskRunner,
-                                GetSanitizedWhitelistPath(crx_id)));
+  base::PostTaskWithTraits(FROM_HERE, kTaskTraits,
+                           base::BindOnce(&DeleteFileOnTaskRunner,
+                                          GetSanitizedWhitelistPath(crx_id)));
 
   return removed;
 }
@@ -460,7 +466,10 @@ void SupervisedUserWhitelistInstallerImpl::OnRawWhitelistReady(
     const base::string16& title,
     const base::FilePath& large_icon_path,
     const base::FilePath& whitelist_path) {
-  cus_->GetSequencedTaskRunner()->PostTask(
+  // TODO: avoid using a single thread task runner crbug.com/744718.
+  auto task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
+      kTaskTraits, base::SingleThreadTaskRunnerThreadMode::SHARED);
+  task_runner->PostTask(
       FROM_HERE,
       base::BindOnce(
           &CheckForSanitizedWhitelistOnTaskRunner, crx_id, whitelist_path,
@@ -516,9 +525,10 @@ void SupervisedUserWhitelistInstallerImpl::RegisterComponents() {
   for (const std::string& id : stale_whitelists)
     whitelists->RemoveWithoutPathExpansion(id, nullptr);
 
-  cus_->GetSequencedTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&RemoveUnregisteredWhitelistsOnTaskRunner,
-                                registered_whitelists));
+  base::PostTaskWithTraits(
+      FROM_HERE, kTaskTraits,
+      base::BindOnce(&RemoveUnregisteredWhitelistsOnTaskRunner,
+                     registered_whitelists));
 }
 
 void SupervisedUserWhitelistInstallerImpl::Subscribe(
