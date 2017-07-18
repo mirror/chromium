@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554ffc07_7482c565",
+        "filename": "base/metrics/histogram_macros_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T21:54:52Z",
+      "side": 1,
+      "message": "Prefer using A \u003d B;",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 80
+      },
+      "revId": "f334f9dc50af3edbeedc18b0d03bc56b34c6137c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
