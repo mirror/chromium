@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "c73657b4_dd157e8a",
+        "filename": "third_party/WebKit/Source/core/input/GestureManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-18T01:50:27Z",
+      "side": 1,
+      "message": "It is bad to access caret information unless you assure selection is caret.\nI mean selection generally has 3 xor types: none, caret and range:\n https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/SelectionTemplate.cpp?type\u003dcs\u0026q\u003dselectiontype+file:%5Esrc/third_party/WebKit/Source/core/editing/+package:%5Echromium$\u0026l\u003d155",
+      "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bda46f1_d57ef7cc",
         "filename": "third_party/WebKit/public/web/WebWidgetClient.h",
         "patchSetId": 1
@@ -66,6 +83,23 @@
         "endLine": 169,
         "endChar": 48
       },
+      "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520dd47b_b1d1dd5b",
+        "filename": "third_party/WebKit/public/web/WebWidgetClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-18T01:50:27Z",
+      "side": 1,
+      "message": "I don\u0027t support the idea adding maybe-useful-so-far args again and again.\nIt makes patch size larger and review hard.\nBefore that, I recommend you making |WebTapedInfo| public class.",
       "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
