@@ -12,10 +12,6 @@
 #include "components/safe_browsing_db/database_manager.h"
 #include "ipc/ipc_message.h"
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace safe_browsing {
 
 // This class implements the Mojo interface for renderers to perform
@@ -32,7 +28,6 @@ class MojoSafeBrowsingImpl : public mojom::SafeBrowsing {
       scoped_refptr<SafeBrowsingDatabaseManager> database_manager,
       scoped_refptr<SafeBrowsingUIManager> ui_manager,
       int render_process_id,
-      const service_manager::BindSourceInfo& source_info,
       mojom::SafeBrowsingRequest request);
 
  private:
