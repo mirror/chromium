@@ -52,6 +52,24 @@
       "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c16c44b_6f4210f1",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-18T13:05:31Z",
+      "side": 1,
+      "message": "I made the patches now:\nhttps://chromium-review.googlesource.com/c/576088/\nhttps://chromium-review.googlesource.com/c/575140/\nhttps://chromium-review.googlesource.com/c/575141/\nhttps://chromium-review.googlesource.com/c/575142/\nhttps://chromium-review.googlesource.com/c/575145/\n\nAmount of work/time depends mostly on whether I got the new names in a way that the code owners are fine with (and that I find code owners that are not on vacation. :-) ).\n\nI would also prefer landing them first so I plan to split this review in two, one for modules browser code and one for unit_tests.",
+      "parentUuid": "9344c61b_bf42079e",
+      "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
