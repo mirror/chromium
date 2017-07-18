@@ -15,6 +15,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.StatisticsRecorderAndroid;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.components.variations.VariationsAssociatedData;
 
 import java.util.HashMap;
@@ -38,6 +39,9 @@ public class FeedbackCollector
      */
     @VisibleForTesting
     static final String URL_KEY = "URL";
+
+    @VisibleForTesting
+    static final String SYNC_INTERNALS_KEY = "about_sync_data";
 
     /**
      * The timeout (ms) for gathering data asynchronously.
@@ -292,6 +296,7 @@ public class FeedbackCollector
         addConnectivityData();
         addDataReductionProxyData();
         addVariationsData();
+        addSyncInternalsData();
         return asBundle();
     }
 
@@ -317,6 +322,15 @@ public class FeedbackCollector
     private void addVariationsData() {
         if (mProfile.isOffTheRecord()) return;
         mData.putAll(VariationsAssociatedData.getFeedbackMap());
+    }
+
+    private void addSyncInternalsData() {
+        ProfileSyncService profileSyncService = ProfileSyncService.get();
+        if (profileSyncService == null) {
+            return;
+        }
+
+        mData.put(SYNC_INTERNALS_KEY, profileSyncService.getSyncInternalsInfo());
     }
 
     private Bundle asBundle() {

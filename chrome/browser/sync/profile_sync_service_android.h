@@ -171,7 +171,7 @@ class ProfileSyncServiceAndroid : public syncer::SyncServiceObserver {
   // Functionality only available for testing purposes.
 
   // Returns sync internals in a JSON-formatted Java string.
-  base::android::ScopedJavaLocalRef<jstring> GetAboutInfoForTest(
+  base::android::ScopedJavaLocalRef<jstring> GetAboutInfo(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 

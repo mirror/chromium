@@ -461,7 +461,7 @@ ProfileSyncServiceAndroid::GetSyncEnterCustomPassphraseBodyText(
 
 // Functionality only available for testing purposes.
 
-ScopedJavaLocalRef<jstring> ProfileSyncServiceAndroid::GetAboutInfoForTest(
+ScopedJavaLocalRef<jstring> ProfileSyncServiceAndroid::GetAboutInfo(
     JNIEnv* env,
     const JavaParamRef<jobject>&) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
