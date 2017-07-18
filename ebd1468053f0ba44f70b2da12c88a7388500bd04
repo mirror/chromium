@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cea6ab24_5c57b9d0",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-18T23:46:09Z",
+      "side": 1,
+      "message": "Why the arbitrary value of 10 seconds? There are abstracted timeout values such as TestTimeouts::tiny_timeout() and TestTimeouts::action_timeout().",
+      "range": {
+        "startLine": 312,
+        "startChar": 74,
+        "endLine": 312,
+        "endChar": 76
+      },
+      "revId": "ebd1468053f0ba44f70b2da12c88a7388500bd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
