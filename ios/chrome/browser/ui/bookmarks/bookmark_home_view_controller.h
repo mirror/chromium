@@ -17,6 +17,7 @@ class ChromeBrowserState;
 }  // namespace ios
 
 namespace bookmarks {
+class BookmarkModelBridge;
 class BookmarkNode;
 }  // namespace bookmarks
 
@@ -31,6 +32,9 @@ class BookmarkNode;
   // DO NOT modify these two ivars directly.
   std::set<const bookmarks::BookmarkNode*> _editNodes;
   std::vector<const bookmarks::BookmarkNode*> _editNodesOrdered;
+
+  // Bridge to register for bookmark changes.
+  std::unique_ptr<bookmarks::BookmarkModelBridge> _bridge;
 }
 
 - (instancetype)initWithNibName:(NSString*)nibNameOrNil
