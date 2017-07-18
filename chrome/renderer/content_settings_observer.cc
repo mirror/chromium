@@ -435,6 +435,14 @@ void ContentSettingsObserver::PassiveInsecureContentFound(
   FilteredReportInsecureContentDisplayed(GURL(resource_url));
 }
 
+void ContentSettingsObserver::PersistClientHints(
+    const bool enabled_types[blink::kWebClientHintsTypeLast + 1],
+    int64_t duration_seconds,
+    const blink::WebURL& url) {
+  // TODO (tbansal): Send it back to browser which should persist the
+  // preferences.
+}
+
 void ContentSettingsObserver::DidNotAllowPlugins() {
   DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS);
 }
