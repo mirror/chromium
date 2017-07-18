@@ -33,7 +33,6 @@
 #include "chrome/browser/ui/webui/print_preview/print_preview_handler.h"
 #include "chrome/browser/ui/webui/theme_source.h"
 #include "chrome/common/chrome_features.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
@@ -420,18 +419,15 @@ content::WebUIDataSource* CreatePrintPreviewUISource(Profile* profile) {
 #else
   source->AddBoolean("printPdfAsImageEnabled", false);
 #endif
+
 #if defined(OS_CHROMEOS)
-  bool cups_and_md_settings_enabled =
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          ::switches::kDisableNativeCups);
-  source->AddBoolean("showLocalManageButton", cups_and_md_settings_enabled);
   source->AddBoolean("useSystemDefaultPrinter", false);
 #else
-  source->AddBoolean("showLocalManageButton", true);
   bool system_default_printer = profile->GetPrefs()->GetBoolean(
       prefs::kPrintPreviewUseSystemDefaultPrinter);
   source->AddBoolean("useSystemDefaultPrinter", system_default_printer);
 #endif
+  source->AddBoolean("showLocalManageButton", true);
   return source;
 }
 

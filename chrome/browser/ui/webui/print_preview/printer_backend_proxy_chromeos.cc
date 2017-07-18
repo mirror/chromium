@@ -100,12 +100,8 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     PrinterList printer_list;
-
-    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableNativeCups)) {
-      AddPrintersToList(prefs_->GetPrinters(), &printer_list);
-      AddPrintersToList(prefs_->GetRecommendedPrinters(), &printer_list);
-    }
+    AddPrintersToList(prefs_->GetPrinters(), &printer_list);
+    AddPrintersToList(prefs_->GetRecommendedPrinters(), &printer_list);
 
     content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
                                      base::Bind(cb, printer_list));

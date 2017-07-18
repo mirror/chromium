@@ -82,7 +82,6 @@ bool PrintBackendChromeOS::IsValidPrinter(const std::string& printer_name) {
 // static
 scoped_refptr<PrintBackend> PrintBackend::CreateInstanceImpl(
     const base::DictionaryValue* print_backend_settings) {
-  if (GetNativeCupsEnabled()) {
 #if defined(USE_CUPS)
     std::string print_server_url_str;
     std::string cups_blocking;
@@ -103,10 +102,9 @@ scoped_refptr<PrintBackend> PrintBackend::CreateInstanceImpl(
             cups_blocking == kValueTrue);
 
     return new PrintBackendCupsIpp(std::move(connection));
-#endif  // defined(USE_CUPS)
-  }
-
+#else
   return new PrintBackendChromeOS();
+#endif  // defined(USE_CUPS)
 }
 
 }  // namespace printing
