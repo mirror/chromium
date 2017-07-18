@@ -19,6 +19,10 @@
 #if defined(USE_OZONE)
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 
+namespace ash {
+class DragDropController;
+}
+
 namespace gfx {
 class ClientNativePixmapFactory;
 }
@@ -34,6 +38,7 @@ namespace test {
 class EnvTestHelper;
 }
 
+class DragDropControllerMus;
 class EnvInputStateController;
 class EnvObserver;
 class InputStateLookup;
@@ -119,6 +124,8 @@ class AURA_EXPORT Env : public ui::EventTarget,
   friend class Window;
   friend class WindowTreeClient;  // For call to WindowTreeClientDestroyed().
   friend class WindowTreeHost;
+  friend class ash::DragDropController;
+  friend class aura::DragDropControllerMus;
 
   explicit Env(Mode mode);
 
@@ -137,6 +144,14 @@ class AURA_EXPORT Env : public ui::EventTarget,
 
   // Invoked by WindowTreeHost when it is activated. Notifies observers.
   void NotifyHostActivated(WindowTreeHost* host);
+
+  // Called by ash::DragDropTracker when drag operation is started. Notifies
+  // observers.
+  void NotifyDragStarted(const ui::OSExchangeData* data);
+
+  // Called by ash::DragDropTracker when drag operation is ended. Notifies
+  // observers.
+  void NotifyDragEnded(const ui::OSExchangeData* data);
 
   void WindowTreeClientDestroyed(WindowTreeClient* client);
 
