@@ -146,6 +146,30 @@
       "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d336042_4e7ca821",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-18T17:15:29Z",
+      "side": 1,
+      "message": "In md_history_ui.cc, the code that calls UpdateDataSource() is already using web_ui() and therefore it would have crashed already otherwise, see https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/md_history_ui.cc?l\u003d241-243.\n\nI am leaning towards a DCHECK here.",
+      "parentUuid": "604b5c03_610b0b39",
+      "range": {
+        "startLine": 302,
+        "startChar": 18,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
