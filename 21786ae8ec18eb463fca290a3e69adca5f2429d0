@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fba4f2a1_d9be25f5",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-18T22:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2e8563_babf2694",
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e2fa81_c90ee658",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6863ce6_99523fc5",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-18T22:21:39Z",
+      "side": 1,
+      "message": "Done.  Good catch.  I\u0027m not sure why I thought base::ConstRef was a good idea.",
+      "parentUuid": "e0e2fa81_c90ee658",
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccab9e6_2ae7525a",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-18T22:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1aa70ff_e8a15e72",
+      "range": {
+        "startLine": 98,
+        "startChar": 38,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "21786ae8ec18eb463fca290a3e69adca5f2429d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
