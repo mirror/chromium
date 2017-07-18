@@ -22,6 +22,30 @@
       "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ad0952_2a772966",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T17:32:39Z",
+      "side": 1,
+      "message": "Ah, it\u0027s possible that update.py doesn\u0027t compile that somehow. Looks like we don\u0027t currently ship any ios libraries, only iossim, so maybe we don\u0027t compile compiler_rt to also target ios. That\u0027d explain your linking issues.",
+      "parentUuid": "ebfde8d0_db1d1b0e",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "0b54ae5cc48704bc3ab1ff0c5fa6d5155c3c9eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
