@@ -9,6 +9,8 @@
 
 #import "ui/base/cocoa/base_view.h"
 
+@class NSTouchBar;
+
 namespace autofill {
 class AutofillPopupViewDelegate;
 }
@@ -42,6 +44,11 @@ class AutofillPopupViewDelegate;
 - (void)updateBoundsAndRedrawPopup;
 - (void)showPopup;
 - (void)hidePopup;
+
+// Creates and returns a touch bar associated with the popup view.
+// Implemented by subclasses.
+- (NSTouchBar*)makeTouchBar;
+
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_AUTOFILL_AUTOFILL_POPUP_BASE_VIEW_COCOA_H_
