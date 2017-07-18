@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Service worker</title>
+<script src="../../../inspector-protocol/resources/inspector-protocol-test.js"></script>
+<script>
+function installSW() {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+</head>
+<body onload="runTest();installSW()">
+<body>
+Page with a service worker
+</body>
+</html>
