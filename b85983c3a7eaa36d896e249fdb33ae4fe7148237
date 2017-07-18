@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4b67547_8da6621a",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T13:37:10Z",
+      "side": 1,
+      "message": "Agreed that it is a behavior change, and should be verified (this was discussed in a previous patch).\n\nIn general, drainUntilIdle statements are a hack. EarlGrey should properly synchronize and not require draining or waiting. In this case selectElementWithMatcher will wait until the UI is idle, at which point the button is displayed, and then tap it. There are a few exceptions that require drainUntilIdle:\n1. Cases where we bypass the UI and we need to tell EG to let the UI catch up (e.g. we clear history via code, EG doesn\u0027t know to synchronize for a UI change).\n2. Cases where webview may cause changes in native UI, since EG doesn\u0027t have WKWebView synchronization.\n\nI definitely agree that we should check with jlebel@, in case there are any other exceptional circumstances that require this. Perhaps there are some server interactions that we overlooked which could asynchronously affect the UI?",
+      "parentUuid": "54b22e25_3d6c3178",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 13
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05f9fc5b_a86a0ec0",
         "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T08:33:38Z",
       "side": 1,
       "message": "Personal preference: I personally think that [self dismissSettings] makes the test step more clear (settings are dismissed) than [[[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()] performAction:grey_tap()]",
+      "range": {
+        "startLine": 309,
+        "startChar": 13,
+        "endLine": 309,
+        "endChar": 61
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9beabf_a23cde40",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T13:37:10Z",
+      "side": 1,
+      "message": "This is where it is a bit of a grey area. What you suggested does make it shorter and simpler. However, it also obscures what is going on, and in a case where it is just one line of code I don\u0027t know if that indirection is worth it. Especially when debugging test failures, it makes it simpler to debug if the developer can just focus on the test. It also makes the test code more consistent since it\u0027s all EarlGrey style.\n\nAdditionally, if we follow this model, then we could wrap virtually every call to EarlGrey in a local helper. Because of this, we have taken the approach where we should make tests explicitly call what they want to do, unless it\u0027s a case where the helper steps are very complicated (e.g. we have some complex logic to tap menu items that involves scrolling).\n\nI slightly prefer how Yuke is changing it, but I usually don\u0027t feel too strongly about these cases and leave it up to the engineer.",
+      "parentUuid": "05f9fc5b_a86a0ec0",
       "range": {
         "startLine": 309,
         "startChar": 13,
