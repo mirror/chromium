@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "459360df_47ae9961",
+        "filename": "components/offline_pages/core/prefetch/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-18T21:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd793d5_300e712d",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "f80836aa6e00e90e56b3d3997bd4acdfb2f1ef0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a36ef21b_e05d380e",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T21:27:50Z",
       "side": 1,
       "message": "So you want it to fail for now. Is that correct?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "f80836aa6e00e90e56b3d3997bd4acdfb2f1ef0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ef2d66_b476028a",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-18T21:38:18Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED should not fail; it might log though. We used it previously in similar situations. See: https://codereview.chromium.org/2811813002/diff/20001/components/offline_pages/core/prefetch/prefetch_service_impl_unittest.cc#newcode16",
+      "parentUuid": "a36ef21b_e05d380e",
       "range": {
         "startLine": 140,
         "startChar": 4,
