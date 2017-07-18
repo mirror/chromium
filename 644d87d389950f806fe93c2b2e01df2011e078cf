@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "5c74cb85_0bf570d6",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-18T14:38:37Z",
+      "side": 1,
+      "message": "Ah, that\u0027s a possibility. Forgot the PPAPI stuff has c/ vs cpp/ directories.",
+      "parentUuid": "6a6ca9f2_5a8f337a",
+      "range": {
+        "startLine": 1472,
+        "startChar": 2,
+        "endLine": 1472,
+        "endChar": 9
+      },
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e22b02b_90eeddb0",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 5
@@ -509,6 +533,24 @@
       "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02fb8e5_a9d1d47b",
+        "filename": "ppapi/c/private/ppb_pdf.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-18T14:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2499acf7_2d0ee4a9",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

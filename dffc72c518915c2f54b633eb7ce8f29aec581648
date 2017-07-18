@@ -16,6 +16,24 @@
       "revId": "dffc72c518915c2f54b633eb7ce8f29aec581648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d9b084_05102371",
+        "filename": "components/pdf/browser/pdf_web_contents_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-18T14:38:37Z",
+      "side": 1,
+      "message": "I don\u0027t actually know either, so I\u0027m being safe. Others don\u0027t appear to be initialized to nullptr.",
+      "parentUuid": "6595291b_ea75b2bc",
+      "revId": "dffc72c518915c2f54b633eb7ce8f29aec581648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
