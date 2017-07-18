@@ -1261,7 +1261,7 @@ bool PaintLayerScrollableArea::NeedsScrollbarReconstruction() const {
   bool has_any_scrollbar = HasScrollbar();
   bool has_custom =
       (HasHorizontalScrollbar() &&
-       HorizontalScrollbar()->IsCustomScrollbar()) ||
+       HorizontalScrollbar()->IsCustomScrollbar()) &&
       (HasVerticalScrollbar() && VerticalScrollbar()->IsCustomScrollbar());
   bool did_custom_scrollbar_owner_changed = false;
 
