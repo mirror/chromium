@@ -242,7 +242,7 @@ bool PermissionReporter::BuildReport(const PermissionReportInfo& report_info,
 
   // Collect field trial data.
   std::vector<variations::ActiveGroupId> active_group_ids;
-  variations::GetFieldTrialActiveGroupIds(&active_group_ids);
+  variations::GetFieldTrialActiveGroupIds("", &active_group_ids);
   for (auto active_group_id : active_group_ids) {
     PermissionReport::FieldTrial* field_trial = report.add_field_trials();
     field_trial->set_name_id(active_group_id.name);

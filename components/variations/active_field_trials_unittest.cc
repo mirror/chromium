@@ -39,7 +39,8 @@ TEST(ActiveFieldTrialsTest, GetFieldTrialActiveGroups) {
   expected_groups.insert(name_group_id);
 
   std::vector<ActiveGroupId> active_group_ids;
-  testing::TestGetFieldTrialActiveGroupIds(active_groups, &active_group_ids);
+  testing::TestGetFieldTrialActiveGroupIds("", active_groups,
+                                           &active_group_ids);
   EXPECT_EQ(2U, active_group_ids.size());
   for (size_t i = 0; i < active_group_ids.size(); ++i) {
     ActiveGroupIdSet::iterator expected_group =

@@ -62,6 +62,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/metrics/drive_metrics_provider.h"
+#include "components/metrics/field_trials_provider.h"
 #include "components/metrics/file_metrics_provider.h"
 #include "components/metrics/gpu/gpu_metrics_provider.h"
 #include "components/metrics/metrics_log_uploader.h"
@@ -85,6 +86,7 @@
 #include "components/sync/device_info/device_count_metrics_provider.h"
 #include "components/ukm/debug_page/debug_page.h"
 #include "components/ukm/ukm_service.h"
+
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/histogram_fetcher.h"
@@ -770,6 +772,10 @@ void ChromeMetricsServiceClient::RegisterUKMProviders() {
       base::MakeUnique<metrics::NetworkMetricsProvider>(
           base::MakeUnique<metrics::NetworkQualityEstimatorProviderImpl>(
               g_browser_process->io_thread())));
+
+  // TODO(rkaplow): Support synthetic trials for UKM.
+  ukm_service_->RegisterMetricsProvider(
+      base::MakeUnique<variations::FieldTrialsProvider>(nullptr, "UKM"));
 }
 
 bool ChromeMetricsServiceClient::ShouldIncludeProfilerDataInLog() {

@@ -42,14 +42,16 @@ struct ActiveGroupIdCompare {
 // with unique ActiveGroupIds for each Field Trial that has a chosen group.
 // Field Trials for which a group has not been chosen yet are NOT returned in
 // this list.
-void GetFieldTrialActiveGroupIds(std::vector<ActiveGroupId>* name_group_ids);
+void GetFieldTrialActiveGroupIds(base::StringPiece suffix,
+                                 std::vector<ActiveGroupId>* name_group_ids);
 
 // Fills the supplied vector |output| (which must be empty when called) with
 // unique string representations of ActiveGroupIds for each Field Trial that
 // has a chosen group. The strings are formatted as "<TrialName>-<GroupName>",
 // with the names as hex strings. Field Trials for which a group has not been
 // chosen yet are NOT returned in this list.
-void GetFieldTrialActiveGroupIdsAsStrings(std::vector<std::string>* output);
+void GetFieldTrialActiveGroupIdsAsStrings(base::StringPiece suffix,
+                                          std::vector<std::string>* output);
 
 // Fills the supplied vector |output| (which must be empty when called) with
 // unique string representations of ActiveGroupIds for each Syntehtic Trial
@@ -63,6 +65,7 @@ void GetSyntheticTrialGroupIdsAsString(std::vector<std::string>* output);
 namespace testing {
 
 void TestGetFieldTrialActiveGroupIds(
+    base::StringPiece suffix,
     const base::FieldTrial::ActiveGroups& active_groups,
     std::vector<ActiveGroupId>* name_group_ids);
 
