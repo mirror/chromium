@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96147a7c_09369338",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "displayedCount → displayed_count",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebe580d_29015cf5",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "This function is never called with an access point that is not signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER, so I would change this to the following:\n\nvoid RecordImpressionsTilSigninButtonsHistogramForAccessPoint(\n    signing_metrics::AccessPoint access_point,\n    int displayed_count) {\n  DCHECK_EQ(access_point, signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER);\n  UMA_HISTOGRAM_COUNTS_100(\n      \"MobileSignInPromo.BookmarkManager.ImpressionsTilSigninButtons\",\n      displayed_count);\n}",
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1676a7c2_774f77d5",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "displayedCount → displayed_count",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e38c3c_41c847c4",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f8ce3e_26f2dc97",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "nil → nullptr",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 16
+      },
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead2b813_058721e7",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "nil → nullptr",
+      "range": {
+        "startLine": 173,
+        "startChar": 13,
+        "endLine": 173,
+        "endChar": 16
+      },
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b2bd13_d40b16c9",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "optional: maybe add a helper function to check that the parameter is valid:\n\n  namespace {\n  #if DCHECK_IS_ON()\n  bool IsSupportedAccessPoint(signin_metrics::AccessPoint access_point) {\n    switch (access_point) {\n      case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:\n      case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:\n      case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:\n      case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:\n        return true;\n      default:\n        return false;\n    }\n  }\n  #endif  // DCHECK_IS_ON()\n  }  // namespace\n\nThen you can change this to the following:\n\n  DCHECK(IsSupportedAccessPoint(accessPoint));",
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686f7fac_3cfa8207",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T12:14:47Z",
+      "side": 1,
+      "message": "Why no helper function for this histogram too?",
+      "revId": "06d45571f21bbe28a49ce714290cf55f0bbc5033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
