@@ -9,10 +9,21 @@ import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
 import "url/mojo/url.mojom";
 
+interface BlobReaderClient {
+  // Possibly not called if an error occurs.
+  OnCalculatedSize(uint64 total_size,
+                   uint64 expected_content_size);
+  // Always called.
+  OnComplete(int32 status, uint64 data_length);
+};
+
 // This interface provides access to a blob in the blob system.
 interface Blob {
   // Creates a copy of this Blob reference.
   Clone(Blob& blob);
+
+  ReadRange(uint64 offset, uint64 length, handle<data_pipe_producer> pipe, BlobReaderClient client);
+  ReadAll(handle<data_pipe_producer> pipe, BlobReaderClient client);
 
   // This method is an implementation detail of the blob system. You should not
   // ever need to call it directly.
