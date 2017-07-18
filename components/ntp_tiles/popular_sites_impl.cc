@@ -5,6 +5,7 @@
 #include "components/ntp_tiles/popular_sites_impl.h"
 
 #include <stddef.h>
+#include <map>
 #include <utility>
 
 #include "base/bind.h"
@@ -12,6 +13,7 @@
 #include "base/feature_list.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -107,7 +109,65 @@ std::string GetVariationVersion() {
                                             "version");
 }
 
-PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
+PopularSites::Site MakeSampleSite(const std::string& title,
+                                  const std::string& url) {
+  return PopularSites::Site(base::UTF8ToUTF16(title), GURL(url), GURL(), GURL(),
+                            GURL());
+}
+
+std::map<SectionType, PopularSites::SitesVector> GetSectionsSampleData() {
+  return {std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::SOCIAL,
+              {MakeSampleSite("Facebook", "https://facebook.com"),
+               MakeSampleSite("Instagram", "https://instagram.com"),
+               MakeSampleSite("Pinterest", "https://pinterest.com"),
+               MakeSampleSite("Twitter", "https://twitter.com"),
+               MakeSampleSite("VKontakte", "https://vk.com")}),
+          std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::ENTERTAINMENT,
+              {MakeSampleSite("YouTube", "https://youtube.com"),
+               MakeSampleSite("HotStar", "https://hotstar.com"),
+               MakeSampleSite("CricBuzz", "https://cricbuzz.com"),
+               MakeSampleSite("Whitty Feed", "https://whittyfeed.com"),
+               MakeSampleSite("Voot", "https://voot.com")}),
+          std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::NEWS,
+              {MakeSampleSite("Times of India", "https://toi.com"),
+               MakeSampleSite("Jagran", "https://jagran.com"),
+               MakeSampleSite("Daily Thanthi", "https://dailythanthi.com"),
+               MakeSampleSite("Live Hindustan", "https://livehindustan.com"),
+               MakeSampleSite("AajTak", "https://aajtak.com")}),
+          std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::ECOMMERCE,
+              {MakeSampleSite("Amazon", "https://amazon.com"),
+               MakeSampleSite("FlipKart", "https://flipkart.com"),
+               MakeSampleSite("Snapdeal", "https://snapdeal.com"),
+               MakeSampleSite("OLX", "https://olx.com")}),
+          std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::TOOLS,
+              {MakeSampleSite("Google Maps", "https://maps.google.com"),
+               MakeSampleSite("TrueCaller", "https://truecaller.com"),
+               MakeSampleSite("PayTm", "https://paytm.com"),
+               MakeSampleSite("Ola", "https://ola.com"),
+               MakeSampleSite("Bookmyshow", "https://bookmyshow.com"),
+               MakeSampleSite("Zomato", "https://zomato.com")}),
+          std::pair<SectionType, PopularSites::SitesVector>(
+              SectionType::TRAVEL,
+              {MakeSampleSite("MakemyTrip", "https://makemytrip.com"),
+               MakeSampleSite("Via", "https://via.com"),
+               MakeSampleSite("Housing", "https://housing.com"),
+               MakeSampleSite("Redbus", "https://redbus.com"),
+               MakeSampleSite("Goibibo", "https://goibibo.com")})};
+}
+
+std::map<SectionType, PopularSites::SitesVector> ParseSections(
+    const base::ListValue& list) {
+  std::map<SectionType, PopularSites::SitesVector> sections;
+  if (base::FeatureList::IsEnabled(kSiteExplorationsFeature)) {
+    // TODO(fhorschig): Remove the sample data and actually parse stuff. Unless
+    // this is done, DO NOT SUBMIT.
+    sections = GetSectionsSampleData();
+  }
   PopularSites::SitesVector sites;
   for (size_t i = 0; i < list.GetSize(); i++) {
     const base::DictionaryValue* item;
@@ -129,7 +189,8 @@ PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
     item->GetInteger("default_icon_resource",
                      &sites.back().default_icon_resource);
   }
-  return sites;
+  sections[SectionType::PERSONALIZED] = std::move(sites);
+  return sections;
 }
 
 #if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
@@ -201,7 +262,7 @@ PopularSitesImpl::PopularSitesImpl(
       download_context_(download_context),
       parse_json_(std::move(parse_json)),
       is_fallback_(false),
-      sites_(ParseSiteList(*prefs->GetList(kPopularSitesJsonPref))),
+      sections_(ParseSections(*prefs->GetList(kPopularSitesJsonPref))),
       weak_ptr_factory_(this) {}
 
 PopularSitesImpl::~PopularSitesImpl() {}
@@ -232,8 +293,9 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
   return false;
 }
 
-const PopularSites::SitesVector& PopularSitesImpl::sites() const {
-  return sites_;
+const std::map<SectionType, PopularSitesImpl::SitesVector>&
+PopularSitesImpl::sections() const {
+  return sections_;
 }
 
 GURL PopularSitesImpl::GetLastURLFetched() const {
@@ -396,7 +458,7 @@ void PopularSitesImpl::OnJsonParsed(std::unique_ptr<base::Value> json) {
                    base::Time::Now().ToInternalValue());
   prefs_->SetString(kPopularSitesURLPref, pending_url_.spec());
 
-  sites_ = ParseSiteList(*list);
+  sections_ = ParseSections(*list);
   callback_.Run(true);
 }
 
