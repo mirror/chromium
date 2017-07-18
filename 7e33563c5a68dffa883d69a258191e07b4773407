@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047c1bca_4ee4f8ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-overflow-padding.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-18T21:32:59Z",
+      "side": 1,
+      "message": "I\u0027m starting to question the utility of the before / after test cases for the geometry tests. I suppose in this case it verifies that the padding is not applied against the containing block.",
+      "revId": "7e33563c5a68dffa883d69a258191e07b4773407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
