@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4521cb03_47f592bb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-18T07:21:06Z",
+      "side": 1,
+      "message": "wasn\u0027t modified by this change, but we can also remove this check too as you do for IsTimeout check?",
+      "revId": "bb5c37714beb6e0c05481de1d4ae3f4f143effba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
