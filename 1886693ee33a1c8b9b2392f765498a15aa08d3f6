@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f289621d_35ec4339",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-18T09:13:11Z",
+      "side": 1,
+      "message": "Can you add a light-weight comment (with a link to the spec)?",
+      "revId": "1886693ee33a1c8b9b2392f765498a15aa08d3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
