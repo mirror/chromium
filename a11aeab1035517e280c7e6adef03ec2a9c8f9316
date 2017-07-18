@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8689653_d32483a7",
+        "filename": "gpu/ipc/service/direct_composition_surface_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T08:18:23Z",
+      "side": 1,
+      "message": "After the next patch, this will be the *only* place where we actually need to check \"--enable-hdr\" on Windows for compositing. In particular, that will set the gfx::ColorSpace which will end up landing at\n\nhttps://cs.chromium.org/chromium/src/cc/output/output_surface.h?rcl\u003d3061637c0d3d99da4f038c753afa28afc716d800\u0026l\u003d105\n\nThat will then need to be plumbed over to the GPU side at \n\nhttps://cs.chromium.org/chromium/src/gpu/ipc/service/direct_composition_surface_win.cc?rcl\u003d2c47bda50459e93c48e00772290f39c45de748f7\u0026l\u003d1107\n\n(note that the GPU-service-side Resize function should really be taking a color space parameter, but it gets dropped along the way).",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1a2fe1_85352a6f",
+        "filename": "ui/display/display.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T08:18:23Z",
+      "side": 1,
+      "message": "I was on the fence about making this a separate function, or rolling it into a SetColorSpaceAndHDRCapability function. I figured that separating them would be better.",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dde799_44aa1bb6",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T08:18:23Z",
+      "side": 1,
+      "message": "I tested P3 here locally, and it works perfectly for https://webkit.org/blog-files/color-gamut/comparison.html ... I\u0027ll grab it in a follow on -- it does come with the drawback of lower fidelity for sRGB content.",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
