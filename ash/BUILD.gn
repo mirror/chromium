@@ -662,6 +662,7 @@ component("ash") {
     "wm/maximize_mode/maximize_mode_event_handler.h",
     "wm/maximize_mode/maximize_mode_event_handler_aura.cc",
     "wm/maximize_mode/maximize_mode_event_handler_aura.h",
+    "wm/maximize_mode/maximize_mode_observer.h",
     "wm/maximize_mode/maximize_mode_window_manager.cc",
     "wm/maximize_mode/maximize_mode_window_manager.h",
     "wm/maximize_mode/maximize_mode_window_state.cc",
