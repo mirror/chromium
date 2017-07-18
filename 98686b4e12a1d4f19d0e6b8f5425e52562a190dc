@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f1a821ae_56537228",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-18T10:45:25Z",
+      "side": 1,
+      "message": "It turns out that some tests that use TestingBrowserProcess don\u0027t have this field set. I\u0027m not sure what the best thing to do here would be, so I put the test back.",
+      "parentUuid": "9b3c9449_b5ee33de",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "556bdbcf_7f6dadf1",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 1
