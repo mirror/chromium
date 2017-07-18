@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "de8a282a_3ec3de2f",
+        "filename": "testing/buildbot/filters/fuchsia.mojo_js_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T01:12:06Z",
+      "side": 1,
+      "message": "The bug isn\u0027t visible in cs.chromium.org; it\u0027s important to link to bugs from code imo.",
+      "parentUuid": "306627fa_c1c010d5",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "de9797cd37ba47678b2c873949c33b8cc67f87fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8f1ffc_d2e42de5",
         "filename": "testing/buildbot/filters/fuchsia.mojo_system_unittests.filter",
         "patchSetId": 1
