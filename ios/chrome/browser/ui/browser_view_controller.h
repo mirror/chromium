@@ -10,14 +10,14 @@
 #import <UIKit/UIKit.h>
 
 #import "base/ios/block_types.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/public/provider/chrome/browser/voice/voice_search_presenter.h"
 
-@protocol ApplicationCommands;
-@protocol BrowserCommands;
 @class BrowserContainerView;
 @class BrowserViewControllerDependencyFactory;
 @class ContextualSearchController;
@@ -103,9 +103,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 
 // Called when the typing shield is tapped.
 - (void)shieldWasTapped:(id)sender;
-
-// Called when a UI element to create a new tab is triggered.
-- (void)newTab:(id)sender;
 
 // Makes sure that the view hierarchy has been built. Equivalent to calling
 // -view, but without the annoying compiler warning.
