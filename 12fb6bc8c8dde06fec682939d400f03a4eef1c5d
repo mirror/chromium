@@ -87,6 +87,24 @@
       "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593f9156_41d5d48c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-18T16:13:02Z",
+      "side": 1,
+      "message": "\u003e \n\u003e It does now, however.\n\nBut it\u0027s not a binary concept. Just because the method makes a non-modifying loop through the results doesn\u0027t mean that it\u0027s the authority on tail suggestions, much less the optimal location of all the code. There are many factors to consider and my point is that it\u0027s a minority participant.\n\n\u003e I still suspect there\u0027s an earlier point at which the results are available and we can determine whether any of them are tail suggestions. But if there\u0027s just a single method to call (InlineTailPrefixes() or whatever) we can easily move it at some later time if we find a better point.\n\nWe can move the calculation of \u0027any\u0027 and \u0027prefix\u0027 earlier, but the call to fix-up a match needs to occur in the UI (assuming we still want to avoid #ifdef\u0027s) If we move all the tail suggest code out of popup_contents_view.cc, this makes putting the call in SetMatch() that much more natural.\n\n\u003e The doc comment for that method suggests that it should be done at the latest possible time, so I think doing the tail suggest manipulation earlier is better...\n\nSorry, I didn\u0027t follow this logic.",
+      "parentUuid": "f6ec9755_7e8066da",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
