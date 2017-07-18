@@ -34,6 +34,24 @@
       "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9344c61b_bf42079e",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T11:16:20Z",
+      "side": 1,
+      "message": "If you promise that you fix the name conflicts in follow-up CLs, I\u0027m fine with the exclude list :) Otherwise I\u0027d prefer fixing the conflicts before landing this CLs.\n\nHow much work would it be?",
+      "parentUuid": "eef7f8e1_f5163fc6",
+      "revId": "8fb152131da33de4601131d0812eed4c3e41cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
