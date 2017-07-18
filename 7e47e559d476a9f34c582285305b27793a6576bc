@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517776eb_dc6b80f3",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-18T14:47:39Z",
+      "side": 1,
+      "message": "dcheng, this is the first dependency on a mojom.h file in t_p/WK/public/platform. Do we want chrome to depend on those?",
+      "range": {
+        "startLine": 115,
+        "startChar": 39,
+        "endLine": 115,
+        "endChar": 58
+      },
+      "revId": "7e47e559d476a9f34c582285305b27793a6576bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
