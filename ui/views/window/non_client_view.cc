@@ -26,8 +26,8 @@ const char NonClientView::kViewClassName[] =
 // because the RootView message dispatch sends messages to items higher in the
 // z-order first and we always want the client view to have first crack at
 // handling mouse messages.
-static const int kFrameViewIndex = 0;
-static const int kClientViewIndex = 1;
+static const int kFrameViewIndex = 1;
+static const int kClientViewIndex = 0;
 // The overlay view is always on top (index == child_count() - 1).
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,8 +61,8 @@ void NonClientView::SetFrameView(NonClientFrameView* frame_view) {
   if (frame_view_.get())
     RemoveChildView(frame_view_.get());
   frame_view_.reset(frame_view);
-  if (parent())
-    AddChildViewAt(frame_view_.get(), kFrameViewIndex);
+ // if (parent())
+ //   AddChildViewAt(frame_view_.get(), kFrameViewIndex);
 }
 
 void NonClientView::SetOverlayView(View* view) {
@@ -193,8 +193,8 @@ void NonClientView::ViewHierarchyChanged(
   // are subsequently resized all the parent-child relationships are
   // established.
   if (details.is_add && GetWidget() && details.child == this) {
-    AddChildViewAt(frame_view_.get(), kFrameViewIndex);
     AddChildViewAt(client_view_, kClientViewIndex);
+    AddChildViewAt(frame_view_.get(), kFrameViewIndex);
     if (overlay_view_)
       AddChildView(overlay_view_);
   }

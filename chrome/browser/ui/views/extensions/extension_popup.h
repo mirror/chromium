@@ -71,6 +71,7 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
 
   // views::View overrides.
   gfx::Size CalculatePreferredSize() const override;
+  void Layout() override;
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
 
@@ -99,6 +100,23 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
   void OnAnchorWindowActivation();
 
  private:
+  class PopupMask : public ui::LayerDelegate {
+   public:
+    PopupMask();
+    ~PopupMask() override;
+
+    void OnPaintLayer(const ui::PaintContext& context) override;
+    void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
+    void OnDeviceScaleFactorChanged(float device_scale_factor) override;
+
+    ui::Layer* layer() { return &layer_; }
+
+   private:
+    ui::Layer layer_;
+
+    DISALLOW_COPY_AND_ASSIGN(PopupMask);
+  };
+
   static ExtensionPopup* Create(extensions::ExtensionViewHost* host,
                                 views::View* anchor_view,
                                 views::BubbleBorder::Arrow arrow,
@@ -123,6 +141,8 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
   content::NotificationRegistrar registrar_;
 
   bool widget_initialized_;
+
+  PopupMask mask_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionPopup);
 };

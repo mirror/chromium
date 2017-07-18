@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/devtools/devtools_window.h"
+#include "ui/views/controls/native/native_view_host.h"
 #include "chrome/browser/extensions/extension_view_host.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -15,9 +16,11 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
+#include "ui/aura/window.h"
 
 namespace {
 
@@ -25,7 +28,7 @@ namespace {
 // hosted WebContents fill more of the bubble. However, it can't fill the entire
 // bubble since that would draw over the rounded corners and make the bubble
 // square. See http://crbug.com/593203.
-const int kBubbleMargin = 2;
+const int kBubbleMargin = 2;//2;
 
 ExtensionViewViews* GetExtensionView(extensions::ExtensionViewHost* host) {
   return static_cast<ExtensionViewViews*>(host->view());
@@ -76,6 +79,14 @@ ExtensionPopup::ExtensionPopup(extensions::ExtensionViewHost* host,
   content::DevToolsAgentHost::AddObserver(this);
 
   GetExtensionView(host)->GetBrowser()->tab_strip_model()->AddObserver(this);
+
+ // SetPaintToLayer();
+ // layer()->SetAlphaShape(base::MakeUnique<SkRegion>());
+  //layer()->SetMasksToBounds(true);
+  //layer()->SetMaskLayer(mask_.layer());
+
+  //SetBorder(views::CreateSolidBorder(10, SK_ColorGREEN));
+  // GetExtensionView(host)->
 
   // If the host had somehow finished loading, then we'd miss the notification
   // and not show.  This seems to happen in single-process mode.
@@ -152,6 +163,46 @@ gfx::Size ExtensionPopup::CalculatePreferredSize() const {
   return sz;
 }
 
+void ExtensionPopup::Layout() {
+  views::BubbleDialogDelegateView::Layout();
+ // mask_.set_corner_radius(
+   //   GetBubbleFrameView()->bubble_border()->GetBorderCornerRadius());
+  mask_.layer()->SetBounds(GetLocalBounds());/*GetExtensionView(host_.get())
+                               ->holder()
+                               ->native_view()
+                               ->layer()
+                               ->bounds());*/
+
+  /*
+  NOTIMPLEMENTED()
+      << "LAYER "
+      << GetExtensionView(host_.get())->holder()->native_view()->layer()
+      << " bounds "
+      << GetExtensionView(host_.get())
+             ->holder()
+             ->native_view()
+             ->layer()
+             ->bounds()
+             .ToString();
+
+  NOTIMPLEMENTED()
+      << " WIDG LAYER"
+      << views::Widget::GetWidgetForNativeView(
+             GetExtensionView(host_.get())->holder()->native_view())
+             ->GetLayer();
+
+    GetExtensionView(host_.get())
+        ->holder()
+        ->native_view()
+        ->layer()
+        ->SetAlphaShape(base::MakeUnique<SkRegion>());
+  */
+  //  if
+  //  (GetExtensionView(host_.get())->holder()->native_view()->layer()->bounds()
+  //  == 
+ // GetExtensionView(host_.get())->holder()->native_view()->layer()->SetMaskLayer(mask_.layer());//SetPaintToLayer();
+}
+
 void ExtensionPopup::ViewHierarchyChanged(
   const ViewHierarchyChangedDetails& details) {
   // TODO(msw): Find any remaining crashes related to http://crbug.com/327776
@@ -204,3 +255,28 @@ void ExtensionPopup::ShowBubble() {
         host()->host_contents(), DevToolsToggleAction::ShowConsolePanel());
   }
 }
+
+ExtensionPopup::PopupMask::PopupMask() : layer_(ui::LAYER_TEXTURED) {
+  layer_.set_delegate(this);
+  layer_.SetFillsBoundsOpaquely(false);
+  layer_.set_name("ExtensionPopupMaskLayer");
+}
+
+ExtensionPopup::PopupMask::~PopupMask() {}
+
+void ExtensionPopup::PopupMask::OnPaintLayer(const ui::PaintContext& context) {
+  cc::PaintFlags flags;
+  flags.setAlpha(255);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setAntiAlias(true);
+
+  ui::PaintRecorder recorder(context, layer()->size());
+  gfx::RectF bounds(layer()->bounds());
+  recorder.canvas()->DrawRoundRect(bounds, 5, flags);
+}
+
+void ExtensionPopup::PopupMask::OnDelegatedFrameDamage(
+    const gfx::Rect& damage_rect_in_dip) {}
+
+void ExtensionPopup::PopupMask::OnDeviceScaleFactorChanged(
+    float device_scale_factor) {}
