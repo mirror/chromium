@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f422e8e9_a63614bd",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:41:10Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned about the performance of this. While this list isn\u0027t likely to be very large for now, I could imagine it growing significantly over time.\n\nAlso, it looks like we are getting the List from the pref store each time in  GetLockScreenSupportForChromeApp() below, which is probably just a memory lookup, but it\u0027s hard to be sure.\n\nI think it would be worth to cache the pref contents as a set\u003cstring\u003e ids, and update the set if the pref changes. For a little extra setup, the runtime code will be simplified and will remain fast.\n\nWDYT?",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238e2a16_9a9d9502",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:41:10Z",
+      "side": 1,
+      "message": "This can have priority issues since .settings-box already has a definition in settings-shared. Also, these should both already be part of .settings-box: https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_shared_css.html?dr\u003dCSs\u0026q\u003dsettings_shared\u0026sq\u003dpackage:chromium\u0026l\u003d226\n\n(default flex-direction is \u0027row\u0027)",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6db1ec_aab11be2",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:41:10Z",
+      "side": 1,
+      "message": "To use iron-flex classes, you now need to:\n\n* include iron-flex-layout-classes.html\n* include iron-flex in \u003cstyle include\u003d (for basic flex classes)\n\nAlso you have two class definitions here.",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65682809_d8279277",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:41:10Z",
+      "side": 1,
+      "message": "This should still be named conventionally: userPolicyIndicatorType_. Also move below public properties.",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40636810_c614f71e",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-18T23:41:10Z",
+      "side": 1,
+      "message": "@private here and below",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
