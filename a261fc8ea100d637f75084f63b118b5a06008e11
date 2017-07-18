@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5344af_887dbf7b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T18:52:48Z",
+      "side": 1,
+      "message": "These three static casts should no longer be needed.",
+      "range": {
+        "startLine": 2568,
+        "startChar": 8,
+        "endLine": 2568,
+        "endChar": 61
+      },
+      "revId": "a261fc8ea100d637f75084f63b118b5a06008e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
