@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4b85bb8_ee0b642b",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:23:47Z",
+      "side": 1,
+      "message": "super nit: \"contains\" seems more natural than \"carries\"",
+      "revId": "9a03b5e204421a61d292eb509148bd4c5fab03d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea745792_fbb77242",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:23:47Z",
+      "side": 1,
+      "message": "WorkerGlobalScope",
+      "revId": "9a03b5e204421a61d292eb509148bd4c5fab03d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8f95b7_a087b58d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:23:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9a03b5e204421a61d292eb509148bd4c5fab03d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030f6540_714a657b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:23:47Z",
+      "side": 1,
+      "message": "kPauseWorkerGlobalScopeOnStart\n\ninitialization",
+      "revId": "9a03b5e204421a61d292eb509148bd4c5fab03d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c6aa26_41f5b7fe",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerMessagingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:23:47Z",
+      "side": 1,
+      "message": "rm the blank lines between overrides",
+      "revId": "9a03b5e204421a61d292eb509148bd4c5fab03d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
