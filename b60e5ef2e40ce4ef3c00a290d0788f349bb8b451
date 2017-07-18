@@ -34,6 +34,24 @@
       "revId": "b60e5ef2e40ce4ef3c00a290d0788f349bb8b451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71da501d_044f054c",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-18T15:32:51Z",
+      "side": 0,
+      "message": "Ah, thanks for pointing out that target; I\u0027d missed it.",
+      "parentUuid": "6a3441b9_94f32be7",
+      "revId": "b60e5ef2e40ce4ef3c00a290d0788f349bb8b451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
