@@ -51,6 +51,8 @@ bool LayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
       context_provider_->SetLostContextCallback(
           base::Bind(&LayerTreeFrameSink::DidLoseLayerTreeFrameSink,
                      base::Unretained(this)));
+    }else{
+      LOG(ERROR)<<"JR context_provider could not bind\n";;
     }
   }
 

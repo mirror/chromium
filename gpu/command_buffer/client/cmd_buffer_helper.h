@@ -60,7 +60,7 @@ class GPU_EXPORT CommandBufferHelper
   // Parameters:
   //   ring_buffer_size: The size of the ring buffer portion of the command
   //       buffer.
-  bool Initialize(int32_t ring_buffer_size);
+  bool Initialize(int32_t ring_buffer_size, bool debug=false);
 
   // Sets whether the command buffer should automatically flush periodically
   // to try to increase performance. Defaults to true.
@@ -271,7 +271,7 @@ class GPU_EXPORT CommandBufferHelper
 
  private:
   void CalcImmediateEntries(int waiting_count);
-  bool AllocateRingBuffer();
+  bool AllocateRingBuffer(bool debug=false);
   void FreeResources();
 
   // Waits for the get offset to be in a specific range, inclusive. Returns
