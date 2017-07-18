@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "60254681_524fa0a2",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T23:32:44Z",
+      "side": 1,
+      "message": "Done as suggested.",
+      "parentUuid": "809cc471_8e27d7b0",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d19fa25_e2ed7f32",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -140,6 +164,30 @@
       "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cb84f4_7c07992f",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T23:32:44Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "0d19fa25_e2ed7f32",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +306,30 @@
       "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929ce189_c15dfd1b",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T23:32:44Z",
+      "side": 1,
+      "message": "Done as suggested. Thanks! :)",
+      "parentUuid": "88d37ec7_9179b530",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -532,6 +604,30 @@
       "side": 1,
       "message": "Sounds good. However, in your other CL, we would need to ensure UpdateAndMaybeSwitch() is called whenever the capabilities change.",
       "parentUuid": "0580a08c_06771a85",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c39c21d_3a12ca12",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-18T23:32:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "174a945f_fa82222a",
       "range": {
         "startLine": 408,
         "startChar": 0,
