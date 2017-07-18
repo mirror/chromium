@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed9cc02_880615ea",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 83950,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T22:02:24Z",
+      "side": 1,
+      "message": "I would reword this to something like:\n\nRecorded whenever an intermediate keyboard state has been active for longer than a fixed timeout.\n\nFeel free to make the words better though? Basically I want the summary to have sufficient information about what this histogram is, so that people can reason about it to an extend without diving deeply into the code. The biggest unclear point I see is, what lingering means in this context.",
+      "revId": "63d45f678cd009bd05a0f560ce7afc65bf345a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f053ca54_5f0aba7a",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T22:02:24Z",
+      "side": 1,
+      "message": "nit: UMA -\u003e histogram",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "63d45f678cd009bd05a0f560ce7afc65bf345a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7676cb3_cad69bad",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T22:02:24Z",
+      "side": 1,
+      "message": "nit: Export -\u003e Report an",
+      "range": {
+        "startLine": 48,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "63d45f678cd009bd05a0f560ce7afc65bf345a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4450a91d_5ee94ff3",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-18T22:02:24Z",
+      "side": 1,
+      "message": "Nit: UMA -\u003e histogram",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 22
+      },
+      "revId": "63d45f678cd009bd05a0f560ce7afc65bf345a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
