@@ -6,6 +6,7 @@
 
 #include "cc/animation/animation_target.h"
 #include "chrome/browser/vr/test/animation_utils.h"
+#include "chrome/browser/vr/transition.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/test/gfx_util.h"
 
@@ -17,6 +18,7 @@ class TestAnimationTarget : public cc::AnimationTarget {
 
   const gfx::SizeF& size() const { return size_; }
   const cc::TransformOperations& operations() const { return operations_; }
+  float opacity() const { return opacity_; }
 
  private:
   void NotifyClientBoundsAnimated(const gfx::SizeF& size,
@@ -30,8 +32,14 @@ class TestAnimationTarget : public cc::AnimationTarget {
     operations_ = operations;
   }
 
+  void NotifyClientOpacityAnimated(float opacity,
+                                   cc::Animation* animation) override {
+    opacity_ = opacity;
+  }
+
   cc::TransformOperations operations_;
   gfx::SizeF size_;
+  float opacity_ = 1.0f;
 };
 
 TEST(AnimationPlayerTest, AddRemoveAnimations) {
@@ -151,13 +159,72 @@ TEST(AnimationPlayerTest, AnimationQueue) {
   player.Tick(start_time + UsToDelta(15000));
 
   EXPECT_EQ(1ul, player.animations().size());
-  EXPECT_EQ(cc::Animation::WAITING_FOR_TARGET_AVAILABILITY,
-            player.animations()[0]->run_state());
+  EXPECT_EQ(cc::Animation::RUNNING, player.animations()[0]->run_state());
   EXPECT_EQ(id1, player.animations()[0]->id());
 
   // Tick beyond all animations. There should be none remaining.
   player.Tick(start_time + UsToDelta(30000));
   EXPECT_TRUE(player.animations().empty());
+}
+
+TEST(AnimationPlayerTest, Transitions) {
+  TestAnimationTarget target;
+  AnimationPlayer player;
+  player.set_target(&target);
+  Transition transition;
+  transition.target_properties[cc::TargetProperty::OPACITY] = true;
+  transition.duration = UsToDelta(10000);
+  player.set_transition(transition);
+
+  base::TimeTicks start_time = UsToTicks(1000000);
+  player.Tick(start_time);
+
+  float from = 1.0f;
+  float to = 0.5f;
+  player.TransitionOpacityTo(start_time, from, to);
+
+  EXPECT_EQ(from, target.opacity());
+  player.Tick(start_time);
+
+  player.Tick(start_time + UsToDelta(5000));
+  EXPECT_GT(from, target.opacity());
+  EXPECT_LT(to, target.opacity());
+
+  player.Tick(start_time + UsToDelta(10000));
+  EXPECT_EQ(to, target.opacity());
+}
+
+TEST(AnimationPlayerTest, ReversedTransitions) {
+  TestAnimationTarget target;
+  AnimationPlayer player;
+  player.set_target(&target);
+  Transition transition;
+  transition.target_properties[cc::TargetProperty::OPACITY] = true;
+  transition.duration = UsToDelta(10000);
+  player.set_transition(transition);
+
+  base::TimeTicks start_time = UsToTicks(1000000);
+  player.Tick(start_time);
+
+  float from = 1.0f;
+  float to = 0.5f;
+  player.TransitionOpacityTo(start_time, from, to);
+
+  EXPECT_EQ(from, target.opacity());
+  player.Tick(start_time);
+
+  player.Tick(start_time + UsToDelta(1000));
+  EXPECT_GT(from, target.opacity());
+  EXPECT_LT(to, target.opacity());
+
+  player.TransitionOpacityTo(start_time + UsToDelta(1000), target.opacity(),
+                             from);
+  player.Tick(start_time + UsToDelta(1000));
+  EXPECT_GT(from, target.opacity());
+  EXPECT_LT(to, target.opacity());
+
+  player.Tick(start_time + UsToDelta(2000));
+  EXPECT_EQ(from, target.opacity());
 }
 
 }  // namespace vr
