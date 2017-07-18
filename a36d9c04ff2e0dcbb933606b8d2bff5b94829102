@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50d30574_5cff752b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-18T01:12:45Z",
+      "side": 1,
+      "message": "If we also replace MakeUnique with WrapUnique(new WlanApi()) (or use a function template friend declaration).  Done.",
+      "parentUuid": "7e32a1c1_e6ab020b",
+      "range": {
+        "startLine": 79,
+        "startChar": 37,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "a36d9c04ff2e0dcbb933606b8d2bff5b94829102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f544d6_1d3a032b",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a36d9c04ff2e0dcbb933606b8d2bff5b94829102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f90f14f_e7852d9e",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-18T01:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4f544d6_1d3a032b",
+      "range": {
+        "startLine": 200,
+        "startChar": 43,
+        "endLine": 200,
+        "endChar": 62
+      },
+      "revId": "a36d9c04ff2e0dcbb933606b8d2bff5b94829102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
