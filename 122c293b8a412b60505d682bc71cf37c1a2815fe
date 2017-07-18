@@ -16,6 +16,24 @@
       "revId": "122c293b8a412b60505d682bc71cf37c1a2815fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8fbfe9_9c2e5043",
+        "filename": "build/config/sysroot.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-18T23:38:41Z",
+      "side": 1,
+      "message": "nope https://cs.chromium.org/chromium/src/build/linux/sysroot_scripts/sysroots.json",
+      "parentUuid": "f25eb5c1_942ea828",
+      "revId": "122c293b8a412b60505d682bc71cf37c1a2815fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
