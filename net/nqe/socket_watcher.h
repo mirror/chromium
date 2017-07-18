@@ -24,6 +24,8 @@ class TimeDelta;
 
 namespace net {
 
+class AddressList;
+
 namespace {
 typedef base::Callback<void(SocketPerformanceWatcherFactory::Protocol protocol,
                             const base::TimeDelta& rtt)>
@@ -44,7 +46,9 @@ class NET_EXPORT_PRIVATE SocketWatcher : public SocketPerformanceWatcher {
   // interval betweeen consecutive notifications to this socket watcher.
   // |tick_clock| is guaranteed to be non-null.
   SocketWatcher(SocketPerformanceWatcherFactory::Protocol protocol,
+                const AddressList& address_list,
                 base::TimeDelta min_notification_interval,
+                bool use_localhost_requests,
                 scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                 OnUpdatedRTTAvailableCallback updated_rtt_observation_callback,
                 base::TickClock* tick_clock);
@@ -67,6 +71,11 @@ class NET_EXPORT_PRIVATE SocketWatcher : public SocketPerformanceWatcher {
 
   // Minimum interval betweeen consecutive incoming notifications.
   const base::TimeDelta rtt_notifications_minimum_interval_;
+
+  // True if the socket is connected to an IP address that is not reserved.
+  // RTTs from sockets that are connected to reserved IP addresses is not used
+  // for network quality estimation except in some of the tests.
+  const bool is_usable_;
 
   // Time when this was last notified of updated RTT.
   base::TimeTicks last_rtt_notification_;
