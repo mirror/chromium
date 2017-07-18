@@ -19,6 +19,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chromeos/chromeos_switches.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "google_apis/gaia/gaia_switches.h"
@@ -85,6 +86,8 @@ IN_PROC_BROWSER_TEST_F(OobeTest, Accelerator) {
   WaitForGaiaPageLoad();
 
   gfx::NativeWindow login_window = GetLoginWindowWidget()->GetNativeWindow();
+  ASSERT_TRUE(
+      GetLoginUI()->GetWebContents()->GetRenderWidgetHostView()->HasFocus());
 
   ui_controls::SendKeyPress(login_window,
                             ui::VKEY_E,
