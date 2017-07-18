@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "ccde5686_d90b3de0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "(Closing comment to out-of-date design)",
+      "parentUuid": "58c62aec_eaf95ef8",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af7075b_d42521cb",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 1

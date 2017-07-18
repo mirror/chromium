@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "956c058c_ac02cf42",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "Done (by deprecating onMostVisitedURLsAvailable. Removing was not really an option as I really don\u0027t want to change iOS code here.)",
+      "parentUuid": "9f58b4e1_85f355e9",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "822b410d_4903a2b8",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 5
@@ -56,6 +80,24 @@
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a41fa1e_4231e31d",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "OnExplorationTilesAvailable() is now _always_ called.\nThe condition only applies to the non-personalized sections.",
+      "parentUuid": "822b410d_4903a2b8",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "9b6de7c8_9107701e",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "I absolutely agree. The personalized section does not depend on popular sites anymore. This became easily possible because we now always call |OnExplorationTilesAvailable|.",
+      "parentUuid": "0f21eac6_f5aa0c4e",
+      "range": {
+        "startLine": 505,
+        "startChar": 55,
+        "endLine": 505,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde5ae67_b06e629f",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
@@ -96,6 +162,24 @@
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d937e36e_c3597d9a",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "Added deprecation notice and java-side annotaions.\n(As mentioned, removing would touch iOS code)",
+      "parentUuid": "cde5ae67_b06e629f",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "750eebe1_7a426066",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "It only processes a single section. \nIf I omit the parameter, I would return a map now (sites for every section) of which I could only use the PERSONALIZED entry when creating the MV tiles.\nThis would move the complexity to the caller and introduce unused results.",
+      "parentUuid": "6aacad2c_06dd9477",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2897f40e_421d4cfe",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
@@ -145,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "7303a272_b2c9f3d0",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2897f40e_421d4cfe",
+      "range": {
+        "startLine": 215,
+        "startChar": 39,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d5bbaa_aa44531c",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
@@ -159,6 +291,24 @@
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bad436_d0126dda",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "We already hold a copy of the other non-personalized sites in the popular_sites_ object so I would like to avoid this kind of redundancy.\n(Especially because this section would always be even more of a special case than it is right now.)",
+      "parentUuid": "b1d5bbaa_aa44531c",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +335,30 @@
     },
     {
       "key": {
+        "uuid": "12423b1f_afef049b",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "Removed. (Was only used in MV and there I already replaced it)",
+      "parentUuid": "78a239de_438088a3",
+      "range": {
+        "startLine": 66,
+        "startChar": 47,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "880f7d05_cadcbe33",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 5
@@ -199,6 +373,24 @@
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b460eb91_46dae5cd",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "I considered that and would really like to keep the key and the vector visible.\nEspecially, because there are two very similar maps:\nstd::map\u003cSectionType, SitesVector\u003e and\nstd::map\u003cSectionType, NTPTilesVector\u003e\nBeing conscious about the first and second value here is not easy - even without having to look up what map is hidden behind a typedef.\n\nYou can easily convince me otherwise as I don\u0027t really enjoy typing this. WDYT?\n\n(BTW: in one zine-weekly, we had feedback, that our code is hard to read because we use a huge amount of typedefs for vectors and maps already.)",
+      "parentUuid": "880f7d05_cadcbe33",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +414,30 @@
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ed2c99_0b05ebaf",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-18T17:14:26Z",
+      "side": 1,
+      "message": "Done (and simplified the sample data creation stuff.)",
+      "parentUuid": "b8da06ce_ed4513e4",
+      "range": {
+        "startLine": 208,
+        "startChar": 60,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
