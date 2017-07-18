@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27ac5ca5_29866084",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-18T18:40:21Z",
+      "side": 1,
+      "message": "I\u0027m still confused why you need to remove the fullscreen restriction given that this old call should go to RenderViewHostImpl::RenderWidgetGotFocus -\u003e WebContentsView(Aura|Mac)::GotFocus() -\u003e WebContentsImpl::NotifyWebContentsFocused() and fire OnWebContentsFocused for the non-fullscreen case.  Or is the issue that this does not work with Android because WebContentsViewAndroid::GotFocus didn\u0027t do anything, but then why not just fix that function?\n\nMy concern is that on non-Android platforms, we might now end up firing OnWebContentsFocused twice: once through owner_delegate_-\u003eRenderWidgetGotFocus() and once through delegate_-\u003eRenderWidgetGotFocus() below.  Am I misunderstanding how this works?  It seems if we remove the fullscreen restriction in WebContentsImpl::RenderWidgetGotFocus, we should also remove owner_delegate_-\u003eRenderWidgetGotFocus(), which is now doing the same thing as below IIUC.",
+      "range": {
+        "startLine": 778,
+        "startChar": 21,
+        "endLine": 778,
+        "endChar": 41
+      },
+      "revId": "179fea64bf2f72188214eaf6a3e7dcd669c25b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
