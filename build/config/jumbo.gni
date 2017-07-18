@@ -6,8 +6,9 @@ import("//build/split_static_library.gni")  # When someone uses that target_type
 
 declare_args() {
   # If true, use a jumbo build (files compiled together) to speed up
-  # compilation.
-  use_jumbo_build = false
+  # compilation. Enabled by default for everything official builds and
+  # Android+gcc builds because of a warning that prevents builds.
+  use_jumbo_build = !is_official_build && !(is_android && !is_clang)
 
   # A target to exclude from jumbo builds, for optimal round trip time
   # when frequently changing a single cpp file.
@@ -25,8 +26,9 @@ declare_args() {
   jumbo_file_merge_limit = 200
 }
 
-# Use one of the targets jumbo_target or jumbo_component to generate a
-# target which merges sources if possible to compile much faster.
+# Use one of the targets jumbo_source_set, jumbo_static_library,
+# jumbo_split_static_library or jumbo_component to generate a target
+# which merges sources if possible to compile much faster.
 #
 # Special values.
 #
@@ -178,13 +180,44 @@ template("internal_jumbo_target") {
 }
 
 # See documentation above by "internal_jumbo_target".
-template("jumbo_target") {
+template("jumbo_source_set") {
   internal_jumbo_target(target_name) {
+    target_type = "source_set"
     forward_variables_from(invoker, "*")
   }
 }
 
-set_defaults("jumbo_target") {
+set_defaults("jumbo_source_set") {
+  # This sets the default list of configs when the content_source_set target
+  # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
+  # is the list normally applied to static libraries and source sets.
+  configs = default_compiler_configs
+}
+
+# See documentation above by "internal_jumbo_target".
+template("jumbo_static_library") {
+  internal_jumbo_target(target_name) {
+    target_type = "static_library"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("jumbo_static_library") {
+  # This sets the default list of configs when the content_source_set target
+  # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
+  # is the list normally applied to static libraries and source sets.
+  configs = default_compiler_configs
+}
+
+# See documentation above by "internal_jumbo_target".
+template("jumbo_split_static_library") {
+  internal_jumbo_target(target_name) {
+    target_type = "split_static_library"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("jumbo_split_static_library") {
   # This sets the default list of configs when the content_source_set target
   # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
   # is the list normally applied to static libraries and source sets.
@@ -194,6 +227,7 @@ set_defaults("jumbo_target") {
 # See documentation above by "internal_jumbo_target".
 template("jumbo_component") {
   internal_jumbo_target(target_name) {
+    target_type = "component"
     forward_variables_from(invoker, "*")
   }
 }
