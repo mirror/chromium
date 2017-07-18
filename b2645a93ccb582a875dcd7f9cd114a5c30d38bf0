@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9f0d7b6_313d18bb",
+        "filename": "ui/message_center/views/notification_header_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431abd5d_224ead0e",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b24049d_f2689bda",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1a8133_1be51a7f",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b24049d_f2689bda",
+      "range": {
+        "startLine": 641,
+        "startChar": 46,
+        "endLine": 641,
+        "endChar": 48
+      },
+      "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94560f70_45f40b26",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f363c2c8_a76999cf",
+      "range": {
+        "startLine": 651,
+        "startChar": 46,
+        "endLine": 651,
+        "endChar": 48
+      },
+      "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3028b5b4_1c092720",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "834cd426_67461402",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3028b5b4_1c092720",
+      "range": {
+        "startLine": 732,
+        "startChar": 6,
+        "endLine": 732,
+        "endChar": 56
+      },
+      "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21873595_21dad7e4",
         "filename": "ui/strings/ui_strings.grd",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e8a2b3_ad615b3e",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-18T10:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21873595_21dad7e4",
+      "range": {
+        "startLine": 647,
+        "startChar": 8,
+        "endLine": 647,
+        "endChar": 16
+      },
+      "revId": "b2645a93ccb582a875dcd7f9cd114a5c30d38bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
