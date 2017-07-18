@@ -7,6 +7,10 @@
 
 #include "ui/aura/aura_export.h"
 
+namespace ui {
+class OSExchangeData;
+}
+
 namespace aura {
 
 class Window;
@@ -25,6 +29,12 @@ class AURA_EXPORT EnvObserver {
 
   // Called right before Env is destroyed.
   virtual void OnWillDestroyEnv() {}
+
+  // Called when dragging started.
+  virtual void OnDragStarted(const ui::OSExchangeData* data) {}
+
+  // Called when dragging ended.
+  virtual void OnDragEnded(const ui::OSExchangeData* data) {}
 
  protected:
   virtual ~EnvObserver() {}
