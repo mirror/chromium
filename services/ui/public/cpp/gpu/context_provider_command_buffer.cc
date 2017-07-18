@@ -13,6 +13,7 @@
 
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
+//#include "base/debug/stack_trace.h"
 #include "base/optional.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -221,8 +222,13 @@ bool ContextProviderCommandBuffer::BindToCurrentThread() {
   // This is called on the thread the context will be used.
   DCHECK(context_thread_checker_.CalledOnValidThread());
 
-  if (bind_failed_)
+//  LOG(ERROR)<<"JR ContextProviderCommandBuffer::BindToCurrentThread\n";
+  //base::debug::StackTrace().Print();
+
+  if (bind_failed_) {
+    LOG(ERROR)<<"JR bind failed\n";
     return false;
+  }
   if (bind_succeeded_)
     return true;
 
@@ -261,14 +267,16 @@ bool ContextProviderCommandBuffer::BindToCurrentThread() {
     if (!command_buffer_) {
       DLOG(ERROR) << "GpuChannelHost failed to create command buffer.";
       command_buffer_metrics::UmaRecordContextInitFailed(context_type_);
+      LOG(ERROR)<<"JR no command_buffer_\n";
       return false;
     }
 
     // The GLES2 helper writes the command buffer protocol.
     gles2_helper_.reset(new gpu::gles2::GLES2CmdHelper(command_buffer_.get()));
     gles2_helper_->SetAutomaticFlushes(automatic_flushes_);
-    if (!gles2_helper_->Initialize(memory_limits_.command_buffer_size)) {
+    if (!gles2_helper_->Initialize(memory_limits_.command_buffer_size, true)) {
       DLOG(ERROR) << "Failed to initialize GLES2CmdHelper.";
+      LOG(ERROR)<<"JR gles2 helper didnt init\n";
       return false;
     }
 
@@ -287,12 +295,14 @@ bool ContextProviderCommandBuffer::BindToCurrentThread() {
     if (!gles2_impl_->Initialize(memory_limits_.start_transfer_buffer_size,
                                  memory_limits_.min_transfer_buffer_size,
                                  memory_limits_.max_transfer_buffer_size,
-                                 memory_limits_.mapped_memory_reclaim_limit)) {
+                                 memory_limits_.mapped_memory_reclaim_limit, true)) {
       DLOG(ERROR) << "Failed to initialize GLES2Implementation.";
+      LOG(ERROR)<<"JR gles2 impl didnt init\n";
       return false;
     }
 
     if (command_buffer_->GetLastState().error != gpu::error::kNoError) {
+      LOG(ERROR)<<"JR context dead on arrival.\n";
       DLOG(ERROR) << "Context dead on arrival. Last error: "
                   << command_buffer_->GetLastState().error;
       return false;
@@ -311,8 +321,10 @@ bool ContextProviderCommandBuffer::BindToCurrentThread() {
     // context provider. If we check sooner, the shared context may be lost in
     // between these two states and our context here would be left in an orphan
     // share group.
-    if (share_group && share_group->IsLost())
+    if (share_group && share_group->IsLost()) {
+      LOG(ERROR)<<"JR share group fails\n";
       return false;
+    }
 
     shared_providers_->list.push_back(this);
 
