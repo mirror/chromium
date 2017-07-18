@@ -140,6 +140,7 @@ class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
   v8::Local<v8::Context> GetContext() const {
     return context_.NewLocal(isolate_);
   }
+  bool HasContext() const { return !context_.IsEmpty(); }
   bool ContextIsValid() const {
     return !context_.IsEmpty() && per_context_data_;
   }
