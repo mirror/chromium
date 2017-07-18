@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bd1df8_4139302b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "Common, don\u0027t be lazy! ;-)",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9e95e2_a390ad8e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "Can you avoid inheritance. I believe you can make use of plain UI.ToolbarComboBox and inline all these method to their call sites.",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cf5e98_35d0c957",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "make a regular handler method",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730deeb2_bb4a39e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "we don\u0027t use const yet.",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327ee072_5e2a9b0f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "no commented code plz",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedb02a5_facc2231",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "can you inline it?",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5633ad5a_7fa88749",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Tree.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-18T22:36:03Z",
+      "side": 1,
+      "message": "You need to remove the file from module.json and BUILD.gn",
+      "revId": "bacb44b2e0f346e0b33bb14c40ec6e863b69fc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
