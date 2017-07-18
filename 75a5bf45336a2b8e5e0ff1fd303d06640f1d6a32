@@ -141,6 +141,30 @@
       "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21d4e29_14561392",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-18T00:58:10Z",
+      "side": 1,
+      "message": "PaintLayerPainterTest expects a sequence of display items like\n\n  doc background\n  div\n  more divs...\n\nWithout this check, we will have to update it to expect the following in the (RLS \u0026\u0026 !SPv2) case:\n\n  begin scroll\n  doc background\n  end scroll\n  div\n  more divs...\n\nIn addition to the ugliness of having the (RLS \u0026\u0026 !SPv2) path diverge further from the other three test configurations, it is super weird to expect a display list like this because the doc background and the divs should all move together when the scroll offset changes.\n\nWhen I investigated why there is no begin/end scroll around the display items for the divs, I was led to the nonzero-offset check in PaintLayerPainter::PaintFragmentWithPhase.  So, I duplicated that check here.",
+      "parentUuid": "50ec40c0_2f31c0cc",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
