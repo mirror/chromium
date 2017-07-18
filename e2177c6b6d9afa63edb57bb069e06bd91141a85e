@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24abbc45_97d44239",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-07-18T17:53:23Z",
+      "side": 1,
+      "message": "right, good catch. I blindly copy-pasted this from the previous code, this further simplification is better.\n\nHowever note that because the background color case requires a mixing, I made the local variable names different to make it more obvious which colors are actually being mixed. This may need to change if the callsite changes.\n\nIf you have an alternative which you like better, let me know.",
+      "parentUuid": "9816df7c_88c81b98",
+      "range": {
+        "startLine": 713,
+        "startChar": 31,
+        "endLine": 713,
+        "endChar": 47
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c05fa3e7_c18cd4ce",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4297ddc1_25451502",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-07-18T17:53:23Z",
+      "side": 1,
+      "message": "changed to const SkColor\u0026 per the change in implementation.",
+      "parentUuid": "c05fa3e7_c18cd4ce",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2da25cac_c0f30e6d",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-07-18T17:53:23Z",
+      "side": 1,
+      "message": "np, thanks for pointing this out :)",
+      "parentUuid": "e64634f6_b06494a0",
+      "range": {
+        "startLine": 283,
+        "startChar": 1,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87998ca7_f5f99dd7",
         "filename": "ui/app_list/views/search_box_view_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f9ecb1_ff475db9",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-07-18T17:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87998ca7_f5f99dd7",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 307,
+        "endChar": 28
+      },
+      "revId": "e2177c6b6d9afa63edb57bb069e06bd91141a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
