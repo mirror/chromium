@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "603b6ed9_3c35df1e",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:00:09Z",
+      "side": 1,
+      "message": "Can we merge this into the comment for |ediable_form_text_area_| in the header?",
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfef2427_ddc5763f",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:00:09Z",
+      "side": 1,
+      "message": "Is this the same as: form_type \u003d\u003d FPDF_FORMFIELD_COMBOBOX ?",
+      "range": {
+        "startLine": 1791,
+        "startChar": 39,
+        "endLine": 1791,
+        "endChar": 73
+      },
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5de9ad_9396606a",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:00:09Z",
+      "side": 1,
+      "message": "Can |editable_form_text_area_| ever be true when |in_form_text_area_| is false?",
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a2b538_fc06a7c6",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T02:00:09Z",
+      "side": 1,
+      "message": "Given the conditional 1 line above, the only possible value of |in_form_text_area_| here is false.",
+      "range": {
+        "startLine": 3670,
+        "startChar": 31,
+        "endLine": 3670,
+        "endChar": 49
+      },
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
