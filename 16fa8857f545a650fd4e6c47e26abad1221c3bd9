@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ba4bf677_2a9bd2e5",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-18T17:19:18Z",
+      "side": 1,
+      "message": "The issue is that the GoogleURLTracker issues a request to https:/www.google.com/ in unittest mode. This means that we would need to request a different URL in this test case. We could certainly do that but it is kind of nice to check the homepage. Do you prefer that we test https://www.google.com/foobar instead? It feels a bit dirty to me as well but I\u0027m fine with it. The setup may become a bit more cumbersome when we register all relevant URLs.",
+      "parentUuid": "83e1748d_6b037d44",
+      "revId": "16fa8857f545a650fd4e6c47e26abad1221c3bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71cb16ea_741af0f2",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
         "patchSetId": 8
