@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d35b9e_ee14c3e8",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T02:06:10Z",
+      "side": 1,
+      "message": "nit: this comment is a little confusing in this context. Maybe something like:\n// If the pattern is for an individual origin or extension display it as such. Otherwise just display the pattern as a string.",
+      "revId": "90592789d27696cc5a9cf4447d7259320c4535a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3473d00_b52bbd2e",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T02:06:10Z",
+      "side": 1,
+      "message": "nit: this comment is a little confusing in this context. Maybe something like:\n// If the pattern is for an individual origin or extension display it as such. Otherwise just display the pattern as a string.",
+      "revId": "90592789d27696cc5a9cf4447d7259320c4535a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e056ef_70ff079d",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-18T02:06:10Z",
+      "side": 1,
+      "message": "nit: this comment is a little confusing in this context. Maybe something like:\n// If the pattern is for an individual origin or extension display it as such. Otherwise just display the pattern as a string.",
+      "revId": "90592789d27696cc5a9cf4447d7259320c4535a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
