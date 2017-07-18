@@ -11,6 +11,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -36,27 +37,50 @@ namespace chromeos {
 namespace {
 
 // Delay before portal detection caused by changes in proxy settings.
-const int kProxyChangeDelaySec = 1;
+constexpr int kProxyChangeDelaySec = 1;
 
 // Maximum number of reports from captive portal detector about
 // offline state in a row before notification is sent to observers.
-const int kMaxOfflineResultsBeforeReport = 3;
+constexpr int kMaxOfflineResultsBeforeReport = 3;
 
 // Delay before portal detection attempt after !ONLINE -> !ONLINE
 // transition.
-const int kShortInitialDelayBetweenAttemptsMs = 600;
+constexpr int kShortInitialDelayBetweenAttemptsMs = 600;
 
 // Maximum timeout before portal detection attempts after !ONLINE ->
 // !ONLINE transition.
-const int kShortMaximumDelayBetweenAttemptsMs = 2 * 60 * 1000;
+constexpr int kShortMaximumDelayBetweenAttemptsMs = 2 * 60 * 1000;
 
 // Delay before portal detection attempt after !ONLINE -> ONLINE
 // transition.
-const int kLongInitialDelayBetweenAttemptsMs = 30 * 1000;
+constexpr int kLongInitialDelayBetweenAttemptsMs = 30 * 1000;
 
 // Maximum timeout before portal detection attempts after !ONLINE ->
 // ONLINE transition.
-const int kLongMaximumDelayBetweenAttemptsMs = 5 * 60 * 1000;
+constexpr int kLongMaximumDelayBetweenAttemptsMs = 5 * 60 * 1000;
+
+// The portal check test urls to rotate through.
+constexpr char kDefaultAltURL[] = "http://alt${RAND}.gstatic.com/generate_204";
+// The keyword placed in kDefaultAltURL. See GetRandomizedTestURL().
+constexpr char kRandomKeyword[] = "${RAND}";
+
+// This range is determined by the server-side configuration. See b/63033351.
+constexpr int kMinRandomHost = 1;
+constexpr int kMaxRandomHost = 25;
+
+// Get randomized test url by rotating through alternate hostnames on each
+// portal check, to defeat IP-based blocking.
+std::string GetRandomizedTestURL() {
+  std::string out(kDefaultAltURL);
+  std::size_t offset = out.find(kRandomKeyword);
+  if (offset == std::string::npos) {
+    return captive_portal::CaptivePortalDetector::kDefaultURL;
+  }
+
+  int alt_host = base::RandInt(kMinRandomHost, kMaxRandomHost);
+  out.replace(offset, strlen(kRandomKeyword), std::to_string(alt_host));
+  return out;
+}
 
 const NetworkState* DefaultNetwork() {
   return NetworkHandler::Get()->network_state_handler()->DefaultNetwork();
@@ -213,8 +237,7 @@ const char NetworkPortalDetectorImpl::kSessionPortalToOnlineHistogram[] =
 NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
     bool create_notification_controller)
-    : portal_test_url_(CaptivePortalDetector::kDefaultURL),
-      strategy_(PortalDetectorStrategy::CreateById(
+    : strategy_(PortalDetectorStrategy::CreateById(
           PortalDetectorStrategy::STRATEGY_ID_LOGIN_SCREEN,
           this)),
       weak_factory_(this) {
@@ -439,13 +462,16 @@ void NetworkPortalDetectorImpl::ScheduleAttempt(const base::TimeDelta& delay) {
 
 void NetworkPortalDetectorImpl::StartAttempt() {
   DCHECK(is_portal_check_pending());
-  DCHECK(portal_test_url_.is_valid());
 
   state_ = STATE_CHECKING_FOR_PORTAL;
   attempt_start_time_ = NowTicks();
 
+  GURL test_url(GetRandomizedTestURL());
+  if (!portal_test_url_.is_empty())
+    test_url = portal_test_url_;
+  DCHECK(test_url.is_valid());
   captive_portal_detector_->DetectCaptivePortal(
-      portal_test_url_,
+      test_url,
       base::Bind(&NetworkPortalDetectorImpl::OnAttemptCompleted,
                  weak_factory_.GetWeakPtr()),
       NO_TRAFFIC_ANNOTATION_YET);
