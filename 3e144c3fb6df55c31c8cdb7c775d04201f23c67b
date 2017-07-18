@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "094ab896_7fcea580",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T18:39:59Z",
+      "side": 1,
+      "message": "If the response is invalid, but it\u0027s partially written, then shouldn\u0027t other transaction still restart? It seems like we\u0027d still want \"should_restart\" to be true.\n\nIt seems like we need tests to ensure that we handle this in an expected way.",
+      "range": {
+        "startLine": 878,
+        "startChar": 24,
+        "endLine": 878,
+        "endChar": 39
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333f1142_5e8d812e",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T18:39:59Z",
+      "side": 1,
+      "message": "Perhaps instead this should be:\n\nif (should_restart \u0026\u0026 IsValidResponse(transaction, is_partial))?",
+      "range": {
+        "startLine": 906,
+        "startChar": 8,
+        "endLine": 906,
+        "endChar": 22
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fae170_94c9c8e8",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T18:39:59Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 1152,
+        "startChar": 78,
+        "endLine": 1152,
+        "endChar": 80
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99956e2e_c08cf88d",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T18:39:59Z",
+      "side": 1,
+      "message": "Above you don\u0027t use {}\u0027s on one-liner conditionals but here you do. Best to pick one and stick with it. We usually omit them on one-liners.",
+      "range": {
+        "startLine": 1157,
+        "startChar": 69,
+        "endLine": 1157,
+        "endChar": 70
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8cae0e_f4d20217",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T18:39:59Z",
+      "side": 1,
+      "message": "Let\u0027s keep the comment to what the function does and not the why.",
+      "range": {
+        "startLine": 483,
+        "startChar": 5,
+        "endLine": 484,
+        "endChar": 14
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
