@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af1fc2b_6ad4ac2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T21:22:10Z",
+      "side": 1,
+      "message": "Is there really no bug about this?\n\nCould you please link to the privacy approval for this?",
+      "revId": "de7ebc9ae36a556453d511b09b660cdc190f2a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
