@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3f5cfc0a_b75a34ea",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T18:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1a5aaf_2da95e83",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86dfc863_6d5512fb",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 2
@@ -129,6 +147,24 @@
       "writtenOn": "2017-07-17T21:22:37Z",
       "side": 1,
       "message": "These CGRect functions can help simplify the arithmetic.",
+      "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e399c8b7_8c5a850c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-18T18:00:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2d25aa14_fb5ecb1c",
       "revId": "034c96611bd8c03d1355784da3611e00d99b175e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
