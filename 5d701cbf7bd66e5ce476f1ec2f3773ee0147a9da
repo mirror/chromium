@@ -46,6 +46,30 @@
       "revId": "5d701cbf7bd66e5ce476f1ec2f3773ee0147a9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4953ed2_f2a7c4f9",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T17:49:44Z",
+      "side": 1,
+      "message": "I guess I was confused by the comment. Maybe say \"records metrics at tab-level\".\n\nSo if it records metrics at tab level, should this be partly combined with TabSignalGenerator? The observing and signal/metrics generation part are likely to have overlaps. The TabSignalGenerator can have a MetricsCollector member, which records metrics.",
+      "parentUuid": "1276e5ae_8d197536",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "5d701cbf7bd66e5ce476f1ec2f3773ee0147a9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
