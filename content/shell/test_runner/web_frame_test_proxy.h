@@ -91,17 +91,6 @@ class WebFrameTestProxy : public Base, public WebFrameTestProxyBase {
     Base::DownloadURL(request, suggested_name);
   }
 
-  void LoadURLExternally(const blink::WebURLRequest& request,
-                         blink::WebNavigationPolicy policy,
-                         blink::WebTriggeringEventInfo triggering_event_info,
-                         bool replaces_current_history_item) override {
-    DCHECK_NE(policy, blink::kWebNavigationPolicyDownload);
-    test_client()->LoadURLExternally(request, policy, triggering_event_info,
-                                     replaces_current_history_item);
-    Base::LoadURLExternally(request, policy, triggering_event_info,
-                            replaces_current_history_item);
-  }
-
   void DidStartProvisionalLoad(blink::WebDataSource* data_source,
                                blink::WebURLRequest& request) override {
     test_client()->DidStartProvisionalLoad(data_source, request);
