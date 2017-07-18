@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "components/storage_monitor/removable_device_constants.h"
 #include "components/storage_monitor/storage_monitor.h"
@@ -79,7 +80,7 @@ void FilterAttachedDevicesOnFileThread(MediaStorageUtil::DeviceIdSet* devices) {
 
 // static
 bool MediaStorageUtil::HasDcim(const base::FilePath& mount_point) {
-  DCHECK(!content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  base::ThreadRestrictions::AssertIOAllowed();
 
   base::FilePath::StringType dcim_dir(kDCIMDirectoryName);
   if (!base::DirectoryExists(mount_point.Append(dcim_dir))) {

@@ -12,10 +12,14 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/thread_restrictions.h"
 #include "components/storage_monitor/media_storage_util.h"
 #include "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h"
 #include "components/storage_monitor/removable_device_constants.h"
-#include "content/public/browser/browser_thread.h"
 #include "device/media_transfer_protocol/media_transfer_protocol_manager.h"
 
 using chromeos::disks::DiskMountManager;
@@ -73,15 +77,13 @@ bool GetDeviceInfo(const DiskMountManager::MountPointInfo& mount_info,
 }
 
 // Returns whether the mount point in |mount_info| is a media device or not.
-bool CheckMountedPathOnFileThread(
+bool CheckMountedPathOnBackgroundSequence(
     const DiskMountManager::MountPointInfo& mount_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   return MediaStorageUtil::HasDcim(base::FilePath(mount_info.mount_path));
 }
 
 }  // namespace
-
-using content::BrowserThread;
 
 StorageMonitorCros::StorageMonitorCros()
     : weak_ptr_factory_(this) {
@@ -111,25 +113,31 @@ void StorageMonitorCros::Init() {
 }
 
 void StorageMonitorCros::CheckExistingMountPoints() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  scoped_refptr<base::SequencedTaskRunner> mounting_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND});
+
   const DiskMountManager::MountPointMap& mount_point_map =
       DiskMountManager::GetInstance()->mount_points();
   for (DiskMountManager::MountPointMap::const_iterator it =
       mount_point_map.begin(); it != mount_point_map.end(); ++it) {
-    BrowserThread::PostTaskAndReplyWithResult(
-        BrowserThread::FILE, FROM_HERE,
-        base::Bind(&CheckMountedPathOnFileThread, it->second),
+    base::PostTaskAndReplyWithResult(
+        mounting_task_runner.get(), FROM_HERE,
+        base::Bind(&CheckMountedPathOnBackgroundSequence, it->second),
         base::Bind(&StorageMonitorCros::AddMountedPath,
                    weak_ptr_factory_.GetWeakPtr(), it->second));
   }
 
-  // Note: relies on scheduled tasks on the file thread being sequential. This
-  // block needs to follow the for loop, so that the DoNothing call on the FILE
-  // thread happens after the scheduled metadata retrievals, meaning that the
-  // reply callback will then happen after all the AddNewMount calls.
-  BrowserThread::PostTaskAndReply(
-      BrowserThread::FILE, FROM_HERE,
-      base::Bind(&base::DoNothing),
+  // Note: Relies on scheduled tasks on the |mounting_task_runner| being
+  // sequential. This block needs to follow the for loop, so that the DoNothing
+  // call on the |mounting_task_runner| happens after the scheduled metadata
+  // retrievals, meaning that the reply callback will then happen after all the
+  // AddMountedPath calls.
+
+  mounting_task_runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&base::DoNothing),
       base::Bind(&StorageMonitorCros::MarkInitialized,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -144,7 +152,7 @@ void StorageMonitorCros::OnMountEvent(
     DiskMountManager::MountEvent event,
     chromeos::MountError error_code,
     const DiskMountManager::MountPointInfo& mount_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Ignore mount points that are not devices.
   if (mount_info.mount_type != chromeos::MOUNT_TYPE_DEVICE)
@@ -162,9 +170,9 @@ void StorageMonitorCros::OnMountEvent(
         return;
       }
 
-      BrowserThread::PostTaskAndReplyWithResult(
-          BrowserThread::FILE, FROM_HERE,
-          base::Bind(&CheckMountedPathOnFileThread, mount_info),
+      base::PostTaskWithTraitsAndReplyWithResult(
+          FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+          base::Bind(&CheckMountedPathOnBackgroundSequence, mount_info),
           base::Bind(&StorageMonitorCros::AddMountedPath,
                      weak_ptr_factory_.GetWeakPtr(), mount_info));
       break;
@@ -273,12 +281,12 @@ StorageMonitorCros::media_transfer_protocol_manager() {
 void StorageMonitorCros::AddMountedPath(
     const DiskMountManager::MountPointInfo& mount_info,
     bool has_dcim) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (base::ContainsKey(mount_map_, mount_info.mount_path)) {
-    // CheckExistingMountPointsOnUIThread() added the mount point information
-    // in the map before the device attached handler is called. Therefore, an
-    // entry for the device already exists in the map.
+    // CheckExistingMountPoints() added the mount point information in the map
+    // before the device attached handler is called. Therefore, an entry for
+    // the device already exists in the map.
     return;
   }
 

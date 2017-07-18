@@ -155,6 +155,10 @@ class StorageMonitor {
   // Called by subclasses to mark the storage monitor as fully initialized.
   void MarkInitialized();
 
+  // Used to make sure creation, initialization, and other key methods are all
+  // called on the same sequence.
+  SEQUENCE_CHECKER(sequence_checker_);
+
  private:
   // Internal method for creating platform specific StorageMonitor.
   static StorageMonitor* CreateInternal();
@@ -172,9 +176,6 @@ class StorageMonitor {
 
   scoped_refptr<base::ObserverListThreadSafe<RemovableStorageObserver>>
       observer_list_;
-
-  // Used to make sure we call initialize from the same sequence as creation.
-  SEQUENCE_CHECKER(sequence_checker_);
 
   bool initializing_;
   bool initialized_;
