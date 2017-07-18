@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6a4ac1_d2207a76",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T15:30:25Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t seem related to whether or not the response is valid. Seems like you could just remove the comment.",
+      "range": {
+        "startLine": 1149,
+        "startChar": 2,
+        "endLine": 1150,
+        "endChar": 35
+      },
+      "revId": "e24c3dc38e7ad50dd4b6f07d78cb9de34d328d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47aabfda_32d6a099",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-18T15:30:25Z",
+      "side": 1,
+      "message": "return true?",
+      "range": {
+        "startLine": 1158,
+        "startChar": 3,
+        "endLine": 1158,
+        "endChar": 0
+      },
+      "revId": "e24c3dc38e7ad50dd4b6f07d78cb9de34d328d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
