@@ -214,7 +214,7 @@ AuditorResult AnnotationInstance::Deserialize(
   } else if (function_type == "Partial") {
     annotation_type = AnnotationType::ANNOTATION_PARTIAL;
   } else if (function_type == "Completing") {
-    annotation_type = AnnotationType::ANNOTATION_COMPLETENG;
+    annotation_type = AnnotationType::ANNOTATION_COMPLETING;
   } else if (function_type == "BranchedCompleting") {
     annotation_type = AnnotationType::ANNOTATION_BRANCHED_COMPLETING;
   } else {
@@ -601,6 +601,10 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
   if (IsWhitelisted(call.file_path, AuditorException::ExceptionType::MISSING))
     return true;
 
+  // Is it a unittest?
+  if (call.file_path.find("unittest") != std::string::npos)
+    return false;
+
   // Already checked?
   if (base::ContainsKey(checked_dependencies_, call.file_path))
     return checked_dependencies_[call.file_path];
@@ -641,8 +645,43 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
   return checked_dependencies_[call.file_path];
 }
 
+bool TrafficAnnotationAuditor::CheckPartialAnnotationsSemantics() {
+  std::vector<AnnotationInstance*> partials;
+  std::vector<AnnotationInstance*> completings;
+  // Find and separate all none-complete annotations.
+  for (AnnotationInstance& instance : extracted_annotations_) {
+    if (instance.annotation_type ==
+        AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL) {
+      partials.push_back(&instance);
+    } else if (instance.annotation_type !=
+               AnnotationInstance::AnnotationType::ANNOTATION_COMPLETE) {
+      completings.push_back(&instance);
+    }
+  }
+  std::set<AnnotationInstance*> used_completing;
+
+  for (AnnotationInstance* partial : partials) {
+    std::string completing_id = partial->extra_id;
+
+    for (AnnotationInstance* completing : completings) {
+      if ((completing->annotation_type ==
+               AnnotationInstance::AnnotationType::ANNOTATION_COMPLETING &&
+           completing->proto.unique_id() == partial->extra_id) ||
+          (completing->annotation_type == AnnotationInstance::AnnotationType::
+                                              ANNOTATION_BRANCHED_COMPLETING &&
+           completing->extra_id == partial->extra_id)) {
+        LOG(ERROR) << "FOUND A PAIR: " << partial->proto.unique_id() << " AND "
+                   << completing->proto.unique_id();
+      }
+    }
+  }
+
+  return true;
+}
+
 void TrafficAnnotationAuditor::RunAllChecks() {
   CheckDuplicateHashes();
   CheckUniqueIDsFormat();
   CheckAllRequiredFunctionsAreAnnotated();
+  CheckPartialAnnotationsSemantics();
 }

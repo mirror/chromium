@@ -206,7 +206,7 @@ TEST_F(TrafficAnnotationAuditorTest, AnnotationDeserialization) {
        AuditorResult::ResultType::RESULT_OK,
        AnnotationInstance::AnnotationType::ANNOTATION_BRANCHED_COMPLETING},
       {"good_completing_annotation.txt", AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETENG},
+       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETING},
       {"good_partial_annotation.txt", AuditorResult::ResultType::RESULT_OK,
        AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL},
       {"good_test_annotation.txt", AuditorResult::ResultType::RESULT_IGNORE},
@@ -400,7 +400,7 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
   std::string file_paths[] = {"net/url_request/url_fetcher.cc",
                               "net/url_request/url_request_context.cc",
                               "net/url_request/other_file.cc",
-                              "somewhere_else.cc"};
+                              "somewhere_else.cc", "something_unittest.cc"};
   std::string function_names[] = {"net::URLFetcher::Create",
                                   "net::URLRequestContext::CreateRequest",
                                   "SSLClientSocket", "Something else", ""};
@@ -424,19 +424,19 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
           auditor.SetExtractedCallsForTest(calls);
           auditor.ClearCheckedDependenciesForTest();
           auditor.CheckAllRequiredFunctionsAreAnnotated();
-          // Error should be issued if a function is not annotated,
-          // chrome::chrome depends on it, the filepath is not whitelisted, and
-          // function name is either of the two specified ones.
-          EXPECT_EQ(
-              auditor.errors().size() == 1,
-              !annotated && dependent &&
-                  file_path != "net/url_request/url_fetcher.cc" &&
-                  file_path != "net/url_request/url_request_context.cc" &&
-                  (function_name == "net::URLFetcher::Create" ||
-                   function_name == "net::URLRequestContext::CreateRequest"))
-              << "The conditions for generating an error for missing "
-                 "annotation do not match the returned number of errors by "
-                 "auditor.";
+          // Error should be issued if a function is not annotated, it's a
+          // unittest or chrome::chrome depends on it, the filepath is not
+          // whitelisted, and function name is either of the two specified ones.
+          bool is_unittest = file_path.find("unittest") != std::string::npos;
+          bool is_whitelist =
+              file_path == "net/url_request/url_fetcher.cc" ||
+              file_path != "net/url_request/url_request_context.cc";
+          bool monitored_function =
+              function_name == "net::URLFetcher::Create" ||
+              function_name == "net::URLRequestContext::CreateRequest";
+          EXPECT_EQ(auditor.errors().size() == 1,
+                    !annotated && (dependent || is_unittest) && !is_whitelist &&
+                        monitored_function);
         }
       }
     }
