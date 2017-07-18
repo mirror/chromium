@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e29e3f_786960ed",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T18:54:08Z",
+      "side": 1,
+      "message": "You know what, with the base::nullopt return in this class, it\u0027s now more or less exactly like NeverAvailabilityModel declared in //components/feature_engagement_tracker/internal/never_availability_model.h, except that one does in fact have the magic delayed init-\u003eready\u003dtrue trick...\n\nHow about you just remove this TestAvailabilityModel and use NeverAvailabilityModel below, since you\u0027ve now documented that it required \"availability\": \"ANY\"?",
+      "revId": "62ded8fe60f6a46fe9512609b7f92febf34bc3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c2be03_e678f579",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-18T18:54:08Z",
+      "side": 1,
+      "message": "Super-extremely-tiny-nit: I think our JSON styleguide says no space before the :, so remove?",
+      "range": {
+        "startLine": 14,
+        "startChar": 61,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "62ded8fe60f6a46fe9512609b7f92febf34bc3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
