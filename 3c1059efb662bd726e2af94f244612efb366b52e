@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "b6a0dd6e_333f270b",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-18T07:28:38Z",
+      "side": 1,
+      "message": "Yes, I agree.\nBut I want to say that the original |GetSwapInfo()| read values from files separately, so I think it may return some valid values and some zeros, not all zeros. (It only sets all values to zero if |orig_data_size| \u003c\u003d 4096)\n\nThe new |GetSwapInfo()| still has this behavior since it may use the old interfaces.\n\nAnd I think check the return values is another issue since these callers do not handle any failure situations from these apis.\nIs it OK that I only check the return value of |GetSwapInfo()| in its callers?\n\nPS: |GetSystemMemoryInfo()| at least reads two file(/proc/meminfo and /proc/vmstat) and will reads another file on CrOS.(https://cs.chromium.org/chromium/src/base/process/process_metrics_linux.cc?rcl\u003d5325997f23e67dcda053d4e7b6b56fe6d20ae65d\u0026l\u003d750)\nI think it will return a partially filled structs when it failed on reading the second file.\nBecause of this, I don\u0027t know how is the right way to handle the failure situations of |GetSwapInfo()| in these callers. (Maybe sets all values to zeros when it fail?)",
+      "parentUuid": "4b6b93e7_aa7e06fa",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
