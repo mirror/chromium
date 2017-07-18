@@ -912,6 +912,24 @@
     },
     {
       "key": {
+        "uuid": "cd28210b_2c64a9d5",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:51:35Z",
+      "side": 1,
+      "message": "Removed the accessor after using UI property.",
+      "parentUuid": "d2c0744d_147429f0",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa1d7269_312c0a51",
         "filename": "components/exo/data_offer_delegate.h",
         "patchSetId": 8
