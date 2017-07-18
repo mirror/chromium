@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec5d181_17357b12",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2343,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T07:20:06Z",
+      "side": 1,
+      "message": "Change to\n  if (current_program_-\u003etex_clamp_rect_location() !\u003d -1) {\n    // Draw batching is not allowed with texture clamping.\n    DCHECK_EQ(1u, draw_cache_.matrix_data.size());\n    ...",
+      "revId": "81b29edd36fd019318bb7d371f40d480de577390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebfd37e_39e11693",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T07:20:06Z",
+      "side": 1,
+      "message": "Change to\n  if (need_tex_clamp_rect) {",
+      "revId": "81b29edd36fd019318bb7d371f40d480de577390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e815ca_3d23216c",
+        "filename": "cc/output/program_binding.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T07:20:06Z",
+      "side": 1,
+      "message": "Remove this (the above callers are gone).",
+      "revId": "81b29edd36fd019318bb7d371f40d480de577390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

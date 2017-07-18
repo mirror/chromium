@@ -34,6 +34,24 @@
       "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6857c53a_6faae60d",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T07:20:06Z",
+      "side": 1,
+      "message": "Batching only occurs when we use the same texture on all 9 quads, which excludes using this for multiple video quads or tiles (seriously ... it was an extremely short-sighted optimization ... just writing a custom shader for 9-patch layers would have been more effective and less complex).",
+      "parentUuid": "e8b1079a_dd88584b",
+      "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
