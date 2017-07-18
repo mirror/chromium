@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c3919f_b314af1d",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-18T18:47:24Z",
+      "side": 1,
+      "message": "Because some places use these values in bit-wise OR\u0027ed fields (ie. |render_text-\u003eSetStyle(ITALIC, (text_style \u0026 TextStyle::ITALIC) !\u003d 0);|), we\u0027ll need to give these specific bit-shifted values, and remove the NUM_TEXT_STYLES value (used by render_text[_unittest].cc)...\nenum TextStyle {\n  NORMAL    \u003d 0,\n  ITALIC    \u003d 1 \u003c\u003c 0,\n  UNDERLINE \u003d 1 \u003c\u003c 1,\n  STRIKE    \u003d 1 \u003c\u003c 2,\n};\n\nAnd now that I\u0027m looking at this change and my old TODO again, I think my intention was actually to remove this gfx::TextStyle enum value and keep the gfx::Font::FontStyle enum... If you pursue a change, I suggest doing that. You should probably remove the strike enum value here first, and either eliminate all bit-field usage of the enum values or use bit-shifted literals in the definition of FontStyle (and add a comment about that usage to the enum definition). I\u0027m sorry I didn\u0027t catch all this in my earlier review...",
+      "revId": "21f0a8aec0118781fe56ee2c11eefe7d12019995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
