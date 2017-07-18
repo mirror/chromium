@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a63ce7_2490368f",
+        "filename": "ios/chrome/browser/ui/webui/suggestions_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:00:23Z",
+      "side": 1,
+      "message": "2017 :)",
+      "revId": "dd8aefc58acbc731d06dd8a457c363f3df7b28f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
