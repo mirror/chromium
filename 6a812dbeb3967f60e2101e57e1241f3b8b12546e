@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3c7e45b_7d9ced63",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T16:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745c0b98_718895d9",
+      "range": {
+        "startLine": 868,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 40
+      },
+      "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb6a1d6_4ceefd81",
         "filename": "ui/app_list/views/contents_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2532c5f_efe56440",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T16:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb6a1d6_4ceefd81",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 11
+      },
+      "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0d31df1e_712492b0",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T16:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bccc3728_8dcae3db",
+      "range": {
+        "startLine": 408,
+        "startChar": 4,
+        "endLine": 408,
+        "endChar": 13
+      },
+      "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2cd6d5_02c9f5e9",
         "filename": "ui/app_list/views/search_result_list_view.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fd3af693_7f94a89e",
+        "filename": "ui/app_list/views/search_result_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T16:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2cd6d5_02c9f5e9",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da9ab9a_9536dad3",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c002b79_62f44496",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-18T16:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da9ab9a_9536dad3",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 12
+      },
+      "revId": "6a812dbeb3967f60e2101e57e1241f3b8b12546e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
