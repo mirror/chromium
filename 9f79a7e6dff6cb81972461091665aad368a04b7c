@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47457521_c0aef883",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "What if it\u0027s invalid at startup?",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 43
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f8ab16_e2aae09d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "The logic that checks subscription_manager_ methods",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785e34e7_b73bf7f2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "This only checks token validation and doesn\u0027t subscribe.",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1f5e36_9320d54d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "content suggestions server?",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 56
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eecf8db6_536b55a9",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "a subscription token",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbaad010_48281cf3",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "GCM server",
+      "range": {
+        "startLine": 84,
+        "startChar": 57,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9b10fa_50454f01",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "Not sure if there is convention for naming the callbacks, is it OnTokenRetrieval or Retrieved?\nSame for validation below.",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284205ce_c399e331",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-18T09:57:56Z",
+      "side": 1,
+      "message": "GCM server.",
+      "range": {
+        "startLine": 93,
+        "startChar": 64,
+        "endLine": 93,
+        "endChar": 67
+      },
+      "revId": "9f79a7e6dff6cb81972461091665aad368a04b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
