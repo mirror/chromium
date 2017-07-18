@@ -798,6 +798,15 @@ blink::WebSize WebMediaPlayerImpl::NaturalSize() const {
   return blink::WebSize(pipeline_metadata_.natural_size);
 }
 
+blink::WebSize WebMediaPlayerImpl::VisibleRectWidth() {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
+  if (!video_frame.get() || !video_frame->HasTextures())
+    return blink::WebSize(0, 0);
+  return blink::WebSize(video_frame->visible_rect().width(),
+                        video_frame->visible_rect().height());
+}
+
 bool WebMediaPlayerImpl::Paused() const {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 

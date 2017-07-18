@@ -389,6 +389,22 @@ blink::WebSize WebMediaPlayerMS::NaturalSize() const {
   return blink::WebSize(compositor_->GetCurrentSize());
 }
 
+blink::WebSize WebMediaPlayerMS::VisibleRectWidth() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  scoped_refptr<media::VideoFrame> video_frame =
+      compositor_->GetCurrentFrameWithoutUpdatingStatistics();
+  if (!video_frame.get() || !video_frame->HasTextures())
+    return blink::WebSize(0, 0);
+
+  if (video_rotation_ == media::VIDEO_ROTATION_90 ||
+      video_rotation_ == media::VideoRotation::VIDEO_ROTATION_270) {
+    return blink::WebSize(video_frame->visible_rect().height(),
+                          video_frame->visible_rect().width());
+  }
+  return blink::WebSize(video_frame->visible_rect().width(),
+                        video_frame->visible_rect().height());
+}
+
 bool WebMediaPlayerMS::Paused() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return paused_;

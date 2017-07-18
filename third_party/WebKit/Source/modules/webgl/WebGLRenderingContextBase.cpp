@@ -5153,7 +5153,12 @@ void WebGLRenderingContextBase::texImage2D(ExecutionContext* execution_context,
 
 PassRefPtr<Image> WebGLRenderingContextBase::VideoFrameToImage(
     HTMLVideoElement* video) {
-  IntSize size(video->videoWidth(), video->videoHeight());
+  if (!video->videoVisibleWidth() || !video->videoVisibleHeight()) {
+    SynthesizeGLError(GL_INVALID_VALUE, "tex(Sub)Image2D",
+                      "video visible size is zero");
+    return nullptr;
+  }
+  IntSize size(video->videoVisibleWidth(), video->videoVisibleHeight());
   ImageBuffer* buf = generated_image_cache_.GetImageBuffer(size);
   if (!buf) {
     SynthesizeGLError(GL_OUT_OF_MEMORY, "texImage2D", "out of memory");

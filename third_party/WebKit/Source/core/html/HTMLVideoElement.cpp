@@ -209,6 +209,18 @@ unsigned HTMLVideoElement::videoHeight() const {
   return GetWebMediaPlayer()->NaturalSize().height;
 }
 
+unsigned HTMLVideoElement::videoVisibleWidth() const {
+  if (!GetWebMediaPlayer())
+    return 0;
+  return GetWebMediaPlayer()->VisibleRect().width;
+}
+
+unsigned HTMLVideoElement::videoVisibleHeight() const {
+  if (!GetWebMediaPlayer())
+    return 0;
+  return GetWebMediaPlayer()->VisibleRect().height;
+}
+
 bool HTMLVideoElement::IsURLAttribute(const Attribute& attribute) const {
   return attribute.GetName() == posterAttr ||
          HTMLMediaElement::IsURLAttribute(attribute);

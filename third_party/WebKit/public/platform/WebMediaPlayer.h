@@ -149,6 +149,8 @@ class WebMediaPlayer {
   // Dimension of the video.
   virtual WebSize NaturalSize() const = 0;
 
+  virtual blink::WebSize VisibleRect() { WebSize(0, 0); }
+
   // Getters of playback state.
   virtual bool Paused() const = 0;
   virtual bool Seeking() const = 0;
