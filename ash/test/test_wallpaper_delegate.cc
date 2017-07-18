@@ -6,6 +6,8 @@
 
 #include "ash/shell.h"
 #include "ash/wallpaper/wallpaper_controller.h"
+#include "components/user_manager/user.h"
+#include "components/wallpaper/wallpaper_manager_base.h"
 
 namespace ash {
 namespace test {
@@ -17,8 +19,11 @@ TestWallpaperDelegate::~TestWallpaperDelegate() {}
 void TestWallpaperDelegate::UpdateWallpaper(bool clear_cache) {
   DefaultWallpaperDelegate::UpdateWallpaper(clear_cache);
   if (!custom_wallpaper_.isNull()) {
-    Shell::Get()->wallpaper_controller()->SetWallpaperImage(
-        custom_wallpaper_, wallpaper::WALLPAPER_LAYOUT_STRETCH);
+    wallpaper::WallpaperInfo info = {"", wallpaper::WALLPAPER_LAYOUT_STRETCH,
+                                     user_manager::User::DEFAULT,
+                                     base::Time::Now().LocalMidnight()};
+    Shell::Get()->wallpaper_controller()->SetWallpaperImage(custom_wallpaper_,
+                                                            info);
   }
   update_wallpaper_count_++;
 }

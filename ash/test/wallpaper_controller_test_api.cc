@@ -4,6 +4,8 @@
 
 #include "ash/test/wallpaper_controller_test_api.h"
 #include "ash/wallpaper/wallpaper_controller.h"
+#include "components/user_manager/user.h"
+#include "components/wallpaper/wallpaper_manager_base.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image_skia.h"
@@ -24,7 +26,10 @@ SkColor WallpaperControllerTestApi::ApplyColorProducingWallpaper() {
   gfx::Canvas canvas(gfx::Size(5, 5), 1.0f, true);
   canvas.DrawColor(color);
   gfx::ImageSkia image = gfx::ImageSkia::CreateFrom1xBitmap(canvas.GetBitmap());
-  controller_->SetWallpaperImage(image, wallpaper::WALLPAPER_LAYOUT_CENTER);
+  wallpaper::WallpaperInfo info = {"", wallpaper::WALLPAPER_LAYOUT_CENTER,
+                                   user_manager::User::DEFAULT,
+                                   base::Time::Now().LocalMidnight()};
+  controller_->SetWallpaperImage(image, info);
 
   return expected_color;
 }

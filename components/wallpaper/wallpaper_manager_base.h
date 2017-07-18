@@ -114,15 +114,11 @@ WALLPAPER_EXPORT extern const int kLargeWallpaperMaxHeight;
 WALLPAPER_EXPORT extern const int kWallpaperThumbnailWidth;
 WALLPAPER_EXPORT extern const int kWallpaperThumbnailHeight;
 
-// A dictionary that maps usernames to wallpaper properties.
+// A dictionary pref that maps usernames to wallpaper info.
 WALLPAPER_EXPORT extern const char kUsersWallpaperInfo[];
 
-// A dictionary pref that maps usernames to file paths to their wallpapers.
-// Deprecated. Will remove this const char after done migration.
-WALLPAPER_EXPORT extern const char kUserWallpapers[];
-
-// A dictionary pref that maps usernames to wallpaper properties.
-WALLPAPER_EXPORT extern const char kUserWallpapersProperties[];
+// A dictionary pref that maps wallpaper file paths to their prominent colors.
+WALLPAPER_EXPORT extern const char kWallpaperColors[];
 
 class WallpaperFilesId;
 
@@ -504,7 +500,7 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   // because that's the callback interface provided by UserImageLoader.)
   virtual void OnWallpaperDecoded(
       const AccountId& account_id,
-      WallpaperLayout layout,
+      WallpaperInfo info,
       bool update_wallpaper,
       MovableOnDestroyCallbackHolder on_finish,
       std::unique_ptr<user_manager::UserImage> user_image) = 0;
