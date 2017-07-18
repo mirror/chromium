@@ -103,6 +103,7 @@ public class OfflinePageBridge {
     @VisibleForTesting
     protected OfflinePageBridge(long nativeOfflinePageBridge) {
         mNativeOfflinePageBridge = nativeOfflinePageBridge;
+        addObserver(new CctOfflinePageModelObserver());
     }
 
     /**
@@ -595,17 +596,18 @@ public class OfflinePageBridge {
     @CalledByNative
     private static void createOfflinePageAndAddToList(List<OfflinePageItem> offlinePagesList,
             String url, long offlineId, String clientNamespace, String clientId, String filePath,
-            long fileSize, long creationTime, int accessCount, long lastAccessTimeMs) {
+            long fileSize, long creationTime, int accessCount, long lastAccessTimeMs,
+            String requestOrigin) {
         offlinePagesList.add(createOfflinePageItem(url, offlineId, clientNamespace, clientId,
-                filePath, fileSize, creationTime, accessCount, lastAccessTimeMs));
+                filePath, fileSize, creationTime, accessCount, lastAccessTimeMs, requestOrigin));
     }
 
     @CalledByNative
     private static OfflinePageItem createOfflinePageItem(String url, long offlineId,
             String clientNamespace, String clientId, String filePath, long fileSize,
-            long creationTime, int accessCount, long lastAccessTimeMs) {
-        return new OfflinePageItem(url, offlineId, clientNamespace, clientId, filePath,
-                fileSize, creationTime, accessCount, lastAccessTimeMs);
+            long creationTime, int accessCount, long lastAccessTimeMs, String requestOrigin) {
+        return new OfflinePageItem(url, offlineId, clientNamespace, clientId, filePath, fileSize,
+                creationTime, accessCount, lastAccessTimeMs, requestOrigin);
     }
 
     @CalledByNative

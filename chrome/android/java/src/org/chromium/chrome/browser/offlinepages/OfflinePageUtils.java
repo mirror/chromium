@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -910,5 +911,38 @@ public class OfflinePageUtils {
         String result = builder.toString();
         formatter.close();
         return result;
+    }
+
+    /** @return the package of the origin if it can be parsed, empty string otherwise */
+    public static String getOriginPackage(String requestOrigin) {
+        if (TextUtils.isEmpty(requestOrigin)) return "";
+        try {
+            JSONArray info = new JSONArray(requestOrigin);
+            if (info.length() == 2) {
+                return info.getString(0);
+            }
+            return "";
+        } catch (JSONException e) {
+            return "";
+        }
+    }
+
+    /** @return the list of sorted signature hashes if it can be parsed, null otherwise */
+    public static int[] getOriginSignatures(String requestOrigin) {
+        if (TextUtils.isEmpty(requestOrigin)) return null;
+        try {
+            JSONArray info = new JSONArray(requestOrigin);
+            if (info.length() == 2) {
+                JSONArray signatureInfo = info.getJSONArray(1);
+                int[] hashes = new int[signatureInfo.length()];
+                for (int i = 0; i < hashes.length; i++) {
+                    hashes[i] = signatureInfo.getInt(i);
+                }
+                return hashes;
+            }
+            return null;
+        } catch (JSONException e) {
+            return null;
+        }
     }
 }
