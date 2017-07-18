@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "be0cee14_68acd619",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-18T06:54:40Z",
+      "side": 1,
+      "message": "Hmn, then adding a new variable to FakeCryptohomeClient to make TpmAttestationIsPrepared()\u0027s behavior customizable makes sense.\nImplementing a fake locally might also make sense.\nI\u0027ll be happy with either way.",
+      "parentUuid": "f0a8e331_d013b1d9",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 50
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdaa8be2_5cab4987",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
         "patchSetId": 3
