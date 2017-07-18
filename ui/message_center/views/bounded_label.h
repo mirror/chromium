@@ -50,6 +50,9 @@ class MESSAGE_CENTER_EXPORT BoundedLabel : public views::View {
   int GetLinesForWidthAndLimit(int width, int limit);
   gfx::Size GetSizeForWidthAndLines(int width, int lines);
 
+  // See views::Label::SizeToFit for detail.
+  void SizeToFit(int fixed_width);
+
   // views::View:
   int GetBaseline() const override;
   gfx::Size CalculatePreferredSize() const override;
@@ -70,6 +73,7 @@ class MESSAGE_CENTER_EXPORT BoundedLabel : public views::View {
 
   std::unique_ptr<InnerBoundedLabel> label_;
   int line_limit_;
+  int fixed_width_;
 
   DISALLOW_COPY_AND_ASSIGN(BoundedLabel);
 };
