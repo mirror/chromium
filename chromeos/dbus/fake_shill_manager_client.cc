@@ -185,7 +185,7 @@ void FakeShillManagerClient::SetProperty(const std::string& name,
                                          const ErrorCallback& error_callback) {
   VLOG(2) << "SetProperty: " << name;
   stub_properties_.SetWithoutPathExpansion(
-      name, base::MakeUnique<base::Value>(value));
+      name, base::MakeUnique<base::Value>(value.Clone()));
   CallNotifyObserversPropertyChanged(name);
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
@@ -457,7 +457,7 @@ void FakeShillManagerClient::AddGeoNetwork(
     list_value = stub_geo_networks_.SetListWithoutPathExpansion(
         technology, base::MakeUnique<base::ListValue>());
   }
-  list_value->GetList().push_back(network);
+  list_value->GetList().push_back(network.Clone());
 }
 
 void FakeShillManagerClient::AddProfile(const std::string& profile_path) {
