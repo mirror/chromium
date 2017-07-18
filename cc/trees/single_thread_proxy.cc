@@ -154,7 +154,7 @@ void SingleThreadProxy::SetLayerTreeFrameSink(
   } else {
     // DidFailToInitializeLayerTreeFrameSink is treated as a
     // RequestNewLayerTreeFrameSink, and so
-    // layer_tree_frame_sink_creation_requested remains true.
+    LOG(ERROR)<<"JR LayerTreeHost failed to init\n";
     layer_tree_host_->DidFailToInitializeLayerTreeFrameSink();
   }
 }

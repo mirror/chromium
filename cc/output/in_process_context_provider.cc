@@ -87,6 +87,7 @@ InProcessContextProvider::InProcessContextProvider(
 InProcessContextProvider::~InProcessContextProvider() = default;
 
 bool InProcessContextProvider::BindToCurrentThread() {
+//  LOG(ERROR)<<"JR attempt to bind "<<(!!context_)<<"\n";
   return !!context_;
 }
 

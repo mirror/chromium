@@ -2532,6 +2532,7 @@ bool LayerTreeHostImpl::InitializeRenderer(
     // Avoid recreating tree resources because we might not have enough
     // information to do this yet (eg. we don't have a TileManager at this
     // point).
+    LOG(ERROR)<<"JR BindToClient failed\n";
     return false;
   }
 
