@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "f684d426_3795ec52",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-18T17:51:47Z",
+      "side": 1,
+      "message": "This is the layer id. This should be for the RPDQ, which is in a different RP from the layer\u0027s quads.",
+      "parentUuid": "2ff83f2d_05f134b3",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34e9978f_50b3c7e7",
         "filename": "cc/layers/surface_layer.cc",
         "patchSetId": 4
