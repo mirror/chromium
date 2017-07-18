@@ -726,7 +726,14 @@ void InspectorPageAgent::FrameStartedLoading(LocalFrame* frame, FrameLoadType) {
 }
 
 void InspectorPageAgent::FrameStoppedLoading(LocalFrame* frame) {
-  GetFrontend()->frameStoppedLoading(FrameId(frame));
+  if (frame->GetDocument() && frame->GetDocument()->Loader() &&
+      !frame->GetDocument()->Loader()->UnreachableURL().IsEmpty()) {
+    GetFrontend()->frameStoppedLoading(
+        FrameId(frame),
+        frame->GetDocument()->Loader()->UnreachableURL().GetString());
+  } else {
+    GetFrontend()->frameStoppedLoading(FrameId(frame));
+  }
 }
 
 void InspectorPageAgent::FrameScheduledNavigation(LocalFrame* frame,

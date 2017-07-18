@@ -630,7 +630,8 @@
                 "name": "frameStoppedLoading",
                 "description": "Fired when frame has stopped loading.",
                 "parameters": [
-                    { "name": "frameId", "$ref": "FrameId", "description": "Id of the frame that has stopped loading." }
+                    { "name": "frameId", "$ref": "FrameId", "description": "Id of the frame that has stopped loading." },
+                    { "name": "unreachableUrl", "type": "string", "optional": "true", "experimental": "true", "description": "If the frame failed to load, this contains the URL that could not be loaded." }
                 ],
                 "experimental": true
             },
