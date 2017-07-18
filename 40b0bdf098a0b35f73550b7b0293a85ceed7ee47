@@ -34,6 +34,24 @@
       "revId": "40b0bdf098a0b35f73550b7b0293a85ceed7ee47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5def361b_e29b8a2a",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T04:48:59Z",
+      "side": 1,
+      "message": "That\u0027s true but it\u0027s abusing HasPendingActivity a bit.\n\nHasPendingActivity is a mechanism to keep a V8 wrapper alive. You\u0027re right that the corresponding C++ object will be kept alive as long as the V8 wrapper is alive, but it\u0027s not really nice to rely on the fact. If you want to keep the C++ object alive, you should explicitly keep it alive by using WrapPersistent :)",
+      "parentUuid": "628bed96_2cd7d207",
+      "revId": "40b0bdf098a0b35f73550b7b0293a85ceed7ee47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
