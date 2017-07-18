@@ -24,11 +24,28 @@ UiTexture* UrlBar::GetTexture() const {
   return texture_.get();
 }
 
+// XXX: hack for testing.
+static constexpr float kUrlBarWidthDMM = 0.672;
+static constexpr float kUrlBarHeightDMM = 0.088;
+static constexpr float kUrlBarDistance = 2.4;
+static constexpr float kUrlBarWidth = kUrlBarWidthDMM * kUrlBarDistance;
+static constexpr float kUrlBarHeight = kUrlBarHeightDMM * kUrlBarDistance;
+static constexpr float kUrlBarVerticalOffset = -0.516 * kUrlBarDistance;
+static constexpr float kUrlBarHoverOffset = 0.2;
+
 void UrlBar::OnHoverEnter(const gfx::PointF& position) {
+  // XXX: hack for testing. Must not submit.
+  SetTranslate(0, kUrlBarVerticalOffset, -kUrlBarDistance + kUrlBarHoverOffset);
+  SetSize(kUrlBarWidth * 1.5, kUrlBarHeight * 1.5);
+  SetOpacity(0.5);
   OnStateUpdated(position);
 }
 
 void UrlBar::OnHoverLeave() {
+  // XXX: hack for testing. Must not submit.
+  SetTranslate(0, kUrlBarVerticalOffset, -kUrlBarDistance);
+  SetSize(kUrlBarWidth, kUrlBarHeight);
+  SetOpacity(1.0);
   OnStateUpdated(gfx::PointF(std::numeric_limits<float>::max(),
                              std::numeric_limits<float>::max()));
 }
