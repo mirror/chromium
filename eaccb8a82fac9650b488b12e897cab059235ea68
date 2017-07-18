@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2d0b3b2_874e0171",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-18T03:54:15Z",
+      "side": 1,
+      "message": "Do you think if we could also remove this domain string, or maybe making the \u0027net\u0027 one default now while errors from other domains still need it?",
+      "revId": "eaccb8a82fac9650b488b12e897cab059235ea68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
