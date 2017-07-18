@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad6aaf0d_bbe47214",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0110eac_df46f2a0",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "GetURL() is deprecated, you might want to use GetLastCommittedURL() instead.",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a3d789_f0005609",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "WebContentsObserver already has a web_contents() getter",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4843810a_f34d1f45",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "`\u003d default;` instead of {} for both ctor and dtor",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59950fb_05570725",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "GetLastCommittedURL()",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bd09bd_97120017",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-18T10:12:02Z",
+      "side": 1,
+      "message": "nit: instead of \"can play sound\", I would say something about being audible. The website can still play sound, technically.",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
