@@ -22,6 +22,30 @@
       "revId": "7e47e559d476a9f34c582285305b27793a6576bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cabf03f_5e59815b",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T20:06:35Z",
+      "side": 1,
+      "message": "This is OK and pretty common in //content/browser: https://cs.chromium.org/chromium/src/content/browser/DEPS?rcl\u003dd1d6f6a53c0233ae203d4f7ca8552c0462dc1372\u0026l\u003d88\n\nAs we rearrange Blink to move more of the IPC directly into Mojo, I would expect this list to grow. That being said, I expect that the majority of Blink mojo dependencies should remain in //content.",
+      "parentUuid": "517776eb_dc6b80f3",
+      "range": {
+        "startLine": 115,
+        "startChar": 39,
+        "endLine": 115,
+        "endChar": 58
+      },
+      "revId": "7e47e559d476a9f34c582285305b27793a6576bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
