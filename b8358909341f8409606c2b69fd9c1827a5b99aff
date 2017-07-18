@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb27ebc0_b589d612",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "This can be dropped - post-merge there\u0027s no need to touch this file so the linter does not get triggered.",
+      "parentUuid": "b3eaf2ae_71d5c317",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fcc3a56_b9e6424b",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f23d7_ec7f30e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fcc3a56_b9e6424b",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8ff2beb6_8fc15a9b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a28a467_f5dd64fc",
+      "range": {
+        "startLine": 225,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 36
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "725f2392_9d5d7db6",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 7
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "197b8e94_4a801813",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "725f2392_9d5d7db6",
+      "range": {
+        "startLine": 242,
+        "startChar": 10,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e255e9_fb52c221",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 7
@@ -102,6 +192,24 @@
       "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be329958_e9e7ae56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05e255e9_fb52c221",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e8d2110c_8a336af3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41c3898b_f2b1bdda",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 14
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f8cfa9d_8a723361",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
         "patchSetId": 7
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "e463dbd0_28a70e1a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8cfa9d_8a723361",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 24
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975afa9d_8d877f3e",
         "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
         "patchSetId": 7
@@ -165,6 +321,24 @@
       "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a418ee6_fc72e63a",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "This object needs to be wrapped into unique_ptr to be passed to https://cs.chromium.org/chromium/src/content/renderer/cache_storage/cache_storage_dispatcher.cc?type\u003dcs\u0026q\u003dDispatchMatch\u0026l\u003d145",
+      "parentUuid": "975afa9d_8d877f3e",
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +362,30 @@
       "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167620df_e0a2a28d",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-18T23:49:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f6c95ba_c7385a2c",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 84
+      },
+      "revId": "b8358909341f8409606c2b69fd9c1827a5b99aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
