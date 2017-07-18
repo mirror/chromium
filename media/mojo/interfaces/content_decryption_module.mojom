@@ -19,6 +19,10 @@ enum CdmSessionType;
 [Native]
 enum CdmMessageType;
 
+// See media::HdcpVersion
+[Native]
+enum HdcpVersion;
+
 // Transport layer of media::CdmConfig (see media/base/cdm_config.h).
 struct CdmConfig {
   bool allow_distinctive_identifier;
@@ -74,6 +78,13 @@ interface ContentDecryptionModule {
   // license server.
   SetServerCertificate(array<uint8> certificate_data)
       => (CdmPromiseResult result);
+
+  // Gets the key status if there's a hypothetical key that requires the
+  // |min_hdcp_version|. Resolve the |promise| with the |key_status| after the
+  // operation completes. Reject the |promise| if this operation is not
+  // supported or unexpected error happened.
+  GetStatusForPolicy(HdcpVersion min_hdcp_version)
+      => (CdmPromiseResult result, CdmKeyInformation.KeyStatus key_status);
 
   // Creates a session with the |init_data_type|, |init_data| and |session_type|
   // provided. If |result.success| is false, the output |session_id| will be
