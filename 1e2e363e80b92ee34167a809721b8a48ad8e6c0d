@@ -16,6 +16,24 @@
       "revId": "1e2e363e80b92ee34167a809721b8a48ad8e6c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44457bc4_1266ac8c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-18T19:37:37Z",
+      "side": 1,
+      "message": "I was somehow confused myself by the constraint that this variable should be accessed by |non_joinable_worker_thread_| only.",
+      "parentUuid": "4c8c2fa3_47ab87db",
+      "revId": "1e2e363e80b92ee34167a809721b8a48ad8e6c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
