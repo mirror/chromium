@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f98f79bc_bf827793",
+        "filename": "components/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T14:17:37Z",
+      "side": 1,
+      "message": "Can you move this to components/payments/BUILD.gn (or components/payments/core/BUILD.gn, I\u0027m not sure where this is going to be used from)? This will be easier to understand code that add a dependency to the target.",
+      "revId": "f93265374d9dfdac31dd92bced3e5d22272ef376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
