@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59cc85b0_5efb7202",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:59:24Z",
+      "side": 1,
+      "message": "content_suggestion_id",
+      "revId": "fd07bf4d8b63ba36d51de79f59c126d838b0d7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a5f52d_4d620eb2",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:59:24Z",
+      "side": 1,
+      "message": "Hm, so no test currently cares if this gets called. Should this code path get tested too? If so, could you add a TODO? If not, could you add a comment explaining why this doesn\u0027t need to get tested?",
+      "range": {
+        "startLine": 87,
+        "startChar": 43,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "fd07bf4d8b63ba36d51de79f59c126d838b0d7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d01cbc_2bf35f72",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:59:24Z",
+      "side": 1,
+      "message": "Non-const references are somewhere between \"frowned upon\" and \"forbidden\" in Chrome, so this should probably return a pointer (\u0026fake_url_fetcher_factory_).",
+      "revId": "fd07bf4d8b63ba36d51de79f59c126d838b0d7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a872e67_50ec0487",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:59:24Z",
+      "side": 1,
+      "message": "I think this can be a TestSimpleTaskRunner, no need for the \"Time\" stuff here (replace FastForwardUntilNoTasksRemain with either RunPendingTasks or RunUntilIdle).",
+      "revId": "fd07bf4d8b63ba36d51de79f59c126d838b0d7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1330fc_3ac723e6",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-18T08:59:24Z",
+      "side": 1,
+      "message": "Is this required? Doesn\u0027t seem to be used.",
+      "range": {
+        "startLine": 102,
+        "startChar": 56,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "fd07bf4d8b63ba36d51de79f59c126d838b0d7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
