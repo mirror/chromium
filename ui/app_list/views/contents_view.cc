@@ -456,9 +456,6 @@ gfx::Size ContentsView::CalculatePreferredSize() const {
 }
 
 void ContentsView::Layout() {
-  // Immediately finish all current animations.
-  pagination_model_.FinishAnimation();
-
   double progress =
       IsStateActive(AppListModel::STATE_CUSTOM_LAUNCHER_PAGE) ? 1 : 0;
 

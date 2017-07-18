@@ -47,7 +47,7 @@ namespace gfx {
 // }
 class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
  public:
-  explicit SlideAnimation(AnimationDelegate* target);
+  explicit SlideAnimation(AnimationDelegate* target, bool force = false);
   ~SlideAnimation() override;
 
   // Set the animation back to the 0 state.
@@ -87,6 +87,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
 
   // Used to determine which way the animation is going.
   bool showing_;
+  // Used to force the show and hide animations to start at 0/1 regardless of
+  // |value_current_|.
+  bool force_;
 
   // Animation values. These are a layer on top of Animation::state_ to
   // provide the reversability.
