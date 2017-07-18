@@ -484,7 +484,11 @@ void VisibleSelectionTemplate<Strategy>::Validate(
   end_ = new_end.IsNotNull() ? new_end : end;
 
   AdjustSelectionToAvoidCrossingShadowBoundaries();
-  AdjustSelectionToAvoidCrossingEditingBoundaries();
+  const EphemeralRangeTemplate<Strategy>& proper_editing_range =
+      AdjustSelectionToAvoidCrossingEditingBoundaries(
+          EphemeralRangeTemplate<Strategy>(start_, end_), base_);
+  start_ = proper_editing_range.StartPosition();
+  end_ = proper_editing_range.EndPosition();
   UpdateSelectionType();
 
   if (GetSelectionType() == kRangeSelection) {
@@ -575,22 +579,105 @@ static Element* LowestEditableAncestor(Node* node) {
 }
 
 template <typename Strategy>
-void VisibleSelectionTemplate<
-    Strategy>::AdjustSelectionToAvoidCrossingEditingBoundaries() {
-  if (base_.IsNull() || start_.IsNull() || end_.IsNull())
-    return;
+static bool ShouldAdjustPositionToAvoidCrossingEditingBoundaries(
+    const PositionTemplate<Strategy>& position,
+    ContainerNode* editable_root,
+    Element* base_editable_ancestor) {
+  if (editable_root)
+    return true;
+  Element* const editable_ancestor =
+      LowestEditableAncestor(position.ComputeContainerNode());
+  return editable_ancestor != base_editable_ancestor;
+}
 
-  ContainerNode* base_root = HighestEditableRoot(base_);
-  ContainerNode* start_root = HighestEditableRoot(start_);
-  ContainerNode* end_root = HighestEditableRoot(end_);
+template <typename Strategy>
+bool IsNonEditableContentInsideTheSameLowestEditableAncestor(
+    const PositionTemplate<Strategy>& position,
+    Element* base_editable_ancestor) {
+  if (position.IsNull())
+    return true;
+  if (IsEditablePosition(position))
+    return false;
+  return LowestEditableAncestor(position.ComputeContainerNode()) ==
+         base_editable_ancestor;
+}
 
-  Element* base_editable_ancestor =
-      LowestEditableAncestor(base_.ComputeContainerNode());
+// The selection ends in editable content or non-editable content inside a
+// different editable ancestor, move backward until non-editable content inside
+// the same lowest editable ancestor is reached.
+template <typename Strategy>
+static PositionTemplate<Strategy>
+AdjustSelectionEndToAvoidCrossingEditingBoundaries(
+    const PositionTemplate<Strategy>& end,
+    ContainerNode* end_root,
+    Element* base_editable_ancestor) {
+  if (!ShouldAdjustPositionToAvoidCrossingEditingBoundaries(
+          end, end_root, base_editable_ancestor))
+    return end;
+  PositionTemplate<Strategy> position = PreviousVisuallyDistinctCandidate(end);
+  Element* shadow_ancestor = end_root ? end_root->OwnerShadowHost() : nullptr;
+  if (position.IsNull() && shadow_ancestor)
+    position = PositionTemplate<Strategy>::AfterNode(*shadow_ancestor);
+  while (!IsNonEditableContentInsideTheSameLowestEditableAncestor(
+      position, base_editable_ancestor)) {
+    Element* const root = RootEditableElementOf(position);
+    shadow_ancestor = root ? root->OwnerShadowHost() : nullptr;
+    position = IsAtomicNode(position.ComputeContainerNode())
+                   ? PositionTemplate<Strategy>::InParentBeforeNode(
+                         *position.ComputeContainerNode())
+                   : PreviousVisuallyDistinctCandidate(position);
+    if (position.IsNull() && shadow_ancestor)
+      position = PositionTemplate<Strategy>::AfterNode(*shadow_ancestor);
+  }
+  return CreateVisiblePosition(position).DeepEquivalent();
+}
+
+// The selection starts in editable content or non-editable content inside a
+// different editable ancestor, move forward until non-editable content inside
+// the same lowest editable ancestor is reached.
+template <typename Strategy>
+static PositionTemplate<Strategy>
+AdjustSelectionStartToAvoidCrossingEditingBoundaries(
+    const PositionTemplate<Strategy>& start,
+    ContainerNode* start_root,
+    Element* base_editable_ancestor) {
+  if (!ShouldAdjustPositionToAvoidCrossingEditingBoundaries(
+          start, start_root, base_editable_ancestor))
+    return start;
+  PositionTemplate<Strategy> position = NextVisuallyDistinctCandidate(start);
+  Element* shadow_ancestor =
+      start_root ? start_root->OwnerShadowHost() : nullptr;
+  if (position.IsNull() && shadow_ancestor)
+    position = PositionTemplate<Strategy>::BeforeNode(*shadow_ancestor);
+  while (!IsNonEditableContentInsideTheSameLowestEditableAncestor(
+      position, base_editable_ancestor)) {
+    Element* root = RootEditableElementOf(position);
+    shadow_ancestor = root ? root->OwnerShadowHost() : nullptr;
+    position = IsAtomicNode(position.ComputeContainerNode())
+                   ? PositionTemplate<Strategy>::InParentAfterNode(
+                         *position.ComputeContainerNode())
+                   : NextVisuallyDistinctCandidate(position);
+    if (position.IsNull() && shadow_ancestor)
+      position = PositionTemplate<Strategy>::BeforeNode(*shadow_ancestor);
+  }
+  return CreateVisiblePosition(position).DeepEquivalent();
+}
+
+template <typename Strategy>
+static EphemeralRangeTemplate<Strategy>
+AdjustSelectionToAvoidCrossingEditingBoundaries(
+    const EphemeralRangeTemplate<Strategy>& range,
+    const PositionTemplate<Strategy>& base) {
+  DCHECK(range.IsNotNull());
+
+  ContainerNode* const base_root = HighestEditableRoot(base);
+  ContainerNode* const start_root = HighestEditableRoot(range.StartPosition());
+  ContainerNode* const end_root = HighestEditableRoot(range.EndPosition());
 
   // The base, start and end are all in the same region.  No adjustment
   // necessary.
   if (base_root == start_root && base_root == end_root)
-    return;
+    return range;
 
   // The selection is based in editable content.
   if (base_root) {
@@ -599,109 +686,56 @@ void VisibleSelectionTemplate<
     // If the start is in non-editable content that is inside the base's
     // editable root, put it at the first editable position after start inside
     // the base's editable root.
-    if (start_root != base_root) {
-      const VisiblePositionTemplate<Strategy> first =
-          FirstEditableVisiblePositionAfterPositionInRoot(start_, *base_root);
-      start_ = first.DeepEquivalent();
-      if (start_.IsNull()) {
-        NOTREACHED();
-        start_ = end_;
-      }
+    const PositionTemplate<Strategy>& start =
+        start_root == base_root
+            ? range.StartPosition()
+            : FirstEditableVisiblePositionAfterPositionInRoot(
+                  range.StartPosition(), *base_root)
+                  .DeepEquivalent();
+    if (start.IsNull()) {
+      NOTREACHED();
+      return EphemeralRangeTemplate<Strategy>();
     }
     // If the end is outside the base's editable root, cap it at the end of that
     // root.
     // If the end is in non-editable content that is inside the base's root, put
     // it at the last editable position before the end inside the base's root.
-    if (end_root != base_root) {
-      const VisiblePositionTemplate<Strategy> last =
-          LastEditableVisiblePositionBeforePositionInRoot(end_, *base_root);
-      end_ = last.DeepEquivalent();
-      if (end_.IsNull())
-        end_ = start_;
-    }
-    // The selection is based in non-editable content.
-  } else {
-    // FIXME: Non-editable pieces inside editable content should be atomic, in
-    // the same way that editable pieces in non-editable content are atomic.
-
-    // The selection ends in editable content or non-editable content inside a
-    // different editable ancestor, move backward until non-editable content
-    // inside the same lowest editable ancestor is reached.
-    Element* end_editable_ancestor =
-        LowestEditableAncestor(end_.ComputeContainerNode());
-    if (end_root || end_editable_ancestor != base_editable_ancestor) {
-      PositionTemplate<Strategy> p = PreviousVisuallyDistinctCandidate(end_);
-      Element* shadow_ancestor =
-          end_root ? end_root->OwnerShadowHost() : nullptr;
-      if (p.IsNull() && shadow_ancestor)
-        p = PositionTemplate<Strategy>::AfterNode(*shadow_ancestor);
-      while (p.IsNotNull() &&
-             !(LowestEditableAncestor(p.ComputeContainerNode()) ==
-                   base_editable_ancestor &&
-               !IsEditablePosition(p))) {
-        Element* root = RootEditableElementOf(p);
-        shadow_ancestor = root ? root->OwnerShadowHost() : nullptr;
-        p = IsAtomicNode(p.ComputeContainerNode())
-                ? PositionTemplate<Strategy>::InParentBeforeNode(
-                      *p.ComputeContainerNode())
-                : PreviousVisuallyDistinctCandidate(p);
-        if (p.IsNull() && shadow_ancestor)
-          p = PositionTemplate<Strategy>::AfterNode(*shadow_ancestor);
-      }
-      const VisiblePositionTemplate<Strategy> previous =
-          CreateVisiblePosition(p);
-
-      if (previous.IsNull()) {
-        // The selection crosses an Editing boundary.  This is a
-        // programmer error in the editing code.  Happy debugging!
-        NOTREACHED();
-        *this = VisibleSelectionTemplate<Strategy>();
-        return;
-      }
-      end_ = previous.DeepEquivalent();
-    }
-
-    // The selection starts in editable content or non-editable content inside a
-    // different editable ancestor, move forward until non-editable content
-    // inside the same lowest editable ancestor is reached.
-    Element* start_editable_ancestor =
-        LowestEditableAncestor(start_.ComputeContainerNode());
-    if (start_root || start_editable_ancestor != base_editable_ancestor) {
-      PositionTemplate<Strategy> p = NextVisuallyDistinctCandidate(start_);
-      Element* shadow_ancestor =
-          start_root ? start_root->OwnerShadowHost() : nullptr;
-      if (p.IsNull() && shadow_ancestor)
-        p = PositionTemplate<Strategy>::BeforeNode(*shadow_ancestor);
-      while (p.IsNotNull() &&
-             !(LowestEditableAncestor(p.ComputeContainerNode()) ==
-                   base_editable_ancestor &&
-               !IsEditablePosition(p))) {
-        Element* root = RootEditableElementOf(p);
-        shadow_ancestor = root ? root->OwnerShadowHost() : nullptr;
-        p = IsAtomicNode(p.ComputeContainerNode())
-                ? PositionTemplate<Strategy>::InParentAfterNode(
-                      *p.ComputeContainerNode())
-                : NextVisuallyDistinctCandidate(p);
-        if (p.IsNull() && shadow_ancestor)
-          p = PositionTemplate<Strategy>::BeforeNode(*shadow_ancestor);
-      }
-      const VisiblePositionTemplate<Strategy> next = CreateVisiblePosition(p);
-
-      if (next.IsNull()) {
-        // The selection crosses an Editing boundary.  This is a
-        // programmer error in the editing code.  Happy debugging!
-        NOTREACHED();
-        *this = VisibleSelectionTemplate<Strategy>();
-        return;
-      }
-      start_ = next.DeepEquivalent();
-    }
+    const PositionTemplate<Strategy>& end =
+        end_root == base_root ? range.EndPosition()
+                              : LastEditableVisiblePositionBeforePositionInRoot(
+                                    range.EndPosition(), *base_root)
+                                    .DeepEquivalent();
+    if (end.IsNull())
+      return EphemeralRangeTemplate<Strategy>(start, start);
+    return EphemeralRangeTemplate<Strategy>(start, end);
   }
 
-  // Correct the extent if necessary.
-  if (base_editable_ancestor !=
-      LowestEditableAncestor(extent_.ComputeContainerNode()))
-    extent_ = base_is_first_ ? end_ : start_;
+  Element* const base_editable_ancestor =
+      LowestEditableAncestor(base.ComputeContainerNode());
+
+  // TODO(editing-dev): Non-editable pieces inside editable content should be
+  // atomic, in the same way that editable pieces in non-editable content are
+  // atomic.
+  const PositionTemplate<Strategy>& end =
+      AdjustSelectionEndToAvoidCrossingEditingBoundaries(
+          range.EndPosition(), end_root, base_editable_ancestor);
+  if (end.IsNull()) {
+    // The selection crosses an Editing boundary.  This is a
+    // programmer error in the editing code.  Happy debugging!
+    NOTREACHED();
+    return EphemeralRangeTemplate<Strategy>();
+  }
+
+  const PositionTemplate<Strategy>& start =
+      AdjustSelectionStartToAvoidCrossingEditingBoundaries(
+          range.StartPosition(), start_root, base_editable_ancestor);
+  if (start.IsNull()) {
+    // The selection crosses an Editing boundary.  This is a
+    // programmer error in the editing code.  Happy debugging!
+    NOTREACHED();
+    return EphemeralRangeTemplate<Strategy>();
+  }
+  return EphemeralRangeTemplate<Strategy>(start, end);
 }
 
 template <typename Strategy>
