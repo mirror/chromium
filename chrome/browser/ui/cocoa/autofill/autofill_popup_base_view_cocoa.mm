@@ -7,6 +7,10 @@
 #import "base/mac/scoped_nsobject.h"
 #include "chrome/browser/ui/autofill/autofill_popup_view_delegate.h"
 #include "chrome/browser/ui/autofill/popup_constants.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h"
+#import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
+#import "chrome/browser/ui/cocoa/web_textfield_touch_bar_controller.h"
 #include "ui/base/cocoa/window_size_constants.h"
 #include "ui/gfx/mac/coordinate_conversion.h"
 
@@ -49,8 +53,9 @@
 - (id)initWithDelegate:(autofill::AutofillPopupViewDelegate*)delegate
                  frame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self)
+  if (self) {
     popup_delegate_ = delegate;
+  }
 
   return self;
 }
@@ -213,13 +218,23 @@
   [window setOpaque:YES];
 
   [self updateBoundsAndRedrawPopup];
-  [[popup_delegate_->container_view() window] addChildWindow:window
-                                                     ordered:NSWindowAbove];
+
+  NSWindow* parentWindow = [popup_delegate_->container_view() window];
+  [parentWindow addChildWindow:window ordered:NSWindowAbove];
 
   // This will momentarily show the vertical scrollbar to indicate that it is
   // possible to scroll. Will do the right thing and not show if scrolling is
   // not possible.
   [scrollView flashScrollers];
+
+  // Show the credit card autofill items on the touch bar if applicable.
+  BrowserWindowController* bwc =
+      [BrowserWindowController browserWindowControllerForWindow:parentWindow];
+  TabContentsController* tabContentsController =
+      [[bwc tabStripController] activeTabContentsController];
+  WebTextfieldTouchBarController* touchBarController =
+      [tabContentsController webTextfieldTouchBarController];
+  [touchBarController showCreditCardAutofillForWindow:window popupView:self];
 }
 
 - (void)hidePopup {
@@ -228,6 +243,10 @@
   NSWindow* window = [self window];
   [[window parentWindow] removeChildWindow:window];
   [window close];
+}
+
+- (NSTouchBar*)makeTouchBar {
+  return nil;
 }
 
 @end
