@@ -97,15 +97,25 @@ class TabController {
   virtual void OnMouseEventInTab(views::View* source,
                                  const ui::MouseEvent& event) = 0;
 
+  // Returns the width of the tab endcap in DIP.  More precisely, this is the
+  // width of the curve making up either the outer or inner edge of the stroke;
+  // since these two curves are horizontally offset by 1 px (regardless of
+  // scale), the total width of the endcap from tab outer edge to the inside end
+  // of the stroke inner edge in px is (GetTabEndcapWidth() * scale) + 1.
+  //
+  // The value returned here must be at least Tab::kMinimumEndcapWidth.
+  virtual float GetTabEndcapWidth() const = 0;
+
   // Returns whether |tab| needs to be painted. When this returns true, |clip|
   // is set to the path which should be clipped out of the current tab's region
   // (for hit testing or painting), if any.  |clip| is only non-empty when
   // stacking tabs; if it is empty, no clipping is needed.  |border_callback| is
-  // a callback which returns a tab's border given its size, and is used in
-  // computing |clip|.
+  // a callback which returns a tab's border given its size and endcap width,
+  // and is used in computing |clip|.
   virtual bool ShouldPaintTab(
       const Tab* tab,
-      const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+      const base::Callback<gfx::Path(const gfx::Size&, float endcap_width)>&
+          border_callback,
       gfx::Path* clip) = 0;
 
   // Returns true if tab loading throbbers can be painted to a composited layer.

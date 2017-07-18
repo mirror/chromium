@@ -53,6 +53,7 @@ std::vector<gfx::Rect> CalculateBounds(const TabSizeInfo& tab_size_info,
                                        int active_index,
                                        int width,
                                        int* active_width,
-                                       int* inactive_width);
+                                       int* inactive_width,
+                                       float* endcap_width);
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_TAB_STRIP_LAYOUT_H_

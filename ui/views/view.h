@@ -170,6 +170,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   View();
   ~View() override;
 
+  void set_checking(bool value) { checking_ = value; }
+  bool checking_ = false;
+
   // By default a View is owned by its parent unless specified otherwise here.
   void set_owned_by_client() { owned_by_client_ = true; }
 

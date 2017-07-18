@@ -84,7 +84,8 @@ const int kHorizontalMoveThreshold = 16;  // DIPs.
 // width, or else the user won't be able to drag a tab to the left of the first
 // tab in the strip.
 //
-// TODO(pkasting): Maybe this should use Tab::GetOverlap() instead?
+// TODO(pkasting): Maybe this should use Tab::GetOverlapForEndcapWidth()
+// instead?
 const int kLeadingWidthForDrag = 16;
 
 // Distance from the next/previous stacked before before we consider the tab

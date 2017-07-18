@@ -65,9 +65,11 @@ class FakeTabController : public TabController {
   }
   void OnMouseEventInTab(views::View* source,
                          const ui::MouseEvent& event) override {}
+  float GetTabEndcapWidth() const override { return Tab::kMinimumEndcapWidth; }
   bool ShouldPaintTab(
       const Tab* tab,
-      const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+      const base::Callback<gfx::Path(const gfx::Size&, float endcap_width)>&
+          border_callback,
       gfx::Path* clip) override {
     return true;
   }

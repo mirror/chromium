@@ -102,18 +102,39 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   // Fill.
   SkPath fill;
   const float fill_bottom = (visible_height - 2) * scale;
-  const float diag_height = fill_bottom - 3.5 * scale;
-  const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
-  fill.moveTo(diag_width + 4 * scale, fill_bottom);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                -1.5 * scale);
+  const float diag_height =
+      fill_bottom - (1 + 2.f * Tab::kCurveSize.height()) * scale;
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
+  const float diag_width = diag_height * inverse_slope;
+  const float max_diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        TabStrip::GetTabEndcapMaxWidth());
+
+  fill.moveTo(max_diag_width + 4 * scale, fill_bottom);
+  fill.rCubicTo(-scale, 0,
+                -(Tab::kCurveSize.width() -
+                  inverse_slope * (Tab::kCurveSize.height() / 2.f)) *
+                    scale,
+                -(Tab::kCurveSize.height() / 2.f) * scale,
+                -Tab::kCurveSize.width() * scale,
+                -Tab::kCurveSize.height() * scale);
   fill.rLineTo(-diag_width, -diag_height);
-  fill.rCubicTo(0, -0.5 * scale, 0.25 * scale, -scale, scale, -scale);
+  fill.rCubicTo(
+      -inverse_slope, -scale, scale, -Tab::kCurveSize.height() * scale,
+      Tab::kCurveSize.width() * scale, -Tab::kCurveSize.height() * scale);
   fill.lineTo((width() - 4) * scale - diag_width, scale);
-  fill.rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
-                1.5 * scale);
+  fill.rCubicTo(scale, 0,
+                (Tab::kCurveSize.width() -
+                 (Tab::kCurveSize.height() / 2.f) * inverse_slope) *
+                    scale,
+                (Tab::kCurveSize.height() / 2.f) * scale,
+                Tab::kCurveSize.width() * scale,
+                Tab::kCurveSize.height() * scale);
   fill.rLineTo(diag_width, diag_height);
-  fill.rCubicTo(0, 0.5 * scale, -0.25 * scale, scale, -scale, scale);
+  fill.rCubicTo(inverse_slope, scale, -scale, Tab::kCurveSize.height() * scale,
+                -Tab::kCurveSize.width() * scale,
+                Tab::kCurveSize.height() * scale);
   fill.close();
   PaintFill(pressed, scale, fill, canvas);
 
@@ -160,13 +181,18 @@ void NewTabButton::GetBorderPath(float button_y,
                                  float scale,
                                  bool extend_to_top,
                                  SkPath* path) const {
-  const float inverse_slope = Tab::GetInverseDiagonalSlope();
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
   const float fill_bottom =
       (GetLayoutSize(NEW_TAB_BUTTON).height() - 2) * scale;
   const float stroke_bottom = button_y + fill_bottom + 1;
   const float diag_height = fill_bottom - 3.5 * scale;
   const float diag_width = diag_height * inverse_slope;
-  path->moveTo(diag_width + 4 * scale - 1, stroke_bottom);
+  const float max_diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        tab_strip_->GetTabEndcapWidth());
+
+  path->moveTo(max_diag_width + 4 * scale - 1, stroke_bottom);
   path->rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
                  -1.5 * scale);
   path->rLineTo(-diag_width, -diag_height);
