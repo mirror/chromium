@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_out_of_flow_layout_part.h"
 
+#include "core/layout/ng/geometry/ng_replaced_size.h"
 #include "core/layout/ng/ng_absolute_utils.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -114,9 +115,14 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
     min_max_size = descendant.ComputeMinMaxContentSize();
   }
 
+  Optional<NGReplacedSize> replaced_size;
+  if (descendant.IsReplaced())
+    replaced_size = descendant.ReplacedSize();
+
   NGAbsolutePhysicalPosition node_position =
       ComputePartialAbsoluteWithChildInlineSize(
-          *container_space_, descendant.Style(), static_position, min_max_size);
+          *container_space_, descendant.Style(), static_position, min_max_size,
+          replaced_size);
 
   if (AbsoluteNeedsChildBlockSize(descendant.Style())) {
     layout_result = GenerateFragment(descendant, block_estimate, node_position);
@@ -130,7 +136,7 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
 
   ComputeFullAbsoluteWithChildBlockSize(*container_space_, descendant.Style(),
                                         static_position, block_estimate,
-                                        &node_position);
+                                        replaced_size, &node_position);
 
   // Skip this step if we produced a fragment when estimating the block size.
   if (!layout_result) {

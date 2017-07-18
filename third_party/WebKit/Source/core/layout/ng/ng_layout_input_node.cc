@@ -4,10 +4,14 @@
 
 #include "core/layout/ng/ng_layout_input_node.h"
 
+#include "core/layout/LayoutReplaced.h"
+#include "core/layout/ng/geometry/ng_replaced_size.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -77,6 +81,10 @@ bool NGLayoutInputNode::CreatesNewFormattingContext() const {
   return box_->AvoidsFloats();
 }
 
+bool NGLayoutInputNode::IsReplaced() const {
+  return box_->IsLayoutReplaced();
+}
+
 RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
                                                  NGBreakToken* break_token) {
   return IsInline() ? ToNGInlineNode(*this).Layout(space, break_token)
@@ -86,6 +94,31 @@ RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
 MinMaxContentSize NGLayoutInputNode::ComputeMinMaxContentSize() {
   return IsInline() ? ToNGInlineNode(*this).ComputeMinMaxContentSize()
                     : ToNGBlockNode(*this).ComputeMinMaxContentSize();
+}
+
+// Call only if if IsReplaced() is true.
+NGReplacedSize NGLayoutInputNode::ReplacedSize() {
+  DCHECK(IsReplaced());
+  NGReplacedSize replaced_size;
+
+  LayoutSize intrinsic_size = box_->IntrinsicSize();
+  replaced_size.intrinsic_content_size =
+      NGPhysicalSize(intrinsic_size.Width(), intrinsic_size.Height());
+
+  LayoutReplaced::IntrinsicSizingInfo sizing_info;
+  ToLayoutReplaced(box_)->ComputeIntrinsicSizingInfo(sizing_info);
+  if (!box_->IsHorizontalWritingMode())
+    sizing_info.Transpose();  // Because by default sizing_info is logical.
+  if (sizing_info.has_width)
+    replaced_size.content_width = LayoutUnit(sizing_info.size.Width());
+  if (sizing_info.has_height)
+    replaced_size.content_height = LayoutUnit(sizing_info.size.Height());
+  if (!sizing_info.aspect_ratio.IsEmpty()) {
+    replaced_size.aspect_ratio =
+        NGPhysicalSize(LayoutUnit(sizing_info.aspect_ratio.Width()),
+                       LayoutUnit(sizing_info.aspect_ratio.Height()));
+  }
+  return replaced_size;
 }
 
 NGLayoutInputNode NGLayoutInputNode::NextSibling() {

@@ -59,6 +59,22 @@ CORE_EXPORT LayoutUnit ResolveBlockLength(const NGConstraintSpace&,
                                           LayoutUnit content_size,
                                           LengthResolveType);
 
+// Computes child's border box width in parents constraint space.
+CORE_EXPORT LayoutUnit
+ResolveWidth(const Length& width,
+             const NGConstraintSpace& space,
+             const ComputedStyle& style,
+             const Optional<MinMaxContentSize>& child_minmax,
+             LengthResolveType resolve_type);
+
+// Computes child's border box height in parent's constraint space.
+CORE_EXPORT LayoutUnit
+ResolveHeight(const Length& height,
+              const NGConstraintSpace& space,
+              const ComputedStyle& style,
+              const Optional<MinMaxContentSize>& child_minmax,
+              LengthResolveType resolve_type);
+
 // For the given style and min/max content sizes, computes the min and max
 // content contribution (https://drafts.csswg.org/css-sizing/#contributions).
 // This is similar to ComputeInlineSizeForFragment except that it does not
