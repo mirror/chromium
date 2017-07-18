@@ -16,6 +16,24 @@
       "revId": "68b0ef3fff32546a0256215d7dad12505bba4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75be637a_c868cc51",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-18T08:22:28Z",
+      "side": 1,
+      "message": "You\u0027re right.  Fixed it, and added some test cases to HTTPPrasersTest.cpp.",
+      "parentUuid": "ddcd8cb9_bd6c4699",
+      "revId": "68b0ef3fff32546a0256215d7dad12505bba4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
