@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "6ee84cbb_c05b002d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T19:11:02Z",
+      "side": 1,
+      "message": "As discussed on Hangouts, I added a TODO for considering moving to a checked arithmetic type as backing store in a separate step.",
+      "parentUuid": "fd4f59dd_599f53dc",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f8e37cd_1fa80156",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 18
@@ -184,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "696cf993_85964972",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T19:11:02Z",
+      "side": 1,
+      "message": "MaximumValue and MinimumValue() cannot because they are static members.",
+      "parentUuid": "7f8e37cd_1fa80156",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede840c8_60ad98bc",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 18
@@ -195,6 +231,24 @@
       "writtenOn": "2017-07-18T14:35:26Z",
       "side": 1,
       "message": "DEFINE_THREAD_SAFE_STATIC_LOCAL here and everywhere else.",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f4f9a1_be99e313",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-18T19:11:02Z",
+      "side": 1,
+      "message": "Yes, changed to using this macro.",
+      "parentUuid": "ede840c8_60ad98bc",
       "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
