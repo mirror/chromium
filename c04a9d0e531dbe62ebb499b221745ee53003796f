@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebfd14fd_234c9489",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T12:18:11Z",
+      "side": 1,
+      "message": "Prefer to have the block not contain conditions that don\u0027t vary when the block is executed. So:\n\nProceduralBlock tabOpenedCompletion;\nif (launchVoiceSearch) {\n  tabOpenedCompletion \u003d ^{ [self startVoiceSearch]; };\n}\n\netc.",
+      "range": {
+        "startLine": 2232,
+        "startChar": 18,
+        "endLine": 2232,
+        "endChar": 37
+      },
+      "revId": "c04a9d0e531dbe62ebb499b221745ee53003796f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35707aed_89803c4b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T12:18:11Z",
+      "side": 1,
+      "message": "Looks like this can instead be something like:\n\nif (tabAddedCompletion) {\n if (self.foregroundTabWasAddedCompletionBlock) {\n   self.foregroundTabWasAddedCompletionBlock \u003d {\n     oldForegroundTabWasAddedCompletionBlock();\n     tabAddedCompletion(); \n   }\n } else {\n   self.foregroundTabWasAddedCompletionBlock \u003d tabAddedCompletion;\n }\n}",
+      "revId": "c04a9d0e531dbe62ebb499b221745ee53003796f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
