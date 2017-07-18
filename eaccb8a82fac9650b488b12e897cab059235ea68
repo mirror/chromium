@@ -16,6 +16,24 @@
       "revId": "eaccb8a82fac9650b488b12e897cab059235ea68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eada80df_b72af907",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T04:10:11Z",
+      "side": 1,
+      "message": "I\u0027m now removing kErrorDomainBlinkInternal. I\u0027m not sure if the planned web security service requires another domain. If not, I want to remove |domain_| completely.",
+      "parentUuid": "f2d0b3b2_874e0171",
+      "revId": "eaccb8a82fac9650b488b12e897cab059235ea68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
