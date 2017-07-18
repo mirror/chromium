@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41f8706_5016a3b6",
+        "filename": "components/policy/core/common/cloud/cloud_policy_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-18T10:09:31Z",
+      "side": 1,
+      "message": "nit: IMO LicenseType::LicenseTypeEnum::CDM_PERPETUAL looks better.",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "0ff95bc4259f33fe22f3ec64f662501843de10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
