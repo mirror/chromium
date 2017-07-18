@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d77d5a53_3af829ab",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T18:40:06Z",
+      "side": 1,
+      "message": "Also... the ++i on line 749 is quite unnecessary (since i isn\u0027t used outside the while loop).",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55edc047_c46b5da2",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T18:40:06Z",
+      "side": 1,
+      "message": "Do we need to update this one, too?",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcd9fcf_fb3b9309",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T18:40:06Z",
+      "side": 1,
+      "message": "Is ItemUpdated only called for radio button updates?  If not, do we need to call RadioItemSelected() (or SanitizeRadioList()) for non-radio items?  If so, can we make that explicit?",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085c4e6c_35642a9d",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T18:40:06Z",
+      "side": 1,
+      "message": "This test is (and was) a bit weird... the whole flow is a bit odd (it has way too many subtle implementation details IMO), but we shouldn\u0027t tackle all those here.  At minimum, let\u0027s make this test case a bit more clear as to what it\u0027s testing (since we shouldn\u0027t actually have multiple items checked at a given point).  Maybe something like:\n\n// Start with item2 checked.\nitem2_ptr-\u003eSetChecked(true);\n// Updating item1 to be checked should result in item2 being unchecked:\nitem1_ptr-\u003eSetChecked(true);\nmanager_.ItemUpdated(item1_ptr-\u003eid());\nASSERT_TRUE(item1_ptr-\u003echecked());\nASSERT_FALSE(item1_ptr-\u003echecked());\n\nThis is almost the same as what you have, but it clears up why (temporally) there are two checked radio buttons.",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
