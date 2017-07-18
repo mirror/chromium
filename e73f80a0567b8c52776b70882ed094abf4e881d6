@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b9faeaf_36d9c416",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-07-18T01:11:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"%s/%d\"?  Or \"%s/%02X\" to make deciphering the bits a bit easier?",
+      "range": {
+        "startLine": 562,
+        "startChar": 32,
+        "endLine": 562,
+        "endChar": 33
+      },
+      "revId": "e73f80a0567b8c52776b70882ed094abf4e881d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
