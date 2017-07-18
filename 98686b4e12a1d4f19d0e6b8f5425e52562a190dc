@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9762612a_acdbae95",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-18T15:29:27Z",
+      "side": 1,
+      "message": "Ah, good to know. Please consider adding a comment.\n\nPlease be noted that I am refactoring related code to support Android WebView:\nhttps://chromium-review.googlesource.com/c/567586/7/chrome/browser/chrome_content_browser_client.cc\n\nI will also change my CL to take care of this.\nIf my CL lands first, you won\u0027t need any change to this file.",
+      "parentUuid": "f1a821ae_56537228",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "556bdbcf_7f6dadf1",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 1
