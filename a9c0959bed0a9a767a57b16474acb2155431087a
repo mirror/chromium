@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3388b270_80e45783",
+        "filename": "third_party/WebKit/Source/core/frame/ContentSettingsClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T21:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95eaa85a_84c0b748",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb5019c8_3ef52e69",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-18T19:15:49Z",
       "side": 1,
       "message": "It seems extremely opaque to store client hints as an array of bools. can\u0027t we just name the bool fields explicitly, and then pass that around?\n\n(We can define the type in WebClientHints.h, move the enum there, and then use the struct in core as well to reduce code duplication. I think it would be easier to read as well, as we already strongly discourage passing lots of bool parameters to functions--and that\u0027s effectively what this does)",
+      "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c821c6_8f7e5750",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T21:55:15Z",
+      "side": 1,
+      "message": "Done, although not exactly what you asked for. I was not sure how to create a struct of bools, and still somehow enforce that the order of the bools is preserved when writing/reading from the disk. Let me know what you think.",
+      "parentUuid": "bb5019c8_3ef52e69",
       "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
