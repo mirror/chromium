@@ -225,12 +225,13 @@ void OfflinePageTabHelper::ScheduleDownloadHelper(
     content::WebContents* web_contents,
     const std::string& name_space,
     const GURL& url,
-    OfflinePageUtils::DownloadUIActionFlags ui_action) {
+    OfflinePageUtils::DownloadUIActionFlags ui_action,
+    const std::string& request_origin) {
   OfflinePageUtils::CheckDuplicateDownloads(
       web_contents->GetBrowserContext(), url,
       base::Bind(&OfflinePageTabHelper::DuplicateCheckDoneForScheduleDownload,
                  weak_ptr_factory_.GetWeakPtr(), web_contents, name_space, url,
-                 ui_action));
+                 ui_action, request_origin));
 }
 
 void OfflinePageTabHelper::DuplicateCheckDoneForScheduleDownload(
@@ -238,6 +239,7 @@ void OfflinePageTabHelper::DuplicateCheckDoneForScheduleDownload(
     const std::string& name_space,
     const GURL& url,
     OfflinePageUtils::DownloadUIActionFlags ui_action,
+    const std::string& request_origin,
     OfflinePageUtils::DuplicateCheckResult result) {
   if (result != OfflinePageUtils::DuplicateCheckResult::NOT_FOUND) {
     if (static_cast<int>(ui_action) &
@@ -246,7 +248,7 @@ void OfflinePageTabHelper::DuplicateCheckDoneForScheduleDownload(
       OfflinePageInfoBarDelegate::Create(
           base::Bind(&OfflinePageTabHelper::DoDownloadPageLater,
                      weak_ptr_factory_.GetWeakPtr(), web_contents, name_space,
-                     url, ui_action),
+                     url, ui_action, request_origin),
           url,
           result ==
               OfflinePageUtils::DuplicateCheckResult::DUPLICATE_REQUEST_FOUND,
@@ -255,14 +257,15 @@ void OfflinePageTabHelper::DuplicateCheckDoneForScheduleDownload(
     }
   }
 
-  DoDownloadPageLater(web_contents, name_space, url, ui_action);
+  DoDownloadPageLater(web_contents, name_space, url, ui_action, request_origin);
 }
 
 void OfflinePageTabHelper::DoDownloadPageLater(
     content::WebContents* web_contents,
     const std::string& name_space,
     const GURL& url,
-    OfflinePageUtils::DownloadUIActionFlags ui_action) {
+    OfflinePageUtils::DownloadUIActionFlags ui_action,
+    const std::string& request_origin) {
   offline_pages::RequestCoordinator* request_coordinator =
       offline_pages::RequestCoordinatorFactory::GetForBrowserContext(
           web_contents->GetBrowserContext());
@@ -272,6 +275,7 @@ void OfflinePageTabHelper::DoDownloadPageLater(
   offline_pages::RequestCoordinator::SavePageLaterParams params;
   params.url = url;
   params.client_id = offline_pages::ClientId(name_space, base::GenerateGUID());
+  params.request_origin = request_origin;
   request_coordinator->SavePageLater(params);
 
   if (static_cast<int>(ui_action) &

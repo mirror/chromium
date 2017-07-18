@@ -6,9 +6,15 @@ package org.chromium.chrome.browser.offlinepages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.TextUtils;
+
+import org.json.JSONArray;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -46,7 +52,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,9 +135,17 @@ public class OfflinePageUtils {
          */
         void showReloadSnackbar(Context context, SnackbarManager snackbarManager,
                 final SnackbarController snackbarController, int tabId);
+
+        /**
+         * Returns the signatures on a particular app using the package manager.
+         * @param context The application context.
+         * @param appName The name of the app in question.
+         */
+        Signature[] getSignatures(Context context, String appName) throws NameNotFoundException;
     }
 
-    private static class OfflinePageUtilsImpl implements Internal {
+    @VisibleForTesting
+    static class OfflinePageUtilsImpl implements Internal {
         @Override
         public OfflinePageBridge getOfflinePageBridge(Profile profile) {
             return OfflinePageBridge.getForProfile(profile);
@@ -169,6 +187,13 @@ public class OfflinePageUtils {
                             .setAction(context.getString(R.string.reload), tabId);
             snackbar.setDuration(sSnackbarDurationMs);
             snackbarManager.showSnackbar(snackbar);
+        }
+
+        @Override
+        public Signature[] getSignatures(Context context, String appName)
+                throws NameNotFoundException {
+            PackageManager packageManager = context.getPackageManager();
+            return packageManager.getPackageInfo(appName, PackageManager.GET_SIGNATURES).signatures;
         }
     }
 
@@ -829,5 +854,61 @@ public class OfflinePageUtils {
     @VisibleForTesting
     public static void setSnackbarDurationForTesting(int durationMs) {
         sSnackbarDurationMs = durationMs;
+    }
+
+    /** @return a JSON string using the package name and signature hash of an app. */
+    public static String createOriginString(String packageName, String[] signatures) {
+        // We default to "", implying chrome-only if inputs invalid.
+        if (TextUtils.isEmpty(packageName) || signatures == null) return "";
+        // JSONArray(Object[]) requires API 19
+        JSONArray signatureArray = new JSONArray();
+        for (String s : signatures) {
+            signatureArray.put(s);
+        }
+        return new JSONArray().put(packageName).put(signatureArray).toString();
+    }
+
+    /** @return a sorted list of strings representing the signatures of an app.
+     *          Null if the app name is invalid or cannot be found.
+     */
+    public static String[] getAppSignaturesFor(Context context, String appName) {
+        if (TextUtils.isEmpty(appName)) return null;
+        try {
+            Signature[] signatureList = getInstance().getSignatures(context, appName);
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            String[] sigStrings = new String[signatureList.length];
+            for (int i = 0; i < sigStrings.length; i++) {
+                messageDigest.update(signatureList[i].toByteArray());
+
+                // The digest is reset after completing the hash computation.
+                sigStrings[i] = byteArrayToString(messageDigest.digest());
+            }
+            Arrays.sort(sigStrings);
+            return sigStrings;
+        } catch (NameNotFoundException e) {
+            return null;
+        } catch (NoSuchAlgorithmException e) {
+            return null; // Cannot parse signatures. Shouldn't happen.
+        }
+    }
+
+    /**
+     * Formats bytes into a string for easier comparison.
+     *
+     * @param input Input bytes.
+     * @return A string representation of the input bytes, e.g., "0123456789abcdef"
+     */
+    private static String byteArrayToString(byte[] input) {
+        if (input == null) return null;
+
+        StringBuilder builder = new StringBuilder(input.length * 2);
+        Formatter formatter = new Formatter(builder);
+        for (byte b : input) {
+            formatter.format("%02x", b);
+        }
+
+        String result = builder.toString();
+        formatter.close();
+        return result;
     }
 }
