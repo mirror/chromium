@@ -13,9 +13,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_file_stream_reader.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
+#include "chrome/test/base/testing_profile.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/test/fake_file_system_instance.h"
+#include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/io_buffer.h"
 #include "net/base/test_completion_callback.h"
@@ -57,6 +59,12 @@ bool ReadData(ArcContentFileSystemFileStreamReader* reader,
   return true;
 }
 
+std::unique_ptr<KeyedService> CreateFileSystemOperationRunnerForTesting(
+    content::BrowserContext* context) {
+  return ArcFileSystemOperationRunner::CreateForTesting(
+      ArcServiceManager::Get()->arc_bridge_service());
+}
+
 class ArcContentFileSystemFileStreamReaderTest : public testing::Test {
  public:
   ArcContentFileSystemFileStreamReaderTest() = default;
@@ -70,15 +78,17 @@ class ArcContentFileSystemFileStreamReaderTest : public testing::Test {
         File(kArcUrlPipe, kData, kMimeType, File::Seekable::NO));
 
     arc_service_manager_ = base::MakeUnique<ArcServiceManager>();
-    arc_service_manager_->AddService(
-        ArcFileSystemOperationRunner::CreateForTesting(
-            arc_service_manager_->arc_bridge_service()));
+    ArcFileSystemOperationRunner::GetFactory()->SetTestingFactoryAndUse(
+        &profile_, &CreateFileSystemOperationRunnerForTesting);
     arc_service_manager_->arc_bridge_service()->file_system()->SetInstance(
         &fake_file_system_);
   }
 
+  content::BrowserContext* context() { return &profile_; }
+
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  TestingProfile profile_;
   FakeFileSystemInstance fake_file_system_;
   std::unique_ptr<ArcServiceManager> arc_service_manager_;
 
@@ -88,7 +98,7 @@ class ArcContentFileSystemFileStreamReaderTest : public testing::Test {
 }  // namespace
 
 TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadRegularFile) {
-  ArcContentFileSystemFileStreamReader reader(GURL(kArcUrlFile), 0);
+  ArcContentFileSystemFileStreamReader reader(context(), GURL(kArcUrlFile), 0);
   auto buffer = make_scoped_refptr(new net::IOBufferWithSize(strlen(kData)));
   EXPECT_TRUE(ReadData(&reader, buffer.get()));
   EXPECT_EQ(base::StringPiece(kData, strlen(kData)),
@@ -97,7 +107,8 @@ TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadRegularFile) {
 
 TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadRegularFileWithOffset) {
   constexpr size_t kOffset = 10;
-  ArcContentFileSystemFileStreamReader reader(GURL(kArcUrlFile), kOffset);
+  ArcContentFileSystemFileStreamReader reader(context(), GURL(kArcUrlFile),
+                                              kOffset);
   auto buffer =
       make_scoped_refptr(new net::IOBufferWithSize(strlen(kData) - kOffset));
   EXPECT_TRUE(ReadData(&reader, buffer.get()));
@@ -106,7 +117,7 @@ TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadRegularFileWithOffset) {
 }
 
 TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadPipe) {
-  ArcContentFileSystemFileStreamReader reader(GURL(kArcUrlPipe), 0);
+  ArcContentFileSystemFileStreamReader reader(context(), GURL(kArcUrlPipe), 0);
   auto buffer = make_scoped_refptr(new net::IOBufferWithSize(strlen(kData)));
   EXPECT_TRUE(ReadData(&reader, buffer.get()));
   EXPECT_EQ(base::StringPiece(kData, strlen(kData)),
@@ -115,7 +126,8 @@ TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadPipe) {
 
 TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadPipeWithOffset) {
   constexpr size_t kOffset = 10;
-  ArcContentFileSystemFileStreamReader reader(GURL(kArcUrlPipe), kOffset);
+  ArcContentFileSystemFileStreamReader reader(context(), GURL(kArcUrlPipe),
+                                              kOffset);
   auto buffer =
       make_scoped_refptr(new net::IOBufferWithSize(strlen(kData) - kOffset));
   EXPECT_TRUE(ReadData(&reader, buffer.get()));
@@ -124,7 +136,7 @@ TEST_F(ArcContentFileSystemFileStreamReaderTest, ReadPipeWithOffset) {
 }
 
 TEST_F(ArcContentFileSystemFileStreamReaderTest, GetLength) {
-  ArcContentFileSystemFileStreamReader reader(GURL(kArcUrlFile), 0);
+  ArcContentFileSystemFileStreamReader reader(context(), GURL(kArcUrlFile), 0);
 
   net::TestInt64CompletionCallback callback;
   EXPECT_EQ(static_cast<int64_t>(strlen(kData)),

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "base/bind.h"
@@ -74,9 +75,11 @@ const ArcDocumentsProviderRoot::WatcherData
                                                      kInvalidWatcherRequestId};
 
 ArcDocumentsProviderRoot::ArcDocumentsProviderRoot(
+    content::BrowserContext* context,
     const std::string& authority,
     const std::string& root_document_id)
-    : authority_(authority),
+    : context_(context),
+      authority_(authority),
       root_document_id_(root_document_id),
       weak_ptr_factory_(this) {}
 
@@ -84,7 +87,7 @@ ArcDocumentsProviderRoot::~ArcDocumentsProviderRoot() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (observer_wrapper_)
     file_system_operation_runner_util::RemoveObserverOnIOThread(
-        std::move(observer_wrapper_));
+        context_, std::move(observer_wrapper_));
 }
 
 void ArcDocumentsProviderRoot::GetFileInfo(
@@ -147,7 +150,7 @@ void ArcDocumentsProviderRoot::RemoveWatcher(const base::FilePath& path,
     return;
   }
   file_system_operation_runner_util::RemoveWatcherOnIOThread(
-      watcher_id,
+      context_, watcher_id,
       base::Bind(&ArcDocumentsProviderRoot::OnWatcherRemoved,
                  weak_ptr_factory_.GetWeakPtr(), callback));
 }
@@ -191,7 +194,7 @@ void ArcDocumentsProviderRoot::GetFileInfoWithDocumentId(
     return;
   }
   file_system_operation_runner_util::GetDocumentOnIOThread(
-      authority_, document_id,
+      context_, authority_, document_id,
       base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocument,
                  weak_ptr_factory_.GetWeakPtr(), callback));
 }
@@ -267,11 +270,12 @@ void ArcDocumentsProviderRoot::AddWatcherWithDocumentId(
   if (!observer_wrapper_) {
     observer_wrapper_ =
         new file_system_operation_runner_util::ObserverIOThreadWrapper(this);
-    file_system_operation_runner_util::AddObserverOnIOThread(observer_wrapper_);
+    file_system_operation_runner_util::AddObserverOnIOThread(context_,
+                                                             observer_wrapper_);
   }
 
   file_system_operation_runner_util::AddWatcherOnIOThread(
-      authority_, document_id, watcher_callback,
+      context_, authority_, document_id, watcher_callback,
       base::Bind(&ArcDocumentsProviderRoot::OnWatcherAdded,
                  weak_ptr_factory_.GetWeakPtr(), path, watcher_request_id));
 }
@@ -283,7 +287,7 @@ void ArcDocumentsProviderRoot::OnWatcherAdded(const base::FilePath& path,
 
   if (IsWatcherInflightRequestCanceled(path, watcher_request_id)) {
     file_system_operation_runner_util::RemoveWatcherOnIOThread(
-        watcher_id,
+        context_, watcher_id,
         base::Bind(&ArcDocumentsProviderRoot::OnWatcherAddedButRemoved,
                    weak_ptr_factory_.GetWeakPtr()));
     return;
@@ -377,7 +381,7 @@ void ArcDocumentsProviderRoot::ReadDirectoryInternal(
     const std::string& document_id,
     const ReadDirectoryInternalCallback& callback) {
   file_system_operation_runner_util::GetChildDocumentsOnIOThread(
-      authority_, document_id,
+      context_, authority_, document_id,
       base::Bind(
           &ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments,
           weak_ptr_factory_.GetWeakPtr(), callback));

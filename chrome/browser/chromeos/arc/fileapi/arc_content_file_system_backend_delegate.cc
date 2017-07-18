@@ -14,8 +14,11 @@
 
 namespace arc {
 
-ArcContentFileSystemBackendDelegate::ArcContentFileSystemBackendDelegate()
-    : async_file_util_(new ArcContentFileSystemAsyncFileUtil()) {}
+ArcContentFileSystemBackendDelegate::ArcContentFileSystemBackendDelegate(
+    content::BrowserContext* context)
+    : context_(context),
+      async_file_util_(
+          base::MakeUnique<ArcContentFileSystemAsyncFileUtil>(context)) {}
 
 ArcContentFileSystemBackendDelegate::~ArcContentFileSystemBackendDelegate() =
     default;
@@ -37,8 +40,8 @@ ArcContentFileSystemBackendDelegate::CreateFileStreamReader(
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK_EQ(storage::kFileSystemTypeArcContent, url.type());
   GURL arc_url = FileSystemUrlToArcUrl(url);
-  return base::MakeUnique<ArcContentFileSystemFileStreamReader>(arc_url,
-                                                                offset);
+  return base::MakeUnique<ArcContentFileSystemFileStreamReader>(
+      context_, arc_url, offset);
 }
 
 std::unique_ptr<storage::FileStreamWriter>

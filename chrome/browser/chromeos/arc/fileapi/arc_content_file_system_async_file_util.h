@@ -9,11 +9,15 @@
 
 #include "storage/browser/fileapi/async_file_util.h"
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 class ArcContentFileSystemAsyncFileUtil : public storage::AsyncFileUtil {
  public:
-  ArcContentFileSystemAsyncFileUtil();
+  explicit ArcContentFileSystemAsyncFileUtil(content::BrowserContext* context);
   ~ArcContentFileSystemAsyncFileUtil() override;
 
   // storage::AsyncFileUtil overrides.
@@ -84,6 +88,8 @@ class ArcContentFileSystemAsyncFileUtil : public storage::AsyncFileUtil {
       const CreateSnapshotFileCallback& callback) override;
 
  private:
+  content::BrowserContext* const context_;  // Owned by ProfileManager.
+
   DISALLOW_COPY_AND_ASSIGN(ArcContentFileSystemAsyncFileUtil);
 };
 

@@ -25,6 +25,10 @@
 
 class GURL;
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 // Represents a file system root in Android Documents Provider.
@@ -42,7 +46,8 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   using ResolveToContentUrlCallback =
       base::Callback<void(const GURL& content_url)>;
 
-  ArcDocumentsProviderRoot(const std::string& authority,
+  ArcDocumentsProviderRoot(content::BrowserContext* context,
+                           const std::string& authority,
                            const std::string& root_document_id);
   ~ArcDocumentsProviderRoot() override;
 
@@ -212,6 +217,8 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   void ReadDirectoryInternalWithChildDocuments(
       const ReadDirectoryInternalCallback& callback,
       base::Optional<std::vector<mojom::DocumentPtr>> maybe_children);
+
+  content::BrowserContext* const context_;  // Owned by ProfileManager.
 
   const std::string authority_;
   const std::string root_document_id_;
