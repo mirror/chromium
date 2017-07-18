@@ -125,8 +125,8 @@ void DelegatedFrameHost::CopyFromCompositingSurface(
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateRequest(
-          base::Bind(&CopyFromCompositingSurfaceHasResult, output_size,
-                     preferred_color_type, callback));
+          base::BindOnce(&CopyFromCompositingSurfaceHasResult, output_size,
+                         preferred_color_type, callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
   RequestCopyOfOutput(std::move(request));
@@ -142,7 +142,7 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
   }
 
   std::unique_ptr<cc::CopyOutputRequest> request =
-      cc::CopyOutputRequest::CreateRequest(base::Bind(
+      cc::CopyOutputRequest::CreateRequest(base::BindOnce(
           &DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo,
           AsWeakPtr(),  // For caching the ReadbackYUVInterface on this class.
           nullptr, std::move(target), callback));
@@ -345,7 +345,7 @@ void DelegatedFrameHost::AttemptFrameSubscriberCapture(
   }
 
   std::unique_ptr<cc::CopyOutputRequest> request =
-      cc::CopyOutputRequest::CreateRequest(base::Bind(
+      cc::CopyOutputRequest::CreateRequest(base::BindOnce(
           &DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo,
           AsWeakPtr(), subscriber_texture, frame,
           base::Bind(callback, present_time)));
