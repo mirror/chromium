@@ -70,6 +70,24 @@
       "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ae6881_ddfc634a",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-18T16:52:48Z",
+      "side": 1,
+      "message": "I don\u0027t think changing enable_vr to be true by default on Linux should cause any issues, although admittedly I\u0027m not a great person to ask about that. Chris, can you think of any issues that could arise if we a \u0027is_linux \u0026\u0026 (current_cpu \u003d\u003d \"x86\" || current_cpu \u003d\u003d \"x64\")\u0027 to https://cs.chromium.org/chromium/src/device/vr/features/features.gni?q\u003denable_vr\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d12 ?",
+      "parentUuid": "2dc08356_d7122fa7",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
