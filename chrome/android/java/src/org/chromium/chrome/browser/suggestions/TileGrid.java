@@ -66,7 +66,7 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
 
     @Override
     public void onTileDataChanged() {
-        setVisible(mTileGroup.getTiles().length != 0);
+        setVisible(!mTileGroup.getAllTiles().isEmpty());
         if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateTilesCallback(mTileGroup));
     }
 
@@ -97,6 +97,7 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
 
     private static int getTileTitleLines() {
         int defaultValue = 1;
+
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.CHROME_HOME, PARAM_CHROME_HOME_TILE_TITLE_LINES, defaultValue);
     }
