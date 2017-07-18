@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd959c3b_facb9263",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-18T01:52:18Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like an appropriate use of NeverFixTests. All tests in web platform tests should be passing; if they don\u0027t, that\u0027s a bug we need to track and fix in our implementation, not something we\u0027ll never fix.",
+      "revId": "1b9cdab37147c4f76d8d99902cee045272536633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11765248_7371ae5b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/wasm_service_worker_test.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-18T01:52:18Z",
+      "side": 1,
+      "message": "Is the intent of this test to only run in HTTPS?\n\nIf so, that should be enforced not with a JavaScript redirect, but by naming the file .https.html.",
+      "revId": "1b9cdab37147c4f76d8d99902cee045272536633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
