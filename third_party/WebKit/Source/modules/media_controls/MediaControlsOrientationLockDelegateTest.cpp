@@ -44,7 +44,7 @@ class DummyScreenOrientationCallback final : public WebLockOrientationCallback {
   void OnError(WebLockOrientationError) override {}
 };
 
-class MockVideoWebMediaPlayer final : public EmptyWebMediaPlayer {
+class MockOrientationLockWebMediaPlayer final : public EmptyWebMediaPlayer {
  public:
   bool HasVideo() const override { return true; }
 
@@ -75,7 +75,7 @@ void DidExitFullscreen(Document* document) {
   document->ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
 }
 
-class MockChromeClient final : public EmptyChromeClient {
+class MockOrientationLockChromeClient final : public EmptyChromeClient {
  public:
   // ChromeClient overrides:
   void InstallSupplements(LocalFrame& frame) override {
@@ -106,15 +106,17 @@ class MockChromeClient final : public EmptyChromeClient {
   MockWebScreenOrientationClient web_screen_orientation_client_;
 };
 
-class StubLocalFrameClient final : public EmptyLocalFrameClient {
+class StubOrientationLockLocalFrameClient final : public EmptyLocalFrameClient {
  public:
-  static StubLocalFrameClient* Create() { return new StubLocalFrameClient; }
+  static StubOrientationLockLocalFrameClient* Create() {
+    return new StubOrientationLockLocalFrameClient;
+  }
 
   std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(
       HTMLMediaElement&,
       const WebMediaPlayerSource&,
       WebMediaPlayerClient*) override {
-    return WTF::MakeUnique<MockVideoWebMediaPlayer>();
+    return WTF::MakeUnique<MockOrientationLockWebMediaPlayer>();
   }
 };
 
@@ -130,14 +132,15 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
   }
 
   void SetUp() override {
-    chrome_client_ = new MockChromeClient();
+    chrome_client_ = new MockOrientationLockChromeClient();
 
     Page::PageClients clients;
     FillWithEmptyClients(clients);
     clients.chrome_client = chrome_client_.Get();
 
-    page_holder_ = DummyPageHolder::Create(IntSize(800, 600), &clients,
-                                           StubLocalFrameClient::Create());
+    page_holder_ =
+        DummyPageHolder::Create(IntSize(800, 600), &clients,
+                                StubOrientationLockLocalFrameClient::Create());
 
     previous_orientation_event_value_ =
         RuntimeEnabledFeatures::OrientationEventEnabled();
@@ -232,15 +235,18 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
         ->orientation_lock_delegate_->ComputeOrientationLock();
   }
 
-  MockChromeClient& ChromeClient() const { return *chrome_client_; }
+  MockOrientationLockChromeClient& ChromeClient() const {
+    return *chrome_client_;
+  }
 
   HTMLVideoElement& Video() const { return *video_; }
   Document& GetDocument() const { return page_holder_->GetDocument(); }
   MockWebScreenOrientationClient& ScreenOrientationClient() const {
     return ChromeClient().WebScreenOrientationClient();
   }
-  MockVideoWebMediaPlayer& MockWebMediaPlayer() const {
-    return *static_cast<MockVideoWebMediaPlayer*>(Video().GetWebMediaPlayer());
+  MockOrientationLockWebMediaPlayer& MockWebMediaPlayer() const {
+    return *static_cast<MockOrientationLockWebMediaPlayer*>(
+        Video().GetWebMediaPlayer());
   }
 
  private:
@@ -251,7 +257,7 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
   bool previous_video_rotate_to_fullscreen_value_;
   std::unique_ptr<DummyPageHolder> page_holder_;
   Persistent<HTMLVideoElement> video_;
-  Persistent<MockChromeClient> chrome_client_;
+  Persistent<MockOrientationLockChromeClient> chrome_client_;
 };
 
 class MediaControlsOrientationLockAndRotateToFullscreenDelegateTest
