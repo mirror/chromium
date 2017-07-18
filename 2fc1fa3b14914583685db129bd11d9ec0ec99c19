@@ -105,6 +105,24 @@
       "revId": "2fc1fa3b14914583685db129bd11d9ec0ec99c19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbe940b_b27cd031",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-18T03:42:36Z",
+      "side": 1,
+      "message": "Great",
+      "parentUuid": "56c96a01_78838cfa",
+      "revId": "2fc1fa3b14914583685db129bd11d9ec0ec99c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
