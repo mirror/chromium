@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ccb573_3171ed1b",
+        "filename": "ash/accelerators/debug_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-18T02:19:05Z",
+      "side": 1,
+      "message": "Nit: Do you want to rename this shortcut to ToggleTabletMode for example?",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "0504a1881338c310f6a990e3b9b6de21435bf296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b426086_ea378a9c",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-18T02:19:05Z",
+      "side": 1,
+      "message": "Forgot to change this?",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 24
+      },
+      "revId": "0504a1881338c310f6a990e3b9b6de21435bf296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
