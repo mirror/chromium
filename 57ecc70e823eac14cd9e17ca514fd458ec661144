@@ -16,6 +16,24 @@
       "revId": "57ecc70e823eac14cd9e17ca514fd458ec661144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b95a786_f45bf4bc",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-18T22:11:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f502b169_98a49af1",
+      "revId": "57ecc70e823eac14cd9e17ca514fd458ec661144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
