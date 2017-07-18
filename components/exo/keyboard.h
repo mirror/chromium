@@ -5,12 +5,14 @@
 #ifndef COMPONENTS_EXO_KEYBOARD_H_
 #define COMPONENTS_EXO_KEYBOARD_H_
 
+#include <map>
 #include <vector>
 
 #include "base/macros.h"
 #include "components/exo/keyboard_observer.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
 namespace ui {
@@ -70,6 +72,9 @@ class Keyboard : public ui::EventHandler,
   // Returns the effective focus for |window|.
   Surface* GetEffectiveFocus(aura::Window* window) const;
 
+  // Record a sent key event to sent_key_events_.
+  void RecordSentKey(uint32_t serail, ui::KeyEvent* event);
+
   // The delegate instance that all events except for events about device
   // configuration are dispatched to.
   KeyboardDelegate* const delegate_;
@@ -90,6 +95,10 @@ class Keyboard : public ui::EventHandler,
   int modifier_flags_ = 0;
 
   base::ObserverList<KeyboardObserver> observer_list_;
+
+  // Map of sent key events that are waiting for ack. Key of this map is a
+  // serial of wayland events.
+  std::map<uint32_t, ui::KeyEvent> sent_key_events_;
 
   DISALLOW_COPY_AND_ASSIGN(Keyboard);
 };
