@@ -16,6 +16,24 @@
       "revId": "b027b4c0a880dbcfb5f9c75e02658dee4bab41ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37b58f8_6663776f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-18T23:41:44Z",
+      "side": 1,
+      "message": "I was afraid that using the default argument caused code size bloat, but I confirmed using the default argument was slightly smaller :)\nNew patch set uses default argument.",
+      "parentUuid": "413f85d7_a7a7d69e",
+      "revId": "b027b4c0a880dbcfb5f9c75e02658dee4bab41ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
