@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f9ee2310_47c4adb4",
+        "filename": "third_party/WebKit/Source/core/frame/ContentSettingsClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-18T19:01:03Z",
+      "side": 1,
+      "message": "Actually, this has to be a bool array since chrome/renderer/content_settings_observer.cc can\u0027t depend on ClientHintPreferences.\nSo, I have reverted it back to a bool array. The other option is to move ClientHintPreferences class in Webkit to somewhere in third_party/WebKit/public which seems unnecessary.",
+      "parentUuid": "8c4bf24a_46e52189",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebbac087_7255ca9b",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 4
