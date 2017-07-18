@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18539929_8c671b19",
+        "filename": "chrome/browser/supervised_user/supervised_user_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T17:59:28Z",
+      "side": 1,
+      "message": "I don\u0027t even remember why we reset the flag here (throttles are one-off, right?)… Could you just remove these overridden methods and see if something breaks?",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 20
+      },
+      "revId": "9f4a07846ca20dfdf347b66bc6de6958c9cdb50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
