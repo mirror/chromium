@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec2c4127_bcd55f98",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-18T17:54:45Z",
+      "side": 1,
+      "message": "Unretained is safe because we bind the current context/client/command buffer on MakeCurrent. (And we only link via glLinkProgram, through the current context).\n\nI was concerned that a Context could be destroyed while another was current, which would be an error, so I did not unbind on destroy. LMK what you think.",
+      "parentUuid": "9393663e_38ab370d",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46ff0f81_674b9755",
         "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "19e36dcf_13ba664e",
+        "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-18T17:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ff0f81_674b9755",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263f2406_04181f24",
         "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c1be33_c0fcf85d",
+        "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-18T17:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "263f2406_04181f24",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
