@@ -71,6 +71,19 @@ const char* GetEventAckName(InputEventAckState ack_result) {
   return "";
 }
 
+void ReportGestureEventFiltered(
+    const GestureEventWithLatencyInfo& gesture_event,
+    bool event_filtered) {
+  WebInputEvent::Type event_type = gesture_event.event.GetType();
+  if (gesture_event.event.source_device ==
+          blink::kWebGestureDeviceTouchscreen &&
+      (event_type == WebInputEvent::kGestureScrollEnd ||
+       event_type == WebInputEvent::kGestureFlingStart ||
+       event_type == WebInputEvent::kGesturePinchEnd)) {
+    UMA_HISTOGRAM_BOOLEAN("TouchAction.GestureEventFiltered", event_filtered);
+  }
+}
+
 }  // namespace
 
 LegacyInputRouterImpl::LegacyInputRouterImpl(IPC::Sender* sender,
@@ -167,8 +180,16 @@ void LegacyInputRouterImpl::SendGestureEvent(
 
   GestureEventWithLatencyInfo gesture_event(original_gesture_event);
 
-  if (touch_action_filter_.FilterGestureEvent(&gesture_event.event))
+  if (touch_action_filter_.FilterGestureEvent(&gesture_event.event)) {
+    // Report how often the gesture event is dropped due to the current
+    // allowed touch action state not matching the gesture event.
+    ReportGestureEventFiltered(gesture_event, true);
     return;
+  }
+
+  // Report how often the gesture event is not dropped due to the current
+  // allowed touch action state matching the gesture event.
+  ReportGestureEventFiltered(gesture_event, false);
 
   wheel_event_queue_.OnGestureScrollEvent(gesture_event);
 
