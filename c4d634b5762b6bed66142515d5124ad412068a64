@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6809f7fc_69c33ec2",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoaderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-18T06:34:55Z",
+      "side": 0,
+      "message": "Have you removed these assuming that the one above (DidFailAccessControlCheck) is sufficient?",
+      "revId": "c4d634b5762b6bed66142515d5124ad412068a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
