@@ -296,6 +296,7 @@ Resource::Resource(const ResourceRequest& request,
           this,
           &Resource::CancelTimerFired),
       resource_request_(request) {
+  TRACE_EVENT_ASYNC_BEGIN1("blink_gc", "Resource", this, "url", Url().GetString().Ascii());
   InstanceCounters::IncrementCounter(InstanceCounters::kResourceCounter);
 
   // Currently we support the metadata caching only for HTTP family.
@@ -306,6 +307,7 @@ Resource::Resource(const ResourceRequest& request,
 }
 
 Resource::~Resource() {
+  TRACE_EVENT_ASYNC_END0("blink_gc", "Resource", this);
   InstanceCounters::DecrementCounter(InstanceCounters::kResourceCounter);
 }
 
