@@ -548,9 +548,8 @@ WebInputEventResult WebViewImpl::HandleMouseWheel(
 WebGestureEvent WebViewImpl::CreateGestureScrollEventFromFling(
     WebInputEvent::Type type,
     WebGestureDevice source_device) const {
-  WebGestureEvent gesture_event(type, fling_modifier_,
-                                WTF::MonotonicallyIncreasingTime());
-  gesture_event.source_device = source_device;
+  WebGestureEvent gesture_event(
+      type, fling_modifier_, WTF::MonotonicallyIncreasingTime(), source_device);
   gesture_event.x = position_on_fling_start_.x;
   gesture_event.y = position_on_fling_start_.y;
   gesture_event.global_x = global_position_on_fling_start_.x;
@@ -652,17 +651,17 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
               ->GetEventHandler()
               .IsScrollbarHandlingGestures())
         break;
-      if (event.source_device != kWebGestureDeviceSyntheticAutoscroll)
+      if (event.SourceDevice() != kWebGestureDeviceSyntheticAutoscroll)
         EndActiveFlingAnimation();
       position_on_fling_start_ = WebPoint(event.x, event.y);
       global_position_on_fling_start_ =
           WebPoint(event.global_x, event.global_y);
       fling_modifier_ = event.GetModifiers();
-      fling_source_device_ = event.source_device;
+      fling_source_device_ = event.SourceDevice();
       DCHECK_NE(fling_source_device_, kWebGestureDeviceUninitialized);
       std::unique_ptr<WebGestureCurve> fling_curve =
           Platform::Current()->CreateFlingAnimationCurve(
-              event.source_device,
+              event.SourceDevice(),
               WebFloatPoint(event.data.fling_start.velocity_x,
                             event.data.fling_start.velocity_y),
               WebSize());
@@ -906,11 +905,11 @@ void WebViewImpl::ResolveTapDisambiguation(double timestamp_seconds,
                                            bool is_long_press) {
   WebGestureEvent event(is_long_press ? WebInputEvent::kGestureLongPress
                                       : WebInputEvent::kGestureTap,
-                        WebInputEvent::kNoModifiers, timestamp_seconds);
+                        WebInputEvent::kNoModifiers, timestamp_seconds,
+                        blink::kWebGestureDeviceTouchscreen);
 
   event.x = tap_viewport_offset.x;
   event.y = tap_viewport_offset.y;
-  event.source_device = blink::kWebGestureDeviceTouchscreen;
 
   {
     // Compute UMA stat about whether the node selected by disambiguation UI was
@@ -2231,7 +2230,7 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
     // For touchpad gestures synthesize a Windows-like wheel event
     // to send to any handlers that may exist. Not necessary for touchscreen
     // as touch events would have already been sent for the gesture.
-    if (pinch_event.source_device == kWebGestureDeviceTouchpad) {
+    if (pinch_event.SourceDevice() == kWebGestureDeviceTouchpad) {
       result = HandleSyntheticWheelFromTouchpadPinchEvent(pinch_event);
       if (result != WebInputEventResult::kNotHandled)
         return result;
@@ -3738,13 +3737,12 @@ WebHitTestResult WebViewImpl::HitTestResultForTap(
   if (!page_->MainFrame()->IsLocalFrame())
     return HitTestResult();
 
-  WebGestureEvent tap_event(WebInputEvent::kGestureTap,
-                            WebInputEvent::kNoModifiers,
-                            WTF::MonotonicallyIncreasingTime());
+  WebGestureEvent tap_event(
+      WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+      WTF::MonotonicallyIncreasingTime(), kWebGestureDeviceTouchscreen);
   tap_event.x = tap_point_window_pos.x;
   tap_event.y = tap_point_window_pos.y;
   // GestureTap is only ever from a touchscreen.
-  tap_event.source_device = kWebGestureDeviceTouchscreen;
   tap_event.data.tap.tap_count = 1;
   tap_event.data.tap.width = tap_area.width;
   tap_event.data.tap.height = tap_area.height;
