@@ -62,6 +62,9 @@ class NTPTilesInternalsMessageHandler : public MostVisitedSites::Observer {
   // MostVisitedSites::Observer.
   void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) override;
   void OnIconMadeAvailable(const GURL& site_url) override;
+  void OnExplorationTilesAvailable(
+      const std::map<ntp_tiles::SectionType, ntp_tiles::NTPTilesVector>& tiles)
+      override;
 
   void OnFaviconLookupDone(const NTPTilesVector& tiles,
                            FaviconResultMap* result_map,

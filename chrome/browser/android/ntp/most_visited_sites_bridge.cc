@@ -4,7 +4,9 @@
 
 #include "chrome/browser/android/ntp/most_visited_sites_bridge.h"
 
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_array.h"
@@ -21,6 +23,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/ntp_tiles/metrics.h"
 #include "components/ntp_tiles/most_visited_sites.h"
+#include "components/ntp_tiles/section_type.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "jni/MostVisitedSitesBridge_jni.h"
 #include "jni/MostVisitedSites_jni.h"
@@ -35,9 +38,10 @@ using base::android::ScopedJavaLocalRef;
 using base::android::ToJavaArrayOfStrings;
 using base::android::ToJavaIntArray;
 using ntp_tiles::MostVisitedSites;
-using ntp_tiles::TileSource;
 using ntp_tiles::NTPTilesVector;
+using ntp_tiles::SectionType;
 using ntp_tiles::TileVisualType;
+using ntp_tiles::TileSource;
 
 namespace {
 
@@ -136,6 +140,8 @@ class MostVisitedSitesBridge::JavaObserver : public MostVisitedSites::Observer {
   void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) override;
 
   void OnIconMadeAvailable(const GURL& site_url) override;
+  void OnExplorationTilesAvailable(
+      const std::map<SectionType, NTPTilesVector>& sections) override;
 
  private:
   ScopedJavaGlobalRef<jobject> observer_;
@@ -150,27 +156,59 @@ MostVisitedSitesBridge::JavaObserver::JavaObserver(
 
 void MostVisitedSitesBridge::JavaObserver::OnMostVisitedURLsAvailable(
     const NTPTilesVector& tiles) {
+  LOG(WARNING) << "|OnMostVisitedURLsAvailable| is deprecated! "
+               << "Use |OnExplorationTilesAvailable| instead.";
   JNIEnv* env = AttachCurrentThread();
   std::vector<base::string16> titles;
   std::vector<std::string> urls;
-  std::vector<std::string> whitelist_icon_paths;
+  std::vector<std::string> whitelist_icons;
   std::vector<int> sources;
-
   titles.reserve(tiles.size());
   urls.reserve(tiles.size());
-  whitelist_icon_paths.reserve(tiles.size());
+  whitelist_icons.reserve(tiles.size());
   sources.reserve(tiles.size());
   for (const auto& tile : tiles) {
     titles.emplace_back(tile.title);
     urls.emplace_back(tile.url.spec());
-    whitelist_icon_paths.emplace_back(tile.whitelist_icon_path.value());
+    whitelist_icons.emplace_back(tile.whitelist_icon_path.value());
     sources.emplace_back(static_cast<int>(tile.source));
   }
   Java_Observer_onMostVisitedURLsAvailable(
       env, observer_, ToJavaArrayOfStrings(env, titles),
       ToJavaArrayOfStrings(env, urls),
-      ToJavaArrayOfStrings(env, whitelist_icon_paths),
-      ToJavaIntArray(env, sources));
+      ToJavaArrayOfStrings(env, whitelist_icons), ToJavaIntArray(env, sources));
+}
+
+void MostVisitedSitesBridge::JavaObserver::OnExplorationTilesAvailable(
+    const std::map<SectionType, NTPTilesVector>& sections) {
+  JNIEnv* env = AttachCurrentThread();
+  const size_t kMaximalTileCount =
+      sections.at(SectionType::PERSONALIZED).size() * sections.size();
+  std::vector<base::string16> titles;
+  std::vector<std::string> urls;
+  std::vector<std::string> whitelist_icons;
+  std::vector<int> sources;
+  std::vector<int> section_types;
+  titles.reserve(kMaximalTileCount);
+  urls.reserve(kMaximalTileCount);
+  whitelist_icons.reserve(kMaximalTileCount);
+  sources.reserve(kMaximalTileCount);
+  section_types.reserve(kMaximalTileCount);
+  for (const auto& section : sections) {
+    const NTPTilesVector& tiles = section.second;
+    section_types.resize(section_types.size() + tiles.size(),
+                         static_cast<int>(section.first));
+    for (const auto& tile : tiles) {
+      titles.emplace_back(tile.title);
+      urls.emplace_back(tile.url.spec());
+      whitelist_icons.emplace_back(tile.whitelist_icon_path.value());
+      sources.emplace_back(static_cast<int>(tile.source));
+    }
+  }
+  Java_Observer_onExplorationTilesAvailable(
+      env, observer_, ToJavaArrayOfStrings(env, titles),
+      ToJavaArrayOfStrings(env, urls), ToJavaIntArray(env, section_types),
+      ToJavaArrayOfStrings(env, whitelist_icons), ToJavaIntArray(env, sources));
 }
 
 void MostVisitedSitesBridge::JavaObserver::OnIconMadeAvailable(
