@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26553144_4dedc5ad",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:14:40Z",
+      "side": 1,
+      "message": "Stupid question: What is the difference if this is in a .cc file?",
+      "parentUuid": "ad6aaf0d_bbe47214",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0110eac_df46f2a0",
         "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
         "patchSetId": 7
@@ -30,6 +48,29 @@
       "writtenOn": "2017-07-18T10:12:02Z",
       "side": 1,
       "message": "GetURL() is deprecated, you might want to use GetLastCommittedURL() instead.",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a89147_fa85c616",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:14:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this -- content settings will automatically fall through to more general rules, and the default content setting really is just a rule that matches anything.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 41
+      },
       "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +139,24 @@
       "writtenOn": "2017-07-18T10:12:02Z",
       "side": 1,
       "message": "nit: instead of \"can play sound\", I would say something about being audible. The website can still play sound, technically.",
+      "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c7a351_c10f5a38",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T13:14:40Z",
+      "side": 1,
+      "message": "Hm, I would argue the other way around: an unmuted website could simply choose not to play sound, so it wouldn\u0027t actually be audible. Maybe meet halfway and make it \"can play audible sound\"?",
+      "parentUuid": "e4bd09bd_97120017",
       "revId": "2ae9aaaf063abd82845fccca05b123e4ac9ba250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
