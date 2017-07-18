@@ -1133,6 +1133,17 @@ bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
   if (!writing_transaction)
     return false;
 
+  // We should not assert while truncating if the response headers or code sent
+  // by the server is garbled. (crbug.com/739112)
+  const HttpResponseInfo* response_info = transaction->GetResponseInfo();
+
+  if (!response_info->headers.get())
+    return false;
+
+  if (!is_partial && response_info->headers->response_code() != 200) {
+    return false;
+  }
+
   // If transaction is not in add_to_entry_queue and has a WRITE bit set or is
   // NONE, then there may be other transactions depending on it to completely
   // write the response.
