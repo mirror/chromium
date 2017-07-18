@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff0d322_c90d0861",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-18T22:41:11Z",
+      "side": 1,
+      "message": "can this just be a base::TaskRunner*?  no need to inc/dec ref count.",
+      "revId": "48c41444c2c58dbd3cca270adc5b1c2d806bee8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7598a2_c8e0f647",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-18T22:41:11Z",
+      "side": 1,
+      "message": "nit: class comment",
+      "revId": "48c41444c2c58dbd3cca270adc5b1c2d806bee8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384f7b20_02fb06a5",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-18T22:41:11Z",
+      "side": 1,
+      "message": "unit tests for all AddPageResult would be nice.",
+      "revId": "48c41444c2c58dbd3cca270adc5b1c2d806bee8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4329ec_3fce9a12",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-18T22:41:11Z",
+      "side": 1,
+      "message": "you mean, Hook up with prefetch importer?",
+      "revId": "48c41444c2c58dbd3cca270adc5b1c2d806bee8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
