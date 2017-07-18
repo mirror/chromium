@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773e2ab2_2066d6ed",
+        "filename": "device/serial/serial.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-18T18:17:59Z",
+      "side": 1,
+      "message": "Please prefix the name of this and the other types below with \"Serial\" now that they share a namespace with other device APIs.",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5c73949779fa2113c84e9a121a38fb88b5fb2063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
