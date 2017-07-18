@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8690d978_728c7595",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a20254b_2bee7907",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2902c921_1aee5e26",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T14:07:30Z",
       "side": 1,
       "message": "Would it be useful if ScrollDown() in chrome_earl_grey_ui was exposed to use here?\n\nNo change required for you, but if you think it\u0027s useful, I\u0027ll file a bug for someone to fix this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 50,
+        "endLine": 69,
+        "endChar": 63
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6382de68_e968217a",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "The benefit would be sharing the constant with 150 points per scroll.\n\nBut sometimes I need to also scroll up (see https://chromium-review.googlesource.com/c/573381), so there would need to be ScrollUp as well. At this point I think it\u0027s easier to have this custom-defined inside this file, but if you see this used more, then sharing makes sense to me.",
+      "parentUuid": "2902c921_1aee5e26",
       "range": {
         "startLine": 69,
         "startChar": 50,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "1579be22_45f82c12",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "I though about that but the tapping action is more frequent than the assert.\nBut looking at this being a one-liner, I think it\u0027s reasonable to inline that. Similarly I inlined TapDetailItem.",
+      "parentUuid": "a247efeb_9926b6ff",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c747d4_5c0c7a08",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "N/A any more.",
+      "parentUuid": "ce3f9f22_e1d3764d",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f4a434c_53ea3315",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-18T14:07:30Z",
       "side": 1,
       "message": "Hrm, I don\u0027t usually like the C-Style methods covering up what EG does. However, these are tricky cases that involve scrolling and knowing the container, so I think this is okay. I just wanted to confirm that this was your thinking, and wanted to mention it in the review (even if you\u0027ll likely leave it), since it is an exceptional case.",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ac4967_9f25b552",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure I understood you.\n\nAre you looking at this C-style helper versus inlining it? Or a C-style helper versus a text fixture Objective-C method? For the former I think inlining the shorter ones is OK, while for the longer ones it would make the tests hard to read. For the latter, I found it confusing to have helper methods in the test fixture which actually did not have anything to do with the fixture. I saw value in the fixture being short (apart from the test methods) and clear to understand.",
+      "parentUuid": "2f4a434c_53ea3315",
       "range": {
         "startLine": 78,
         "startChar": 1,
@@ -137,6 +257,30 @@
       "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e5169a_180954e6",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-18T16:07:52Z",
+      "side": 1,
+      "message": "I have no preference, so I\u0027m going with your suggestion.",
+      "parentUuid": "95220585_c9229e9a",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
