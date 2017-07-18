@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90547c94_5593005a",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T17:48:15Z",
+      "side": 1,
+      "message": "nit: Comment before this describing what\u0027s going on.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 1
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924a33ed_a1f31650",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T17:48:15Z",
+      "side": 1,
+      "message": "SetTechnologyEnabled()\u0027s description:\n\n  // Asynchronously sets the technology enabled property for |type|. Only\n  // NetworkTypePattern::Primitive, ::Mobile and ::Ethernet are supported.\n  // Note: Modifies Manager state. Calls |error_callback| on failure.\n\nIt seems that this isn\u0027t designed to work with NetworkTypePattern::WiFi(). Likewise, it says that this operation is asynchronous, but we attempt to connect via Wi-Fi synchronously.\n\nstevenjb@, is this the correct approach? We\u0027ve verified that it works, but I\u0027m not sure if this is the right way to go about this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4add3a8c_0626e23b",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-18T17:48:15Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned with this (in relation to my other comment). This converts asynchronous code into synchronous code for the sake of our test, but it doesn\u0027t appear that this happens in our real code.",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 33
+      },
+      "revId": "1aa227311cc440685cc1bab2a7746bffb87263dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
