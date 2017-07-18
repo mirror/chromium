@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22017c83_5a144ad3",
+        "filename": "chrome/browser/predictors/loading_data_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-18T12:22:18Z",
+      "side": 1,
+      "message": "This is not only the NTP, I believe.",
+      "revId": "4414967d36965770a65a9742766b22832fd4c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
