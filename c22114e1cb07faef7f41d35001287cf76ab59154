@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "51d8f656_c12aaaf7",
+        "filename": "components/url_log/url_log_browsertest_base.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-18T20:22:10Z",
+      "side": 1,
+      "message": "Just from a complexity standpoint, I\u0027d say it\u0027s best to do everything in the constructor, particularly when you\u0027re inheriting from a class with its own SetUp method.  When there\u0027s a need for a SetUp method by all means, use one.",
+      "parentUuid": "97686989_8ae01aaf",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c22114e1cb07faef7f41d35001287cf76ab59154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04bff0f9_2cfc59eb",
         "filename": "components/url_log/url_log_browsertest_base.cc",
         "patchSetId": 46
