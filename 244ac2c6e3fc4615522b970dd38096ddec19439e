@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b4a0a2_5e9648bb",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-18T08:41:10Z",
+      "side": 1,
+      "message": "This is effectively a dead store into a local variable, won\u0027t some compiler on the bots complain about it?",
+      "revId": "244ac2c6e3fc4615522b970dd38096ddec19439e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
