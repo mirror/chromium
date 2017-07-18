@@ -1063,8 +1063,9 @@ double LocalDOMWindow::scrollX() const {
 
   document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  double viewport_x =
-      view->LayoutViewportScrollableArea()->GetScrollOffset().Width();
+  ScrollableArea& layoutViewport =
+      view->GetRootFrameViewport()->LayoutViewport();
+  double viewport_x = layoutViewport.GetScrollOffset().Width();
   return AdjustScrollForAbsoluteZoom(viewport_x, GetFrame()->PageZoomFactor());
 }
 
@@ -1081,8 +1082,9 @@ double LocalDOMWindow::scrollY() const {
 
   document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  double viewport_y =
-      view->LayoutViewportScrollableArea()->GetScrollOffset().Height();
+  ScrollableArea& layoutViewport =
+      view->GetRootFrameViewport()->LayoutViewport();
+  double viewport_y = layoutViewport.GetScrollOffset().Height();
   return AdjustScrollForAbsoluteZoom(viewport_y, GetFrame()->PageZoomFactor());
 }
 
