@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e45e9016_3406a12e",
+        "filename": "ash/accelerators/debug_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-18T19:30:53Z",
+      "side": 1,
+      "message": "I\u0027ll rename touch view in a separate CL.",
+      "parentUuid": "e1ccb573_3171ed1b",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "0504a1881338c310f6a990e3b9b6de21435bf296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b426086_ea378a9c",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0504a1881338c310f6a990e3b9b6de21435bf296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e79d0c7_5f3dc148",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-18T19:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b426086_ea378a9c",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 24
+      },
+      "revId": "0504a1881338c310f6a990e3b9b6de21435bf296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
