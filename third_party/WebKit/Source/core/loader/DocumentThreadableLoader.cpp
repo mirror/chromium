@@ -555,7 +555,7 @@ bool DocumentThreadableLoader::RedirectReceived(
   if (!actual_request_.IsNull()) {
     ReportResponseReceived(resource->Identifier(), redirect_response);
 
-    HandlePreflightFailure(redirect_response.Url().GetString(),
+    HandlePreflightFailure(redirect_response.Url(),
                            "Response for preflight is invalid (redirect)");
 
     return false;
@@ -784,7 +784,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
         "control check: ");
     CrossOriginAccessControl::AccessControlErrorString(
         builder, cors_status, response, GetSecurityOrigin(), request_context_);
-    HandlePreflightFailure(response.Url().GetString(), builder.ToString());
+    HandlePreflightFailure(response.Url(), builder.ToString());
     return;
   }
 
@@ -794,7 +794,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
     StringBuilder builder;
     CrossOriginAccessControl::PreflightErrorString(builder, preflight_status,
                                                    response);
-    HandlePreflightFailure(response.Url().GetString(), builder.ToString());
+    HandlePreflightFailure(response.Url(), builder.ToString());
     return;
   }
 
@@ -806,7 +806,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
       StringBuilder builder;
       CrossOriginAccessControl::PreflightErrorString(
           builder, external_preflight_status, response);
-      HandlePreflightFailure(response.Url().GetString(), builder.ToString());
+      HandlePreflightFailure(response.Url(), builder.ToString());
       return;
     }
   }
@@ -820,8 +820,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
       !preflight_result->AllowsCrossOriginHeaders(
           actual_request_.HttpHeaderFields(),
           access_control_error_description)) {
-    HandlePreflightFailure(response.Url().GetString(),
-                           access_control_error_description);
+    HandlePreflightFailure(response.Url(), access_control_error_description);
     return;
   }
 
@@ -1048,7 +1047,7 @@ void DocumentThreadableLoader::LoadActualRequest() {
 }
 
 void DocumentThreadableLoader::HandlePreflightFailure(
-    const String& url,
+    const KURL& url,
     const String& error_description) {
   // Prevent handleSuccessfulFinish() from bypassing access check.
   actual_request_ = ResourceRequest();

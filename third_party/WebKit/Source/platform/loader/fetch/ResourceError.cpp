@@ -44,15 +44,14 @@ constexpr char kThrottledErrorDescription[] =
 
 const char kErrorDomainBlinkInternal[] = "BlinkInternal";
 
-ResourceError ResourceError::CancelledError(const String& failing_url) {
-  return WebURLError(KURL(kParsedURLString, failing_url), false,
-                     net::ERR_ABORTED);
+ResourceError ResourceError::CancelledError(const KURL& url) {
+  return WebURLError(url, false, net::ERR_ABORTED);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
-    const String& failing_url,
+    const KURL& url,
     ResourceRequestBlockedReason blocked_reason) {
-  ResourceError error = CancelledError(failing_url);
+  ResourceError error = CancelledError(url);
   error.SetIsAccessCheck(true);
   if (blocked_reason == ResourceRequestBlockedReason::kSubresourceFilter)
     error.SetShouldCollapseInitiator(true);
@@ -60,18 +59,16 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
-    const String& failing_url,
+    const KURL& url,
     ResourceRequestBlockedReason blocked_reason,
     const String& localized_description) {
-  ResourceError error =
-      CancelledDueToAccessCheckError(failing_url, blocked_reason);
+  ResourceError error = CancelledDueToAccessCheckError(url, blocked_reason);
   error.localized_description_ = localized_description;
   return error;
 }
 
-ResourceError ResourceError::CacheMissError(const String& failing_url) {
-  return WebURLError(KURL(kParsedURLString, failing_url), false,
-                     net::ERR_CACHE_MISS);
+ResourceError ResourceError::CacheMissError(const KURL& url) {
+  return WebURLError(url, false, net::ERR_CACHE_MISS);
 }
 
 ResourceError ResourceError::Copy() const {

@@ -36,6 +36,7 @@
 
 namespace blink {
 
+class KURL;
 class WebURL;
 enum class ResourceRequestBlockedReason;
 struct WebURLError;
@@ -52,16 +53,16 @@ class PLATFORM_EXPORT ResourceError final {
     BLOCKED_BY_XSS_AUDITOR = net::ERR_BLOCKED_BY_XSS_AUDITOR
   };
 
-  static ResourceError CancelledError(const String& failing_url);
+  static ResourceError CancelledError(const KURL&);
   static ResourceError CancelledDueToAccessCheckError(
-      const String& failing_url,
+      const KURL&,
       ResourceRequestBlockedReason);
   static ResourceError CancelledDueToAccessCheckError(
-      const String& failing_url,
+      const KURL&,
       ResourceRequestBlockedReason,
       const String& localized_description);
 
-  static ResourceError CacheMissError(const String& failing_url);
+  static ResourceError CacheMissError(const KURL&);
 
   ResourceError()
       : error_code_(0),
