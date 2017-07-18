@@ -75,6 +75,14 @@ clang_toolchain("clang_x86_v8_arm") {
   }
 }
 
+clang_toolchain("clang_x86_v8_arm64") {
+  toolchain_args = {
+    current_cpu = "x64"
+    v8_current_cpu = "arm64"
+    current_os = "linux"
+  }
+}
+
 clang_toolchain("clang_x86_v8_mipsel") {
   toolchain_args = {
     current_cpu = "x86"
