@@ -34,6 +34,24 @@
       "revId": "c9fbccac57926fef6688d2047e82d297b4bf98d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331cbaef_d942856e",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-18T08:25:42Z",
+      "side": 1,
+      "message": "Oh. I found the problem. Bug in the test. See line 391. \n\nElement is \u003cspan\u003e but ShouldShowIBeamForNode only answers true for text nodes - it does layout_object-\u003eIsText(). I corrected the two Shadow DOM tests in PS4. PTAL.",
+      "parentUuid": "861076fc_24b6032d",
+      "revId": "c9fbccac57926fef6688d2047e82d297b4bf98d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
