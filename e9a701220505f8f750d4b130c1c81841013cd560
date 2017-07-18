@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e60ec9a_037e5582",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-18T13:20:27Z",
+      "side": 1,
+      "message": "nit: s/performance/performance_/\n\nLet\u0027s check if the object itself is in a good state.  Arguments are occasionally less important.  e.g.\n  : performance_(performance ? performance : foo()),\nthen, what important is that |performance_| is not null (foo() might return null).",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "e9a701220505f8f750d4b130c1c81841013cd560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
