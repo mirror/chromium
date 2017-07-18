@@ -103,6 +103,7 @@ public class OfflinePageBridge {
     @VisibleForTesting
     protected OfflinePageBridge(long nativeOfflinePageBridge) {
         mNativeOfflinePageBridge = nativeOfflinePageBridge;
+        addObserver(new CctOfflinePageModelObserver());
     }
 
     /**
