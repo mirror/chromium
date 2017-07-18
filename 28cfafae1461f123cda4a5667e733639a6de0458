@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0158f9_5f877c0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "Please say something like \"cros: Add animations to launcher\"",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3df7109_117f87bb",
+        "filename": "third_party/.chroot_lock",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "Don\u0027t commit this.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae064e3c_d963f2d7",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "nit: We usually name these variables kFooDurationMs or kFooDurationInMillis. It\u0027s shorter.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d5d621_7c59a91a",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "nit: cache result of GetDisplayNearestView() since you use it twice in this function",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3814d01_420e320c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "optional: You seem to call GetScreen()-\u003eGetDisplayNearestView() a lot in this file. Maybe add a utility method like GetDisplay() or similar?",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67cdbef_d84b1945",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "Question: Do you need a SetPreemptionStrategy, or is the default OK?",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6f7685_501ae660",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "I\u0027m not super-familiar with layer animations anymore. Are there other examples where a ScopedLayerAnimationSettings is being used to smoothly animate a widget this way?\n\nI\u0027m guessing it works, but not sure.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98aa55c_c56c3d33",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "Based on the comment, maybe call this StartAnimationForState() or similar?\n\nAlso, document the intended behavior if an animation is already in progress.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074d4922_fb3563b8",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-18T22:39:20Z",
+      "side": 1,
+      "message": "nit: I think oshima is renaming MaximizeMode to TabletMode, you might want to use the new name",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
