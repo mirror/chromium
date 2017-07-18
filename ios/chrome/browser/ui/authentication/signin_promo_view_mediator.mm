@@ -48,6 +48,58 @@ bool IsSupportedAccessPoint(signin_metrics::AccessPoint access_point) {
 }
 #endif  // DCHECK_IS_ON()
 
+void RecordSigninImpressionWithAccountUserActionForAccessPoint(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      base::RecordAction(base::UserMetricsAction(
+          "Signin_ImpressionWithAccount_FromBookmarkManager"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
+      base::RecordAction(base::UserMetricsAction(
+          "Signin_ImpressionWithAccount_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_ImpressionWithAccount_FromSettings"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
+      base::RecordAction(base::UserMetricsAction(
+          "Signin_ImpressionWithAccount_FromTabSwitcher"));
+      break;
+    default:
+      NOTREACHED() << "Unexpected value for access point "
+                   << static_cast<int>(access_point);
+      break;
+  }
+}
+
+void RecordSigninImpressionNoAccountUserActionForAccessPoint(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      base::RecordAction(base::UserMetricsAction(
+          "Signin_ImpressionNoAccount_FromBookmarkManager"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_ImpressionNoAccount_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_ImpressionNoAccount_FromSettings"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
+      base::RecordAction(base::UserMetricsAction(
+          "Signin_ImpressionNoAccount_FromTabSwitcher"));
+      break;
+    default:
+      NOTREACHED() << "Unexpected value for access point "
+                   << static_cast<int>(access_point);
+      break;
+  }
+}
+
 void RecordSigninUserActionForAccessPoint(
     signin_metrics::AccessPoint access_point) {
   switch (access_point) {
@@ -218,6 +270,11 @@ const char* AlreadySeenSigninViewPreferenceKey(
                               ->GetAllIdentitiesSortedForDisplay();
     if (identities.count != 0) {
       [self selectIdentity:identities[0]];
+    }
+    if (_defaultIdentity) {
+      RecordSigninImpressionWithAccountUserActionForAccessPoint(accessPoint);
+    } else {
+      RecordSigninImpressionNoAccountUserActionForAccessPoint(accessPoint);
     }
     _identityServiceObserver =
         base::MakeUnique<ChromeIdentityServiceObserverBridge>(self);
