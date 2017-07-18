@@ -20,6 +20,13 @@ ALWAYS_INLINE int64_t MxTimeToMicroseconds(mx_time_t nanos) {
   return static_cast<int64_t>(micros);
 }
 
+ALWAYS_INLINE mx_time_t MicrosecondsToMxTime(int64_t microseconds) {
+  const mx_time_t nanos =
+      microseconds *
+      static_cast<mx_time_t>(base::Time::kNanosecondsPerMicrosecond);
+  return nanos;
+}
+
 }  // namespace
 
 // Time -----------------------------------------------------------------------
@@ -65,6 +72,10 @@ bool TimeTicks::IsConsistentAcrossProcesses() {
 // static
 TimeTicks TimeTicks::FromMXTime(mx_time_t nanos_since_boot) {
   return TimeTicks(MxTimeToMicroseconds(nanos_since_boot));
+}
+
+mx_time_t TimeTicks::ToMXTime() const {
+  return MicrosecondsToMxTime(ToInternalValue());
 }
 
 // static
