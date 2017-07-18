@@ -2918,14 +2918,12 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
                                       base::RetainedRef(context)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    registry->AddInterface(
-        base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
-                   safe_browsing_service_->database_manager(),
-                   safe_browsing_service_->ui_manager(),
-                   render_process_host->GetID()),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
-  }
+  registry->AddInterface(
+      base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
+                 safe_browsing_service_->database_manager(),
+                 safe_browsing_service_->ui_manager(),
+                 render_process_host->GetID()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 
 #if defined(OS_WIN)
   if (base::FeatureList::IsEnabled(features::kModuleDatabase)) {
