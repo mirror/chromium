@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561d7ae6_fe6a0c4d",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T20:50:04Z",
+      "side": 1,
+      "message": "If |max_delta_| is 0 here, i.e. if width \u003c start_threshold, is there a point doing any work at all? i.e. can this just return from here?",
+      "revId": "fb00fe302b5b79a2172a0f34e26024976af1263c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
