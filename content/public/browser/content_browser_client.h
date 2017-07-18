@@ -74,7 +74,6 @@ class ScopedInterfaceEndpointHandle;
 
 namespace service_manager {
 class Service;
-struct BindSourceInfo;
 }
 
 namespace net {
@@ -661,7 +660,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   // should try.
   virtual void BindInterfaceRequestFromFrame(
       RenderFrameHost* render_frame_host,
-      const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) {}
 

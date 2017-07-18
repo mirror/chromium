@@ -33,7 +33,9 @@ class FileSystemApp : public service_manager::Service {
   void Create(const service_manager::BindSourceInfo& source_info,
               mojom::FileSystemRequest request);
 
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistryWithArgs<
+      const service_manager::BindSourceInfo&>
+      registry_;
 
   scoped_refptr<LockTable> lock_table_;
 

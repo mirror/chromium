@@ -127,8 +127,7 @@ class Catalog::ServiceImpl : public service_manager::Service {
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    registry_.BindInterface(source_info, interface_name,
-                            std::move(interface_pipe));
+    registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
  private:
@@ -191,14 +190,12 @@ Instance* Catalog::GetInstanceForUserId(const std::string& user_id) {
 }
 
 void Catalog::BindCatalogRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::CatalogRequest request) {
   Instance* instance = GetInstanceForUserId(source_info.identity.user_id());
   instance->BindCatalog(std::move(request));
 }
 
 void Catalog::BindDirectoryRequest(
-    const service_manager::BindSourceInfo& source_info,
     filesystem::mojom::DirectoryRequest request) {
   if (!lock_table_)
     lock_table_ = new filesystem::LockTable;

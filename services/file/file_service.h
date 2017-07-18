@@ -51,7 +51,9 @@ class FileService : public service_manager::Service {
   class LevelDBServiceObjects;
   std::unique_ptr<LevelDBServiceObjects> leveldb_objects_;
 
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistryWithArgs<
+      const service_manager::BindSourceInfo&>
+      registry_;
 
   DISALLOW_COPY_AND_ASSIGN(FileService);
 };

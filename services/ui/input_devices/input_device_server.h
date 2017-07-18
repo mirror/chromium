@@ -13,10 +13,6 @@
 #include "ui/events/devices/device_data_manager.h"
 #include "ui/events/devices/input_device_event_observer.h"
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace ui {
 
 class TouchDeviceServer;
@@ -55,9 +51,7 @@ class InputDeviceServer : public mojom::InputDeviceServer,
   // Sends the current state of all input-devices to an observer.
   void SendDeviceListsComplete(mojom::InputDeviceObserverMojo* observer);
 
-  void BindInputDeviceServerRequest(
-      const service_manager::BindSourceInfo& source_info,
-      mojom::InputDeviceServerRequest request);
+  void BindInputDeviceServerRequest(mojom::InputDeviceServerRequest request);
 
   mojo::BindingSet<mojom::InputDeviceServer> bindings_;
   mojo::InterfacePtrSet<mojom::InputDeviceObserverMojo> observers_;

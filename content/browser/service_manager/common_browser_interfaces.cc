@@ -25,7 +25,6 @@ namespace content {
 namespace {
 
 void BindMemoryCoordinatorRequest(
-    const service_manager::BindSourceInfo& source_info,
     memory_instrumentation::mojom::CoordinatorRequest request) {
   auto* coordinator = memory_instrumentation::CoordinatorImpl::GetInstance();
   if (coordinator)
@@ -55,25 +54,21 @@ class ConnectionFilterImpl : public ConnectionFilter {
  private:
   template <typename Interface>
   using InterfaceBinder =
-      base::Callback<void(const service_manager::BindSourceInfo&,
-                          mojo::InterfaceRequest<Interface>)>;
+      base::Callback<void(mojo::InterfaceRequest<Interface>)>;
 
   // ConnectionFilter:
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
-    if (registry_.CanBindInterface(interface_name)) {
-      registry_.BindInterface(source_info, interface_name,
-                              std::move(*interface_pipe));
-    }
+    if (registry_.CanBindInterface(interface_name))
+      registry_.BindInterface(interface_name, std::move(*interface_pipe));
   }
 
   template <typename Interface>
   static void BindOnTaskRunner(
       const scoped_refptr<base::TaskRunner>& task_runner,
       const InterfaceBinder<Interface>& binder,
-      const service_manager::BindSourceInfo& source_info,
       mojo::InterfaceRequest<Interface> request) {
     task_runner->PostTask(
         FROM_HERE, base::BindOnce(binder, source_info, std::move(request)));

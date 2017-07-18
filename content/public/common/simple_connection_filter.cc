@@ -4,8 +4,6 @@
 
 #include "content/public/common/simple_connection_filter.h"
 
-#include "services/service_manager/public/cpp/bind_source_info.h"
-
 namespace content {
 
 SimpleConnectionFilter::SimpleConnectionFilter(
@@ -19,10 +17,8 @@ void SimpleConnectionFilter::OnBindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle* interface_pipe,
     service_manager::Connector* connector) {
-  if (registry_->CanBindInterface(interface_name)) {
-    registry_->BindInterface(source_info, interface_name,
-                             std::move(*interface_pipe));
-  }
+  if (registry_->CanBindInterface(interface_name))
+    registry_->BindInterface(interface_name, std::move(*interface_pipe));
 }
 
 }  // namespace content

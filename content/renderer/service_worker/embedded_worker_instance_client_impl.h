@@ -19,10 +19,6 @@ class WebEmbeddedWorker;
 
 }  // namespace blink
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace content {
 
 class EmbeddedWorkerDevToolsAgent;
@@ -36,7 +32,6 @@ class EmbeddedWorkerInstanceClientImpl
   static void Create(
       base::TimeTicks blink_initialized_time,
       scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
-      const service_manager::BindSourceInfo& source_info,
       mojom::EmbeddedWorkerInstanceClientRequest request);
 
   ~EmbeddedWorkerInstanceClientImpl() override;

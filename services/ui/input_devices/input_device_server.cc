@@ -7,7 +7,6 @@
 #include <utility>
 #include <vector>
 
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "ui/events/devices/input_device.h"
 #include "ui/events/devices/touchscreen_device.h"
 
@@ -123,7 +122,6 @@ void InputDeviceServer::SendDeviceListsComplete(
 }
 
 void InputDeviceServer::BindInputDeviceServerRequest(
-    const service_manager::BindSourceInfo& source_info,
     mojom::InputDeviceServerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

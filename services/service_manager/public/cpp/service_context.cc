@@ -136,8 +136,7 @@ void ServiceContext::OnBindInterface(
       GetGlobalBinderRegistryForService(identity_.name());
   if (global_registry && global_registry->CanBindInterface(interface_name)) {
     // Just use the binder overridden globally.
-    global_registry->BindInterface(source_info, interface_name,
-                                   std::move(interface_pipe));
+    global_registry->BindInterface(interface_name, std::move(interface_pipe));
     return;
   }
   service_->OnBindInterface(source_info, interface_name,

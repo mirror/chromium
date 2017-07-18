@@ -15,10 +15,6 @@ namespace display {
 class DefaultTouchTransformSetter;
 }
 
-namespace service_manager {
-struct BindSourceInfo;
-}
-
 namespace ui {
 
 // Implementation of mojom::TouchDeviceServer. Uses an instance of
@@ -39,7 +35,6 @@ class TouchDeviceServer : public mojom::TouchDeviceServer {
 
  private:
   void BindTouchDeviceServerRequest(
-      const service_manager::BindSourceInfo& source_info,
       mojom::TouchDeviceServerRequest request);
 
   mojo::BindingSet<mojom::TouchDeviceServer> bindings_;
