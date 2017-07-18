@@ -59,7 +59,7 @@ void HidServiceWin::Connect(const HidDeviceId& device_id,
   }
   scoped_refptr<HidDeviceInfo> device_info = map_entry->second;
 
-  base::win::ScopedHandle file(OpenDevice(device_info->device_id()));
+  base::win::ScopedHandle file(OpenDevice(device_info->platform_device_id()));
   if (!file.IsValid()) {
     HID_PLOG(EVENT) << "Failed to open device";
     task_runner_->PostTask(FROM_HERE, base::Bind(callback, nullptr));
