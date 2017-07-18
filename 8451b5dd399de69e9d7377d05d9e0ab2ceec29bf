@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2308e1a_54cf4370",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-18T13:39:15Z",
+      "side": 1,
+      "message": "If the FilterGestureEvent returns true, this condition cannot be true.",
+      "range": {
+        "startLine": 173,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 50
+      },
+      "revId": "8451b5dd399de69e9d7377d05d9e0ab2ceec29bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d406c045_c777d267",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-18T13:39:15Z",
+      "side": 1,
+      "message": "This is always false if we get to this point.",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 45
+      },
+      "revId": "8451b5dd399de69e9d7377d05d9e0ab2ceec29bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
