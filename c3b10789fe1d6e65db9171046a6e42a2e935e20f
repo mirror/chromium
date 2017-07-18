@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3334f1ff_f73fb06c",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-18T11:34:47Z",
+      "side": 1,
+      "message": "Thank you, UserDuringLogin is a nice option.",
+      "parentUuid": "a09fc4dc_a3a11903",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2bac3e8_13245f29",
         "filename": "chromeos/dbus/session_manager_client.h",
         "patchSetId": 10
@@ -350,6 +368,24 @@
       "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06b5095_ae22a56b",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-18T11:34:47Z",
+      "side": 1,
+      "message": "Whoops, done. Thanks.",
+      "parentUuid": "c19378ee_5b9569d9",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
