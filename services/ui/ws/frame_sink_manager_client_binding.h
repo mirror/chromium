@@ -16,9 +16,9 @@ class GpuHost;
 class WindowServer;
 
 // FrameSinkManagerClientBinding manages the binding between a WindowServer and
-// its FrameSinkManager. FrameSinkManagerClientBinding exists so that a mock
-// implementation of FrameSinkManager can be injected for tests. WindowServer
-// owns its associated FrameSinkManagerClientBinding.
+// its FrameSinkManagerImpl. FrameSinkManagerClientBinding exists so that a mock
+// implementation of FrameSinkManagerImpl can be injected for tests.
+// WindowServer owns its associated FrameSinkManagerClientBinding.
 class FrameSinkManagerClientBinding : public cc::mojom::FrameSinkManager {
  public:
   FrameSinkManagerClientBinding(
@@ -27,7 +27,7 @@ class FrameSinkManagerClientBinding : public cc::mojom::FrameSinkManager {
   ~FrameSinkManagerClientBinding() override;
 
  private:
-  // cc::mojom::FrameSinkManager:
+  // cc::mojom::FrameSinkManagerImpl:
   void CreateRootCompositorFrameSink(
       const viz::FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,

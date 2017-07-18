@@ -186,6 +186,8 @@ class CC_SURFACES_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  bool HasTemporaryReference(const viz::SurfaceId& surface_id) const;
+
  private:
   friend class viz::test::SurfaceSynchronizationTest;
   friend class viz::test::SurfaceReferencesTest;
@@ -224,8 +226,6 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // Removes all surface references to or from |surface_id|. Used when the
   // surface is about to be deleted.
   void RemoveAllSurfaceReferences(const viz::SurfaceId& surface_id);
-
-  bool HasTemporaryReference(const viz::SurfaceId& surface_id) const;
 
   // Adds a temporary reference to |surface_id|. The reference will not have an
   // owner initially.

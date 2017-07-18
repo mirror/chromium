@@ -10,7 +10,6 @@
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 
 namespace viz {
@@ -21,18 +20,18 @@ HostFrameSinkManager::HostFrameSinkManager()
 HostFrameSinkManager::~HostFrameSinkManager() = default;
 
 void HostFrameSinkManager::SetLocalManager(
-    FrameSinkManagerImpl* frame_sink_manager_impl) {
+    FrameSinkManagerImpl* frame_sink_manager) {
   DCHECK(!frame_sink_manager_ptr_);
-  frame_sink_manager_impl_ = frame_sink_manager_impl;
+  frame_sink_manager_ = frame_sink_manager;
 
-  frame_sink_manager_ = frame_sink_manager_impl;
+  frame_sink_manager_ = frame_sink_manager;
 }
 
 void HostFrameSinkManager::BindAndSetManager(
     cc::mojom::FrameSinkManagerClientRequest request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     cc::mojom::FrameSinkManagerPtr ptr) {
-  DCHECK(!frame_sink_manager_impl_);
+  DCHECK(!frame_sink_manager_);
   DCHECK(!binding_.is_bound());
 
   binding_.Bind(std::move(request), std::move(task_runner));
@@ -111,12 +110,12 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
     bool is_root,
     bool handles_frame_sink_id_invalidation,
     bool needs_sync_points) {
-  DCHECK(frame_sink_manager_impl_);
+  DCHECK(frame_sink_manager_);
   DCHECK_EQ(frame_sink_data_map_.count(frame_sink_id), 0u);
 
   auto support = CompositorFrameSinkSupport::Create(
-      client, frame_sink_manager_impl_->frame_sink_manager(), frame_sink_id,
-      is_root, handles_frame_sink_id_invalidation, needs_sync_points);
+      client, frame_sink_manager_impl_, frame_sink_id, is_root,
+      handles_frame_sink_id_invalidation, needs_sync_points);
   support->SetDestructionCallback(
       base::BindOnce(&HostFrameSinkManager::DestroyCompositorFrameSink,
                      weak_ptr_factory_.GetWeakPtr(), frame_sink_id));

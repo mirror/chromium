@@ -12,7 +12,7 @@
 
 namespace cc {
 namespace mojom {
-class FrameSinkManager;
+class FrameSinkManagerImpl;
 }
 }
 

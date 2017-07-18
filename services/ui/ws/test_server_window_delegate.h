@@ -20,7 +20,7 @@ class TestServerWindowDelegate : public ServerWindowDelegate {
 
  private:
   // ServerWindowDelegate:
-  cc::mojom::FrameSinkManager* GetFrameSinkManager() override;
+  cc::mojom::FrameSinkManagerImpl* GetFrameSinkManager() override;
   ServerWindow* GetRootWindow(const ServerWindow* window) override;
 
   ServerWindow* root_window_ = nullptr;
