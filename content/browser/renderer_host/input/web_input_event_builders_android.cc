@@ -171,16 +171,19 @@ WebMouseWheelEvent WebMouseWheelEventBuilder::Build(float ticks_x,
   return result;
 }
 
-WebGestureEvent WebGestureEventBuilder::Build(WebInputEvent::Type type,
-                                              double time_sec,
-                                              int x,
-                                              int y) {
+WebGestureEvent WebGestureEventBuilder::Build(
+    WebInputEvent::Type type,
+    double time_sec,
+    int x,
+    int y,
+    blink::WebGestureDevice source_device =
+        blink::kWebGestureDeviceTouchscreen) {
   DCHECK(WebInputEvent::IsGestureEventType(type));
-  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time_sec);
+  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time_sec,
+                         source_device);
 
   result.x = x;
   result.y = y;
-  result.source_device = blink::kWebGestureDeviceTouchscreen;
 
   return result;
 }

@@ -758,9 +758,15 @@ void ContentViewCore::SendOrientationChangeEvent(
 WebGestureEvent ContentViewCore::MakeGestureEvent(WebInputEvent::Type type,
                                                   int64_t time_ms,
                                                   float x,
-                                                  float y) const {
-  return WebGestureEventBuilder::Build(type, time_ms / 1000.0, x / dpi_scale(),
-                                       y / dpi_scale());
+                                                  float y,
+                                                  boolean from_gamepad) const {
+  if (from_gamepad)
+    return WebGestureEventBuilder::Build(
+        type, time_ms / 1000.0, x / dpi_scale(), y / dpi_scale(),
+        blink::kWebGestureDeviceSyntheticAutoscroll);
+  else
+    return WebGestureEventBuilder::Build(type, time_ms / 1000.0,
+                                         x / dpi_scale(), y / dpi_scale());
 }
 
 void ContentViewCore::SendGestureEvent(const blink::WebGestureEvent& event) {
@@ -778,14 +784,11 @@ void ContentViewCore::ScrollBegin(JNIEnv* env,
                                   jfloat hinty,
                                   jboolean target_viewport,
                                   jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureScrollBegin, time_ms, x, y);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureScrollBegin,
+                                           time_ms, x, y, from_gamepad);
   event.data.scroll_begin.delta_x_hint = hintx / dpi_scale();
   event.data.scroll_begin.delta_y_hint = hinty / dpi_scale();
   event.data.scroll_begin.target_viewport = target_viewport;
-
-  if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
 
   SendGestureEvent(event);
 }
@@ -822,14 +825,11 @@ void ContentViewCore::FlingStart(JNIEnv* env,
                                  jfloat vy,
                                  jboolean target_viewport,
                                  jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureFlingStart, time_ms, x, y);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureFlingStart,
+                                           time_ms, x, y, from_gamepad);
   event.data.fling_start.velocity_x = vx / dpi_scale();
   event.data.fling_start.velocity_y = vy / dpi_scale();
   event.data.fling_start.target_viewport = target_viewport;
-
-  if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
 
   SendGestureEvent(event);
 }
@@ -838,14 +838,12 @@ void ContentViewCore::FlingCancel(JNIEnv* env,
                                   const JavaParamRef<jobject>& obj,
                                   jlong time_ms,
                                   jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureFlingCancel, time_ms, 0, 0);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureFlingCancel,
+                                           time_ms, 0, 0, from_gamepad);
   event.data.fling_cancel.prevent_boosting = true;
 
-  if (from_gamepad) {
+  if (from_gamepad)
     event.data.fling_cancel.target_viewport = true;
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
-  }
 
   SendGestureEvent(event);
 }
