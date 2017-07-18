@@ -43,7 +43,8 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
         revert_translation_called_(false),
         translation_declined_(false),
         original_language_index_on_translation_(-1),
-        target_language_index_on_translation_(-1) {}
+        target_language_index_on_translation_(-1),
+        can_blacklist_site_(true) {}
 
   TranslateBubbleModel::ViewState GetViewState() const override {
     return view_state_transition_.view_state();
@@ -120,6 +121,10 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
            target_language_index_on_translation_ == target_language_index_;
   }
 
+  bool CanBlacklistSite() override { return can_blacklist_site_; }
+
+  void SetCanBlacklistSite(bool value) { can_blacklist_site_ = value; }
+
   TranslateBubbleViewStateTransition view_state_transition_;
   translate::TranslateErrors::Type error_type_;
   int original_language_index_;
@@ -134,6 +139,7 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
   bool translation_declined_;
   int original_language_index_on_translation_;
   int target_language_index_on_translation_;
+  bool can_blacklist_site_;
 };
 
 }  // namespace
@@ -468,4 +474,27 @@ TEST_F(TranslateBubbleViewTest, CancelButtonReturningError) {
   EXPECT_EQ(TranslateBubbleModel::VIEW_STATE_ADVANCED, bubble_->GetViewState());
   bubble_->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_CANCEL);
   EXPECT_EQ(TranslateBubbleModel::VIEW_STATE_ERROR, bubble_->GetViewState());
+}
+
+TEST_F(TranslateBubbleViewTest, ComboboxCanBlacklistSite) {
+  EXPECT_TRUE(mock_model_->CanBlacklistSite());
+  CreateAndShowBubble();
+  views::Combobox* const combobox = denial_combobox();
+  views::test::ComboboxTestApi test_api(combobox);
+  EXPECT_FALSE(denial_button_clicked());
+  EXPECT_FALSE(bubble_->GetWidget()->IsClosed());
+  // The menu rows are DONT, NEVER_TRANSLATE_LANGUAGE, SEPARATOR, and
+  // NEVER_TRANSLATE_SITE.
+  EXPECT_EQ(4, combobox->GetRowCount());
+}
+
+TEST_F(TranslateBubbleViewTest, ComboboxCantBlacklistSite) {
+  mock_model_->SetCanBlacklistSite(false);
+  CreateAndShowBubble();
+  views::Combobox* const combobox = denial_combobox();
+  views::test::ComboboxTestApi test_api(combobox);
+  EXPECT_FALSE(denial_button_clicked());
+  EXPECT_FALSE(bubble_->GetWidget()->IsClosed());
+  // The menu rows are DONT and NEVER_TRANSLATE_LANGUAGE.
+  EXPECT_EQ(2, combobox->GetRowCount());
 }
