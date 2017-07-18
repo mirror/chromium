@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "266d619e_12e99e45",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T21:40:40Z",
+      "side": 1,
+      "message": "Do we really want to block here? Or should this use DeleteSoon?",
+      "revId": "29a6ef53faf116f6c4f68b3f66830fbd76964206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
