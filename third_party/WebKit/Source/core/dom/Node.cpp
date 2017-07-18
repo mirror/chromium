@@ -871,7 +871,11 @@ bool Node::IsInert() const {
   if (!isConnected() || !CanParticipateInFlatTree())
     return true;
 
-  DCHECK(!ChildNeedsDistributionRecalc());
+  DCHECK(!NeedsDistributionRecalc());
+  // If distribution is needed, risk a false positive instead of a crash
+  // caused by forcing distribution.
+  if (NeedsDistributionRecalc())
+    return true;
 
   const HTMLDialogElement* dialog = GetDocument().ActiveModalDialog();
   if (dialog && this != GetDocument() &&
