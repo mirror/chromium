@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "28a20fb0_5ae17e81",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-07-18T04:14:56Z",
+      "side": 1,
+      "message": "Nit: \"document is import\" doesn\u0027t sound intuitive to me. Does that means \"document is a document which is imported by HTMLImport\"?\nCan we rename this IsImportedDocument()? (Is this a correct name?)",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "347614e1_c6558a08",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 4
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-18T04:06:38Z",
       "side": 1,
       "message": "How about the following?\n\n  if (!imports_controller_)\n    return *const_cast\u003cDocument*\u003e(this);\n\n  Document* master \u003d imports_controller_-\u003eMaster();\n  DCHECK(master);\n  return *master;",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d36896e_2d2f5922",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-07-18T04:14:56Z",
+      "side": 1,
+      "message": "Nit: At first glance, I don\u0027t know any idea what \u0027effective\u0027 means here.\nIt would be better to be more explicit, if you can.",
       "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
