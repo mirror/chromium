@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f1126e_4e909a8a",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T19:18:56Z",
+      "side": 1,
+      "message": "As mentioned previously, I\u0027m not sure why we\u0027re cloning. It seems like the params to this function shouldn\u0027t be const refs and just be values, so we can std::move().",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 58
+      },
+      "revId": "ceef5c55d95c82ee393055b84383bd836c6f53bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
