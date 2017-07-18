@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "e6c477f5_feaa936b",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I find it a bit weird that Create doesn\u0027t return anything. Can you add a comment like:\n// Creates a new SharedWorkerContentSettingsProxyImpl and binds it to |request|.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042a5b8a_34eef783",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "Add a comment:\n// blink::mojom::SharedWorkerContentSettingsProxy implementation.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4bae05_b49f3712",
         "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
         "patchSetId": 9
@@ -36,6 +70,23 @@
       "writtenOn": "2017-07-18T04:09:40Z",
       "side": 1,
       "message": "Could you add a comment like \n// Implements blink::mojom::SharedWorkerContentSettingsProxy.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baebb22_350b3b0a",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "nit: delete line 35, we usually don\u0027t put line breaks between overrides",
       "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +133,23 @@
     },
     {
       "key": {
+        "uuid": "9427b7ba_ca87eb8b",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "nit: keep in alphabetical order",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d24e0827_266db670",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
         "patchSetId": 9
@@ -93,6 +161,23 @@
       "writtenOn": "2017-07-18T04:09:40Z",
       "side": 1,
       "message": "nit: the blank line isn\u0027t needed because GetId() is also overriding blink::WebSharedWorkerClient.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407b7cbd_5218c731",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "nit: delete line 83",
       "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +286,23 @@
     },
     {
       "key": {
+        "uuid": "4e52ed8a_e22f1a01",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "\"The information is requested via a Mojo connection to the browser process. The connection is established and on each method call and then destructed.\"",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ea6558_cec6a955",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 9
@@ -212,6 +314,23 @@
       "writtenOn": "2017-07-18T03:51:51Z",
       "side": 1,
       "message": "KURL::Copy() instead of String::IsolatedCopy()?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c9b269_98398bdb",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I think this comment is out of date? Also seems redundant with the return type, probably.",
       "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -235,6 +354,108 @@
     },
     {
       "key": {
+        "uuid": "2f3f0647_6f97a6c3",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I think this is more clearly written as:\n\"Each call to this method establishes a new Mojo connection, because the returned pointer can only be used in the process which made it.\"\n\nHowever I\u0027m confused about the explanation. We are in Blink here which is a single process, so the pointer will only be available to a single process anyway.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02926c09_b3c6cefe",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I believe the ID is unique within the renderer process. \"content side\" is a bit vague, and I think we can omit it.\n\nI think we could just say:\n// Returns the shared worker\u0027s ID. This ID is unique within the worker\u0027s renderer process.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66544037_c908b5a5",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "identifies the sender of message?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623a80d5_98528d08",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I kind of think this should just be called GetRoutingID for consistency with the existing code which calls it \"routing id\".",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcf668c_710c200e",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "Can you rephrase this as: \"The renderer uses this interface to ask the browser process about content settings for whether features are allowed.\"",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1442a00a_26c600e4",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "should be \u003d\u003e is",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3630e10_233080fb",
         "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
         "patchSetId": 9
@@ -246,6 +467,40 @@
       "writtenOn": "2017-07-18T03:51:51Z",
       "side": 1,
       "message": "\"each method calls\" -\u003e \"each method call\"\n\nWhen AllowIndexedDB() defined in this file is called, the connection has already been established, right? What does \"each method call\" indicate?",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaf6ab9_ef3db5bc",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure this last sentence belongs in the documentation for the Mojo interface. I think it\u0027s an implementation level detail that we create the connection on each method call.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7beab32c_599e6a98",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-18T04:16:56Z",
+      "side": 1,
+      "message": "Can you preserve the comments from the original IPC messages:\n\n// Returns whether the worker matching |route_id| is allowed access to IndexedDB.\n// Returns whether the worker matching |route_id| is allowed access to the file system.",
       "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
