@@ -352,7 +352,8 @@ PaintImage Image::PaintImageForCurrentFrame() {
                               ? PaintImage::CompletionState::DONE
                               : PaintImage::CompletionState::PARTIALLY_DONE;
   return PaintImage(stable_image_id_, ImageForCurrentFrame(), animation_type,
-                    completion_state, FrameCount(), is_multipart_);
+                    completion_state, FrameCount(), is_multipart_,
+                    has_on_load_handler_);
 }
 
 bool Image::ApplyShader(PaintFlags& flags, const SkMatrix& local_matrix) {

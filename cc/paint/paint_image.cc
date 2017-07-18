@@ -16,13 +16,15 @@ PaintImage::PaintImage(Id id,
                        AnimationType animation_type,
                        CompletionState completion_state,
                        size_t frame_count,
-                       bool is_multipart)
+                       bool is_multipart,
+                       bool has_on_load_handler)
     : id_(id),
       sk_image_(std::move(sk_image)),
       animation_type_(animation_type),
       completion_state_(completion_state),
       frame_count_(frame_count),
-      is_multipart_(is_multipart) {}
+      is_multipart_(is_multipart),
+      has_on_load_handler_(has_on_load_handler) {}
 PaintImage::PaintImage(const PaintImage& other) = default;
 PaintImage::PaintImage(PaintImage&& other) = default;
 PaintImage::~PaintImage() = default;

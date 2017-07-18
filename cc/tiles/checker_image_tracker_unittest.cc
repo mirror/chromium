@@ -96,7 +96,8 @@ class CheckerImageTrackerTest : public testing::Test,
       PaintImage::AnimationType animation = PaintImage::AnimationType::STATIC,
       PaintImage::CompletionState completion =
           PaintImage::CompletionState::DONE,
-      bool is_multipart = false) {
+      bool is_multipart = false,
+      bool has_on_load_handler = false) {
     int dimension = 0;
     switch (image_type) {
       case ImageType::CHECKERABLE:
@@ -112,10 +113,11 @@ class CheckerImageTrackerTest : public testing::Test,
 
     sk_sp<SkImage> image =
         CreateDiscardableImage(gfx::Size(dimension, dimension));
-    return DrawImage(PaintImage(PaintImage::GetNextId(), image, animation,
-                                completion, 1, is_multipart),
-                     SkIRect::MakeWH(dimension, dimension),
-                     kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
+    return DrawImage(
+        PaintImage(PaintImage::GetNextId(), image, animation, completion, 1,
+                   is_multipart, has_on_load_handler),
+        SkIRect::MakeWH(dimension, dimension), kNone_SkFilterQuality,
+        SkMatrix::I(), gfx::ColorSpace());
   }
 
   CheckerImageTracker::ImageDecodeQueue BuildImageDecodeQueue(
@@ -489,6 +491,22 @@ TEST_F(CheckerImageTrackerTest, DontCheckerMultiPartImages) {
       image, WhichTree::PENDING_TREE));
   EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
       multi_part_image, WhichTree::PENDING_TREE));
+}
+
+TEST_F(CheckerImageTrackerTest, DontCheckerImagesWithOnLoadHandler) {
+  SetUpTracker(true);
+
+  DrawImage image = CreateImage(ImageType::CHECKERABLE);
+  EXPECT_FALSE(image.paint_image().has_on_load_handler());
+  DrawImage handler_image =
+      CreateImage(ImageType::CHECKERABLE, PaintImage::AnimationType::STATIC,
+                  PaintImage::CompletionState::DONE, false, true);
+  EXPECT_TRUE(handler_image.paint_image().has_on_load_handler());
+
+  EXPECT_TRUE(checker_image_tracker_->ShouldCheckerImage(
+      image, WhichTree::PENDING_TREE));
+  EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
+      handler_image, WhichTree::PENDING_TREE));
 }
 
 TEST_F(CheckerImageTrackerTest, RespectsDecodePriority) {

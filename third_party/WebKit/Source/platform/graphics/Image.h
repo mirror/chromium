@@ -210,6 +210,9 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
     return nullptr;
   }
 
+  void set_has_on_load_handler() { has_on_load_handler_ = true; }
+  bool has_on_load_handler() const { return has_on_load_handler_; }
+
  protected:
   Image(ImageObserver* = 0, bool is_multipart = false);
 
@@ -248,6 +251,10 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   WeakPersistent<ImageObserver> image_observer_;
   PaintImage::Id stable_image_id_;
   const bool is_multipart_;
+
+  // Indicates that the image is or has been used by an image element with an
+  // onload handler.
+  bool has_on_load_handler_ = false;
 };
 
 #define DEFINE_IMAGE_TYPE_CASTS(typeName)                          \
