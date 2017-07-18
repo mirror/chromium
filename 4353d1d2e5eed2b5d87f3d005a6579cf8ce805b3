@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "778ad77d_9afa805f",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T17:30:51Z",
+      "side": 1,
+      "message": "Instead of letting the mock class subclass this, I think you can just add a |ResetMetricsHandlerForTesting(handler)| function to reset the handler. Then in the test, you can just use this probe class directly without mocking it. Since you can declare the test to be a friend of this class, the reset function can be private for testing only.",
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58597ad6_e0ce262a",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 19
@@ -19,6 +36,47 @@
         "endLine": 98,
         "endChar": 50
       },
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bc7a53_56e0deeb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T17:30:51Z",
+      "side": 1,
+      "message": "I agree with Peiyong.",
+      "parentUuid": "58597ad6_e0ce262a",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb621ee5_46a9cc43",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-18T17:30:51Z",
+      "side": 1,
+      "message": "Is this function blocking?",
       "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
