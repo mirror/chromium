@@ -141,6 +141,30 @@
       "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bc543a_d2f80e19",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-07-18T15:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49545251_4deffd01",
+      "range": {
+        "startLine": 826,
+        "startChar": 30,
+        "endLine": 826,
+        "endChar": 42
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
