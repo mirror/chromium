@@ -22,6 +22,30 @@
       "revId": "0a99285795ade2dd281995dee72fdb9e80d3fd6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb806e22_0c678b4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/displaystyle/MarginResizer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T14:51:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c40e4012_231e39f3",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "0a99285795ade2dd281995dee72fdb9e80d3fd6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

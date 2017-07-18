@@ -22,6 +22,30 @@
       "revId": "5ee8b141946d2d96b692526d86b3fe9f46fe9708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7edd284_88082cd4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/CardViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T14:51:58Z",
+      "side": 1,
+      "message": "Yes, that might be a good idea. I\u0027m less familiar with the structure of the other view holders though -- would we want to store the MarginResizer in a member variable and add a recycle() method there too?",
+      "parentUuid": "566bac53_d4f5770b",
+      "range": {
+        "startLine": 209,
+        "startChar": 24,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "5ee8b141946d2d96b692526d86b3fe9f46fe9708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
