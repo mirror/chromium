@@ -228,6 +228,9 @@ class HomedirMethodsImpl : public HomedirMethods {
     if (request.public_mount)
       request_proto.set_public_mount(true);
 
+    if (request.hidden_mount)
+      request_proto.set_hidden_mount(true);
+
     DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
         id, auth_proto, request_proto,
         base::Bind(&HomedirMethodsImpl::OnMountExCallback,
