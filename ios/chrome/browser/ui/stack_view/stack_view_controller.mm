@@ -21,8 +21,11 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/feature_engagement_tracker/public/event_constants.h"
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/experimental_flags.h"
+#include "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
@@ -2730,6 +2733,29 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
       break;
     case IDC_NEW_INCOGNITO_TAB:
     case IDC_NEW_TAB:
+      switch (command) {
+        case IDC_NEW_TAB:
+          // Send the "New Tab Opened" event to the FeatureEngagementTracker
+          // when the user clicks on the new tab button on the tab switcher or
+          // clicks the new tab button in the tools menu while the tab switcher
+          // is open.
+          FeatureEngagementTrackerFactory::GetForBrowserState(
+              _activeCardSet.tabModel.browserState)
+              ->NotifyEvent(feature_engagement_tracker::events::kNewTabOpened);
+          break;
+        case IDC_NEW_INCOGNITO_TAB:
+          // Send the "Incognito Tab Opened" event to the
+          // FeatureEngagementTracker when the user clicks on the new tab button
+          // on the tab switcher or clicks the new incognito tab button in the
+          // tools menu while the tab switcher is open.
+          FeatureEngagementTrackerFactory::GetForBrowserState(
+              _activeCardSet.tabModel.browserState)
+              ->NotifyEvent(
+                  feature_engagement_tracker::events::kIncognitoTabOpened);
+          break;
+        default:
+          break;
+      }
       // Ensure that the right mode is showing.
       if ([self isCurrentSetIncognito] != (command == IDC_NEW_INCOGNITO_TAB))
         [self setActiveCardSet:[self inactiveCardSet]];

@@ -941,8 +941,13 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
       MostVisitedCell* cell = (MostVisitedCell*)sender.view;
       [[strongSelf dataSource] logMostVisitedClick:index
                                           tileType:cell.tileType];
+      // inIncognito:NO has the same effect as calling the non-inIncognito
+      // version because GoogleLandingViewController is never displayed in
+      // an incognito state. Using the inIncognito version of webPageOrderedOpen
+      // is necessary for FeatureEngagementTracker tracking.
       [[strongSelf dispatcher] webPageOrderedOpen:url
                                          referrer:web::Referrer()
+                                      inIncognito:NO
                                      inBackground:YES
                                          appendTo:kCurrentTab];
     };
