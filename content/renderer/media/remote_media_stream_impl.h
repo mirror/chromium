@@ -42,6 +42,8 @@ class CONTENT_EXPORT RemoteMediaStreamImpl {
   const blink::WebMediaStream& webkit_stream() { return webkit_stream_; }
   const scoped_refptr<webrtc::MediaStreamInterface>& webrtc_stream();
 
+  void CheckAdapterRef();
+
  private:
   class Observer;
 
