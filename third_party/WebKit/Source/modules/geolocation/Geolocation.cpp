@@ -446,6 +446,11 @@ void Geolocation::RequestPermission() {
   if (geolocation_permission_ != kPermissionUnknown)
     return;
 
+  if (GetFrame()->GetSettings()->GetPagePopupsSuppressed()) {
+    pending_for_permission_notifiers_.clear();
+    return;
+  }
+
   LocalFrame* frame = this->GetFrame();
   if (!frame)
     return;
