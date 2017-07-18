@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e4a059e_3fdd214e",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-18T15:57:47Z",
+      "side": 1,
+      "message": "dtapuska@: I am not very certain about the |event_type| here, could you review?",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 52
+      },
+      "revId": "d1b7d93b7f6134dd91fcb61bf50622116893c1b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
