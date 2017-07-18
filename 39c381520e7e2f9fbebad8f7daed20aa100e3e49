@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "04a00807_148891b6",
+        "filename": "chrome/browser/supervised_user/supervised_user_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-18T15:04:53Z",
+      "side": 1,
+      "message": "I see. However from the moment you make a method protected you stop controlling its scope. After all, even if its non-virtual, any child class can have a public method that calls the protected one directly, which is pretty much equivalent to making it public for the child class. The way I see it, making something protected is more like an indication to developers writing a derived class that they should really think before exposing it - but not something that is enforced the way private methods are.",
+      "parentUuid": "0580a7b4_76242579",
+      "revId": "39c381520e7e2f9fbebad8f7daed20aa100e3e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a490b7e_22df6e14",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 10
