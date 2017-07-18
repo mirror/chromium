@@ -117,6 +117,30 @@
       "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ec40c0_2f31c0cc",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-18T00:45:15Z",
+      "side": 1,
+      "message": "If the offset is zero, the scroll recorder will have no effect (and is harmless).\n\nGiven that, why did you need line 79?",
+      "parentUuid": "bc436dd2_74ddac14",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "75a5bf45336a2b8e5e0ff1fd303d06640f1d6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
