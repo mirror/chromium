@@ -46,6 +46,30 @@
       "revId": "76b917eedfca62b75999ac199f804a78e194bc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "431068a6_431d237b",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T22:07:45Z",
+      "side": 1,
+      "message": "Seems like what you really want is to get the promo from the tree and check if its visible.\n\nSuccessful instantiation does not mean successful display.",
+      "parentUuid": "488926f1_c21f8200",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "76b917eedfca62b75999ac199f804a78e194bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
