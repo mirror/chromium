@@ -22,6 +22,30 @@
       "revId": "056ecfbd6e74ff772fea5f4b945ab30a26e859b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7061280c_588d1d9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-18T16:21:08Z",
+      "side": 1,
+      "message": "Oh, shoot. I think I have a relatively simple fix for this though -- should I send that, or would you like me to revert?",
+      "parentUuid": "eafa2671_fa134527",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "056ecfbd6e74ff772fea5f4b945ab30a26e859b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
