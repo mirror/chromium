@@ -22,6 +22,30 @@
       "revId": "76b917eedfca62b75999ac199f804a78e194bc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488926f1_c21f8200",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-18T22:02:38Z",
+      "side": 1,
+      "message": "This is for the interactive browsertest to confirm that the promo was created when cat calls it.",
+      "parentUuid": "f3890977_885565f4",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "76b917eedfca62b75999ac199f804a78e194bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "efad59f8_99c61a25",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-18T22:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3121abd_b0174a09",
+      "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ea794d1_e29c241c",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 6
