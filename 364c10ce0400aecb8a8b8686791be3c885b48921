@@ -2050,6 +2050,24 @@
     },
     {
       "key": {
+        "uuid": "d648d9cf_bdcc3b64",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "Yes, bind_data_device_manager provides the client supported version. see bind_compositor for an example of how we use this.",
+      "parentUuid": "36f1ce37_0094fbc0",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f576cc2_0cce161a",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8

@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde2482a_1c1dca3a",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "\"const DataSource* source\" if passing nullptr as the comment above is valid.",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64ecb78_f20a8498",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "who is the owner of the returned DataOffer?",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27ab598_7ea54b48",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: \"ended using\"? \"is no longer using\" instead? or did it end something else?",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee7ba76_009d9103",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: WaylandDataDeviceManagerDndAction(DndAction action) to be consistent with similar helper functions in this file such as XdgSurfaceV5ResizeComponent",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad58b11_6163eb33",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: NOTREACHED() below switch statement in case we ever end up with an incorrect value of action at runtime somehow",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010e6be0_ecd2e1a6",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: WaylandDataDeviceManagerDndActions(...)",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a55a31_136232db",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: no need for {}",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a788ec_e43368b9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: DataDeviceManagerDndAction",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39f0b4e_1123913b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: DataDeviceManagerDndActions",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6e476c_6af0c225",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "just \"DataOffer\"?",
+      "range": {
+        "startLine": 2836,
+        "startChar": 61,
+        "endLine": 2836,
+        "endChar": 76
+      },
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c364af8_e715c3f9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2844,
+        "startChar": 25,
+        "endLine": 2844,
+        "endChar": 40
+      },
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb39333_ef185450",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "please use wl_display_next_serial instead. see other uses of it in this file for an exmaple.",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6abbd24_b9f07ea5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2880,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "FYI, I think it makes sense to pass the serial to StartDrag here. Eventually we want that class to contain the logic to validate if drag should be respected or not. However, ignoring this for now is fine. Do you have a bug number you can link to here?",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fecaea5_8eee9a64",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2891,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-18T12:49:16Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
