@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4a3a2e_bb6dfe5c",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T11:50:08Z",
+      "side": 1,
+      "message": "#pragma mark - ShareCommands (or whatever)",
+      "revId": "844397aacf8fc63ece833188935184bbe3f7867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acccb372_aeb85ecc",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T11:50:08Z",
+      "side": 1,
+      "message": "#pragma mark - internal",
+      "revId": "844397aacf8fc63ece833188935184bbe3f7867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d659b4_dd2550f2",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T11:50:08Z",
+      "side": 1,
+      "message": "#pragma mark - ActivityServicePassword",
+      "revId": "844397aacf8fc63ece833188935184bbe3f7867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0f2a6c_419d3e81",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T11:50:08Z",
+      "side": 1,
+      "message": "Comments on all of these?",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "844397aacf8fc63ece833188935184bbe3f7867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070fee8a_948ad99d",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-18T11:50:08Z",
+      "side": 1,
+      "message": "I still prefer the inverse approach -- break out non-BVC commands into sub-protocols.",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "844397aacf8fc63ece833188935184bbe3f7867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
