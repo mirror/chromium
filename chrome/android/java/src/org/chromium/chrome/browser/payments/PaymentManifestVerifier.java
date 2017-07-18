@@ -40,7 +40,7 @@ import java.util.Set;
 public class PaymentManifestVerifier
         implements ManifestDownloadCallback, ManifestParseCallback,
                    PaymentManifestWebDataService.PaymentManifestWebDataServiceCallback {
-    private static final String TAG = "cr_PaymentManifest";
+    private static final String TAG = "PaymentManifest";
 
     /** Interface for the callback to invoke when finished verification. */
     public interface ManifestVerifyCallback {
@@ -126,7 +126,8 @@ public class PaymentManifestVerifier
      * Builds the manifest verifier.
      *
      * @param methodName             The name of the payment method name that apps offer to handle.
-     *                               Must be an absolute URI with HTTPS scheme.
+     *                               Must be an absolute URI with HTTPS scheme, but HTTP localhost
+     *                               is allowed in testing.
      * @param matchingApps           The identifying information for the native Android payment apps
      *                               that offer to handle this payment method.
      * @param webDataService         The web data service to cache manifest.
@@ -140,7 +141,9 @@ public class PaymentManifestVerifier
             PaymentManifestParser parser, PackageManagerDelegate packageManagerDelegate,
             ManifestVerifyCallback callback) {
         assert methodName.isAbsolute();
-        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme());
+        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme())
+                || ("127.0.0.1".equals(methodName.getHost())
+                           && UrlConstants.HTTP_SCHEME.equals(methodName.getScheme()));
         assert !matchingApps.isEmpty();
 
         mMethodName = methodName;
@@ -162,7 +165,7 @@ public class PaymentManifestVerifier
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             // Intentionally ignore.
-            Log.d(TAG, "Unable to generate SHA-256 hashes.");
+            Log.e(TAG, "Unable to generate SHA-256 hashes.");
         }
         mMessageDigest = md;
 
@@ -256,8 +259,12 @@ public class PaymentManifestVerifier
         }
 
         mPendingWebAppManifestsCount = matchingApps.size();
+        if (appPackageNames.length == 0) {
+            assert false : "Remove this line once a test hits it.";
+        }
         for (int i = 0; i < appPackageNames.length; i++) {
             if (!mWebDataService.getPaymentWebAppManifest(appPackageNames[i], this)) {
+                assert false : "Remove this line once a test hits it.";
                 mIsManifestCacheStaleOrUnusable = true;
                 mPendingWebAppManifestsCount = 0;
                 mDownloader.downloadPaymentMethodManifest(mMethodName, this);
@@ -268,9 +275,13 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentWebAppManifestFetched(WebAppManifestSection[] manifest) {
-        if (mIsManifestCacheStaleOrUnusable) return;
+        if (mIsManifestCacheStaleOrUnusable) {
+            assert false : "Remove this line once a test hits it.";
+            return;
+        }
 
         if (manifest == null || manifest.length == 0) {
+            assert false : "Remove this line once a test hits it.";
             mIsManifestCacheStaleOrUnusable = true;
             mPendingWebAppManifestsCount = 0;
             mDownloader.downloadPaymentMethodManifest(mMethodName, this);
@@ -315,7 +326,10 @@ public class PaymentManifestVerifier
 
         mPendingWebAppManifestsCount = webAppManifestUris.length;
         for (int i = 0; i < webAppManifestUris.length; i++) {
-            if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+            if (mAtLeastOneManifestFailedToDownloadOrParse) {
+                assert false : "Remove this line once a test hits it.";
+                return;
+            }
             assert webAppManifestUris[i] != null;
             mDownloader.downloadWebAppManifest(webAppManifestUris[i], this);
         }
@@ -323,7 +337,10 @@ public class PaymentManifestVerifier
 
     @Override
     public void onWebAppManifestDownloadSuccess(String content) {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        if (mAtLeastOneManifestFailedToDownloadOrParse) {
+            assert false : "Remove this line once a test hits it.";
+            return;
+        }
         mParser.parseWebAppManifest(content, this);
     }
 
@@ -332,7 +349,10 @@ public class PaymentManifestVerifier
         assert manifest != null;
         assert manifest.length > 0;
 
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        if (mAtLeastOneManifestFailedToDownloadOrParse) {
+            assert false : "Remove this line once a test hits it.";
+            return;
+        }
 
         for (int i = 0; i < manifest.length; i++) {
             mSupportedAppPackageNames.add(manifest[i].id);
@@ -347,6 +367,8 @@ public class PaymentManifestVerifier
                         mMethodName, mMatchingApps.get(verifiedAppPackageName).resolveInfo);
                 mMatchingApps.remove(verifiedAppPackageName);
             }
+        } else {
+            assert false : "Remove this line once a test hits it.";
         }
 
         mPendingWebAppManifestsCount--;
@@ -358,6 +380,8 @@ public class PaymentManifestVerifier
             for (Map.Entry<String, AppInfo> entry : mMatchingApps.entrySet()) {
                 mCallback.onInvalidPaymentApp(mMethodName, entry.getValue().resolveInfo);
             }
+        } else {
+            assert false : "Remove this line once a test hits it.";
         }
 
         // Cache supported apps' package names.
@@ -365,6 +389,9 @@ public class PaymentManifestVerifier
                 mSupportedAppPackageNames.toArray(new String[mSupportedAppPackageNames.size()]));
 
         // Cache supported apps' parsed manifests.
+        if (mSupportedAppParsedManifests.isEmpty()) {
+            assert false : "Remove this line once a test hits it.";
+        }
         for (int i = 0; i < mSupportedAppParsedManifests.size(); i++) {
             mWebDataService.addPaymentWebAppManifest(mSupportedAppParsedManifests.get(i));
         }
@@ -374,10 +401,15 @@ public class PaymentManifestVerifier
 
     @Nullable
     private String verifyAppWithWebAppManifest(WebAppManifestSection[] manifest) {
+        assert manifest.length > 0;
+
         List<Set<String>> sectionsFingerprints = new ArrayList<>();
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
             Set<String> fingerprints = new HashSet<>();
+            if (section.fingerprints.length == 0) {
+                assert false : "Remove this line once a test hits it.";
+            }
             for (int j = 0; j < section.fingerprints.length; j++) {
                 fingerprints.add(byteArrayToString(section.fingerprints[j]));
             }
@@ -387,31 +419,81 @@ public class PaymentManifestVerifier
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
             AppInfo appInfo = mMatchingApps.get(section.id);
-            if (appInfo != null && appInfo.version >= section.minVersion
-                    && appInfo.sha256CertFingerprints != null
-                    && appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
-                return section.id;
+            if (appInfo == null) continue;
+
+            if (appInfo.version < section.minVersion) {
+                assert false : "Remove this line once a test hits it.";
+                Log.e(TAG, "\"%s\" version is %d, but at least %d is required.", section.id,
+                        appInfo.version, section.minVersion);
+                continue;
             }
+
+            if (appInfo.sha256CertFingerprints == null) {
+                assert false : "Remove this line once a test hits it.";
+                Log.e(TAG, "Unable to determine fingerprints of \"%s\".", section.id);
+                continue;
+            }
+
+            if (!appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
+                Log.e(TAG,
+                        "\"%s\" fingerprints don't match the manifest. Expected %s, but found %s.",
+                        section.id, setToString(sectionsFingerprints.get(i)),
+                        setToString(appInfo.sha256CertFingerprints));
+                continue;
+            }
+
+            return section.id;
         }
 
         return null;
     }
 
+    private static String setToString(Set<String> set) {
+        StringBuilder result = new StringBuilder("[");
+        for (String item : set) {
+            result.append(' ');
+            result.append(item);
+        }
+        result.append(" ]");
+        return result.toString();
+    }
+
     @Override
     public void onManifestDownloadFailure() {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        if (mAtLeastOneManifestFailedToDownloadOrParse) {
+            assert false : "Remove this line once a test hits it.";
+            return;
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
         mAtLeastOneManifestFailedToDownloadOrParse = true;
 
-        if (mIsManifestCacheStaleOrUnusable) mCallback.onInvalidManifest(mMethodName);
+        if (mIsManifestCacheStaleOrUnusable) {
+            assert false : "Remove this line once a test hits it.";
+            mCallback.onInvalidManifest(mMethodName);
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
         mCallback.onVerifyFinished(this);
     }
 
     @Override
     public void onManifestParseFailure() {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        assert false : "Remove this line once a test hits it.";
+        if (mAtLeastOneManifestFailedToDownloadOrParse) {
+            assert false : "Remove this line once a test hits it.";
+            return;
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
         mAtLeastOneManifestFailedToDownloadOrParse = true;
 
-        if (mIsManifestCacheStaleOrUnusable) mCallback.onInvalidManifest(mMethodName);
+        if (mIsManifestCacheStaleOrUnusable) {
+            assert false : "Remove this line once a test hits it.";
+            mCallback.onInvalidManifest(mMethodName);
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
         mCallback.onVerifyFinished(this);
     }
 }

@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 
 import org.chromium.base.Log;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.payments.PaymentAppFactory.PaymentAppCreatedCallback;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,14 +39,14 @@ import javax.annotation.Nullable;
  * app.
  */
 public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
-    private static final String TAG = "cr_PaymentAppFinder";
+    private static final String TAG = "PaymentAppFinder";
 
     /** The maximum number of payment method manifests to download. */
     private static final int MAX_NUMBER_OF_MANIFESTS = 10;
 
     /** The name of the intent for the service to check whether an app is ready to pay. */
     /* package */ static final String ACTION_IS_READY_TO_PAY =
-                          "org.chromium.intent.action.IS_READY_TO_PAY";
+            "org.chromium.intent.action.IS_READY_TO_PAY";
 
     /**
      * Meta data name of an app's supported payment method names.
@@ -59,6 +59,8 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
      */
     /* package */ static final String META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME =
             "org.chromium.default_payment_method_name";
+
+    private static boolean sAllowHttpForTest;
 
     private final WebContents mWebContents;
     private final Set<String> mNonUriPaymentMethods;
@@ -129,19 +131,26 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             assert !TextUtils.isEmpty(method);
             if (supportedNonUriPaymentMethods.contains(method)) {
                 mNonUriPaymentMethods.add(method);
-            } else if (method.startsWith(UrlConstants.HTTPS_URL_PREFIX)) {
+            } else if (method.startsWith(UrlConstants.HTTPS_URL_PREFIX)
+                    || (sAllowHttpForTest && method.startsWith("http://127.0.0.1:"))) {
                 URI uri;
                 try {
                     // Don't use java.net.URL, because it performs a synchronous DNS lookup in
                     // the constructor.
                     uri = new URI(method);
                 } catch (URISyntaxException e) {
+                    assert false : "Remove this line once a test hits it.";
                     continue;
                 }
 
                 if (uri.isAbsolute()) {
-                    assert UrlConstants.HTTPS_SCHEME.equals(uri.getScheme());
+                    assert UrlConstants.HTTPS_SCHEME.equals(uri.getScheme())
+                            || (sAllowHttpForTest
+                                       && UrlConstants.HTTP_SCHEME.equals(uri.getScheme())
+                                       && "127.0.0.1".equals(uri.getHost()));
                     mUriPaymentMethods.add(uri);
+                } else {
+                    assert false : "Remove this line once a test hits it.";
                 }
             }
         }
@@ -168,6 +177,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             return;
         }
 
+        if (apps.isEmpty()) {
+            assert false : "Remove this line once a test hits it.";
+        }
         List<Set<String>> appSupportedMethods = new ArrayList<>();
         for (int i = 0; i < apps.size(); i++) {
             appSupportedMethods.add(getPaymentMethodNames(apps.get(i).activityInfo));
@@ -192,7 +204,8 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             mPendingApps.put(uriMethodName, new HashSet<>(supportedApps));
 
             if (mManifestVerifiers.size() == MAX_NUMBER_OF_MANIFESTS) {
-                Log.d(TAG, "Reached maximum number of allowed payment app manifests.");
+                assert false : "Remove this line once a test hits it.";
+                Log.e(TAG, "Reached maximum number of allowed payment app manifests.");
                 break;
             }
         }
@@ -211,6 +224,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             return;
         }
 
+        if (mManifestVerifiers.isEmpty()) {
+            assert false : "Remove this line once a test hits it.";
+        }
         for (int i = 0; i < mManifestVerifiers.size(); i++) {
             mManifestVerifiers.get(i).verify();
         }
@@ -219,26 +235,52 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
     @Nullable
     private Set<String> getPaymentMethodNames(ActivityInfo activityInfo) {
         Set<String> result = new HashSet<>();
-        if (activityInfo.metaData == null) return result;
+        if (activityInfo.metaData == null) {
+            assert false : "Remove this line once a test hits it.";
+            return result;
+        }
 
         String defaultMethodName =
                 activityInfo.metaData.getString(META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
-        if (!TextUtils.isEmpty(defaultMethodName)) result.add(defaultMethodName);
+        if (!TextUtils.isEmpty(defaultMethodName)) {
+            result.add(defaultMethodName);
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
 
         int resId = activityInfo.metaData.getInt(META_DATA_NAME_OF_PAYMENT_METHOD_NAMES);
-        if (resId == 0) return result;
+        if (resId == 0) {
+            return result;
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
 
         Resources resources =
                 mPackageManagerDelegate.getResourcesForApplication(activityInfo.applicationInfo);
-        if (resources == null) return result;
+        if (resources == null) {
+            assert false : "Remove this line once a test hits it.";
+            return result;
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
 
         String[] methodNames = resources.getStringArray(resId);
-        if (methodNames == null) return result;
+        if (methodNames == null) {
+            assert false : "Remove this line once a test hits it.";
+            return result;
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
 
+        if (methodNames.length == 0) {
+            assert false : "Remove this line once a test hits it.";
+        }
         for (int i = 0; i < methodNames.length; i++) {
+            assert false : "Remove this line once a test hits it.";
             result.add(methodNames[i]);
         }
 
+        assert false : "Remove this line once a test hits it.";
         return result;
     }
 
@@ -249,6 +291,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         // Note that apps and  methodNames must have the same size. The information at the same
         // index must correspond to the same app.
         List<ResolveInfo> supportedApps = new ArrayList<>();
+        if (apps.isEmpty()) {
+            assert false : "Remove this line once a test hits it.";
+        }
         for (int i = 0; i < apps.size(); i++) {
             if (methodNames.get(i).contains(targetMethodName)) {
                 supportedApps.add(apps.get(i));
@@ -271,15 +316,16 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         if (app == null) {
             CharSequence label = mPackageManagerDelegate.getAppLabel(resolveInfo);
             if (TextUtils.isEmpty(label)) {
-                Log.d(TAG,
-                        String.format(Locale.getDefault(), "Skipping '%s' because of empty label.",
-                                packageName));
+                assert false : "Remove this line once a test hits it.";
+                Log.e(TAG, "Skipping \"%s\" because of empty label.", packageName);
                 return;
             }
             app = new AndroidPaymentApp(mWebContents, packageName, resolveInfo.activityInfo.name,
                     label.toString(), mPackageManagerDelegate.getAppIcon(resolveInfo),
                     mIsIncognito);
             mResult.put(packageName, app);
+        } else {
+            assert false : "Remove this line once a test hits it.";
         }
         app.addMethodName(methodName);
     }
@@ -293,14 +339,22 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
     private void removePendingApp(URI methodName, ResolveInfo resolveInfo) {
         Set<ResolveInfo> pendingAppsForMethod = mPendingApps.get(methodName);
         pendingAppsForMethod.remove(resolveInfo);
-        if (pendingAppsForMethod.isEmpty()) mPendingApps.remove(methodName);
+        if (pendingAppsForMethod.isEmpty()) {
+            mPendingApps.remove(methodName);
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
         if (mPendingApps.isEmpty()) onSearchFinished();
     }
 
     @Override
     public void onInvalidManifest(URI methodName) {
         mPendingApps.remove(methodName);
-        if (mPendingApps.isEmpty()) onSearchFinished();
+        if (mPendingApps.isEmpty()) {
+            onSearchFinished();
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
     }
 
     @Override
@@ -310,8 +364,16 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
 
         assert mPendingApps.isEmpty();
         mWebDataService.destroy();
-        if (mDownloader.isInitialized()) mDownloader.destroy();
-        if (mParser.isUtilityProcessRunning()) mParser.stopUtilityProcess();
+        if (mDownloader.isInitialized()) {
+            mDownloader.destroy();
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
+        if (mParser.isUtilityProcessRunning()) {
+            mParser.stopUtilityProcess();
+        } else {
+            assert false : "Remove this line once a test hits it.";
+        }
     }
 
     /**
@@ -326,10 +388,18 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                     mPackageManagerDelegate.getServicesThatCanRespondToIntent(
                             new Intent(ACTION_IS_READY_TO_PAY));
             for (int i = 0; i < resolveInfos.size(); i++) {
+                assert false : "Remove this line once a test hits it.";
                 ResolveInfo resolveInfo = resolveInfos.get(i);
                 AndroidPaymentApp app = mResult.get(resolveInfo.serviceInfo.packageName);
-                if (app != null) app.setIsReadyToPayAction(resolveInfo.serviceInfo.name);
+                if (app != null) {
+                    assert false : "Remove this line once a test hits it.";
+                    app.setIsReadyToPayAction(resolveInfo.serviceInfo.name);
+                } else {
+                    assert false : "Remove this line once a test hits it.";
+                }
             }
+        } else {
+            assert false : "Remove this line once a test hits it.";
         }
 
         for (Map.Entry<String, AndroidPaymentApp> entry : mResult.entrySet()) {
@@ -337,5 +407,10 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         }
 
         mCallback.onAllPaymentAppsCreated();
+    }
+
+    @VisibleForTesting
+    public static void allowHttpForTest() {
+        sAllowHttpForTest = true;
     }
 }
