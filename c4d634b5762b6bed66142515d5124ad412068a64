@@ -16,6 +16,24 @@
       "revId": "c4d634b5762b6bed66142515d5124ad412068a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4286f1_7cd33483",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoaderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-18T06:51:18Z",
+      "side": 0,
+      "message": "The two tests I removed was checking whether we can call Clear / Cancel in the callback. It is not needed now because the function is deleted, and we have similar tests for DidFail. DidFailAccessControlCheck is a bit different, it checks if the correct error is dispatched, so it\u0027s not covered by others.",
+      "parentUuid": "6809f7fc_69c33ec2",
+      "revId": "c4d634b5762b6bed66142515d5124ad412068a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
