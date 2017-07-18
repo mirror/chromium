@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca41cced_879a1cb9",
+        "filename": "build/toolchain/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-07-18T22:12:50Z",
+      "side": 1,
+      "message": "This already exists :p.",
+      "range": {
+        "startLine": 131,
+        "startChar": 17,
+        "endLine": 131,
+        "endChar": 35
+      },
+      "revId": "71557343961a2258c3a0a44f6f90976abd9e03ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
