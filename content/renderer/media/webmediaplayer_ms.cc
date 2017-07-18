@@ -268,7 +268,7 @@ void WebMediaPlayerMS::Load(LoadType load_type,
   }
   if (video_frame_provider_)
     video_frame_provider_->Start();
-  if (audio_renderer_ && !video_frame_provider_) {
+  if (audio_renderer_ && true) {  // !video_frame_provider_) {
     // This is audio-only mode.
     SetReadyState(WebMediaPlayer::kReadyStateHaveMetadata);
     SetReadyState(WebMediaPlayer::kReadyStateHaveEnoughData);
