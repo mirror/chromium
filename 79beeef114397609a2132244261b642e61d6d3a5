@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76e062fe_5b30367e",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T00:25:21Z",
+      "side": 1,
+      "message": "worklet_backing_thread_ \u003d nullptr; ?\n\n(Optional) How about abstracting thread clearance like IsRenderingThread() and GetRenderingThread():\n\nAudioDestination:ClearRenderingThread() {\n  rendering_thread_.reset();\n  worklet_backing_thread_ \u003d nullptr;\n}",
+      "revId": "79beeef114397609a2132244261b642e61d6d3a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
