@@ -1443,6 +1443,8 @@ source_set("chromeos") {
     "system_logs/touch_log_source.h",
     "system_logs/touch_log_source_ozone.cc",
     "system_logs/touch_log_source_x11.cc",
+    "tether/active_users_daily_event_observer.cc",
+    "tether/active_users_daily_event_observer.h",
     "tether/fake_tether_service.cc",
     "tether/fake_tether_service.h",
     "tether/tether_service.cc",
