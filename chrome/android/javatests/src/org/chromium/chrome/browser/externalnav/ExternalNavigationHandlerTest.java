@@ -529,6 +529,7 @@ public class ExternalNavigationHandlerTest {
                 .expecting(OverrideUrlLoadingResult.OVERRIDE_WITH_EXTERNAL_INTENT,
                         START_OTHER_ACTIVITY);
 
+        // Intent out if the external handler extra is present for non redirect requests.
         Intent extraIntent3 = Intent.parseUri("http://youtube.com/", Intent.URI_INTENT_SCHEME);
         extraIntent3.putExtra(CustomTabsIntent.EXTRA_SESSION, "");
         extraIntent3.putExtra(
@@ -539,7 +540,7 @@ public class ExternalNavigationHandlerTest {
         redirectHandler.updateNewUrlLoading(transTypeLinkFromIntent, false, false, 0, 0);
         checkUrl("http://youtube.com/")
                 .withPageTransition(transTypeLinkFromIntent)
-                .withIsRedirect(true)
+                .withIsRedirect(false)
                 .withRedirectHandler(redirectHandler)
                 .expecting(OverrideUrlLoadingResult.OVERRIDE_WITH_EXTERNAL_INTENT,
                         START_OTHER_ACTIVITY);
