@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1350fcfb_678d65ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/ChromeFullscreenManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-18T17:06:34Z",
+      "side": 1,
+      "message": "getBottomControlsHeight can probably just be used here, but this matches the logic for the top.",
+      "range": {
+        "startLine": 488,
+        "startChar": 29,
+        "endLine": 488,
+        "endChar": 81
+      },
+      "revId": "1ee8d746f0fe23632b6f00f58feb0ef3bf2c1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
