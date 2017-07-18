@@ -34,6 +34,24 @@
       "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3edce5_b6666b3b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-18T14:55:21Z",
+      "side": 1,
+      "message": "I think we need to keep enable_vr disabled for most existing linux builders, as that\u0027s the norm.  With this CL, we simply want to make sure that the linux target also compiles and passes VR tests if enable_vr is set.  I figured that\u0027d be a different (additional) build target, but I don\u0027t know what the preferences are here.",
+      "parentUuid": "04960ee6_151cc1c4",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
