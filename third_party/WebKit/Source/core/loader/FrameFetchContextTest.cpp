@@ -49,6 +49,7 @@
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/testing/MockResource.h"
+#include "platform/testing/HistogramTester.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/WebAddressSpace.h"
@@ -56,6 +57,7 @@
 #include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
+#include "public/platform/web_feature.mojom-blink.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -911,6 +913,30 @@ TEST_F(FrameFetchContextMockedLocalFrameClientTest,
                   ResourceResponse()));
   fetch_context->DispatchDidLoadResourceFromMemoryCache(
       CreateUniqueIdentifier(), resource_request, resource->GetResponse());
+}
+
+// Tests that the client hints lifetime header is parsed correctly.
+TEST_F(FrameFetchContextMockedLocalFrameClientTest, PersistClientHints) {
+  HistogramTester histogram_tester;
+  ResourceRequest resource_request(url);
+  resource_request.SetRequestContext(WebURLRequest::kRequestContextImage);
+  resource_request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeOmit);
+
+  ResourceResponse response;
+  response.SetHTTPHeaderField("accept-ch", "dpr");
+  response.SetHTTPHeaderField("accept-ch-lifetime", "3600");
+  response.SetURL(url);
+  Resource* resource = MockResource::Create(resource_request);
+  resource->SetResponse(response);
+  fetch_context->DispatchDidReceiveResponse(
+      CreateUniqueIdentifier(), response, WebURLRequest::kFrameTypeNone,
+      WebURLRequest::kRequestContextFetch, resource,
+      FetchContext::ResourceResponseType::kNotFromMemoryCache);
+
+  histogram_tester.ExpectBucketCount(
+      "Blink.UseCounter.Features",
+      static_cast<int>(WebFeature::kPersistentClientHintHeader), 1);
 }
 
 // Tests that when a resource with certificate errors is loaded from the memory

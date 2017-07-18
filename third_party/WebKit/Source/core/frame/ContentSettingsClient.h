@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "platform/heap/Heap.h"
 #include "platform/wtf/Forward.h"
+#include "public/platform/WebClientHintsType.h"
 
 namespace blink {
 
@@ -89,6 +90,12 @@ class CORE_EXPORT ContentSettingsClient {
 
   // This callback is similar, but for plugins.
   void DidNotAllowPlugins();
+
+  // Called to persist the client hint preferences received when |url| was
+  // fetched. The preferences should be persisted for |duration_seconds|.
+  void PersistClientHints(const bool enabled_types[kWebClientHintsTypeLast + 1],
+                          int64_t duration_seconds,
+                          const KURL&);
 
  private:
   WebContentSettingsClient* client_ = nullptr;

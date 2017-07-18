@@ -4,6 +4,8 @@
 
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 
+#include "platform/weborigin/KURL.h"
+#include "public/platform/WebRuntimeFeatures.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -55,6 +57,53 @@ TEST_F(ClientHintsPreferencesTest, Basic) {
               preferences.ShouldSend(kWebClientHintsTypeDpr));
     EXPECT_EQ(test_case.expectation_viewport_width,
               preferences.ShouldSend(kWebClientHintsTypeViewportWidth));
+  }
+}
+
+TEST_F(ClientHintsPreferencesTest, PersistentHints) {
+  struct TestCase {
+    bool enable_persistent_runtime_feature;
+    bool use_https_url;
+    const char* accept_ch_header_value;
+    const char* accept_lifetime_header_value;
+    int64_t expect_persist_duration_seconds;
+  } test_cases[] = {
+      {true, true, "width, dpr, viewportWidth", "", -1},
+      {true, true, "width, dpr, viewportWidth", "-1000", -1},
+      {true, true, "width, dpr, viewportWidth", "1000s", -1},
+      {true, true, "width, dpr, viewportWidth", "1000.5", -1},
+      {false, true, "width, dpr, viewportWidth", "1000", -1},
+      {true, false, "width, dpr, viewportWidth", "1000", -1},
+      {true, true, "width, dpr, viewportWidth", "1000", 1000},
+  };
+
+  for (const auto& test : test_cases) {
+    WebRuntimeFeatures::EnableClientHintsPersistent(
+        test.enable_persistent_runtime_feature);
+    ClientHintsPreferences preferences;
+    bool enabled_types[kWebClientHintsTypeLast + 1] = {};
+    int64_t persist_duration_seconds = 0;
+
+    const String& url = test.use_https_url
+                            ? String::FromUTF8("https://www.google.com/")
+                            : String::FromUTF8("http://www.google.com/");
+    const KURL kurl(kParsedURLString, url);
+
+    preferences.UpdatePersistentHintsFromHeaders(
+        test.accept_ch_header_value, test.accept_lifetime_header_value, kurl,
+        nullptr, enabled_types, &persist_duration_seconds);
+    EXPECT_EQ(test.expect_persist_duration_seconds, persist_duration_seconds);
+    if (persist_duration_seconds > 0) {
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeDeviceRam]);
+      EXPECT_TRUE(enabled_types[kWebClientHintsTypeDpr]);
+      EXPECT_TRUE(enabled_types[kWebClientHintsTypeResourceWidth]);
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeViewportWidth]);
+    } else {
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeDeviceRam]);
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeDpr]);
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeResourceWidth]);
+      EXPECT_FALSE(enabled_types[kWebClientHintsTypeViewportWidth]);
+    }
   }
 }
 
