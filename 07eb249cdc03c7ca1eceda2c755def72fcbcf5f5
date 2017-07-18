@@ -46,6 +46,30 @@
       "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6244bdc0_9b43a8b0",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 0,
+      "message": "Yes. (BTW--You\u0027ll probably want to brush-up on how GMock works.) You\u0027ll want to write code like:\n\n  EXPECT_CALL(source, OnSinkAvailable(_)).Times(some number);\n\nThe underscore \u0027_\u0027 is a placeholder for \"anything.\"",
+      "parentUuid": "2548ece8_9b33ed43",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

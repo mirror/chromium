@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "f1909f5f_ff40c24e",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "This is filled-in by CastRemotingConnector, based on feature flags, right? If so, I don\u0027t recommend setting it here. You\u0027d like to test that it is missing when the feature flag is turned off.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 78
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd85e810_24a91e5b",
         "filename": "media/mojo/interfaces/remoting_common.mojom",
         "patchSetId": 1
@@ -284,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4e14b419_8e99e8f8",
+        "filename": "media/mojo/interfaces/remoting_common.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "Sounds good. Yes, because the media/remoting code should not include Cast device-specific knowledge. :)",
+      "parentUuid": "b55a44c8_b7d96036",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8153389d_8e07d5ab",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -331,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "754b5540_2a76ebf6",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "IIUC, this will be false if the feature flag was disabled. So, if the feature is disabled, we would not want remoting to ever start.",
+      "parentUuid": "8ff3995d_b08bcd8e",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e33ab29_2fd92a94",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -366,6 +437,30 @@
       "side": 1,
       "message": "Yes, I feel helpful in debugging by logging out the start_trigger and stop_trigger while switching. WDYT? Removed some other VLOGs that might give duplicate info.",
       "parentUuid": "0e33ab29_2fd92a94",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 76
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba6dcc8_bf8a636f",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "f73ec1af_fa32ee5f",
       "range": {
         "startLine": 349,
         "startChar": 0,

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ce33ce_f7bd92c3",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "No need to change in this CL, but either you or me or avayvod@ will probably want to enable Android soon, to support avayvod@\u0027s work. This is as simple as removing the \"#if !defined(ANDROID)\" here and in chrome/common/chrome_features.*, and adding android in the entry in chrome/browser/about_flags.cc.",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 24
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af028b13_374d9a80",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "It would be good to have some unit tests that check RendererController works when certain audio or video capabilities are present versus not. E.g., VP9 remoting is allowed to start when the capability is in the set, but is not allowed to start when the capability is missing.",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 227,
+        "endChar": 58
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725b031d_4a65bbc3",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "IMHO, \"IsRemotingEnabled()\" could be confused with \"is remoting started\" or something similar. I was about to suggest a name change, but how about we just remove it?\n\nHere\u0027s what I\u0027m thinking: When SharedSession::OnSinkAvailable() is called, we can check for the RENDERING feature (in shared_session.cc). If it\u0027s missing, don\u0027t change the session state nor notify the Client. In other words, SharedSession could pretend the sink is not available. WDYT?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd98731_9d01ae1a",
+        "filename": "media/remoting/sink_availability_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T01:54:20Z",
+      "side": 1,
+      "message": "Hmm...This code is duplicated: this is the same as the code in SharedSession. Can you consolidate it?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "06765d47225614875e63e0da5243101367c3801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
