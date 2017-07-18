@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5365d1f5_61042981",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-18T08:51:18Z",
+      "side": 1,
+      "message": "Nit: can toDouble() handle \"1.\" (\u003d\u003e 1.0)?  Giving \"1..\" should pass \"1.\" to ToDouble(),\nand the returned value is expected to be 1.0.",
+      "revId": "c0feeea173924e2dd17d4d419de908fc0078c2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
