@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "7cee2da1_f1f98e38",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T20:16:39Z",
+      "side": 1,
+      "message": "For next time, discuss why the change can\u0027t be made.",
+      "parentUuid": "c410964d_6fb90ff8",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a2d5f8_2479ea67",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 4
