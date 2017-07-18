@@ -16,6 +16,24 @@
       "revId": "4414967d36965770a65a9742766b22832fd4c8ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc21d05_4c4ea9c1",
+        "filename": "chrome/browser/predictors/loading_data_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-18T12:44:46Z",
+      "side": 1,
+      "message": "Done\nThe new wording is: \"Initialize |predictor_| no matter whether the |navigation_id| is present in |inflight_navigations_|. This is the case for NTP and about:blank pages, for example.\"",
+      "parentUuid": "22017c83_5a144ad3",
+      "revId": "4414967d36965770a65a9742766b22832fd4c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
