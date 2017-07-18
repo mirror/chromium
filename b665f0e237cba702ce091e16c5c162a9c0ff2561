@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c933eb00_68989f58",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-18T13:05:38Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this make it a little hard to debug if the code and this method diverge by any chance?\n\nMight it be better if this method just takes the next phase parameter (so the body will be primarily phase_ \u003d next_phase), but also does state transition checking based on the type_ and current phase_ when dcheck is on?",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd55f88_94138d87",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-18T13:05:38Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
