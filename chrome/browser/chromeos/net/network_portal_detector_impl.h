@@ -232,7 +232,8 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
   base::CancelableClosure attempt_task_;
   base::CancelableClosure attempt_timeout_;
 
-  // URL that returns a 204 response code when connected to the Internet.
+  // URL that returns a 204 response code when connected to the Internet. Used
+  // by tests.
   GURL portal_test_url_;
 
   // Detector for checking default network for a portal state.
