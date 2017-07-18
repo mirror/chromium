@@ -2,6 +2,103 @@
   "comments": [
     {
       "key": {
+        "uuid": "9af78121_e56d6756",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T04:09:40Z",
+      "side": 1,
+      "message": "nit: SHARED_WORKER",
+      "range": {
+        "startLine": 5,
+        "startChar": 24,
+        "endLine": 5,
+        "endChar": 38
+      },
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4bae05_b49f3712",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T04:09:40Z",
+      "side": 1,
+      "message": "Could you add a comment like \n// Implements blink::mojom::SharedWorkerContentSettingsProxy.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d768b867_60d52db4",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T04:09:40Z",
+      "side": 1,
+      "message": "nit: blank line between l.42 and l.43? (methods and member variables)",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4f79e2_cd06d43a",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T04:09:40Z",
+      "side": 1,
+      "message": "nit: SHARED_WORKER",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24e0827_266db670",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-18T04:09:40Z",
+      "side": 1,
+      "message": "nit: the blank line isn\u0027t needed because GetId() is also overriding blink::WebSharedWorkerClient.",
+      "revId": "cbb528ab3a73a5b485c9e019d7fa0928f6f43a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6521e658_c8fea121",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
         "patchSetId": 9
