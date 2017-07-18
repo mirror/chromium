@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS large typed array 
+PASS blob with large typed array 
+PASS blob with large typed array with key generator 
+PASS array of blobs and large typed arrays 
+PASS array of blobs and large typed arrays with key generator 
+FAIL object with blobs and large typed arrays assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL object with blobs and large typed arrays with key generator assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+Harness: the test ran to completion.
+

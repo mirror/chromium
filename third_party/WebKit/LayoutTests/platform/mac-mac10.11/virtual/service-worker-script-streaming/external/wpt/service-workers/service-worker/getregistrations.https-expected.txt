@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS registrations are not returned following unregister 
+PASS Register then getRegistrations 
+FAIL Register multiple times then getRegistrations assert_array_equals: getRegistrations should resolve with array of registrations. property 0, expected object "[object ServiceWorkerRegistration]" but got object "[object ServiceWorkerRegistration]"
+FAIL Register then Unregister then getRegistrations assert_array_equals: getRegistrations should resolve with an empty array. lengths differ, expected 0 got 2
+FAIL Register then Unregister with controlled frame then getRegistrations assert_array_equals: getRegistrations should resolve with an empty array. lengths differ, expected 0 got 2
+FAIL getRegistrations promise resolves only with same origin registrations. assert_array_equals: getRegistrations should only return same origin registrations. lengths differ, expected 1 got 3
+Harness: the test ran to completion.
+
