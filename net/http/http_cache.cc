@@ -873,8 +873,10 @@ void HttpCache::DoneWithEntry(ActiveEntry* entry,
                               bool is_partial) {
   // |should_restart| is true if there may be other transactions dependent on
   // this transaction and they will need to be restarted.
-  bool should_restart = process_cancel && HasDependentTransactions(
-                                              entry, transaction, is_partial);
+  bool should_restart = process_cancel &&
+                        HasDependentTransactions(entry, transaction) &&
+                        IsValidResponse(transaction, is_partial);
+
   if (should_restart && is_partial)
     entry->disk_entry->CancelSparseIO();
 
@@ -1119,8 +1121,7 @@ bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
 }
 
 bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
-                                         Transaction* transaction,
-                                         bool is_partial) const {
+                                         Transaction* transaction) const {
   if (transaction->method() == "HEAD" || transaction->method() == "DELETE")
     return false;
 
@@ -1142,6 +1143,19 @@ bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
   }
 
   return true;
+}
+
+bool HttpCache::IsValidResponse(Transaction* transaction, bool is_partial) {
+  // Do not keep the entry if the response headers or code sent by the server
+  // is garbled. (crbug.com/739112)
+  const HttpResponseInfo* response_info = transaction->GetResponseInfo();
+
+  if (!response_info->headers.get())
+    return false;
+
+  if (!is_partial && response_info->headers->response_code() != 200) {
+    return false;
+  }
 }
 
 bool HttpCache::IsWritingInProgress(ActiveEntry* entry) const {
