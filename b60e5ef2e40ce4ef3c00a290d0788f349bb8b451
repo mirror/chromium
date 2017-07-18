@@ -16,6 +16,24 @@
       "revId": "b60e5ef2e40ce4ef3c00a290d0788f349bb8b451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3441b9_94f32be7",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-18T15:32:13Z",
+      "side": 0,
+      "message": "This is covered by the webgl_conformance_gl_passthrough tests, and I don\u0027t mind losing coverage of the non-passthrough case.  This target probably should have been removed a while ago.",
+      "parentUuid": "98b7cbad_361e0ccd",
+      "revId": "b60e5ef2e40ce4ef3c00a290d0788f349bb8b451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
