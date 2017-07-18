@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2117c1_f0f56f61",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "probably not needed if you keep the logic in omnibox_field_trial.{cc,h}",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668efd70_2dc3867d",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ecc689_edb7f6fe",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1641c247_159e3bd5",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "ditto (probably doesn\u0027t belong here)",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f27baa2_54120b8e",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "moot with the omnibox_field_trial version?  (I think the old version used \"general params\", not experiment ID params.)\n\nLet\u0027s not add new functionality--even this simple--in this changelist; it\u0027s big enough as is.",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eae1926_a79ec233",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "Hmmm, where does this name come from?  We\u0027re not doing anything with \"extensions\" here.  Also, \"Cusco\" doesn\u0027t mean anything in the checked-in client code.  Can you make this name something more sensible?\n\noptional: Also, only used in one place.  Consider using inlining.  (Not sure if this value needs to be easily found and changed or not.)",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1cc6b4_3b7f12a3",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "optional: Also used in only one place.  Consider using inlining.",
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cc83e8_95222aa8",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "This DCHECK shouldn\u0027t be here if you think it can be null, as it appears you do (see line 103)",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a2af54_18264859",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "nit: is_experimental here as well",
+      "range": {
+        "startLine": 93,
+        "startChar": 13,
+        "endLine": 93,
+        "endChar": 25
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94c991d_0ec38bda",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this can every happen?  What am I missing?  If it can\u0027t happen, please don\u0027t try to handle it.",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c78883_25e659f0",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "not needed anymore I think",
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41369d0a_6308c54a",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7521b56f_fe611ec0",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:45:41Z",
+      "side": 1,
+      "message": "not needed anymore I think",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
