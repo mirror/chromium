@@ -1962,6 +1962,7 @@ test("blink_platform_unittests") {
     "scroll/ScrollableAreaTest.cpp",
     "scroll/ScrollbarThemeOverlayTest.cpp",
     "testing/ArenaTestHelpers.h",
+    "testing/CheckedNumericHashTest.cpp",
     "testing/TreeTestHelpers.cpp",
     "testing/TreeTestHelpers.h",
     "text/BidiResolverTest.cpp",
