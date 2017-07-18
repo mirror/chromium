@@ -3,10 +3,11 @@
 // found in the LICENSE file.
 
 #include <objbase.h>
-#include <shlobj.h>  // Must be before propkey.
 #include <propkey.h>
 #include <shellapi.h>
+#include <shlobj.h>  // Must be before propkey.
 #include <stddef.h>
+#include <wrl/client.h>
 
 #include <string>
 
@@ -15,7 +16,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_propvariant.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -54,6 +54,10 @@ void UnblockOnProfileCreation(Profile* profile,
     base::MessageLoop::current()->QuitWhenIdle();
 }
 
+std::wstring AddIdToIconPath(const wchar_t* path) {
+  return base::StringPrintf(L"%ls,%d", path, 0);
+}
+
 // Checks that the relaunch name, relaunch command and app icon for the given
 // |browser| are correct.
 void ValidateBrowserWindowProperties(
@@ -61,7 +65,7 @@ void ValidateBrowserWindowProperties(
     const base::string16& expected_profile_name) {
   HWND hwnd = views::HWNDForNativeWindow(browser->window()->GetNativeWindow());
 
-  base::win::ScopedComPtr<IPropertyStore> pps;
+  Microsoft::WRL::ComPtr<IPropertyStore> pps;
   HRESULT result = SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps));
   EXPECT_TRUE(SUCCEEDED(result));
 
@@ -93,18 +97,19 @@ void ValidateBrowserWindowProperties(
   EXPECT_EQ(S_OK, pps->GetValue(PKEY_AppUserModel_RelaunchIconResource,
                                 prop_var.Receive()));
   EXPECT_EQ(VT_LPWSTR, prop_var.get().vt);
-  EXPECT_EQ(profiles::internal::GetProfileIconPath(
-                browser->profile()->GetPath()).value(),
+  EXPECT_EQ(AddIdToIconPath(profiles::internal::GetProfileIconPath(
+                                browser->profile()->GetPath())
+                                .value()
+                                .c_str()),
             prop_var.get().pwszVal);
   prop_var.Reset();
-  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void ValidateHostedAppWindowProperties(const Browser* browser,
                                        const extensions::Extension* extension) {
   HWND hwnd = views::HWNDForNativeWindow(browser->window()->GetNativeWindow());
 
-  base::win::ScopedComPtr<IPropertyStore> pps;
+  Microsoft::WRL::ComPtr<IPropertyStore> pps;
   HRESULT result = SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps));
   EXPECT_TRUE(SUCCEEDED(result));
 
@@ -137,29 +142,13 @@ void ValidateHostedAppWindowProperties(const Browser* browser,
             pps->GetValue(PKEY_AppUserModel_RelaunchIconResource,
                           prop_var.Receive()));
   EXPECT_EQ(VT_LPWSTR, prop_var.get().vt);
-  EXPECT_EQ(web_app::internals::GetIconFilePath(
-                web_app_dir, base::UTF8ToUTF16(extension->name())).value(),
-            prop_var.get().pwszVal);
+  EXPECT_EQ(
+      AddIdToIconPath(web_app::internals::GetIconFilePath(
+                          web_app_dir, base::UTF8ToUTF16(extension->name()))
+                          .value()
+                          .c_str()),
+      prop_var.get().pwszVal);
   prop_var.Reset();
-  base::MessageLoop::current()->QuitWhenIdle();
-}
-
-void PostValidationTaskToUIThread(const base::Closure& validation_task) {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE, validation_task);
-}
-
-// Posts a validation task to the FILE thread which bounces back to the UI
-// thread and then does validation. This is necessary because the icon profile
-// pref only gets set at the end of icon creation (which happens on the FILE
-// thread) and is set on the UI thread.
-void WaitAndValidateBrowserWindowProperties(
-    const base::Closure& validation_task) {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&PostValidationTaskToUIThread, validation_task));
-  content::RunMessageLoop();
 }
 
 }  // namespace
@@ -179,12 +168,10 @@ class BrowserTestWithProfileShortcutManager : public InProcessBrowserTest {
 };
 
 // Check that the window properties on Windows are properly set.
-// http://crbug.com/396344
 IN_PROC_BROWSER_TEST_F(BrowserTestWithProfileShortcutManager,
-                       DISABLED_WindowProperties) {
+                       WindowProperties) {
   // Single profile case. The profile name should not be shown.
-  WaitAndValidateBrowserWindowProperties(base::Bind(
-      &ValidateBrowserWindowProperties, browser(), base::string16()));
+  ValidateBrowserWindowProperties(browser(), base::string16());
 
   // If multiprofile mode is not enabled, we can't test the behavior when there
   // are multiple profiles.
@@ -206,10 +193,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTestWithProfileShortcutManager,
   content::RunMessageLoop();
 
   // The default profile's name should be part of the relaunch name.
-  WaitAndValidateBrowserWindowProperties(base::Bind(
-      &ValidateBrowserWindowProperties,
-      browser(),
-      base::UTF8ToUTF16(browser()->profile()->GetProfileUserName())));
+  ValidateBrowserWindowProperties(
+      browser(), base::UTF8ToUTF16(browser()->profile()->GetProfileUserName()));
 
   // The second profile's name should be part of the relaunch name.
   Browser* profile2_browser =
@@ -217,14 +202,10 @@ IN_PROC_BROWSER_TEST_F(BrowserTestWithProfileShortcutManager,
   ProfileAttributesEntry* entry;
   ASSERT_TRUE(profile_manager->GetProfileAttributesStorage().
               GetProfileAttributesWithPath(path_profile2, &entry));
-  WaitAndValidateBrowserWindowProperties(
-      base::Bind(&ValidateBrowserWindowProperties,
-                 profile2_browser,
-                 entry->GetName()));
+  ValidateBrowserWindowProperties(profile2_browser, entry->GetName());
 }
 
-// http://crbug.com/396344
-IN_PROC_BROWSER_TEST_F(BrowserWindowPropertyManagerTest, DISABLED_HostedApp) {
+IN_PROC_BROWSER_TEST_F(BrowserWindowPropertyManagerTest, HostedApp) {
   // Load an app.
   const extensions::Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("app/"));
@@ -247,7 +228,6 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowPropertyManagerTest, DISABLED_HostedApp) {
   ASSERT_TRUE(app_browser);
   ASSERT_TRUE(app_browser != browser());
 
-  WaitAndValidateBrowserWindowProperties(
-      base::Bind(&ValidateHostedAppWindowProperties, app_browser,
-                 base::RetainedRef(extension)));
+  content::RunAllBlockingPoolTasksUntilIdle();
+  ValidateHostedAppWindowProperties(app_browser, extension);
 }
