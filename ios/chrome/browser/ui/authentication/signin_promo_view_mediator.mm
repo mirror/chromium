@@ -121,6 +121,58 @@ void RecordSigninNewAccountUserActionForAccessPoint(
       break;
   }
 }
+
+void RecordImpressionsTilSigninButtonsHistogramForAccessPoint(
+    signin_metrics::AccessPoint access_point,
+    int displayedCount) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      UMA_HISTOGRAM_COUNTS_100(
+          "MobileSignInPromo.BookmarkManager.ImpressionsTilSigninButtons",
+          displayedCount);
+      break;
+    default:
+      NOTREACHED() << "Unexpected value for access point "
+                   << static_cast<int>(access_point);
+      break;
+  }
+}
+
+void RecordImpressionsTilDismissHistogramForAccessPoint(
+    signin_metrics::AccessPoint access_point,
+    int displayedCount) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      UMA_HISTOGRAM_COUNTS_100(
+          "MobileSignInPromo.BookmarkManager.ImpressionsTilDismiss",
+          displayedCount);
+      break;
+    default:
+      NOTREACHED() << "Unexpected value for access point "
+                   << static_cast<int>(access_point);
+      break;
+  }
+}
+
+const char* DisplayedCountPreferenceKey(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      return prefs::kIosBookmarkSigninPromoDisplayedCount;
+    default:
+      return nil;
+  }
+}
+
+const char* AlreadySeenSigninViewPreferenceKey(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      return prefs::kIosBookmarkPromoAlreadySeen;
+    default:
+      return nil;
+  }
+}
 }  // namespace
 
 @interface SigninPromoViewMediator ()<ChromeIdentityServiceObserver,
@@ -129,6 +181,7 @@ void RecordSigninNewAccountUserActionForAccessPoint(
 
 @implementation SigninPromoViewMediator {
   ios::ChromeBrowserState* _browserState;
+  signin_metrics::AccessPoint _accessPoint;
   std::unique_ptr<ChromeIdentityServiceObserverBridge> _identityServiceObserver;
   std::unique_ptr<ChromeBrowserProviderObserverBridge> _browserProviderObserver;
   UIImage* _identityAvatar;
@@ -137,16 +190,19 @@ void RecordSigninNewAccountUserActionForAccessPoint(
 
 @synthesize consumer = _consumer;
 @synthesize defaultIdentity = _defaultIdentity;
-@synthesize accessPoint = _accessPoint;
-@synthesize displayedCountPreferenceKey = _displayedCountPreferenceKey;
-@synthesize alreadySeenSigninViewPreferenceKey =
-    _alreadySeenSigninViewPreferenceKey;
-@synthesize histograms = _histograms;
 @synthesize signinPromoViewState = _signinPromoViewState;
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                         accessPoint:(signin_metrics::AccessPoint)accessPoint {
   self = [super init];
   if (self) {
+    DCHECK(
+        accessPoint == signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS ||
+        accessPoint ==
+            signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER ||
+        accessPoint == signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS ||
+        accessPoint == signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER);
+    _accessPoint = accessPoint;
     _browserState = browserState;
     NSArray* identities = ios::GetChromeBrowserProvider()
                               ->GetChromeIdentityService()
@@ -215,19 +271,14 @@ void RecordSigninNewAccountUserActionForAccessPoint(
   DCHECK(![self isInvalidOrClosed] ||
          _signinPromoViewState != ios::SigninPromoViewState::Unused);
   _signinPromoViewState = ios::SigninPromoViewState::SigninStarted;
-  if (!_displayedCountPreferenceKey)
+  const char* displayedCountPreferenceKey =
+      DisplayedCountPreferenceKey(_accessPoint);
+  if (!displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
-  int displayedCount = prefs->GetInteger(_displayedCountPreferenceKey);
-  switch (_histograms) {
-    case ios::SigninPromoViewHistograms::Bookmarks:
-      UMA_HISTOGRAM_COUNTS_100(
-          "MobileSignInPromo.BookmarkManager.ImpressionsTilSigninButtons",
-          displayedCount);
-      break;
-    case ios::SigninPromoViewHistograms::None:
-      break;
-  }
+  int displayedCount = prefs->GetInteger(displayedCountPreferenceKey);
+  RecordImpressionsTilSigninButtonsHistogramForAccessPoint(_accessPoint,
+                                                           displayedCount);
 }
 
 - (void)signinPromoViewVisible {
@@ -235,15 +286,19 @@ void RecordSigninNewAccountUserActionForAccessPoint(
   if (_isSigninPromoViewVisible)
     return;
   _isSigninPromoViewVisible = YES;
-  if (!_displayedCountPreferenceKey)
+  const char* displayedCountPreferenceKey =
+      DisplayedCountPreferenceKey(_accessPoint);
+  if (!displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
-  int displayedCount = prefs->GetInteger(_displayedCountPreferenceKey);
+  int displayedCount = prefs->GetInteger(displayedCountPreferenceKey);
   ++displayedCount;
-  prefs->SetInteger(_displayedCountPreferenceKey, displayedCount);
+  prefs->SetInteger(displayedCountPreferenceKey, displayedCount);
+  const char* alreadySeenSigninViewPreferenceKey =
+      AlreadySeenSigninViewPreferenceKey(_accessPoint);
   if (displayedCount >= kAutomaticSigninPromoViewDismissCount &&
-      _alreadySeenSigninViewPreferenceKey) {
-    prefs->SetBoolean(prefs::kIosBookmarkPromoAlreadySeen, true);
+      alreadySeenSigninViewPreferenceKey) {
+    prefs->SetBoolean(alreadySeenSigninViewPreferenceKey, true);
   }
 }
 
@@ -255,17 +310,20 @@ void RecordSigninNewAccountUserActionForAccessPoint(
 - (void)signinPromoViewClosed {
   DCHECK(_isSigninPromoViewVisible && ![self isInvalidOrClosed]);
   _signinPromoViewState = ios::SigninPromoViewState::Closed;
-  if (!_displayedCountPreferenceKey)
+  const char* displayedCountPreferenceKey =
+      DisplayedCountPreferenceKey(_accessPoint);
+  if (!displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
-  int displayedCount = prefs->GetInteger(_displayedCountPreferenceKey);
-  switch (_histograms) {
-    case ios::SigninPromoViewHistograms::Bookmarks:
+  int displayedCount = prefs->GetInteger(displayedCountPreferenceKey);
+  switch (_accessPoint) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
       UMA_HISTOGRAM_COUNTS_100(
           "MobileSignInPromo.BookmarkManager.ImpressionsTilXButton",
           displayedCount);
       break;
-    case ios::SigninPromoViewHistograms::None:
+
+    default:
       break;
   }
 }
@@ -276,7 +334,9 @@ void RecordSigninNewAccountUserActionForAccessPoint(
   _signinPromoViewState = ios::SigninPromoViewState::Invalid;
   // If the sign-in promo view has been used at least once, it should not be
   // counted as dismissed (even if the sign-in has been canceled).
-  if (!_displayedCountPreferenceKey || !wasUnused)
+  const char* displayedCountPreferenceKey =
+      DisplayedCountPreferenceKey(_accessPoint);
+  if (!displayedCountPreferenceKey || !wasUnused)
     return;
   // If the sign-in view is removed when the user is authenticated, then the
   // sign-in has been done by another view, and this mediator cannot be counted
@@ -286,16 +346,9 @@ void RecordSigninNewAccountUserActionForAccessPoint(
   if (authService->IsAuthenticated())
     return;
   PrefService* prefs = _browserState->GetPrefs();
-  int displayedCount = prefs->GetInteger(_displayedCountPreferenceKey);
-  switch (_histograms) {
-    case ios::SigninPromoViewHistograms::Bookmarks:
-      UMA_HISTOGRAM_COUNTS_100(
-          "MobileSignInPromo.BookmarkManager.ImpressionsTilDismiss",
-          displayedCount);
-      break;
-    case ios::SigninPromoViewHistograms::None:
-      break;
-  }
+  int displayedCount = prefs->GetInteger(displayedCountPreferenceKey);
+  RecordImpressionsTilDismissHistogramForAccessPoint(_accessPoint,
+                                                     displayedCount);
 }
 
 - (void)signinCallback {
