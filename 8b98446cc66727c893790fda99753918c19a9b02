@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "189bbd69_d71d2c84",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-18T19:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c580e42f_57aa14cd",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9557989e_330968ca",
         "filename": "tools/determinism/remove_build_metadata.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "657b9810_d1b43cac",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-18T19:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9557989e_330968ca",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55896ee6_2723d96d",
         "filename": "tools/determinism/remove_build_metadata.py",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "8b98446cc66727c893790fda99753918c19a9b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90c4f97_0ca44de3",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-18T19:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55896ee6_2723d96d",
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "8b98446cc66727c893790fda99753918c19a9b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1497b64f_565ac562",
+        "filename": "tools/determinism/remove_build_metadata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-18T19:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fc2be19_a2946fb4",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "8b98446cc66727c893790fda99753918c19a9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
