@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d894417c_f5f3b666",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T14:02:43Z",
+      "side": 1,
+      "message": "nit: let\u0027s include this above DISALLOW_COPY_AND_ASSIGN, which is usually the last private member. Can you also include a comment to say what the purpose of it is?",
+      "revId": "a4e23453b47a0913a85e6b71e7b63fee4a185267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
