@@ -36,6 +36,8 @@ enum class CheckerImagingDecision {
   kVetoedSmallerThanCheckeringSize,
   kVetoedLargerThanCacheSize,
 
+  kVetoedHasOnLoadHandler,
+
   kCheckerImagingDecisionCount,
 };
 
@@ -68,6 +70,9 @@ CheckerImagingDecision GetAnimationDecision(const PaintImage& image) {
 }
 
 CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
+  if (image.has_on_load_handler())
+    return CheckerImagingDecision::kVetoedHasOnLoadHandler;
+
   switch (image.completion_state()) {
     case PaintImage::CompletionState::UNKNOWN:
       return CheckerImagingDecision::kVetoedLoadStateUnknown;
