@@ -15,6 +15,29 @@
 #endif  // defined(USE_CUPS)
 
 namespace printing {
+namespace {
+
+#if defined(USE_CUPS)
+std::unique_ptr<CupsConnection> CreateConnection(
+    const base::DictionaryValue* print_backend_settings) {
+  std::string print_server_url_str;
+  std::string cups_blocking;
+  int encryption = HTTP_ENCRYPT_NEVER;
+  if (print_backend_settings) {
+    print_backend_settings->GetString(kCUPSPrintServerURL,
+                                      &print_server_url_str);
+    print_backend_settings->GetString(kCUPSBlocking, &cups_blocking);
+    print_backend_settings->GetInteger(kCUPSEncryption, &encryption);
+  }
+  GURL print_server_url(print_server_url_str);
+
+  return base::MakeUnique<CupsConnection>(
+      print_server_url, static_cast<http_encryption_t>(encryption),
+      cups_blocking == kValueTrue);
+}
+#endif  // defined(USE_CUPS)
+
+}  // namespace
 
 // Provides either a stubbed out PrintBackend implementation or a CUPS IPP
 // implementation for use on ChromeOS.
@@ -82,31 +105,11 @@ bool PrintBackendChromeOS::IsValidPrinter(const std::string& printer_name) {
 // static
 scoped_refptr<PrintBackend> PrintBackend::CreateInstanceImpl(
     const base::DictionaryValue* print_backend_settings) {
-  if (GetNativeCupsEnabled()) {
 #if defined(USE_CUPS)
-    std::string print_server_url_str;
-    std::string cups_blocking;
-    int encryption = HTTP_ENCRYPT_NEVER;
-    if (print_backend_settings) {
-      print_backend_settings->GetString(kCUPSPrintServerURL,
-                                        &print_server_url_str);
-
-      print_backend_settings->GetString(kCUPSBlocking, &cups_blocking);
-
-      print_backend_settings->GetInteger(kCUPSEncryption, &encryption);
-    }
-    GURL print_server_url(print_server_url_str);
-
-    std::unique_ptr<CupsConnection> connection =
-        base::MakeUnique<CupsConnection>(
-            print_server_url, static_cast<http_encryption_t>(encryption),
-            cups_blocking == kValueTrue);
-
-    return new PrintBackendCupsIpp(std::move(connection));
-#endif  // defined(USE_CUPS)
-  }
-
+  return new PrintBackendCupsIpp(CreateConnection(print_backend_settings));
+#else
   return new PrintBackendChromeOS();
+#endif  // defined(USE_CUPS)
 }
 
 }  // namespace printing
