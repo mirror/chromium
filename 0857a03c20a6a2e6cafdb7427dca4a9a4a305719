@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3ad210_b25fdf76",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-18T00:02:47Z",
+      "side": 1,
+      "message": "nit: Taking a const reference to a return value, are we? This is a very subtle part of the spec, and we typically don\u0027t do that in chromium code... Does it actually have an impact? Otherwise I\u0027d keep it simple.",
+      "revId": "0857a03c20a6a2e6cafdb7427dca4a9a4a305719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
