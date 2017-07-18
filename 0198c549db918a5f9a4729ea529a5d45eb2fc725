@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7acfadf9_93729e2d",
+        "filename": "ui/arc/notification/arc_notification_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T15:59:46Z",
+      "side": 1,
+      "message": "I don\u0027t think the friend is what we\u0027d like to have,\nbecause then at any place base::MakeUnique\u003cArcNotificationManager\u003e(...) works unintentionally with private ctors.",
+      "parentUuid": "3adac7e4_e306cf11",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "0198c549db918a5f9a4729ea529a5d45eb2fc725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ed2387a_bc31ccfd",
         "filename": "ui/arc/notification/arc_notification_manager.cc",
         "patchSetId": 4

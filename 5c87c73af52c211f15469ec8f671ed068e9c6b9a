@@ -70,6 +70,30 @@
       "revId": "5c87c73af52c211f15469ec8f671ed068e9c6b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cce5b2_0c3d3fee",
+        "filename": "ui/arc/notification/arc_notification_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-18T15:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98783d1d_e59e977e",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 72
+      },
+      "revId": "5c87c73af52c211f15469ec8f671ed068e9c6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
