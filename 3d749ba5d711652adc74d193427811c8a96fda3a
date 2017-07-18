@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3413cff1_97b833c7",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:03:30Z",
+      "side": 1,
+      "message": "Optional: we could use the ScopedTempDir approach here, too, to make it more clear what we\u0027re testing.",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b568847_2f7b3949",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:03:30Z",
+      "side": 1,
+      "message": "Can we check the error?",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b6bd84_e6779589",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:03:30Z",
+      "side": 1,
+      "message": "nit: Do we need ext_root at all?  Why not just use the temp dir\u0027s path as the root?",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177d48b9_80941c4b",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:03:30Z",
+      "side": 1,
+      "message": "if the description is the only thing that changes, and that\u0027s only needed for documenting the purpose of the test, we could pull this out into a shared constant in an anonymous namespace that we use in each test and just have a comment explaining the expected failure.",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1102ce52_b8b42c81",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-18T22:03:30Z",
+      "side": 1,
+      "message": "String Literals (http://en.cppreference.com/w/cpp/language/string_literal) would make this cleaner, since you wouldn\u0027t have to escape each quote:\n\nR\"(\n    {\n      \"name\": \"Metadata Folder Test\",\n      \"description\": \"...\",\n      ...\n    })\";",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
