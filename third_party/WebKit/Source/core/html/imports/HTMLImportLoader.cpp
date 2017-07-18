@@ -102,12 +102,10 @@ HTMLImportLoader::State HTMLImportLoader::StartWritingAndParsing(
     const ResourceResponse& response) {
   DCHECK(controller_);
   DCHECK(!imports_.IsEmpty());
-  DocumentInit init =
-      DocumentInit(response.Url(), 0, controller_->Master()->ContextDocument(),
-                   controller_)
-          .WithRegistrationContext(
-              controller_->Master()->RegistrationContext());
-  document_ = HTMLDocument::Create(init);
+  DocumentInit init(response.Url(), nullptr, nullptr,
+                    controller_->Master()->ContextDocument(), controller_);
+  document_ = HTMLDocument::Create(init.WithRegistrationContext(
+      controller_->Master()->RegistrationContext()));
   writer_ = DocumentWriter::Create(document_.Get(), kAllowAsynchronousParsing,
                                    response.MimeType(), "UTF-8");
 
