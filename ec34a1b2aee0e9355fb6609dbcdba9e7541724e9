@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a16d83c4_41596c50",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-18T10:31:42Z",
+      "side": 1,
+      "message": "Ok, how about adding a doc on this to maybe chrome/browser/chromeos/arc/arc_service_launcher.cc? I\u0027d mention that the |profile| and a BroserContext object associated with the |profile| is alive as long as the UI thread is running, and because of that, posting the |profile| or |browser_context| to UI thread is safe. Doing it in another CL is just fine.",
+      "parentUuid": "b51662a2_6ed544ef",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f97891fb_f5b72b7f",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 1
