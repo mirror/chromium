@@ -67,4 +67,10 @@ public class NodeVisitor {
      * Visits the tile grid.
      */
     public void visitTileGrid() {}
+
+    /**
+     * Visits the contextual suggestions carousel items.
+     * @param suggestion The contextual suggestion represented by the item.
+     */
+    public void visitCarouselItem(SnippetArticle suggestion) {}
 }
