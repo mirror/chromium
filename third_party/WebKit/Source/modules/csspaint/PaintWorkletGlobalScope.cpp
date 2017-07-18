@@ -13,9 +13,13 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
+#include "modules/csspaint/PaintWorklet.h"
+#include "modules/csspaint/WindowPaintWorklet.h"
 #include "platform/bindings/V8BindingMacros.h"
 
 namespace blink {
+
+int PaintWorkletGlobalScope::instance_count = 1;
 
 // static
 PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
@@ -29,10 +33,10 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
       new PaintWorkletGlobalScope(frame, url, user_agent,
                                   std::move(security_origin), isolate,
                                   pending_generator_registry);
-  // TODO(xidachen): When we implement two PaintWorkletGlobalScope, we should
-  // change the last parameter.
+  String context_name("PaintWorklet #");
+  context_name.append(String::Number(instance_count++));
   paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
-      "Paint Worklet");
+      context_name);
   MainThreadDebugger::Instance()->ContextCreated(
       paint_worklet_global_scope->ScriptController()->GetScriptState(),
       paint_worklet_global_scope->GetFrame(),
@@ -54,7 +58,9 @@ PaintWorkletGlobalScope::PaintWorkletGlobalScope(
                                    isolate),
       pending_generator_registry_(pending_generator_registry) {}
 
-PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {}
+PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {
+  instance_count--;
+}
 
 void PaintWorkletGlobalScope::Dispose() {
   MainThreadDebugger::Instance()->ContextWillBeDestroyed(
@@ -199,7 +205,38 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
       input_argument_types, has_alpha);
   paint_definitions_.Set(
       name, TraceWrapperMember<CSSPaintDefinition>(this, definition));
-  pending_generator_registry_->SetDefinition(name, definition);
+
+  // TODO(xidachen): the following steps should be done with a postTask when
+  // we move PaintWorklet off main thread.
+  LocalDOMWindow* dom_window = GetFrame()->GetDocument()->domWindow();
+  PaintWorklet* paint_worklet =
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
+  PaintWorklet::DocumentDefinitionMap& document_definition_map =
+      paint_worklet->GetDocumentDefinitionMap();
+  DocumentPaintDefinition* document_definition =
+      DocumentPaintDefinition::Create(native_invalidation_properties,
+                                      custom_invalidation_properties,
+                                      input_argument_types, has_alpha);
+  if (document_definition_map.Contains(name)) {
+    DocumentPaintDefinition* existing_document_definition =
+        document_definition_map.at(name);
+    if (!existing_document_definition)
+      return;
+    if (!existing_document_definition->Equals(*document_definition)) {
+      DocumentPaintDefinition* invalid_document_definition = nullptr;
+      document_definition_map.Set(name, invalid_document_definition);
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          "A class with name:'" + name + "' is already registered.");
+      return;
+    }
+    // Notify the generator ready only when register paint is called the second
+    // time with the same |name| (i.e. there is already a document definition
+    // associated with |name|
+    pending_generator_registry_->NotifyGeneratorReady(name);
+  }
+  document_definition_map.Set(name, TraceWrapperMember<DocumentPaintDefinition>(
+                                        this, document_definition));
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(

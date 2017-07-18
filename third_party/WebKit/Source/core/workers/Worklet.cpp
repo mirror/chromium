@@ -95,7 +95,6 @@ void Worklet::ContextDestroyed(ExecutionContext* execution_context) {
 WorkletGlobalScopeProxy* Worklet::FindAvailableGlobalScope() const {
   DCHECK(IsMainThread());
   // TODO(nhiroki): Support the case where there are multiple global scopes.
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
   return proxies_.begin()->Get();
 }
 
@@ -138,7 +137,6 @@ void Worklet::FetchAndInvokeScript(const KURL& module_url_record,
   // WorkletGlobalScopes at this time."
   while (NeedsToCreateGlobalScope())
     proxies_.insert(CreateGlobalScope());
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
 
   // Step 11: "Let pendingTaskStruct be a new pending tasks struct with counter
   // initialized to the length of worklet's WorkletGlobalScopes."
