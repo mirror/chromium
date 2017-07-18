@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d801a478_7aec49a1",
+        "filename": "ash/system/brightness/tray_brightness.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:15:09Z",
+      "side": 1,
+      "message": "Why do you need the conditional for maximize_mode_controller here?",
+      "range": {
+        "startLine": 124,
+        "startChar": 40,
+        "endLine": 124,
+        "endChar": 64
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078dfd8d_1de519c7",
+        "filename": "ash/system/overview/overview_button_tray.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:15:09Z",
+      "side": 1,
+      "message": "Similar question about conditional.",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154697f6_39598238",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:15:09Z",
+      "side": 1,
+      "message": "And here too.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 44
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6100d83_a9fd16fa",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:15:09Z",
+      "side": 1,
+      "message": "Please use Add/RemoveObserver as that names. That way classes like ScopedObserver just work.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ad2c91_863a7351",
+        "filename": "ash/wm/maximize_mode/maximize_mode_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:15:09Z",
+      "side": 1,
+      "message": "Please wait for https://chromium-review.googlesource.com/c/572945/ to land, and then use tablet rather than maximize in all this code.",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "00f964e363aebbc3b2edb52ceed3c2f625a8b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
