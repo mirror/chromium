@@ -200,6 +200,30 @@
       "revId": "5217cb08a5c6380c012774d008281dec5229764d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bda3b0_5edfa5bd",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-18T04:41:50Z",
+      "side": 1,
+      "message": "That seems... fragile! But so long as it\u0027s well-documented and we have checks to verify correctness, SGTM.",
+      "parentUuid": "fa324e94_bcb624ac",
+      "range": {
+        "startLine": 309,
+        "startChar": 38,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
