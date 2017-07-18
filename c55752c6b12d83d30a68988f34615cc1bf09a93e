@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a500024f_cee4eebd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 42
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Nit: Align the bullet content. It makes it easier to read.\n\n* Bullet Line 1\n  Bullet Line 2\n* Next Bullet\n  Next Bullet Line 2",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06f6a6a2_bbf488de",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
         "patchSetId": 42
@@ -13,6 +36,121 @@
       "writtenOn": "2017-07-18T21:12:00Z",
       "side": 1,
       "message": "Add comment above: // static",
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a6f326_c60e0c0c",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Needs to be preceded by\n\n// static",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f910234_7e1b0087",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "These comments are back again.\n\nSee https://chromium-review.googlesource.com/c/549057/32/chrome%252Fbrowser%252Ffeature_engagement_tracker%252Ffeatures%252Fnew_tab_tracker.cc#51 for original comment.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40aeb151_1bb93b04",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Nit: Call the promo.",
+      "range": {
+        "startLine": 71,
+        "startChar": 29,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19dd00d_7100adf1",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Nit: Call the promo.",
+      "range": {
+        "startLine": 71,
+        "startChar": 29,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699d9439_e62c9267",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Discuss why this line must be called.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 52
+      },
       "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +174,29 @@
     },
     {
       "key": {
+        "uuid": "0d8c8bac_0539981c",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Indeed. Discuss the why.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86932019_729c9729",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
         "patchSetId": 42
@@ -47,6 +208,29 @@
       "writtenOn": "2017-07-18T21:12:00Z",
       "side": 1,
       "message": "Could this just call NewTabTracker::RegisterProfilePrefs(registry)?",
+      "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56824672_66df80ba",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-18T21:15:38Z",
+      "side": 1,
+      "message": "Custom classes in tests still need to go in an anonymous namespace. The positioning is fine, so add in\n\nnamespace { \u003cCode\u003e } as necessary.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 0
+      },
       "revId": "c55752c6b12d83d30a68988f34615cc1bf09a93e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
