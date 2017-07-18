@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de327fa5_d8fba259",
+        "filename": "chrome/browser/ui/webui/app_launcher_login_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T10:33:16Z",
+      "side": 0,
+      "message": "Should we be retaining this as a DCHECK?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 10
+      },
+      "revId": "e41dab163bf7f9fdf43bbb986c4864f88e2fb6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
