@@ -22,6 +22,30 @@
       "revId": "71557343961a2258c3a0a44f6f90976abd9e03ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da33931_034354e2",
+        "filename": "build/toolchain/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1133009
+      },
+      "writtenOn": "2017-07-18T22:18:22Z",
+      "side": 1,
+      "message": "Hmm I guess our problem is that our build tries to look for clang_x86, when it should pick up this one. Let me try to fix that dependency instead then. Marking this as wip.",
+      "parentUuid": "ca41cced_879a1cb9",
+      "range": {
+        "startLine": 131,
+        "startChar": 17,
+        "endLine": 131,
+        "endChar": 35
+      },
+      "revId": "71557343961a2258c3a0a44f6f90976abd9e03ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
