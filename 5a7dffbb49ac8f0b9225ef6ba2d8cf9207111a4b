@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7478ebea_5300664f",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T22:10:58Z",
+      "side": 1,
+      "message": "Unless you\u0027re worried about rounding errors, should SetBackgroundBlur take the radius and divide by 3 when it makes the filter, so the API user doesn\u0027t have to worry about how it is implemented?",
+      "revId": "5a7dffbb49ac8f0b9225ef6ba2d8cf9207111a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
