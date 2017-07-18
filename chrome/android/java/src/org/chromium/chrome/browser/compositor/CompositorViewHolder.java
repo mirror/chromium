@@ -53,6 +53,7 @@ import org.chromium.chrome.browser.widget.ClipDrawableProgressBar.DrawingInfo;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.SPenSupport;
@@ -72,8 +73,7 @@ import java.util.List;
  */
 public class CompositorViewHolder extends FrameLayout
         implements ContentOffsetProvider, LayoutManagerHost, LayoutRenderHost, Invalidator.Host,
-                FullscreenListener {
-
+                   FullscreenListener, AndroidOverlayModeManager.Listener {
     private boolean mIsKeyboardShowing;
 
     private final Invalidator mInvalidator = new Invalidator();
@@ -96,6 +96,7 @@ public class CompositorViewHolder extends FrameLayout
 
     private TabModelSelector mTabModelSelector;
     private ChromeFullscreenManager mFullscreenManager;
+    private AndroidOverlayModeManager mOverlayModeManager;
     private View mAccessibilityView;
     private CompositorAccessibilityProvider mNodeProvider;
 
@@ -446,6 +447,9 @@ public class CompositorViewHolder extends FrameLayout
         if (mFullscreenManager != null) {
             mFullscreenManager.addListener(this);
         }
+        if (mOverlayModeManager != null) {
+            mOverlayModeManager.addListener(this);
+        }
         requestRender();
     }
 
@@ -454,6 +458,7 @@ public class CompositorViewHolder extends FrameLayout
      */
     public void onStop() {
         if (mFullscreenManager != null) mFullscreenManager.removeListener(this);
+        if (mOverlayModeManager != null) mOverlayModeManager.removeListener(this);
     }
 
     @Override
@@ -477,6 +482,13 @@ public class CompositorViewHolder extends FrameLayout
     public void onToggleOverlayVideoMode(boolean enabled) {
         if (mCompositorView != null) {
             mCompositorView.setOverlayVideoMode(enabled);
+        }
+    }
+
+    @Override
+    public void onOverlayModeChanged(boolean useOverlayMode) {
+        if (mCompositorView != null) {
+            mCompositorView.setOverlayVideoMode(useOverlayMode);
         }
     }
 
@@ -663,6 +675,17 @@ public class CompositorViewHolder extends FrameLayout
             mFullscreenManager.addListener(this);
         }
         onViewportChanged();
+    }
+
+    /**
+     * Sets the overlay mode handler.
+     * @param manager An overlay mode manager.
+     */
+    public void setOverlayModeHandler(AndroidOverlayModeManager manager) {
+        mOverlayModeManager = manager;
+        if (mOverlayModeManager != null) {
+            mOverlayModeManager.addListener(this);
+        }
     }
 
     @Override

@@ -500,6 +500,9 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual bool ShouldBlockMediaRequest(const GURL& url);
 #endif
 
+  // TODO
+  virtual void SetOverlayMode(bool use_overlay_mode);
+
   // Requests permission to access the PPAPI broker. The delegate should return
   // true and call the passed in |callback| with the result, or return false
   // to indicate that it does not support asking for permission.

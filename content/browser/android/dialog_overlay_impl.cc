@@ -5,6 +5,7 @@
 #include "content/browser/android/dialog_overlay_impl.h"
 
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "gpu/ipc/common/gpu_surface_tracker.h"
 #include "jni/DialogOverlayImpl_jni.h"
 #include "ui/android/window_android.h"
@@ -72,6 +73,10 @@ DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
 void DialogOverlayImpl::CompleteInit(JNIEnv* env,
                                      const JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // TODO
+  web_contents()->GetDelegate()->SetOverlayMode(true);
+
   // Send the initial token, if there is one.  The observer will notify us about
   // changes only.
   if (ui::WindowAndroid* window = cvc_->GetWindowAndroid()) {
@@ -89,6 +94,9 @@ DialogOverlayImpl::~DialogOverlayImpl() {
 }
 
 void DialogOverlayImpl::Stop() {
+  // TODO
+  web_contents()->GetDelegate()->SetOverlayMode(false);
+
   UnregisterForTokensIfNeeded();
 
   JNIEnv* env = AttachCurrentThread();

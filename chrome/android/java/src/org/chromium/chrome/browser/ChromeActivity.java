@@ -149,6 +149,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.ContentBitmapCallback;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -254,6 +255,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private ChromeFullscreenManager mFullscreenManager;
     private boolean mCreatedFullscreenManager;
 
+    private AndroidOverlayModeManager mOverlayModeManager;
+
     private final PictureInPictureController mPictureInPictureController =
             new PictureInPictureController();
 
@@ -323,6 +326,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
         mFullscreenManager = createFullscreenManager();
         mCreatedFullscreenManager = true;
+
+        mOverlayModeManager = new AndroidOverlayModeManager();
     }
 
     @SuppressLint("NewApi")
@@ -1607,6 +1612,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     }
 
     /**
+     * Gets the OverlayMode manager.
+     * @return The OverlayMode manager, possibly null
+     */
+    public AndroidOverlayModeManager getOverlayModeManager() {
+        return mOverlayModeManager;
+    }
+
+    /**
      * @return The content offset provider, may be null.
      */
     public ContentOffsetProvider getContentOffsetProvider() {
@@ -1681,6 +1694,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         mCompositorViewHolder.setFocusable(false);
         mCompositorViewHolder.setControlContainer(controlContainer);
         mCompositorViewHolder.setFullscreenHandler(getFullscreenManager());
+        mCompositorViewHolder.setOverlayModeHandler(getOverlayModeManager());
         mCompositorViewHolder.setUrlBar(urlBar);
         mCompositorViewHolder.onFinishNativeInitialization(getTabModelSelector(), this,
                 getTabContentManager(), contentContainer, mContextualSearchManager);
