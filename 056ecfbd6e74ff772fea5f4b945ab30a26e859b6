@@ -46,6 +46,30 @@
       "revId": "056ecfbd6e74ff772fea5f4b945ab30a26e859b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251a7490_aaa2c81a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-18T16:25:14Z",
+      "side": 1,
+      "message": "You can send the fix :)",
+      "parentUuid": "7061280c_588d1d9d",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "056ecfbd6e74ff772fea5f4b945ab30a26e859b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
