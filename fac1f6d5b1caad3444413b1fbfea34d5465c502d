@@ -81,6 +81,57 @@
       "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3aa1f08_213484b7",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-18T17:38:47Z",
+      "side": 1,
+      "message": "In cras_audio_handler.h, there is a private function:\nconst AudioDevice* GetDeviceByType(AudioDeviceType type);\nYou can change it to a public function and call it here.",
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63e893b_06faa761",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-18T17:38:47Z",
+      "side": 1,
+      "message": "Why not call CrasAudioHandler::GetDeviceFromId(uint64_t device_id)?",
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a26e08_6c16d0fb",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-18T17:38:47Z",
+      "side": 1,
+      "message": "Why not call CrasAudioHandler::GetPrimaryActiveOutputNode() directly?",
+      "revId": "fac1f6d5b1caad3444413b1fbfea34d5465c502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
