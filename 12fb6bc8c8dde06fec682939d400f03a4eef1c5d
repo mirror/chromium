@@ -69,6 +69,24 @@
       "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ec9755_7e8066da",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-18T13:44:48Z",
+      "side": 1,
+      "message": "\u003e To be fair, this class doesn\u0027t know anything about tail suggestions\n\u003e either.\n\nIt does now, however. It knows whether tail suggestions are present and what their prefix is, which is why it has to pass additional information (any_tail_suggestions, common_prefix) to the result view.\n\n\u003e A possibly better place to move the actual method might be \n\u003e autocomplete_match.cc. Like PossiblySwapContents(), the match could define\n\u003e InlineTailPrefix(). One benefit of this approach would be that if/when we\n\u003e change the provider to put \"correct\" strings in the matches, we could do\n\u003e it all from the components directory.\n\nYeah, you\u0027re right. Moving this logic to the data classes in components is the way to go. This is all about manipulating the model into a form that represents what we want on desktop, so we should let the model classes take care of it. This will avoid us having to re-implement any of it on the Cocoa side, also.\n\nI just realized that everything you care about is encapsulated in a single value: the AutocompleteResult available via model_-\u003eresult(). So all this code can and should go in that class (piped through model_-\u003eautocomplete_controller() since model_-\u003eresult() is const).\n\nI still suspect there\u0027s an earlier point at which the results are available and we can determine whether any of them are tail suggestions. But if there\u0027s just a single method to call (InlineTailPrefixes() or whatever) we can easily move it at some later time if we find a better point.\n\n\u003e Also, notice how there\u0027s already code to modify the match in SetMatch().\n\u003e I\u0027d prefer not modifying it two separate places.\n\nI assume you mean the call to PossiblySwapContents()? The doc comment for that method suggests that it should be done at the latest possible time, so I think doing the tail suggest manipulation earlier is better, regardless. It\u0027s also experimental code that we might not need anymore (I need to check with Mark).",
+      "parentUuid": "e9314999_bf0795cd",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
