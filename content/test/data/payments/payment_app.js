@@ -54,6 +54,13 @@ self.addEventListener('paymentrequest', e => {
         maybeSendPaymentRequest();
       })
       .catch(error => {
+        e.waitUntil(clients.matchAll({includeUncontrolled: true}).then(clients => {
+          clients.forEach(client => {
+            if (client.url.indexOf('payment_app_invocation.html') != -1) {
+              client.postMessage('open window failed');
+            }
+          });
+        }));
         reject(error);
       });
   }));

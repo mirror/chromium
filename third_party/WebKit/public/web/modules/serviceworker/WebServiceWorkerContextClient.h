@@ -36,6 +36,7 @@
 #include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebWorkerFetchContext.h"
+#include "public/platform/modules/payments/payment_app.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerEventResult.h"
@@ -53,6 +54,9 @@ class WebServiceWorkerNetworkProvider;
 class WebServiceWorkerProvider;
 class WebServiceWorkerResponse;
 class WebString;
+
+using WebIsPaymentRequestCancelledCallback =
+    payments::mojom::blink::PaymentHandlerInvokeCallback::IsCancelledCallback;
 
 // WebServiceWorkerContextClient is a "client" of a service worker execution
 // context. This interface is implemented by the embedder and allows the
@@ -195,6 +199,9 @@ class WebServiceWorkerContextClient {
       int event_id,
       const WebPaymentHandlerResponse& response,
       double event_dispatch_time) {}
+  virtual void IsPaymentRequestCancelled(
+      int event_id,
+      WebIsPaymentRequestCancelledCallback callback) {}
   virtual void DidHandleFetchEvent(int fetch_event_id,
                                    WebServiceWorkerEventResult result,
                                    double event_dispatch_time) {}

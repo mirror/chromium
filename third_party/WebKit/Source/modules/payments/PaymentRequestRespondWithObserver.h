@@ -18,6 +18,8 @@ class WaitUntilObserver;
 // Implementation for PaymentRequestEvent.respondWith(), which is used by the
 // payment handler to provide a payment response when the payment successfully
 // completes.
+// It also provides an asynchronous interface to check whether the payment
+// request is cancelled.
 class MODULES_EXPORT PaymentRequestRespondWithObserver final
     : public RespondWithObserver {
  public:

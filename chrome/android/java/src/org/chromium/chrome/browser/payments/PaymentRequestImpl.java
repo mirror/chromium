@@ -1685,6 +1685,11 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     }
 
     @Override
+    public boolean isCancelled() {
+        return mClient == null;
+    }
+
+    @Override
     public void onFocusChanged(@PaymentRequestUI.DataType int dataType, boolean willFocus) {
         assert dataType == PaymentRequestUI.TYPE_SHIPPING_ADDRESSES;
 
