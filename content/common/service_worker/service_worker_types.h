@@ -29,6 +29,10 @@
 // This file is to have common definitions that are to be shared by
 // browser and child process.
 
+namespace storage {
+class BlobHandle;
+}
+
 namespace content {
 
 // Indicates the document main thread ID in the child process. This is used for
@@ -107,6 +111,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
                             const Referrer& referrer,
                             bool is_reload);
   ServiceWorkerFetchRequest(const ServiceWorkerFetchRequest& other);
+  ServiceWorkerFetchRequest& operator=(const ServiceWorkerFetchRequest& other);
   ~ServiceWorkerFetchRequest();
   size_t EstimatedStructSize();
 
@@ -120,6 +125,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerHeaderMap headers;
   std::string blob_uuid;
   uint64_t blob_size;
+  scoped_refptr<storage::BlobHandle> blob;
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
   FetchRedirectMode redirect_mode;
@@ -139,12 +145,14 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
       std::unique_ptr<ServiceWorkerHeaderMap> headers,
       const std::string& blob_uuid,
       uint64_t blob_size,
+      scoped_refptr<storage::BlobHandle> blob,
       blink::WebServiceWorkerResponseError error,
       base::Time response_time,
       bool is_in_cache_storage,
       const std::string& cache_storage_cache_name,
       std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_header_names);
   ServiceWorkerResponse(const ServiceWorkerResponse& other);
+  ServiceWorkerResponse& operator=(const ServiceWorkerResponse& other);
   ~ServiceWorkerResponse();
   size_t EstimatedStructSize();
 
@@ -159,6 +167,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   // ServiceWorkerFetchResponseCallback.
   std::string blob_uuid;
   uint64_t blob_size;
+  scoped_refptr<storage::BlobHandle> blob;
   blink::WebServiceWorkerResponseError error;
   base::Time response_time;
   bool is_in_cache_storage = false;
