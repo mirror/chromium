@@ -518,6 +518,7 @@ void ChannelProxy::Close() {
 
 bool ChannelProxy::Send(Message* message) {
   DCHECK(did_init_);
+  DCHECK(!message->is_sync()) << "Need to use IPC::SyncChannel";
 
   // TODO(alexeypa): add DCHECK(CalledOnValidThread()) here. Currently there are
   // tests that call Send() from a wrong thread. See http://crbug.com/163523.
