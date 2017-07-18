@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cab82d74_25358f78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aada0786_32626871",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4158b39_442e2284",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64dd4de_1ce6306b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4158b39_442e2284",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "471e3596_cfa22052",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6509588_89ad7afb",
+      "range": {
+        "startLine": 607,
+        "startChar": 16,
+        "endLine": 607,
+        "endChar": 41
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a0db8ed_fcf9ad31",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-18T22:13:35Z",
       "side": 1,
       "message": "shall we move this out of \u0027if (option instanceof AutofillPaymentInstrument)\u0027?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 0,
+        "endLine": 1090,
+        "endChar": 81
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93afc9a_6c046d9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Goooood catch!",
+      "parentUuid": "1a0db8ed_fcf9ad31",
       "range": {
         "startLine": 1090,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3a551637_b21bcf85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "In that case does the user have to do anything to be able to use it? What I want to record is whether the user had everything needed to pay and does not need to add or edit anything.",
+      "parentUuid": "f7670537_872e9292",
+      "range": {
+        "startLine": 1577,
+        "startChar": 44,
+        "endLine": 1577,
+        "endChar": 53
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ff21e37_d06c7050",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-18T22:13:35Z",
       "side": 1,
       "message": "Annotate Nullable for this parameter in this function and ContactDetailsSection, and explain when it could be null?",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28880e3_0b2dd7de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Ah I should have explained. This should never happen but it will do in tests for the moment. I\u0027ll need to create an interface and stuff like that, so I wanted to go fast and clean this up after the branch. WDYT?",
+      "parentUuid": "6ff21e37_d06c7050",
       "range": {
         "startLine": 150,
         "startChar": 12,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4387ea1c_bf299063",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestTestRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "Right that\u0027s weird, I just copy pasted it from the other in this file. It seems they all do that. I fixed them. Thanks!",
+      "parentUuid": "feecd133_ee38f49e",
+      "range": {
+        "startLine": 311,
+        "startChar": 8,
+        "endLine": 311,
+        "endChar": 14
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cc253b2_e4517367",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-18T22:13:35Z",
       "side": 1,
       "message": "FYI: is it allowed to rename a histogram instead of obsolete it and add a new one?",
+      "range": {
+        "startLine": 53236,
+        "startChar": 25,
+        "endLine": 53236,
+        "endChar": 71
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6029f3c4_aaf011bc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 53236,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-18T22:49:25Z",
+      "side": 1,
+      "message": "I just added this one last week, so it should be OK. But you are right we should not generally do that.",
+      "parentUuid": "6cc253b2_e4517367",
       "range": {
         "startLine": 53236,
         "startChar": 25,
