@@ -168,6 +168,12 @@ void ServiceWorkerGlobalScopeClient::RespondToPaymentRequestEvent(
   client_.RespondToPaymentRequestEvent(event_id, response, event_dispatch_time);
 }
 
+void ServiceWorkerGlobalScopeClient::IsPaymentRequestCancelled(
+    int event_id,
+    WebIsPaymentRequestCancelledCallback callback) {
+  client_.IsPaymentRequestCancelled(event_id, std::move(callback));
+}
+
 void ServiceWorkerGlobalScopeClient::DidHandleFetchEvent(
     int fetch_event_id,
     WebServiceWorkerEventResult result,

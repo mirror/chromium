@@ -71,8 +71,10 @@ struct PaymentHandlerResponse {
 };
 
 // This interface is provided to pass a payment handler response from payment
-// request event in renderer side to browser side by calling respondWith().
-interface PaymentHandlerResponseCallback {
+// request event in renderer side to browser side by calling respondWith()
+// and check whether the invocation is cancelled by calling IsCancelled.
+interface PaymentHandlerInvokeCallback {
   OnPaymentHandlerResponse(PaymentHandlerResponse response,
                        mojo.common.mojom.Time dispatch_event_time);
+  IsCancelled() => (bool status);
 };

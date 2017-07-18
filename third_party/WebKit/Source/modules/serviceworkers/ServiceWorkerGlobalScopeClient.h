@@ -38,6 +38,7 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebMessagePortChannel.h"
+#include "public/platform/modules/payments/payment_app.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerEventResult.h"
@@ -53,6 +54,9 @@ class WebServiceWorkerContextClient;
 class WebServiceWorkerResponse;
 class WebURL;
 class WorkerClients;
+
+using WebIsPaymentRequestCancelledCallback =
+    payments::mojom::blink::PaymentHandlerInvokeCallback::IsCancelledCallback;
 
 // See WebServiceWorkerContextClient for documentation for the methods in this
 // class.
@@ -113,6 +117,8 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   void RespondToPaymentRequestEvent(int event_id,
                                     const WebPaymentHandlerResponse&,
                                     double event_dispatch_time);
+  void IsPaymentRequestCancelled(int event_id,
+                                 WebIsPaymentRequestCancelledCallback);
   void DidHandleFetchEvent(int fetch_event_id,
                            WebServiceWorkerEventResult,
                            double event_dispatch_time);
