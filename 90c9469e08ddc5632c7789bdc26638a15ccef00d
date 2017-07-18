@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eccddcad_14b50e79",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-18T07:36:34Z",
+      "side": 1,
+      "message": "+1 to removal",
+      "parentUuid": "3955e35d_a0651968",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd7c11a_cc4ab00d",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "acf21a95_28b5b4f2",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-18T07:36:34Z",
+      "side": 1,
+      "message": "I recommended this due to the extended functionality. I thought that this is appropriate given that we have a non-trivial setter that allocates a unique_ptr. I am open to reverting if you prefer.",
+      "parentUuid": "9dd7c11a_cc4ab00d",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57b346a5_afd874e8",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-17T17:38:35Z",
       "side": 1,
       "message": "This is the unique_ptr API.  Why not just make the unique_ptr public?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e85451_5f86295e",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-18T07:36:34Z",
+      "side": 1,
+      "message": "not exactly. Note that set_traffic_annotation does not take a pointer. That would defer some verbose syntax to the callers of the class.",
+      "parentUuid": "57b346a5_afd874e8",
       "range": {
         "startLine": 81,
         "startChar": 2,
