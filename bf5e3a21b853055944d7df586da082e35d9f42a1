@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c26c9d7_869d8340",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T22:04:56Z",
+      "side": 1,
+      "message": "nit: std::max(0, a - b)",
+      "revId": "bf5e3a21b853055944d7df586da082e35d9f42a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d34c402_52cd0e5c",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T22:04:56Z",
+      "side": 1,
+      "message": "Available. Scary this passes bots.",
+      "revId": "bf5e3a21b853055944d7df586da082e35d9f42a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
