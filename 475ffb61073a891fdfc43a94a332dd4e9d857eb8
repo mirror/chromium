@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c71fc7b6_4e855bda",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 79588,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-18T23:17:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t read right.  It reads like you\u0027re recording a number, in particular the number of times a language code is listed in a request.  Instead, you\u0027re emitting a single value on each request, right?  If so, consider something like\nThe number of requests sent to the Translate server, grouped by source language.\n\nditto below, just with target",
+      "range": {
+        "startLine": 79588,
+        "startChar": 15,
+        "endLine": 79588,
+        "endChar": 17
+      },
+      "revId": "475ffb61073a891fdfc43a94a332dd4e9d857eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
