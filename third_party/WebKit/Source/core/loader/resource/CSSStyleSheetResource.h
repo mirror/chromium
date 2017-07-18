@@ -53,6 +53,7 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   DECLARE_VIRTUAL_TRACE();
 
   const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict) const;
+  const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict);
 
   void DidAddClient(ResourceClient*) override;
 
@@ -83,15 +84,10 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   void CheckNotify() override;
 
   void SetParsedStyleSheetCache(StyleSheetContents*);
-  void SetDecodedSheetText(const String&);
 
   void DestroyDecodedDataIfPossible() override;
   void DestroyDecodedDataForFailedRevalidation() override;
   void UpdateDecodedSize();
-
-  // Decoded sheet text cache is available iff loading this CSS resource is
-  // successfully complete.
-  String decoded_sheet_text_;
 
   Member<StyleSheetContents> parsed_style_sheet_cache_;
 

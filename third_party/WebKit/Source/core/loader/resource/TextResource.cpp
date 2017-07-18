@@ -16,21 +16,34 @@ TextResource::TextResource(const ResourceRequest& resource_request,
                            const ResourceLoaderOptions& options,
                            const TextResourceDecoderOptions& decoder_options)
     : Resource(resource_request, type, options),
-      decoder_(TextResourceDecoder::Create(decoder_options)) {}
+      decoder_(TextResourceDecoder::Create(decoder_options)),
+      has_decoded_(false) {}
 
 TextResource::~TextResource() {}
 
 void TextResource::SetEncoding(const String& chs) {
   decoder_->SetEncoding(WTF::TextEncoding(chs),
                         TextResourceDecoder::kEncodingFromHTTPHeader);
+  has_decoded_ = false;
 }
 
 WTF::TextEncoding TextResource::Encoding() const {
+  // The decoder will may remember a character set declaration when decoding.
+  // As a result, the encoding will not be correct before having ever used
+  // the decoder.
+  // So... if we haven't used decoder_ yet, we'll just force one decoder run.
+  // In practice, this only seems to happen in tests, so it shouldn't be a
+  // performance problem.
+  if (!has_decoded_ && Data())
+    DecodedText();
+
   return decoder_->Encoding();
 }
 
 String TextResource::DecodedText() const {
   DCHECK(Data());
+
+  has_decoded_ = true;
 
   StringBuilder builder;
   const char* segment;

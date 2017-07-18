@@ -273,11 +273,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   const IntegrityMetadataSet& IntegrityMetadata() const {
     return integrity_metadata_;
   }
-  // The argument must never be |NotChecked|.
-  void SetIntegrityDisposition(ResourceIntegrityDisposition);
-  ResourceIntegrityDisposition IntegrityDisposition() const {
-    return integrity_disposition_;
-  }
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
   bool IsAlive() const { return is_alive_; }
@@ -482,7 +477,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool is_add_remove_client_prohibited_;
   bool is_revalidation_start_forbidden_ = false;
 
-  ResourceIntegrityDisposition integrity_disposition_;
   IntegrityMetadataSet integrity_metadata_;
 
   // Ordered list of all redirects followed while fetching this resource.

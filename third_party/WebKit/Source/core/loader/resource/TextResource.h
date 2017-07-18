@@ -34,6 +34,7 @@ class CORE_EXPORT TextResource : public Resource {
 
  private:
   std::unique_ptr<TextResourceDecoder> decoder_;
+  mutable bool has_decoded_;
 };
 
 }  // namespace blink
