@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fd82e35_fd57cbee",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-18T14:38:18Z",
+      "side": 1,
+      "message": "nit: use //components/test/data/payments/abort.js (and similar for other files) to be consistent with the other bundle_data that ship data from components/test/data (make it easier to grep for them).",
+      "revId": "a1e36b11b6a837709e09ffcb4b4d46261c17d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
