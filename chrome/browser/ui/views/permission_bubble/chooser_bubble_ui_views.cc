@@ -35,27 +35,3 @@ void ChooserBubbleUi::CreateAndShow(views::BubbleDialogDelegateView* delegate) {
   delegate->set_parent_window(parent);
   views::BubbleDialogDelegateView::CreateBubble(delegate)->Show();
 }
-
-views::View* ChooserBubbleUi::GetAnchorView() {
-  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser_);
-
-  if (browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR)) {
-    return browser_view->GetLocationBarView()
-        ->location_icon_view()
-        ->GetImageView();
-  }
-  if (browser_view->IsFullscreenBubbleVisible())
-    return browser_view->exclusive_access_bubble()->GetView();
-
-  return browser_view->top_container();
-}
-
-gfx::Point ChooserBubbleUi::GetAnchorPoint() {
-  return gfx::Point();
-}
-
-views::BubbleBorder::Arrow ChooserBubbleUi::GetAnchorArrow() {
-  if (browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR))
-    return views::BubbleBorder::TOP_LEFT;
-  return views::BubbleBorder::NONE;
-}

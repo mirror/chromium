@@ -220,8 +220,7 @@
 }
 
 - (NSPoint)getExpectedAnchorPoint {
-  return GetPermissionBubbleAnchorPointForBrowser(browser_,
-                                                  [self hasLocationBar]);
+  return GetPageInfoAnchorPointForBrowser(browser_, [self hasLocationBar]);
 }
 
 - (bool)hasLocationBar {

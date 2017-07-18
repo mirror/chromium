@@ -49,7 +49,8 @@ class PermissionBubbleCocoa;
 // Returns the anchor point to use for the given Cocoa |browser|.
 + (NSPoint)getAnchorPointForBrowser:(Browser*)browser;
 
-// Returns true if |browser| has a visible location bar.
+// Returns true if |browser| has a visible location bar. A test can replace this
+// implementation to return a known result.
 + (bool)hasVisibleLocationBarForBrowser:(Browser*)browser;
 
 // Makes the bubble visible. The bubble will be populated with text retrieved
