@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4234f28a_1a750c31",
+        "filename": "ash/shelf/shelf_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-18T22:30:21Z",
+      "side": 1,
+      "message": "This is here to override the base class behaviour. The base class would only extend the hit-test area if the |window| is resizable. Shelf is not. Shelf relies on having the hit-test extend above it to facilitate dragging it up from auto-hidden state, without this you won\u0027t be able to drag it back out once it has been auto-hidden.\nAlternative would be to set some property on the base class to allow it to always (as long as the parent matches) extend the hit-test region - even when the |window| is not resizable.\nDo you like this alternative better?",
+      "parentUuid": "c7f19b04_7a3b4587",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a72dc5_83ed9a87",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 5
