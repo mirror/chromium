@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e4447df_238b6205",
+        "filename": "third_party/WebKit/Source/core/css/threaded/TextRendererThreadedTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:52:32Z",
+      "side": 1,
+      "message": "MeasureText",
+      "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc576953_b39d3339",
+        "filename": "third_party/WebKit/Source/core/css/threaded/TextRendererThreadedTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:52:32Z",
+      "side": 1,
+      "message": "Comments are sentences, including capitalization and punctuation.",
+      "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692e8c96_06f37899",
+        "filename": "third_party/WebKit/Source/core/css/threaded/TextRendererThreadedTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:52:32Z",
+      "side": 1,
+      "message": "DrawText",
+      "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84846e41_5d7b7c6c",
+        "filename": "third_party/WebKit/Source/platform/graphics/test/MockPaintCanvas.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:52:32Z",
+      "side": 1,
+      "message": "you could put this in cc/test/ if you want so others can use it",
+      "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
