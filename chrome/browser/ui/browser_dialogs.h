@@ -118,6 +118,14 @@ void ShowBookmarkAppDialog(gfx::NativeWindow parent_window,
 content::ColorChooser* ShowColorChooser(content::WebContents* web_contents,
                                         SkColor initial_color);
 
+// Shows Page Info using the specified information. |virtual_url| is the
+// virtual url of the page/frame the info applies to, and |security_info|
+// contains the security state for that page/frame.
+void ShowPageInfoBubble(Browser* browser,
+                        content::WebContents* web_contents,
+                        const GURL& virtual_url,
+                        const security_state::SecurityInfo& security_info);
+
 #if defined(OS_MACOSX)
 
 // Bridging methods that show/hide the toolkit-views based Task Manager on Mac.

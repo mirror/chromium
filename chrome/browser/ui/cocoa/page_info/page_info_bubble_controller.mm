@@ -1257,11 +1257,51 @@ void PageInfoUIBridge::set_bubble_controller(
   bubble_controller_ = controller;
 }
 
-void PageInfoUIBridge::Show(gfx::NativeWindow parent,
-                            Profile* profile,
-                            content::WebContents* web_contents,
-                            const GURL& virtual_url,
-                            const security_state::SecurityInfo& security_info) {
+void PageInfoUIBridge::SetIdentityInfo(
+    const PageInfoUI::IdentityInfo& identity_info) {
+  [bubble_controller_ setIdentityInfo:identity_info];
+}
+
+void PageInfoUIBridge::RenderFrameDeleted(
+    content::RenderFrameHost* render_frame_host) {
+  if (render_frame_host == web_contents_->GetMainFrame()) {
+    [bubble_controller_ close];
+  }
+}
+
+void PageInfoUIBridge::SetCookieInfo(const CookieInfoList& cookie_info_list) {
+  [bubble_controller_ setCookieInfo:cookie_info_list];
+}
+
+void PageInfoUIBridge::SetPermissionInfo(
+    const PermissionInfoList& permission_info_list,
+    ChosenObjectInfoList chosen_object_info_list) {
+  [bubble_controller_ setPermissionInfo:permission_info_list
+                       andChosenObjects:std::move(chosen_object_info_list)];
+}
+
+void PageInfoUIBridge::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      !navigation_handle->HasCommitted()) {
+    return;
+  }
+  // If the browser navigates to another page, close the bubble.
+  [bubble_controller_ close];
+}
+
+namespace chrome {
+
+// Creates a |PageInfoBubbleController| and displays the UI. |parent|
+// is the currently active window. |profile| points to the currently active
+// profile. |web_contents| points to the WebContents that wraps the currently
+// active tab. |virtual_url| is the virtual GURL of the currently active
+// tab. |security_info| is the |security_state::SecurityInfo| of the
+// connection to the website in the currently active tab.
+void ShowPageInfoBubble(Browser* browser,
+                        content::WebContents* web_contents,
+                        const GURL& virtual_url,
+                        const security_state::SecurityInfo& security_info) {
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     chrome::ShowPageInfoBubbleViews(parent, profile, web_contents, virtual_url,
                                     security_info);
@@ -1298,35 +1338,4 @@ void PageInfoUIBridge::Show(gfx::NativeWindow parent,
   [bubble_controller showWindow:nil];
 }
 
-void PageInfoUIBridge::SetIdentityInfo(
-    const PageInfoUI::IdentityInfo& identity_info) {
-  [bubble_controller_ setIdentityInfo:identity_info];
-}
-
-void PageInfoUIBridge::RenderFrameDeleted(
-    content::RenderFrameHost* render_frame_host) {
-  if (render_frame_host == web_contents_->GetMainFrame()) {
-    [bubble_controller_ close];
-  }
-}
-
-void PageInfoUIBridge::SetCookieInfo(const CookieInfoList& cookie_info_list) {
-  [bubble_controller_ setCookieInfo:cookie_info_list];
-}
-
-void PageInfoUIBridge::SetPermissionInfo(
-    const PermissionInfoList& permission_info_list,
-    ChosenObjectInfoList chosen_object_info_list) {
-  [bubble_controller_ setPermissionInfo:permission_info_list
-                       andChosenObjects:std::move(chosen_object_info_list)];
-}
-
-void PageInfoUIBridge::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() ||
-      !navigation_handle->HasCommitted()) {
-    return;
-  }
-  // If the browser navigates to another page, close the bubble.
-  [bubble_controller_ close];
-}
+}  // namespace chrome
