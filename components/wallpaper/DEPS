@@ -12,6 +12,8 @@ specific_include_rules = {
   "wallpaper_manager_base\.*": [
     "+chromeos",
     "+components/signin/core/account_id/account_id.h",
+  ],
+  "wallpaper_layout\.h": [
     "+components/user_manager",
   ],
 }
