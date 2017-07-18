@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97c71d7f_bc234e99",
+        "filename": "gpu/ipc/service/direct_composition_surface_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-18T19:56:37Z",
+      "side": 1,
+      "message": "This is not how I think it should work.\nI want --enable-hdr to forcibly enable HDR mode. This flag will eventually be removed.\nThen I think we should have a base::Feature called AutoEnableHDR which will will enable HDR mode if detected. This feature will eventually default to enabled, and much later it will be removed.",
+      "parentUuid": "b8689653_d32483a7",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d1a2fe1_85352a6f",
         "filename": "ui/display/display.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "71863038_92371ba8",
+        "filename": "ui/display/display.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-18T19:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d1a2fe1_85352a6f",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34dde799_44aa1bb6",
         "filename": "ui/gfx/color_space.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T08:18:23Z",
       "side": 1,
       "message": "I tested P3 here locally, and it works perfectly for https://webkit.org/blog-files/color-gamut/comparison.html ... I\u0027ll grab it in a follow on -- it does come with the drawback of lower fidelity for sRGB content.",
+      "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08aafd4_69a96f1d",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-18T19:56:37Z",
+      "side": 1,
+      "message": "Can we put a comment like \"short-time workaround until we can raster in HDR\" or something?\nOr, we could raster in sRGB if inputs are sRGB and switch to scRGB if any of the inputs don\u0027t fit in sRGB.",
+      "parentUuid": "34dde799_44aa1bb6",
       "revId": "a11aeab1035517e280c7e6adef03ec2a9c8f9316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
