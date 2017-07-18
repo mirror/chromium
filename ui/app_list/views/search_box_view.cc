@@ -610,14 +610,16 @@ bool SearchBoxView::HandleGestureEvent(views::Textfield* sender,
 
 void SearchBoxView::ButtonPressed(views::Button* sender,
                                   const ui::Event& event) {
-  if (back_button_ && sender == back_button_)
+  if (back_button_ && sender == back_button_) {
     delegate_->BackButtonPressed();
-  else if (speech_button_ && sender == speech_button_)
+  } else if (speech_button_ && sender == speech_button_) {
     view_delegate_->StartSpeechRecognition();
-  else if (close_button_ && sender == close_button_)
+  } else if (close_button_ && sender == close_button_) {
     ClearSearch();
-  else
+    app_list_view_->SetStateFromSearchBoxView(true);
+  } else {
     NOTREACHED();
+  }
 }
 
 void SearchBoxView::SpeechRecognitionButtonPropChanged() {

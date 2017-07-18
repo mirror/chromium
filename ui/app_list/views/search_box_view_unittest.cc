@@ -268,11 +268,16 @@ TEST_P(SearchBoxViewTest, CancelAutoLaunch) {
 }
 
 TEST_F(SearchBoxViewFullscreenTest, CloseButtonTest) {
+  EXPECT_FALSE(view()->IsCloseButtonVisible());
+  EXPECT_EQ(AppListView::PEEKING, app_list_view()->app_list_state());
+
   KeyPress(ui::VKEY_A);
   EXPECT_TRUE(view()->IsCloseButtonVisible());
+  EXPECT_EQ(AppListView::HALF, app_list_view()->app_list_state());
 
   view()->ClearSearch();
   EXPECT_FALSE(view()->IsCloseButtonVisible());
+  EXPECT_EQ(AppListView::PEEKING, app_list_view()->app_list_state());
 }
 
 TEST_F(SearchBoxViewFullscreenTest, SearchEngineGoogle) {
