@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "9861986c_3b0975ba",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T17:56:25Z",
+      "side": 1,
+      "message": "Oh ok, can you comment this, and maybe explain the namespace requirements on the field in the SharedQuadState mojom and class?",
+      "parentUuid": "f684d426_3795ec52",
+      "revId": "db5e5b2efc4a17e31762944abab6048ebef81b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34e9978f_50b3c7e7",
         "filename": "cc/layers/surface_layer.cc",
         "patchSetId": 4
