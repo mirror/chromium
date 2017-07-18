@@ -8,6 +8,7 @@
 #include "base/json/json_writer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/strings/pattern.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/public/browser/browser_thread.h"
@@ -17,20 +18,14 @@ namespace content {
 
 namespace {
 
-const char kChromeTraceLabel[] = "traceEvents";
-const char kMetadataTraceLabel[] = "metadata";
-
 class StringTraceDataEndpoint : public TraceDataEndpoint {
  public:
-  typedef base::Callback<void(std::unique_ptr<const base::DictionaryValue>,
-                              base::RefCountedString*)>
-      CompletionCallback;
+  typedef base::Callback<void(base::RefCountedString*)> CompletionCallback;
 
   explicit StringTraceDataEndpoint(CompletionCallback callback)
       : completion_callback_(callback) {}
 
-  void ReceiveTraceFinalContents(
-      std::unique_ptr<const base::DictionaryValue> metadata) override {
+  void ReceiveTraceEnd() override {
     std::string tmp = trace_.str();
     trace_.str("");
     trace_.clear();
@@ -39,8 +34,7 @@ class StringTraceDataEndpoint : public TraceDataEndpoint {
 
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(completion_callback_, base::Passed(std::move(metadata)),
-                   base::RetainedRef(str)));
+        base::Bind(completion_callback_, base::RetainedRef(str)));
   }
 
   void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
@@ -71,8 +65,7 @@ class FileTraceDataEndpoint : public TraceDataEndpoint {
                    base::Passed(std::move(chunk))));
   }
 
-  void ReceiveTraceFinalContents(
-      std::unique_ptr<const base::DictionaryValue>) override {
+  void ReceiveTraceEnd() override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
         base::Bind(&FileTraceDataEndpoint::CloseOnFileThread, this));
@@ -121,21 +114,18 @@ class TraceDataSinkImplBase : public TracingController::TraceDataSink {
  public:
   void AddAgentTrace(const std::string& trace_label,
                      const std::string& trace_data) override;
-  void AddMetadata(std::unique_ptr<base::DictionaryValue> data) override;
 
  protected:
-  TraceDataSinkImplBase() : metadata_(new base::DictionaryValue()) {}
+  TraceDataSinkImplBase() {}
   ~TraceDataSinkImplBase() override {}
 
   // Get a map of TracingAgent's data, which is previously added by
   // AddAgentTrace(). The map's key is the trace label and the map's value is
   // the trace data.
   const std::map<std::string, std::string>& GetAgentTrace() const;
-  std::unique_ptr<base::DictionaryValue> TakeMetadata();
 
  private:
   std::map<std::string, std::string> additional_tracing_agent_trace_;
-  std::unique_ptr<base::DictionaryValue> metadata_;
 
   DISALLOW_COPY_AND_ASSIGN(TraceDataSinkImplBase);
 };
@@ -143,45 +133,19 @@ class TraceDataSinkImplBase : public TracingController::TraceDataSink {
 class JSONTraceDataSink : public TraceDataSinkImplBase {
  public:
   explicit JSONTraceDataSink(scoped_refptr<TraceDataEndpoint> endpoint)
-      : endpoint_(endpoint), had_received_first_chunk_(false) {}
+      : endpoint_(endpoint) {}
 
   void AddTraceChunk(const std::string& chunk) override {
-    std::string trace_string;
-    if (had_received_first_chunk_)
-      trace_string = ",";
-    else
-      trace_string = "{\"" + std::string(kChromeTraceLabel) + "\":[";
-    trace_string += chunk;
-    had_received_first_chunk_ = true;
-
-    endpoint_->ReceiveTraceChunk(base::MakeUnique<std::string>(trace_string));
+    endpoint_->ReceiveTraceChunk(base::MakeUnique<std::string>(chunk));
   }
 
-  void Close() override {
-    endpoint_->ReceiveTraceChunk(base::MakeUnique<std::string>("]"));
-
-    for (auto const &it : GetAgentTrace())
-      endpoint_->ReceiveTraceChunk(
-          base::MakeUnique<std::string>(",\"" + it.first + "\": " + it.second));
-
-    std::unique_ptr<base::DictionaryValue> metadata(TakeMetadata());
-    std::string metadataJSON;
-
-    if (base::JSONWriter::Write(*metadata, &metadataJSON) &&
-        !metadataJSON.empty()) {
-      endpoint_->ReceiveTraceChunk(base::MakeUnique<std::string>(
-          ",\"" + std::string(kMetadataTraceLabel) + "\": " + metadataJSON));
-    }
-
-    endpoint_->ReceiveTraceChunk(base::MakeUnique<std::string>("}"));
-    endpoint_->ReceiveTraceFinalContents(std::move(metadata));
-  }
+  void Close() override { endpoint_->ReceiveTraceEnd(); }
 
  private:
   ~JSONTraceDataSink() override {}
 
   scoped_refptr<TraceDataEndpoint> endpoint_;
-  bool had_received_first_chunk_;
+
   DISALLOW_COPY_AND_ASSIGN(JSONTraceDataSink);
 };
 
@@ -198,12 +162,10 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
                    base::Passed(std::move(chunk))));
   }
 
-  void ReceiveTraceFinalContents(
-      std::unique_ptr<const base::DictionaryValue> metadata) override {
+  void ReceiveTraceEnd() override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
-        base::Bind(&CompressedTraceDataEndpoint::CloseOnFileThread, this,
-                   base::Passed(std::move(metadata))));
+        base::Bind(&CompressedTraceDataEndpoint::CloseOnFileThread, this));
   }
 
  private:
@@ -266,8 +228,7 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
     } while (stream_->avail_out == 0);
   }
 
-  void CloseOnFileThread(
-      std::unique_ptr<const base::DictionaryValue> metadata) {
+  void CloseOnFileThread() {
     DCHECK_CURRENTLY_ON(BrowserThread::FILE);
     if (!OpenZStreamOnFileThread())
       return;
@@ -276,7 +237,7 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
     deflateEnd(stream_.get());
     stream_.reset();
 
-    endpoint_->ReceiveTraceFinalContents(std::move(metadata));
+    endpoint_->ReceiveTraceEnd();
   }
 
   scoped_refptr<TraceDataEndpoint> endpoint_;
@@ -303,19 +264,9 @@ const std::map<std::string, std::string>& TraceDataSinkImplBase::GetAgentTrace()
   return additional_tracing_agent_trace_;
 }
 
-void TraceDataSinkImplBase::AddMetadata(
-    std::unique_ptr<base::DictionaryValue> data) {
-  metadata_->MergeDictionary(data.get());
-}
-
-std::unique_ptr<base::DictionaryValue> TraceDataSinkImplBase::TakeMetadata() {
-  return std::move(metadata_);
-}
-
 scoped_refptr<TracingController::TraceDataSink>
 TracingController::CreateStringSink(
-    const base::Callback<void(std::unique_ptr<const base::DictionaryValue>,
-                              base::RefCountedString*)>& callback) {
+    const base::Callback<void(base::RefCountedString*)>& callback) {
   return new JSONTraceDataSink(new StringTraceDataEndpoint(callback));
 }
 
@@ -332,8 +283,7 @@ TracingControllerImpl::CreateCompressedStringSink(
 }
 
 scoped_refptr<TraceDataEndpoint> TracingControllerImpl::CreateCallbackEndpoint(
-    const base::Callback<void(std::unique_ptr<const base::DictionaryValue>,
-                              base::RefCountedString*)>& callback) {
+    const base::Callback<void(base::RefCountedString*)>& callback) {
   return new StringTraceDataEndpoint(callback);
 }
 

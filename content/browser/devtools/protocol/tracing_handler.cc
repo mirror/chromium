@@ -102,8 +102,7 @@ class DevToolsStreamEndpoint : public TraceDataEndpoint {
     stream_->Append(std::move(chunk));
   }
 
-  void ReceiveTraceFinalContents(
-      std::unique_ptr<const base::DictionaryValue> metadata) override {
+  void ReceiveTraceEnd() override {
     if (TracingHandler* h = tracing_handler_.get())
       h->OnTraceToStreamComplete(stream_->handle());
   }
@@ -311,11 +310,7 @@ void TracingHandler::OnMemoryDumpFinished(
 Response TracingHandler::RecordClockSyncMarker(const std::string& sync_id) {
   if (!IsTracing())
     return Response::Error("Tracing is not started");
-
-  TracingControllerImpl::GetInstance()->RecordClockSyncMarker(
-      sync_id,
-      base::trace_event::TracingAgent::RecordClockSyncMarkerCallback());
-
+  TRACE_EVENT_CLOCK_SYNC_RECEIVER(sync_id);
   return Response::OK();
 }
 

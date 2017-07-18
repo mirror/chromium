@@ -11,11 +11,14 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
-#include "services/service_manager/public/cpp/connector.h"
 
 namespace base {
 class DictionaryValue;
-}
+}  // namespace base
+
+namespace service_manager {
+class Connector;
+}  // namespace service_manager
 
 namespace tracing {
 
@@ -27,7 +30,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ChromeTraceEventAgent
 
   static ChromeTraceEventAgent* GetInstance();
 
-  explicit ChromeTraceEventAgent(mojom::AgentRegistryPtr agent_registry);
+  explicit ChromeTraceEventAgent(service_manager::Connector* connector);
 
   void AddMetadataGeneratorFunction(MetadataGeneratorFunction generator);
 

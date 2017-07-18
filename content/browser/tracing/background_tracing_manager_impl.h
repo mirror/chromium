@@ -94,13 +94,10 @@ class BackgroundTracingManagerImpl : public BackgroundTracingManager {
   void StartTracing(BackgroundTracingConfigImpl::CategoryPreset,
                     base::trace_event::TraceRecordMode);
   void StartTracingIfConfigNeedsIt();
-  void OnFinalizeStarted(std::unique_ptr<const base::DictionaryValue> metadata,
-                         base::RefCountedString*);
+  void OnFinalizeStarted(base::RefCountedString*);
   void OnFinalizeComplete();
   void BeginFinalizing(StartedFinalizingCallback);
   void ValidateStartupScenario();
-
-  void AddCustomMetadata();
 
   std::string GetTriggerNameFromHandle(TriggerHandle handle) const;
   bool IsTriggerHandleValid(TriggerHandle handle) const;

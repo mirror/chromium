@@ -37,14 +37,13 @@ void OnUploadComplete(TraceCrashServiceUploader* uploader,
 }
 
 void UploadCallback(const scoped_refptr<base::RefCountedString>& file_contents,
-                    std::unique_ptr<const base::DictionaryValue> metadata,
                     base::Closure callback) {
   TraceCrashServiceUploader* uploader = new TraceCrashServiceUploader(
       g_browser_process->system_request_context());
 
   uploader->DoUpload(
       file_contents->data(), content::TraceUploader::UNCOMPRESSED_UPLOAD,
-      std::move(metadata), content::TraceUploader::UploadProgressCallback(),
+      content::TraceUploader::UploadProgressCallback(),
       base::Bind(&OnUploadComplete, base::Owned(uploader), callback));
 }
 

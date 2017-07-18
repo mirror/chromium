@@ -482,7 +482,6 @@ void BackgroundTracingManagerImpl::StartTracing(
 }
 
 void BackgroundTracingManagerImpl::OnFinalizeStarted(
-    std::unique_ptr<const base::DictionaryValue> metadata,
     base::RefCountedString* file_contents) {
   CHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
@@ -492,7 +491,7 @@ void BackgroundTracingManagerImpl::OnFinalizeStarted(
 
   if (!receive_callback_.is_null()) {
     receive_callback_.Run(
-        file_contents, std::move(metadata),
+        file_contents,
         base::Bind(&BackgroundTracingManagerImpl::OnFinalizeComplete,
                    base::Unretained(this)));
   }
@@ -530,19 +529,6 @@ void BackgroundTracingManagerImpl::OnFinalizeComplete() {
   RecordBackgroundTracingMetric(FINALIZATION_COMPLETE);
 }
 
-void BackgroundTracingManagerImpl::AddCustomMetadata() {
-  base::DictionaryValue metadata_dict;
-
-  std::unique_ptr<base::DictionaryValue> config_dict(
-      new base::DictionaryValue());
-  config_->IntoDict(config_dict.get());
-  metadata_dict.Set("config", std::move(config_dict));
-  if (last_triggered_rule_)
-    metadata_dict.Set("last_triggered_rule", std::move(last_triggered_rule_));
-
-  TracingController::GetInstance()->AddMetadata(metadata_dict);
-}
-
 void BackgroundTracingManagerImpl::BeginFinalizing(
     StartedFinalizingCallback callback) {
   is_gathering_ = true;
@@ -562,7 +548,6 @@ void BackgroundTracingManagerImpl::BeginFinalizing(
             base::Bind(&BackgroundTracingManagerImpl::OnFinalizeStarted,
                        base::Unretained(this))));
     RecordBackgroundTracingMetric(FINALIZATION_ALLOWED);
-    AddCustomMetadata();
   } else {
     RecordBackgroundTracingMetric(FINALIZATION_DISALLOWED);
   }

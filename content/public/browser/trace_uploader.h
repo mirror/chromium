@@ -33,7 +33,6 @@ class TraceUploader {
   // Compresses and uploads the given file contents.
   virtual void DoUpload(const std::string& file_contents,
                         UploadMode upload_mode,
-                        std::unique_ptr<const base::DictionaryValue> metadata,
                         const UploadProgressCallback& progress_callback,
                         const UploadDoneCallback& done_callback) = 0;
 };

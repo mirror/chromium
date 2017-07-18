@@ -35,7 +35,7 @@ interface AgentRegistry {
 // close the recorder connection to signal the tracing service that no more data
 // will be sent.
 interface Agent {
-  StartTracing(string config) => ();
+  StartTracing(string config) => (bool success);
   StopAndFlush(Recorder recorder);
   RequestClockSyncMarker(string sync_id) => (
       mojo.common.mojom.TimeTicks issue_ts,

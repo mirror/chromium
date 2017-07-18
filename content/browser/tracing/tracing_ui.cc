@@ -18,6 +18,7 @@
 #include "base/format_macros.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -97,7 +98,6 @@ void OnTraceBufferStatusResult(const WebUIDataSource::GotDataCallback& callback,
 
 void TracingCallbackWrapperBase64(
     const WebUIDataSource::GotDataCallback& callback,
-    std::unique_ptr<const base::DictionaryValue> metadata,
     base::RefCountedString* data) {
   base::RefCountedString* data_base64 = new base::RefCountedString();
   base::Base64Encode(data->data(), &data_base64->data());
@@ -248,8 +248,8 @@ void TracingUI::DoUploadInternal(const std::string& file_contents,
           web_ui()->GetWebContents()->GetBrowserContext())->
               GetURLRequestContext());
   DCHECK(trace_uploader_);
-  trace_uploader_->DoUpload(file_contents, upload_mode, nullptr,
-                            progress_callback, done_callback);
+  trace_uploader_->DoUpload(file_contents, upload_mode, progress_callback,
+                            done_callback);
   // TODO(mmandlis): Add support for stopping the upload in progress.
 }
 

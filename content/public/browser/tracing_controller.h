@@ -50,7 +50,6 @@ class TracingController {
     // Add a TracingAgent's trace to the data sink.
     virtual void AddAgentTrace(const std::string& trace_label,
                                const std::string& trace_data) {}
-    virtual void AddMetadata(std::unique_ptr<base::DictionaryValue> data) {}
     virtual void Close() {}
     virtual ~TraceDataSink();
   };
@@ -58,8 +57,7 @@ class TracingController {
   // Create a trace sink that may be supplied to StopTracing
   // to capture the trace data as a string.
   CONTENT_EXPORT static scoped_refptr<TraceDataSink> CreateStringSink(
-      const base::Callback<void(std::unique_ptr<const base::DictionaryValue>,
-                                base::RefCountedString*)>& callback);
+      const base::Callback<void(base::RefCountedString*)>& callback);
 
   // Create a trace sink that may be supplied to StopTracing
   // to dump the trace data to a file.
@@ -119,13 +117,6 @@ class TracingController {
   //
   virtual bool StopTracing(
       const scoped_refptr<TraceDataSink>& trace_data_sink) = 0;
-
-  // Appends metadata to the current tracing session. The metadata are
-  // subject to filtering according to current trace config.
-  // Note that TracingController adds some default metadata when
-  // StopTracing is called, which may override metadata that you would
-  // set beforehand in case of key collision.
-  virtual void AddMetadata(const base::DictionaryValue& metadata) = 0;
 
   // Get the maximum across processes of trace buffer percent full state.
   // When the TraceBufferUsage value is determined, the callback is

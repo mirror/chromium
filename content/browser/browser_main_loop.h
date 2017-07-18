@@ -85,6 +85,11 @@ class ClientNativePixmapFactory;
 }  // namespace gfx
 #endif
 
+namespace tracing {
+class AgentRegistry;
+class Coordinator;
+}  // namespace tracing
+
 namespace viz {
 class HostFrameSinkManager;
 class FrameSinkManagerImpl;
@@ -239,11 +244,12 @@ class CONTENT_EXPORT BrowserMainLoop {
   // MainMessageLoopStart()
   //   InitializeMainThread()
   // PostMainMessageLoopStart()
-  //   InitStartupTracingForDuration()
   // CreateStartupTasks()
   //   PreCreateThreads()
   //   CreateThreads()
   //   BrowserThreadsStarted()
+  //     InitializeMojo()
+  //     InitStartupTracingForDuration()
   //   PreMainMessageLoopRun()
 
   // Members initialized on construction ---------------------------------------
@@ -355,6 +361,8 @@ class CONTENT_EXPORT BrowserMainLoop {
   scoped_refptr<SaveFileManager> save_file_manager_;
   std::unique_ptr<memory_instrumentation::CoordinatorImpl>
       memory_instrumentation_coordinator_;
+  std::unique_ptr<tracing::AgentRegistry> tracing_agent_registry_;
+  std::unique_ptr<tracing::Coordinator> tracing_coordinator_;
 #if !defined(OS_ANDROID)
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
   // This is owned here so that SurfaceManager will be accessible in process

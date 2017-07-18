@@ -17,6 +17,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
+#include "services/resource_coordinator/tracing/coordinator.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace content {
@@ -36,7 +37,12 @@ class ConnectionFilterImpl : public ConnectionFilter {
   ConnectionFilterImpl()
       : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
     RegisterMainThreadInterface(base::Bind(&BindMemoryCoordinatorRequest));
-
+    RegisterMainThreadInterface(base::BindRepeating(
+        &tracing::AgentRegistry::BindAgentRegistryRequest,
+        base::Unretained(tracing::AgentRegistry::GetInstance())));
+    RegisterMainThreadInterface(base::BindRepeating(
+        &tracing::Coordinator::BindCoordinatorRequest,
+        base::Unretained(tracing::Coordinator::GetInstance())));
     auto* browser_main_loop = BrowserMainLoop::GetInstance();
     if (browser_main_loop) {
       auto* manager = browser_main_loop->discardable_shared_memory_manager();

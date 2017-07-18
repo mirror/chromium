@@ -95,9 +95,7 @@ void TracingManager::StartTracing() {
       content::TracingController::StartTracingDoneCallback());
 }
 
-void TracingManager::OnTraceDataCollected(
-    std::unique_ptr<const base::DictionaryValue> metadata,
-    base::RefCountedString* trace_data) {
+void TracingManager::OnTraceDataCollected(base::RefCountedString* trace_data) {
   if (!current_trace_id_)
     return;
 

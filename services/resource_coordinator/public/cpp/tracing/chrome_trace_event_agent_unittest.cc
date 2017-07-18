@@ -92,7 +92,7 @@ class ChromeTraceEventAgentTest : public testing::Test {
   void StartTracing(const std::string& categories) {
     agent_->StartTracing(
         base::trace_event::TraceConfig(categories, "").ToString(),
-        base::BindRepeating([] {}));
+        base::BindRepeating([](bool success) { EXPECT_TRUE(success); }));
   }
 
   void StopAndFlush(base::Closure quit_closure) {

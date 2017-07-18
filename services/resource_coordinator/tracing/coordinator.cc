@@ -68,11 +68,13 @@ Coordinator::~Coordinator() {
 void Coordinator::BindCoordinatorRequest(
     const service_manager::BindSourceInfo& source_info,
     mojom::CoordinatorRequest request) {
+  LOG(ERROR) << "Coordinator::BindCoordinatorRequest";
   binding_.Bind(std::move(request));
 }
 
 void Coordinator::StartTracing(const std::string& config,
                                const StartTracingCallback& callback) {
+  LOG(ERROR) << "Coordinator::StartTracing";
   if (is_tracing_) {
     // Cannot change the config while tracing is enabled.
     callback.Run(config == config_);
@@ -92,17 +94,20 @@ void Coordinator::StartTracing(const std::string& config,
 
 void Coordinator::SendStartTracingToAgent(
     AgentRegistry::AgentEntry* agent_entry) {
+  LOG(ERROR) << "Coordinator::SendStartTracingToAgent";
   agent_entry->AddDisconnectClosure(
       &kStartTracingClosureName,
       base::BindOnce(&Coordinator::OnTracingStarted, base::Unretained(this),
-                     base::Unretained(agent_entry)));
+                     base::Unretained(agent_entry), false));
   agent_entry->agent()->StartTracing(
       config_, base::BindRepeating(&Coordinator::OnTracingStarted,
                                    base::Unretained(this),
                                    base::Unretained(agent_entry)));
 }
 
-void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
+void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry,
+                                   bool success) {
+  LOG(ERROR) << "Coordinator::OnTracingStarted";
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kStartTracingClosureName);
   DCHECK(removed);
@@ -114,6 +119,7 @@ void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
 }
 
 void Coordinator::StopAndFlush(mojo::ScopedDataPipeProducerHandle stream) {
+  LOG(ERROR) << "Coordinator::StopAndFlush";
   DCHECK(is_tracing_);
   DCHECK(!stream_.is_valid());
   DCHECK(stream.is_valid());
@@ -253,17 +259,20 @@ void Coordinator::StreamMetadata() {
 }
 
 void Coordinator::OnFlushDone() {
+  LOG(ERROR) << "Coordinator::OnFlushDone";
   recorders_.clear();
   stream_.reset();
   is_tracing_ = false;
 }
 
 void Coordinator::IsTracing(const IsTracingCallback& callback) {
+  LOG(ERROR) << "Coordinator::IsTracing";
   callback.Run(is_tracing_);
 }
 
 void Coordinator::RequestBufferUsage(
     const RequestBufferUsageCallback& callback) {
+  LOG(ERROR) << "Coordinator::RequestBufferUsage";
   if (!request_buffer_usage_callback_.is_null()) {
     callback.Run(false, 0, 0);
     return;
@@ -288,6 +297,7 @@ void Coordinator::OnRequestBufferStatusResponse(
     AgentRegistry::AgentEntry* agent_entry,
     uint32_t capacity,
     uint32_t count) {
+  LOG(ERROR) << "Coordinator::OnRequestBufferStatusResponse";
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kRequestBufferUsageClosureName);
   DCHECK(removed);
@@ -307,6 +317,7 @@ void Coordinator::OnRequestBufferStatusResponse(
 }
 
 void Coordinator::GetCategories(const GetCategoriesCallback& callback) {
+  LOG(ERROR) << "Coordinator::GetCategories";
   if (is_tracing_) {
     callback.Run(false, "");
   }
@@ -330,6 +341,7 @@ void Coordinator::GetCategories(const GetCategoriesCallback& callback) {
 void Coordinator::OnGetCategoriesResponse(
     AgentRegistry::AgentEntry* agent_entry,
     const std::string& categories) {
+  LOG(ERROR) << "Coordinator::OnGetCategoriesResponse";
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kGetCategoriesClosureName);
   DCHECK(removed);
