@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/password_manager/content/browser/visible_password_observer.h"
+#include "chrome/browser/ssl/visible_password_observer.h"
 
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/origin_util.h"
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(password_manager::VisiblePasswordObserver);
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(password_observer::VisiblePasswordObserver);
 
-namespace password_manager {
+namespace password_observer {
 
 VisiblePasswordObserver::~VisiblePasswordObserver() {}
 
@@ -52,4 +52,4 @@ void VisiblePasswordObserver::MaybeNotifyAllFieldsInvisible() {
   }
 }
 
-}  // namespace password_manager
+}  // namespace password_observer
