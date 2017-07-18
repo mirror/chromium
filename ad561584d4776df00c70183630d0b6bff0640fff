@@ -22,6 +22,30 @@
       "revId": "ad561584d4776df00c70183630d0b6bff0640fff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec822f0_7173ff7c",
+        "filename": "content/browser/renderer_host/media/service_video_capture_device_launcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-18T04:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a336ce_001c7062",
+      "range": {
+        "startLine": 35,
+        "startChar": 53,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "ad561584d4776df00c70183630d0b6bff0640fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
