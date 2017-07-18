@@ -65,33 +65,40 @@ InterpolationValue CSSFontWeightInterpolationType::MaybeConvertValue(
     const CSSValue& value,
     const StyleResolverState* state,
     ConversionCheckers& conversion_checkers) const {
-  if (!value.IsIdentifierValue())
-    return nullptr;
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    CSSValueID keyword = identifier_value.GetValueID();
 
-  const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
-  CSSValueID keyword = identifier_value.GetValueID();
+    switch (keyword) {
+      case CSSValueInvalid:
+        return nullptr;
+      case CSSValueNormal:
+        return CreateFontWeightValue(NormalWeightValue());
 
-  switch (keyword) {
-    case CSSValueInvalid:
-      return nullptr;
-
-    case CSSValueBolder:
-    case CSSValueLighter: {
-      DCHECK(state);
-      FontSelectionValue inherited_font_weight =
-          state->ParentStyle()->GetFontWeight();
-      conversion_checkers.push_back(
-          InheritedFontWeightChecker::Create(inherited_font_weight));
-      if (keyword == CSSValueBolder)
+      case CSSValueBolder:
+      case CSSValueLighter: {
+        DCHECK(state);
+        FontSelectionValue inherited_font_weight =
+            state->ParentStyle()->GetFontWeight();
+        conversion_checkers.push_back(
+            InheritedFontWeightChecker::Create(inherited_font_weight));
+        if (keyword == CSSValueBolder) {
+          return CreateFontWeightValue(
+              FontDescription::BolderWeight(inherited_font_weight));
+        }
         return CreateFontWeightValue(
-            FontDescription::BolderWeight(inherited_font_weight));
-      return CreateFontWeightValue(
-          FontDescription::LighterWeight(inherited_font_weight));
+            FontDescription::LighterWeight(inherited_font_weight));
+      }
+      default:
+        NOTREACHED();
     }
-    default:
-      return CreateFontWeightValue(
-          identifier_value.ConvertTo<FontSelectionValueWeight>());
+  } else if (value.IsPrimitiveValue()) {
+    return CreateFontWeightValue(
+        FontSelectionValue(ToCSSPrimitiveValue(value).GetFloatValue()));
   }
+
+  NOTREACHED();
+  return nullptr;
 }
 
 InterpolationValue
