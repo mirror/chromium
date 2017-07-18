@@ -427,7 +427,7 @@ void FakeCryptohomeClient::TpmAttestationDoesKeyExist(
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_name,
     const BoolDBusMethodCallback& callback) {
-  if (!service_is_available_) {
+  if (!service_is_available_ || !tpm_attestation_does_key_exist_success_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, DBUS_METHOD_CALL_FAILURE, false));
     return;
