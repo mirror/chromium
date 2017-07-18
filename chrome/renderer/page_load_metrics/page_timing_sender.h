@@ -14,8 +14,9 @@ namespace page_load_metrics {
 class PageTimingSender {
  public:
   virtual ~PageTimingSender() {}
-  virtual void SendTiming(const mojom::PageLoadTimingPtr& timing,
-                          const mojom::PageLoadMetadataPtr& metadata) = 0;
+  virtual void SendTiming(mojom::PageLoadTimingPtr timing,
+                          mojom::PageLoadMetadataPtr metadata,
+                          mojom::PageLoadFeaturesPtr new_features) = 0;
 };
 
 }  // namespace page_load_metrics
