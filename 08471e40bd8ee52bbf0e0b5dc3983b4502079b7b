@@ -94,6 +94,30 @@
       "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd6d2d1_1e7e73aa",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-18T13:51:59Z",
+      "side": 1,
+      "message": "Javascript dialogs are typically used in non-typing contexts involving user action, such as submitting a form or attempting to navigate away from an un-submitted form. \n\nThis modal dialog can appear any time. The user could be typing an URL in the address bar, get focus stolen by the dialog and have their space/enter key press misinterpreted as consenting to Chrome Cleanup and reporting data to Google. \n\nThis consent isn\u0027t reversible and puts the user in an unexpected state. I think avoiding these false prompt acceptance is worth deviating from the normal modal dialog behavior.",
+      "parentUuid": "91668a98_e13e06e2",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
