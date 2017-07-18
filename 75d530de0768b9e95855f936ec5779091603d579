@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c1700b_b46ec9a5",
+        "filename": "ppapi/generators/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000894
+      },
+      "writtenOn": "2017-07-18T20:34:06Z",
+      "side": 0,
+      "message": "Noel left even before I did :-).  Please remove these also.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
