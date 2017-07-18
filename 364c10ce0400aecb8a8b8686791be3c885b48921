@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf63f010_3b913c44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97512dd2_ada31c44",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ec72dd_1f0e73fd",
         "filename": "components/exo/data_device.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df5667f_12a8f674",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ec72dd_1f0e73fd",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4bc0ae2_368b0123",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2571e346_c22c24b7",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ac78f6f_f2b6d659",
         "filename": "components/exo/data_device.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c72a24e_14ba0da0",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac78f6f_f2b6d659",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6e5c38ba_0dc6e317",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0a2d24_50a23988",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa5cb84_23b69125",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d5a502_537acf1d",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa5cb84_23b69125",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0040cc0e_732d1258",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6479eb16_88cb93b9",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a19d660_212e7e97",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2828beca_ac850ba5",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a19d660_212e7e97",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0e675079_9c36c5c5",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140e47ab_bcbe165b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0aabf99_f3e571ce",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "do you have to pass this by value? \"const std::vector\u003cstd::string\u003e\u0026 mime_types\" instead?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0db37c9_ce2ea3c3",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Changed to const reference. This was originally to use a move constructor. But the vector unlikely to have many items.",
+      "parentUuid": "b0aabf99_f3e571ce",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "e662f89d_cfc0f231",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4746d5c2_4529bd5b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6084d40a_7b6b525f",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -203,6 +401,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000e28d0_ced49abd",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6084d40a_7b6b525f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "d26fe678_97e2b3e9",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Removed the serial arguments here and from other exo places.",
+      "parentUuid": "57fa4cfc_25cf6fca",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b1c4eb_5307d49f",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "0e7e4437_29a6d0f2",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b1c4eb_5307d49f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbd46804_8933a120",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -251,6 +503,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "why \"class\" and not just \"const DataOffer\u0026 data_offer\"?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09c8cc6_699cc7a0",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Yes we don\u0027t need it. Removed.",
+      "parentUuid": "dbd46804_8933a120",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "fbefee7c_82055090",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58db5fd4_bf3a8dda",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5fadf94_16490685",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 8
@@ -288,6 +576,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18872aca_995c3634",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fadf94_16490685",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "b53b6941_09b011d5",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4857556_cfa23621",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7351c5a2_c527938b",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 8
@@ -322,6 +646,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e317f09_2c19cf5d",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7351c5a2_c527938b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "d069baa6_abcb0d6a",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3abc1cd_e90d48eb",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "271bab55_176de836",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 8
@@ -356,6 +716,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a333c209_d0ffe12f",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "271bab55_176de836",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "431d139b_fc5ce85b",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c115b74_c74e6f44",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f54523d_937c308e",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 8
@@ -390,6 +786,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09404c35_911aa1b6",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f54523d_937c308e",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "4e09221e_51425aeb",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d175871_d4886a3c",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6636c5_00973a36",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 8
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "cd0abc39_ed9ab57f",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6636c5_00973a36",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a2194d_bed6fe81",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 8
@@ -438,6 +888,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "what is this needed for?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c0744d_147429f0",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "exo classes passes a DataOffer object to wayland delegates (e.g. DataDeviceDelegate::OnEnter), then wayland delegates needs to obtain wl_data_offer* which is stored in DataOfferDelegate. So I need an accessor to obtain DataDeviceDelegate from DataOffer.",
+      "parentUuid": "d6a2194d_bed6fe81",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -461,6 +929,24 @@
     },
     {
       "key": {
+        "uuid": "4539c50d_6114f220",
+        "filename": "components/exo/data_offer_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1d7269_312c0a51",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f3429d_9db6fc96",
         "filename": "components/exo/data_source.h",
         "patchSetId": 8
@@ -472,6 +958,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "what are these includes for?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a133972_f1f7becf",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "\u003cstring\u003e is for mime type. \u003ccstdint\u003e was removed after uint32_t is turned into DndAction.",
+      "parentUuid": "c7f3429d_9db6fc96",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -495,6 +999,24 @@
     },
     {
       "key": {
+        "uuid": "79fa6a63_06d1e90d",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "base/macros is for DISALLOW_COPY_AND_ASSIGN. thread_checker had been mixed from the following CL and was removed.",
+      "parentUuid": "700b7cb7_b5d6c2c9",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a66f59_918da45a",
         "filename": "components/exo/data_source.h",
         "patchSetId": 8
@@ -509,6 +1031,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4191f9_63616601",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a66f59_918da45a",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -529,6 +1069,24 @@
     },
     {
       "key": {
+        "uuid": "3aa79fd6_c00ffaeb",
+        "filename": "components/exo/data_source_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88770c70_27f3b97b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22d5f11_72d3965f",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -543,6 +1101,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8de44aa_c762dce9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2652,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b22d5f11_72d3965f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -563,6 +1139,24 @@
     },
     {
       "key": {
+        "uuid": "95e5d05b_4efdcf24",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2653,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a69f2a_16bc4ace",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d729f80_172b5dc0",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -577,6 +1171,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7bd06a_382693f7",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d729f80_172b5dc0",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -597,6 +1209,24 @@
     },
     {
       "key": {
+        "uuid": "dd014d1b_a9766208",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2661,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0a060d1_fff07b1f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d607d71b_628b0bf4",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -611,6 +1241,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb80d66a_9423292f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d607d71b_628b0bf4",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -631,6 +1279,24 @@
     },
     {
       "key": {
+        "uuid": "23e67d4f_4f77b1b2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2667,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed62cd3a_49db4111",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ba52b84_d4f2119c",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -645,6 +1311,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e054ce_6437e06d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2669,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ba52b84_d4f2119c",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -665,6 +1349,24 @@
     },
     {
       "key": {
+        "uuid": "a52ef4fb_f6f707de",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf97bd7_bb7782c7",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02ee0ce_1cc544aa",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -679,6 +1381,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e994ba_ed2a9928",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2706,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02ee0ce_1cc544aa",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -699,6 +1419,24 @@
     },
     {
       "key": {
+        "uuid": "ba2b5c97_e0595691",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2707,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b38218_2c84bcdb",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28987e9d_c62feee9",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -713,6 +1451,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6449fc_5a291559",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28987e9d_c62feee9",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -733,6 +1489,24 @@
     },
     {
       "key": {
+        "uuid": "87d17ec5_222367c6",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2715,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90655c2_bfec534f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f868ecf3_5804bef9",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -747,6 +1521,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316c00cf_61ebe3fc",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f868ecf3_5804bef9",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -767,6 +1559,24 @@
     },
     {
       "key": {
+        "uuid": "460bcad3_32d78c5e",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12da128_2ae43cc9",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9664b8cf_ca81540b",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -781,6 +1591,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae71533f_53885742",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2769,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9664b8cf_ca81540b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -801,6 +1629,24 @@
     },
     {
       "key": {
+        "uuid": "65a0d8f8_13393304",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d6733a_acc86eec",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b97d0cc3_e271c23a",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -815,6 +1661,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d248cd40_8712ac09",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b97d0cc3_e271c23a",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -835,6 +1699,24 @@
     },
     {
       "key": {
+        "uuid": "5fd9421e_83139399",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2778,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4eb7e15_7ba12271",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6bf1e44_d1f98fc5",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -849,6 +1731,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd6ad2_24ff8d32",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6bf1e44_d1f98fc5",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -869,6 +1769,24 @@
     },
     {
       "key": {
+        "uuid": "bc7d8ae8_dedc5dd2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2788,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b249691c_889b552f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492fe672_81c5c4d4",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -883,6 +1801,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5863be_d0a07ff7",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492fe672_81c5c4d4",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -903,6 +1839,24 @@
     },
     {
       "key": {
+        "uuid": "28e7eb9f_a36b9d0d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "647fe7f9_2285ebe5",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a79b6f6_3d214ead",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -917,6 +1871,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b47462_dce2d9e3",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a79b6f6_3d214ead",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -937,6 +1909,24 @@
     },
     {
       "key": {
+        "uuid": "4c224246_36a69b7c",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65cee80b_fc82215f",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3babb94b_a7a5c859",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -951,6 +1941,24 @@
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f214cd_e56283f3",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2816,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3babb94b_a7a5c859",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -971,6 +1979,24 @@
     },
     {
       "key": {
+        "uuid": "e03428eb_656a4c6a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44af5bc4_0623549b",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a1d1db_cccf4bd6",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -982,6 +2008,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f1ce37_0094fbc0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Changed the version to 1 for now. We may eventually need to use newer version to use newly added messages. Is there any way to check the client supported version?",
+      "parentUuid": "a5a1d1db_cccf4bd6",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1005,6 +2049,24 @@
     },
     {
       "key": {
+        "uuid": "a60e4640_5bf6a8be",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2865,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f576cc2_0cce161a",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "223ccba3_0d026154",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -1016,6 +2078,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d4728b_a3345b28",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Changed the version to 1 for now. We may eventually need to use newer version to use newly added messages. Is there any way to check the client supported version?",
+      "parentUuid": "223ccba3_0d026154",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1039,6 +2119,24 @@
     },
     {
       "key": {
+        "uuid": "388c5dad_a17970b0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2881,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22860e7f_afb943cc",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0233de45_257ff1d6",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -1050,6 +2148,24 @@
       "writtenOn": "2017-07-14T11:31:27Z",
       "side": 1,
       "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c880ca_84fbad3d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-18T02:50:10Z",
+      "side": 1,
+      "message": "Changed the version to 1 for now. We may eventually need to use newer version to use newly added messages. Is there any way to check the client supported version?",
+      "parentUuid": "0233de45_257ff1d6",
       "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
