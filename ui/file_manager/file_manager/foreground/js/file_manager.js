@@ -642,6 +642,12 @@ FileManager.prototype = /** @struct */ {
     this.ui_.attachFilesTooltip();
 
     this.ui_.decorateFilesMenuItems();
+
+    chrome.commandLinePrivate.hasSwitch(
+        'enable-file-manager-touch-mode', function(enabled) {
+          if (!enabled)
+            this.ui_.selectionMenuButton.hidden = true;
+        }.bind(this));
   };
 
   /**

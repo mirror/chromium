@@ -1299,6 +1299,9 @@ extern const char kEnableImeMenuDescription[];
 extern const char kEnableTouchSupportForScreenMagnifierName[];
 extern const char kEnableTouchSupportForScreenMagnifierDescription[];
 
+extern const char kEnableFileManagerTouchModeName[];
+extern const char kEnableFileManagerTouchModeDescription[];
+
 extern const char kEnableZipArchiverOnFileManagerName[];
 extern const char kEnableZipArchiverOnFileManagerDescription[];
 
