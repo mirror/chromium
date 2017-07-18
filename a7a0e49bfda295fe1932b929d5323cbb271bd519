@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ce0bb09_e4a5e510",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e23cb5d_d8634843",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f17744_391eef66",
         "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5366bfd9_837d7982",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f17744_391eef66",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03b71c68_c2286b68",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5490a88a_9d13a4f3",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6311fc7a_91025a37",
         "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e94b731_72ec6178",
+        "filename": "chrome/browser/chromeos/tether/active_users_daily_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6311fc7a_91025a37",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9c21f95c_f33aaf0c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "36eec9cf_66b6632f",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 47
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49fc38f_4d2253b6",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9258e50_de61262f",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Thanks for the catch! Fixed.",
+      "parentUuid": "c49fc38f_4d2253b6",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 76
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "681a4d5a_4f7bafe3",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "494b6846_e8cb8e1a",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72aca191_0a18c365",
         "filename": "chromeos/components/tether/active_users_logger.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675b379c_64f554d0",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72aca191_0a18c365",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b6140d97_e8e0befe",
+        "filename": "chromeos/components/tether/active_users_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4427c06d_f79a6d6b",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71f59b1c_1e4545b9",
         "filename": "chromeos/components/tether/initializer_unittest.cc",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c33ea77_68f11824",
+        "filename": "chromeos/components/tether/initializer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-18T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f59b1c_1e4545b9",
+      "range": {
+        "startLine": 211,
+        "startChar": 42,
+        "endLine": 211,
+        "endChar": 49
+      },
+      "revId": "a7a0e49bfda295fe1932b929d5323cbb271bd519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
