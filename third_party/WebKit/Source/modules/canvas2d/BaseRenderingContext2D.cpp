@@ -1855,6 +1855,43 @@ void BaseRenderingContext2D::CheckOverdraw(
   GetImageBuffer()->WillOverwriteCanvas();
 }
 
+float BaseRenderingContext2D::GetFontBaseline(
+    const FontMetrics& font_metrics) const {
+  // If the font is so tiny that the lroundf operations result in two
+  // different types of text baselines to return the same baseline, use
+  // floating point metrics (crbug.com/338908).
+  // If you changed the heuristic here, for consistency please also change it
+  // in SimpleFontData::platformInit().
+  bool use_float_ascent_descent =
+      font_metrics.Ascent() < 3 || font_metrics.Height() < 2;
+  switch (GetState().GetTextBaseline()) {
+    case kTopTextBaseline:
+      return use_float_ascent_descent ? font_metrics.FloatAscent()
+                                      : font_metrics.Ascent();
+    case kHangingTextBaseline:
+      // According to
+      // http://wiki.apache.org/xmlgraphics-fop/LineLayout/AlignmentHandling
+      // "FOP (Formatting Objects Processor) puts the hanging baseline at 80% of
+      // the ascender height"
+      return use_float_ascent_descent ? (font_metrics.FloatAscent() * 4.0) / 5.0
+                                      : (font_metrics.Ascent() * 4) / 5;
+    case kBottomTextBaseline:
+    case kIdeographicTextBaseline:
+      return use_float_ascent_descent ? -font_metrics.FloatDescent()
+                                      : -font_metrics.Descent();
+    case kMiddleTextBaseline:
+      return use_float_ascent_descent
+                 ? -font_metrics.FloatDescent() +
+                       font_metrics.FloatHeight() / 2.0
+                 : -font_metrics.Descent() + font_metrics.Height() / 2;
+    case kAlphabeticTextBaseline:
+    default:
+      // Do nothing.
+      break;
+  }
+  return 0;
+}
+
 const BaseRenderingContext2D::UsageCounters&
 BaseRenderingContext2D::GetUsage() {
   return usage_counters_;

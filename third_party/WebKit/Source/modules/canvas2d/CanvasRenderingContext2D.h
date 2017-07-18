@@ -227,7 +227,6 @@ class MODULES_EXPORT CanvasRenderingContext2D final
                         double* max_width = nullptr);
 
   const Font& AccessFont();
-  float GetFontBaseline(const FontMetrics&) const;
 
   void DrawFocusIfNeededInternal(const Path&, Element*);
   bool FocusRingCallIsValid(const Path&, Element*);

@@ -354,6 +354,8 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
 
   virtual void NeedsFinalizeFrame(){};
 
+  float GetFontBaseline(const FontMetrics&) const;
+
  private:
   void RealizeSaves();
 
