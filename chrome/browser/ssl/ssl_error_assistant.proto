@@ -18,7 +18,14 @@ message CaptivePortalCert {
   optional string sha256_hash = 1;
 }
 
+message ContentFilterEntry {
+  optional string content_filter_regex = 1;
+  optional string content_filter_name = 2;
+  optional string content_filter_help_url = 3;
+}
+
 message SSLErrorAssistantConfig {
   optional uint32 version_id = 1;
   repeated CaptivePortalCert captive_portal_cert = 2;
+  repeated ContentFilterEntry content_filter = 3;
 }
