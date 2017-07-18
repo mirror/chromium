@@ -72,7 +72,7 @@
 
 namespace {
 
-void LogHistogramValue(int action) {
+void LogHistogramValue(signin_metrics::APAction action) {
   UMA_HISTOGRAM_ENUMERATION("Signin.AllAccessPointActions", action,
                             signin_metrics::HISTOGRAM_MAX);
 }
