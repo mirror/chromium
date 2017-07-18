@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "69e2519b_f831f64b",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-18T17:33:54Z",
+      "side": 1,
+      "message": "By \"this approach\" I mean the approach this CL currently is using (Using switches::kDisableBackgroundNetworking - I was thinking we were confused by another request to the same host, not to the same URL).  There\u0027s still a concern about running into future google magic, but I\u0027m less worried about requests to Google\u0027s root URL than general requests to Google.",
+      "parentUuid": "245bc503_d5409743",
+      "revId": "16fa8857f545a650fd4e6c47e26abad1221c3bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71cb16ea_741af0f2",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
         "patchSetId": 8
