@@ -70,6 +70,30 @@
       "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e2ebbc_632f62f0",
+        "filename": "components/variations/service/variations_field_trial_creator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-18T22:47:59Z",
+      "side": 1,
+      "message": "Alright, I\u0027ve changed it some.  The original crash occurs when CreateTrialsFromSeed() calls GetClientFilterableStateForVersion().  The way all the tests work for calling CreateTrialsFromSeed() is by overriding LoadSeed() and StoreSeed() to fake the loading and storing. In this case we want to indirectly create VariationsFieldTrialCreator via VariationsService, so we can\u0027t override those two methods and call CreateTrialsFromSeed().\n\nHopefully that makes sense, but please let me know what you think.",
+      "parentUuid": "bd07c11e_6fdbd095",
+      "range": {
+        "startLine": 281,
+        "startChar": 62,
+        "endLine": 281,
+        "endChar": 63
+      },
+      "revId": "de3101a1a7cb2b6750f7ea6548ea5eb8a9744c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
