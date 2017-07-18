@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93bd863e_a883b8be",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/line-flow-with-floats-2-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-18T01:20:47Z",
+      "side": 1,
+      "message": "The sub-frame document size grew, thus the document background should grow too.",
+      "revId": "eb837b3364f42d0baec9964f8fe1353b986a8304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c542846_6b883f09",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/repaint-during-scroll-with-zoom-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-18T01:20:47Z",
+      "side": 1,
+      "message": "Because we don\u0027t clip visual rects in SPv2, the computed root graphics layer bounds is bogus (it is only a hack anyway).",
+      "revId": "eb837b3364f42d0baec9964f8fe1353b986a8304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2ab4a2_ad34bee9",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/resize-scrollable-iframe-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-18T01:20:47Z",
+      "side": 1,
+      "message": "Before this CL the LayoutView had both kGeometry and kIncremental, but kGeometry got shadowed (which I think is unintentional). With this CL we no longer issue kIncremental.",
+      "revId": "eb837b3364f42d0baec9964f8fe1353b986a8304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdb05f3_0962b890",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/text-match-document-change-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-18T01:20:47Z",
+      "side": 1,
+      "message": "The sub-frame document size grew, thus the document background should grow too.",
+      "revId": "eb837b3364f42d0baec9964f8fe1353b986a8304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
