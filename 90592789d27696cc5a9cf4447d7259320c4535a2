@@ -50,6 +50,24 @@
       "revId": "90592789d27696cc5a9cf4447d7259320c4535a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0719b4_e0335d6b",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-18T04:46:59Z",
+      "side": 1,
+      "message": "I did something similar, but moved it above the function (also for GetDisplayNameForGURL()) as well.",
+      "parentUuid": "a3473d00_b52bbd2e",
+      "revId": "90592789d27696cc5a9cf4447d7259320c4535a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
