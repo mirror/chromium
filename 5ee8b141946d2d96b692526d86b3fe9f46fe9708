@@ -46,6 +46,30 @@
       "revId": "5ee8b141946d2d96b692526d86b3fe9f46fe9708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6f18c1_a2a51386",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/CardViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-18T23:09:36Z",
+      "side": 1,
+      "message": "Yes, I think something like that. I can create a work item for myself since I own bookmarks and history and did a fair amount of the downloads work.",
+      "parentUuid": "b7edd284_88082cd4",
+      "range": {
+        "startLine": 209,
+        "startChar": 24,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "5ee8b141946d2d96b692526d86b3fe9f46fe9708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
