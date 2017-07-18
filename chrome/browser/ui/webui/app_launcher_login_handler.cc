@@ -140,6 +140,8 @@ void AppLauncherLoginHandler::HandleShowSyncLoginUI(
 }
 
 void AppLauncherLoginHandler::RecordInHistogram(NTPSignInPromoBuckets type) {
+  DCHECK(type >= NTP_SIGN_IN_PROMO_VIEWED &&
+         type < NTP_SIGN_IN_PROMO_BUCKET_BOUNDARY);
   UMA_HISTOGRAM_ENUMERATION("SyncPromo.NTPPromo", type,
                             NTP_SIGN_IN_PROMO_BUCKET_BOUNDARY);
 }
