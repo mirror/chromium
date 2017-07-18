@@ -185,11 +185,16 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   arc_play_store_enabled_preference_handler_->Start();
 }
 
-void ArcServiceLauncher::Shutdown() {
-  // Destroy in the reverse order of the initialization.
+void ArcServiceLauncher::OnPrimaryUserProfileBeingDestroyed() {
   arc_play_store_enabled_preference_handler_.reset();
   if (arc_service_manager_)
     arc_service_manager_->Shutdown();
+  if (arc_session_manager_)
+    arc_session_manager_->Shutdown();
+}
+
+void ArcServiceLauncher::Shutdown() {
+  DCHECK(!arc_play_store_enabled_preference_handler_);
   arc_session_manager_.reset();
   arc_service_manager_.reset();
 }

@@ -29,7 +29,7 @@ class ArcServiceLauncher {
   // Called before the main MessageLooop starts.
   void Initialize();
 
-  // Called after the main MessageLoop stops, but before the Profile is
+  // Called after the main MessageLoop stops, and after the Profile is
   // destroyed.
   void Shutdown();
 
@@ -40,6 +40,9 @@ class ArcServiceLauncher {
 
   // Called when the main profile is initialized after user logs in.
   void OnPrimaryUserProfilePrepared(Profile* profile);
+
+  // Called just before the main profile is being destroyed.
+  void OnPrimaryUserProfileBeingDestroyed();
 
  private:
   std::unique_ptr<ArcServiceManager> arc_service_manager_;

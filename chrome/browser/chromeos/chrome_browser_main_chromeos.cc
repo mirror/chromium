@@ -1015,7 +1015,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // This must be shut down before |arc_service_launcher_|.
   NoteTakingHelper::Shutdown();
 
-  arc_service_launcher_->Shutdown();
+  arc_service_launcher_->OnPrimaryUserProfileBeingDestroyed();
 
   // Unregister CrosSettings observers before CrosSettings is destroyed.
   shutdown_policy_forwarder_.reset();
@@ -1113,6 +1113,12 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // Destroy ArcKioskAppManager after its observers are removed when Ash is
   // closed above.
   arc_kiosk_app_manager_.reset();
+
+  // All ARC related modules should be shut down here, so shut down ARC.
+  // Specifically, this should be done after Profile destruction run in
+  // ChromeBrowserMainPartsLinux::PostMainMessageLoopRun().
+  arc_service_launcher_->Shutdown();
+  arc_service_launcher_.reset();
 
   if (!ash_util::IsRunningInMash())
     AccessibilityManager::Shutdown();
