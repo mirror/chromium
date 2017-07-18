@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42265bc0_37e77cbd",
+        "filename": "cc/input/touch_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "nit: return a const char* here so callers dont have to construct a string if they wouldn\u0027t use it.",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30da5a9_51ba94b6",
+        "filename": "cc/input/touch_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "use static_cast here https://google.github.io/styleguide/cppguide.html#Casting",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0843c69f_251f8973",
+        "filename": "cc/input/touch_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "no () around the case values",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06aeb40c_5a19b28e",
+        "filename": "cc/input/touch_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "We have a NOTREACHED() macro for this in base/logging.h",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc775cf_6a0ac998",
+        "filename": "cc/input/touch_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d just return \"\" or null.",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ffc1ee_3150a00a",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "Does this extra text become a problem if rects are small, would it make the action itself likely to get clipped? If so you might consider \"touch event listener: \" + string instead. If not then this is fine ofc :)",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a546c47_f86617d8",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "did you mean to copy the region here?",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e498a889_b096d524",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "static_cast (and i\u0027d use auto when ur already writing the type out elsewhere on the line)",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c886cb79_3de07a53",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "emplace_back() since you\u0027re constructing the object here anyway.",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36807acb_c8a601b2",
+        "filename": "cc/trees/debug_rect_history.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "Maybe DCHECK the action is none if the type isn\u0027t touch event (and isn\u0027t none if is touch event, if that\u0027s correct)?",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b35ea42_49081579",
+        "filename": "cc/trees/debug_rect_history.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T19:24:59Z",
+      "side": 1,
+      "message": "Comment about when this is valid?",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
