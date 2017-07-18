@@ -83,6 +83,10 @@ enum class LineBreakType {
   // word-break:keep-all doesn't allow breaks between all kind of
   // letters/numbers except some south east asians'.
   kKeepAll,
+
+  kNormalBreakAfterSpace,
+  kBreakAllBreakAfterSpace,
+  kKeepAllBreakAfterSpace,
 };
 
 PLATFORM_EXPORT std::ostream& operator<<(std::ostream&, LineBreakType);
@@ -243,9 +247,9 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
     cached_prior_context_length_ = 0;
   }
 
-  template <typename CharacterType, LineBreakType>
+  template <typename CharacterType, LineBreakType, bool>
   int NextBreakablePosition(int pos, const CharacterType* str) const;
-  template <LineBreakType>
+  template <LineBreakType, bool>
   int NextBreakablePosition(int pos) const;
   int NextBreakablePositionBreakCharacter(int pos) const;
   int NextBreakablePosition(int pos, LineBreakType) const;

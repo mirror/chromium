@@ -76,8 +76,9 @@ class TextBreakIteratorTest : public ::testing::Test {
   }
 
 TEST_F(TextBreakIteratorTest, Basic) {
-  SetTestString("a b c");
-  MATCH_LINE_BREAKS(LineBreakType::kNormal, {1, 3, 5});
+  SetTestString("a b  c");
+  MATCH_LINE_BREAKS(LineBreakType::kNormal, {1, 3, 4, 6});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {2, 5, 6});
 }
 
 TEST_F(TextBreakIteratorTest, LatinPunctuation) {
@@ -86,6 +87,7 @@ TEST_F(TextBreakIteratorTest, LatinPunctuation) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakAll, {2, 4, 6, 8});
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter, {1, 2, 3, 4, 5, 6, 7, 8});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {4, 8});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {5, 8});
 }
 
 TEST_F(TextBreakIteratorTest, Chinese) {
@@ -94,6 +96,7 @@ TEST_F(TextBreakIteratorTest, Chinese) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakAll, {1, 2, 3, 4, 5});
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter, {1, 2, 3, 4, 5});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {5});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {1, 2, 3, 4, 5});
 }
 
 TEST_F(TextBreakIteratorTest, ChineseMixed) {
@@ -103,6 +106,17 @@ TEST_F(TextBreakIteratorTest, ChineseMixed) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter,
                     {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {1, 4, 9, 10});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {1, 4, 5, 7, 9, 10});
+}
+
+TEST_F(TextBreakIteratorTest, ChineseSpaces) {
+  SetTestString("標  萬  a  國");
+  MATCH_LINE_BREAKS(LineBreakType::kNormal, {1, 2, 4, 5, 7, 8, 10});
+  MATCH_LINE_BREAKS(LineBreakType::kBreakAll, {1, 2, 4, 5, 7, 8, 10});
+  MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter,
+                    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+  MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {1, 2, 4, 5, 7, 8, 10});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {3, 6, 9, 10});
 }
 
 TEST_F(TextBreakIteratorTest, KeepEmojiZWJFamilyIsolate) {
@@ -111,6 +125,7 @@ TEST_F(TextBreakIteratorTest, KeepEmojiZWJFamilyIsolate) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakAll, {11});
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter, {11});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {11});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {11});
 }
 
 TEST_F(TextBreakIteratorTest, KeepEmojiModifierSequenceIsolate) {
@@ -119,6 +134,7 @@ TEST_F(TextBreakIteratorTest, KeepEmojiModifierSequenceIsolate) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakAll, {3});
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter, {3});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {3});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {3});
 }
 
 TEST_F(TextBreakIteratorTest, KeepEmojiZWJSequence) {
@@ -129,6 +145,7 @@ TEST_F(TextBreakIteratorTest, KeepEmojiZWJSequence) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter,
                     {1, 2, 3, 4, 15, 16, 17, 18, 19});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {3, 15, 19});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {4, 16, 19});
 }
 
 TEST_F(TextBreakIteratorTest, KeepEmojiModifierSequence) {
@@ -138,6 +155,7 @@ TEST_F(TextBreakIteratorTest, KeepEmojiModifierSequence) {
   MATCH_LINE_BREAKS(LineBreakType::kBreakCharacter,
                     {1, 2, 3, 4, 7, 8, 9, 10, 11});
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {3, 7, 11});
+  MATCH_LINE_BREAKS(LineBreakType::kNormalBreakAfterSpace, {4, 8, 11});
 }
 
 }  // namespace blink

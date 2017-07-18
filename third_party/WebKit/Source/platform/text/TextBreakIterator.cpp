@@ -258,7 +258,9 @@ inline bool NeedsLineBreakIterator(UChar ch) {
   return ch > kAsciiLineBreakTableLastChar && ch != kNoBreakSpaceCharacter;
 }
 
-template <typename CharacterType, LineBreakType lineBreakType>
+template <typename CharacterType,
+          LineBreakType lineBreakType,
+          bool break_after_space>
 inline int LazyLineBreakIterator::NextBreakablePosition(
     int pos,
     const CharacterType* str) const {
@@ -279,7 +281,13 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
     ch = str[i];
 
     is_space = IsBreakableSpace(ch);
-    if (is_space || ShouldBreakAfter(last_last_ch, last_ch, ch))
+    if (!break_after_space) {
+      if (is_space)
+        return i;
+    } else if (!is_space && is_last_space) {
+      return i;
+    }
+    if (ShouldBreakAfter(last_last_ch, last_ch, ch))
       return i;
 
     if (lineBreakType == LineBreakType::kBreakAll && !U16_IS_LEAD(ch)) {
@@ -300,8 +308,8 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
 
     if (NeedsLineBreakIterator(ch) || NeedsLineBreakIterator(last_ch)) {
       if (next_break < i) {
-        // Don't break if positioned at start of primary context and there is no
-        // prior context.
+        // Don't break if positioned at start of primary context and there is
+        // no prior context.
         if (i || prior_context_length) {
           TextBreakIterator* break_iterator = Get(prior_context_length);
           if (break_iterator) {
@@ -313,7 +321,7 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
           }
         }
       }
-      if (i == next_break && !is_last_space)
+      if (i == next_break && (break_after_space || !is_last_space))
         return i;
     }
   }
@@ -321,14 +329,14 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
   return len;
 }
 
-template <LineBreakType lineBreakType>
+template <LineBreakType lineBreakType, bool break_after_space>
 inline int LazyLineBreakIterator::NextBreakablePosition(int pos) const {
   if (string_.Is8Bit()) {
-    return NextBreakablePosition<LChar, lineBreakType>(pos,
-                                                       string_.Characters8());
+    return NextBreakablePosition<LChar, lineBreakType, break_after_space>(
+        pos, string_.Characters8());
   }
-  return NextBreakablePosition<UChar, lineBreakType>(pos,
-                                                     string_.Characters16());
+  return NextBreakablePosition<UChar, lineBreakType, break_after_space>(
+      pos, string_.Characters16());
 }
 
 int LazyLineBreakIterator::NextBreakablePositionBreakCharacter(int pos) const {
@@ -342,13 +350,19 @@ int LazyLineBreakIterator::NextBreakablePosition(
     LineBreakType line_break_type) const {
   switch (line_break_type) {
     case LineBreakType::kNormal:
-      return NextBreakablePosition<LineBreakType::kNormal>(pos);
+      return NextBreakablePosition<LineBreakType::kNormal, false>(pos);
     case LineBreakType::kBreakAll:
-      return NextBreakablePosition<LineBreakType::kBreakAll>(pos);
+      return NextBreakablePosition<LineBreakType::kBreakAll, false>(pos);
     case LineBreakType::kKeepAll:
-      return NextBreakablePosition<LineBreakType::kKeepAll>(pos);
+      return NextBreakablePosition<LineBreakType::kKeepAll, false>(pos);
     case LineBreakType::kBreakCharacter:
       return NextBreakablePositionBreakCharacter(pos);
+    case LineBreakType::kNormalBreakAfterSpace:
+      return NextBreakablePosition<LineBreakType::kNormal, true>(pos);
+    case LineBreakType::kBreakAllBreakAfterSpace:
+      return NextBreakablePosition<LineBreakType::kBreakAll, true>(pos);
+    case LineBreakType::kKeepAllBreakAfterSpace:
+      return NextBreakablePosition<LineBreakType::kKeepAll, true>(pos);
   }
   NOTREACHED();
   return NextBreakablePosition(pos, LineBreakType::kNormal);
@@ -380,6 +394,12 @@ std::ostream& operator<<(std::ostream& ostream, LineBreakType line_break_type) {
       return ostream << "BreakCharacter";
     case LineBreakType::kKeepAll:
       return ostream << "KeepAll";
+    case LineBreakType::kNormalBreakAfterSpace:
+      return ostream << "NormalBreakAfterSpace";
+    case LineBreakType::kBreakAllBreakAfterSpace:
+      return ostream << "BreakAllBreakAfterSpace";
+    case LineBreakType::kKeepAllBreakAfterSpace:
+      return ostream << "KeepAllBreakAfterSpace";
   }
   NOTREACHED();
   return ostream << "LineBreakType::" << static_cast<int>(line_break_type);
