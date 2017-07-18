@@ -22,6 +22,30 @@
       "revId": "61e44701f187fae0a3e7e2f6341f0ce47abff2be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89139cf6_1f70aa1e",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-18T18:16:20Z",
+      "side": 1,
+      "message": "Yes the mixer class (https://cs.chromium.org/chromium/src/ui/app_list/search/mixer.cc) takes care of this.\nCurrently Play Store apps\u0027 relevance is 0, which mean they\u0027re always listed behind other results.",
+      "parentUuid": "400145b1_47f986a8",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "61e44701f187fae0a3e7e2f6341f0ce47abff2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
