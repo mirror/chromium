@@ -10,6 +10,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/active_host.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/components/tether/fake_notification_presenter.h"
 #include "chromeos/components/tether/host_scan_device_prioritizer.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -147,12 +148,13 @@ class InitializerTest : public NetworkStateTest {
       ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
       NetworkConnect* network_connect,
       NetworkConnectionHandler* network_connection_handler,
+      ActiveUsersLogger* active_users_logger,
       scoped_refptr<device::BluetoothAdapter> adapter) {
     Initializer* initializer =
         new Initializer(cryptauth_service, std::move(notification_presenter),
                         pref_service, token_service, network_state_handler,
                         managed_network_configuration_handler, network_connect,
-                        network_connection_handler);
+                        network_connection_handler, active_users_logger);
     initializer->OnBluetoothAdapterAdvertisingIntervalSet(adapter);
     delete initializer;
   }
@@ -205,6 +207,9 @@ TEST_F(InitializerTest, TestCreateAndDestroy) {
   std::unique_ptr<NetworkConnectionHandler> network_connection_handler_ =
       base::MakeUnique<TestNetworkConnectionHandler>();
 
+  std::unique_ptr<ActiveUsersLogger> active_users_logger_ =
+      base::MakeUnique<ActiveUsersLogger>(test_pref_service.get());
+
   scoped_refptr<NiceMock<device::MockBluetoothAdapter>> mock_adapter =
       make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
 
@@ -216,7 +221,8 @@ TEST_F(InitializerTest, TestCreateAndDestroy) {
       base::MakeUnique<FakeNotificationPresenter>(), test_pref_service_.get(),
       fake_token_service.get(), network_state_handler(),
       managed_network_configuration_handler.get(), mock_network_connect.get(),
-      network_connection_handler_.get(), mock_adapter);
+      network_connection_handler_.get(), active_users_logger_.get(),
+      mock_adapter);
 }
 
 }  // namespace tether

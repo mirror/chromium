@@ -4,6 +4,8 @@
 
 static_library("tether") {
   sources = [
+    "active_users_daily_event_observer.cc",
+    "active_users_daily_event_observer.h",
     "fake_tether_service.cc",
     "fake_tether_service.h",
     "tether_service.cc",

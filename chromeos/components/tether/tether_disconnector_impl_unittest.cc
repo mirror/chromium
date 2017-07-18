@@ -111,7 +111,8 @@ class TestTetherConnector : public TetherConnector {
                         nullptr /* device_id_tether_network_guid_map */,
                         nullptr /* host_scan_cache */,
                         nullptr /* notification_presenter */,
-                        nullptr /* host_connection_metrics_logger */),
+                        nullptr /* host_connection_metrics_logger */,
+                        nullptr /* active_users_logger */),
         should_cancel_successfully_(true) {}
   ~TestTetherConnector() override {}
 

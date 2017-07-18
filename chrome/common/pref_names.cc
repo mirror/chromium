@@ -981,6 +981,9 @@ const char kInstantTetheringAllowed[] = "tether.allowed";
 
 // Boolean pref indicating whether a user has enabled Tether.
 const char kInstantTetheringEnabled[] = "tether.enabled";
+
+// Pref for registering a daily event to call on Tether.
+const char kInstantTetheringDailyEvent[] = "tether.daily_event";
 #endif  // defined(OS_CHROMEOS)
 
 // A boolean pref set to true if a Home button to open the Home pages should be

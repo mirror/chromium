@@ -10,6 +10,8 @@ static_library("tether") {
     "active_host.h",
     "active_host_network_state_updater.cc",
     "active_host_network_state_updater.h",
+    "active_users_logger.cc",
+    "active_users_logger.h",
     "ble_advertisement_device_queue.cc",
     "ble_advertisement_device_queue.h",
     "ble_advertiser.cc",
@@ -153,6 +155,7 @@ source_set("unit_tests") {
   sources = [
     "active_host_network_state_updater_unittest.cc",
     "active_host_unittest.cc",
+    "active_users_logger_unittest.cc",
     "ble_advertisement_device_queue_unittest.cc",
     "ble_advertiser_unittest.cc",
     "ble_connection_manager_unittest.cc",

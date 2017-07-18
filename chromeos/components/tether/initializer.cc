@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/active_host_network_state_updater.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/crash_recovery_manager.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
@@ -66,7 +67,8 @@ void Initializer::Init(
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
     NetworkConnect* network_connect,
-    NetworkConnectionHandler* network_connection_handler) {
+    NetworkConnectionHandler* network_connection_handler,
+    ActiveUsersLogger* active_users_logger) {
   if (!device::BluetoothAdapterFactory::IsBluetoothSupported()) {
     PA_LOG(WARNING) << "Bluetooth is not supported on this device; cannot "
                     << "initialize Tether feature.";
@@ -83,7 +85,7 @@ void Initializer::Init(
       new Initializer(cryptauth_service, std::move(notification_presenter),
                       pref_service, token_service, network_state_handler,
                       managed_network_configuration_handler, network_connect,
-                      network_connection_handler);
+                      network_connection_handler, active_users_logger);
 }
 
 // static
@@ -98,6 +100,7 @@ void Initializer::Shutdown() {
 // static
 void Initializer::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   ActiveHost::RegisterPrefs(registry);
+  ActiveUsersLogger::RegisterPrefs(registry);
   PersistentHostScanCacheImpl::RegisterPrefs(registry);
   TetherHostResponseRecorder::RegisterPrefs(registry);
   TetherDisconnectorImpl::RegisterPrefs(registry);
@@ -111,7 +114,8 @@ Initializer::Initializer(
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
     NetworkConnect* network_connect,
-    NetworkConnectionHandler* network_connection_handler)
+    NetworkConnectionHandler* network_connection_handler,
+    ActiveUsersLogger* active_users_logger)
     : cryptauth_service_(cryptauth_service),
       notification_presenter_(std::move(notification_presenter)),
       pref_service_(pref_service),
@@ -121,6 +125,7 @@ Initializer::Initializer(
           managed_network_configuration_handler),
       network_connect_(network_connect),
       network_connection_handler_(network_connection_handler),
+      active_users_logger_(active_users_logger),
       weak_ptr_factory_(this) {
   if (!token_service_->RefreshTokenIsAvailable(
           cryptauth_service_->GetAccountId())) {
@@ -231,7 +236,8 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
       tether_host_fetcher_.get(), ble_connection_manager_.get(),
       tether_host_response_recorder_.get(),
       device_id_tether_network_guid_map_.get(), master_host_scan_cache_.get(),
-      notification_presenter_.get(), host_connection_metrics_logger_.get());
+      notification_presenter_.get(), host_connection_metrics_logger_.get(),
+      active_users_logger_);
   network_configuration_remover_ =
       base::MakeUnique<NetworkConfigurationRemover>(
           network_state_handler_, managed_network_configuration_handler_);

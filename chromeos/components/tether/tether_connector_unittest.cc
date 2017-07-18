@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/components/tether/connect_tethering_operation.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/fake_active_host.h"
@@ -35,6 +36,22 @@ namespace chromeos {
 namespace tether {
 
 namespace {
+
+class TestActiveUsersLogger : public ActiveUsersLogger {
+ public:
+  TestActiveUsersLogger() : ActiveUsersLogger(nullptr /* pref_service */) {}
+
+  void RecordUserWasActive() override {
+    num_times_record_user_was_active_called_++;
+  }
+
+  int num_times_record_user_was_active_called() {
+    return num_times_record_user_was_active_called_;
+  }
+
+ private:
+  int num_times_record_user_was_active_called_ = 0;
+};
 
 const char kSuccessResult[] = "success";
 
@@ -151,6 +168,7 @@ class TetherConnectorTest : public NetworkStateTest {
         base::MakeUnique<FakeNotificationPresenter>();
     mock_host_connection_metrics_logger_ =
         base::WrapUnique(new StrictMock<MockHostConnectionMetricsLogger>);
+    test_active_users_logger_ = base::MakeUnique<TestActiveUsersLogger>();
 
     result_.clear();
 
@@ -161,7 +179,8 @@ class TetherConnectorTest : public NetworkStateTest {
         mock_tether_host_response_recorder_.get(),
         device_id_tether_network_guid_map_.get(), fake_host_scan_cache_.get(),
         fake_notification_presenter_.get(),
-        mock_host_connection_metrics_logger_.get()));
+        mock_host_connection_metrics_logger_.get(),
+        test_active_users_logger_.get()));
 
     SetUpTetherNetworks();
   }
@@ -229,12 +248,19 @@ class TetherConnectorTest : public NetworkStateTest {
   void ErrorCallback(const std::string& error_name) { result_ = error_name; }
 
   void CallConnect(const std::string& tether_network_guid) {
+    int previous_num_times_record_user_was_active_called =
+        test_active_users_logger_->num_times_record_user_was_active_called();
+
     tether_connector_->ConnectToNetwork(
         tether_network_guid,
         base::Bind(&TetherConnectorTest::SuccessCallback,
                    base::Unretained(this)),
         base::Bind(&TetherConnectorTest::ErrorCallback,
                    base::Unretained(this)));
+
+    EXPECT_EQ(
+        previous_num_times_record_user_was_active_called + 1,
+        test_active_users_logger_->num_times_record_user_was_active_called());
   }
 
   void VerifyConnectTetheringOperationFails(
@@ -314,6 +340,7 @@ class TetherConnectorTest : public NetworkStateTest {
   std::unique_ptr<FakeNotificationPresenter> fake_notification_presenter_;
   std::unique_ptr<StrictMock<MockHostConnectionMetricsLogger>>
       mock_host_connection_metrics_logger_;
+  std::unique_ptr<TestActiveUsersLogger> test_active_users_logger_;
 
   std::string result_;
 
