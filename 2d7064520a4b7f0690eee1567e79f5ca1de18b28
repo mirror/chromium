@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1165db41_87109471",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-18T22:37:33Z",
+      "side": 1,
+      "message": "Might be cleaner to move the comment out of the if.",
+      "revId": "2d7064520a4b7f0690eee1567e79f5ca1de18b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
