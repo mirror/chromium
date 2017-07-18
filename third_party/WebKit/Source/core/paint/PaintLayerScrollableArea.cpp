@@ -897,12 +897,12 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
     }
   }
 
-  if (!scrollbars_are_frozen && HasOverlayScrollbars()) {
-    if (!ScrollSize(kHorizontalScrollbar))
-      SetHasHorizontalScrollbar(false);
-    if (!ScrollSize(kVerticalScrollbar))
-      SetHasVerticalScrollbar(false);
-  }
+//  if (!scrollbars_are_frozen && HasOverlayScrollbars()) {
+//    if (!ScrollSize(kHorizontalScrollbar))
+//      SetHasHorizontalScrollbar(false);
+//    if (!ScrollSize(kVerticalScrollbar))
+//      SetHasVerticalScrollbar(false);
+//  }
 
   ClampScrollOffsetAfterOverflowChange();
 
