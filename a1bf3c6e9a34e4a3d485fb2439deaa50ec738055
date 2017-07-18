@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6aec0982_39b275f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-18T13:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b48c27_1292cd44",
+      "revId": "a1bf3c6e9a34e4a3d485fb2439deaa50ec738055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a2171b_20603289",
         "filename": "components/test/data/payments/abort.js",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "a1bf3c6e9a34e4a3d485fb2439deaa50ec738055",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2812dc2d_325973fb",
+        "filename": "components/test/data/payments/abort.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-18T13:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a2171b_20603289",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "a1bf3c6e9a34e4a3d485fb2439deaa50ec738055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
