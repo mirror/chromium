@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f8245d8_71fbbe7b",
+        "filename": "chrome/browser/permissions/permission_prompt_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-18T03:44:03Z",
+      "side": 1,
+      "message": "Yep, done",
+      "parentUuid": "1a74c8c0_15cdfcc6",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c89d0a7c_3bdd7954",
         "filename": "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T01:28:43Z",
       "side": 1,
       "message": "nit: we should document the params. Is the can_update_ui value always false?",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003ed5be_ba00d800",
+        "filename": "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-18T03:44:03Z",
+      "side": 1,
+      "message": "This case is NOTREACHED() though, I think it\u0027s just passing in arbitrary values because the compiler expects it to return something.",
+      "parentUuid": "c89d0a7c_3bdd7954",
       "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f17154_fd65b06e",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-18T03:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd4e284_7db252a9",
+      "revId": "39d6ae1a0dcd9b939862dba8a726c25781eea9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
