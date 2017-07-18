@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad6e796_bbd6ba25",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-18T18:09:35Z",
+      "side": 1,
+      "message": "nit: can you add lock_.AssertAcquired() in these two functions?",
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af643b6d_09a5061a",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-18T18:09:35Z",
+      "side": 1,
+      "message": "nit: s/ :/: /",
+      "range": {
+        "startLine": 1218,
+        "startChar": 20,
+        "endLine": 1218,
+        "endChar": 25
+      },
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1c92d1_2684f545",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-18T18:09:35Z",
+      "side": 1,
+      "message": "nit: leave a comment describing what this records please.",
+      "range": {
+        "startLine": 325,
+        "startChar": 21,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "d7d02b15e567ef77fbabec86cad8b96244356f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
