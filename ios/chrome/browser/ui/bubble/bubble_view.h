@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, BubbleAlignment) {
 // Initializes with the given text, direction that the bubble should point, and
 // alignment of the bubble.
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
+              arrowDirection:(BubbleArrowDirection)direction
                    alignment:(BubbleAlignment)alignment
     NS_DESIGNATED_INITIALIZER;
 
