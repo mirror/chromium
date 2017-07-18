@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b081cd3d_97fb410f",
+        "filename": "third_party/WebKit/Source/core/css/threaded/TextRendererThreadedTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-18T21:28:06Z",
+      "side": 1,
+      "message": "Can you make your own subclass of PaintCanvas instead of SkiaPaintCanvas? It should stay final I think.",
+      "revId": "53611682c755670f0a39dbd1cb2bd332ccd01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
