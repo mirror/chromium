@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "a7058b60_2ea31359",
+        "filename": "ui/aura/env_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T19:31:18Z",
+      "side": 1,
+      "message": "I think this makes more sense as an observer on DragDropClient, rather than Env.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a105be23_13dab79a",
         "filename": "ui/aura/mus/drag_drop_controller_mus.h",
         "patchSetId": 6
