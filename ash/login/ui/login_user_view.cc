@@ -110,16 +110,16 @@ class LoginUserView::UserLabel : public views::View {
     switch (style) {
       case LoginDisplayStyle::kLarge:
         user_name_->SetFontList(base_font_list.Derive(
-            11, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::LIGHT));
+            11, gfx::TextStyle::NORMAL, gfx::Font::Weight::LIGHT));
         break;
       case LoginDisplayStyle::kSmall:
         user_name_->SetFontList(base_font_list.Derive(
-            8, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::LIGHT));
+            8, gfx::TextStyle::NORMAL, gfx::Font::Weight::LIGHT));
         break;
       case LoginDisplayStyle::kExtraSmall:
         // TODO(jdufault): match font against spec.
         user_name_->SetFontList(base_font_list.Derive(
-            6, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::LIGHT));
+            6, gfx::TextStyle::NORMAL, gfx::Font::Weight::LIGHT));
         break;
     }
 

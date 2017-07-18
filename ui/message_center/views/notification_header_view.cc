@@ -155,7 +155,7 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
 
   // App name view
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      -2, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      -2, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
   app_name_view_ = new views::Label(base::string16());
   app_name_view_->SetFontList(font_list);
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);

@@ -1034,7 +1034,7 @@ void OmniboxViewMac::FocusLocation(bool select_all) {
 NSFont* OmniboxViewMac::GetNormalFieldFont() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   return rb
-      .GetFontWithDelta(kOmniboxNormalFontSizeDelta, gfx::Font::NORMAL,
+      .GetFontWithDelta(kOmniboxNormalFontSizeDelta, gfx::TextStyle::NORMAL,
                         gfx::Font::Weight::NORMAL)
       .GetNativeFont();
 }
@@ -1046,9 +1046,8 @@ NSFont* OmniboxViewMac::GetBoldFieldFont() {
   // And while the omnibox locks the baseline in ApplyTextStyle(),
   // OmniboxPopupCellData does not.
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  return rb
-      .GetFontWithDelta(0, gfx::Font::NORMAL, gfx::Font::Weight::BOLD)
-      .Derive(kOmniboxNormalFontSizeDelta, gfx::Font::NORMAL,
+  return rb.GetFontWithDelta(0, gfx::TextStyle::NORMAL, gfx::Font::Weight::BOLD)
+      .Derive(kOmniboxNormalFontSizeDelta, gfx::TextStyle::NORMAL,
               gfx::Font::Weight::BOLD)
       .GetNativeFont();
 }
@@ -1056,15 +1055,15 @@ NSFont* OmniboxViewMac::GetBoldFieldFont() {
 NSFont* OmniboxViewMac::GetLargeFont() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   return rb
-      .GetFontWithDelta(kOmniboxLargeFontSizeDelta, gfx::Font::NORMAL,
+      .GetFontWithDelta(kOmniboxLargeFontSizeDelta, gfx::TextStyle::NORMAL,
                         gfx::Font::Weight::NORMAL)
       .GetNativeFont();
 }
 
 NSFont* OmniboxViewMac::GetSmallFont() {
   return ui::ResourceBundle::GetSharedInstance()
-      .GetFontWithDelta(kOmniboxSmallMaterialFontSizeDelta, gfx::Font::NORMAL,
-                        gfx::Font::Weight::NORMAL)
+      .GetFontWithDelta(kOmniboxSmallMaterialFontSizeDelta,
+                        gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL)
       .GetNativeFont();
 }
 

@@ -361,7 +361,7 @@ void HintBox::SetLabel(const base::string16& text, const SkColor& color) {
 
   label_font_list_ =
       ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-          kHintBoxLabelTextSize, gfx::Font::FontStyle::NORMAL,
+          kHintBoxLabelTextSize, gfx::TextStyle::NORMAL,
           gfx::Font::Weight::NORMAL);
 
   // Adjust size of label bounds based on text and font.
@@ -382,7 +382,7 @@ void HintBox::SetSubLabel(const base::string16& text, const SkColor& color) {
 
   sublabel_font_list_ =
       ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-          kHintBoxSublabelTextSize, gfx::Font::FontStyle::NORMAL,
+          kHintBoxSublabelTextSize, gfx::TextStyle::NORMAL,
           gfx::Font::Weight::NORMAL);
 
   // Adjust size of sublabel label bounds based on text and font.
@@ -437,7 +437,7 @@ CompletionMessageView::CompletionMessageView(const gfx::Rect& bounds,
   text_bounds_.SetRect(x_offset, 0, width() - x_offset, height());
 
   font_list_ = ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      kCompleteMessageTextSize, gfx::Font::FontStyle::NORMAL,
+      kCompleteMessageTextSize, gfx::TextStyle::NORMAL,
       gfx::Font::Weight::NORMAL);
 
   // crbug/676513 moves this file to src/ash which will require an ash icon
@@ -501,7 +501,7 @@ void TouchCalibratorView::InitViewContents() {
   // calibration setup.
   exit_label_ = new views::Label(
       rb.GetLocalizedString(IDS_DISPLAY_TOUCH_CALIBRATION_EXIT_LABEL),
-      {rb.GetFontListWithDelta(8, gfx::Font::FontStyle::NORMAL,
+      {rb.GetFontListWithDelta(8, gfx::TextStyle::NORMAL,
                                gfx::Font::Weight::NORMAL)});
   exit_label_->SetBounds((display_.bounds().width() - kExitLabelWidth) / 2,
                          display_.bounds().height() * 3.f / 4, kExitLabelWidth,
@@ -534,7 +534,7 @@ void TouchCalibratorView::InitViewContents() {
   // Initialize the tap label.
   tap_label_ = new views::Label(
       rb.GetLocalizedString(IDS_DISPLAY_TOUCH_CALIBRATION_TAP_HERE_LABEL),
-      {rb.GetFontListWithDelta(6, gfx::Font::FontStyle::NORMAL,
+      {rb.GetFontListWithDelta(6, gfx::TextStyle::NORMAL,
                                gfx::Font::Weight::NORMAL)});
   tap_label_->SetBounds(0, kThrobberCircleViewWidth, kTapLabelWidth,
                         kTapLabelHeight);

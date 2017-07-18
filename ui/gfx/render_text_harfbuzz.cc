@@ -1560,7 +1560,7 @@ void RenderTextHarfBuzz::ShapeRun(const base::string16& text,
     FontRenderParamsQuery query;
     query.families.push_back(font_name);
     query.pixel_size = run->font_size;
-    query.style = run->italic ? Font::ITALIC : 0;
+    query.style = run->italic ? TextStyle::ITALIC : 0;
     FontRenderParams fallback_render_params = GetFontRenderParams(query, NULL);
     if (CompareFamily(text, font, fallback_render_params, run, &best_font,
                       &best_render_params, &best_missing_glyphs))
@@ -1706,11 +1706,11 @@ bool RenderTextHarfBuzz::GetDecoratedTextForRange(
     DCHECK(!intersection.is_reversed());
 
     if (!intersection.is_empty()) {
-      int style = Font::NORMAL;
+      int style = TextStyle::NORMAL;
       if (run.italic)
-        style |= Font::ITALIC;
+        style |= TextStyle::ITALIC;
       if (run.underline)
-        style |= Font::UNDERLINE;
+        style |= TextStyle::UNDERLINE;
 
       // Get range relative to the decorated text.
       DecoratedText::RangedAttribute attribute(

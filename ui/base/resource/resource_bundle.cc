@@ -172,7 +172,7 @@ class ResourceBundle::ResourceBundleImageSource : public gfx::ImageSkiaSource {
 
 struct ResourceBundle::FontKey {
   FontKey(int in_size_delta,
-          gfx::Font::FontStyle in_style,
+          gfx::TextStyle in_style,
           gfx::Font::Weight in_weight)
       : size_delta(in_size_delta), style(in_style), weight(in_weight) {}
 
@@ -189,7 +189,7 @@ struct ResourceBundle::FontKey {
   }
 
   int size_delta;
-  gfx::Font::FontStyle style;
+  gfx::TextStyle style;
   gfx::Font::Weight weight;
 };
 
@@ -627,7 +627,7 @@ base::RefCountedMemory* ResourceBundle::LoadLocalizedResourceBytes(
 
 const gfx::FontList& ResourceBundle::GetFontListWithDelta(
     int size_delta,
-    gfx::Font::FontStyle style,
+    gfx::TextStyle style,
     gfx::Font::Weight weight) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
@@ -637,7 +637,7 @@ const gfx::FontList& ResourceBundle::GetFontListWithDelta(
   if (found != font_cache_.end())
     return found->second;
 
-  const FontKey base_key(0, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  const FontKey base_key(0, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
   gfx::FontList& base = font_cache_[base_key];
   if (styled_key == base_key)
     return base;
@@ -646,7 +646,7 @@ const gfx::FontList& ResourceBundle::GetFontListWithDelta(
   // Cache the unstyled font by first inserting a default-constructed font list.
   // Then, derive it for the initial insertion, or use the iterator that points
   // to the existing entry that the insertion collided with.
-  const FontKey sized_key(size_delta, gfx::Font::NORMAL,
+  const FontKey sized_key(size_delta, gfx::TextStyle::NORMAL,
                           gfx::Font::Weight::NORMAL);
   auto sized = font_cache_.insert(std::make_pair(sized_key, gfx::FontList()));
   if (sized.second)
@@ -663,7 +663,7 @@ const gfx::FontList& ResourceBundle::GetFontListWithDelta(
 }
 
 const gfx::Font& ResourceBundle::GetFontWithDelta(int size_delta,
-                                                  gfx::Font::FontStyle style,
+                                                  gfx::TextStyle style,
                                                   gfx::Font::Weight weight) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   return GetFontListWithDelta(size_delta, style, weight).GetPrimaryFont();
@@ -692,7 +692,7 @@ const gfx::FontList& ResourceBundle::GetFontList(FontStyle legacy_style) {
       break;
   }
 
-  return GetFontListWithDelta(size_delta, gfx::Font::NORMAL, font_weight);
+  return GetFontListWithDelta(size_delta, gfx::TextStyle::NORMAL, font_weight);
 }
 
 const gfx::Font& ResourceBundle::GetFont(FontStyle style) {

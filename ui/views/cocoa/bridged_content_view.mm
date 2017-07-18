@@ -222,7 +222,8 @@ NSAttributedString* GetAttributedString(
 
     // NSFont does not have underline as an attribute. Hence handle it
     // separately.
-    const bool underline = attribute.font.GetStyle() & gfx::Font::UNDERLINE;
+    const bool underline =
+        attribute.font.GetStyle() & gfx::TextStyle::UNDERLINE;
     if (underline)
       attrs[NSUnderlineStyleAttributeName] = line_style;
 

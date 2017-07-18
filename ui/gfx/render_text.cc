@@ -402,8 +402,8 @@ void RenderText::SetFontList(const FontList& font_list) {
   font_list_ = font_list;
   const int font_style = font_list.GetFontStyle();
   weights_.SetValue(font_list.GetFontWeight());
-  styles_[ITALIC].SetValue((font_style & Font::ITALIC) != 0);
-  styles_[UNDERLINE].SetValue((font_style & Font::UNDERLINE) != 0);
+  styles_[ITALIC].SetValue((font_style & TextStyle::ITALIC) != 0);
+  styles_[UNDERLINE].SetValue((font_style & TextStyle::UNDERLINE) != 0);
   baseline_ = kInvalidBaseline;
   cached_bounds_and_offset_valid_ = false;
   OnLayoutTextAttributeChanged(false);

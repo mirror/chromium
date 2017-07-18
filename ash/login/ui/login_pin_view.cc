@@ -156,10 +156,10 @@ class DigitPinButton : public BasePinButton {
         SkColorSetA(SK_ColorWHITE, kButtonSubLabelAlpha));
     label->SetAutoColorReadabilityEnabled(false);
     sub_label->SetAutoColorReadabilityEnabled(false);
-    label->SetFontList(base_font_list.Derive(8, gfx::Font::FontStyle::NORMAL,
+    label->SetFontList(base_font_list.Derive(8, gfx::TextStyle::NORMAL,
                                              gfx::Font::Weight::LIGHT));
-    sub_label->SetFontList(base_font_list.Derive(
-        -3, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL));
+    sub_label->SetFontList(base_font_list.Derive(-3, gfx::TextStyle::NORMAL,
+                                                 gfx::Font::Weight::NORMAL));
     AddChildView(label);
     AddChildView(sub_label);
   }
