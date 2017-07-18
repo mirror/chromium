@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "ebbac087_7255ca9b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-18T09:54:18Z",
+      "side": 1,
+      "message": "unless you have a good reason to run this even when the frame is detached, we should place this after IsDetached().",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a568900_4fbdc47a",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContextTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-18T09:54:18Z",
+      "side": 1,
+      "message": "is this for WebFeature::kPersistentClientHintHeader?\n\nIn FrameClientHintsPreferencesContext.cpp, we are just depending on UseCounter.h. I think this is also fine.\n\nPlease do either you prefer for both places.",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87ee35c_85d0001c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContextTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-18T09:54:18Z",
+      "side": 1,
+      "message": "unless you really need to pass kFrameTypeNone and kRequestContextFetch, you can just pass ones on resource_request.",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87414108_c1143819",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
         "patchSetId": 4
@@ -47,6 +98,23 @@
       "writtenOn": "2017-07-18T04:00:00Z",
       "side": 1,
       "message": "Giving const ResourceResponse\u0026 instead of the triple (const String\u0026, const String\u0026, const KURL\u0026) seems better to me. What do you think?",
+      "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d4b5d3_4b38f962",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferencesTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-18T09:54:18Z",
+      "side": 1,
+      "message": "how about performing also String::FromUTF8() here?",
       "revId": "9b190a87969cc0272e686bdf39f1df6b9097ec05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
