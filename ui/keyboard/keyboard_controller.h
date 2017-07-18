@@ -101,8 +101,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void Reload();
 
   // Hides virtual keyboard and notifies observer bounds change.
-  // This method hides the keyboard with a delay to avoid layout flicker
-  // when the focus of input field quickly change.
+  // This method immediately starts hiding animation.
   void HideKeyboard(HideReason reason);
 
   // Notifies the observer for contents bounds changed.
@@ -143,8 +142,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Retrieve the active keyboard controller.
   static KeyboardController* GetInstance();
 
-  // Returns true if keyboard is currently visible.
-  bool keyboard_visible() const { return keyboard_visible_; }
+  // Returns true if keyboard is SHOWN or SHOWING state.
+  bool keyboard_visible();
 
   bool show_on_resize() const { return show_on_resize_; }
 

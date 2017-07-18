@@ -316,6 +316,14 @@ KeyboardController* KeyboardController::GetInstance() {
   return instance_;
 }
 
+bool KeyboardController::keyboard_visible() {
+  bool res = state_ == KeyboardControllerState::SHOWING ||
+             state_ == KeyboardControllerState::SHOWN;
+  DLOG(ERROR) << StateToStr(state_);
+  DCHECK(res == keyboard_visible_) << StateToStr(state_);
+  return keyboard_visible_;
+}
+
 aura::Window* KeyboardController::GetContainerWindow() {
   if (!container_.get()) {
     container_.reset(new aura::Window(new KeyboardWindowDelegate()));
@@ -554,6 +562,8 @@ void KeyboardController::OnTextInputStateChanged(
 
   if (type == ui::TEXT_INPUT_TYPE_NONE && !keyboard_locked_) {
     if (keyboard_visible_) {
+      // Abort possible call of ShowAnimationFinished.
+      animation_observer_.reset();
       // Set the visibility state here so that any queries for visibility
       // before the timer fires returns the correct future value.
       keyboard_visible_ = false;
@@ -572,11 +582,8 @@ void KeyboardController::OnTextInputStateChanged(
   } else {
     // Abort a pending keyboard hide.
     if (WillHideKeyboard()) {
-      // TODO(oka): state_ is SHOWN in
-      // VirtualKeyboardWebContentTest.EnableIMEInDifferentExtension.
-      // Investigate why, and enable the DCHECK below.
-      // DCHECK(state_ == KeyboardControllerState::WILL_HIDE) <<
-      // StateToStr(state_);
+      DCHECK(state_ == KeyboardControllerState::WILL_HIDE)
+          << StateToStr(state_);
       weak_factory_.InvalidateWeakPtrs();
       keyboard_visible_ = true;
       ChangeState(KeyboardControllerState::SHOWN);
@@ -634,7 +641,7 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
       layout_delegate_->MoveKeyboardToTouchableDisplay();
   }
 
-  if (keyboard_visible_) {
+  if (keyboard_visible()) {
     return;
   } else if (!show_keyboard ||
              ui_->GetContentsWindow()->bounds().height() == 0) {
@@ -647,6 +654,8 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
   }
 
   keyboard_visible_ = true;
+  LOG(ERROR) << "keyboard_visible_ = true "
+             << " >>>" << base::debug::StackTrace(5).ToString() << "<<<";
 
   // If the controller is in the process of hiding the keyboard, do not log
   // the stat here since the keyboard will not actually be shown.
@@ -673,6 +682,7 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
            // Fix the test.
            || state_ == KeyboardControllerState::HIDDEN)
         << StateToStr(state_);
+    LOG(ERROR) << "Returning A: " << StateToStr(state_);
     return;
   }
 
@@ -732,6 +742,7 @@ void KeyboardController::ShowAnimationFinished() {
   // background during animation.
   NotifyContentsBoundsChanging(container_->bounds());
   ui_->EnsureCaretInWorkArea();
+
   ChangeState(KeyboardControllerState::SHOWN);
 }
 
@@ -762,6 +773,8 @@ void KeyboardController::AdjustKeyboardBounds() {
 
 void KeyboardController::CheckStateTransition(KeyboardControllerState prev,
                                               KeyboardControllerState next) {
+  DLOG(ERROR) << "State: " << StateToStr(prev) << " -> " << StateToStr(next)
+              << " >>>" << base::debug::StackTrace(5).ToString() << "<<<";
   std::stringstream error_message;
   const bool valid_transition = isAllowedStateStansition(prev, next);
   if (!valid_transition)
