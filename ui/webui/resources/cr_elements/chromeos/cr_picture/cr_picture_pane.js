@@ -93,13 +93,15 @@ Polymer({
   },
 
   /**
-   * Returns the 2x (high dpi) image to use for 'srcset'. Note: 'src' will still
-   * be used as the 1x candidate as per the HTML spec.
+   * Returns the 2x (high dpi) image to use for 'srcset' for chrome:// images.
+   * Note: 'src' will still be used as the 1x candidate as per the HTML spec.
    * @param {string} url
    * @return {string}
    * @private
    */
   getImgSrc2x_: function(url) {
+    if (url.indexOf('chrome') != 0)
+      return '';
     return url + '@2x 2x';
   },
 });
