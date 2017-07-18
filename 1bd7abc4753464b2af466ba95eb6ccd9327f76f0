@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8940a525_f3f3b8b4",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/imageTileOpacity.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002875
+      },
+      "writtenOn": "2017-07-18T06:59:09Z",
+      "side": 0,
+      "message": "I think you can also delete the button_center.png file? https://cs.chromium.org/search/?q\u003dbutton_center.png\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "1bd7abc4753464b2af466ba95eb6ccd9327f76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
