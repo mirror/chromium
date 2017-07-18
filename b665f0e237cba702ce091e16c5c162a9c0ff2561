@@ -19,6 +19,98 @@
     },
     {
       "key": {
+        "uuid": "df4d6cdb_fb98a724",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T13:21:00Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c933eb00_68989f58",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9bf33d4_72416ee6",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T13:21:00Z",
+      "side": 1,
+      "message": "Can you change these \u0027break\u0027s to \u0027return\u0027s? It would improve the readability.",
+      "range": {
+        "startLine": 464,
+        "startChar": 6,
+        "endLine": 464,
+        "endChar": 11
+      },
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9109dc16_5ab91cae",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T13:21:00Z",
+      "side": 1,
+      "message": "switch-case would be better.",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfda71f7_6badee62",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T13:21:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95646255_8264fd12",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-18T13:21:00Z",
+      "side": 1,
+      "message": "nit: This needs 2 spaces before \"Obsolete\" like REGISTERING_TO_DEVTOOLS.",
+      "revId": "b665f0e237cba702ce091e16c5c162a9c0ff2561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd55f88_94138d87",
         "filename": "content/browser/service_worker/embedded_worker_instance.h",
         "patchSetId": 5
