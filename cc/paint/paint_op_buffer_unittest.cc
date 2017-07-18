@@ -18,11 +18,22 @@ using testing::Mock;
 
 namespace cc {
 namespace {
+
 void Playback(PaintOpBuffer* buffer,
               SkCanvas* canvas,
               const std::vector<size_t>& indices) {
   buffer->Playback(canvas, nullptr, &indices);
 }
+
+void ExpectPaintFlagsEqual(const PaintFlags& expected,
+                           const PaintFlags& actual) {
+  SkPaint expected_paint;
+  expected.ToSkPaint(&expected_paint);
+  SkPaint actual_paint;
+  actual.ToSkPaint(&actual_paint);
+  EXPECT_TRUE(expected_paint == actual_paint);
+}
+
 }  // namespace
 
 TEST(PaintOpBufferTest, Empty) {
@@ -68,7 +79,7 @@ class PaintOpAppendTest : public ::testing::Test {
     ASSERT_EQ(iter->GetType(), PaintOpType::SaveLayer);
     SaveLayerOp* save_op = static_cast<SaveLayerOp*>(*iter);
     EXPECT_EQ(save_op->bounds, rect_);
-    EXPECT_TRUE(save_op->flags == flags_);
+    ExpectPaintFlagsEqual(save_op->flags, flags_);
     ++iter;
 
     ASSERT_EQ(iter->GetType(), PaintOpType::Save);
