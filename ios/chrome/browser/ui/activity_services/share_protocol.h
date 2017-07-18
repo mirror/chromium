@@ -8,7 +8,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol ActivityServicePassword;
+@protocol ActivityServicePositioner;
+@protocol ActivityServicePresentation;
+@protocol ActivityServiceSnackbar;
 @class ShareToData;
+
+namespace ios {
+class ChromeBrowserState;
+}
 
 namespace ShareTo {
 
@@ -30,29 +38,6 @@ enum ShareResult {
 
 }  // namespace ShareTo
 
-// This protocol provides callbacks for sharing events.
-@protocol ShareToDelegate<NSObject>
-// Callback triggered on completion of sharing. |completionMessage| gives the
-// message to be displayed on completion. If |completionMessage| is nil, no
-// message is displayed.
-- (void)shareDidComplete:(ShareTo::ShareResult)shareStatus
-       completionMessage:(NSString*)message;
-
-// Callback triggered if user invoked a Password Management App Extension.
-// If |shareStatus| is a successful status, delegate implementing this method
-// should find a login form on the current page and autofills it with the
-// |username| and |password|. |completionMessage|, if non-nil, is the message to
-// be displayed on completion.
-- (void)passwordAppExDidFinish:(ShareTo::ShareResult)shareStatus
-                      username:(NSString*)username
-                      password:(NSString*)password
-             completionMessage:(NSString*)message;
-@end
-
-namespace ios {
-class ChromeBrowserState;
-}
-
 @protocol ShareProtocol<NSObject>
 
 // Returns YES if a share is currently in progress.
@@ -69,11 +54,12 @@ class ChromeBrowserState;
 // When sharing to iPad, |inView| must not be nil and |rect|'s size must not be
 // zero.
 - (void)shareWithData:(ShareToData*)data
-           controller:(UIViewController*)controller
-         browserState:(ios::ChromeBrowserState*)browserState
-      shareToDelegate:(id<ShareToDelegate>)delegate
-             fromRect:(CGRect)rect
-               inView:(UIView*)inView;
+              controller:(UIViewController*)controller
+            browserState:(ios::ChromeBrowserState*)browserState
+        passwordProvider:(id<ActivityServicePassword>)passwordProvider
+        positionProvider:(id<ActivityServicePositioner>)positionProvider
+    presentationProvider:(id<ActivityServicePresentation>)presentationProvider
+        snackbarProvider:(id<ActivityServiceSnackbar>)snackbarProvider;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_ACTIVITY_SERVICES_SHARE_PROTOCOL_H_
