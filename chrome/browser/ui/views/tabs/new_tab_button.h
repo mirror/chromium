@@ -39,7 +39,8 @@ class NewTabButton : public views::ImageButton,
   static int GetTopOffset();
 
   // Shows the NewTabPromo when the NewTabFeatureEngagementTracker calls for it.
-  void ShowPromo();
+  // Returns a bool based of of the success of the creation of the Promo.
+  bool ShowPromo(const std::string& promo_string_specifier);
 
  private:
 // views::ImageButton:
