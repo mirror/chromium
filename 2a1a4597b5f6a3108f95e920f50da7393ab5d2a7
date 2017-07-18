@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ebc9832_521515f0",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-18T00:41:41Z",
+      "side": 1,
+      "message": "sort list",
+      "range": {
+        "startLine": 480,
+        "startChar": 5,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0849a288_46bb07be",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-18T00:41:41Z",
+      "side": 1,
+      "message": "Should probably be a command line argument that you parse.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae553426_e35c2d9e",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-18T00:41:41Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff709dd_d91aee87",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-18T00:41:41Z",
+      "side": 1,
+      "message": "Are you sure that start and stop get called on the same thread?",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 19
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b850d57_2fade66f",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-18T00:41:41Z",
+      "side": 1,
+      "message": "Can you reuse a buffer instead of creating a new one everytime?",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 14
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
