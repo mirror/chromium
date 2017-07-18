@@ -46,6 +46,30 @@
       "revId": "4a1dccb934b10d8477ae73ce2b08b6487205e553",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3278a3c_59ec6352",
+        "filename": "content/browser/image_capture/image_capture_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-18T12:59:00Z",
+      "side": 1,
+      "message": "So, the differences of ScopedCallbackRunner and ScopedResultCallback are:\n1. SCR requires arguments for fail case even if the callback is called with successful result. SRC requires an extra function just to send an error result to the caller.\n2. Resulting callback types are OnceCallback on SCR, while SRC has its own class. SRC in the source indicates the special handling on the callback rather than hide it in the callback object.\n(1) seems less controversial to use SCR, while (2) is.\n\nI prefer ScopedCallbackRunner also for (2) as it looks simpler, but it\u0027s also reasonable to leave ScopedResultCallback to leave the special handling in the type.\nI\u0027d defer it to owners.\n\nBTW, I made a draft CL to splitting DefaultArgs part of this CL as https://chromium-review.googlesource.com/c/575119/. WDYT?",
+      "parentUuid": "e1f6a7ab_e8a4c580",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 69
+      },
+      "revId": "4a1dccb934b10d8477ae73ce2b08b6487205e553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
