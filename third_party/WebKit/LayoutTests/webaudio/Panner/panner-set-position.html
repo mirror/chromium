@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+  <head>
+    <title>
+      Test Panner.setPosition and Panner.setOrientation Errors
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // Fairly arbitrary rate
+      let sampleRate = 16000;
+
+      // For the tests we need to render for at least two render quanta.
+      // Otherwise, pretty arbitrary.
+      let renderFrames = 256;
+      let renderDuration = renderFrames / sampleRate;
+
+      // The curve duration for the test.  Anything less than one render quantum
+      // is fine.  Arbitrarily choose something small.
+      let curveDurationFrames = 8;
+
+      // When to call setPosition, after the setValueCurve has ended.  Any value
+      // after the end of the first render quantum is fine.
+      let suspendFrame = 129;
+
+      let audit = Audit.createTaskRunner();
+
+      // Array of tests to do.  Each element of this array is used to create a
+      // task to test the entry.
+      let tests = [
+        // Test setPosition against positionX, positionY, and positionZ
+        // setValueCurves.  Include test where there's overlap and where there
+        // isn't.
+        {name: 'setPosition X error', options: {coordName: 'positionX'}},
+        {
+          name: 'setPosition X no error',
+          options: {
+            coordName: 'positionX',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+        {name: 'setPosition Y error', options: {coordName: 'positionY'}},
+        {
+          name: 'setPosition Y no error',
+          options: {
+            coordName: 'positionY',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+        {name: 'setPosition Z error', options: {coordName: 'positionZ'}},
+        {
+          name: 'setPosition Z no error',
+          options: {
+            coordName: 'positionZ',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+        // Now do the same with setOrientation.
+        {name: 'setOrientation X error', options: {coordName: 'orientationX'}},
+        {
+          name: 'setOrientation X no error',
+          options: {
+            coordName: 'orientationX',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+        {name: 'setOrientation Y error', options: {coordName: 'orientationY'}},
+        {
+          name: 'setOrientation Y no error',
+          options: {
+            coordName: 'orientationY',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+        {name: 'setOrientation Z error', options: {coordName: 'orientationZ'}},
+        {
+          name: 'setOrientation Z no error',
+          options: {
+            coordName: 'orientationZ',
+            curveDuration: curveDurationFrames / sampleRate,
+            suspendFrame: suspendFrame
+          }
+        },
+      ];
+
+      // Create an audit test for each entry in |tests|.
+      tests.forEach(test => {
+        let taskFunction = (task, should) => {
+          testSetter(should, test.options).then(() => task.done());
+        };
+        audit.define(test.name, taskFunction);
+      });
+
+      audit.run();
+
+      // Test that setPosition throws an error if there is already a
+      // setValueCurve scheduled during the same time period.
+      function testSetter(should, options) {
+        let context = new OfflineAudioContext(1, renderFrames, sampleRate);
+
+        // Create the graph consisting of a source node and the panner.
+        let src = new ConstantSourceNode(context, {offset: 1});
+        let panner = new PannerNode(context);
+        src.connect(panner).connect(context.destination);
+
+        let curve = Float32Array.from([-10, 10]);
+
+        let message = options.coordName + '.setValueCurve(..., 0, ' +
+            (options.curveDuration || renderDuration) + ')';
+
+        // If the coordinate name has 'position', we're testing setPosition;
+        // otherwise assume we're testing setOrientation.
+        let methodName = options.coordName.includes('position') ?
+            'setPosition' :
+            'setOrientation';
+
+        // Set the curve automation on the specified axis.
+        should(() => {
+          panner[options.coordName].setValueCurveAtTime(
+              curve, 0, options.curveDuration || renderDuration);
+        }, message).notThrow();
+
+        if (options.suspendFrame) {
+          // We're testing setPosition after the curve has ended to verify that
+          // we don't throw an error.  Thus, suspend the context and call
+          // setPosition.
+          let suspendTime = options.suspendFrame / context.sampleRate;
+          context.suspend(suspendTime)
+              .then(() => {
+                should(
+                    () => {
+                      panner[methodName](1, 1, 1)
+                    },
+                    methodName + '(1,1,1) for ' + options.coordName +
+                        ' at time ' + suspendTime)
+                    .notThrow();
+              })
+              .then(() => context.resume());
+        } else {
+          // Basic test where setPosition is called where setValueCurve is
+          // already active.
+          context.suspend(0)
+              .then(() => {
+                should(
+                    () => {
+                      panner[methodName](1, 1, 1);
+                    },
+                    methodName + '(1,1,1) for ' + options.coordName)
+                    .throw('NotSupportedError');
+              })
+              .then(() => context.resume());
+        }
+
+        src.start();
+        return context.startRendering();
+      }
+    </script>
+  </body>
+</html>
