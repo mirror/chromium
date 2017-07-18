@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0965781b_7cb12962",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-07-18T22:38:12Z",
+      "side": 1,
+      "message": "Not for this line, but the rest would need to be down here.",
+      "parentUuid": "8bec81a7_2f51f37a",
+      "range": {
+        "startLine": 430,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 30
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f4b92b_29f0c93e",
         "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6e514b2_33773f14",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-07-18T22:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f4b92b_29f0c93e",
+      "range": {
+        "startLine": 432,
+        "startChar": 13,
+        "endLine": 432,
+        "endChar": 26
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0865b0_aa5f932b",
         "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce809ee_149350ef",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-07-18T22:38:12Z",
+      "side": 1,
+      "message": "I had thought of that, but then thought it may be less obvious how to fix this in the future if another platform has this issue - in a general sense I\u0027m still working out what the maintenance pain points are in the codebase.\n\nThe code would be simpler though, so I prefer this implementation.",
+      "parentUuid": "2f0865b0_aa5f932b",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 35
+      },
+      "revId": "3a95cbbdd22b19871fc0052d7c3bafca435077e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
