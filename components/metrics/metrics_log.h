@@ -69,20 +69,12 @@ class MetricsLog {
   // the hash.
   static uint64_t Hash(const std::string& value);
 
-  // Get the GMT buildtime for the current binary, expressed in seconds since
-  // January 1, 1970 GMT.
-  // The value is used to identify when a new build is run, so that previous
-  // reliability stats, from other builds, can be abandoned.
-  static int64_t GetBuildTime();
 
   // Convenience function to return the current time at a resolution in seconds.
   // This wraps base::TimeTicks, and hence provides an abstract time that is
   // always incrementing for use in measuring time durations.
   static int64_t GetCurrentTime();
 
-  // Record core profile settings into the SystemProfileProto.
-  static void RecordCoreSystemProfile(MetricsServiceClient* client,
-                                      SystemProfileProto* system_profile);
 
   // Records a user-initiated action.
   void RecordUserAction(const std::string& key);
@@ -154,12 +146,7 @@ class MetricsLog {
   LogType log_type() const { return log_type_; }
 
  protected:
-  // Exposed for the sake of mocking/accessing in test code.
 
-  // Fills |field_trial_ids| with the list of initialized field trials name and
-  // group ids.
-  virtual void GetFieldTrialIds(
-      std::vector<variations::ActiveGroupId>* field_trial_ids) const;
 
   ChromeUserMetricsExtension* uma_proto() { return &uma_proto_; }
 
@@ -173,10 +160,6 @@ class MetricsLog {
   // Returns true if the environment has already been filled in by a call to
   // RecordEnvironment() or LoadSavedEnvironmentFromPrefs().
   bool HasEnvironment() const;
-
-  // Write the default state of the enable metrics checkbox.
-  void WriteMetricsEnableDefault(EnableMetricsDefault metrics_default,
-                                 SystemProfileProto* system_profile);
 
   // Returns true if the stability metrics have already been filled in by a
   // call to RecordStabilityMetrics().

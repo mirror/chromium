@@ -153,6 +153,7 @@
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/metrics_state_manager.h"
 #include "components/metrics/stability_metrics_provider.h"
+#include "components/metrics/system_profile_writer.h"
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -478,7 +479,7 @@ void MetricsService::UpdateMetricsUsagePrefs(const std::string& service_name,
 // Initialization methods
 
 void MetricsService::InitializeMetricsState() {
-  const int64_t buildtime = MetricsLog::GetBuildTime();
+  const int64_t buildtime = SystemProfileWriter::GetBuildTime();
   const std::string version = client_->GetVersionString();
 
   bool version_changed = false;
@@ -664,6 +665,8 @@ void MetricsService::CloseCurrentLog() {
   current_log->RecordStabilityMetrics(metrics_providers_, incremental_uptime,
                                       uptime);
 
+  // TODO(rkaplow): This section has a lot of overlap with
+  // PrepareInitialMetricsLog - can probably be refactored.
   current_log->RecordGeneralMetrics(metrics_providers_);
   RecordCurrentHistograms();
   current_log->TruncateEvents();

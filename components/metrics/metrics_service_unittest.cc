@@ -29,6 +29,7 @@
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_state_manager.h"
 #include "components/metrics/metrics_upload_scheduler.h"
+#include "components/metrics/system_profile_writer.h"
 #include "components/metrics/test_enabled_state_provider.h"
 #include "components/metrics/test_metrics_provider.h"
 #include "components/metrics/test_metrics_service_client.h"
@@ -224,7 +225,7 @@ TEST_F(MetricsServiceTest, InitialStabilityLogAtProviderRequest) {
   // Record stability build time and version from previous session, so that
   // stability metrics (including exited cleanly flag) won't be cleared.
   EnvironmentRecorder(GetLocalState())
-      .SetBuildtimeAndVersion(MetricsLog::GetBuildTime(),
+      .SetBuildtimeAndVersion(SystemProfileWriter::GetBuildTime(),
                               client.GetVersionString());
 
   // Set the clean exit flag, as that will otherwise cause a stabilty
@@ -295,7 +296,7 @@ TEST_F(MetricsServiceTest, InitialStabilityLogAfterCrash) {
   // Record stability build time and version from previous session, so that
   // stability metrics (including exited cleanly flag) won't be cleared.
   EnvironmentRecorder(GetLocalState())
-      .SetBuildtimeAndVersion(MetricsLog::GetBuildTime(),
+      .SetBuildtimeAndVersion(SystemProfileWriter::GetBuildTime(),
                               client.GetVersionString());
 
   GetLocalState()->SetBoolean(prefs::kStabilityExitedCleanly, false);

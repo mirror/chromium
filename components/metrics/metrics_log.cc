@@ -29,6 +29,7 @@
 #include "components/metrics/proto/histogram_event.pb.h"
 #include "components/metrics/proto/system_profile.pb.h"
 #include "components/metrics/proto/user_action_event.pb.h"
+#include "components/metrics/system_profile_writer.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/variations/active_field_trials.h"
@@ -42,7 +43,6 @@
 #endif
 
 using base::SampleCountIterator;
-typedef variations::ActiveGroupId ActiveGroupId;
 
 namespace metrics {
 
@@ -81,17 +81,6 @@ bool IsTestingID(const std::string& id) {
   return id.size() < 16;
 }
 
-void WriteFieldTrials(const std::vector<ActiveGroupId>& field_trial_ids,
-                      SystemProfileProto* system_profile) {
-  for (std::vector<ActiveGroupId>::const_iterator it =
-       field_trial_ids.begin(); it != field_trial_ids.end(); ++it) {
-    SystemProfileProto::FieldTrial* field_trial =
-        system_profile->add_field_trial();
-    field_trial->set_name_id(it->name);
-    field_trial->set_group_id(it->group);
-  }
-}
-
 // Round a timestamp measured in seconds since epoch to one with a granularity
 // of an hour. This can be used before uploaded potentially sensitive
 // timestamps.
@@ -124,7 +113,8 @@ MetricsLog::MetricsLog(const std::string& client_id,
     uma_proto_.set_product(product);
 
   SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
-  RecordCoreSystemProfile(client_, system_profile);
+  metrics::SystemProfileWriter system_profile_writer;
+  system_profile_writer.RecordCoreSystemProfile(client_, system_profile);
   if (log_type_ == ONGOING_LOG) {
     GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
         *system_profile, /*complete=*/false);
@@ -155,14 +145,6 @@ uint64_t MetricsLog::Hash(const std::string& value) {
 }
 
 // static
-int64_t MetricsLog::GetBuildTime() {
-  static int64_t integral_build_time = 0;
-  if (!integral_build_time)
-    integral_build_time = static_cast<int64_t>(base::GetBuildTime().ToTimeT());
-  return integral_build_time;
-}
-
-// static
 int64_t MetricsLog::GetCurrentTime() {
   return (base::TimeTicks::Now() - base::TimeTicks()).InSeconds();
 }
@@ -173,40 +155,6 @@ void MetricsLog::RecordUserAction(const std::string& key) {
   UserActionEventProto* user_action = uma_proto_.add_user_action_event();
   user_action->set_name_hash(Hash(key));
   user_action->set_time(GetCurrentTime());
-}
-
-void MetricsLog::RecordCoreSystemProfile(MetricsServiceClient* client,
-                                         SystemProfileProto* system_profile) {
-  system_profile->set_build_timestamp(metrics::MetricsLog::GetBuildTime());
-  system_profile->set_app_version(client->GetVersionString());
-  system_profile->set_channel(client->GetChannel());
-  system_profile->set_application_locale(client->GetApplicationLocale());
-
-#if defined(SYZYASAN)
-  system_profile->set_is_asan_build(true);
-#endif
-
-  metrics::SystemProfileProto::Hardware* hardware =
-      system_profile->mutable_hardware();
-#if !defined(OS_IOS)
-  // On iOS, OperatingSystemArchitecture() returns values like iPad4,4 which is
-  // not the actual CPU architecture. Don't set it until the API is fixed. See
-  // crbug.com/370104 for details.
-  hardware->set_cpu_architecture(base::SysInfo::OperatingSystemArchitecture());
-#endif
-  hardware->set_system_ram_mb(base::SysInfo::AmountOfPhysicalMemoryMB());
-  hardware->set_hardware_class(base::SysInfo::HardwareModelName());
-#if defined(OS_WIN)
-  hardware->set_dll_base(reinterpret_cast<uint64_t>(CURRENT_MODULE()));
-#endif
-
-  metrics::SystemProfileProto::OS* os = system_profile->mutable_os();
-  os->set_name(base::SysInfo::OperatingSystemName());
-  os->set_version(base::SysInfo::OperatingSystemVersion());
-#if defined(OS_ANDROID)
-  os->set_fingerprint(
-      base::android::BuildInfo::GetInstance()->android_build_fp());
-#endif
 }
 
 void MetricsLog::RecordHistogramDelta(const std::string& histogram_name,
@@ -246,38 +194,10 @@ void MetricsLog::RecordGeneralMetrics(
     metrics_providers[i]->ProvideGeneralMetrics(uma_proto());
 }
 
-void MetricsLog::GetFieldTrialIds(
-    std::vector<ActiveGroupId>* field_trial_ids) const {
-  variations::GetFieldTrialActiveGroupIds(field_trial_ids);
-}
-
 bool MetricsLog::HasEnvironment() const {
   return uma_proto()->system_profile().has_uma_enabled_date();
 }
 
-void MetricsLog::WriteMetricsEnableDefault(EnableMetricsDefault metrics_default,
-                                           SystemProfileProto* system_profile) {
-  if (client_->IsReportingPolicyManaged()) {
-    // If it's managed, then it must be reporting, otherwise we wouldn't be
-    // sending metrics.
-    system_profile->set_uma_default_state(
-        SystemProfileProto_UmaDefaultState_POLICY_FORCED_ENABLED);
-    return;
-  }
-
-  switch (metrics_default) {
-    case EnableMetricsDefault::DEFAULT_UNKNOWN:
-      // Don't set the field if it's unknown.
-      break;
-    case EnableMetricsDefault::OPT_IN:
-      system_profile->set_uma_default_state(
-          SystemProfileProto_UmaDefaultState_OPT_IN);
-      break;
-    case EnableMetricsDefault::OPT_OUT:
-      system_profile->set_uma_default_state(
-          SystemProfileProto_UmaDefaultState_OPT_OUT);
-  }
-}
 
 bool MetricsLog::HasStabilityMetrics() const {
   return uma_proto()->system_profile().stability().has_launch_count();
@@ -310,8 +230,11 @@ std::string MetricsLog::RecordEnvironment(
 
   SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
 
-  WriteMetricsEnableDefault(client_->GetMetricsReportingDefaultState(),
-                            system_profile);
+  metrics::SystemProfileWriter system_profile_writer;
+
+  system_profile_writer.WriteMetricsEnableDefault(
+      client_->IsReportingPolicyManaged(),
+      client_->GetMetricsReportingDefaultState(), system_profile);
 
   std::string brand_code;
   if (client_->GetBrand(&brand_code))
@@ -324,17 +247,9 @@ std::string MetricsLog::RecordEnvironment(
   // Reduce granularity of the install_date field to nearest hour.
   system_profile->set_install_date(RoundSecondsToHour(install_date));
 
-  SystemProfileProto::Hardware::CPU* cpu =
-      system_profile->mutable_hardware()->mutable_cpu();
-  base::CPU cpu_info;
-  cpu->set_vendor_name(cpu_info.vendor_name());
-  cpu->set_signature(cpu_info.signature());
-  cpu->set_num_cores(base::SysInfo::NumberOfProcessors());
-
-  std::vector<ActiveGroupId> field_trial_ids;
-  GetFieldTrialIds(&field_trial_ids);
-  WriteFieldTrials(field_trial_ids, system_profile);
-  WriteFieldTrials(synthetic_trials, system_profile);
+  system_profile_writer.RecordCPU(system_profile);
+  system_profile_writer.WriteVariationsFieldTrials(system_profile);
+  system_profile_writer.WriteFieldTrials(synthetic_trials, system_profile);
 
   for (size_t i = 0; i < metrics_providers.size(); ++i)
     metrics_providers[i]->ProvideSystemProfileMetrics(system_profile);

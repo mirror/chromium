@@ -20,6 +20,7 @@
 #include "components/metrics/metrics_log.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/proto/ukm/report.pb.h"
+#include "components/metrics/system_profile_writer.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/ukm/persisted_logs_metrics_impl.h"
@@ -250,8 +251,9 @@ void UkmService::BuildAndStoreLog() {
 
   StoreRecordingsInReport(&report);
 
-  metrics::MetricsLog::RecordCoreSystemProfile(client_,
-                                               report.mutable_system_profile());
+  metrics::SystemProfileWriter system_profile_writer;
+  system_profile_writer.RecordCoreSystemProfile(
+      client_, report.mutable_system_profile());
 
   for (auto& provider : metrics_providers_) {
     provider->ProvideSystemProfileMetrics(report.mutable_system_profile());
