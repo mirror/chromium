@@ -412,6 +412,11 @@ const base::Feature kServiceWorkerPaymentApps{
 const base::Feature kWebNfc{"WebNFC", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+// Controls whether PreferCompositingToLCDText is forced off, even for
+// screens with high resolution.
+const base::Feature kDisablePreferCompositingToLCDText{
+    "DisablePreferCompositingToLCDText", base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_WIN)
 // Emergency "off switch" for new Windows sandbox security mitigation,
 // sandbox::MITIGATION_EXTENSION_POINT_DISABLE.

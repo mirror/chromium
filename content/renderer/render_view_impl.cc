@@ -336,6 +336,9 @@ static bool DeviceScaleEnsuresTextQuality(float device_scale_factor) {
 
 static bool PreferCompositingToLCDText(CompositorDependencies* compositor_deps,
                                        float device_scale_factor) {
+  if (base::FeatureList::IsEnabled(
+          features::kDisablePreferCompositingToLCDText))
+    return false;
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kDisablePreferCompositingToLCDText))
