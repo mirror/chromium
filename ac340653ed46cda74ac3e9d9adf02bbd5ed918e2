@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a20254b_2bee7907",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "Same as comment on the other GREYInteractionForDetailItem, should this include Password in the name? Or would that be too long?",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2902c921_1aee5e26",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "Would it be useful if ScrollDown() in chrome_earl_grey_ui was exposed to use here?\n\nNo change required for you, but if you think it\u0027s useful, I\u0027ll file a bug for someone to fix this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 50,
+        "endLine": 69,
+        "endChar": 63
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a247efeb_9926b6ff",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "Actually, on second thought, do we need this method? Below in the code we call GetInteractionForEntry: assertWithMatcher:, wouldn\u0027t it be consistent to do the same thing with performAction:grey_tap() ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3f9f22_e1d3764d",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "nit: Would TapPasswordListEntry() be more clear? to verbose?",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4a434c_53ea3315",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "Hrm, I don\u0027t usually like the C-Style methods covering up what EG does. However, these are tricky cases that involve scrolling and knowing the container, so I think this is okay. I just wanted to confirm that this was your thinking, and wanted to mention it in the review (even if you\u0027ll likely leave it), since it is an exceptional case.",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95220585_c9229e9a",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-18T14:07:30Z",
+      "side": 1,
+      "message": "Not to make the method name even longer, but would it make it more clear to include Password in the name? Or maybe that\u0027s too long and doesn\u0027t help readability?",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "ac340653ed46cda74ac3e9d9adf02bbd5ed918e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
