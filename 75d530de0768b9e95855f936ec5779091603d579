@@ -22,6 +22,30 @@
       "revId": "75d530de0768b9e95855f936ec5779091603d579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83dee17_5489de5e",
+        "filename": "ppapi/generators/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-18T20:40:50Z",
+      "side": 0,
+      "message": "Done (and updated CL description).",
+      "parentUuid": "e5c1700b_b46ec9a5",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
