@@ -34,6 +34,24 @@
       "revId": "60a85e751c9b8eee3fc8034bfa28c900a7fabdc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d0f095_86ecace8",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T19:53:01Z",
+      "side": 0,
+      "message": "No, and I suppose we avoid the selinux mitigation logic in ndk-gdb.py by always using the app data directory. My concern was about whether this would work in N+, but if you\u0027re trying it on O and it works, then it\u0027s fine w/ me.",
+      "parentUuid": "98e89a19_431216d4",
+      "revId": "60a85e751c9b8eee3fc8034bfa28c900a7fabdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "18ee6991_5188a2ef",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T19:53:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2f52e9f_03314744",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad18c6ae_0f336a90",
         "filename": "build/android/adb_gdb",
         "patchSetId": 1
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "05c168d7_014376d4",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T19:53:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "340694d1_bf1c1681",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd3a319a_5810a1a2",
         "filename": "build/android/adb_gdb",
         "patchSetId": 1
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Trying it on an O device. There\u0027s no conditional logic here though:\nthird_party/android_tools/ndk/python-packages/gdbrunner/__init__.py\n\nI suspect the domain socket is what makes you not need setenforce 0. (I was seeing permission denied when trying to run gdbserver before this change)",
       "parentUuid": "bd3a319a_5810a1a2",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31de36ba_6c0b814c",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T19:53:01Z",
+      "side": 1,
+      "message": "Given that we push the gdbserver binary from the ndk, I don\u0027t think device version will matter re whether domain sockets exist in the binary. Just wanted to make sure that this works w/ r12 of the NDK.",
+      "parentUuid": "6fa7c152_07a00725",
       "revId": "34be9e2655786435f98ab629414fcea445d0decf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
