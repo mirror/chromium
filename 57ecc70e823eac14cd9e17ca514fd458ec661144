@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f502b169_98a49af1",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T22:08:09Z",
+      "side": 1,
+      "message": "Thanks for catching this! Can you write a quick test (see example [1]) for this?\n\n[1] https://chromium-review.googlesource.com/c/575701/2/ui/ozone/public/interfaces/overlay_surface_candidate_struct_traits_unittest.cc\nAlthough instead of enumerating the enums in a std::vector\u003c\u003e the test, maybe iterate from ATC to LAST, so that if LAST changes, the test fails. That would help make sure the mojom is updated accordingly.",
+      "revId": "57ecc70e823eac14cd9e17ca514fd458ec661144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
