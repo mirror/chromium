@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210bfcbd_aa8a83c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-18T18:20:34Z",
+      "side": 1,
+      "message": "(Technically, requested by speed releasing.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "b319b7284e5ad980501c64d5d48d43192a692bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60da8d6a_89a94ab3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32490,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-18T18:20:34Z",
+      "side": 1,
+      "message": "Can you mention when this is logged? - i.e. \"Recorded once per UMA ping.\"",
+      "range": {
+        "startLine": 32490,
+        "startChar": 20,
+        "endLine": 32490,
+        "endChar": 21
+      },
+      "revId": "b319b7284e5ad980501c64d5d48d43192a692bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
