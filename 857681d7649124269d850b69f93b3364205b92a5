@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96fce3d9_c06d830e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-18T09:48:26Z",
+      "side": 1,
+      "message": "I think we should do lazy initialization of this one somehow. It doesn\u0027t seem reasonable to create a vector if we have no collapsed rows.",
+      "revId": "857681d7649124269d850b69f93b3364205b92a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8799b0c_2e847b3b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-18T09:48:26Z",
+      "side": 1,
+      "message": "This should only be done if we have any collapsed rows at all.",
+      "revId": "857681d7649124269d850b69f93b3364205b92a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78757c1_7b0d5fbd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-18T09:48:26Z",
+      "side": 1,
+      "message": "Might as well store \"cell-\u003eRowSpan() + r\" and name the variable end_row or something.",
+      "revId": "857681d7649124269d850b69f93b3364205b92a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
