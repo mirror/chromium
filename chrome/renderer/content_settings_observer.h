@@ -88,6 +88,9 @@ class ContentSettingsObserver
                                    const blink::WebURL& url) override;
   bool AllowAutoplay(bool default_value) override;
   void PassiveInsecureContentFound(const blink::WebURL&) override;
+  void PersistClientHints(const blink::ClientHintsPreferences&,
+                          int64_t duration_seconds,
+                          const blink::WebURL& url) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ContentSettingsObserverTest, WhitelistedSchemes);

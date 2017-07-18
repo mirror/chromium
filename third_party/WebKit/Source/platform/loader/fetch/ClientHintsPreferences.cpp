@@ -4,8 +4,11 @@
 
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 
+#include "platform/HTTPNames.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/weborigin/KURL.h"
 
 namespace blink {
 
@@ -62,6 +65,48 @@ void ClientHintsPreferences::UpdateFromAcceptClientHintsHeader(
         context->CountClientHints(static_cast<WebClientHintsType>(i));
     }
   }
+}
+
+void ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
+    const ResourceResponse& response,
+    Context* context,
+    int64_t* persist_duration_seconds) {
+  *persist_duration_seconds = -1;
+
+  if (response.WasCached())
+    return;
+
+  String accept_ch_header_value =
+      response.HttpHeaderField(HTTPNames::Accept_CH);
+  String accept_ch_lifetime_header_value =
+      response.HttpHeaderField(HTTPNames::Accept_CH_Lifetime);
+
+  if (!RuntimeEnabledFeatures::ClientHintsEnabled() ||
+      !RuntimeEnabledFeatures::ClientHintsPersistentEnabled() ||
+      accept_ch_header_value.IsEmpty() ||
+      accept_ch_lifetime_header_value.IsEmpty()) {
+    return;
+  }
+
+  const KURL url = response.Url();
+
+  if (url.Protocol() != "https") {
+    // Only HTTPS domains are allowed to persist client hints.
+    return;
+  }
+
+  bool conversion_ok = false;
+  *persist_duration_seconds =
+      accept_ch_lifetime_header_value.ToInt64Strict(&conversion_ok);
+  if (!conversion_ok || *persist_duration_seconds < 0) {
+    *persist_duration_seconds = -1;
+    return;
+  }
+
+  if (context)
+    context->CountPersistentClientHintHeaders();
+
+  ParseAcceptChHeader(accept_ch_header_value, enabled_types_);
 }
 
 }  // namespace blink

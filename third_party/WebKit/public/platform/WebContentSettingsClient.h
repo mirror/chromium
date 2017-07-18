@@ -5,10 +5,12 @@
 #ifndef WebContentSettingsClient_h
 #define WebContentSettingsClient_h
 
+#include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebContentSettingCallbacks.h"
 
 namespace blink {
 
+class ClientHintsPreferences;
 class WebSecurityOrigin;
 class WebString;
 class WebURL;
@@ -100,6 +102,13 @@ class WebContentSettingsClient {
   // Notifies the client that the frame would have executed script if script
   // were enabled.
   virtual void DidNotAllowScript() {}
+
+  // Called to persist the received client hint preferences when |url| was
+  // fetched. The preferences should be persisted for |duration_seconds|.
+  virtual void PersistClientHints(
+      const ClientHintsPreferences& hints_preferences,
+      int64_t duration_seconds,
+      const blink::WebURL& url) {}
 
   virtual ~WebContentSettingsClient() {}
 };
