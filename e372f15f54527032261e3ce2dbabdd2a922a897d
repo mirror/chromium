@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3e4d81b_de92d08c",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-18T16:43:43Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think MediaStreamManager actually requires |audio_task_runner| to be more than a SequencedTaskRunner.",
+      "revId": "e372f15f54527032261e3ce2dbabdd2a922a897d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdd5a5f_e10319ed",
         "filename": "media/audio/audio_manager_helper.h",
         "patchSetId": 10
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-14T18:10:32Z",
       "side": 1,
       "message": "Why not use the AudioSystemInfo naming from your other CL?",
+      "revId": "e372f15f54527032261e3ce2dbabdd2a922a897d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65798b22_521e86a4",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-18T16:43:43Z",
+      "side": 1,
+      "message": "If \"AudioSystemInterface\" exists, I would expect \"AudioSystem\" to be an implementation :). Maybe the AudioSystemInterface could be AudioSystem, and this AudioSystem could be replaced by AudioSystemHandle (not implementing AudioSystem, just providing get/setinstance)?",
       "revId": "e372f15f54527032261e3ce2dbabdd2a922a897d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
