@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d7edfa_9d13fbf0",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 1,
+      "message": "nit: quote the entire value rather than just $APP_DATA_DIR",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ddeff0_174729b4",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 1,
+      "message": "Should this be \"...; echo $?\" rather than \"... \u0026\u0026 echo $?\"?",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad18c6ae_0f336a90",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 1,
+      "message": "--once?",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3a319a_5810a1a2",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned about trying to use a domain socket with gdbserver given how new the functionality appears to be -- which version did you try this out against locally?",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7948296c_6b0069ad",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 1,
+      "message": "Wow, this is much nicer.",
+      "revId": "34be9e2655786435f98ab629414fcea445d0decf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

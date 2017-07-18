@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab4fa10c_5f798253",
+        "filename": "build/android/adb_gdb",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T18:48:19Z",
+      "side": 0,
+      "message": "You mentioned setenforce was unnecessary -- which Android version were you using?",
+      "revId": "60a85e751c9b8eee3fc8034bfa28c900a7fabdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
