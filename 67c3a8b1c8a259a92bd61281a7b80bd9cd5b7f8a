@@ -22,6 +22,30 @@
       "revId": "67c3a8b1c8a259a92bd61281a7b80bd9cd5b7f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95199ccd_d9442078",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-18T22:54:01Z",
+      "side": 1,
+      "message": "My reasoning was that the NTP/IncognitoNTP is the only place (besides the TabSwitcher who already exists as a property) where there will be disabled items. So we\u0027d only need to add 1 extra property to this class, we could rename this to inNativeContent or something similar to make sure we don\u0027t need to add more of these. \n\n\nI actually started implementing this using the broadcaster since it was closer to the current IDC_COMMANDS implementation we have, but then I realized that the ToolsMenu items are static, and the Menu will be dismissed after any kind of action. So I think that observing (either by using the broadcaster or having the coordinator listening for any dispatcher calls) would be too much for now. \n\n\nThis way the features displaying the ToolsMenu can deal with higher level concepts and not know specifically about a certain Item that will be disabled or not. I also like that this way we will explicitly know from the model exactly how each Item will behave. \n\n\nOn the other hand, if we want to update the items after a Webstate has finished loading on the background or something like that, we might need to change this... maybe we can then start observing.\n\nWDYT?",
+      "parentUuid": "5e7da058_fc118f33",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "67c3a8b1c8a259a92bd61281a7b80bd9cd5b7f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
