@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f67c34_c5db049e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-18T05:26:31Z",
+      "side": 1,
+      "message": "is this necessary? I\u0027m disappointed (though not wholly surprised) that closure can\u0027t figure out that exceptionList is a NodeList\u003c!RawSiteException\u003e. Does explicitly annotating exceptionList obviate the need for this explicit type and the one above?",
+      "range": {
+        "startLine": 102,
+        "startChar": 14,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1941f47e_07e99a5c",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-18T05:26:31Z",
+      "side": 1,
+      "message": "Yayyy type-safetyyy",
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f8203f_5fd674b1",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-18T05:26:31Z",
+      "side": 1,
+      "message": "Can this go in an anonymous namespace instead?",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 34
+      },
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5982ca02_956ca9bb",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-18T05:26:31Z",
+      "side": 1,
+      "message": "You should turn these sources into an ENUM and have a string mapping, like with ContentSettingTo/FromString. Copy the approach used in content_settings_utils.cc.\n\nThen you can do the same type-safe comparison in the test as you did for ContentSetting.",
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
