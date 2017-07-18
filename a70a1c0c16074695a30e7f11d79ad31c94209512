@@ -52,6 +52,24 @@
       "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc08356_d7122fa7",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-18T15:34:47Z",
+      "side": 1,
+      "message": "I think the goal of trying to ensure that VR targets on non-Android builders aren\u0027t broken is reasonable, but I don\u0027t think that an end state of having enable_vr disabled on linux bots other than the two 64-bit bots on the main waterfall + the main CQ bot is a desirable end state. I think we should either work to make it default or should spin up a separate builder and trybot (which is a much heavier process, unfortunately).",
+      "parentUuid": "7d3edce5_b6666b3b",
+      "revId": "a70a1c0c16074695a30e7f11d79ad31c94209512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
