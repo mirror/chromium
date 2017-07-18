@@ -7,6 +7,7 @@
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/thread_restrictions.h"
 
 namespace {
 
@@ -36,6 +37,7 @@ class SecurityServicesSingleton {
 namespace crypto {
 
 base::Lock& GetMacSecurityServicesLock() {
+  base::ThreadRestrictions::AssertIOAllowed();
   return SecurityServicesSingleton::GetInstance()->lock();
 }
 
