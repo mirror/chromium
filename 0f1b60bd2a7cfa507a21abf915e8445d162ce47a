@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b62b39b5_358e191c",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-18T00:08:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e1e92ef4_34e4c091",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 52
+      },
+      "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dea9290d_d08e5787",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T22:46:17Z",
       "side": 1,
       "message": "s/metrics_sender/metrics_handler",
+      "range": {
+        "startLine": 85,
+        "startChar": 51,
+        "endLine": 85,
+        "endChar": 65
+      },
+      "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d357e534_bea72bfd",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-18T00:08:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "dea9290d_d08e5787",
       "range": {
         "startLine": 85,
         "startChar": 51,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d183f6e7_1433d3eb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-18T00:08:21Z",
+      "side": 1,
+      "message": "Done -- No longer needed. Thank you for catching.",
+      "parentUuid": "fc12a253_93fc175f",
+      "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "085f89c6_d1ae83d2",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 18
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "a9ec5ddf_9cdb307a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-18T00:08:21Z",
+      "side": 1,
+      "message": "Done. Thank you for pointing me to this.",
+      "parentUuid": "085f89c6_d1ae83d2",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d2c183b_48de26cf",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 18
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-17T22:46:17Z",
       "side": 1,
       "message": "How does the wait happen with the run_loop?",
+      "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90889b1_6c6d97b5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-18T00:08:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2d2c183b_48de26cf",
       "revId": "0f1b60bd2a7cfa507a21abf915e8445d162ce47a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
