@@ -255,6 +255,7 @@ static_library("v4_local_database_manager") {
     ":v4_protocol_manager_util",
     ":v4_update_protocol_manager",
     "//base",
+    "//components/safe_browsing/web_ui:database_params_proto",
     "//content/public/browser",
     "//net",
     "//url",

@@ -70,6 +70,12 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
   // Schedule the next update without backoff.
   void ScheduleNextUpdate(std::unique_ptr<StoreStateMap> store_state_map);
 
+  // Saves the network response code of the last update
+  int response_code = 0;
+
+  // Saves the time since the last update.
+  long long time_since_last_update_ = 0;
+
  protected:
   // Constructs a V4UpdateProtocolManager that issues network requests using
   // |request_context_getter|. It schedules updates to get the hash prefixes for

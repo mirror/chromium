@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+syntax = "proto2";
+package database_params;
+option optimize_for = LITE_RUNTIME;
+// The message that's passed to safe_browsing_ui with the v4 database parameters
+// to be shown on chrome://safe-browsing.
+message V4DatabaseInfo {
+  // The network status after the last update.
+  optional int32 network_status = 1;
+  optional double database_size = 2;
+  map<string, double> files_List = 3;
+  optional double time_since_last_update_response = 4;
+}

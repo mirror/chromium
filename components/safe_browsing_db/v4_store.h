@@ -196,7 +196,8 @@ class V4Store {
 
   // Records (in kilobytes) and returns the size of the file on disk for this
   // store using |base_metric| as prefix and the filename as suffix.
-  int64_t RecordAndReturnFileSize(const std::string& base_metric);
+  std::pair<int64_t, std::string> RecordAndReturnFileSize(
+      const std::string& base_metric);
 
   std::string DebugString() const;
 

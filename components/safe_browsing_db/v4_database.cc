@@ -299,11 +299,14 @@ bool V4Database::IsStoreAvailable(const ListIdentifier& identifier) const {
 void V4Database::RecordFileSizeHistograms() {
   int64_t db_size = 0;
   for (const auto& store_map_iter : *store_map_) {
-    const int64_t size =
+    std::pair<const int64_t, std::string> store_data =
         store_map_iter.second->RecordAndReturnFileSize(kV4DatabaseSizeMetric);
-    db_size += size;
+    list_sizes[kV4DatabaseSizeMetric + store_data.second] =
+        store_data.first / 1024;
+    db_size += store_data.first;
   }
   const int64_t db_size_kilobytes = static_cast<int64_t>(db_size / 1024);
+  db_size_instance = db_size_kilobytes;
   UMA_HISTOGRAM_COUNTS(kV4DatabaseSizeMetric, db_size_kilobytes);
 }
 

@@ -10,9 +10,16 @@
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
+#include "components/safe_browsing_db/database_params.pb.h"
+#include "components/safe_browsing_db/v4_local_database_manager.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_context.h"
+
+#include <stddef.h>
+#include <algorithm>
+#include <utility>
+#include <vector>
 
 namespace safe_browsing {
 
@@ -47,6 +54,7 @@ SafeBrowsingUI::~SafeBrowsingUI() {}
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
     : browser_context_(context) {}
+SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}
 
 void SafeBrowsingUIHandler::GetExperiments(const base::ListValue* args) {
   AllowJavascript();
@@ -63,7 +71,43 @@ void SafeBrowsingUIHandler::GetPrefs(const base::ListValue* args) {
                             safe_browsing::GetSafeBrowsingPreferencesList(
                                 user_prefs::UserPrefs::Get(browser_context_)));
 }
-SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}
+
+void SafeBrowsingUIHandler::GetDatabaseInfo(const base::ListValue* args) {
+  AllowJavascript();
+  std::string callback_id;
+  args->GetString(0, &callback_id);
+
+  database_params::V4DatabaseInfo v4_database_info_ =
+      V4LocalDatabaseManager::local_database_manager_instance
+          ->GetV4DatabaseParams();
+
+  base::ListValue databaseInfoList;
+
+  // Network status of the last GetUpdate().
+  if (v4_database_info_.network_status()) {
+    databaseInfoList.GetList().push_back(
+        base::Value("Network Status of the last update"));
+    databaseInfoList.GetList().push_back(
+        base::Value(v4_database_info_.network_status()));
+  }
+
+  // Database size
+  if (v4_database_info_.database_size()) {
+    databaseInfoList.GetList().push_back(base::Value("Database size"));
+    databaseInfoList.GetList().push_back(
+        base::Value(v4_database_info_.database_size()));
+  }
+  for (auto& file : v4_database_info_.files_list()) {
+    databaseInfoList.GetList().push_back(base::Value(file.first));
+    databaseInfoList.GetList().push_back(base::Value(file.second));
+  }
+  // Time since the last GetUpdate()
+  databaseInfoList.GetList().push_back(
+      base::Value("Time since the last update"));
+  databaseInfoList.GetList().push_back(
+      base::Value(v4_database_info_.time_since_last_update_response()));
+  ResolveJavascriptCallback(base::Value(callback_id), databaseInfoList);
+}
 
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -72,6 +116,9 @@ void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getPrefs",
       base::Bind(&SafeBrowsingUIHandler::GetPrefs, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getDatabaseInfo", base::Bind(&SafeBrowsingUIHandler::GetDatabaseInfo,
+                                    base::Unretained(this)));
 }
 
 }  // namespace safe_browsing

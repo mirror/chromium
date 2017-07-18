@@ -849,7 +849,8 @@ bool V4Store::VerifyChecksum() {
   return true;
 }
 
-int64_t V4Store::RecordAndReturnFileSize(const std::string& base_metric) {
+std::pair<int64_t, std::string> V4Store::RecordAndReturnFileSize(
+    const std::string& base_metric) {
   std::string suffix = GetUmaSuffixForStore(store_path_);
   // Histogram properties as in UMA_HISTOGRAM_COUNTS macro.
   base::HistogramBase* histogram = base::Histogram::FactoryGet(
@@ -859,7 +860,7 @@ int64_t V4Store::RecordAndReturnFileSize(const std::string& base_metric) {
     const int64_t file_size_kilobytes = file_size_ / 1024;
     histogram->Add(file_size_kilobytes);
   }
-  return file_size_;
+  return make_pair(file_size_, suffix);
 }
 
 }  // namespace safe_browsing

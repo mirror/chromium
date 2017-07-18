@@ -17,10 +17,13 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/safe_browsing_db/database_params.pb.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/sha2.h"
+
+#include <google/protobuf/map.h>
 
 using content::BrowserThread;
 using base::TimeTicks;
@@ -171,13 +174,29 @@ V4LocalDatabaseManager::PendingCheck::PendingCheck(
 }
 
 V4LocalDatabaseManager::PendingCheck::~PendingCheck() {}
+// static
+scoped_refptr<V4LocalDatabaseManager>
+    V4LocalDatabaseManager::local_database_manager_instance;
 
 // static
 scoped_refptr<V4LocalDatabaseManager> V4LocalDatabaseManager::Create(
     const base::FilePath& base_path,
     ExtendedReportingLevelCallback extended_reporting_level_callback) {
-  return make_scoped_refptr(
-      new V4LocalDatabaseManager(base_path, extended_reporting_level_callback));
+  return local_database_manager_instance =
+             make_scoped_refptr(new V4LocalDatabaseManager(
+                 base_path, extended_reporting_level_callback));
+}
+
+database_params::V4DatabaseInfo V4LocalDatabaseManager::GetV4DatabaseParams() {
+  v4_database_info.set_network_status(
+      v4_update_protocol_manager_->response_code);
+  v4_database_info.mutable_files_list()->insert(
+      v4_database_->list_sizes.cbegin(), v4_database_->list_sizes.cend());
+  v4_database_info.set_database_size(v4_database_->db_size_instance);
+  v4_database_info.set_time_since_last_update_response(
+      v4_update_protocol_manager_->time_since_last_update_);
+
+  return v4_database_info;
 }
 
 V4LocalDatabaseManager::V4LocalDatabaseManager(
@@ -877,6 +896,7 @@ void V4LocalDatabaseManager::SetupUpdateProtocolManager(
   v4_update_protocol_manager_ = V4UpdateProtocolManager::Create(
       request_context_getter, config, update_callback,
       extended_reporting_level_callback_);
+  //
 }
 
 void V4LocalDatabaseManager::UpdateRequestCompleted(
