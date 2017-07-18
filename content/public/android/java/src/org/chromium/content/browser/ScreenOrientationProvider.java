@@ -13,6 +13,7 @@ import android.view.Surface;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content_public.browser.ScreenOrientationDelegateManager;
 import org.chromium.content_public.common.ScreenOrientationConstants;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.ui.base.WindowAndroid;
@@ -71,6 +72,8 @@ public class ScreenOrientationProvider {
 
     @CalledByNative
     public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
+        if (!ScreenOrientationDelegateManager.canLockOrientation()) return;
+
         // WindowAndroid may be null if the tab is being reparented.
         if (window == null) return;
         Activity activity = window.getActivity().get();
@@ -119,8 +122,16 @@ public class ScreenOrientationProvider {
         } catch (PackageManager.NameNotFoundException e) {
             // Do nothing, defaultOrientation should be SCREEN_ORIENTATION_UNSPECIFIED.
         } finally {
-            activity.setRequestedOrientation(defaultOrientation);
+            if (!ScreenOrientationDelegateManager.canUnlockOrientation(
+                        activity, defaultOrientation)) {
+                activity.setRequestedOrientation(defaultOrientation);
+            }
         }
+    }
+
+    @CalledByNative
+    static boolean isOrientationLockEnabled() {
+        return ScreenOrientationDelegateManager.canLockOrientation();
     }
 
     private ScreenOrientationProvider() {
