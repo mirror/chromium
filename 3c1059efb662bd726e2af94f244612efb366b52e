@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "4b6b93e7_aa7e06fa",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-18T00:10:37Z",
+      "side": 1,
+      "message": "Previously GetSwapInfo() returned void. Thus callers can only call GetSwapInfo() and hope the output is sane. Of course, GetSwapInfo() does behave sanely and either returns all zeros, or all valid values for the SwapInfo.\n\nNow, GetSwapInfo() has to read both /sys/block/zram0/mm_stat and /sys/block/zram0/stat, so there is potential for first read+parse to succeed and for the other to fail. This could potentially leave the SwapInfo in a partially filled state.\n\nGiven this, it makes sense to have a bool return value, where it would never return true if the SwapInfo is in a partially filled state. Now the callers need to check the return value.\n\nAs for the other calls in SystemMetrics::Sample() - If one looks closely, they never return partially filled structs. So not checking the return value works, but it is fragile and not the best practice.",
+      "parentUuid": "c1733861_b4efde71",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
