@@ -17,16 +17,13 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/strings/grit/ui_strings.h"
 
-GroupedPermissionInfoBarDelegate::~GroupedPermissionInfoBarDelegate() {}
-
 // static
 infobars::InfoBar* GroupedPermissionInfoBarDelegate::Create(
     const base::WeakPtr<PermissionPromptAndroid>& permission_prompt,
-    InfoBarService* infobar_service,
-    const GURL& requesting_origin) {
-  return infobar_service->AddInfoBar(base::MakeUnique<GroupedPermissionInfoBar>(
-      base::WrapUnique(new GroupedPermissionInfoBarDelegate(
-          permission_prompt, requesting_origin))));
+    InfoBarService* infobar_service) {
+  return infobar_service->AddInfoBar(
+      base::MakeUnique<GroupedPermissionInfoBar>(base::WrapUnique(
+          new GroupedPermissionInfoBarDelegate(permission_prompt))));
 }
 
 size_t GroupedPermissionInfoBarDelegate::PermissionCount() const {
@@ -79,12 +76,11 @@ base::string16 GroupedPermissionInfoBarDelegate::GetLinkText() const {
   return permission_prompt_->GetLinkText();
 }
 
+GroupedPermissionInfoBarDelegate::~GroupedPermissionInfoBarDelegate() {}
+
 GroupedPermissionInfoBarDelegate::GroupedPermissionInfoBarDelegate(
-    const base::WeakPtr<PermissionPromptAndroid>& permission_prompt,
-    const GURL& requesting_origin)
-    : requesting_origin_(requesting_origin),
-      persist_(true),
-      permission_prompt_(permission_prompt) {
+    const base::WeakPtr<PermissionPromptAndroid>& permission_prompt)
+    : persist_(true), permission_prompt_(permission_prompt) {
   DCHECK(permission_prompt);
 }
 

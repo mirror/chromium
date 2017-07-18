@@ -48,9 +48,8 @@ void PermissionPromptAndroid::Show() {
   if (!infobar_service)
     return;
 
-  GroupedPermissionInfoBarDelegate::Create(
-      weak_factory_.GetWeakPtr(), infobar_service,
-      delegate_->Requests()[0]->GetOrigin());
+  GroupedPermissionInfoBarDelegate::Create(weak_factory_.GetWeakPtr(),
+                                           infobar_service);
 }
 
 bool PermissionPromptAndroid::CanAcceptRequestUpdate() {
