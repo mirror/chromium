@@ -16,6 +16,24 @@
       "revId": "a5a7183e513df72855719e5ede8cd98dd200da6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f8b0ab_5f8fde52",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83731,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-18T17:30:07Z",
+      "side": 1,
+      "message": "I\u0027m keeping the comment general for now to track auto-presentation, which today only happens for Daydream Home. We may auto-present for any intent in the future, in which case we can probably still use this metric, and add a different one just for Daydream if needed.\n\nUpdated to mention that this is only tracked the first time we enter WebVR mode.",
+      "parentUuid": "233b13e6_4cbbc0d9",
+      "revId": "a5a7183e513df72855719e5ede8cd98dd200da6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
