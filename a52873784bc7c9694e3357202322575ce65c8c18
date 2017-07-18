@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95cb7eca_18dcb16f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-18T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c69c6a_25348cbf",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "976365bf_69e8ff9f",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33761778_a646534d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-18T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "976365bf_69e8ff9f",
+      "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31d172e_5b881428",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-18T20:31:05Z",
+      "side": 1,
+      "message": "Yes, I like that better!",
+      "parentUuid": "5ea794d1_e29c241c",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 53
+      },
+      "revId": "a52873784bc7c9694e3357202322575ce65c8c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
