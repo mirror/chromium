@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f322e0e6_464b3a4b",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "Oh! You\u0027re right. My misunderstanding. Ok, then, please ignore my other comments and keep |frames_queued_|.\n\nHowever, unfortunately, this creates a new problem we need to account for. See my new comments for the code in AudioTrackRecorder::AudioEncoder::ProvideInput().",
+      "parentUuid": "9dd55d6d_ea50d9a9",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad7a96d_32c2e1b2",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
@@ -168,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "e90f6893_244bbcba",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "No change needed here since we\u0027re keeping |frames_queued_|.",
+      "parentUuid": "a65d313b_49fe9a86",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 3
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34cee486_00880d28",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
@@ -191,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "3389fdb2_3c410c08",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "No change needed here since we\u0027re keeping |frames_queued_|.",
+      "parentUuid": "34cee486_00880d28",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 63
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9f53b44_54d3522d",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
@@ -207,6 +279,53 @@
         "startChar": 58,
         "endLine": 266,
         "endChar": 59
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8407d7f7_cd7be2d3",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "No change needed here since we\u0027re keeping |frames_queued_|.",
+      "parentUuid": "d9f53b44_54d3522d",
+      "range": {
+        "startLine": 266,
+        "startChar": 58,
+        "endLine": 266,
+        "endChar": 59
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63b1aeb5_acffb1bd",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "Instead of |audio_bus_queue_.empty()|, I think you need to check |frames_queued_ \u003c audio_bus-\u003eframes()|.",
+      "range": {
+        "startLine": 279,
+        "startChar": 6,
+        "endLine": 279,
+        "endChar": 30
       },
       "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -254,6 +373,29 @@
         "startChar": 2,
         "endLine": 280,
         "endChar": 15
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e89b6ea_6c866550",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-18T00:53:04Z",
+      "side": 1,
+      "message": "Unfortunately, the number of frames in the AudioBus at the front of the queue may be more or less than the number of frames in the output |audio_bus|. This will make this change much more involved, since now you\u0027ll have to:\n\n1. In the case where audio_bus_queue_.front()-\u003eframes() is greater than audio_bus-\u003eframes(): Track how many frames have been consumed, and copy the remaining frames to the |audio_bus| in the *next* ProvideInput() call.\n\n2. In the case where audio_bus_queue_.front()-\u003eframes() is less than audio_bus-\u003eframes(): You\u0027ll need to process more than one AudioBus from the queue to fill the output |audio_bus|.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 46
       },
       "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
