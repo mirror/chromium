@@ -16,6 +16,24 @@
       "revId": "d52ea8334e83c18ed3597e7139aa1f9c37bd1b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6312386_6b59ee38",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-18T16:40:27Z",
+      "side": 1,
+      "message": "I went with using event-\u003etarget().",
+      "parentUuid": "a9354f24_6d6c44a1",
+      "revId": "d52ea8334e83c18ed3597e7139aa1f9c37bd1b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
