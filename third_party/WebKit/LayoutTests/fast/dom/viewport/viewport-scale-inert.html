@@ -1,0 +1,34 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<h1>Viewport: Scale is inert</h1>
+<h4>
+    Test Description: This test checks that window scroll and size properties
+    are unaffected by page scale.
+</h4>
+<script>
+    addEventListener("load", function() {
+        if (!window.internals)
+          return;
+
+        var initialWidth = window.innerWidth;
+        var initialHeight = window.innerHeight;
+
+        // Zoom into the page, innerWidth and innerHeight shouldn't be affected.
+        window.internals.setPageScaleFactor(2);
+
+        test(function() {
+              assert_equals(window.innerWidth, initialWidth);
+              assert_equals(window.innerHeight, initialHeight);
+            }, "`window.innerWidth and window.innerHeight don't change");
+
+        // Pan just the visual viepwort. scrollX and scrollY shouldn't be
+        // affected.
+        window.internals.setVisualViewportOffset(10, 20);
+
+        test(function() {
+              assert_equals(window.scrollX, 0);
+              assert_equals(window.scrollY, 0);
+            }, "`window.scrollX and window.scrollY don't change");
+    });
+</script>
