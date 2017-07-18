@@ -49,8 +49,9 @@
 - (id)initWithDelegate:(autofill::AutofillPopupViewDelegate*)delegate
                  frame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self)
+  if (self) {
     popup_delegate_ = delegate;
+  }
 
   return self;
 }
@@ -213,8 +214,9 @@
   [window setOpaque:YES];
 
   [self updateBoundsAndRedrawPopup];
-  [[popup_delegate_->container_view() window] addChildWindow:window
-                                                     ordered:NSWindowAbove];
+
+  NSWindow* parentWindow = [popup_delegate_->container_view() window];
+  [parentWindow addChildWindow:window ordered:NSWindowAbove];
 
   // This will momentarily show the vertical scrollbar to indicate that it is
   // possible to scroll. Will do the right thing and not show if scrolling is
