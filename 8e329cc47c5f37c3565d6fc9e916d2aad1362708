@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c258c762_04c37e9e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-07-18T22:50:52Z",
+      "side": 1,
+      "message": "nit: you can condense these two lines into one:\nis_any_row_collapsed |\u003d RowHasVisibilityCollapse(r);",
+      "revId": "8e329cc47c5f37c3565d6fc9e916d2aad1362708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffd6fca_f7682edb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-07-18T22:50:52Z",
+      "side": 1,
+      "message": "style: add underscore to end of this variable name (that\u0027s how we tell at a glance that it\u0027s a member variable instead of a local)",
+      "range": {
+        "startLine": 428,
+        "startChar": 7,
+        "endLine": 428,
+        "endChar": 27
+      },
+      "revId": "8e329cc47c5f37c3565d6fc9e916d2aad1362708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
