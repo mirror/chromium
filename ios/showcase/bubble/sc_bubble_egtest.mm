@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#import <EarlGrey/EarlGrey.h>
+
 #import "ios/showcase/test/showcase_eg_utils.h"
 #import "ios/showcase/test/showcase_test_case.h"
-
-#import <EarlGrey/EarlGrey.h>
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -16,14 +16,14 @@ using ::showcase_utils::Open;
 using ::showcase_utils::Close;
 }
 
-@interface TextBadgeViewTestCase : ShowcaseTestCase
+@interface SCBubbleTestCase : ShowcaseTestCase
 @end
 
-@implementation TextBadgeViewTestCase
+@implementation SCBubbleTestCase
 
 // Tests that the accessibility label matches the display text.
 - (void)testTextBadgeAccessibilityLabel {
-  Open(@"TextBadgeView");
+  Open(@"Bubble");
   Close();
 }
 
