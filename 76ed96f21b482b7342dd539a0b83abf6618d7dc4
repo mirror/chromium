@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ff4cbb7d_674af058",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T21:15:34Z",
+      "side": 1,
+      "message": "True, I was also thinking about reparenting a subframe, but I\u0027m not sure how common it is.",
+      "parentUuid": "70d36b4a_2ce92331",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 73
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5da1c1_b4a86c27",
         "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.h",
         "patchSetId": 12
