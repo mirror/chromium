@@ -297,6 +297,10 @@ int HeadlessWebContentsImpl::GetMainFrameRenderProcessId() const {
   return web_contents()->GetMainFrame()->GetProcess()->GetID();
 }
 
+GURL HeadlessWebContentsImpl::GetVisibleURL() const {
+  return web_contents()->GetVisibleURL();
+}
+
 bool HeadlessWebContentsImpl::OpenURL(const GURL& url) {
   if (!url.is_valid())
     return false;

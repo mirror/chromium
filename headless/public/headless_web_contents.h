@@ -92,6 +92,14 @@ class HEADLESS_EXPORT HeadlessWebContents {
 
   virtual int GetMainFrameRenderProcessId() const = 0;
 
+  // Gets the virtual URL currently being displayed in the URL bar, if there is
+  // one. This URL might be a pending navigation that hasn't committed yet, so
+  // it is not guaranteed to match the current page in this WebContents. A
+  // typical example of this is interstitials, which show the URL of the
+  // new/loading page (active) but the security context is of the old page (last
+  // committed).
+  virtual GURL GetVisibleURL() const = 0;
+
  private:
   friend class HeadlessWebContentsImpl;
   HeadlessWebContents() {}
