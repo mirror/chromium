@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ec6091_d3443c22",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-18T02:15:00Z",
+      "side": 1,
+      "message": "We still need \nDCHECK_CURRENTLY_ON(BrowserThread::IO);\non every new method.",
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c660120f_46ee5384",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-18T02:15:00Z",
+      "side": 1,
+      "message": "This follows the pattern in VideoCaptureImpl, it\u0027d easy \nthe migration if you could mention that in the CL description.",
+      "range": {
+        "startLine": 354,
+        "startChar": 6,
+        "endLine": 354,
+        "endChar": 34
+      },
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8f0ea5_1b43fe80",
+        "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-18T02:15:00Z",
+      "side": 1,
+      "message": "Not your fault, but I wonder what\u0027s the purpose -if any- \nof this aliases :?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 64
+      },
+      "revId": "a6e6de0548aa5765fa6f6f3cbca363cfd07738e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
