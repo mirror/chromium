@@ -319,33 +319,35 @@ class MediaLoadDeferrer : public content::RenderFrameObserver {
 };
 
 #if defined(OS_WIN)
-// Dispatches a module |event| to the provided |module_event_sink| interface.
-// It is expected that this only be called from the IO thread. This is only
-// safe because the underlying |module_event_sink| object is never deleted,
+// Dispatches a module |event| to the browser process via the ModuleEventSink
+// interface. It is expected that this only be called from the IO thread. This
+// is only safe because the underlying |connector| object is never deleted,
 // being owned by the leaked ChromeContentRendererClient object. If this ever
 // changes then a WeakPtr mechanism would have to be used.
-void HandleModuleEventOnIOThread(mojom::ModuleEventSinkPtr* module_event_sink,
+void HandleModuleEventOnIOThread(service_manager::Connector* connector,
                                  const ModuleWatcher::ModuleEvent& event) {
+  // Bind the pointer here now that this is executing on the IO thread.
+  mojom::ModuleEventSinkPtr module_event_sink;
+  connector->BindInterface(content::mojom::kBrowserServiceName,
+                           &module_event_sink);
+
   // Simply send the module load address. The browser can validate this and look
   // up the module details on its own.
-  (*module_event_sink)
-      ->OnModuleEvent(event.event_type,
-                      reinterpret_cast<uintptr_t>(event.module_load_address));
+  module_event_sink->OnModuleEvent(
+      event.event_type, reinterpret_cast<uintptr_t>(event.module_load_address));
 }
 
 // Receives notifications from the ModuleWatcher on any thread. Bounces these
-// over to the provided |io_task_runner| where they are subsequently dispatched
-// to the |module_event_sink| interface.
+// over to the provided |task_runner| where they are subsequently dispatched to
+// the |module_event_sink| interface.
 void OnModuleEvent(scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-                   mojom::ModuleEventSinkPtr* module_event_sink,
+                   service_manager::Connector* connector,
                    const ModuleWatcher::ModuleEvent& event) {
-  // The Mojo interface can only be used from a single thread. Bounce tasks
-  // over to it. It is safe to pass an unretained pointer to
-  // |module_event_sink|: it is owned by a ChromeContentRendererClient, which is
-  // a leaked singleton in the process.
-  io_task_runner->PostTask(
-      FROM_HERE, base::Bind(&HandleModuleEventOnIOThread,
-                            base::Unretained(module_event_sink), event));
+  // Bounce to IO thread only because |connector| must always be used on the
+  // same thread.
+  io_task_runner->PostTask(FROM_HERE,
+                           base::BindOnce(&HandleModuleEventOnIOThread,
+                                          base::Unretained(connector), event));
 }
 #endif
 
@@ -371,8 +373,7 @@ ChromeContentRendererClient::ChromeContentRendererClient()
 #endif
 }
 
-ChromeContentRendererClient::~ChromeContentRendererClient() {
-}
+ChromeContentRendererClient::~ChromeContentRendererClient() = default;
 
 void ChromeContentRendererClient::RenderThreadStarted() {
   RenderThread* thread = RenderThread::Get();
@@ -386,19 +387,11 @@ void ChromeContentRendererClient::RenderThreadStarted() {
 
 #if defined(OS_WIN)
   if (base::FeatureList::IsEnabled(features::kModuleDatabase)) {
-    thread->GetConnector()->BindInterface(content::mojom::kBrowserServiceName,
-                                          &module_event_sink_);
-
-    // Rebind the ModuleEventSink so that it can be accessed on the IO thread.
-    module_event_sink_.Bind(module_event_sink_.PassInterface(),
-                            thread->GetIOTaskRunner());
-
-    // It is safe to pass an unretained pointer to |module_event_sink_|, as it
-    // is owned by the process singleton ChromeContentRendererClient, which is
-    // leaked.
+    // Create a clone of the connector that will be used to bind to the
+    // ModuleEventSink implementation on the IO thread.
     module_watcher_ = ModuleWatcher::Create(
         base::Bind(&OnModuleEvent, thread->GetIOTaskRunner(),
-                   base::Unretained(&module_event_sink_)));
+                   base::Owned(thread->GetConnector()->Clone().release())));
   }
 #endif
 
