@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95689c56_54809e62",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBTestHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T13:52:17Z",
+      "side": 1,
+      "message": "Remove this comment. It\u0027s written in the header file.",
+      "revId": "221dc6e5d802edbe66cb3f18b35b98ad1c628ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2ed1c9_704c98e1",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBTestHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-18T13:52:17Z",
+      "side": 1,
+      "message": "CreateIDBValueForTesting?\n\nI\u0027m fine with putting this method in IDBValue.h. I\u0027ll delegate the decision to jsbell@.",
+      "revId": "221dc6e5d802edbe66cb3f18b35b98ad1c628ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
