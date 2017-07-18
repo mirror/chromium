@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd69700_867ddef4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/wasm_service_worker_test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000804
+      },
+      "writtenOn": "2017-07-18T01:17:13Z",
+      "side": 1,
+      "message": "Indent is funny here.",
+      "revId": "075bf701d9d36a728f6cb7dcdc1bd8377dd63813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
