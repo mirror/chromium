@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3d4e6c5_486dc874",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-18T19:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d7e8aea_fbe00c0a",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "1b7a4c17fd77ba34fa0e4d89f8d5e14e7c83109f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7963d67a_7d713ecf",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T19:07:09Z",
       "side": 1,
       "message": "Since the expand button handles toggling, why is this needed? What else could fire a toggling event in this context? Tests?",
+      "range": {
+        "startLine": 174,
+        "startChar": 41,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "1b7a4c17fd77ba34fa0e4d89f8d5e14e7c83109f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b34c2fb_7dd5af5f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-18T19:18:22Z",
+      "side": 1,
+      "message": "Clicking anywhere on the settings box (ex. on the \"Show files to remove\" text) instead of just on the little arrow toggles the list of files to remove.\n\nPrior art:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/languages_page/languages_page.js?l\u003d561\u0026rcl\u003d9ecc7ea64164c15ef9d6e977903a40c270ef8441",
+      "parentUuid": "7963d67a_7d713ecf",
       "range": {
         "startLine": 174,
         "startChar": 41,
