@@ -292,6 +292,11 @@ void NativeAppWindowViews::RenderViewCreated(
         render_view_host->GetWidget()->GetView();
     DCHECK(view);
     view->SetBackgroundColor(SK_ColorTRANSPARENT);
+  } else if (app_window_->show_on_lock_screen()) {
+    content::RenderWidgetHostView* view =
+        render_view_host->GetWidget()->GetView();
+    DCHECK(view);
+    view->SetBackgroundColor(SK_ColorBLACK);
   }
 }
 
