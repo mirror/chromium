@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba86d30c_1e15dd26",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T18:59:16Z",
+      "side": 1,
+      "message": "This is effectively reverting https://codereview.chromium.org/2773573002/diff/80001/third_party/WebKit/Source/web/ChromeClientImpl.cpp?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 79
+      },
+      "revId": "7d05e04ddd93304905f63017e599f913b9544112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76eccd4b_85ed2435",
+        "filename": "third_party/WebKit/Source/core/page/EffectiveNavigationPolicyTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T18:59:16Z",
+      "side": 1,
+      "message": "These tests are restored from https://codereview.chromium.org/2773573002/diff/80001/third_party/WebKit/Source/web/tests/ChromeClientImplTest.cpp",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 1
+      },
+      "revId": "7d05e04ddd93304905f63017e599f913b9544112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

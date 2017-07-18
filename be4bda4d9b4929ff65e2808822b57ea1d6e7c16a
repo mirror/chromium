@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a04f2ac_6502be58",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-18T18:59:16Z",
+      "side": 1,
+      "message": "Effectively restores parsing for https://codereview.chromium.org/2905283003/diff/120001/third_party/WebKit/Source/core/page/WindowFeatures.cpp (but doesn\u0027t consume it anywhere other than inside Blink. I think this is probably fairly consistent with the original intent?)",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 40
+      },
+      "revId": "be4bda4d9b4929ff65e2808822b57ea1d6e7c16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
