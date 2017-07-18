@@ -191,10 +191,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 // Remove these as we update our sites.
 //
 
-#ifndef SK_SUPPORT_LEGACY_HQ_SCALER
-#define SK_SUPPORT_LEGACY_HQ_SCALER
-#endif
-
 #ifndef SK_SUPPORT_LEGACY_BILERP
 #define SK_SUPPORT_LEGACY_BILERP
 #endif
