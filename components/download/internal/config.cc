@@ -46,6 +46,10 @@ const uint32_t kDefaultWindowEndTimeSeconds = 3600 * 8; /* 8 hours. */
 const base::TimeDelta kDefaultNetworkChangeDelay =
     base::TimeDelta::FromSeconds(5);
 
+// The default value of download retry delay when the download is failed.
+const base::TimeDelta kDefaultDownloadRetryDelay =
+    base::TimeDelta::FromSeconds(20);
+
 // Helper routine to get Finch experiment parameter. If no Finch seed was found,
 // use the |default_value|. The |name| should match an experiment
 // parameter in Finch server configuration.
@@ -83,7 +87,10 @@ std::unique_ptr<Configuration> Configuration::CreateFromFinch() {
       base::TimeDelta::FromMilliseconds(base::saturated_cast<int>(
           GetFinchConfigUInt(kNetworkChangeDelayConfig,
                              kDefaultNetworkChangeDelay.InMilliseconds())));
-
+  config->download_retry_delay =
+      base::TimeDelta::FromMilliseconds(base::saturated_cast<int>(
+          GetFinchConfigUInt(kDownloadRetryDelayConfig,
+                             kDefaultDownloadRetryDelay.InMilliseconds())));
   return config;
 }
 
@@ -98,6 +105,7 @@ Configuration::Configuration()
           base::saturated_cast<int>(kDefaultFileCleanupWindowMinutes))),
       window_start_time_seconds(kDefaultWindowStartTimeSeconds),
       window_end_time_seconds(kDefaultWindowEndTimeSeconds),
-      network_change_delay(kDefaultNetworkChangeDelay) {}
+      network_change_delay(kDefaultNetworkChangeDelay),
+      download_retry_delay(kDefaultDownloadRetryDelay) {}
 
 }  // namespace download

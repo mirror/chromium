@@ -120,6 +120,9 @@ class ControllerImpl : public Controller,
   // service.
   void UpdateDriverStates();
 
+  // Process the download based on the entry state after a delay.
+  void UpdateDriverStateAfterDelay(const std::string& guid);
+
   // Processes the download based on the state of |entry|. May start, pause
   // or resume a download accordingly.
   void UpdateDriverState(Entry* entry);

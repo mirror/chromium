@@ -40,6 +40,10 @@ constexpr char kWindowEndTimeConfig[] = "window_end_time_seconds";
 // milliseconds.
 constexpr char kNetworkChangeDelayConfig[] = "network_change_delay_ms";
 
+// Configuration name for the retry delay when the download is failed, measured
+// in milliseconds.
+constexpr char kDownloadRetryDelayConfig[] = "retry_delay_ms";
+
 // Download service configuration.
 //
 // Loaded based on experiment parameters from the server. Use default values if
@@ -83,6 +87,9 @@ struct Configuration {
 
   // The delay to notify network status changes.
   base::TimeDelta network_change_delay;
+
+  // The delay to retry a download when the download is failed.
+  base::TimeDelta download_retry_delay;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Configuration);

@@ -737,9 +737,9 @@ TEST_F(DownloadServiceControllerImplTest, RetryOnFailure) {
   driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
   driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
   driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
-  EXPECT_EQ(nullptr, model_->Get(entry2.guid));
 
   task_runner_->RunUntilIdle();
+  EXPECT_EQ(nullptr, model_->Get(entry2.guid));
 }
 
 TEST_F(DownloadServiceControllerImplTest, OnDownloadSucceeded) {
