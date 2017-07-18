@@ -127,7 +127,7 @@ class FullscreenAppListPresenterDelegateTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenAppListPresenterDelegateTest);
-};
+};  // namespace ash
 
 // Instantiate the Boolean which is used to toggle the Fullscreen app list in
 // the parameterized tests.
@@ -190,12 +190,12 @@ TEST_F(AppListPresenterDelegateTest, ClickOutsideBubbleClosesBubble) {
 // Tests that tapping outside the app-list bubble closes it.
 TEST_F(AppListPresenterDelegateTest, TapOutsideBubbleClosesBubble) {
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-
   aura::Window* app_window = app_list_presenter_impl()->GetWindow();
+
   ASSERT_TRUE(app_window);
   gfx::Rect app_window_bounds = app_window->GetBoundsInRootWindow();
-
   ui::test::EventGenerator& generator = GetEventGenerator();
+
   // Click on the bubble itself. The bubble should remain visible.
   generator.GestureTapAt(app_window_bounds.CenterPoint());
   EXPECT_TRUE(app_list_presenter_impl()->GetTargetVisibility());
@@ -474,6 +474,7 @@ TEST_F(FullscreenAppListPresenterDelegateTest,
   app_list::AppListView* app_list = app_list_presenter_impl()->GetView();
   EXPECT_EQ(app_list->app_list_state(),
             app_list::AppListView::FULLSCREEN_ALL_APPS);
+
   // Type in the search box to transition to |FULLSCREEN_SEARCH|.
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.PressKey(ui::KeyboardCode::VKEY_0, 0);
@@ -579,6 +580,7 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   } else {
     generator.GestureTapDownAndUp(GetPointOutsideSearchbox());
   }
+
   EXPECT_EQ(app_list_presenter_impl()->GetView()->app_list_state(),
             app_list::AppListView::CLOSED);
 }
@@ -590,6 +592,7 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
        StateTransitionsByTappingAppListBodyFromFullscreen) {
   const bool test_mouse_event = TestMouseEventParam();
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+
   app_list::AppListView* app_list_view = app_list_presenter_impl()->GetView();
   app_list::SearchBoxView* search_box_view = app_list_view->search_box_view();
   ui::test::EventGenerator& generator = GetEventGenerator();
@@ -601,12 +604,14 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   generator.GestureScrollSequence(gfx::Point(10, top_of_app_list + 20),
                                   gfx::Point(10, 10),
                                   base::TimeDelta::FromMilliseconds(100), 10);
+
   EXPECT_EQ(app_list_view->app_list_state(),
             app_list::AppListView::FULLSCREEN_ALL_APPS);
 
   // Press a key, this should activate the searchbox and transition to
   // fullscreen search.
   generator.PressKey(ui::KeyboardCode::VKEY_0, 0);
+
   EXPECT_EQ(app_list_view->app_list_state(),
             app_list::AppListView::FULLSCREEN_SEARCH);
   EXPECT_TRUE(search_box_view->is_search_box_active());
@@ -619,6 +624,7 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   } else {
     generator.GestureTapDownAndUp(GetPointOutsideSearchbox());
   }
+
   EXPECT_EQ(app_list_view->app_list_state(),
             app_list::AppListView::FULLSCREEN_ALL_APPS);
   EXPECT_FALSE(search_box_view->is_search_box_active());
@@ -630,6 +636,7 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   } else {
     generator.GestureTapDownAndUp(GetPointOutsideSearchbox());
   }
+
   EXPECT_EQ(app_list_view->app_list_state(), app_list::AppListView::CLOSED);
 }
 
@@ -705,50 +712,51 @@ TEST_F(AppListPresenterDelegateTest,
             SHELF_BACKGROUND_DEFAULT);
 }
 
-// Tests that the half app list closes if the user taps outside its bounds.
-TEST_F(FullscreenAppListPresenterDelegateTest,
-       TapAndClickOutsideClosesHalfAppList) {
-  // TODO(newcomer): Investigate mash failures crbug.com/726838
+// Tests that the app list in HALF with an active search transitions to PEEKING
+// after the body is clicked/tapped.
+TEST_P(FullscreenAppListPresenterDelegateTest, HalfToPeekingByClickorTap) {
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+
   ui::test::EventGenerator& generator = GetEventGenerator();
 
   // Transition to half app list by entering text.
   generator.PressKey(ui::KeyboardCode::VKEY_0, 0);
   app_list::AppListView* app_list = app_list_presenter_impl()->GetView();
   EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::HALF);
+  // Click or Tap the app list view body.
+  gfx::Point p(10, 700);
+  if (TestMouseEventParam()) {
+    generator.MoveMouseTo(p);
+    generator.ClickLeftButton();
+    generator.ReleaseLeftButton();
+  } else {
+    generator.GestureTapAt(GetPointOutsideSearchbox());
+  }
+  EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::PEEKING);
+}
 
-  // Grab the bounds of the search box,
-  // which is guaranteed to be inside the app list.
-  gfx::Point tap_point = app_list_presenter_impl()
-                             ->GetView()
-                             ->search_box_widget()
-                             ->GetContentsView()
-                             ->GetBoundsInScreen()
-                             .CenterPoint();
-
-  // Tapping inside the bounds doesn't close the app list.
-  generator.GestureTapAt(tap_point);
-  EXPECT_TRUE(app_list_presenter_impl()->GetTargetVisibility());
-  EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::HALF);
-
-  // Clicking inside the bounds doesn't close the app list.
-  generator.MoveMouseTo(tap_point);
-  generator.ClickLeftButton();
-  EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
-  EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::HALF);
-
-  // Tapping outside the bounds closes the app list.
-  generator.GestureTapAt(gfx::Point(10, 10));
-  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
-
-  // Reset the app list to half state.
+// Tests that the half app list closes if the user taps outside its bounds.
+TEST_P(FullscreenAppListPresenterDelegateTest,
+       TapAndClickOutsideClosesHalfAppList) {
+  // TODO(newcomer): Investigate mash failures crbug.com/726838
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+
+  ui::test::EventGenerator& generator = GetEventGenerator();
+
+  // Transition to half app list by entering text.
   generator.PressKey(ui::KeyboardCode::VKEY_0, 0);
+  app_list::AppListView* app_list = app_list_presenter_impl()->GetView();
+
   EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::HALF);
 
-  // Clicking outside the bounds closes the app list.
-  generator.MoveMouseTo(gfx::Point(10, 10));
-  generator.ClickLeftButton();
+  // Clicking/tapping outside the bounds closes the app list.
+  if (TestMouseEventParam()) {
+    generator.MoveMouseTo(gfx::Point(10, 10));
+    generator.ClickLeftButton();
+  } else {
+    generator.GestureTapAt(gfx::Point(10, 10));
+  }
+
   EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
 }
 

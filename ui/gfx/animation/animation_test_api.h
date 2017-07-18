@@ -6,7 +6,6 @@
 #define UI_GFX_ANIMATION_ANIMATION_TEST_API_H_
 
 #include <memory>
-
 #include "base/auto_reset.h"
 #include "base/macros.h"
 #include "ui/gfx/animation/animation.h"
