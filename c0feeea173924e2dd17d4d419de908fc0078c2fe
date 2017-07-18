@@ -16,6 +16,24 @@
       "revId": "c0feeea173924e2dd17d4d419de908fc0078c2fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ceed353_b0eded04",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-18T09:02:04Z",
+      "side": 1,
+      "message": "ToDouble() accepts \"1.\".  I have added a testcase for it.",
+      "parentUuid": "5365d1f5_61042981",
+      "revId": "c0feeea173924e2dd17d4d419de908fc0078c2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
