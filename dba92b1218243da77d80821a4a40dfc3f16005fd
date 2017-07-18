@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a71dbad_d93cec76",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T07:11:08Z",
+      "side": 1,
+      "message": "nit: explicit not required",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "dba92b1218243da77d80821a4a40dfc3f16005fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0787a8_130a90a6",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-18T07:11:08Z",
+      "side": 1,
+      "message": "here too i guess. and android",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "dba92b1218243da77d80821a4a40dfc3f16005fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
