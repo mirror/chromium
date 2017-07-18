@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f3c8e15_78e8f329",
+        "filename": "content/shell/test_runner/accessibility_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure what you\u0027re asking, but essentially this method returns whether the object in question is still attached to the document. I don\u0027t know specifically when that might not be the case for the root element.",
+      "parentUuid": "50423976_8f6cd828",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ed83b9_b708ed78",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-17T16:56:10Z",
       "side": 1,
       "message": "Why might it be null?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d0fc33_a22f8c3c",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "This isn\u0027t a behaviour change from the original code, but in most cases there won\u0027t be an existing AXObjectCache as it is only created when it is needed (typically when some external application requests something via an accessibility API).",
+      "parentUuid": "e6ed83b9_b708ed78",
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "381fd7fa_afb22b22",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "It is - the rest of the change attempts to make sure we never hit this DCHECK. However, if something slipped through and we do hit this DCHECK:\n- the DCHECK will let us know what needs to be fixed in a debug context\n- the `return true` will work around the issue in a release context.",
+      "parentUuid": "04f79f10_49c986c4",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d88fb3_011aae87",
         "filename": "third_party/WebKit/Source/core/events/EventDispatcher.cpp",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3022a3d2_ee0dfae7",
+        "filename": "third_party/WebKit/Source/core/events/EventDispatcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d88fb3_011aae87",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "55bdddd6_b97011e5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "In order to avoid hitting the DCHECK in the IsInert() call on line 461, we need to make sure distribution is up to date here.",
+      "parentUuid": "2448a182_60b0b742",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e9efd29_0c1dbdc9",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXMenuList.cpp",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-17T16:56:10Z",
       "side": 1,
       "message": "Why this change?",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3d85f5_88fbf410",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXMenuList.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "If NeedsToUpdateChildren() is true, Children() on line 124 populates the children of the AXMenuList, which calls AXObjectCache::GetOrCreate(), which calls AXObject::IsIgnored(), which calls IsInert(), which DCHECKS if distribution is dirty.\n\nBy calling this here, we ensure that we\u0027re not trying to create any AXObjects at a stage when it would be risky to do so - they will be created later.",
+      "parentUuid": "5e9efd29_0c1dbdc9",
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "e875d905_3b6cc7a8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "Can you suggest an alternative, please?",
+      "parentUuid": "bd33a8d2_7eb94bc8",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae84995_8533c39e",
         "filename": "third_party/WebKit/Source/modules/exported/WebAXObject.cpp",
         "patchSetId": 6
@@ -220,6 +346,24 @@
       "writtenOn": "2017-07-17T16:56:10Z",
       "side": 1,
       "message": "This is not updating layout, it\u0027s layout plus also compositing.",
+      "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f61e74e_9621ac56",
+        "filename": "third_party/WebKit/Source/modules/exported/WebAXObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-18T00:02:16Z",
+      "side": 1,
+      "message": "This is just moved from line 168 in the old file; I don\u0027t want to change behaviour.",
+      "parentUuid": "5ae84995_8533c39e",
       "revId": "157527abb8722cad5161c915795128bd3dc38a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
