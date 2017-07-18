@@ -31,6 +31,15 @@ class AddressNormalizer : public autofill::LoadRulesListener {
     virtual ~Delegate() {}
   };
 
+  class Observer {
+   public:
+    virtual void OnRulesLoaded(const std::string& region_code,
+                               bool success) = 0;
+
+   protected:
+    virtual ~Observer() {}
+  };
+
   // The interface for the normalization request.
   class Request {
    public:
@@ -58,6 +67,9 @@ class AddressNormalizer : public autofill::LoadRulesListener {
       const std::string& region_code,
       int timeout_seconds,
       Delegate* requester) = 0;
+
+  virtual void AddObserver(Observer* observer) = 0;
+  virtual void RemoveObserver(Observer* observer) = 0;
 };
 
 }  // namespace payments

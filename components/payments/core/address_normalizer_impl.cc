@@ -173,6 +173,15 @@ void AddressNormalizerImpl::StartAddressNormalization(
   }
 }
 
+void AddressNormalizerImpl::AddObserver(AddressNormalizer::Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void AddressNormalizerImpl::RemoveObserver(
+    AddressNormalizer::Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 void AddressNormalizerImpl::OnAddressValidationRulesLoaded(
     const std::string& region_code,
     bool success) {
@@ -183,6 +192,10 @@ void AddressNormalizerImpl::OnAddressValidationRulesLoaded(
       it->second[i]->OnRulesLoaded(success);
     }
     pending_normalization_.erase(it);
+  }
+
+  for (AddressNormalizer::Observer& observer : observers_) {
+    observer.OnRulesLoaded(region_code, success);
   }
 }
 

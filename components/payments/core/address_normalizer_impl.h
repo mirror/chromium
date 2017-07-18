@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "components/payments/core/address_normalizer.h"
 
 namespace autofill {
@@ -41,6 +42,9 @@ class AddressNormalizerImpl : public AddressNormalizer {
                                  int timeout_seconds,
                                  Delegate* requester) override;
 
+  void AddObserver(AddressNormalizer::Observer* observer) override;
+  void RemoveObserver(AddressNormalizer::Observer* observer) override;
+
  private:
   // Called when the validation rules for the |region_code| have finished
   // loading. Implementation of the LoadRulesListener interface.
@@ -53,6 +57,8 @@ class AddressNormalizerImpl : public AddressNormalizer {
 
   // The address validator used to normalize addresses.
   autofill::AddressValidator address_validator_;
+
+  base::ObserverList<AddressNormalizer::Observer> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(AddressNormalizerImpl);
 };
