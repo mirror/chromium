@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d268aa_538b105a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-18T21:39:31Z",
+      "side": 1,
+      "message": "Please elaborate :)",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 14
+      },
+      "revId": "d6885315ae5f84dbf6f3507f72566c28ed8ed6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
