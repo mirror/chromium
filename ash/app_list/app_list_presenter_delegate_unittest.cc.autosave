@@ -668,7 +668,6 @@ TEST_P(FullscreenAppListPresenterDelegateTest, TapAndClickEnablesSearchBox) {
   } else {
     generator.GestureTapAt(GetPointOutsideSearchbox());
   }
-
   EXPECT_FALSE(search_box_view->is_search_box_active());
   EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
 
@@ -679,7 +678,6 @@ TEST_P(FullscreenAppListPresenterDelegateTest, TapAndClickEnablesSearchBox) {
   } else {
     generator.GestureTapAt(GetPointOutsideSearchbox());
   }
-
   EXPECT_EQ(app_list_presenter_impl()->GetView()->app_list_state(),
             app_list::AppListView::AppListState::CLOSED);
 }
