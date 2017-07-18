@@ -16,6 +16,24 @@
       "revId": "91cdf0b728d540491a2fdcd52d1cc670e6336b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f5ad0d_11bc8230",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-18T14:09:08Z",
+      "side": 1,
+      "message": "\u003e Why does ContextIsValid not work? Our programming rule is that \"we should check ContextIsValid before using ScriptState\". Can we follow that rule here?\n\nI\u0027m focusing to only fix the crash issue in this CL, and it\u0027s possible that we need to merge the CL (depending on whether we can commit this CL before or after the branch cut).\n\nSo I refrained from a behavioral change.  That\u0027s the reason that I didn\u0027t use ContextIsValid.\n\n\n\u003e Also it is not nice that some caller sites are expecting that GetExecutionContext never returns null. Would it make more sense to move the ContextIsValid check to the caller sites?\n\nThis CL is what you\u0027re saying, I think?  Before the re-implementation of ToExecutionContext, ToExecutionContext checks whether the given context is null or not, and returns null if the context is null.\n\nAfter the re-implementation of ToExecutionContext, ToExecutionContext no longer checks if the context is null or not, it simply requires non-null context.  So we need to check whether the context is null or not in this function that is a call site.",
+      "parentUuid": "ac8ee3a5_633c5a84",
+      "revId": "91cdf0b728d540491a2fdcd52d1cc670e6336b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
