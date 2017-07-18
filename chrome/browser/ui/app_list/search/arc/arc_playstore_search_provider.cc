@@ -6,7 +6,9 @@
 
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.h"
 #include "components/arc/arc_bridge_service.h"
@@ -35,10 +37,11 @@ void ArcPlayStoreSearchProvider::Start(bool is_voice_query,
                 GetRecentAndSuggestedAppsFromPlayStore)
           : nullptr;
 
-  if (app_instance == nullptr)
+  if (app_instance == nullptr || query.empty())
     return;
 
   ClearResults();
+  query_start_time_ = base::TimeTicks::Now();
   app_instance->GetRecentAndSuggestedAppsFromPlayStore(
       UTF16ToUTF8(query), max_results_,
       base::Bind(&ArcPlayStoreSearchProvider::OnResults,
@@ -49,10 +52,22 @@ void ArcPlayStoreSearchProvider::Stop() {}
 
 void ArcPlayStoreSearchProvider::OnResults(
     std::vector<arc::mojom::AppDiscoveryResultPtr> results) {
+  size_t instant_app_count = 0;
   for (auto& result : results) {
+    if (result->is_instant_app)
+      ++instant_app_count;
     Add(base::MakeUnique<ArcPlayStoreSearchResult>(std::move(result), profile_,
                                                    list_controller_));
   }
+  UMA_HISTOGRAM_TIMES("Arc.PlayStoreSearch.QueryTime",
+                      base::TimeTicks::Now() - query_start_time_);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.PlayStoreSearch.ReturnedAppsTotal",
+                              results.size(), 0, max_results_, max_results_);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.PlayStoreSearch.ReturnedUninstalledApps",
+                              results.size() - instant_app_count, 0,
+                              max_results_, max_results_);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.PlayStoreSearch.ReturnedInstantApps",
+                              instant_app_count, 0, max_results_, max_results_);
 }
 
 }  // namespace app_list
