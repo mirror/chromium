@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7f19b04_7a3b4587",
+        "filename": "ash/shelf/shelf_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T20:30:05Z",
+      "side": 1,
+      "message": "Can you add a comment to clarify what this is doing?\n\ncontainer() in this case is the shelf-container? So |window| should only be |shelf_-\u003eGetWindow()|? So I guess this makes sure that the extended bounds only applies to the shelf window itself? If that is the case, then it\u0027s a little weird to have to explicitly do this. What other window is this targeter being called for?",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a72dc5_83ed9a87",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T20:30:05Z",
+      "side": 1,
+      "message": "The indenting seems a little off. But also, this confuses me about why we need the change in shelf-targeter.",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

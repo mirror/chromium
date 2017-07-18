@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686fa88b_9d251a50",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T20:30:05Z",
+      "side": 0,
+      "message": "I was thinking we would early return false right after this if |can_resize| is false.",
+      "revId": "0b2c5409e58a71c691b05454b55cc5580cc822d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e7d7be_057b821b",
+        "filename": "ui/wm/core/easy_resize_window_targeter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-18T20:30:05Z",
+      "side": 0,
+      "message": "I think this could remain private.",
+      "revId": "0b2c5409e58a71c691b05454b55cc5580cc822d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
