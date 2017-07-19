@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef1f544_20174cc6",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "return {}; for consistency",
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e58fddf_6b431838",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "I see that frame_count and PaintedFrameCount aren\u0027t the same....\n\nBefore reviewing too much further, I think we need to clean up the PaintImage API. There are too many similar/confusing names on it. \n\nCan you try and eliminate a bunch of them? I don\u0027t think the API needs to provide a bunch of convenience methods for things that can be retrieved using other functions.\n\nCan you also group the functions and comment each one of them so that it\u0027s clear what\u0027s meant to be accessed where and what type of information it provides?",
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c1d286_64443639",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "might as well add move ctor/operator",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac3041a_ea89b5c6",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "comment what 0 means",
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f315d43_7a7a145b",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "if frame_count \u003d\u003d frames.size() then you don\u0027t need frame_count neither here nor above. If we didn\u0027t have AnimationType::VIDEO we could technically also derived that data. Is there a better way to say \"video\"?",
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c13c277_186259b2",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T23:33:28Z",
+      "side": 1,
+      "message": "T_T",
+      "revId": "7551564bdf8516bffd33dc216a0697693136838b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
