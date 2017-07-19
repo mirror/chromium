@@ -40,7 +40,7 @@ public class ContextualSearchContextForTest extends ContextualSearchContext {
             long nativeContextualSearchContext, int startAdjust, int endAdjust) {}
 
     @Override
-    protected boolean isCharFromAlphabetWithUnreliableWordBreakAtIndex(String text, int index) {
+    protected boolean hasCharFromAlphabetWithUnreliableWordBreak(String text) {
         return false;
     }
 }

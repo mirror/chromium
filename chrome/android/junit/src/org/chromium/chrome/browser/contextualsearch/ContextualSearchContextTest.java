@@ -198,4 +198,10 @@ public class ContextualSearchContextTest {
         assertEquals("is", mContext.getWordTapped());
         assertEquals("ambiguous", mContext.getWordFollowingTap());
     }
+
+    @Test
+    @Feature({"ContextualSearch", "Context"})
+    public void testWordWithEastAsianCharacter() {
+        assertTrue(mContext.hasCharFromAlphabetWithUnreliableWordBreak("Clin马ton"));
+    }
 }
