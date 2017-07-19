@@ -16,6 +16,7 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
+#include "ui/aura/client/drag_drop_client_observer.h"
 #include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
@@ -75,6 +76,21 @@ void DispatchGestureEndToWindow(aura::Window* window) {
     window->delegate()->OnGestureEvent(&gesture_end);
   }
 }
+
+void NotifyDragStarted(
+    const base::ObserverList<aura::client::DragDropClientObserver>& observers,
+    const ui::OSExchangeData* data) {
+  for (aura::client::DragDropClientObserver& observer : observers)
+    observer.OnDragStarted(data);
+}
+
+void NotifyDragEnded(
+    const base::ObserverList<aura::client::DragDropClientObserver>& observers,
+    const ui::OSExchangeData* data) {
+  for (aura::client::DragDropClientObserver& observer : observers)
+    observer.OnDragEnded(data);
+}
+
 }  // namespace
 
 class DragDropTrackerDelegate : public aura::WindowDelegate {
@@ -224,6 +240,8 @@ int DragDropController::StartDragAndDrop(
   if (cancel_animation_)
     cancel_animation_->End();
 
+  NotifyDragStarted(observers_, drag_data_);
+
   if (should_block_during_drag_drop_) {
     base::RunLoop run_loop;
     quit_closure_ = run_loop.QuitClosure();
@@ -258,6 +276,16 @@ void DragDropController::DragCancel() {
 
 bool DragDropController::IsDragDropInProgress() {
   return !!drag_drop_tracker_.get();
+}
+
+void DragDropController::AddObserver(
+    aura::client::DragDropClientObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DragDropController::RemoveObserver(
+    aura::client::DragDropClientObserver* observer) {
+  observers_.RemoveObserver(observer);
 }
 
 void DragDropController::OnKeyEvent(ui::KeyEvent* event) {
@@ -570,6 +598,8 @@ void DragDropController::ForwardPendingLongTap() {
 }
 
 void DragDropController::Cleanup() {
+  if (drag_data_)
+    NotifyDragEnded(observers_, drag_data_);
   if (drag_window_)
     drag_window_->RemoveObserver(this);
   drag_window_ = NULL;
