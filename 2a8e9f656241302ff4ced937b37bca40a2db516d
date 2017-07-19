@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "227dd959_9dda5ec4",
+        "filename": "chrome/browser/autocomplete/contextual_suggestions_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "I\u0027m unaware of deeper implications, but from what I can tell, ChromeAutocompleteProviderClient simply forwards the call to its underlying Profile:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc?l\u003d84\n\nI _believe_ it doesn\u0027t make any difference, but you know the codebase better than me.",
+      "parentUuid": "7591e6e0_f7378c42",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc2450a_a59ddfd4",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55591e6f_b37701f9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "Good catch. I read the code and I think it makes more sense to put it above the call to ZeroSuggestURL().",
+      "parentUuid": "9dc2450a_a59ddfd4",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 23
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5cfb297f_142854f4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45eed9ce_356e8ae1",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb4d6f9_5e23a756",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-19T04:20:17Z",
       "side": 1,
       "message": "optional nit: Given the shared description and shared setting (both multi-line strings), it might be good to define those elsewhere to make it obvious that those strings are identical and make it easier to spot actual differences.",
+      "range": {
+        "startLine": 160,
+        "startChar": 27,
+        "endLine": 160,
+        "endChar": 34
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1972b9_201d520a",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "I agree but I\u0027m not sure what kind of solution would be good here. The biggest problem is that net::DefineNetworkTrafficeAnnotation() accepts only const char arrays: https://cs.chromium.org/chromium/src/net/traffic_annotation/network_traffic_annotation.h?type\u003dcs\u0026q\u003dDefineNetworkTrafficAnnotation\u0026sq\u003dpackage:chromium\u0026l\u003d75\n\nThis prevents us from using base::StringPrintf which returns a string on the heap. We could construct a const char array with something like \"char* my_array \u003d new char[some_size_here];\" + \"delete[] my_array;\" but I personally think that\u0027s terrible for performance, for readability and for safety.\n\nWe could probably do some constexpr/template fiddling to construct these strings at compilation time, but it\u0027s annoying that we can\u0027t do:\n\nstatic const char kMyDescription[] \u003d \"blah blah blah\";\n\n\"hello\" + kMyDescription\n\nAlso std::string::operator+() is not constexpr, so we can\u0027t do this either:\n\nconstexpr std::string kMyAnnotation \u003d some_string + \"some_literal\";\n\nnor this:\n\nconstexpr const char[] kMyAnnotation() { // construct the array with + }\n\nnor this\n\nconstexpr const char kMyAnnotation[] \u003d [] { // construct the array with + }();\n\n\n\nDo you have an alternative simple solution?\n\n\nI think the best would be to have an overload or alternate DefineNetworkTrafficAnnotation() that would accept a NetworkTrafficAnnotation protobuf object. We could then do:\n\nconst char kMyDescription[] \u003d \"...\";\nconst char kMySettiing[] \u003d \"...\";\nconst NetworkTrafficAnnotation* const kMyAnnotation \u003d [] {\n  auto* annotation \u003d new NetworkTrafficAnnotation;\n  CHECK(annotation-\u003eParseFromString(\n            base::StringPrintf(R\"(...)\"R,\n                               kMyDescription,\n                               kMySetting)));\n  return annotation;\n};\n\nDefineNetworkTrafficAnnotation(\"omnibox_zerosuggest\", *kMyAnnotation);\n\n\nMaybe I\u0027m missing something utterly obvious, but I think it\u0027s better to leave it like this.",
+      "parentUuid": "1fb4d6f9_5e23a756",
       "range": {
         "startLine": 160,
         "startChar": 27,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "65c4d6b1_fb3a4040",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "I agree. Done.",
+      "parentUuid": "c77fb195_e0abc4c7",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1fb3d6_e2922744",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "671f3add_daa9e7a6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "Done.\n\nnet::UrlFetcher::SetExtraRequestHeaders() overwrites everything, so I have to use net::UrlFetcher::AddExtraRequestHeader() on each header entry.",
+      "parentUuid": "df1fb3d6_e2922744",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 34
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "348abf8b_b991a215",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fab6be9_07bbce96",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T16:21:18Z",
+      "side": 1,
+      "message": "I agree, there\u0027s no pointing in creating yet another std::unique_ptr\u003cT\u003e. I changed the code to use .reset().",
+      "parentUuid": "348abf8b_b991a215",
+      "range": {
+        "startLine": 240,
+        "startChar": 18,
+        "endLine": 240,
+        "endChar": 36
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
