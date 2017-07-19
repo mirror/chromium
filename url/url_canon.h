@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "base/strings/string16.h"
+#include "ipc/export_template.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_export.h"
 
@@ -173,6 +174,10 @@ class RawCanonOutputT : public CanonOutputT<T> {
  protected:
   T fixed_buffer_[fixed_capacity];
 };
+
+// Explicitly instantiate commonly used instantiations.
+extern template class EXPORT_TEMPLATE_DECLARE(URL_EXPORT) CanonOutputT<char>;
+extern template class EXPORT_TEMPLATE_DECLARE(URL_EXPORT) CanonOutputT<base::char16>;
 
 // Normally, all canonicalization output is in narrow characters. We support
 // the templates so it can also be used internally if a wide buffer is
