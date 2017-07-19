@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992b4f87_f250726b",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:35:01Z",
+      "side": 1,
+      "message": "Why do we need ClampAdd here? This is\n\nmin + clamped(max - min)\n\nif clamp did nothing then it\u0027s min + max - min \u003d max\nif clamp did something, then it\u0027s min + INT_MIN which can\u0027t overflow\n\nis that right?",
+      "revId": "330ab230626a84f2c9bc6b70258580a143094745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5f8729_9c73c74f",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:35:01Z",
+      "side": 1,
+      "message": "Can you put these 2 as_unsigned things into a constexpr variable to share them, they are getting long",
+      "revId": "330ab230626a84f2c9bc6b70258580a143094745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
