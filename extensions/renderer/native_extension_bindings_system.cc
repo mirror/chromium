@@ -6,6 +6,7 @@
 
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "content/public/child/worker_thread.h"
 #include "content/public/common/console_message_level.h"
@@ -15,6 +16,8 @@
 #include "extensions/common/extension_api.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/features/feature_provider.h"
+#include "extensions/common/manifest_constants.h"
+#include "extensions/common/manifest_handlers/externally_connectable.h"
 #include "extensions/renderer/api_activity_logger.h"
 #include "extensions/renderer/bindings/api_binding_bridge.h"
 #include "extensions/renderer/bindings/api_binding_hooks.h"
@@ -227,6 +230,7 @@ v8::Local<v8::Object> CreateRootBinding(v8::Local<v8::Context> context,
                                         ScriptContext* script_context,
                                         const std::string& name,
                                         APIBindingsSystem* bindings_system) {
+  LOG(WARNING) << "Creating root binding: " << name;
   APIBindingHooks* hooks = nullptr;
   v8::Local<v8::Object> binding_object =
       bindings_system->CreateAPIInstance(name, context, &hooks);
@@ -264,6 +268,7 @@ v8::Local<v8::Object> CreateFullBinding(
     APIBindingsSystem* bindings_system,
     const FeatureProvider* api_feature_provider,
     const std::string& root_name) {
+  LOG(WARNING) << "Creating full binding: " << root_name;
   const FeatureMap& features = api_feature_provider->GetAllFeatures();
   auto lower = features.lower_bound(root_name);
   DCHECK(lower != features.end());
@@ -275,11 +280,14 @@ v8::Local<v8::Object> CreateFullBinding(
   // else use an empty object (so we can still instantiate 'app.runtime').
   v8::Local<v8::Object> root_binding;
   if (lower->first == root_name) {
+    LOG(WARNING) << "Checking: " << (lower->first);
     if (script_context->IsAnyFeatureAvailableToContext(
             *lower->second, CheckAliasStatus::NOT_ALLOWED)) {
+      // BUG in AnyFeatureAvailableToContext - children include no-parented children.
+      LOG(WARNING) << "Has access";
       root_binding = CreateRootBinding(context, script_context, root_name,
                                        bindings_system);
-    }
+    } else { LOG(WARNING) << "No access"; }
     ++lower;
   }
 
@@ -332,6 +340,7 @@ v8::Local<v8::Object> CreateFullBinding(
     base::StringPiece binding_name =
         GetFirstDifferentAPIName(iter->first, root_name);
 
+    LOG(WARNING) << "Creating binding: " << binding_name.as_string();
     v8::Local<v8::Object> nested_binding =
         CreateFullBinding(context, script_context, bindings_system,
                           api_feature_provider, binding_name.as_string());
@@ -569,6 +578,17 @@ void NativeExtensionBindingsSystem::HandleResponse(
   // Some API calls result in failure, but don't set an error. Use a generic and
   // unhelpful error string.
   // TODO(devlin): Track these down and fix them. See crbug.com/648275.
+  LOG(WARNING) << "Handling response for: " << request_id << ", success: " << success << ", error: " << error;
+  std::string args_json;
+  if (base::JSONWriter::Write(response, &args_json)) {
+    LOG(WARNING) << "Response: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
+  // Some API calls result in failure, but don't set an error. Use a generic and
+  // unhelpful error string.
+  // TODO(devlin): Track these down and fix them.
   api_system_.CompleteRequest(
       request_id, response,
       !success && error.empty() ? "Unknown error." : error);
@@ -581,6 +601,13 @@ RequestSender* NativeExtensionBindingsSystem::GetRequestSender() {
 
 IPCMessageSender* NativeExtensionBindingsSystem::GetIPCMessageSender() {
   return ipc_message_sender_.get();
+}
+
+v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIObjectForTesting(
+    ScriptContext* context,
+    const std::string& api_name) {
+  return GetAPIHelper(context->v8_context(),
+                      gin::StringToSymbol(context->isolate(), api_name));
 }
 
 void NativeExtensionBindingsSystem::BindingAccessor(
@@ -748,6 +775,14 @@ void NativeExtensionBindingsSystem::SendRequest(
   params->worker_thread_id = -1;
   params->service_worker_version_id = kInvalidServiceWorkerVersionId;
 
+  LOG(WARNING) << "Sending request: " << params->name << ", " << params->request_id << ", context: " << script_context;
+  std::string args_json;
+  if (base::JSONWriter::Write(params->arguments, &args_json)) {
+    LOG(WARNING) << "Arguments: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
   ipc_message_sender_->SendRequestIPC(script_context, std::move(params),
                                       request->thread);
 }
@@ -758,6 +793,7 @@ void NativeExtensionBindingsSystem::OnEventListenerChanged(
     const base::DictionaryValue* filter,
     bool was_manual,
     v8::Local<v8::Context> context) {
+  LOG(WARNING) << "Event listeners changed: " << event_name;
   ScriptContext* script_context = GetScriptContext(context);
   // Note: Check context_type() first to avoid accessing ExtensionFrameHelper on
   // a worker thread.

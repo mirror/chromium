@@ -36,7 +36,8 @@ try {
 //   previously saved file entries.
 function getFileBindingsForApi(apiName) {
   // Fallback to using the current window if no background page is running.
-  var backgroundPage = GetExtensionViews(-1, -1, 'BACKGROUND')[0] || WINDOW;
+  var views = GetExtensionViews(-1, -1, 'BACKGROUND');
+  var backgroundPage = views && views[0] ? views[0] : WINDOW;
   var backgroundPageModuleSystem = GetModuleSystem(backgroundPage);
 
   // All windows use the bindFileEntryCallback from the background page so their
@@ -138,7 +139,8 @@ function getFileBindingsForApi(apiName) {
 function getBindDirectoryEntryCallback() {
   // Get the background page if one exists. Otherwise, default to the current
   // window.
-  var backgroundPage = GetExtensionViews(-1, -1, 'BACKGROUND')[0] || WINDOW;
+  var views = GetExtensionViews(-1, -1, 'BACKGROUND');
+  var backgroundPage = views && views[0] ? views[0] : WINDOW;
 
   // For packaged apps, all windows use the bindFileEntryCallback from the
   // background page so their FileEntry objects have the background page's

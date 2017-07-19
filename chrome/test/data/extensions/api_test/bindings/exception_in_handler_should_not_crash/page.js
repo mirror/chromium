@@ -11,7 +11,7 @@ function throwNewError(message) {
 chrome.test.runTests([
   function tabsCreateThrowsError() {
     chrome.test.setExceptionHandler(function(message, exception) {
-      chrome.test.assertTrue(message.indexOf('throwNewError') >= 0);
+      chrome.test.assertTrue(exception.stack.indexOf('throwNewError') >= 0);
       chrome.test.assertEq('tata', exception.message);
       chrome.test.succeed();
     });
@@ -25,7 +25,7 @@ chrome.test.runTests([
       throwNewError('hi');
     };
     chrome.test.setExceptionHandler(function(message, exception) {
-      chrome.test.assertTrue(message.indexOf('throwNewError') >= 0);
+      chrome.test.assertTrue(exception.stack.indexOf('throwNewError') >= 0);
       chrome.tabs.onCreated.removeListener(listener);
       chrome.test.succeed();
     });
@@ -37,7 +37,7 @@ chrome.test.runTests([
     // permissions.getAll has a custom callback, as do many other methods, but
     // this is easy to call.
     chrome.test.setExceptionHandler(function(message, exception) {
-      chrome.test.assertTrue(message.indexOf('throwNewError') >= 0);
+      chrome.test.assertTrue(exception.stack.indexOf('throwNewError') >= 0);
       chrome.test.assertEq('boom', exception.message);
       chrome.test.succeed();
     });
