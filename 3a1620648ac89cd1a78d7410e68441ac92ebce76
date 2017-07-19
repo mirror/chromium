@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45fb7948_5623a42e",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "user name -\u003e username, |non_best_matches|, |preferred_match_|.",
+      "range": {
+        "startLine": 540,
+        "startChar": 1,
+        "endLine": 540,
+        "endChar": 2
+      },
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f9888e_af76e764",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "focuses",
+      "range": {
+        "startLine": 945,
+        "startChar": 45,
+        "endLine": 945,
+        "endChar": 53
+      },
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc727a1c_d165902d",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "filled",
+      "range": {
+        "startLine": 947,
+        "startChar": 5,
+        "endLine": 947,
+        "endChar": 10
+      },
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6505f482_c8c03237",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "These conditions describe what was already processed in the first if-clause. It looks that it\u0027s more or less described in comment before if \"This first match... \".\n\nIt seems that it\u0027s enough just to describe which forms are considered here, that\u0027s nice described in a comment \"This branch deals..\".\nWDYT?",
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4d1a10_12aa7585",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure that we should mention here something about anotations with autocomplete attributes it\u0027s kind of implementation detail how it was found. In future for example we can use server-side predictions. I think that in this function we should just assume that detection of username, password, new-password is correct.",
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fafd905_9b36e584",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "|username_value|",
+      "range": {
+        "startLine": 1233,
+        "startChar": 31,
+        "endLine": 1233,
+        "endChar": 45
+      },
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3767f5_adcf02e0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-19T17:16:02Z",
+      "side": 1,
+      "message": "it\u0027s not constant, it should be named something like submitted_form_has_username\nThe same in the next line",
+      "range": {
+        "startLine": 1245,
+        "startChar": 7,
+        "endLine": 1245,
+        "endChar": 32
+      },
+      "revId": "3a1620648ac89cd1a78d7410e68441ac92ebce76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
