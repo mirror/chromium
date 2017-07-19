@@ -86,6 +86,7 @@ void InstallProtocolHandlers(net::URLRequestJobFactoryImpl* job_factory,
 
 ShellURLRequestContextGetter::ShellURLRequestContextGetter(
     bool ignore_certificate_errors,
+    bool off_the_record,
     const base::FilePath& base_path,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     ProtocolHandlerMap* protocol_handlers,
@@ -173,18 +174,19 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
         base::MakeUnique<net::HttpServerPropertiesImpl>());
 
     base::FilePath cache_path = base_path_.Append(FILE_PATH_LITERAL("Cache"));
-    std::unique_ptr<net::HttpCache::DefaultBackend> main_backend(
-        new net::HttpCache::DefaultBackend(
-            net::DISK_CACHE,
+    std::unique_ptr<net::HttpCache::BackendFactory> main_backend(
+        off_the_record_
+            ? net::HttpCache::DefaultBackend::InMemory(0)
+            : base::MakeUnique<net::HttpCache::DefaultBackend>(
+                  net::DISK_CACHE,
 #if defined(OS_ANDROID)
-            // TODO(rdsmith): Remove when default backend for Android is
-            // changed to simple cache.
-            net::CACHE_BACKEND_SIMPLE,
+                  // TODO(rdsmith): Remove when default backend for Android is
+                  // changed to simple cache.
+                  net::CACHE_BACKEND_SIMPLE,
 #else
-            net::CACHE_BACKEND_DEFAULT,
+                  net::CACHE_BACKEND_DEFAULT,
 #endif
-            cache_path, 0,
-            BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE)));
+                  cache_path, 0));
 
     net::HttpNetworkSession::Context network_session_context;
     network_session_context.cert_verifier =
