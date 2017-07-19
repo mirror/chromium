@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0b1dc92_5c829958",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-19T22:46:26Z",
+      "side": 1,
+      "message": "I\u0027ve made BubbleOrigin private, and changed the parameters of BubbleAnchorPoint so that it can call BubbleOrigin.",
+      "parentUuid": "832c48b1_3a90875b",
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b43260d5_ecd8c20a",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a812d642_66dd6765",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-19T22:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43260d5_ecd8c20a",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5d432221_3ebeb263",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-19T22:46:26Z",
+      "side": 1,
+      "message": "Good call. I\u0027ve changed leading edge to left edge in this comment, and |leadingOffset| to |originOffset|.",
+      "parentUuid": "b62e03bc_f2ddbbd5",
+      "range": {
+        "startLine": 26,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 65
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765fcd25_4db4fb7d",
         "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71f1f5d_e3a460a0",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-19T22:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765fcd25_4db4fb7d",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
