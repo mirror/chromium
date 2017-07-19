@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93831ec5_ecbfe37e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3915,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T12:03:38Z",
+      "side": 0,
+      "message": "Looking at HasErrorPage implementations, |error_domain| is always \"http\". That is why I removed the second param from HasErrorPage.",
+      "revId": "f3f766d65e466b1a7e34b17558ca77c0346eccdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
