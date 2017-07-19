@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd4f14c_733a393c",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:57:51Z",
+      "side": 1,
+      "message": "nit: append() has a const char* override, so no need to make a string here, this is the advantage of append() over operator+",
+      "revId": "f6d5803ee2e7258fc232f960d891b3f8c568b591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
