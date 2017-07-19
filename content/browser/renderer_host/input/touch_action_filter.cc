@@ -7,6 +7,7 @@
 #include <math.h>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 
 using blink::WebInputEvent;
@@ -162,6 +163,15 @@ void TouchActionFilter::OnSetTouchAction(cc::TouchAction touch_action) {
   // 2. Only subtractive - eg. can't trigger scrolling on a element that
   //    otherwise has scrolling disabling by the addition of a finger.
   allowed_touch_action_ &= touch_action;
+}
+
+void TouchActionFilter::ReportAndResetTouchAction() {
+  // Report how often the effective touch action computed by blink is or is
+  // not equivalent to the whitelisted touch action computed by the
+  // compositor.
+  UMA_HISTOGRAM_BOOLEAN("TouchAction.EquivalentEffectiveAndWhiteListed",
+                        allowed_touch_action_ == white_listed_touch_action_);
+  ResetTouchAction();
 }
 
 void TouchActionFilter::ResetTouchAction() {
