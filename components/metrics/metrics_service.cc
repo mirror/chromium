@@ -152,10 +152,12 @@
 #include "components/metrics/metrics_rotation_scheduler.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/metrics_state_manager.h"
+#include "components/metrics/proto/system_profile.pb.h"
 #include "components/metrics/stability_metrics_provider.h"
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/variations/active_field_trials.h"
 #include "components/variations/entropy_provider.h"
 
 namespace metrics {

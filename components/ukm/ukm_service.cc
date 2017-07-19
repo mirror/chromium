@@ -25,6 +25,7 @@
 #include "components/ukm/persisted_logs_metrics_impl.h"
 #include "components/ukm/ukm_pref_names.h"
 #include "components/ukm/ukm_rotation_scheduler.h"
+#include "components/variations/active_field_trials.h"
 
 namespace ukm {
 
@@ -33,6 +34,9 @@ namespace {
 // The delay, in seconds, after starting recording before doing expensive
 // initialization work.
 constexpr int kInitializationDelaySeconds = 5;
+
+// Suffix added to field trials before uploading hashes.
+constexpr char kFieldTrialSuffix[] = "UKM";
 
 // True if we should record session ids in the UKM Report proto.
 bool ShouldRecordSessionId() {
@@ -252,6 +256,7 @@ void UkmService::BuildAndStoreLog() {
 
   metrics::MetricsLog::RecordCoreSystemProfile(client_,
                                                report.mutable_system_profile());
+  WriteFieldTrials(report.mutable_system_profile());
 
   for (auto& provider : metrics_providers_) {
     provider->ProvideSystemProfileMetrics(report.mutable_system_profile());
@@ -260,6 +265,21 @@ void UkmService::BuildAndStoreLog() {
   std::string serialized_log;
   report.SerializeToString(&serialized_log);
   reporting_service_.ukm_log_store()->StoreLog(serialized_log);
+}
+
+void UkmService::WriteFieldTrials(metrics::SystemProfileProto* system_profile) {
+  std::vector<variations::ActiveGroupId> field_trial_ids;
+  GetFieldTrialIds(&field_trial_ids);
+  for (auto it = field_trial_ids.begin(); it != field_trial_ids.end(); ++it) {
+    metrics::SystemProfileProto::FieldTrial* field_trial =
+        system_profile->add_field_trial();
+    field_trial->set_name_id(it->name);
+    field_trial->set_group_id(it->group);
+  }
+}
+void UkmService::GetFieldTrialIds(
+    std::vector<variations::ActiveGroupId>* field_trial_ids) const {
+  variations::GetFieldTrialActiveGroupIds(kFieldTrialSuffix, field_trial_ids);
 }
 
 }  // namespace ukm

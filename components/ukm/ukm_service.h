@@ -17,6 +17,7 @@
 #include "components/metrics/metrics_rotation_scheduler.h"
 #include "components/ukm/ukm_recorder_impl.h"
 #include "components/ukm/ukm_reporting_service.h"
+#include "components/variations/active_field_trials.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -74,6 +75,11 @@ class UkmService : public UkmRecorderImpl {
   // the provided PrefRegistry.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
+  // Fills |field_trial_ids| with the list of initialized field trials name and
+  // group ids.
+  virtual void GetFieldTrialIds(
+      std::vector<variations::ActiveGroupId>* field_trial_ids) const;
+
  private:
   friend ::ukm::debug::DebugPage;
   friend ::metrics::UkmBrowserTest;
@@ -105,6 +111,9 @@ class UkmService : public UkmRecorderImpl {
 
   // Called by log_uploader_ when the an upload is completed.
   void OnLogUploadComplete(int response_code);
+
+  // Writes field trial information to input |system_profile|.
+  void WriteFieldTrials(metrics::SystemProfileProto* system_profile);
 
   // A weak pointer to the PrefService used to read and write preferences.
   PrefService* pref_service_;

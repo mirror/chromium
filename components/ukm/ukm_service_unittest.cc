@@ -48,6 +48,10 @@ class TestRecordingHelper {
 
 namespace {
 
+const variations::ActiveGroupId kFieldTrialIds[] = {{37, 43},
+                                                    {13, 47},
+                                                    {23, 17}};
+
 // TODO(rkaplow): consider making this a generic testing class in
 // components/variations.
 class ScopedUkmFeatureParams {
@@ -144,6 +148,24 @@ class UkmServiceTest : public testing::Test {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(UkmServiceTest);
+};
+
+class TestUkmService : public UkmService {
+ public:
+  TestUkmService(PrefService* pref_service,
+                 metrics::MetricsServiceClient* client)
+      : UkmService(pref_service, client){};
+
+ private:
+  void GetFieldTrialIds(
+      std::vector<variations::ActiveGroupId>* field_trial_ids) const override {
+    ASSERT_TRUE(field_trial_ids->empty());
+
+    for (size_t i = 0; i < arraysize(kFieldTrialIds); ++i) {
+      field_trial_ids->push_back(kFieldTrialIds[i]);
+    }
+  }
+  DISALLOW_COPY_AND_ASSIGN(TestUkmService);
 };
 
 }  // namespace
@@ -582,6 +604,34 @@ TEST_F(UkmServiceTest, SourceURLLength) {
   ASSERT_EQ(1, proto_report.sources_size());
   const Source& proto_source = proto_report.sources(0);
   EXPECT_EQ("URLTooLong", proto_source.url());
+}
+
+TEST_F(UkmServiceTest, TestWriteFieldTrials) {
+  TestUkmService service(&prefs_, &client_);
+  TestRecordingHelper recorder(&service);
+  EXPECT_EQ(GetPersistedLogCount(), 0);
+  service.Initialize();
+  task_runner_->RunUntilIdle();
+  service.EnableRecording();
+  service.EnableReporting();
+
+  ukm::SourceId id = UkmRecorder::GetNewSourceID();
+  recorder.UpdateSourceURL(id, GURL("https://google.com"));
+
+  service.Flush();
+  EXPECT_EQ(GetPersistedLogCount(), 1);
+
+  Report proto_report = GetPersistedReport();
+  ASSERT_EQ(
+      arraysize(kFieldTrialIds),
+      static_cast<size_t>(proto_report.system_profile().field_trial_size()));
+
+  for (size_t i = 0; i < arraysize(kFieldTrialIds); ++i) {
+    const metrics::SystemProfileProto::FieldTrial& field_trial =
+        proto_report.system_profile().field_trial(i);
+    EXPECT_EQ(kFieldTrialIds[i].name, field_trial.name_id());
+    EXPECT_EQ(kFieldTrialIds[i].group, field_trial.group_id());
+  }
 }
 
 }  // namespace ukm
