@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfdbe020_70c8f29d",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-19T15:34:52Z",
+      "side": 1,
+      "message": "nit: this is a renderer-initiated...",
+      "revId": "03b63f2329c2654c38ac56fb15cfa46b08109834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
