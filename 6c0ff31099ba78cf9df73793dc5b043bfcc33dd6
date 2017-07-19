@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "04b7fac9_d1edb63a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "That makes sense, thanks for the explanation.",
+      "parentUuid": "a7671310_d6dd0c52",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87a414eb_b4d84f55",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
         "patchSetId": 12
@@ -430,6 +454,24 @@
       "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95446afc_b39e838a",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bcc312f_4a6c14e3",
+      "revId": "6c0ff31099ba78cf9df73793dc5b043bfcc33dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

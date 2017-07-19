@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cb983fc_d3c1754a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/passwordcredential-fetch-registrabledomain.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "These changes are required now that [SecureContext] is correctly removing constructors for affected interfaces. PasswordCredential has [SecureContext] on the interface:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/credentialmanager/PasswordCredential.idl\n\nThis test started failing with this CL, so I changed it to run under https.",
+      "parentUuid": "bd43017a_96b2a51e",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b14f241f_28abece9",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ecfac52c_ccde498c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Done. Put into anonymous namespace.",
+      "parentUuid": "b14f241f_28abece9",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089050eb_c2d5de9b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T17:00:22Z",
       "side": 1,
       "message": "Just to confirm: This is no-op since [SecureContext] is not yet supported in workers, right?",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a32900_ef7216ac",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Yes, this is a no-op, but because [SecureContext] is not currently applied to any interfaces that are exposed to workers. See https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/quota/StorageManager.idl?rcl\u003db282b9d66bcee93439bf6366ddea0cafa4bc63b2\u0026l\u003d7 for an example of where [SecureContext] may be applied. For local testing, I added [SecureContext] to StorageManager.idl, and this call is then required to setup bindings correctly.",
+      "parentUuid": "089050eb_c2d5de9b",
       "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d29cd6eb_f2c1c319",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/ConditionalFeaturesForModules.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Done. Put into anonymous namespace.",
+      "parentUuid": "ae60f0d5_aecff600",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c33dfc_26044b35",
         "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.cpp",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4f5980_63949a7b",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Only the Window object needs the additional call to InstallConditionalFeatures(), so the separate function was to make that explicit. That could of been handled with a boolean condition in *OnGlobal. After discussion offline with iclelland@, we decided that it didn\u0027t make much sense to combine the two calls in *OnWindow, because they happen for very different reasons. In the end, I removed *OnWindow, and moved the two calls into LocalWindowProxy.cpp.",
+      "parentUuid": "46c33dfc_26044b35",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "877f8bd8_2fb19fc5",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "As in previous comment, *OnWindow has been removed.",
+      "parentUuid": "10786e10_5fc33200",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b6369d_5c442abf",
         "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1344068a_450cc23e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ConditionalFeatures.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-19T04:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b6369d_5c442abf",
+      "revId": "6e0d23c85d5282fcfc8c0b31842e514d36303cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
