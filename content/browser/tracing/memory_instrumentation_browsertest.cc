@@ -60,9 +60,10 @@ GlobalMemoryDumpPtr DoGlobalDump() {
   return result;
 }
 
-// ASAN and TSAN fake some sys calls we need meaning we never get dumps for the
+// *SAN fake some sys calls we need meaning we never get dumps for the
 // processes.
-#if defined(ADDRESS_SANITIZER) || defined(THREAD_SANITIZER)
+#if defined(MEMORY_SANITIZER) || defined(ADDRESS_SANITIZER) || \
+    defined(THREAD_SANITIZER)
 #define MAYBE_PrivateFootprintComputation DISABLED_PrivateFootprintComputation
 #else
 #define MAYBE_PrivateFootprintComputation PrivateFootprintComputatio
