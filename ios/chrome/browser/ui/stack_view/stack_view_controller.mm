@@ -21,8 +21,11 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/feature_engagement_tracker/public/event_constants.h"
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/experimental_flags.h"
+#include "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
@@ -2713,6 +2716,26 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   // Ensure that the right mode is showing.
   if ([self isCurrentSetIncognito] != command.incognito)
     [self setActiveCardSet:[self inactiveCardSet]];
+
+  if (command.recordEngagement) {
+    if (command.incognito) {
+      // Send the "Incognito Tab Opened" event to the FeatureEngagementTracker
+      // when the user opens an incognito tab from the tab switcher or from the
+      // tools menu while the tab switcher is visible.
+      FeatureEngagementTrackerFactory::GetForBrowserState(
+          _activeCardSet.tabModel.browserState)
+          ->NotifyEvent(
+              feature_engagement_tracker::events::kIncognitoTabOpened);
+    } else {
+      // Send the "New Tab Opened" event to the FeatureEngagementTracker when
+      // the user opens a new tab from the tab switcher or from the tools menu
+      // while the tab switcher is visible.
+      FeatureEngagementTrackerFactory::GetForBrowserState(
+          _activeCardSet.tabModel.browserState)
+          ->NotifyEvent(feature_engagement_tracker::events::kNewTabOpened);
+    }
+  }
+
   [self setLastTapPoint:command];
   [self dismissWithNewTabAnimation:GURL(kChromeUINewTabURL)
                            atIndex:NSNotFound
