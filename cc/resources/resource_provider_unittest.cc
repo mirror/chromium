@@ -512,10 +512,9 @@ class ResourceProviderTest
       EXPECT_TRUE(sync_token->HasData());
 
       std::unique_ptr<viz::SharedBitmap> shared_bitmap;
-      std::unique_ptr<SingleReleaseCallbackImpl> callback =
-          SingleReleaseCallbackImpl::Create(base::Bind(
-              ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
-              release_called, release_sync_token, lost_resource));
+      SingleReleaseCallbackImpl callback = base::BindOnce(
+          ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
+          release_called, release_sync_token, lost_resource);
       return child_resource_provider_->CreateResourceFromTextureMailbox(
           viz::TextureMailbox(gpu_mailbox, *sync_token, GL_TEXTURE_2D),
           std::move(callback));
@@ -525,10 +524,9 @@ class ResourceProviderTest
           CreateAndFillSharedBitmap(shared_bitmap_manager_.get(), size, 0));
 
       viz::SharedBitmap* shared_bitmap_ptr = shared_bitmap.get();
-      std::unique_ptr<SingleReleaseCallbackImpl> callback =
-          SingleReleaseCallbackImpl::Create(base::Bind(
-              ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
-              release_called, release_sync_token, lost_resource));
+      SingleReleaseCallbackImpl callback = base::BindOnce(
+          ReleaseSharedBitmapCallback, base::Passed(&shared_bitmap),
+          release_called, release_sync_token, lost_resource);
       return child_resource_provider_->CreateResourceFromTextureMailbox(
           viz::TextureMailbox(shared_bitmap_ptr, size), std::move(callback));
     }
@@ -662,8 +660,7 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
                                   GL_TEXTURE_EXTERNAL_OES);
   id4_mailbox.set_color_space(color_space4);
   ResourceId id4 = child_resource_provider_->CreateResourceFromTextureMailbox(
-      id4_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback)));
+      id4_mailbox, base::BindOnce(&EmptyReleaseCallback));
 
   std::vector<ReturnedResource> returned_to_child;
   int child_id =
@@ -914,8 +911,7 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
   id1_mailbox.set_is_overlay_candidate(true);
   id1_mailbox.set_is_backed_by_surface_texture(true);
   ResourceId id1 = child_resource_provider_->CreateResourceFromTextureMailbox(
-      id1_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback)));
+      id1_mailbox, base::BindOnce(&EmptyReleaseCallback));
 
   viz::TextureMailbox id2_mailbox(external_mailbox, external_sync_token,
                                   GL_TEXTURE_EXTERNAL_OES);
@@ -923,8 +919,7 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
   id2_mailbox.set_is_overlay_candidate(true);
   id2_mailbox.set_is_backed_by_surface_texture(false);
   ResourceId id2 = child_resource_provider_->CreateResourceFromTextureMailbox(
-      id2_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback)));
+      id2_mailbox, base::BindOnce(&EmptyReleaseCallback));
 
   std::vector<ReturnedResource> returned_to_child;
   int child_id =
@@ -1031,7 +1026,7 @@ TEST_P(ResourceProviderTestNoSyncToken, TransferGLResources) {
   ResourceId id3 = child_resource_provider_->CreateResourceFromTextureMailbox(
       viz::TextureMailbox(external_mailbox, external_sync_token,
                           GL_TEXTURE_EXTERNAL_OES),
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback)));
+      base::BindOnce(&EmptyReleaseCallback));
 
   std::vector<ReturnedResource> returned_to_child;
   int child_id =
@@ -1426,8 +1421,8 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
   viz::SharedBitmap* shared_bitmap_ptr = shared_bitmap.get();
   ResourceId id3 = child_resource_provider_->CreateResourceFromTextureMailbox(
       viz::TextureMailbox(shared_bitmap_ptr, gfx::Size(1, 1)),
-      SingleReleaseCallbackImpl::Create(base::Bind(
-          &SharedBitmapReleaseCallback, base::Passed(&shared_bitmap))));
+      base::BindOnce(&SharedBitmapReleaseCallback,
+                     base::Passed(&shared_bitmap)));
 
   std::vector<ReturnedResource> returned_to_child;
   int child_id =
@@ -2295,8 +2290,7 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
       base::Bind(ReleaseCallback, &release_sync_token, &lost_resource,
                  &main_thread_task_runner);
   ResourceId resource = resource_provider_->CreateResourceFromTextureMailbox(
-      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
-      SingleReleaseCallbackImpl::Create(callback));
+      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D), callback);
   EXPECT_EQ(1u, context()->NumTextures());
   EXPECT_FALSE(release_sync_token.HasData());
   {
@@ -2349,8 +2343,7 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
   EXPECT_LT(0u, sync_token.release_count());
   release_sync_token.Clear();
   resource = resource_provider_->CreateResourceFromTextureMailbox(
-      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
-      SingleReleaseCallbackImpl::Create(callback));
+      viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D), callback);
   EXPECT_EQ(1u, context()->NumTextures());
   EXPECT_FALSE(release_sync_token.HasData());
   {
@@ -2722,10 +2715,9 @@ TEST_P(ResourceProviderTest, LostContext) {
   gpu::SyncToken release_sync_token;
   bool lost_resource = false;
   BlockingTaskRunner* main_thread_task_runner = nullptr;
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(
-          base::Bind(ReleaseCallback, &release_sync_token, &lost_resource,
-                     &main_thread_task_runner));
+  SingleReleaseCallbackImpl callback =
+      base::BindOnce(&ReleaseCallback, &release_sync_token, &lost_resource,
+                     &main_thread_task_runner);
   resource_provider_->CreateResourceFromTextureMailbox(
       viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
       std::move(callback));
@@ -2984,10 +2976,9 @@ TEST_P(ResourceProviderTest, TextureMailbox_SharedMemory) {
   gpu::SyncToken release_sync_token;
   bool lost_resource = false;
   BlockingTaskRunner* main_thread_task_runner = nullptr;
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(
-          base::Bind(&ReleaseCallback, &release_sync_token, &lost_resource,
-                     &main_thread_task_runner));
+  SingleReleaseCallbackImpl callback =
+      base::BindOnce(&ReleaseCallback, &release_sync_token, &lost_resource,
+                     &main_thread_task_runner);
   viz::TextureMailbox mailbox(shared_bitmap.get(), size);
 
   ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
@@ -3047,10 +3038,9 @@ class ResourceProviderTestTextureMailboxGLFilters
     gpu::SyncToken release_sync_token;
     bool lost_resource = false;
     BlockingTaskRunner* mailbox_task_runner = nullptr;
-    std::unique_ptr<SingleReleaseCallbackImpl> callback =
-        SingleReleaseCallbackImpl::Create(
-            base::Bind(&ReleaseCallback, &release_sync_token, &lost_resource,
-                       &mailbox_task_runner));
+    SingleReleaseCallbackImpl callback =
+        base::BindOnce(&ReleaseCallback, &release_sync_token, &lost_resource,
+                       &mailbox_task_runner);
 
     viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
     mailbox.set_nearest_neighbor(mailbox_nearest_neighbor);
@@ -3186,8 +3176,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
 
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback));
+  SingleReleaseCallbackImpl callback = base::BindOnce(&EmptyReleaseCallback);
 
   viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
 
@@ -3255,8 +3244,7 @@ TEST_P(ResourceProviderTest,
 
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback));
+  SingleReleaseCallbackImpl callback = base::BindOnce(&EmptyReleaseCallback);
 
   viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
 
@@ -3309,8 +3297,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_WaitSyncTokenIfNeeded_NoSyncToken) {
 
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback));
+  SingleReleaseCallbackImpl callback = base::BindOnce(&EmptyReleaseCallback);
 
   viz::TextureMailbox mailbox(gpu_mailbox, sync_token, target);
 
@@ -3355,8 +3342,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_PrepareSendToParent_NoSyncToken) {
   viz::TextureMailbox mailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                               GL_TEXTURE_2D);
 
-  std::unique_ptr<SingleReleaseCallbackImpl> callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&EmptyReleaseCallback));
+  SingleReleaseCallbackImpl callback = base::BindOnce(&EmptyReleaseCallback);
 
   ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(callback));

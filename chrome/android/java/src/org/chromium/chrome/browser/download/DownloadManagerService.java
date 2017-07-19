@@ -737,9 +737,8 @@ public class DownloadManagerService
      * @return the intent to launch for the given download item.
      */
     @Nullable
-    static Intent getLaunchIntentFromDownloadId(
-            Context context, @Nullable String filePath, long downloadId,
-            boolean isSupportedMimeType, String originalUrl, String referrer) {
+    static Intent getLaunchIntentFromDownloadId(Context context, @Nullable String filePath,
+            long downloadId, boolean isSupportedMimeType, String originalUrl, String referrer) {
         assert !ThreadUtils.runningOnUiThread();
         Uri contentUri = filePath == null
                 ? DownloadManagerDelegate.getContentUriFromDownloadManager(context, downloadId)
@@ -771,9 +770,9 @@ public class DownloadManagerService
     static boolean canResolveDownloadItem(Context context, DownloadItem download,
             boolean isSupportedMimeType) {
         assert !ThreadUtils.runningOnUiThread();
-        Intent intent = getLaunchIntentFromDownloadId(
-                context, download.getDownloadInfo().getFilePath(),
-                download.getSystemDownloadId(), isSupportedMimeType, null, null);
+        Intent intent =
+                getLaunchIntentFromDownloadId(context, download.getDownloadInfo().getFilePath(),
+                        download.getSystemDownloadId(), isSupportedMimeType, null, null);
         return (intent == null)
                 ? false : ExternalNavigationDelegateImpl.resolveIntent(intent, true);
     }

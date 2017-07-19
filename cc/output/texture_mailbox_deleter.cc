@@ -10,7 +10,7 @@
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
-#include "cc/resources/single_release_callback.h"
+#include "cc/resources/release_callback.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/sync_token.h"
@@ -31,12 +31,13 @@ static void DeleteTextureOnImplThread(
 
 static void PostTaskFromMainToImplThread(
     scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner,
-    ReleaseCallback run_impl_callback,
+    SingleReleaseCallback run_impl_callback,
     const gpu::SyncToken& sync_token,
     bool is_lost) {
   // This posts the task to RunDeleteTextureOnImplThread().
   impl_task_runner->PostTask(
-      FROM_HERE, base::BindOnce(run_impl_callback, sync_token, is_lost));
+      FROM_HERE,
+      base::BindOnce(std::move(run_impl_callback), sync_token, is_lost));
 }
 
 TextureMailboxDeleter::TextureMailboxDeleter(
@@ -44,57 +45,43 @@ TextureMailboxDeleter::TextureMailboxDeleter(
     : impl_task_runner_(std::move(task_runner)), weak_ptr_factory_(this) {}
 
 TextureMailboxDeleter::~TextureMailboxDeleter() {
-  for (size_t i = 0; i < impl_callbacks_.size(); ++i)
-    impl_callbacks_.at(i)->Run(gpu::SyncToken(), true);
+  auto impl_callbacks = std::move(impl_callbacks_);
+  for (auto& item : impl_callbacks_)
+    std::move(item.second).Run(gpu::SyncToken(), true);
 }
 
-std::unique_ptr<SingleReleaseCallback>
-TextureMailboxDeleter::GetReleaseCallback(
+SingleReleaseCallback TextureMailboxDeleter::GetReleaseCallback(
     scoped_refptr<viz::ContextProvider> context_provider,
     unsigned texture_id) {
   // This callback owns the |context_provider|. It must be destroyed on the impl
   // thread. Upon destruction of this class, the callback must immediately be
   // destroyed.
-  std::unique_ptr<SingleReleaseCallback> impl_callback =
-      SingleReleaseCallback::Create(base::Bind(
-          &DeleteTextureOnImplThread, std::move(context_provider), texture_id));
+  SingleReleaseCallback impl_callback = base::BindOnce(
+      &DeleteTextureOnImplThread, std::move(context_provider), texture_id);
 
-  impl_callbacks_.push_back(std::move(impl_callback));
+  int32_t id = next_id_++;
+  impl_callbacks_.insert(std::make_pair(id, std::move(impl_callback)));
 
-  // The raw pointer to the impl-side callback is valid as long as this
-  // class is alive. So we guard it with a WeakPtr.
-  ReleaseCallback run_impl_callback(
-      base::Bind(&TextureMailboxDeleter::RunDeleteTextureOnImplThread,
-                 weak_ptr_factory_.GetWeakPtr(), impl_callbacks_.back().get()));
+  SingleReleaseCallback run_impl_callback =
+      base::BindOnce(&TextureMailboxDeleter::RunDeleteTextureOnImplThread,
+                     weak_ptr_factory_.GetWeakPtr(), id);
 
   // Provide a callback for the main thread that posts back to the impl
   // thread.
-  std::unique_ptr<SingleReleaseCallback> main_callback;
-  if (impl_task_runner_) {
-    main_callback = SingleReleaseCallback::Create(base::Bind(
-        &PostTaskFromMainToImplThread, impl_task_runner_, run_impl_callback));
-  } else {
-    main_callback = SingleReleaseCallback::Create(run_impl_callback);
-  }
-
-  return main_callback;
+  if (!impl_task_runner_)
+    return run_impl_callback;
+  return base::BindOnce(&PostTaskFromMainToImplThread, impl_task_runner_,
+                        std::move(run_impl_callback));
 }
 
 void TextureMailboxDeleter::RunDeleteTextureOnImplThread(
-    SingleReleaseCallback* impl_callback,
+    int32_t id,
     const gpu::SyncToken& sync_token,
     bool is_lost) {
-  for (size_t i = 0; i < impl_callbacks_.size(); ++i) {
-    if (impl_callbacks_[i].get() == impl_callback) {
-      // Run the callback, then destroy it here on the impl thread.
-      impl_callbacks_[i]->Run(sync_token, is_lost);
-      impl_callbacks_.erase(impl_callbacks_.begin() + i);
-      return;
-    }
-  }
-
-  NOTREACHED() << "The Callback returned by GetDeleteCallback() was called "
-               << "more than once.";
+  auto found = impl_callbacks_.find(id);
+  auto impl_callback = std::move(found->second);
+  impl_callbacks_.erase(found);
+  std::move(impl_callback).Run(sync_token, is_lost);
 }
 
 }  // namespace cc

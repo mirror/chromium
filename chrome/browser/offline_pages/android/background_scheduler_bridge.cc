@@ -25,8 +25,8 @@ namespace android {
 namespace {
 
 // C++ callback that delegates to Java callback.
-void ProcessingDoneCallback(
-    const ScopedJavaGlobalRef<jobject>& j_callback_obj, bool result) {
+void ProcessingDoneCallback(const ScopedJavaGlobalRef<jobject>& j_callback_obj,
+                            bool result) {
   base::android::RunCallbackAndroid(j_callback_obj, result);
 }
 
@@ -47,8 +47,7 @@ static jboolean StartScheduledProcessing(
   // StartScheduledProcessing on it with bound j_callback_obj.
   Profile* profile = ProfileManager::GetLastUsedProfile();
   RequestCoordinator* coordinator =
-      RequestCoordinatorFactory::GetInstance()->
-      GetForBrowserContext(profile);
+      RequestCoordinatorFactory::GetInstance()->GetForBrowserContext(profile);
   DVLOG(2) << "resource_coordinator: " << coordinator;
   DeviceConditions device_conditions(
       j_power_connected, j_battery_percentage,
@@ -86,14 +85,15 @@ void BackgroundSchedulerBridge::Schedule(
 }
 
 void BackgroundSchedulerBridge::BackupSchedule(
-    const TriggerConditions& trigger_conditions, long delay_in_seconds) {
+    const TriggerConditions& trigger_conditions,
+    long delay_in_seconds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jobject> j_conditions =
       CreateTriggerConditions(env, trigger_conditions.require_power_connected,
                               trigger_conditions.minimum_battery_percentage,
                               trigger_conditions.require_unmetered_network);
-  Java_BackgroundSchedulerBridge_backupSchedule(
-      env, j_conditions, delay_in_seconds);
+  Java_BackgroundSchedulerBridge_backupSchedule(env, j_conditions,
+                                                delay_in_seconds);
 }
 
 void BackgroundSchedulerBridge::Unschedule() {

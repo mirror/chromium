@@ -43,7 +43,6 @@ namespace offline_pages {
 //   }
 class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
  public:
-
   explicit OfflinePageMHTMLArchiver(content::WebContents* web_contents);
   ~OfflinePageMHTMLArchiver() override;
 

@@ -290,8 +290,8 @@ public class DownloadUtils {
      * @param referrer Referrer of the downloaded file.
      * @return Intent that can be used to start an Activity for the file.
      */
-    public static Intent createViewIntentForDownloadItem(Uri fileUri, String mimeType,
-            String originalUrl, String referrer) {
+    public static Intent createViewIntentForDownloadItem(
+            Uri fileUri, String mimeType, String originalUrl, String referrer) {
         Intent fileIntent = new Intent(Intent.ACTION_VIEW);
         String normalizedMimeType = Intent.normalizeMimeType(mimeType);
         if (TextUtils.isEmpty(normalizedMimeType)) {
@@ -533,9 +533,8 @@ public class DownloadUtils {
      * @param referrer Referrer of the downloaded file.
      * @return whether the file could successfully be opened.
      */
-    public static boolean openFile(
-            File file, String mimeType, String downloadGuid, boolean isOffTheRecord,
-            String originalUrl, String referrer) {
+    public static boolean openFile(File file, String mimeType, String downloadGuid,
+            boolean isOffTheRecord, String originalUrl, String referrer) {
         Context context = ContextUtils.getApplicationContext();
         DownloadManagerService service = DownloadManagerService.getDownloadManagerService();
 
@@ -560,8 +559,8 @@ public class DownloadUtils {
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             Uri uri = ApiCompatibilityUtils.getUriForDownloadedFile(file);
             StrictMode.setThreadPolicy(oldPolicy);
-            Intent viewIntent = createViewIntentForDownloadItem(
-                    uri, mimeType, originalUrl, referrer);
+            Intent viewIntent =
+                    createViewIntentForDownloadItem(uri, mimeType, originalUrl, referrer);
             context.startActivity(viewIntent);
             service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;

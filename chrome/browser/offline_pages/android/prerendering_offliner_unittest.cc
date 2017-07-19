@@ -272,8 +272,8 @@ void PrerenderingOfflinerTest::OnCancel(const SavePageRequest& request) {
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSaveBadUrl) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kFileUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kFileUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_FALSE(offliner()->LoadAndSave(request, completion_callback(),
                                        progress_callback()));
   EXPECT_TRUE(loader()->IsIdle());
@@ -281,8 +281,8 @@ TEST_F(PrerenderingOfflinerTest, LoadAndSaveBadUrl) {
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSavePrerenderingDisabled) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   loader()->DisablePrerendering();
   EXPECT_FALSE(offliner()->LoadAndSave(request, completion_callback(),
                                        progress_callback()));
@@ -317,8 +317,8 @@ TEST_F(PrerenderingOfflinerTest,
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSaveLoadStartedButFails) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -334,8 +334,8 @@ TEST_F(PrerenderingOfflinerTest, LoadAndSaveLoadStartedButFails) {
 
 TEST_F(PrerenderingOfflinerTest, CancelWhenLoading) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -360,8 +360,8 @@ TEST_F(PrerenderingOfflinerTest, PropagatesRequestOrigin) {
 
 TEST_F(PrerenderingOfflinerTest, CancelWhenLoaded) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -391,8 +391,8 @@ TEST_F(PrerenderingOfflinerTest, CancelWhenLoaded) {
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSaveLoadedButSaveFails) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -414,8 +414,8 @@ TEST_F(PrerenderingOfflinerTest, LoadAndSaveLoadedButSaveFails) {
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSaveSuccessful) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -460,8 +460,8 @@ TEST_F(PrerenderingOfflinerTest, LoadAndSavePageAlreadyExists) {
 
 TEST_F(PrerenderingOfflinerTest, LoadAndSaveLoadedButThenCanceledFromLoader) {
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   EXPECT_FALSE(loader()->IsIdle());
@@ -486,8 +486,8 @@ TEST_F(PrerenderingOfflinerTest, ForegroundTransitionCancelsOnLowEndDevice) {
   offliner()->SetLowEndDeviceForTesting(true);
 
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   // LoadAndSave completes asynchronously, and notifies us via the
   // completion_callback() when it completes.
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
@@ -509,8 +509,8 @@ TEST_F(PrerenderingOfflinerTest, ForegroundTransitionIgnoredOnHighEndDevice) {
   offliner()->SetLowEndDeviceForTesting(false);
 
   base::Time creation_time = base::Time::Now();
-  SavePageRequest request(
-      kRequestId, kHttpUrl, kClientId, creation_time, kUserRequested);
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
   // LoadAndSave completes asynchronously, and notifies us via the
   // completion_callback() when it completes.
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),

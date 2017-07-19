@@ -86,10 +86,9 @@ class CC_EXPORT CopyOutputRequest {
 
   void SendEmptyResult();
   void SendBitmapResult(std::unique_ptr<SkBitmap> bitmap);
-  void SendTextureResult(
-      const gfx::Size& size,
-      const viz::TextureMailbox& texture_mailbox,
-      std::unique_ptr<SingleReleaseCallback> release_callback);
+  void SendTextureResult(const gfx::Size& size,
+                         const viz::TextureMailbox& texture_mailbox,
+                         SingleReleaseCallback release_callback);
 
   void SendResult(std::unique_ptr<CopyOutputResult> result);
 
