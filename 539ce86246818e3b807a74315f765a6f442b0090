@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04234047_3462010d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T10:37:52Z",
+      "side": 1,
+      "message": "I\u0027m not fully sure why are we replacing FromContext with this Create method, in the new code we call DocumentInit::Create() many place with two nullptr params, which doesn\u0027t feel it really improves readability?",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652cacef_789ab6d2",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T10:37:52Z",
+      "side": 1,
+      "message": "Could we maybe call this in InstallNewDocument?",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b144458_38a52953",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T10:37:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
