@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "00b354a9_27ee35f6",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T08:43:48Z",
+      "side": 1,
+      "message": "Yup, thanks.",
+      "parentUuid": "aa090499_ef5d54b2",
+      "revId": "15a7a64cdae03dc1d0a629edb3e7f488f0505271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc74080_baca26f3",
         "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
         "patchSetId": 6
