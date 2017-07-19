@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5f0d000_2b0aa686",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-19T16:12:30Z",
+      "side": 1,
+      "message": "Yes, I meant to assert, thanks!\nI can\u0027t move it though as isRunningOnLauncherThread() needs mLauncherHandler set.",
+      "parentUuid": "daca1d3d_2b3617d8",
+      "revId": "2db4b9f2b2700ea242eb6e5e1456d048ad108667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e375ee03_fa14fd22",
         "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-19T05:50:39Z",
       "side": 1,
       "message": "Could you just use -1 with a nice constant name or some other incorrect value here?\nFirst few times I read this I totally misread this and was wondering why on earth the intValue had to be incremented by 1 :-/ I know it\u0027s my bad, but... oh well..",
+      "range": {
+        "startLine": 188,
+        "startChar": 62,
+        "endLine": 188,
+        "endChar": 74
+      },
+      "revId": "2db4b9f2b2700ea242eb6e5e1456d048ad108667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d69236_9fd0c5c2",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-19T16:12:30Z",
+      "side": 1,
+      "message": "It\u0027s not you, it\u0027s me :-)\nI realized writing this code this was confusing. Now using another constant.",
+      "parentUuid": "e375ee03_fa14fd22",
       "range": {
         "startLine": 188,
         "startChar": 62,
