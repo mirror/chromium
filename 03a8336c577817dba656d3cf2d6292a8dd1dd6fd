@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "de71d998_a1f22156",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "Done\n\nThat\u0027s a mistake, it should be 1s.",
+      "parentUuid": "11d86e13_f14ded63",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77bdcc68_fcbec3a2",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b36202_6ac3c381",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bdcc68_fcbec3a2",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "6c82dbce_035e9df1",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d128948_b5e5a28f",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e723446c_eaa22685",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 3
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "c6a7728b_ca043945",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e723446c_eaa22685",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f24685fe_f2c61200",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 3
@@ -98,6 +170,24 @@
       "writtenOn": "2017-07-18T22:33:11Z",
       "side": 1,
       "message": "I don\u0027t quite understand what is recorded here.\n\nIs it recording how long it takes to start playing audio after a tab becomes background? Why is this interesting? And why do we have this one minute threshold?",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3df629_d66e02fd",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "I added the comment above to explain what is recorded, and added the comment for the macro about why we want to record this UMA in general. I already have a comment explaining why one minute is used here.",
+      "parentUuid": "f24685fe_f2c61200",
       "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "360fff78_daec7e60",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7982f9_dcbf130d",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5926f344_1b9497d6",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 3
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "472a941a_18b64c21",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "No, I don\u0027t want to add the overhead of maintaining a set even if it\u0027s small. It\u0027s not worth it for such small code.",
+      "parentUuid": "5926f344_1b9497d6",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1ec9c8_838e6f64",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
@@ -149,6 +275,30 @@
       "writtenOn": "2017-07-18T22:43:53Z",
       "side": 1,
       "message": "One question of visibility here. Do we always get visibility signal once a tab is created? That is, we can always trust the visibility property being set here?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a24094_302d65ac",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T00:05:51Z",
+      "side": 1,
+      "message": "We get signal from WasShown and WasHidden. So I think yes.",
+      "parentUuid": "df1ec9c8_838e6f64",
       "range": {
         "startLine": 40,
         "startChar": 2,
