@@ -33,8 +33,9 @@ class MostVisitedSitesObserverBridge : public MostVisitedSites::Observer {
   MostVisitedSitesObserverBridge(id<MostVisitedSitesObserving> observer);
   ~MostVisitedSitesObserverBridge() override;
 
-  void OnMostVisitedURLsAvailable(const NTPTilesVector& most_visited) override;
   void OnIconMadeAvailable(const GURL& site_url) override;
+  void OnExplorationTilesAvailable(
+      const std::map<SectionType, NTPTilesVector>& sections) override;
 
  private:
   base::WeakNSProtocol<id<MostVisitedSitesObserving>> observer_;

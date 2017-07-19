@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -24,6 +25,7 @@
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #include "components/ntp_tiles/popular_sites.h"
+#include "components/ntp_tiles/section_type.h"
 #include "components/ntp_tiles/tile_source.h"
 #include "components/suggestions/proto/suggestions.pb.h"
 #include "components/suggestions/suggestions_service.h"
@@ -85,8 +87,9 @@ class MostVisitedSites : public history::TopSitesObserver,
   // The observer to be notified when the list of most visited sites changes.
   class Observer {
    public:
-    virtual void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) = 0;
     virtual void OnIconMadeAvailable(const GURL& site_url) = 0;
+    virtual void OnExplorationTilesAvailable(
+        const std::map<SectionType, NTPTilesVector>& sections) = 0;
 
    protected:
     virtual ~Observer() {}
@@ -195,6 +198,7 @@ class MostVisitedSites : public history::TopSitesObserver,
 
   // Creates popular tiles whose hosts weren't used yet.
   NTPTilesVector CreatePopularSitesTiles(
+      const PopularSites::SitesVector& sites,
       const std::set<std::string>& used_hosts,
       size_t num_actual_tiles);
 
@@ -206,6 +210,8 @@ class MostVisitedSites : public history::TopSitesObserver,
   // if appropriate, and saves the new tiles. Notifies the observer if the tiles
   // were actually changed.
   void SaveTilesAndNotify(NTPTilesVector personal_tiles);
+  // If there is an observer registered, notify it for the current set of tiles.
+  void NotifyObserverForCurrentTiles();
 
   void OnPopularSitesDownloaded(bool success);
 
