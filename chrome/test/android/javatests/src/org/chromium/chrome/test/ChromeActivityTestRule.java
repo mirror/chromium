@@ -32,7 +32,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
     private String mCurrentTestName;
 
     public static final String DISABLE_NETWORK_PREDICTION_FLAG =
-            "--disable-features=NetworkPrediction";
+            "disable-features=NetworkPrediction";
 
     // ChromeActivityTestRule
     private T mSetActivity;

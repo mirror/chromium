@@ -36,7 +36,7 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         // Preconnect causes issues with the single-threaded Java test server.
-        "--disable-features=NetworkPrediction"})
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
 public class AddToHomescreenDialogTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
