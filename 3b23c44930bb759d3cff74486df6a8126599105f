@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "58e11059_c64ef039",
+        "filename": "third_party/WebKit/Source/core/html/HTMLVideoElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-19T18:32:55Z",
+      "side": 1,
+      "message": "Since this isn\u0027t a web-exposed API, could you please expose only one method (videoVisibleSize) and return IntSize? I realize it can\u0027t hold the entire unsigned range, but that shouldn\u0027t matter in practice. Please make sure there are no compiler errors when you construct it.",
+      "revId": "3b23c44930bb759d3cff74486df6a8126599105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5a9a974_8634b832",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 3
@@ -25,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "2bef068c_39853221",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5158,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-19T18:32:55Z",
+      "side": 1,
+      "message": "Actually, generating an error here sounds OK to me. It\u0027s unlikely to be hit since we require that videos that aren\u0027t ready to render already generate something like INVALID_OPERATION higher up.",
+      "parentUuid": "b5a9a974_8634b832",
+      "range": {
+        "startLine": 5158,
+        "startChar": 23,
+        "endLine": 5158,
+        "endChar": 28
+      },
+      "revId": "3b23c44930bb759d3cff74486df6a8126599105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eac95d2_1d93c59d",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
         "patchSetId": 3
@@ -36,6 +77,30 @@
       "writtenOn": "2017-07-19T14:31:04Z",
       "side": 1,
       "message": "curious: why not make this a pure virtual function as NaturalSize()?",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 9
+      },
+      "revId": "3b23c44930bb759d3cff74486df6a8126599105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5371bf84_2a0e95d6",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-19T18:32:55Z",
+      "side": 1,
+      "message": "+1, please make it pure virtual so that we see any compilation errors on WebMediaPlayer subclasses which don\u0027t implement this properly.",
+      "parentUuid": "2eac95d2_1d93c59d",
       "range": {
         "startLine": 153,
         "startChar": 2,
