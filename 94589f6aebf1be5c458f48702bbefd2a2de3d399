@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be40ad86_5ca17d94",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/inspect-headers.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T11:54:31Z",
+      "side": 1,
+      "message": "Is \u0027 and space\u0027 now not needed?",
+      "revId": "94589f6aebf1be5c458f48702bbefd2a2de3d399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
