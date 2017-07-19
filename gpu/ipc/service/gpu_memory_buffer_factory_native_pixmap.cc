@@ -160,4 +160,9 @@ unsigned GpuMemoryBufferFactoryNativePixmap::RequiredTextureType() {
   return GL_TEXTURE_2D;
 }
 
+bool GpuMemoryBufferFactoryNativePixmap::SupportsFormatRGB() {
+  // not support RGB texture bound to FBO.
+  return false;
+}
+
 }  // namespace gpu

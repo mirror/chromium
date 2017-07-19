@@ -1174,7 +1174,8 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     parameters = GpuMemoryBufferColorBufferParameters();
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
-    if (parameters.allocate_alpha_channel) {
+    if (parameters.allocate_alpha_channel ||
+        ContextProvider()->GetCapabilities().chromium_image_rgb_emulation) {
       buffer_format = gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
