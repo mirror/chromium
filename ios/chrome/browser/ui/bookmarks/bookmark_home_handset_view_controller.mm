@@ -53,11 +53,8 @@ using bookmarks::BookmarkNode;
 defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
                          model:(bookmarks::BookmarkModel*)model;
 
-// This views holds the primary content of this view controller.
-@property(nonatomic, strong) UIView* contentView;
-
 // When the view is first shown on the screen, this property represents the
-// cached value of the y of the content offset of the primary view. This
+// cached value of the y of the content offset of the folder view. This
 // property is set to nil after it is used.
 @property(nonatomic, strong) NSNumber* cachedContentPosition;
 
@@ -78,8 +75,8 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
 - (void)navigationBarToggledMenu:(id)sender;
 
 #pragma mark private methods
-// Returns the size of the primary view.
-- (CGRect)frameForPrimaryView;
+// Returns the size of the panel view.
+- (CGRect)frameForPanelView;
 // Updates the UI to reflect the given orientation, with an animation lasting
 // |duration|.
 - (void)updateUIForInterfaceOrientation:(UIInterfaceOrientation)orientation
@@ -94,7 +91,6 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
 @end
 
 @implementation BookmarkHomeHandsetViewController
-@synthesize contentView = _contentView;
 @synthesize cachedContentPosition = _cachedContentPosition;
 @synthesize delegate = _delegate;
 
@@ -145,18 +141,13 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
   DCHECK([self isViewLoaded]);
 
   self.menuView.delegate = self;
-  [self.folderView setFrame:[self frameForPrimaryView]];
 
-  [self.panelView setFrame:[self frameForPrimaryView]];
+  // Set view frames and add them to hierarchy.
+  [self.panelView setFrame:[self frameForPanelView]];
   self.panelView.delegate = self;
   [self.view insertSubview:self.panelView atIndex:0];
-
-  self.contentView = [[UIView alloc] init];
-  self.contentView.frame = self.panelView.contentView.bounds;
-  self.contentView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [self.panelView.contentView addSubview:self.contentView];
-
+  self.folderView.frame = self.panelView.contentView.bounds;
+  [self.panelView.contentView addSubview:self.folderView];
   [self.panelView.menuView addSubview:self.menuView];
 
   // Load the last primary menu item which the user had active.
@@ -173,7 +164,7 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
     // If the view has already been laid out, then immediately apply the content
     // position.
     if (self.view.window) {
-      [[self primaryView] applyContentPosition:position];
+      [self.folderView applyContentPosition:position];
     } else {
       // Otherwise, save the position to be applied once the view has been laid
       // out.
@@ -186,14 +177,10 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
                      animated:(BOOL)animated {
   [super updatePrimaryMenuItem:menuItem animated:animated];
 
-  // Disable editing on previous primary view before dismissing it. No need to
+  // Disable editing on previous folder view before dismissing it. No need to
   // animate because this view is immediately removed from hierarchy.
   if ([[self primaryMenuItem] supportsEditing])
-    [self.primaryView setEditing:NO animated:NO];
-
-  UIView* primaryView = [self primaryView];
-  [self.contentView insertSubview:primaryView atIndex:0];
-  primaryView.frame = self.contentView.bounds;
+    [self.folderView setEditing:NO animated:NO];
 
   [self updateNavigationBarAnimated:animated
                         orientation:GetInterfaceOrientation()];
@@ -333,7 +320,7 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
 
 #pragma mark - Other internal methods.
 
-- (CGRect)frameForPrimaryView {
+- (CGRect)frameForPanelView {
   CGFloat margin;
   if (self.editing)
     margin = CGRectGetMaxY(self.editingBar.frame);
@@ -346,13 +333,13 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
 
 - (void)updateUIForInterfaceOrientation:(UIInterfaceOrientation)orientation
                                duration:(NSTimeInterval)duration {
-  [[self primaryView] changeOrientation:orientation];
+  [self.folderView changeOrientation:orientation];
   [self updateNavigationBarWithDuration:duration orientation:orientation];
 }
 
 - (void)showMenuAnimated:(BOOL)animated {
   [self.menuView setScrollsToTop:YES];
-  [[self primaryView] setScrollsToTop:NO];
+  [self.folderView setScrollsToTop:NO];
   self.scrollToTop = YES;
   [self.panelView showMenuAnimated:animated];
   [self updateNavigationBarAnimated:animated
@@ -361,7 +348,7 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
 
 - (void)hideMenuAnimated:(BOOL)animated updateNavigationBar:(BOOL)update {
   [self.menuView setScrollsToTop:NO];
-  [[self primaryView] setScrollsToTop:YES];
+  [self.folderView setScrollsToTop:YES];
   self.scrollToTop = NO;
   [self.panelView hideMenuAnimated:animated];
   if (update) {
@@ -382,11 +369,11 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
     withAnimationDuration:(CGFloat)duration {
   if (showMenu) {
     [self.menuView setScrollsToTop:YES];
-    [[self primaryView] setScrollsToTop:NO];
+    [self.folderView setScrollsToTop:NO];
     self.scrollToTop = YES;
   } else {
     [self.menuView setScrollsToTop:NO];
-    [[self primaryView] setScrollsToTop:YES];
+    [self.folderView setScrollsToTop:YES];
     self.scrollToTop = NO;
   }
 
@@ -424,7 +411,7 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
   UIInterfaceOrientation orient = GetInterfaceOrientation();
   [self updateUIForInterfaceOrientation:orient duration:0];
   if (self.cachedContentPosition) {
-    [[self primaryView]
+    [self.folderView
         applyContentPosition:[self.cachedContentPosition floatValue]];
     self.cachedContentPosition = nil;
   }
@@ -439,11 +426,11 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
   // Plus landscape, the width of the collection is too large when created, then
   // resized down before being presented. Yet, the bounds change doesn't yield a
   // call to the flow layout, thus not invalidating the layout correctly.
-  [[self primaryView].collectionView.collectionViewLayout invalidateLayout];
+  [self.folderView.collectionView.collectionViewLayout invalidateLayout];
 
   self.navigationBar.frame = [self navigationBarFrame];
   self.editingBar.frame = [self navigationBarFrame];
-  [self.panelView setFrame:[self frameForPrimaryView]];
+  [self.panelView setFrame:[self frameForPanelView]];
 }
 
 #pragma mark - Internal non-UI Methods
