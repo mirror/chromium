@@ -68,7 +68,8 @@ void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
         ipconfig_path.value(), base::MakeUnique<base::DictionaryValue>());
   }
   // Update existing ip config stub object's properties.
-  dict->SetWithoutPathExpansion(name, base::MakeUnique<base::Value>(value));
+  dict->SetWithoutPathExpansion(name,
+                                base::MakeUnique<base::Value>(value.Clone()));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
 }
@@ -97,8 +98,8 @@ FakeShillIPConfigClient::GetTestInterface() {
 void FakeShillIPConfigClient::AddIPConfig(
     const std::string& ip_config_path,
     const base::DictionaryValue& properties) {
-  ipconfigs_.SetWithoutPathExpansion(ip_config_path,
-                                     base::MakeUnique<base::Value>(properties));
+  ipconfigs_.SetWithoutPathExpansion(
+      ip_config_path, base::MakeUnique<base::Value>(properties.Clone()));
 }
 
 // Private methods

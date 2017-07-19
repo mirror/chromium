@@ -620,7 +620,7 @@ TEST(SchemaTest, Validate) {
     bundle.Clear();
     base::ListValue list;
     list.AppendInteger(1);
-    bundle.Set("Array", base::MakeUnique<base::Value>(list));
+    bundle.Set("Array", base::MakeUnique<base::Value>(list.Clone()));
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
 
@@ -629,7 +629,7 @@ TEST(SchemaTest, Validate) {
     bundle.Clear();
     base::DictionaryValue dict;
     dict.SetString("one", "one");
-    bundle.Set("Object", base::MakeUnique<base::Value>(dict));
+    bundle.Set("Object", base::MakeUnique<base::Value>(dict.Clone()));
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
 
@@ -650,7 +650,7 @@ TEST(SchemaTest, Validate) {
     base::ListValue list;
     list.AppendString("a string");
     list.AppendString("another string");
-    bundle.Set("Array", base::MakeUnique<base::Value>(list));
+    bundle.Set("Array", base::MakeUnique<base::Value>(list.Clone()));
   }
 
   {
@@ -658,9 +658,9 @@ TEST(SchemaTest, Validate) {
     dict.SetString("one", "string");
     dict.SetInteger("two", 2);
     base::ListValue list;
-    list.GetList().push_back(dict);
-    list.GetList().push_back(dict);
-    bundle.Set("ArrayOfObjects", base::MakeUnique<base::Value>(list));
+    list.GetList().push_back(dict.Clone());
+    list.GetList().push_back(dict.Clone());
+    bundle.Set("ArrayOfObjects", base::MakeUnique<base::Value>(list.Clone()));
   }
 
   {
@@ -668,9 +668,9 @@ TEST(SchemaTest, Validate) {
     list.AppendString("a string");
     list.AppendString("another string");
     base::ListValue listlist;
-    listlist.GetList().push_back(list);
-    listlist.GetList().push_back(list);
-    bundle.Set("ArrayOfArray", base::MakeUnique<base::Value>(listlist));
+    listlist.GetList().push_back(list.Clone());
+    listlist.GetList().push_back(list.Clone());
+    bundle.Set("ArrayOfArray", base::MakeUnique<base::Value>(listlist.Clone()));
   }
 
   {
@@ -679,7 +679,7 @@ TEST(SchemaTest, Validate) {
     dict.SetInteger("two", 2);
     dict.SetString("additionally", "a string");
     dict.SetString("and also", "another string");
-    bundle.Set("Object", base::MakeUnique<base::Value>(dict));
+    bundle.Set("Object", base::MakeUnique<base::Value>(dict.Clone()));
   }
 
   bundle.SetInteger("IntegerWithEnums", 1);

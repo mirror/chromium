@@ -309,7 +309,7 @@ base::Value CoordinationUnitImpl::GetProperty(
     const mojom::PropertyType property_type) const {
   auto value_it = properties_.find(property_type);
 
-  return value_it != properties_.end() ? base::Value(*value_it->second)
+  return value_it != properties_.end() ? value_it->second->Clone()
                                        : base::Value();
 }
 

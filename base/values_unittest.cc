@@ -120,6 +120,25 @@ TEST(ValuesTest, ConstructDict) {
   EXPECT_EQ(Value::Type::DICTIONARY, value.type());
 }
 
+TEST(ValuesTest, ConstructDictFromStorage) {
+  Value::DictStorage storage;
+  storage.emplace("foo", MakeUnique<Value>("bar"));
+  {
+    DictionaryValue value(storage);
+    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
+    EXPECT_EQ(Value::Type::STRING, value.FindKey("foo")->second.type());
+    EXPECT_EQ("bar", value.FindKey("foo")->second.GetString());
+  }
+
+  *storage["foo"] = base::Value("baz");
+  {
+    DictionaryValue value(std::move(storage));
+    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
+    EXPECT_EQ(Value::Type::STRING, value.FindKey("foo")->second.type());
+    EXPECT_EQ("baz", value.FindKey("foo")->second.GetString());
+  }
+}
+
 TEST(ValuesTest, ConstructList) {
   ListValue value;
   EXPECT_EQ(Value::Type::LIST, value.type());
@@ -128,7 +147,6 @@ TEST(ValuesTest, ConstructList) {
 TEST(ValuesTest, ConstructListFromStorage) {
   Value::ListStorage storage;
   storage.emplace_back("foo");
-
   {
     ListValue value(storage);
     EXPECT_EQ(Value::Type::LIST, value.type());
@@ -152,74 +170,74 @@ TEST(ValuesTest, ConstructListFromStorage) {
 // Equals being correct.
 TEST(ValuesTest, CopyBool) {
   Value true_value(true);
-  Value copied_true_value(true_value);
+  Value copied_true_value(true_value.Clone());
   EXPECT_EQ(true_value.type(), copied_true_value.type());
   EXPECT_EQ(true_value.GetBool(), copied_true_value.GetBool());
 
   Value false_value(false);
-  Value copied_false_value(false_value);
+  Value copied_false_value(false_value.Clone());
   EXPECT_EQ(false_value.type(), copied_false_value.type());
   EXPECT_EQ(false_value.GetBool(), copied_false_value.GetBool());
 
   Value blank;
 
-  blank = true_value;
+  blank = true_value.Clone();
   EXPECT_EQ(true_value.type(), blank.type());
   EXPECT_EQ(true_value.GetBool(), blank.GetBool());
 
-  blank = false_value;
+  blank = false_value.Clone();
   EXPECT_EQ(false_value.type(), blank.type());
   EXPECT_EQ(false_value.GetBool(), blank.GetBool());
 }
 
 TEST(ValuesTest, CopyInt) {
   Value value(74);
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetInt(), copied_value.GetInt());
 
   Value blank;
 
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetInt(), blank.GetInt());
 }
 
 TEST(ValuesTest, CopyDouble) {
   Value value(74.896);
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetDouble(), copied_value.GetDouble());
 
   Value blank;
 
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetDouble(), blank.GetDouble());
 }
 
 TEST(ValuesTest, CopyString) {
   Value value("foobar");
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetString(), copied_value.GetString());
 
   Value blank;
 
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetString(), blank.GetString());
 }
 
 TEST(ValuesTest, CopyBinary) {
   Value value(Value::BlobStorage({0xF, 0x0, 0x0, 0xB, 0xA, 0x2}));
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetBlob(), copied_value.GetBlob());
 
   Value blank;
 
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetBlob(), blank.GetBlob());
 }
@@ -229,22 +247,24 @@ TEST(ValuesTest, CopyDictionary) {
   storage.emplace("Int", MakeUnique<Value>(123));
   Value value(std::move(storage));
 
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value, copied_value);
 
   Value blank;
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value, blank);
 }
 
 TEST(ValuesTest, CopyList) {
-  Value value(Value::ListStorage{Value(123)});
+  Value::ListStorage storage;
+  storage.emplace_back(123);
+  Value value(std::move(storage));
 
-  Value copied_value(value);
+  Value copied_value(value.Clone());
   EXPECT_EQ(value, copied_value);
 
   Value blank;
-  blank = value;
+  blank = value.Clone();
   EXPECT_EQ(value, blank);
 }
 
@@ -345,15 +365,15 @@ TEST(ValuesTest, MoveAssignDictionary) {
 }
 
 TEST(ValuesTest, MoveList) {
-  const Value::ListStorage list = {Value(123)};
-  Value value(list);
+  Value::ListStorage storage;
+  storage.emplace_back(123);
+  Value value(storage);
   Value moved_value(std::move(value));
   EXPECT_EQ(Value::Type::LIST, moved_value.type());
   EXPECT_EQ(123, moved_value.GetList().back().GetInt());
 
   Value blank;
-
-  blank = Value(list);
+  blank = Value(std::move(storage));
   EXPECT_EQ(Value::Type::LIST, blank.type());
   EXPECT_EQ(123, blank.GetList().back().GetInt());
 }
@@ -791,7 +811,7 @@ TEST(ValuesTest, ListRemoval) {
   {
     ListValue list;
     auto value = MakeUnique<Value>();
-    Value original_value = *value;
+    Value original_value = value->Clone();
     list.Append(std::move(value));
     size_t index = 0;
     list.Remove(original_value, &index);
@@ -1023,8 +1043,11 @@ TEST(ValuesTest, DeepCopy) {
   Value* binary_weak = original_dict.Set(
       "binary", MakeUnique<Value>(Value::BlobStorage(42, '!')));
 
-  Value* list_weak = original_dict.Set(
-      "list", MakeUnique<Value>(Value::ListStorage({Value(0), Value(1)})));
+  Value::ListStorage storage;
+  storage.emplace_back(0);
+  storage.emplace_back(1);
+  Value* list_weak =
+      original_dict.Set("list", MakeUnique<Value>(std::move(storage)));
   Value* list_element_0_weak = &list_weak->GetList()[0];
   Value* list_element_1_weak = &list_weak->GetList()[1];
 
@@ -1032,7 +1055,7 @@ TEST(ValuesTest, DeepCopy) {
       original_dict.SetDictionary("dictionary", MakeUnique<DictionaryValue>());
   dict_weak->SetString("key", "value");
 
-  auto copy_dict = MakeUnique<DictionaryValue>(original_dict);
+  auto copy_dict = MakeUnique<DictionaryValue>(original_dict.Clone());
   ASSERT_TRUE(copy_dict.get());
   ASSERT_NE(copy_dict.get(), &original_dict);
 
@@ -1153,13 +1176,13 @@ TEST(ValuesTest, Equals) {
   dv.SetString("d2", ASCIIToUTF16("http://google.com"));
   dv.Set("e", MakeUnique<Value>());
 
-  auto copy = MakeUnique<DictionaryValue>(dv);
+  auto copy = MakeUnique<DictionaryValue>(dv.Clone());
   EXPECT_EQ(dv, *copy);
 
   std::unique_ptr<ListValue> list(new ListValue);
   list->Append(MakeUnique<Value>());
   list->Append(WrapUnique(new DictionaryValue));
-  auto list_copy = MakeUnique<Value>(*list);
+  auto list_copy = MakeUnique<Value>(list->Clone());
 
   ListValue* list_weak = dv.SetList("f", std::move(list));
   EXPECT_NE(dv, *copy);
@@ -1170,7 +1193,7 @@ TEST(ValuesTest, Equals) {
   EXPECT_NE(dv, *copy);
 
   // Check if Equals detects differences in only the keys.
-  copy = MakeUnique<DictionaryValue>(dv);
+  copy = MakeUnique<DictionaryValue>(dv.Clone());
   EXPECT_EQ(dv, *copy);
   copy->Remove("a", NULL);
   copy->SetBoolean("aa", false);
@@ -1306,8 +1329,15 @@ TEST(ValuesTest, Comparisons) {
   EXPECT_FALSE(int_dict1 >= int_dict2);
 
   // Test Values of different types.
-  std::vector<Value> values = {null1,   bool1,   int1,      double1,
-                               string1, binary1, int_dict1, int_list1};
+  std::vector<Value> values;
+  values.emplace_back(std::move(null1));
+  values.emplace_back(std::move(bool1));
+  values.emplace_back(std::move(int1));
+  values.emplace_back(std::move(double1));
+  values.emplace_back(std::move(string1));
+  values.emplace_back(std::move(binary1));
+  values.emplace_back(std::move(int_dict1));
+  values.emplace_back(std::move(int_list1));
   for (size_t i = 0; i < values.size(); ++i) {
     for (size_t j = i + 1; j < values.size(); ++j) {
       EXPECT_FALSE(values[i] == values[j]);
@@ -1333,18 +1363,21 @@ TEST(ValuesTest, DeepCopyCovariantReturnTypes) {
   Value* binary_weak = original_dict.Set(
       "binary", MakeUnique<Value>(Value::BlobStorage(42, '!')));
 
-  Value* list_weak = original_dict.Set(
-      "list", MakeUnique<Value>(Value::ListStorage({Value(0), Value(1)})));
+  Value::ListStorage storage;
+  storage.emplace_back(0);
+  storage.emplace_back(1);
+  Value* list_weak =
+      original_dict.Set("list", MakeUnique<Value>(std::move(storage)));
 
-  auto copy_dict = MakeUnique<Value>(original_dict);
-  auto copy_null = MakeUnique<Value>(*null_weak);
-  auto copy_bool = MakeUnique<Value>(*bool_weak);
-  auto copy_int = MakeUnique<Value>(*int_weak);
-  auto copy_double = MakeUnique<Value>(*double_weak);
-  auto copy_string = MakeUnique<Value>(*string_weak);
-  auto copy_string16 = MakeUnique<Value>(*string16_weak);
-  auto copy_binary = MakeUnique<Value>(*binary_weak);
-  auto copy_list = MakeUnique<Value>(*list_weak);
+  auto copy_dict = MakeUnique<Value>(original_dict.Clone());
+  auto copy_null = MakeUnique<Value>(null_weak->Clone());
+  auto copy_bool = MakeUnique<Value>(bool_weak->Clone());
+  auto copy_int = MakeUnique<Value>(int_weak->Clone());
+  auto copy_double = MakeUnique<Value>(double_weak->Clone());
+  auto copy_string = MakeUnique<Value>(string_weak->Clone());
+  auto copy_string16 = MakeUnique<Value>(string16_weak->Clone());
+  auto copy_binary = MakeUnique<Value>(binary_weak->Clone());
+  auto copy_list = MakeUnique<Value>(list_weak->Clone());
 
   EXPECT_EQ(original_dict, *copy_dict);
   EXPECT_EQ(*null_weak, *copy_null);
@@ -1518,7 +1551,7 @@ TEST(ValuesTest, DictionaryIterator) {
   }
 
   Value value1("value1");
-  dict.Set("key1", MakeUnique<Value>(value1));
+  dict.Set("key1", MakeUnique<Value>(value1.Clone()));
   bool seen1 = false;
   for (DictionaryValue::Iterator it(dict); !it.IsAtEnd(); it.Advance()) {
     EXPECT_FALSE(seen1);
@@ -1529,7 +1562,7 @@ TEST(ValuesTest, DictionaryIterator) {
   EXPECT_TRUE(seen1);
 
   Value value2("value2");
-  dict.Set("key2", MakeUnique<Value>(value2));
+  dict.Set("key2", MakeUnique<Value>(value2.Clone()));
   bool seen2 = seen1 = false;
   for (DictionaryValue::Iterator it(dict); !it.IsAtEnd(); it.Advance()) {
     if (it.key() == "key1") {
@@ -1555,7 +1588,7 @@ TEST(ValuesTest, StdDictionaryIterator) {
   }
 
   Value value1("value1");
-  dict.Set("key1", MakeUnique<Value>(value1));
+  dict.Set("key1", MakeUnique<Value>(value1.Clone()));
   bool seen1 = false;
   for (const auto& it : dict) {
     EXPECT_FALSE(seen1);
@@ -1566,7 +1599,7 @@ TEST(ValuesTest, StdDictionaryIterator) {
   EXPECT_TRUE(seen1);
 
   Value value2("value2");
-  dict.Set("key2", MakeUnique<Value>(value2));
+  dict.Set("key2", MakeUnique<Value>(value2.Clone()));
   bool seen2 = seen1 = false;
   for (const auto& it : dict) {
     if (it.first == "key1") {
@@ -1599,21 +1632,21 @@ TEST(ValuesTest, GetWithNullOutValue) {
   DictionaryValue dict_value;
   ListValue list_value;
 
-  main_dict.Set("bool", MakeUnique<Value>(bool_value));
-  main_dict.Set("int", MakeUnique<Value>(int_value));
-  main_dict.Set("double", MakeUnique<Value>(double_value));
-  main_dict.Set("string", MakeUnique<Value>(string_value));
-  main_dict.Set("binary", MakeUnique<Value>(binary_value));
-  main_dict.Set("dict", MakeUnique<Value>(dict_value));
-  main_dict.Set("list", MakeUnique<Value>(list_value));
+  main_dict.Set("bool", MakeUnique<Value>(bool_value.Clone()));
+  main_dict.Set("int", MakeUnique<Value>(int_value.Clone()));
+  main_dict.Set("double", MakeUnique<Value>(double_value.Clone()));
+  main_dict.Set("string", MakeUnique<Value>(string_value.Clone()));
+  main_dict.Set("binary", MakeUnique<Value>(binary_value.Clone()));
+  main_dict.Set("dict", MakeUnique<Value>(dict_value.Clone()));
+  main_dict.Set("list", MakeUnique<Value>(list_value.Clone()));
 
-  main_list.Append(MakeUnique<Value>(bool_value));
-  main_list.Append(MakeUnique<Value>(int_value));
-  main_list.Append(MakeUnique<Value>(double_value));
-  main_list.Append(MakeUnique<Value>(string_value));
-  main_list.Append(MakeUnique<Value>(binary_value));
-  main_list.Append(MakeUnique<Value>(dict_value));
-  main_list.Append(MakeUnique<Value>(list_value));
+  main_list.Append(MakeUnique<Value>(bool_value.Clone()));
+  main_list.Append(MakeUnique<Value>(int_value.Clone()));
+  main_list.Append(MakeUnique<Value>(double_value.Clone()));
+  main_list.Append(MakeUnique<Value>(string_value.Clone()));
+  main_list.Append(MakeUnique<Value>(binary_value.Clone()));
+  main_list.Append(MakeUnique<Value>(dict_value.Clone()));
+  main_list.Append(MakeUnique<Value>(list_value.Clone()));
 
   EXPECT_TRUE(main_dict.Get("bool", NULL));
   EXPECT_TRUE(main_dict.Get("int", NULL));

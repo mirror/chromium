@@ -150,7 +150,7 @@ void BrowserStateInfoCache::SetAuthInfoOfBrowserStateAtIndex(
   }
 
   auto info = base::MakeUnique<base::DictionaryValue>(
-      *GetInfoForBrowserStateAtIndex(index));
+      GetInfoForBrowserStateAtIndex(index)->Clone());
 
   info->SetString(kGAIAIdKey, gaia_id);
   info->SetString(kUserNameKey, user_name);
@@ -164,7 +164,7 @@ void BrowserStateInfoCache::SetBrowserStateIsAuthErrorAtIndex(size_t index,
     return;
 
   auto info = base::MakeUnique<base::DictionaryValue>(
-      *GetInfoForBrowserStateAtIndex(index));
+      GetInfoForBrowserStateAtIndex(index)->Clone());
   info->SetBoolean(kIsAuthErrorKey, value);
   SetInfoForBrowserStateAtIndex(index, std::move(info));
 }
