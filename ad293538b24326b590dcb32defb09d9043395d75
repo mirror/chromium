@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c1f192_7ebf4d1d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-19T04:30:11Z",
+      "side": 0,
+      "message": "error: constexpr variable cannot have non-literal type \u0027const std::array\u003cconst char *const, 4\u003e\u0027",
+      "revId": "ad293538b24326b590dcb32defb09d9043395d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
