@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf55d69_f8329155",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-19T19:18:07Z",
+      "side": 1,
+      "message": "A question: Do I need to care about clearing the stored offset mapping when layout is invalidated?\n\nIt seems that although LayoutNGBlockFlow can be reused in a subsequent layout, NGInlineNodeData can\u0027t be reused because LayoutNGBlockFlow::ResetNGInlineNodeData() is always called before a new layout. So it seems that I don\u0027t need to worry about clearing the stored offset mapping.",
+      "revId": "bd8ba731f372990dace44ca5ff06ba51e24f46ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
