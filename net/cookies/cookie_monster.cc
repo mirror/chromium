@@ -395,6 +395,17 @@ CookieMonster::CookieMonster(PersistentCookieStore* store,
   cookieable_schemes_.insert(
       cookieable_schemes_.begin(), kDefaultCookieableSchemes,
       kDefaultCookieableSchemes + kDefaultCookieableSchemesCount);
+  if (channel_id_service_ && store_) {
+    // |store_| can outlive this CookieMonster, but there are no guarantees
+    // about the lifetime of |channel_id_service_| relative to |store_|. The
+    // only guarantee is that |channel_id_service_| will outlive this
+    // CookieMonster. To avoid the PersistentCookieStore retaining a pointer to
+    // the ChannelIDStore via this callback after this CookieMonster is
+    // destroyed, CookieMonster's d'tor sets the callback to a null callback.
+    store_->SetBeforeFlushCallback(
+        base::Bind(&ChannelIDStore::Flush,
+                   base::Unretained(channel_id_service_->GetChannelIDStore())));
+  }
 }
 
 // Asynchronous CookieMonster API
@@ -637,6 +648,10 @@ bool CookieMonster::IsEphemeral() {
 
 CookieMonster::~CookieMonster() {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (channel_id_service_ && store_) {
+    store_->SetBeforeFlushCallback(base::Closure());
+  }
 
   // TODO(mmenke): Does it really make sense to run |delegate_| and
   // CookieChanged callbacks when the CookieStore is destroyed?
