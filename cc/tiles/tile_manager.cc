@@ -1118,7 +1118,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
     PartitionImagesForCheckering(prioritized_tile, color_space,
                                  &sync_decoded_images, &checkered_images);
     for (const auto& image : checkered_images) {
-      playback_settings.images_to_skip.insert(image.sk_image()->uniqueID());
+      playback_settings.images_to_skip.insert(image.DefaultFrame()->uniqueID());
 
       // This can be the case for tiles on the active tree that will be replaced
       // or are occluded on the pending tree. While we still need to continue

@@ -40,7 +40,6 @@ enum class CheckerImagingDecision {
 };
 
 std::string ToString(PaintImage::Id paint_image_id,
-                     SkImageId sk_image_id,
                      CheckerImagingDecision decision) {
   std::ostringstream str;
   str << "paint_image_id[" << paint_image_id << "] sk_image_id[" << sk_image_id
@@ -84,8 +83,8 @@ CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
 CheckerImagingDecision GetSizeDecision(const PaintImage& image,
                                        size_t max_bytes) {
   base::CheckedNumeric<size_t> checked_size = 4;
-  checked_size *= image.sk_image()->width();
-  checked_size *= image.sk_image()->height();
+  checked_size *= image.width();
+  checked_size *= image.height();
   size_t size = checked_size.ValueOrDefault(std::numeric_limits<size_t>::max());
 
   if (size < kMinImageSizeToCheckerBytes)
@@ -304,7 +303,7 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
 
     TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                  "CheckerImageTracker::CheckerImagingDecision", "image_params",
-                 ToString(image_id, image.sk_image()->uniqueID(), decision));
+                 ToString(image_id, decision));
   }
 
   // Update the decode state from the latest image we have seen. Note that it
@@ -372,11 +371,11 @@ void CheckerImageTracker::ScheduleNextImageDecode() {
     if (it->second.policy != DecodePolicy::ASYNC)
       continue;
 
-    draw_image = DrawImage(candidate, candidate.sk_image()->bounds(),
-                           it->second.filter_quality,
-                           SkMatrix::MakeScale(it->second.scale.width(),
-                                               it->second.scale.height()),
-                           it->second.color_space);
+    draw_image =
+        DrawImage(candidate, candidate.bounds(), it->second.filter_quality,
+                  SkMatrix::MakeScale(it->second.scale.width(),
+                                      it->second.scale.height()),
+                  it->second.color_space);
     outstanding_image_decode_.emplace(candidate);
     break;
   }

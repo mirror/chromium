@@ -214,7 +214,7 @@ void SkiaPaintCanvas::drawImage(const PaintImage& image,
                                 SkScalar left,
                                 SkScalar top,
                                 const PaintFlags* flags) {
-  canvas_->drawImage(image.sk_image().get(), left, top, ToSkPaint(flags));
+  canvas_->drawImage(image.DefaultFrame().get(), left, top, ToSkPaint(flags));
 }
 
 void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
@@ -222,7 +222,7 @@ void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
                                     const SkRect& dst,
                                     const PaintFlags* flags,
                                     SrcRectConstraint constraint) {
-  canvas_->drawImageRect(image.sk_image().get(), src, dst, ToSkPaint(flags),
+  canvas_->drawImageRect(image.DefaultFrame().get(), src, dst, ToSkPaint(flags),
                          static_cast<SkCanvas::SrcRectConstraint>(constraint));
 }
 
