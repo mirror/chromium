@@ -6,6 +6,9 @@
 
 #include <stdint.h>
 
+#include <algorithm>
+#include <memory>
+
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -44,7 +47,7 @@ class FakeRequest : public WebHistoryService::Request {
               const WebHistoryService::CompletionCallback& callback,
               base::Time begin,
               base::Time end,
-              int max_count);
+              size_t max_count);
 
   // WebHistoryService::Request:
   bool IsPending() override;
@@ -64,32 +67,30 @@ class FakeRequest : public WebHistoryService::Request {
   const WebHistoryService::CompletionCallback& callback_;
   base::Time begin_;
   base::Time end_;
-  int max_count_;
+  size_t max_count_;
   bool is_pending_;
   std::string response_body_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeRequest);
 };
 
-FakeRequest::FakeRequest(
-    FakeWebHistoryService* service,
-    const GURL& url,
-    bool emulate_success,
-    int emulate_response_code,
-    const WebHistoryService::CompletionCallback& callback,
-    base::Time begin,
-    base::Time end,
-    int max_count)
-        : service_(service),
-          url_(url),
-          emulate_success_(emulate_success),
-          emulate_response_code_(emulate_response_code),
-          callback_(callback),
-          begin_(begin),
-          end_(end),
-          max_count_(max_count),
-          is_pending_(false) {
-}
+FakeRequest::FakeRequest(FakeWebHistoryService* service,
+                         const GURL& url,
+                         bool emulate_success,
+                         int emulate_response_code,
+                         const WebHistoryService::CompletionCallback& callback,
+                         base::Time begin,
+                         base::Time end,
+                         size_t max_count)
+    : service_(service),
+      url_(url),
+      emulate_success_(emulate_success),
+      emulate_response_code_(emulate_response_code),
+      callback_(callback),
+      begin_(begin),
+      end_(end),
+      max_count_(max_count),
+      is_pending_(false) {}
 
 bool FakeRequest::IsPending() {
   return is_pending_;
@@ -109,14 +110,29 @@ const std::string& FakeRequest::GetResponseBody() {
 
   if (base_url == kLookupUrl && client == kChromeClient) {
     // History query.
-    int count = service_->GetNumberOfVisitsBetween(begin_, end_);
-    if (max_count_ && max_count_ < count)
-      count = max_count_;
 
     response_body_ = "{ \"event\": [";
-    for (int i = 0; i < count; ++i)
-      response_body_ += i ? ", {}" : "{}";
-    response_body_ += "] }";
+    bool first = true;
+    bool more_results_left;
+    auto visits = service_->GetVisitsBetween(begin_, end_, max_count_,
+                                             &more_results_left);
+    for (const FakeWebHistoryService::Visit& visit : visits) {
+      if (!first) {
+        response_body_ += ",";
+      } else {
+        first = false;
+      }
+      std::string unix_time = std::to_string(
+          (visit.second - base::Time::UnixEpoch()).InMicroseconds());
+      response_body_ += base::StringPrintf(
+          "{\"result\":[{\"id\":[{\"timestamp_usec\":\"%s\"}],\"url\":\"%s\"}]"
+          "}",
+          unix_time.c_str(), visit.first.c_str());
+    }
+
+    response_body_ +=
+        base::StringPrintf("], \"continuation_token\":\"%s\" }",
+                           (more_results_left ? "more_results_left" : ""));
 
   } else if (base_url == kDeleteUrl && client == kChromeClient) {
     // Deletion query.
@@ -142,16 +158,16 @@ const std::string& FakeRequest::GetResponseBody() {
 
 void FakeRequest::SetPostData(const std::string& post_data) {
   // Unused.
-};
+}
 
 void FakeRequest::SetPostDataAndType(const std::string& post_data,
                                      const std::string& mime_type) {
   // Unused.
-};
+}
 
 void FakeRequest::SetUserAgent(const std::string& user_agent) {
   // Unused.
-};
+}
 
 void FakeRequest::Start() {
   is_pending_ = true;
@@ -192,12 +208,31 @@ void FakeWebHistoryService::ClearSyncedVisits() {
   visits_.clear();
 }
 
-int FakeWebHistoryService::GetNumberOfVisitsBetween(
-    const base::Time& begin, const base::Time& end) {
-  int result = 0;
+std::vector<FakeWebHistoryService::Visit>
+FakeWebHistoryService::GetVisitsBetween(const base::Time& begin,
+                                        const base::Time& end,
+                                        size_t count,
+                                        bool* more_results_left) {
+  // Make sure that |visits_| is sorted in reverse chronological order before we
+  // return anything. This means that the most recent results are returned
+  // first.
+  std::sort(visits_.begin(), visits_.end(),
+            [](const Visit& lhs, const Visit rhs) -> bool {
+              return lhs.second > rhs.second;
+            });
+  *more_results_left = false;
+  std::vector<Visit> result;
   for (const Visit& visit : visits_) {
-    if (visit.second >= begin && visit.second < end)
-      ++result;
+    if (visit.second >= begin && visit.second < end) {
+      // We found another valid result, but cannot return it because we've
+      // reached max count.
+      if (result.size() >= count) {
+        *more_results_left = true;
+        break;
+      }
+
+      result.push_back(visit);
+    }
   }
   return result;
 }

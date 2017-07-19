@@ -74,6 +74,7 @@ Polymer({
       queryState.searchTerm,
       lastVisitTime,
       RESULTS_PER_PAGE,
+      incremental,
     ]);
   },
 

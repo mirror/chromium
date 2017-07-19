@@ -49,7 +49,8 @@ class BrowsingHistoryBridge : public BrowsingHistoryServiceHandler {
   // BrowsingHistoryServiceHandler implementation
   void OnQueryComplete(
       std::vector<BrowsingHistoryService::HistoryEntry>* results,
-      BrowsingHistoryService::QueryResultsInfo* query_results_info) override;
+      const BrowsingHistoryService::QueryResultsInfo& query_results_info)
+      override;
   void OnRemoveVisitsComplete() override;
   void OnRemoveVisitsFailed() override;
   void HistoryDeleted() override;

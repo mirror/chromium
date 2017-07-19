@@ -61,8 +61,7 @@ void BrowsingHistoryBridge::QueryHistory(
 // BrowsingHistoryServiceHandler implementation
 void BrowsingHistoryBridge::OnQueryComplete(
     std::vector<BrowsingHistoryService::HistoryEntry>* results,
-    BrowsingHistoryService::QueryResultsInfo* query_results_info) {
-
+    const BrowsingHistoryService::QueryResultsInfo& query_results_info) {
   JNIEnv* env = base::android::AttachCurrentThread();
 
   for (const BrowsingHistoryService::HistoryEntry& entry : *results) {
@@ -92,10 +91,8 @@ void BrowsingHistoryBridge::OnQueryComplete(
   }
 
   Java_BrowsingHistoryBridge_onQueryHistoryComplete(
-      env,
-      j_history_service_obj_.obj(),
-      j_query_result_obj_.obj(),
-      !(query_results_info->reached_beginning));
+      env, j_history_service_obj_.obj(), j_query_result_obj_.obj(),
+      !query_results_info.reached_beginning);
 }
 
 void BrowsingHistoryBridge::MarkItemForRemoval(

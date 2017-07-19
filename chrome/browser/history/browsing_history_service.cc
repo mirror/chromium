@@ -175,24 +175,53 @@ void BrowsingHistoryService::WebHistoryTimeout() {
       WEB_HISTORY_QUERY_TIMED_OUT, NUM_WEB_HISTORY_QUERY_BUCKETS);
 }
 
-void BrowsingHistoryService::QueryHistory(
-    const base::string16& search_text,
-    const history::QueryOptions& options) {
+void BrowsingHistoryService::QueryHistory(const base::string16& search_text,
+                                          const history::QueryOptions& options,
+                                          bool incremental) {
   // Anything in-flight is invalid.
   query_task_tracker_.TryCancelAll();
   web_history_request_.reset();
 
   query_results_.clear();
 
-  history::HistoryService* hs = HistoryServiceFactory::GetForProfile(
-      profile_, ServiceAccessType::EXPLICIT_ACCESS);
-  hs->QueryHistory(search_text,
-                   options,
-                   base::Bind(&BrowsingHistoryService::QueryComplete,
-                              base::Unretained(this),
-                              search_text,
-                              options),
-                   &query_task_tracker_);
+  history::QueryOptions local_options(options);
+  history::QueryOptions remote_options(options);
+  bool skip_local = false;
+  bool skip_remote = false;
+  if (incremental && !pending_query_results_.empty()) {
+    bool pending_query_results_is_local =
+        pending_query_results_[0].entry_type ==
+        BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY;
+    if (pending_query_results_is_local) {
+      local_options.end_time = pending_query_results_.rbegin()->time;
+      if (pending_query_results_.size() >=
+          static_cast<size_t>(local_options.EffectiveMaxCount())) {
+        skip_local = true;
+      }
+    } else {
+      remote_options.end_time = pending_query_results_.rbegin()->time;
+      if (pending_query_results_.size() >=
+          static_cast<size_t>(remote_options.EffectiveMaxCount())) {
+        skip_remote = true;
+      }
+    }
+  } else {
+    pending_query_results_.clear();
+    web_history_reached_beginning_ = false;
+  }
+
+  if (!skip_local) {
+    history::HistoryService* hs = HistoryServiceFactory::GetForProfile(
+        profile_, ServiceAccessType::EXPLICIT_ACCESS);
+    hs->QueryHistory(
+        search_text, local_options,
+        base::Bind(&BrowsingHistoryService::QueryComplete,
+                   base::Unretained(this), search_text, local_options),
+        &query_task_tracker_);
+  }
+
+  if (skip_remote)
+    return;
 
   history::WebHistoryService* web_history =
       WebHistoryServiceFactory::GetForProfile(profile_);
@@ -202,6 +231,11 @@ void BrowsingHistoryService::QueryHistory(
 
   if (web_history) {
     web_history_query_results_.clear();
+    // Start a timer so we know when to give up.
+    web_history_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromSeconds(kWebHistoryTimeoutSeconds),
+        this, &BrowsingHistoryService::WebHistoryTimeout);
+
     net::PartialNetworkTrafficAnnotationTag partial_traffic_annotation =
         net::DefinePartialNetworkTrafficAnnotation("web_history_query",
                                                    "web_history_service",
@@ -230,15 +264,11 @@ void BrowsingHistoryService::QueryHistory(
             }
           })");
     web_history_request_ = web_history->QueryHistory(
-        search_text, options,
+        search_text, remote_options,
         base::Bind(&BrowsingHistoryService::WebHistoryQueryComplete,
-                   base::Unretained(this), search_text, options,
+                   base::Unretained(this), search_text, remote_options,
                    base::TimeTicks::Now()),
         partial_traffic_annotation);
-    // Start a timer so we know when to give up.
-    web_history_timer_.Start(
-        FROM_HERE, base::TimeDelta::FromSeconds(kWebHistoryTimeoutSeconds),
-        this, &BrowsingHistoryService::WebHistoryTimeout);
 
     // Test the existence of other forms of browsing history.
     browsing_data::ShouldShowNoticeAboutOtherFormsOfBrowsingHistory(
@@ -274,7 +304,7 @@ void BrowsingHistoryService::RemoveVisits(
   std::vector<history::ExpireHistoryArgs> expire_list;
   expire_list.reserve(items->size());
 
-  DCHECK(urls_to_be_deleted_.empty());
+  DCHECK_EQ(0U, urls_to_be_deleted_.size());
   for (auto it = items->begin(); it != items->end(); ++it) {
     // In order to ensure that visits will be deleted from the server and other
     // clients (even if they are offline), create a sync delete directive for
@@ -374,7 +404,12 @@ void BrowsingHistoryService::RemoveVisits(
 
 // static
 void BrowsingHistoryService::MergeDuplicateResults(
-    std::vector<BrowsingHistoryService::HistoryEntry>* results) {
+    std::vector<BrowsingHistoryService::HistoryEntry>* results,
+    std::vector<BrowsingHistoryService::HistoryEntry>* pending,
+    bool reached_beggining_local,
+    bool reached_beggining_remote) {
+  DCHECK_EQ(0U, pending->size());
+
   std::vector<BrowsingHistoryService::HistoryEntry> new_results;
   // Pre-reserve the size of the new vector. Since we're working with pointers
   // later on not doing this could lead to the vector being resized and to
@@ -387,6 +422,9 @@ void BrowsingHistoryService::MergeDuplicateResults(
   // in order to handle removing per-day duplicates.
   base::Time current_day_midnight;
 
+  base::Time youngest_local = base::Time::Min();
+  base::Time youngest_remote = base::Time::Min();
+
   std::sort(
       results->begin(), results->end(), HistoryEntry::SortByTimeDescending);
 
@@ -396,6 +434,15 @@ void BrowsingHistoryService::MergeDuplicateResults(
     if (current_day_midnight != it->time.LocalMidnight()) {
       current_day_entries.clear();
       current_day_midnight = it->time.LocalMidnight();
+    }
+
+    // it->time can be assumed to be smaller/older than any previous entry
+    // because we sorted by by time descending.
+    if (it->entry_type == BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY) {
+      youngest_local = it->time;
+    } else if (it->entry_type ==
+               BrowsingHistoryService::HistoryEntry::REMOTE_ENTRY) {
+      youngest_remote = it->time;
     }
 
     // Keep this visit if it's the first visit to this URL on the current day.
@@ -415,6 +462,32 @@ void BrowsingHistoryService::MergeDuplicateResults(
       }
     }
   }
+
+  // If the beginning if either source was not reached, that means there are
+  // more results from that source, and then other source needs to have its data
+  // held back in |pending| until the former source catches up. This way we send
+  // the ui history entries in the correct order, and they reply with reasonable
+  // page requests.
+  base::Time youngest_allowed = base::Time::Min();
+  if (!reached_beggining_local) {
+    youngest_allowed = std::max(youngest_allowed, youngest_local);
+  }
+  if (!reached_beggining_remote) {
+    youngest_allowed = std::max(youngest_allowed, youngest_remote);
+  }
+
+  HistoryEntry search_entry;
+  search_entry.time = youngest_allowed;
+  auto threshold_iter =
+      std::upper_bound(new_results.begin(), new_results.end(), search_entry,
+                       HistoryEntry::SortByTimeDescending);
+
+  // Note that because these results only contain results when one sources goes
+  // farther back, they should never contain COMBINED_ENTRY. Instead, they
+  // should all be LOCAL_ENTRY or REMOTE_ENTRY.
+  pending->assign(threshold_iter, new_results.end());
+
+  new_results.erase(threshold_iter, new_results.end());
   results->swap(new_results);
 }
 
@@ -458,12 +531,27 @@ void BrowsingHistoryService::QueryComplete(
 void BrowsingHistoryService::ReturnResultsToHandler() {
   // Combine the local and remote results into |query_results_|, and remove
   // any duplicates.
-  if (!web_history_query_results_.empty()) {
+  if (!web_history_query_results_.empty() || !pending_query_results_.empty()) {
     int local_result_count = query_results_.size();
+    if (!pending_query_results_.empty()) {
+      if (pending_query_results_.begin()->entry_type ==
+          BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY) {
+        local_result_count += pending_query_results_.size();
+      }
+      query_results_.insert(query_results_.end(),
+                            pending_query_results_.begin(),
+                            pending_query_results_.end());
+      pending_query_results_.clear();
+    }
+
     query_results_.insert(query_results_.end(),
                           web_history_query_results_.begin(),
                           web_history_query_results_.end());
-    MergeDuplicateResults(&query_results_);
+    MergeDuplicateResults(&query_results_, &pending_query_results_,
+                          query_results_info_.reached_beginning,
+                          web_history_reached_beginning_);
+    query_results_info_.reached_beginning =
+        query_results_info_.reached_beginning && web_history_reached_beginning_;
 
     if (local_result_count) {
       // In the best case, we expect that all local results are duplicated on
@@ -475,7 +563,7 @@ void BrowsingHistoryService::ReturnResultsToHandler() {
     }
   }
 
-  handler_->OnQueryComplete(&query_results_, &query_results_info_);
+  handler_->OnQueryComplete(&query_results_, query_results_info_);
   handler_->HasOtherFormsOfBrowsingHistory(
       has_other_forms_of_browsing_history_, has_synced_results_);
 
@@ -505,6 +593,16 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
 
   DCHECK_EQ(0U, web_history_query_results_.size());
   const base::ListValue* events = NULL;
+
+  if (results_value) {
+    std::string continuation_token;
+    if (results_value->GetString("continuation_token", &continuation_token)) {
+      web_history_reached_beginning_ = continuation_token.empty();
+    } else {
+      web_history_reached_beginning_ = true;
+    }
+  }
+
   if (results_value && results_value->GetList("event", &events)) {
     web_history_query_results_.reserve(events->GetSize());
     for (unsigned int i = 0; i < events->GetSize(); ++i) {
@@ -568,6 +666,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
       }
     }
   }
+
   has_synced_results_ = results_value != nullptr;
   query_results_info_.has_synced_results = has_synced_results_;
   if (!query_task_tracker_.HasTrackedTasks())

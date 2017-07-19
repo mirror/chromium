@@ -137,7 +137,8 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
 
   // Core implementation of history querying.
   void QueryHistory(const base::string16& search_text,
-                    const history::QueryOptions& options);
+                    const history::QueryOptions& options,
+                    bool incremental);
 
   // Removes |items| from history.
   void RemoveVisits(
@@ -151,7 +152,10 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
   // recent visit to a URL on a particular day. That visit contains the
   // timestamps of the other visits.
   static void MergeDuplicateResults(
-      std::vector<BrowsingHistoryService::HistoryEntry>* results);
+      std::vector<BrowsingHistoryService::HistoryEntry>* results,
+      std::vector<BrowsingHistoryService::HistoryEntry>* pending,
+      bool reached_beggining_local,
+      bool reached_beggining_remote);
 
   // Callback from the history system when a history query has completed.
   // Exposed for testing.
@@ -224,6 +228,18 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
 
   // The list of query results received from the history server.
   std::vector<HistoryEntry> web_history_query_results_;
+
+  // Results from either local or web history that were not returned in the last
+  // QueryHistory call because they were farther ahead than the other source.
+  // These results should be used on the next QueryHistory request, assuming
+  // incremental is true.
+  std::vector<HistoryEntry> pending_query_results_;
+
+  // Only true if the last QueryHistory that called out to WebHistory told us
+  // that there are no more results. If this is true, then we will stop
+  // limiting local results that happened farther in the past, and we will stop
+  // making requests to web history.
+  bool web_history_reached_beginning_;
 
   // Timer used to implement a timeout on a Web History response.
   base::OneShotTimer web_history_timer_;

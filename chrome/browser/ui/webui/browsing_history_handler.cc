@@ -238,11 +238,9 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
 }  // namespace
 
 BrowsingHistoryHandler::BrowsingHistoryHandler()
-    : clock_(new base::DefaultClock()),
-      browsing_history_service_(nullptr) {}
+    : clock_(new base::DefaultClock()), browsing_history_service_(nullptr) {}
 
-BrowsingHistoryHandler::~BrowsingHistoryHandler() {
-}
+BrowsingHistoryHandler::~BrowsingHistoryHandler() {}
 
 void BrowsingHistoryHandler::RegisterMessages() {
   browsing_history_service_ = base::MakeUnique<BrowsingHistoryService>(
@@ -290,8 +288,14 @@ void BrowsingHistoryHandler::HandleQueryHistory(const base::ListValue* args) {
     return;
   }
 
+  bool incremental;
+  if (!args->GetBoolean(3, &incremental)) {
+    NOTREACHED() << "Failed to convert argument 3.";
+    return;
+  }
+
   options.duplicate_policy = history::QueryOptions::REMOVE_DUPLICATES_PER_DAY;
-  browsing_history_service_->QueryHistory(search_text, options);
+  browsing_history_service_->QueryHistory(search_text, options, incremental);
 }
 
 void BrowsingHistoryHandler::HandleRemoveVisits(const base::ListValue* args) {
@@ -353,7 +357,7 @@ void BrowsingHistoryHandler::HandleRemoveBookmark(const base::ListValue* args) {
 
 void BrowsingHistoryHandler::OnQueryComplete(
     std::vector<BrowsingHistoryService::HistoryEntry>* results,
-    BrowsingHistoryService::QueryResultsInfo* query_results_info) {
+    const BrowsingHistoryService::QueryResultsInfo& query_results_info) {
   Profile* profile = Profile::FromWebUI(web_ui());
   BookmarkModel* bookmark_model =
       BookmarkModelFactory::GetForBrowserContext(profile);
@@ -380,19 +384,19 @@ void BrowsingHistoryHandler::OnQueryComplete(
   // described in chrome/browser/resources/history/history.js in @typedef for
   // HistoryQuery. Please update it whenever you add or remove any keys in
   // results_info_value_.
-  results_info.SetString("term", query_results_info->search_text);
-  results_info.SetBoolean("finished", query_results_info->reached_beginning);
+  results_info.SetString("term", query_results_info.search_text);
+  results_info.SetBoolean("finished", query_results_info.reached_beginning);
   results_info.SetBoolean("hasSyncedResults",
-                          query_results_info->has_synced_results);
+                          query_results_info.has_synced_results);
 
   // Add the specific dates that were searched to display them.
   // TODO(sergiu): Put today if the start is in the future.
   results_info.SetString(
       "queryStartTime",
-      GetRelativeDateLocalized(clock_.get(), query_results_info->start_time));
+      GetRelativeDateLocalized(clock_.get(), query_results_info.start_time));
   results_info.SetString(
       "queryEndTime",
-      GetRelativeDateLocalized(clock_.get(), query_results_info->end_time));
+      GetRelativeDateLocalized(clock_.get(), query_results_info.end_time));
 
   web_ui()->CallJavascriptFunctionUnsafe("historyResult", results_info,
                                          results_value);

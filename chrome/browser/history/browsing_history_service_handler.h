@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_HISTORY_BROWSING_HISTORY_SERVICE_HANDLER_H_
 #define CHROME_BROWSER_HISTORY_BROWSING_HISTORY_SERVICE_HANDLER_H_
 
+#include <vector>
+
 #include "chrome/browser/history/browsing_history_service.h"
 
 // Interface for handling calls from the BrowsingHistoryService.
@@ -13,7 +15,7 @@ class BrowsingHistoryServiceHandler {
   // Callback for QueryHistory().
   virtual void OnQueryComplete(
       std::vector<BrowsingHistoryService::HistoryEntry>* results,
-      BrowsingHistoryService::QueryResultsInfo* query_results_info) = 0;
+      const BrowsingHistoryService::QueryResultsInfo& query_results_info) = 0;
 
   // Callback for RemoveVisits().
   virtual void OnRemoveVisitsComplete() = 0;
@@ -34,6 +36,7 @@ class BrowsingHistoryServiceHandler {
   BrowsingHistoryServiceHandler() {}
   virtual ~BrowsingHistoryServiceHandler() {}
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(BrowsingHistoryServiceHandler);
 };
 
