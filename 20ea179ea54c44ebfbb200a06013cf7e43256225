@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "994e3971_209a7528",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-19T00:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc3e033_3f93e547",
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5308ecd9_f4bc3ab5",
         "filename": "third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33d4cf1_83247566",
+        "filename": "third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-19T00:32:30Z",
+      "side": 1,
+      "message": "Done.\n\nFor the big-endian case, do you have any better suggestions than the for loop/Bswap32 ?",
+      "parentUuid": "5308ecd9_f4bc3ab5",
+      "range": {
+        "startLine": 530,
+        "startChar": 16,
+        "endLine": 530,
+        "endChar": 46
+      },
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +128,30 @@
       "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d92ab84_fd2415e9",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecICU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-19T00:32:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c184967_4c5aa118",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
