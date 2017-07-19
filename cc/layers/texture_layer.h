@@ -13,6 +13,8 @@
 #include "base/threading/thread_checker.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer.h"
+#include "cc/resources/single_release_callback.h"
+#include "cc/resources/single_release_callback_impl.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 
 namespace gpu {
@@ -21,8 +23,6 @@ struct SyncToken;
 
 namespace cc {
 class BlockingTaskRunner;
-class SingleReleaseCallback;
-class SingleReleaseCallbackImpl;
 class TextureLayerClient;
 
 // A Layer containing a the rendered output of a plugin instance.
@@ -47,7 +47,7 @@ class CC_EXPORT TextureLayer : public Layer {
 
     // Gets a ReleaseCallback that can be called from another thread. Note: the
     // caller must ensure the callback is called.
-    std::unique_ptr<SingleReleaseCallbackImpl> GetCallbackForImplThread();
+    SingleReleaseCallbackImpl GetCallbackForImplThread();
 
    protected:
     friend class TextureLayer;
@@ -55,15 +55,14 @@ class CC_EXPORT TextureLayer : public Layer {
     // Protected visiblity so only TextureLayer and unit tests can create these.
     static std::unique_ptr<MainThreadReference> Create(
         const viz::TextureMailbox& mailbox,
-        std::unique_ptr<SingleReleaseCallback> release_callback);
+        SingleReleaseCallback release_callback);
     virtual ~TextureMailboxHolder();
 
    private:
     friend class base::RefCountedThreadSafe<TextureMailboxHolder>;
     friend class MainThreadReference;
-    explicit TextureMailboxHolder(
-        const viz::TextureMailbox& mailbox,
-        std::unique_ptr<SingleReleaseCallback> release_callback);
+    explicit TextureMailboxHolder(const viz::TextureMailbox& mailbox,
+                                  SingleReleaseCallback release_callback);
 
     void InternalAddRef();
     void InternalRelease();
@@ -76,7 +75,7 @@ class CC_EXPORT TextureLayer : public Layer {
     // during commit where the main thread is blocked.
     unsigned internal_references_;
     viz::TextureMailbox mailbox_;
-    std::unique_ptr<SingleReleaseCallback> release_callback_;
+    SingleReleaseCallback release_callback_;
 
     // This lock guards the sync_token_ and is_lost_ fields because they can be
     // accessed on both the impl and main thread. We do this to ensure that the
@@ -129,9 +128,8 @@ class CC_EXPORT TextureLayer : public Layer {
   void SetBlendBackgroundColor(bool blend);
 
   // Code path for plugins which supply their own mailbox.
-  void SetTextureMailbox(
-      const viz::TextureMailbox& mailbox,
-      std::unique_ptr<SingleReleaseCallback> release_callback);
+  void SetTextureMailbox(const viz::TextureMailbox& mailbox,
+                         SingleReleaseCallback release_callback);
 
   void SetNeedsDisplayRect(const gfx::Rect& dirty_rect) override;
 
@@ -146,11 +144,10 @@ class CC_EXPORT TextureLayer : public Layer {
   bool HasDrawableContent() const override;
 
  private:
-  void SetTextureMailboxInternal(
-      const viz::TextureMailbox& mailbox,
-      std::unique_ptr<SingleReleaseCallback> release_callback,
-      bool requires_commit,
-      bool allow_mailbox_reuse);
+  void SetTextureMailboxInternal(const viz::TextureMailbox& mailbox,
+                                 SingleReleaseCallback release_callback,
+                                 bool requires_commit,
+                                 bool allow_mailbox_reuse);
 
   TextureLayerClient* client_;
 

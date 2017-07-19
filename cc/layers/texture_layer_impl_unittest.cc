@@ -69,9 +69,8 @@ TEST(TextureLayerImplTest, Occlusion) {
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
-  texture_layer_impl->SetTextureMailbox(
-      texture_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(&IgnoreCallback)));
+  texture_layer_impl->SetTextureMailbox(texture_mailbox,
+                                        base::BindOnce(&IgnoreCallback));
 
   impl.CalcDrawProps(viewport_size);
 
@@ -129,9 +128,8 @@ TEST(TextureLayerImplTest, OutputIsSecure) {
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
-  texture_layer_impl->SetTextureMailbox(
-      texture_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(&IgnoreCallback)));
+  texture_layer_impl->SetTextureMailbox(texture_mailbox,
+                                        base::BindOnce(&IgnoreCallback));
 
   impl.CalcDrawProps(viewport_size);
 
@@ -174,10 +172,10 @@ TEST(TextureLayerImplTest, ResourceNotFreedOnGpuRasterToggle) {
   texture_layer_impl->SetDrawsContent(true);
   texture_layer_impl->SetTextureMailbox(
       texture_mailbox,
-      SingleReleaseCallbackImpl::Create(base::Bind(
+      base::BindOnce(
           [](bool* released, const gpu::SyncToken& sync_token, bool lost,
              BlockingTaskRunner* main_thread_task_runner) { *released = true; },
-          base::Unretained(&released))));
+          base::Unretained(&released)));
 
   impl.CalcDrawProps(viewport_size);
 

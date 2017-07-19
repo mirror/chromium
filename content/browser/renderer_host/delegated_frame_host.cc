@@ -547,7 +547,7 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceFinishedForVideo(
     base::WeakPtr<DelegatedFrameHost> dfh,
     const base::Callback<void(bool)>& callback,
     scoped_refptr<OwnedMailbox> subscriber_texture,
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+    cc::SingleReleaseCallback release_callback,
     bool result) {
   callback.Run(result);
 
@@ -562,7 +562,7 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceFinishedForVideo(
     // should be no |subscriber_texture|.
     DCHECK(!subscriber_texture.get());
     const bool lost_resource = !sync_token.HasData();
-    release_callback->Run(sync_token, lost_resource);
+    std::move(release_callback).Run(sync_token, lost_resource);
   }
   ReturnSubscriberTexture(dfh, subscriber_texture, sync_token);
 }
@@ -632,7 +632,7 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo(
     return;
 
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
 
