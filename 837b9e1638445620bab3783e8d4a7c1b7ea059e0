@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd39179_468422b1",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-19T17:15:27Z",
+      "side": 1,
+      "message": "Destroys",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8e4337_6a044141",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-19T17:15:27Z",
+      "side": 1,
+      "message": "nit: Destroys",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
