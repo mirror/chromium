@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
@@ -333,4 +334,16 @@ void PermissionPromptImpl::Show() {
 
   bubble_delegate_->UpdateAnchor(GetAnchorView(), GetAnchorPoint(),
                                  GetAnchorArrow());
+}
+
+views::View* PermissionPromptImpl::GetAnchorView() {
+  return bubble_anchor_util::GetPageInfoAnchorView(browser_);
+}
+
+gfx::Point PermissionPromptImpl::GetAnchorPoint() {
+  return bubble_anchor_util::GetPageInfoAnchorRect(browser_).origin();
+}
+
+views::BubbleBorder::Arrow PermissionPromptImpl::GetAnchorArrow() {
+  return views::BubbleBorder::TOP_LEFT;
 }
