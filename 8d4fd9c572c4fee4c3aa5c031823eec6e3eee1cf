@@ -22,6 +22,30 @@
       "revId": "8d4fd9c572c4fee4c3aa5c031823eec6e3eee1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e0620e_ff3e80a6",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-19T19:01:12Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "983ba24d_33957688",
+      "range": {
+        "startLine": 99,
+        "startChar": 22,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "8d4fd9c572c4fee4c3aa5c031823eec6e3eee1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
