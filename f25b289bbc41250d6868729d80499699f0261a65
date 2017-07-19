@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "437e6c98_4a750130",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-19T08:32:37Z",
+      "side": 1,
+      "message": "dtapuska@: any opinions about this? (for example, is this how we would do this on Windows too?)",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
