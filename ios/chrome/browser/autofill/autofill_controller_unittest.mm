@@ -10,6 +10,7 @@
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/histogram_tester.h"
 #import "base/test/ios/wait_util.h"
 #include "components/autofill/core/browser/autofill_manager.h"
@@ -31,8 +32,8 @@
 #include "ios/chrome/browser/web_data_service_factory.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
-#import "ios/web/public/web_state/web_state.h"
 #include "ios/web/public/ssl_status.h"
+#import "ios/web/public/web_state/web_state.h"
 #import "testing/gtest_mac.h"
 #include "ui/base/test/ios/ui_view_test_utils.h"
 
@@ -167,7 +168,7 @@ class AutofillControllerTest : public ChromeWebTest {
   void TearDown() override;
   void SetUpForSuggestions(NSString* data);
 
-  // Adds key value data to the Personal Data Manager.
+  // Adds key value data to the Personal Data Manager and loads test page.
   void SetUpKeyValueData();
 
   // Blocks until suggestion retrieval has completed.
@@ -345,8 +346,11 @@ void AutofillControllerTest::SetUpForSuggestions(NSString* data) {
   profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16("55123"));
   EXPECT_EQ(0U, personal_data_manager->GetProfiles().size());
   personal_data_manager->SaveImportedProfile(profile);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   EXPECT_EQ(1U, personal_data_manager->GetProfiles().size());
+
   LoadHtml(data);
+  WaitForBackgroundTasks();
 }
 
 // Checks that focusing on a text element of a profile-type form will result in
@@ -354,7 +358,6 @@ void AutofillControllerTest::SetUpForSuggestions(NSString* data) {
 // test data manager.
 TEST_F(AutofillControllerTest, ProfileSuggestions) {
   SetUpForSuggestions(kProfileFormHtml);
-  WaitForBackgroundTasks();
   ui::test::uiview_utils::ForceViewRendering(web_state()->GetView());
   ExecuteJavaScript(@"document.forms[0].name.focus()");
   WaitForSuggestionRetrieval();
@@ -370,7 +373,6 @@ TEST_F(AutofillControllerTest, ProfileSuggestions) {
 TEST_F(AutofillControllerTest, ProfileSuggestionsTwoAnonymousForms) {
   SetUpForSuggestions(
       [NSString stringWithFormat:@"%@%@", kProfileFormHtml, kProfileFormHtml]);
-  WaitForBackgroundTasks();
   ui::test::uiview_utils::ForceViewRendering(web_state()->GetView());
   ExecuteJavaScript(@"document.forms[0].name.focus()");
   WaitForSuggestionRetrieval();
@@ -386,7 +388,6 @@ TEST_F(AutofillControllerTest, ProfileSuggestionsTwoAnonymousForms) {
 // into a test data manager.
 TEST_F(AutofillControllerTest, ProfileSuggestionsFromSelectField) {
   SetUpForSuggestions(kProfileFormHtml);
-  WaitForBackgroundTasks();
   ui::test::uiview_utils::ForceViewRendering(web_state()->GetView());
   ExecuteJavaScript(@"document.forms[0].state.focus()");
   WaitForSuggestionRetrieval();
@@ -422,6 +423,7 @@ TEST_F(AutofillControllerTest, MultipleProfileSuggestions) {
   personal_data_manager->SaveImportedProfile(profile2);
   EXPECT_EQ(2U, personal_data_manager->GetProfiles().size());
   LoadHtml(kProfileFormHtml);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   ui::test::uiview_utils::ForceViewRendering(web_state()->GetView());
   ExecuteJavaScript(@"document.forms[0].name.focus()");
@@ -442,8 +444,11 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
           chrome_browser_state_.get(), ServiceAccessType::EXPLICIT_ACCESS);
   __block TestConsumer consumer;
   const int limit = 1;
+  consumer.result_ = {base::ASCIIToUTF16("Should"), base::ASCIIToUTF16("get"),
+                      base::ASCIIToUTF16("overwritten")};
   web_data_service->GetFormValuesForElementName(
       base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // No value should be returned before anything is loaded via form submission.
   ASSERT_EQ(0U, consumer.result_.size());
@@ -453,6 +458,7 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
         base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
     return consumer.result_.size();
   });
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // One result should be returned, matching the filled value.
   ASSERT_EQ(1U, consumer.result_.size());
@@ -470,6 +476,11 @@ void AutofillControllerTest::SetUpKeyValueData() {
   fieldData.value = base::UTF8ToUTF16("Bonjour");
   values.push_back(fieldData);
   web_data_service->AddFormFields(values);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+
+  // Load test page.
+  LoadHtml(kKeyValueFormHtml);
+  WaitForBackgroundTasks();
 }
 
 // Checks that focusing on an element of a key/value type form then typing the
@@ -477,9 +488,8 @@ void AutofillControllerTest::SetUpKeyValueData() {
 // AutofillAgent, once data has been loaded into a test data manager.
 TEST_F(AutofillControllerTest, KeyValueSuggestions) {
   SetUpKeyValueData();
-  // Load test page and focus element.
-  LoadHtml(kKeyValueFormHtml);
-  WaitForBackgroundTasks();
+
+  // Focus element.
   ExecuteJavaScript(@"document.forms[0].greeting.value='B'");
   ExecuteJavaScript(@"document.forms[0].greeting.focus()");
   WaitForSuggestionRetrieval();
@@ -493,8 +503,7 @@ TEST_F(AutofillControllerTest, KeyValueSuggestions) {
 // in practice and should not result in a crash or incorrect behavior.
 TEST_F(AutofillControllerTest, KeyValueTypedSuggestions) {
   SetUpKeyValueData();
-  LoadHtml(kKeyValueFormHtml);
-  WaitForBackgroundTasks();
+
   ExecuteJavaScript(@"document.forms[0].greeting.select()");
   ExecuteJavaScript(@"event = document.createEvent('TextEvent');");
   ExecuteJavaScript(
@@ -510,7 +519,6 @@ TEST_F(AutofillControllerTest, KeyValueTypedSuggestions) {
 // typing again, result in suggestions.
 TEST_F(AutofillControllerTest, KeyValueFocusChange) {
   SetUpKeyValueData();
-  LoadHtml(kKeyValueFormHtml);
 
   // Focus the dummy field and confirm no suggestions are presented.
   ExecuteJavaScript(@"document.forms[0].dummy.focus()");
@@ -543,8 +551,8 @@ TEST_F(AutofillControllerTest, KeyValueFocusChange) {
 // been loaded into a test data manager.
 TEST_F(AutofillControllerTest, NoKeyValueSuggestionsWithoutTyping) {
   SetUpKeyValueData();
-  // Load test page and focus element.
-  LoadHtml(kKeyValueFormHtml);
+
+  // Focus element.
   ExecuteJavaScript(@"document.forms[0].greeting.focus()");
   WaitForSuggestionRetrieval();
   EXPECT_EQ(0U, [suggestion_controller() suggestions].count);
