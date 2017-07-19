@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aacbdf1b_80feb739",
+        "filename": "base/values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T21:41:21Z",
+      "side": 1,
+      "message": "How about a unique_ptr\u003cValue\u003e MakeUniqueClone() const; or\nDictionaryValue::Set(StringPiece path, Value\u0026\u0026 in_value);\n\nThe latter creates nicer syntax but the former is probably faster.\n\nEither one could make this syntax less awkward:\nchanged_prefs_.Set(key, base::MakeUnique\u003cbase::Value\u003e(value-\u003eClone()));\n\n--\u003e \nchanged_prefs_.Set(key, value-\u003eMakeUniqueClone());\nchanged_prefs_.Set(key, value-\u003eClone());",
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5dc17f_7aeba935",
         "filename": "base/values.h",
         "patchSetId": 6
