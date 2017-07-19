@@ -356,6 +356,6 @@ void PluginObserver::OnOpenPDF(content::RenderFrameHost* render_frame_host,
       content::Referrer::SanitizeForRequest(
           url, content::Referrer(web_contents()->GetURL(),
                                  blink::kWebReferrerPolicyDefault)),
-      WindowOpenDisposition::NEW_FOREGROUND_TAB,
-      ui::PAGE_TRANSITION_AUTO_BOOKMARK, false));
+      WindowOpenDisposition::CURRENT_TAB, ui::PAGE_TRANSITION_AUTO_BOOKMARK,
+      false));
 }
