@@ -17,6 +17,7 @@
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/test_render_frame_host.h"
 #include "content/test/test_render_view_host.h"
@@ -400,7 +401,9 @@ TEST_F(RenderProcessHostUnitTest, ReuseNavigationProcess) {
 
   // Start a navigation. Now Getting RenderProcessHost with the
   // REUSE_PENDING_OR_COMMITTED_SITE policy should return the current process.
-  main_test_rfh()->SimulateNavigationStart(kUrl1);
+  std::unique_ptr<NavigationSimulator> navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl1, main_test_rfh());
+  navigation->Start();
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl1);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
@@ -409,8 +412,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseNavigationProcess) {
   // Finish the navigation and start a new cross-site one. Getting
   // RenderProcessHost with the REUSE_PENDING_OR_COMMITTED_SITE policy should
   // return the process of the speculative RenderFrameHost.
-  main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigate(0, true, kUrl1);
+  navigation->Commit();
   contents()->GetController().LoadURL(kUrl2, Referrer(),
                                       ui::PAGE_TRANSITION_TYPED, std::string());
   main_test_rfh()->SendBeforeUnloadACK(true);
@@ -455,7 +457,9 @@ TEST_F(RenderProcessHostUnitTest,
 
   // Start a navigation. Now getting RenderProcessHost with the
   // REUSE_PENDING_OR_COMMITTED_SITE policy should return the current process.
-  main_test_rfh()->SimulateNavigationStart(kUrl);
+  std::unique_ptr<NavigationSimulator> navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl, main_test_rfh());
+  navigation->Start();
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
@@ -463,7 +467,7 @@ TEST_F(RenderProcessHostUnitTest,
 
   // Simulate a same-site redirect. Getting RenderProcessHost with the
   // REUSE_PENDING_OR_COMMITTED_SITE policy should return the current process.
-  main_test_rfh()->SimulateRedirect(kRedirectUrl1);
+  navigation->Redirect(kRedirectUrl1);
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
@@ -476,7 +480,7 @@ TEST_F(RenderProcessHostUnitTest,
   // RenderProcessHost with the REUSE_PENDING_OR_COMMITTED_SITE policy should no
   // longer return the current process for the initial site we were trying to
   // navigate to.
-  main_test_rfh()->SimulateRedirect(kRedirectUrl2);
+  navigation->Redirect(kRedirectUrl2);
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
@@ -691,7 +695,9 @@ TEST_F(RenderProcessHostUnitTest, ReuseExpectedSiteURLChanges) {
   // Start a navigation. Getting a RenderProcessHost with the
   // REUSE_PENDING_OR_COMMITTED_SITE policy should now return the process of the
   // main RFH.
-  main_test_rfh()->SimulateNavigationStart(kUrl);
+  std::unique_ptr<NavigationSimulator> navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl, main_test_rfh());
+  navigation->Start();
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
@@ -712,8 +718,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseExpectedSiteURLChanges) {
   // Have the navigation commit. Getting a RenderProcessHost with the
   // REUSE_PENDING_OR_COMMITTED_SITE policy should now return the process of the
   // main RFH, as it was registered with the modified site URL at commit time.
-  main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigate(0, true, kUrl);
+  navigation->Commit();
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
