@@ -60,6 +60,8 @@ define('media_router_bindings', [
         return mediaRouterMojom.MediaSink.IconType.CAST_AUDIO;
       case 'cast_audio_group':
         return mediaRouterMojom.MediaSink.IconType.CAST_AUDIO_GROUP;
+      case 'education':
+        return mediaRouterMojom.MediaSink.IconType.EDUCATION;
       case 'generic':
         return mediaRouterMojom.MediaSink.IconType.GENERIC;
       case 'hangout':
