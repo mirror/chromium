@@ -82,7 +82,8 @@ struct WALLPAPER_EXPORT WallpaperInfo {
 
 // Asserts that the current task is sequenced with any other task that calls
 // this.
-void WALLPAPER_EXPORT AssertCalledOnWallpaperSequence();
+void WALLPAPER_EXPORT
+AssertCalledOnWallpaperSequence(base::SequencedTaskRunner* task_runner);
 
 class WallpaperManagerBrowserTest;
 
