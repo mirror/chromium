@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5c75786_8e4a63ce",
+        "filename": "services/viz/public/interfaces/compositing/struct_traits_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-19T23:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a52bc0ca_fe0118e4",
+      "revId": "57ecc70e823eac14cd9e17ca514fd458ec661144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f502b169_98a49af1",
         "filename": "ui/gfx/mojo/buffer_types_struct_traits.h",
         "patchSetId": 6
