@@ -118,7 +118,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
                  mojom::blink::WebSocketPtr);
     void SendTextAsCharVector(std::unique_ptr<Vector<char>>);
     void SendBinaryAsCharVector(std::unique_ptr<Vector<char>>);
-    void SendBlob(PassRefPtr<BlobDataHandle>);
+    void SendBlob(std::unique_ptr<CrossThreadBlobDataHandleData>);
     void Close(int code, const String& reason);
     void Fail(const String& reason,
               MessageLevel,

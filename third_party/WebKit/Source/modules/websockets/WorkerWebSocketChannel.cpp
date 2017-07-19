@@ -206,10 +206,11 @@ void MainChannelClient::SendBinaryAsCharVector(
     main_channel_->SendBinaryAsCharVector(std::move(data));
 }
 
-void MainChannelClient::SendBlob(PassRefPtr<BlobDataHandle> blob_data) {
+void MainChannelClient::SendBlob(
+    std::unique_ptr<CrossThreadBlobDataHandleData> blob_data) {
   DCHECK(IsMainThread());
   if (main_channel_)
-    main_channel_->Send(std::move(blob_data));
+    main_channel_->Send(BlobDataHandle::Create(std::move(blob_data)));
 }
 
 void MainChannelClient::Close(int code, const String& reason) {
@@ -459,9 +460,10 @@ void Bridge::Send(const DOMArrayBuffer& binary_data,
 void Bridge::Send(PassRefPtr<BlobDataHandle> data) {
   DCHECK(main_channel_client_);
   parent_frame_task_runners_->Get(TaskType::kNetworking)
-      ->PostTask(BLINK_FROM_HERE,
-                 CrossThreadBind(&MainChannelClient::SendBlob,
-                                 main_channel_client_, std::move(data)));
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&MainChannelClient::SendBlob, main_channel_client_,
+                          WTF::Passed(data->CopyData())));
 }
 
 void Bridge::Close(int code, const String& reason) {
