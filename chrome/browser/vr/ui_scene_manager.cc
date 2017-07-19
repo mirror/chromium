@@ -249,7 +249,7 @@ void UiSceneManager::CreateSystemIndicators() {
         512, kIndicatorHeight, indicator.icon, indicator.resource_string);
     element->set_debug_id(indicator.debug_id);
     element->set_id(AllocateId());
-    element->set_parent_id(main_content_->id());
+    main_content_->AddChild(element.get());
     element->set_y_anchoring(YAnchoring::YTOP);
     element->set_visible(false);
     *(indicator.element) = element.get();
@@ -283,7 +283,7 @@ void UiSceneManager::CreateContentQuad() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kBackplaneSize, kBackplaneSize);
   element->SetTranslate(0, 0, -kTextureOffset);
-  element->set_parent_id(main_content_->id());
+  main_content_->AddChild(element.get());
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
@@ -363,7 +363,7 @@ void UiSceneManager::CreateUrlBar() {
   indicator->SetTranslate(0, kLoadingIndicatorVerticalOffset,
                           kLoadingIndicatorDepthOffset);
   indicator->SetSize(kLoadingIndicatorWidth, kLoadingIndicatorHeight);
-  indicator->set_parent_id(url_bar_->id());
+  url_bar_->AddChild(indicator.get());
   indicator->set_y_anchoring(YAnchoring::YTOP);
   loading_indicator_ = indicator.get();
   control_elements_.push_back(indicator.get());
@@ -413,7 +413,7 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kExitPromptWidth, kExitPromptHeight);
   element->SetTranslate(0.0, kExitPromptVerticalOffset, kTextureOffset);
-  element->set_parent_id(main_content_->id());
+  main_content_->AddChild(element.get());
   element->set_visible(false);
   exit_prompt_ = element.get();
   scene_->AddUiElement(std::move(element));
@@ -427,7 +427,7 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
   element->SetTranslate(0.0, 0.0, -kTextureOffset);
-  element->set_parent_id(exit_prompt_->id());
+  exit_prompt_->AddChild(element.get());
   exit_prompt_backplane_ = element.get();
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
