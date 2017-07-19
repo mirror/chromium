@@ -57,6 +57,18 @@ enum class MediaRouterUserAction {
   TOTAL_COUNT = 6
 };
 
+// Error encounted when parsing DIAL device description XML text.
+enum class MediaRouterDialParsingError {
+  NONE = 0,
+  MISSING_UNIQUE_ID = 1,
+  MISSING_FRIENDLY_NAME = 2,
+  MISSING_APP_URL = 3,
+  INVALID_APP_URL = 4,
+
+  // Note: Add entries only immediately above this line.
+  TOTAL_COUNT = 5
+};
+
 class MediaRouterMetrics {
  public:
   MediaRouterMetrics();
@@ -65,6 +77,7 @@ class MediaRouterMetrics {
   // UMA histogram names.
   static const char kHistogramDialAvailableDeviceCount[];
   static const char kHistogramDialKnownDeviceCount[];
+  static const char kHistogramDialParsingError[];
   static const char kHistogramIconClickLocation[];
   static const char kHistogramMediaRouterCastingSource[];
   static const char kHistogramMediaRouterFileFormat[];
@@ -102,6 +115,9 @@ class MediaRouterMetrics {
   // Records the format of a cast file.
   static void RecordMediaRouterFileFormat(
       media::container_names::MediaContainerName format);
+
+  // Records why DIAL device description resolution fails.
+  static void RecordDialParsingError(MediaRouterDialParsingError parsing_error);
 
   // Records device counts.
   // TODO(zhaobin): Move device count specific metrics and state into its own

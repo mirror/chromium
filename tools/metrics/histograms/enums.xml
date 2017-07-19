@@ -24961,6 +24961,14 @@ from previous Chrome versions.
   <int value="3" label="Page"/>
 </enum>
 
+<enum name="MediaRouterDialParsingError">
+  <int value="0" label="Success"/>
+  <int value="1" label="Missing unique ID"/>
+  <int value="2" label="Missing name"/>
+  <int value="3" label="Missing app URL"/>
+  <int value="4" label="Invalid app URL"/>
+</enum>
+
 <enum name="MediaRouterInitialViews">
   <int value="0" label="Route Details"/>
   <int value="1" label="Sink List"/>

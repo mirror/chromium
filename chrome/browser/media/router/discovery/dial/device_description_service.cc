@@ -12,18 +12,13 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/media/router/discovery/dial/device_description_fetcher.h"
 #include "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h"
+#include "chrome/browser/media/router/media_router_metrics.h"
 #include "net/base/ip_address.h"
 #include "url/gurl.h"
 
-namespace {
+using ErrorType = media_router::MediaRouterDialParsingError;
 
-enum ErrorType {
-  NONE,
-  MISSING_UNIQUE_ID,
-  MISSING_FRIENDLY_NAME,
-  MISSING_APP_URL,
-  INVALID_APP_URL
-};
+namespace {
 
 // How long to cache a device description.
 constexpr int kDeviceDescriptionCacheTimeHours = 12;
@@ -251,7 +246,9 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
       device_data.device_description_url().host(), description_data);
 
   if (error != ErrorType::NONE) {
-    DLOG(WARNING) << "Device description failed to validate: " << error;
+    DLOG(WARNING) << "Device description failed to validate: "
+                  << static_cast<int>(error);
+    MediaRouterMetrics::RecordDialParsingError(error);
     error_cb_.Run(device_data, "Failed to process fetch result");
     return;
   }

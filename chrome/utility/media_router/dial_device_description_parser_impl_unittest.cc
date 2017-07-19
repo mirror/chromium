@@ -85,7 +85,8 @@ class DialDeviceDescriptionParserImplTest : public testing::Test {
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestInvalidXml) {
   chrome::mojom::DialDeviceDescriptionPtr device_description = Parse("");
-  EXPECT_FALSE(device_description);
+  EXPECT_TRUE(device_description);
+  EXPECT_TRUE(device_description->unique_id.empty());
 }
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestParse) {
@@ -130,7 +131,9 @@ TEST_F(DialDeviceDescriptionParserImplTest,
   xml_text = Replace(xml_text, model_name, "");
 
   chrome::mojom::DialDeviceDescriptionPtr device_description = Parse(xml_text);
-  EXPECT_FALSE(device_description);
+  EXPECT_TRUE(device_description);
+  EXPECT_TRUE(device_description->friendly_name.empty());
+  EXPECT_TRUE(device_description->model_name.empty());
 }
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestParseWithoutFriendlyName) {
