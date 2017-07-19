@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d526dd33_6a67cab2",
+        "filename": "chrome/browser/chromeos/login/users/default_user_image/default_user_images.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T16:25:53Z",
+      "side": 1,
+      "message": "These were not shown on the spec or provided, but yes, we should add these for a11y. I was waiting for an official list.",
+      "parentUuid": "bb7408fb_f4100981",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d79f090_54bc3d15",
         "filename": "chrome/browser/chromeos/login/users/default_user_image/default_user_images.cc",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "91a5f900_b24eeb87",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T16:25:53Z",
+      "side": 1,
+      "message": "My understanding is that new Chrome features (and it seems to me that this counts) should ship with a flag allowing it to be disabled so that we can easily disable it in the branch if we encounter insurmountable problems. The intention is to remove the flag once the feature is in stable.",
+      "parentUuid": "64cf6cac_46e124a5",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2858427b_55d358fc",
         "filename": "ui/chromeos/resources/default_100_percent/default_user_images/harmony/1-bird.png",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-19T03:31:29Z",
       "side": 1,
       "message": "is 288x288 the size we want? old user images are 256x256",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffbac57_469b0ea4",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/harmony/1-bird.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T16:25:53Z",
+      "side": 1,
+      "message": "That\u0027s the size in the spec.",
+      "parentUuid": "2858427b_55d358fc",
       "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
