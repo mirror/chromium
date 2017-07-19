@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67e00bb_12dab53a",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T05:14:27Z",
+      "side": 1,
+      "message": "Not sure I understand what you are trying to do, by this moment we should have already checked for window.debugTest in http/tests/inspector/inspector-test.js.",
+      "revId": "c7972b6005b92000256568674227518590dc4309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
