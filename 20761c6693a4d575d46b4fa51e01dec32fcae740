@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b31a8145_d3a5977e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-19T22:07:45Z",
+      "side": 1,
+      "message": "Add comments to initializeAdapter()",
+      "parentUuid": "b1aa6543_53f4a374",
+      "range": {
+        "startLine": 331,
+        "startChar": 28,
+        "endLine": 331,
+        "endChar": 29
+      },
+      "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ee41e5_f3781dbe",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34627452_c98b7038",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-19T22:07:45Z",
+      "side": 1,
+      "message": "The first group is still header group because clear browsing data button is still here, but the name change should be applied to testInfoHeaderInSearchMode() and testInvisibleHeader()",
+      "parentUuid": "67ee41e5_f3781dbe",
+      "range": {
+        "startLine": 447,
+        "startChar": 37,
+        "endLine": 447,
+        "endChar": 48
+      },
+      "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d16b9a89_c1bca230",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-19T22:07:45Z",
+      "side": 1,
+      "message": "headerGroup.isListHeader is not exposed, but we can definitely assert adapter\u0027s hasListHeader.",
+      "parentUuid": "956a6bc8_c7cbd3cb",
+      "range": {
+        "startLine": 466,
+        "startChar": 24,
+        "endLine": 466,
+        "endChar": 35
+      },
+      "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ab2b0c_72792d50",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e94efa_cf6006ed",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-19T22:07:45Z",
+      "side": 1,
+      "message": "This will also be assert true for the above reason.",
+      "parentUuid": "b6ab2b0c_72792d50",
+      "range": {
+        "startLine": 476,
+        "startChar": 8,
+        "endLine": 476,
+        "endChar": 20
+      },
+      "revId": "20761c6693a4d575d46b4fa51e01dec32fcae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
