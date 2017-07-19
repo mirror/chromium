@@ -15,17 +15,22 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/views/bubble/bubble_frame_view.h"
+#include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
+
+#if defined(USE_AURA)
+#include "ui/aura/window.h"
+#endif
 
 namespace {
 
 // Override the default margin provided by views::kPanel*Margin so that the
-// hosted WebContents fill more of the bubble. However, it can't fill the entire
-// bubble since that would draw over the rounded corners and make the bubble
-// square. See http://crbug.com/593203.
-const int kBubbleMargin = 2;
+// hosted WebContents fills all of the bubble.
+const int kBubbleMargin = 0;
 
 ExtensionViewViews* GetExtensionView(extensions::ExtensionViewHost* host) {
   return static_cast<ExtensionViewViews*>(host->view());
@@ -57,9 +62,7 @@ ExtensionPopup::ExtensionPopup(extensions::ExtensionViewHost* host,
                                views::View* anchor_view,
                                views::BubbleBorder::Arrow arrow,
                                ShowAction show_action)
-    : BubbleDialogDelegateView(anchor_view, arrow),
-      host_(host),
-      widget_initialized_(false) {
+    : BubbleDialogDelegateView(anchor_view, arrow), host_(host) {
   inspect_with_devtools_ = show_action == SHOW_AND_INSPECT;
   set_margins(gfx::Insets(kBubbleMargin));
   SetLayoutManager(new views::FillLayout());
@@ -142,6 +145,18 @@ void ExtensionPopup::DevToolsAgentHostDetached(
 
 void ExtensionPopup::OnExtensionSizeChanged(ExtensionViewViews* view) {
   SizeToContents();
+
+#if defined(USE_AURA)
+  aura::Window* native_view =
+      GetExtensionView(host_.get())->holder()->native_view();
+  ui::Layer* contents_layer = native_view ? native_view->layer() : nullptr;
+  if (!contents_layer)
+    return;
+
+  if (!contents_layer->layer_mask_layer())
+    contents_layer->SetMaskLayer(mask_.layer());
+  mask_.layer()->SetBounds(contents_layer->bounds());
+#endif
 }
 
 gfx::Size ExtensionPopup::CalculatePreferredSize() const {
@@ -204,3 +219,29 @@ void ExtensionPopup::ShowBubble() {
         host()->host_contents(), DevToolsToggleAction::ShowConsolePanel());
   }
 }
+
+ExtensionPopup::ContentsMask::ContentsMask() : layer_(ui::LAYER_TEXTURED) {
+  layer_.set_delegate(this);
+  layer_.SetFillsBoundsOpaquely(false);
+  layer_.set_name("ExtensionContentsMaskLayer");
+}
+
+ExtensionPopup::ContentsMask::~ContentsMask() {}
+
+void ExtensionPopup::ContentsMask::OnPaintLayer(
+    const ui::PaintContext& context) {
+  cc::PaintFlags flags;
+  flags.setAlpha(255);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setAntiAlias(true);
+
+  ui::PaintRecorder recorder(context, layer()->size());
+  gfx::RectF bounds(layer()->bounds());
+  recorder.canvas()->DrawRoundRect(bounds, corner_radius_, flags);
+}
+
+void ExtensionPopup::ContentsMask::OnDelegatedFrameDamage(
+    const gfx::Rect& damage_rect_in_dip) {}
+
+void ExtensionPopup::ContentsMask::OnDeviceScaleFactorChanged(
+    float device_scale_factor) {}
