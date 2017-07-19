@@ -163,9 +163,10 @@ ukm::SourceId IOSChromePasswordManagerClient::GetUkmSourceId() {
 PasswordManagerMetricsRecorder&
 IOSChromePasswordManagerClient::GetMetricsRecorder() {
   if (!metrics_recorder_) {
-    metrics_recorder_.emplace(PasswordManagerMetricsRecorder(
-        PasswordManagerMetricsRecorder::CreateUkmEntryBuilder(
-            GetUkmRecorder(), GetUkmSourceId())));
+    // Query source_id first, because that has the side effect of initializing
+    // |ukm_source_url_|.
+    ukm::SourceId source_id = GetUkmSourceId();
+    metrics_recorder_.emplace(GetUkmRecorder(), source_id, ukm_source_url_);
   }
   return metrics_recorder_.value();
 }

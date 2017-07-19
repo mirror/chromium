@@ -466,9 +466,8 @@ ukm::SourceId ChromePasswordManagerClient::GetUkmSourceId() {
 PasswordManagerMetricsRecorder&
 ChromePasswordManagerClient::GetMetricsRecorder() {
   if (!metrics_recorder_) {
-    metrics_recorder_.emplace(
-        PasswordManagerMetricsRecorder::CreateUkmEntryBuilder(
-            GetUkmRecorder(), GetUkmSourceId()));
+    metrics_recorder_.emplace(GetUkmRecorder(), GetUkmSourceId(),
+                              GetMainFrameURL());
   }
   return metrics_recorder_.value();
 }
