@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc5dc17f_7aeba935",
+        "filename": "base/values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:29:20Z",
+      "side": 1,
+      "message": "This is added for consistency with ListValues.",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f257952f_97a5b4f2",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:29:20Z",
+      "side": 1,
+      "message": "Unfortunately initializer lists don\u0027t support move-only types, which makes this change necessary. This also applies to similar spots in other files.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 34
+      },
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2fe6c3_891bca2b",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:29:20Z",
+      "side": 1,
+      "message": "I mechanically replaced all previous calls to the copy constructor with a call to |Clone|. However, in situations where we insert into dicts we could make use of the new API, meaning this could be written as |main_dict.SetKey(\"bool\", bool_value.Clone());| \n\nI didn\u0027t do this, because I didn\u0027t want to do too many things in one CL. However, sooner or later we will make this change anyway, so we could just do it now. WDYT?",
+      "range": {
+        "startLine": 1635,
+        "startChar": 2,
+        "endLine": 1635,
+        "endChar": 63
+      },
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb598c4_f1893dea",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:29:20Z",
+      "side": 1,
+      "message": "Here I had to be creative, because gtest does not play nicely with move-only types and tries to make a copy. Hence the previous code wouldn\u0027t compile anymore.",
+      "range": {
+        "startLine": 747,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 61
+      },
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
