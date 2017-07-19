@@ -245,7 +245,9 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
     }
 
-    @Override
+    /** This method used to be called by the native side. Soon, only onExplorationTilesAvailable
+     * will be called and all it's contents should move there. */
+    @Deprecated
     public void onMostVisitedURLsAvailable(final String[] titles, final String[] urls,
             final String[] whitelistIconPaths, final int[] sources) {
         boolean removalCompleted = mPendingRemovalUrl != null;
@@ -288,6 +290,13 @@ public class TileGroup implements MostVisitedSites.Observer {
         LargeIconCallback iconCallback =
                 new LargeIconCallbackImpl(siteUrl, /* trackLoadTask = */ false);
         mUiDelegate.getImageFetcher().makeLargeIconRequest(siteUrl, mMinIconSize, iconCallback);
+    }
+
+    @Override
+    public void onExplorationTilesAvailable(String[] titles, String[] urls, int[] sections,
+            String[] whitelistIconPaths, int[] sources) {
+        // TODO(dgn): Initiate refresh of exploration section tiles.
+        onMostVisitedURLsAvailable(titles, urls, whitelistIconPaths, sources); // sample use.
     }
 
     /**
