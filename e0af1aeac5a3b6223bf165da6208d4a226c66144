@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933087cd_df44548a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36322,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T03:37:38Z",
+      "side": 1,
+      "message": "nit: which happens on startup?  on profile open (are these per-profile)?  periodically polled from disk?\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\n\nditto below",
+      "range": {
+        "startLine": 36322,
+        "startChar": 43,
+        "endLine": 36322,
+        "endChar": 44
+      },
+      "revId": "e0af1aeac5a3b6223bf165da6208d4a226c66144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45071eb3_1e664632",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36350,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T03:37:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t sound like \"recently\" broken.  It sounds like \"permanently\" broken.  Did you write this description in the way you meant?",
+      "range": {
+        "startLine": 36350,
+        "startChar": 24,
+        "endLine": 36350,
+        "endChar": 29
+      },
+      "revId": "e0af1aeac5a3b6223bf165da6208d4a226c66144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
