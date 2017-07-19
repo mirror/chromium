@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de64fde_1ea11b86",
+        "filename": "net/ntlm/ntlm_buffer_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T18:36:22Z",
+      "side": 1,
+      "message": "Just 0 will suffice since we are now dealing with uint8_t.",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "0c01a744d2c48c7fa252282cbdaf43caec4540bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abefc7a_a4965d73",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T18:36:22Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "revId": "0c01a744d2c48c7fa252282cbdaf43caec4540bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
