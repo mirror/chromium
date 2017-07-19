@@ -684,6 +684,7 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
 
 void AppListView::OnMaximizeModeChanged(bool started) {
   is_maximize_mode_ = started;
+  search_box_view_->OnMaximizeModeChanged(started);
   if (is_maximize_mode_ && !is_fullscreen()) {
     // Set |app_list_state_| to a maximize mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS

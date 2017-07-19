@@ -31,6 +31,8 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/shadow_value.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -145,14 +147,16 @@ class SearchBoxImageButton : public views::ImageButton {
 
 SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
                              AppListViewDelegate* view_delegate,
-                             AppListView* app_list_view)
+                             AppListView* app_list_view,
+                             bool is_maximize_mode)
     : delegate_(delegate),
       view_delegate_(view_delegate),
       content_container_(new views::View),
       search_box_(new views::Textfield),
       app_list_view_(app_list_view),
       focused_view_(FOCUS_SEARCH_BOX),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
+      is_maximize_mode(is_maximize_mode_) {
   SetLayoutManager(new views::FillLayout);
   SetPreferredSize(gfx::Size(is_fullscreen_app_list_enabled_
                                  ? kPreferredWidthFullscreen
@@ -396,6 +400,19 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   search_box_->SetCursorEnabled(active);
   search_box_->SchedulePaint();
 
+  if (is_maximize_mode_) {
+    keyboard::KeyboardController* const keyboard_controller =
+        keyboard::KeyboardController::GetInstance();
+    if (!keyboard_controller || active == keyboard::IsKeyboardVisible())
+      return;
+
+    if (active)
+      keyboard_controller->ShowKeyboard(false);
+    else
+      keyboard_controller->HideKeyboard(
+          keyboard::KeyboardController::HIDE_REASON_MANUAL);
+  }
+
   if (speech_button_)
     speech_button_->SetVisible(!active);
   close_button_->SetVisible(active);
@@ -506,6 +523,13 @@ void SearchBoxView::UpdateBackground(double progress,
       GetSearchBoxColorForState(target_state));
   background->set_color(color);
   search_box_->SetBackgroundColor(color);
+}
+
+void SearchBoxView::OnMaximizeModeChanged(bool started) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  is_maximize_mode_ = started;
 }
 
 void SearchBoxView::UpdateModel() {
