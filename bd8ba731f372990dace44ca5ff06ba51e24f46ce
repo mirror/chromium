@@ -39,6 +39,30 @@
       "revId": "bd8ba731f372990dace44ca5ff06ba51e24f46ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b17f105_fbcb6793",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-19T19:39:53Z",
+      "side": 1,
+      "message": "Will rename it to ComputeOffsetMappingIfNeeded. Thanks!",
+      "parentUuid": "4ab7e9a5_94b81127",
+      "range": {
+        "startLine": 71,
+        "startChar": 40,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "bd8ba731f372990dace44ca5ff06ba51e24f46ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
