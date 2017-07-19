@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c9c0da9_81f422ed",
+        "filename": "chrome/browser/safe_browsing/permission_reporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-19T15:13:55Z",
+      "side": 1,
+      "message": "If param is StringPiece, use StringPiece() instead of std::string(). (Here and elsewhere.)",
+      "range": {
+        "startLine": 245,
+        "startChar": 42,
+        "endLine": 245,
+        "endChar": 45
+      },
+      "revId": "be40ea83ed66d07a953e09ff0ee55ac3b4b477f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f888fc11_0dda384a",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-19T15:13:55Z",
+      "side": 1,
+      "message": "Nit: Either \"field trial\" no caps if not referring to class name or FieldTrial (one word) when referring to it.",
+      "range": {
+        "startLine": 251,
+        "startChar": 30,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "be40ea83ed66d07a953e09ff0ee55ac3b4b477f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
