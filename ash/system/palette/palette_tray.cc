@@ -136,6 +136,11 @@ class TitleView : public views::View, public views::ButtonListener {
 
 }  // namespace
 
+// PaletteTray
+
+// static
+const char PaletteTray::kViewClassName[] = "PaletteTray";
+
 PaletteTray::PaletteTray(Shelf* shelf)
     : TrayBackgroundView(shelf),
       palette_tool_manager_(new PaletteToolManager(this)),
@@ -184,6 +189,10 @@ void PaletteTray::OnLockStateChanged(bool locked) {
   // open the palette. Make sure to close it if that happens.
   if (locked)
     HidePalette();
+}
+
+const char* PaletteTray::GetClassName() const {
+  return kViewClassName;
 }
 
 void PaletteTray::ClickedOutsideBubble() {
