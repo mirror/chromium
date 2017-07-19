@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a80f31f_94b6fdc8",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T18:35:11Z",
+      "side": 1,
+      "message": "This situation isn\u0027t possible - no need for this special handling.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 78
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0200e6_505b324b",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T18:35:11Z",
+      "side": 1,
+      "message": "Can you make a handler and log this if it ever occurs? Also set |is_waiting_for_wifi_to_enable_| to false.",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9976ee0_9f8ae449",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T18:35:11Z",
+      "side": 1,
+      "message": "passed",
+      "range": {
+        "startLine": 174,
+        "startChar": 54,
+        "endLine": 174,
+        "endChar": 60
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f819eac1_5fab4f57",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T18:35:11Z",
+      "side": 1,
+      "message": "nit: Add comment: \"No configuration should have been created since the connection attempt timed out before Wi-Fi was successfully enabled.\"",
+      "range": {
+        "startLine": 636,
+        "startChar": 0,
+        "endLine": 636,
+        "endChar": 60
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
