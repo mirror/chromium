@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1662c3a_e67bccf2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4035,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T21:07:01Z",
+      "side": 1,
+      "message": "Nit: Here and where command.recordEngagement is used in StackViewController:\nThis comment represents the entry points now, but if a new entry point is added that invokes the new tab command on BVC, this comment goes stale. I would remove mention of the specific entry points in the comment and instead mention when recordEngagement is YES.\n\nThe list of entry points (that are included) could then be added to the commit message.",
+      "range": {
+        "startLine": 4034,
+        "startChar": 9,
+        "endLine": 4035,
+        "endChar": 27
+      },
+      "revId": "661053a09f366976c9fa0701cc990e5bfc88bcdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
