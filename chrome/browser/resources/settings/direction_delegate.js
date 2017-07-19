@@ -18,7 +18,7 @@ cr.define('settings', function() {
   class DirectionDelegateImpl {
     /** @override */
     isRtl() {
-      return loadTimeData.getString('textdirection') == 'rtl';
+      return loadTimeData.getString('textdirection') == 'rtl'; 
     }
   }
 
