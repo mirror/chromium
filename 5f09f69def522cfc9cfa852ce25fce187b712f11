@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a205bef6_5ed529ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "Is there a spec (or a draft of a spec) yet? If so, please link it here.",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb58656_5825c63f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "Please link to the intent to implement here.",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5085799c_31029f39",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ReportingObserverCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "Why can\u0027t we generate the bindings for the constructor?",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a941126d_4d82c4ac",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "const String\u0026, no need to copy?",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f71e974_5c2467d0",
+        "filename": "third_party/WebKit/Source/core/frame/Report.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "Why String instead of KURL?",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c43ea1_4259a24e",
+        "filename": "third_party/WebKit/Source/core/frame/ReportingObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-19T18:26:47Z",
+      "side": 1,
+      "message": "reports will get copied here, right? That looked unnecessary to me at first, but I think it might be important. This function will call JS, which could then generate a new Report, which could cause modify-will-iterating if a copy isn\u0027t made. Maybe make the copy explicit and/or commented?",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
