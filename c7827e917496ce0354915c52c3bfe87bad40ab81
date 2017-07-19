@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49e6a87a_1715d197",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/sticky-input-box-position.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-19T18:33:34Z",
+      "side": 1,
+      "message": "I confirmed on #testing that this won\u0027t work in WPT (lack of testRunner/eventSender support). Please move this test to our internal sticky tests and I will port it later once WPT works out an input approach.",
+      "revId": "c7827e917496ce0354915c52c3bfe87bad40ab81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
