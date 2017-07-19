@@ -16,6 +16,24 @@
       "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf03f23c_5c9174a4",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-19T19:14:19Z",
+      "side": 1,
+      "message": "The SystemMonitor is notified when plugging/unplugging devices, that is working fine. With this change it would also be notified when changing the default device (from https://cs.chromium.org/chromium/src/ash/system/audio/audio_detailed_view.cc), in which case the device cache must be refreshed.",
+      "parentUuid": "06308844_8c3f2a3c",
+      "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
