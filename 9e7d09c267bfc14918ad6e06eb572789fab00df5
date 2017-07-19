@@ -34,6 +34,24 @@
       "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9658329c_56216648",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-19T01:38:58Z",
+      "side": 1,
+      "message": "I mean, just sharing code around L185-188 and L198-201.\nNaming is up to you.",
+      "parentUuid": "19de8130_aa27f6ff",
+      "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
