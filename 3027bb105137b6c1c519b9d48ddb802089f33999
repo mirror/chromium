@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2d19ee_11a43678",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 0,
+      "message": "It would be nice to keep all the omnibox field trial logic in one place, so we can easily see what experiments exist and/or need to be retired.  Please use these functions if possible.",
+      "range": {
+        "startLine": 430,
+        "startChar": 45,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "3027bb105137b6c1c519b9d48ddb802089f33999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3688cf0f_5da8a730",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 0,
+      "message": "I think this line should probably stay.  I wonder why Gheorghe removed it.",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "3027bb105137b6c1c519b9d48ddb802089f33999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

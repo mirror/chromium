@@ -1,0 +1,480 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "443a80b5_942fe7f3",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "context -\u003e URL context",
+      "range": {
+        "startLine": 20,
+        "startChar": 65,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e1d31e2_0b8b09fa",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: prefer variable names in comments in |bars|",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9689e041_b70cbd11",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "fetch request -\u003e fetcher\nand\n... and passes the fetcher to the provided callback.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc3629e9_ebbe3010",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: replace with \"/\"\nin Chrome field trial and experiment are basically synonymous",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4c76918_8c1db605",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "It doesn\u0027t \"return an invalid fetcher\", instead say it may \"pass an nullptr fetcher to the callback\"",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c93a9c32_0e0123dd",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "I don\u0027t think part of this paragraph is right.  The callback is called when the fetcher is created/ready.  The request has been sent yet, i.e., a network response is not yet received.",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "636b7a84_a3b7360f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "I don\u0027t see this case in the code.  I don\u0027t think the fetcher can be invalid.  What am I missing.",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5298bde0_7d48581c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "waiting for an\n-\u003e\nwaiting for a previously-requested",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e3c40f2_d11089df",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: |token_fetcher_|",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31f92f68_b3ac5de0",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Please comment that |current_url| can be empty and if so what happens.",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d11a374_6682968f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: experimental -\u003e is_experimental",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7fbddd5_97082642",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "It\u0027s not intuitive why what the current_url has to do with whether to use an experimental server.  Can you explain or refactor to remove this condition from this code?",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c036f0b5_6a0313b4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: return -\u003e returned",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb8c28fe_002c8b5a",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: corresponding to -\u003e with",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffda834f_004d5105",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Please restore the period. :-)",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c11757a_a7bc272f",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "How about can_attach_current_url?",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9761f62_4626f64e",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Is GetContextualSuggestionsService() always going to be non-null?",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd764418_cf373dff",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "nit: Definitions in the .cc file should be in the same order at in the header.",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 65
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84f0bdee_24ec8a93",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Why / how can this happen?\nAlso, if you keep it, since we\u0027re not going to get any additional suggestions after this failure, I think you should set done_ to true here.",
+      "range": {
+        "startLine": 192,
+        "startChar": 13,
+        "endLine": 192,
+        "endChar": 14
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c9e549f_f8deb5ce",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right place to set done_ to false.  I think it should\nremain set to false where it was.",
+      "range": {
+        "startLine": 196,
+        "startChar": 10,
+        "endLine": 196,
+        "endChar": 15
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ff4c2a6_cedf5362",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Please revise, as Run() doesn\u0027t exist anymore.",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb369706_3d2763a3",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T19:57:25Z",
+      "side": 1,
+      "message": "Please comment.",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 46
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
