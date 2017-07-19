@@ -39,6 +39,30 @@
       "revId": "2256ed61b315000c27f6c8b0dd94a3f025c4adc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54db9218_f6e93c73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/skip-waiting-installed.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-19T02:01:22Z",
+      "side": 1,
+      "message": "Thanks for commenting.\nActually, w3c owner just said he already has a patch for this issue, please see https://github.com/w3c/web-platform-tests/issues/6548, so the question is that if his patch will finally auto merged into chromium?",
+      "parentUuid": "93e27e61_4b838c29",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "2256ed61b315000c27f6c8b0dd94a3f025c4adc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
