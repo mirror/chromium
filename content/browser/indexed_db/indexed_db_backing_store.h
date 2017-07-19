@@ -54,6 +54,7 @@ class URLRequestContextGetter;
 namespace content {
 
 class IndexedDBFactory;
+class IndexedDBTombstoneCrawler;
 class LevelDBComparator;
 class LevelDBDatabase;
 class LevelDBFactory;
@@ -379,7 +380,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
   const url::Origin& origin() const { return origin_; }
   IndexedDBFactory* factory() const { return indexed_db_factory_; }
   base::SequencedTaskRunner* task_runner() const { return task_runner_.get(); }
-  base::OneShotTimer* close_timer() { return &close_timer_; }
+  IndexedDBTombstoneCrawler* crawler() { return crawler_.get(); }
   IndexedDBActiveBlobRegistry* active_blob_registry() {
     return &active_blob_registry_;
   }
@@ -585,6 +586,15 @@ class CONTENT_EXPORT IndexedDBBackingStore
       blink::WebIDBCursorDirection,
       leveldb::Status*);
 
+  // Stars the crawler, and calls |done| when the crawler has completed. The
+  // crawler is guarenteed to be destroyed before |done| is called.
+  void StartCrawler(std::unique_ptr<IndexedDBTombstoneCrawler> crawler,
+                    base::OnceClosure done);
+
+  // Deletes the crawler. This prevents uma metrics from being uploaded if it
+  // has not finished crawling. Suitable for force close situations.
+  void DeleteCrawler();
+
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
 
@@ -622,6 +632,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
   void CleanPrimaryJournalIgnoreReturn();
 
  private:
+  friend class IndexedDBTombstoneCrawler;
   FRIEND_TEST_ALL_PREFIXES(IndexedDBBackingStoreTest, ReadCorruptionInfo);
 
   static scoped_refptr<IndexedDBBackingStore> Create(
@@ -689,12 +700,15 @@ class CONTENT_EXPORT IndexedDBBackingStore
   // Whenever blobs are registered in active_blob_registry_, indexed_db_factory_
   // will hold a reference to this backing store.
   IndexedDBActiveBlobRegistry active_blob_registry_;
-  base::OneShotTimer close_timer_;
+
+  std::unique_ptr<IndexedDBTombstoneCrawler> tombstone_crawler_;
 
   // Incremented whenever a transaction starts committing, decremented when
   // complete. While > 0, temporary journal entries may exist so out-of-band
   // journal cleaning must be deferred.
   size_t committing_transaction_count_;
+
+  std::unique_ptr<IndexedDBTombstoneCrawler> crawler_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedDBBackingStore);
 };

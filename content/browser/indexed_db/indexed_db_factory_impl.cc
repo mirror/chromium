@@ -10,12 +10,15 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "content/browser/indexed_db/indexed_db_backing_store.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_database_error.h"
+#include "content/browser/indexed_db/indexed_db_tombstone_crawler.h"
 #include "content/browser/indexed_db/indexed_db_tracing.h"
 #include "content/browser/indexed_db/indexed_db_transaction_coordinator.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseException.h"
@@ -27,6 +30,9 @@ using url::Origin;
 namespace content {
 
 const int64_t kBackingStoreGracePeriodMs = 2000;
+const size_t kTombstoneCrawlerMaxScanPeriodMs = 5 * 60 * 1000;
+const size_t kTombstoneCrawlerRoundIterations = 1000;
+const size_t kTombstoneCrawlerMaxIterations = 10 * 1000 * 1000;
 
 IndexedDBFactoryImpl::IndexedDBFactoryImpl(IndexedDBContextImpl* context)
     : context_(context) {
@@ -88,12 +94,31 @@ void IndexedDBFactoryImpl::ReleaseBackingStore(const Origin& origin,
     return;
   }
 
-  // Start a timer to close the backing store, unless something else opens it
-  // in the mean time.
-  DCHECK(!backing_store_map_[origin]->close_timer()->IsRunning());
-  backing_store_map_[origin]->close_timer()->Start(
-      FROM_HERE, base::TimeDelta::FromMilliseconds(kBackingStoreGracePeriodMs),
+  scoped_refptr<IndexedDBBackingStore> store = backing_store_map_[origin];
+
+  if (store->crawler())
+    store->DeleteCrawler();
+
+  std::unique_ptr<IndexedDBTombstoneCrawler> crawler =
+      base::MakeUnique<IndexedDBTombstoneCrawler>(
+          IndexedDBTombstoneCrawler::Mode::STATISTICS,
+          kTombstoneCrawlerRoundIterations, kTombstoneCrawlerMaxIterations,
+          base::TimeDelta::FromMilliseconds(kBackingStoreGracePeriodMs),
+          base::TimeDelta::FromMilliseconds(kTombstoneCrawlerMaxScanPeriodMs));
+
+  store->StartCrawler(
+      std::move(crawler),
       base::Bind(&IndexedDBFactoryImpl::MaybeCloseBackingStore, this, origin));
+  //
+  //  // Start a timer to close the backing store, unless something else opens
+  //  it
+  //  // in the mean time.
+  //  DCHECK(!backing_store_map_[origin]->close_timer()->IsRunning());
+  //  backing_store_map_[origin]->close_timer()->Start(
+  //      FROM_HERE,
+  //      base::TimeDelta::FromMilliseconds(kBackingStoreGracePeriodMs),
+  //      base::Bind(&IndexedDBFactoryImpl::MaybeCloseBackingStore, this,
+  //      origin));
 }
 
 void IndexedDBFactoryImpl::MaybeCloseBackingStore(const Origin& origin) {
@@ -106,9 +131,10 @@ void IndexedDBFactoryImpl::MaybeCloseBackingStore(const Origin& origin) {
 void IndexedDBFactoryImpl::CloseBackingStore(const Origin& origin) {
   const auto& it = backing_store_map_.find(origin);
   DCHECK(it != backing_store_map_.end());
-  // Stop the timer (if it's running) - this may happen if the timer was started
-  // and then a forced close occurs.
-  it->second->close_timer()->Stop();
+  // Stop the crawler (if it's running) - this may happen if the timer was
+  // started and then a forced close occurs.
+  if (it->second->crawler())
+    it->second->DeleteCrawler();
   backing_store_map_.erase(it);
 }
 
@@ -169,8 +195,10 @@ void IndexedDBFactoryImpl::ContextDestroyed() {
   // context (which nominally owns this factory) is destroyed during thread
   // termination the timers must be stopped so that this factory and the
   // stores can be disposed of.
-  for (const auto& it : backing_store_map_)
-    it.second->close_timer()->Stop();
+  for (const auto& it : backing_store_map_) {
+    if (it.second->crawler())
+      it.second->DeleteCrawler();
+  }
   backing_store_map_.clear();
   backing_stores_with_active_blobs_.clear();
   context_ = NULL;
@@ -401,7 +429,7 @@ bool IndexedDBFactoryImpl::IsBackingStorePendingClose(
   const auto& it = backing_store_map_.find(origin);
   if (it == backing_store_map_.end())
     return false;
-  return it->second->close_timer()->IsRunning();
+  return it->second->crawler() ? !it->second->crawler()->IsStopped() : false;
 }
 
 scoped_refptr<IndexedDBBackingStore>
@@ -429,7 +457,8 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBFactoryImpl::OpenBackingStore(
 
   const auto& it2 = backing_store_map_.find(origin);
   if (it2 != backing_store_map_.end()) {
-    it2->second->close_timer()->Stop();
+    if (it2->second->crawler())
+      it2->second->crawler()->StopForNewConnection();
     return it2->second;
   }
 

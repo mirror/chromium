@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/format_macros.h"
@@ -28,6 +29,7 @@
 #include "content/browser/indexed_db/indexed_db_data_format_version.h"
 #include "content/browser/indexed_db/indexed_db_database_error.h"
 #include "content/browser/indexed_db/indexed_db_leveldb_coding.h"
+#include "content/browser/indexed_db/indexed_db_tombstone_crawler.h"
 #include "content/browser/indexed_db/indexed_db_tracing.h"
 #include "content/browser/indexed_db/indexed_db_value.h"
 #include "content/browser/indexed_db/leveldb/leveldb_comparator.h"
@@ -4006,6 +4008,27 @@ IndexedDBBackingStore::OpenIndexCursor(
     return std::unique_ptr<IndexedDBBackingStore::Cursor>();
 
   return std::move(cursor);
+}
+
+void RunCallbacksInOrder(base::OnceClosure one, base::OnceClosure two) {
+  std::move(one).Run();
+  std::move(two).Run();
+}
+
+void IndexedDBBackingStore::StartCrawler(
+    std::unique_ptr<IndexedDBTombstoneCrawler> crawler,
+    base::OnceClosure done) {
+  DCHECK(!crawler_.get());
+  crawler_ = std::move(crawler);
+  crawler_->Start(
+      this, base::BindOnce(&RunCallbacksInOrder,
+                           base::BindOnce(&IndexedDBBackingStore::DeleteCrawler,
+                                          base::Unretained(this)),
+                           std::move(done)));
+}
+
+void IndexedDBBackingStore::DeleteCrawler() {
+  crawler_.reset();
 }
 
 IndexedDBBackingStore::Transaction::Transaction(
