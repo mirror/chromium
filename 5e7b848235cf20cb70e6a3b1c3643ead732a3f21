@@ -37,6 +37,47 @@
     },
     {
       "key": {
+        "uuid": "b1b12e0e_9440571a",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-19T05:09:54Z",
+      "side": 1,
+      "message": "OK ... that makes sense, and it should indeed be EXTENSION_FUNCTION_VALIDATE.\n\nI\u0027d also add a comment explaining that the explicit check for \u0027default\u0027 exists because the content settings extension API should not support setting any content setting to \u0027default\u0027.",
+      "parentUuid": "17403d24_f1e09cab",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1150e3_b212b130",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-19T05:09:54Z",
+      "side": 1,
+      "message": "A comment here would also be useful as it is not at all obvious why this DCHECK exists.",
+      "range": {
+        "startLine": 342,
+        "startChar": 14,
+        "endLine": 342,
+        "endChar": 37
+      },
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f251c6ad_c8039849",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 10
