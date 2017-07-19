@@ -1053,6 +1053,9 @@ extern const char kOfflinePagesLoadSignalCollectingDescription[];
 extern const char kOfflinePagesPrefetchingName[];
 extern const char kOfflinePagesPrefetchingDescription[];
 
+extern const char kOfflinePagesRenovationsName[];
+extern const char kOfflinePagesRenovationsDescription[];
+
 extern const char kOfflinePagesSharingName[];
 extern const char kOfflinePagesSharingDescription[];
 
