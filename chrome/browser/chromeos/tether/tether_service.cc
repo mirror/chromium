@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
+#include "chrome/browser/chromeos/tether/active_users_daily_event_observer.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
 #include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -17,10 +18,12 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/components/tether/initializer.h"
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_type_pattern.h"
 #include "components/cryptauth/cryptauth_service.h"
+#include "components/metrics/daily_event.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
@@ -38,6 +41,8 @@ TetherService* TetherService::Get(Profile* profile) {
 void TetherService::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kInstantTetheringAllowed, true);
   registry->RegisterBooleanPref(prefs::kInstantTetheringEnabled, true);
+  metrics::DailyEvent::RegisterPref(registry,
+                                    prefs::kInstantTetheringDailyEvent);
   chromeos::tether::Initializer::RegisterProfilePrefs(registry);
 }
 
@@ -56,12 +61,13 @@ void TetherService::InitializerDelegate::InitializeTether(
     chromeos::ManagedNetworkConfigurationHandler*
         managed_network_configuration_handler,
     chromeos::NetworkConnect* network_connect,
-    chromeos::NetworkConnectionHandler* network_connection_handler) {
+    chromeos::NetworkConnectionHandler* network_connection_handler,
+    chromeos::tether::ActiveUsersLogger* active_users_logger) {
   chromeos::tether::Initializer::Init(
       cryptauth_service, std::move(notification_presenter), pref_service,
       token_service, network_state_handler,
       managed_network_configuration_handler, network_connect,
-      network_connection_handler);
+      network_connection_handler, active_users_logger);
 }
 
 void TetherService::InitializerDelegate::ShutdownTether() {
@@ -80,6 +86,13 @@ TetherService::TetherService(
       cryptauth_service_(cryptauth_service),
       network_state_handler_(network_state_handler),
       initializer_delegate_(base::MakeUnique<InitializerDelegate>()),
+      active_users_logger_(
+          base::MakeUnique<chromeos::tether::ActiveUsersLogger>(
+              profile_->GetPrefs())),
+      daily_event_(base::MakeUnique<metrics::DailyEvent>(
+          profile_->GetPrefs(),
+          prefs::kInstantTetheringDailyEvent,
+          "InstantTethering.DailyEvent.IntervalType")),
       weak_ptr_factory_(this) {
   power_manager_client_->AddObserver(this);
   session_manager_client_->AddObserver(this);
@@ -92,6 +105,9 @@ TetherService::TetherService(
   registrar_.Add(prefs::kInstantTetheringAllowed,
                  base::Bind(&TetherService::OnPrefsChanged,
                             weak_ptr_factory_.GetWeakPtr()));
+
+  daily_event_->AddObserver(base::MakeUnique<ActiveUsersDailyEventObserver>(
+      active_users_logger_.get()));
 
   // GetAdapter may call OnBluetoothAdapterFetched immediately which can cause
   // problems with the Fake implementation since the class is not fully
@@ -122,7 +138,10 @@ void TetherService::StartTetherIfEnabled() {
       network_state_handler_,
       chromeos::NetworkHandler::Get()->managed_network_configuration_handler(),
       chromeos::NetworkConnect::Get(),
-      chromeos::NetworkHandler::Get()->network_connection_handler());
+      chromeos::NetworkHandler::Get()->network_connection_handler(),
+      active_users_logger_.get());
+
+  daily_event_->CheckInterval();
 }
 
 void TetherService::StopTether() {

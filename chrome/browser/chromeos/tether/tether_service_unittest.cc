@@ -16,6 +16,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
@@ -105,7 +106,8 @@ class TestInitializerDelegate : public TetherService::InitializerDelegate {
       chromeos::ManagedNetworkConfigurationHandler*
           managed_network_configuration_handler,
       chromeos::NetworkConnect* network_connect,
-      chromeos::NetworkConnectionHandler* network_connection_handler) override {
+      chromeos::NetworkConnectionHandler* network_connection_handler,
+      chromeos::tether::ActiveUsersLogger* active_users_logger) override {
     is_tether_running_ = true;
   }
 

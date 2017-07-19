@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "chromeos/components/tether/active_host.h"
+#include "chromeos/components/tether/active_users_logger.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/host_connection_metrics_logger.h"
 #include "chromeos/components/tether/host_scan_cache.h"
@@ -31,7 +32,8 @@ TetherConnector::TetherConnector(
     DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
     HostScanCache* host_scan_cache,
     NotificationPresenter* notification_presenter,
-    HostConnectionMetricsLogger* host_connection_metrics_logger)
+    HostConnectionMetricsLogger* host_connection_metrics_logger,
+    ActiveUsersLogger* active_users_logger)
     : network_state_handler_(network_state_handler),
       wifi_hotspot_connector_(wifi_hotspot_connector),
       active_host_(active_host),
@@ -42,6 +44,7 @@ TetherConnector::TetherConnector(
       host_scan_cache_(host_scan_cache),
       notification_presenter_(notification_presenter),
       host_connection_metrics_logger_(host_connection_metrics_logger),
+      active_users_logger_(active_users_logger),
       weak_ptr_factory_(this) {}
 
 TetherConnector::~TetherConnector() {
@@ -61,6 +64,8 @@ void TetherConnector::ConnectToNetwork(
   PA_LOG(INFO) << "Attempting to connect to network with GUID "
                << tether_network_guid << ".";
   notification_presenter_->RemoveConnectionToHostFailedNotification();
+
+  active_users_logger_->RecordUserWasActive();
 
   const std::string device_id =
       device_id_tether_network_guid_map_->GetDeviceIdForTetherNetworkGuid(

@@ -36,6 +36,7 @@ namespace tether {
 
 class ActiveHost;
 class ActiveHostNetworkStateUpdater;
+class ActiveUsersLogger;
 class BleConnectionManager;
 class CrashRecoveryManager;
 class NetworkConnectionHandlerTetherDelegate;
@@ -70,7 +71,8 @@ class Initializer : public OAuth2TokenService::Observer {
       NetworkStateHandler* network_state_handler,
       ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
       NetworkConnect* network_connect,
-      NetworkConnectionHandler* network_connection_handler);
+      NetworkConnectionHandler* network_connection_handler,
+      ActiveUsersLogger* active_users_logger);
 
   // Shuts down the tether feature, destroying all internal classes. This should
   // be called before the dependencies passed to Init() are destroyed.
@@ -91,7 +93,8 @@ class Initializer : public OAuth2TokenService::Observer {
       NetworkStateHandler* network_state_handler,
       ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
       NetworkConnect* network_connect,
-      NetworkConnectionHandler* network_connection_handler);
+      NetworkConnectionHandler* network_connection_handler,
+      ActiveUsersLogger* active_users_logger);
   ~Initializer() override;
 
   // OAuth2TokenService::Observer:
@@ -114,6 +117,7 @@ class Initializer : public OAuth2TokenService::Observer {
   ManagedNetworkConfigurationHandler* managed_network_configuration_handler_;
   NetworkConnect* network_connect_;
   NetworkConnectionHandler* network_connection_handler_;
+  ActiveUsersLogger* active_users_logger_;
 
   // Declare new objects in the order that they will be created during
   // initialization to ensure that they are destroyed in the correct order. This

@@ -24,14 +24,21 @@ class NetworkStateHandler;
 class ManagedNetworkConfigurationHandler;
 class NetworkConnect;
 class NetworkConnectionHandler;
+
 namespace tether {
+class ActiveUsersLogger;
 class NotificationPresenter;
 }  // namespace tether
+
 }  // namespace chromeos
 
 namespace cryptauth {
 class CryptAuthService;
 }  // namespace cryptauth
+
+namespace metrics {
+class DailyEvent;
+}  // namespace metrics
 
 class PrefRegistrySimple;
 class Profile;
@@ -82,7 +89,8 @@ class TetherService : public KeyedService,
         chromeos::ManagedNetworkConfigurationHandler*
             managed_network_configuration_handler,
         chromeos::NetworkConnect* network_connect,
-        chromeos::NetworkConnectionHandler* network_connection_handler);
+        chromeos::NetworkConnectionHandler* network_connection_handler,
+        chromeos::tether::ActiveUsersLogger* active_users_logger);
     virtual void ShutdownTether();
   };
 
@@ -158,6 +166,8 @@ class TetherService : public KeyedService,
   cryptauth::CryptAuthService* cryptauth_service_;
   chromeos::NetworkStateHandler* network_state_handler_;
   std::unique_ptr<InitializerDelegate> initializer_delegate_;
+  std::unique_ptr<chromeos::tether::ActiveUsersLogger> active_users_logger_;
+  std::unique_ptr<metrics::DailyEvent> daily_event_;
 
   PrefChangeRegistrar registrar_;
   scoped_refptr<device::BluetoothAdapter> adapter_;
