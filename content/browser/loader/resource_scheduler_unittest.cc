@@ -982,6 +982,112 @@ TEST_F(ResourceSchedulerTest, RequestStartedAfterClientDeletedManyDelayable) {
   EXPECT_TRUE(lowest->started());
 }
 
+// Test that the time interval between non-delayable requests and in-flight
+// delayable requests that were started immidiately are recorded.
+TEST_F(ResourceSchedulerTest, DelayableNonDelayableIntervalRecorded) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  std::vector<std::unique_ptr<TestRequest>> non_delayable_requests;
+  std::vector<std::unique_ptr<TestRequest>> delayable_requests;
+
+  // Check that nothing is recorded in the absense of a delayable request.
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/high";
+    non_delayable_requests.push_back(NewRequest(url.c_str(), net::HIGHEST));
+    EXPECT_TRUE(non_delayable_requests[index]->started());
+  }
+  histograms.ExpectTotalCount(histogram_name, 0);
+  non_delayable_requests.clear();
+  base::RunLoop().RunUntilIdle();
+
+  // Check that one entry is present for each spontaneous delayable request in
+  // flight.
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(delayable_requests[index]->started());
+  }
+  // Add a non-delayable request and check that it started.
+  non_delayable_requests.push_back(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(non_delayable_requests.back()->started());
+  histograms.ExpectTotalCount(histogram_name, 10);
+  non_delayable_requests.clear();
+  delayable_requests.clear();
+  base::RunLoop().RunUntilIdle();
+
+  // Check that one entry is present for each non-delayable request in
+  // flight when there is one delayable request.
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  // Add a delayable request and check that it started.
+  delayable_requests.push_back(NewRequest("http://host/high", net::LOWEST));
+  EXPECT_TRUE(delayable_requests.back()->started());
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/high";
+    non_delayable_requests.push_back(NewRequest(url.c_str(), net::HIGHEST));
+    EXPECT_TRUE(non_delayable_requests[index]->started());
+  }
+  histograms.ExpectTotalCount(histogram_name, 20);
+  non_delayable_requests.clear();
+  delayable_requests.clear();
+  base::RunLoop().RunUntilIdle();
+
+  // Check that entries are present only for delayable requests which are
+  // in-flight. Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(delayable_requests[index]->started());
+  }
+  for (int index = 0; index < 5; ++index) {
+    delayable_requests.pop_back();
+  }
+  base::RunLoop().RunUntilIdle();
+  // There are only 5 spontaneous delayable requests in-flight. Add a
+  // non-delayable request and verify that there were 5 entries added to the
+  // histogram.
+  non_delayable_requests.push_back(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(non_delayable_requests.back()->started());
+  histograms.ExpectTotalCount(histogram_name, 25);
+  non_delayable_requests.clear();
+  delayable_requests.clear();
+  base::RunLoop().RunUntilIdle();
+
+  // Check that entries are present only for delayable requests that were
+  // started as soon as they were scheduled.
+  for (int index = 0; index < 15; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+  }
+  // The last 5 requests were not started because
+  // |kMaxNumDelayableRequestsPerClient| is set to 10. The last 5 requests will
+  // start when atleast 5 other requests are done.
+  for (int index = 0; index < 5; ++index) {
+    delayable_requests[index].reset();
+  }
+  // Add a high priority request. Although there are 10 delayable requests
+  // in-flight, only 5 of them were started spontaneously. Hence, there must be
+  // 5 new entries in the histogram.
+  non_delayable_requests.push_back(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(non_delayable_requests.back()->started());
+  histograms.ExpectTotalCount(histogram_name, 30);
+  non_delayable_requests.clear();
+  delayable_requests.clear();
+  base::RunLoop().RunUntilIdle();
+}
+
 }  // unnamed namespace
 
 }  // namespace content

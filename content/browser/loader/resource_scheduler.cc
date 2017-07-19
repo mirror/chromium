@@ -229,6 +229,7 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
         fifo_ordering_(0),
         peak_delayable_requests_in_flight_(0u),
         host_port_pair_(net::HostPortPair::FromURL(request->url())),
+        started_immediately_(false),
         weak_ptr_factory_(this) {
     DCHECK(!request_->GetUserData(kUserDataKey));
     request_->SetUserData(kUserDataKey, base::MakeUnique<UnownedPointer>(this));
@@ -311,6 +312,10 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
     attributes_ = attributes;
   }
   const net::HostPortPair& host_port_pair() const { return host_port_pair_; }
+  base::TimeTicks start_time() const { return start_time_; }
+  void set_start_time(base::TimeTicks start_time) { start_time_ = start_time; }
+  bool was_started_immediately() const { return started_immediately_; }
+  void set_started_immediately() { started_immediately_ = true; }
 
  private:
   class UnownedPointer : public base::SupportsUserData::Data {
@@ -349,6 +354,12 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
   size_t peak_delayable_requests_in_flight_;
   // Cached to excessive recomputation in ShouldKeepSearching.
   const net::HostPortPair host_port_pair_;
+
+  // The time at which the resource scheduler started the request.
+  base::TimeTicks start_time_;
+
+  // Whether or not the request was started as soon as it was scheduled.
+  bool started_immediately_;
 
   base::WeakPtrFactory<ResourceScheduler::ScheduledResourceRequest>
       weak_ptr_factory_;
@@ -410,6 +421,31 @@ class ResourceScheduler::Client {
     if (should_start == START_REQUEST) {
       // New requests can be started synchronously without issue.
       StartRequest(request, START_SYNC, RequestStartTrigger::NONE);
+      request->set_start_time(base::TimeTicks::Now());
+      request->set_started_immediately();
+      if (!RequestAttributesAreSet(request->attributes(),
+                                   kAttributeDelayable)) {
+        // If the current request is non-delayable, record the difference in
+        // start times of the current request and the start time of the
+        // delayable requests in-flight which were started as soon as they were
+        // scheduled. Don't iterate over more than 50 requests. This will cover
+        // about 99 percent of the cases.
+        int max_requests_to_scan = 50;
+        for (ScheduledResourceRequest* in_flight_request :
+             in_flight_requests_) {
+          if (!max_requests_to_scan)
+            break;
+          max_requests_to_scan--;
+          if (RequestAttributesAreSet(in_flight_request->attributes(),
+                                      kAttributeDelayable) &&
+              in_flight_request->was_started_immediately()) {
+            UMA_HISTOGRAM_TIMES(
+                "ResourceScheduler.InterarrivalTime."
+                "SpontaneousDelayableToNonDelayableStart",
+                request->start_time() - in_flight_request->start_time());
+          }
+        }
+      }
     } else {
       pending_requests_.Insert(request);
       if (should_start == YIELD_SCHEDULER)
@@ -552,6 +588,7 @@ class ResourceScheduler::Client {
   void EraseInFlightRequest(ScheduledResourceRequest* request) {
     size_t erased = in_flight_requests_.erase(request);
     DCHECK_EQ(1u, erased);
+
     // Clear any special state that we were tracking for this request.
     SetRequestAttributes(request, kAttributeNone);
   }
