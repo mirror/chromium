@@ -32,11 +32,32 @@
 #include "components/subresource_filter/core/common/activation_level.h"
 #include "components/subresource_filter/core/common/activation_list.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
+#include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
+
+SubresourceFilterTestHarness::ScopedDevToolsClientHost::
+    ScopedDevToolsClientHost(
+        scoped_refptr<content::DevToolsAgentHost> agent_host)
+    : agent_host_(std::move(agent_host)) {
+  agent_host_->AttachClient(this);
+}
+
+SubresourceFilterTestHarness::ScopedDevToolsClientHost::
+    ~ScopedDevToolsClientHost() {
+  agent_host_->DetachClient(this);
+}
+
+void SubresourceFilterTestHarness::ScopedDevToolsClientHost::
+    DispatchProtocolMessage(content::DevToolsAgentHost* agent_host,
+                            const std::string& message) {}
+
+void SubresourceFilterTestHarness::ScopedDevToolsClientHost::AgentHostClosed(
+    content::DevToolsAgentHost* agent_host,
+    bool replaced) {}
 
 constexpr char const SubresourceFilterTestHarness::kDefaultDisallowedUrl[];
 
@@ -46,6 +67,10 @@ SubresourceFilterTestHarness::~SubresourceFilterTestHarness() = default;
 // ChromeRenderViewHostTestHarness:
 void SubresourceFilterTestHarness::SetUp() {
   ChromeRenderViewHostTestHarness::SetUp();
+
+  // Set up devtools.
+  agent_host_ = content::DevToolsAgentHost::GetOrCreateFor(web_contents());
+
   AfterStartupTaskUtils::SetBrowserStartupIsCompleteForTesting();
 
   // Ensure correct features.
@@ -105,6 +130,7 @@ void SubresourceFilterTestHarness::SetUp() {
 }
 
 void SubresourceFilterTestHarness::TearDown() {
+  agent_host_ = nullptr;
   fake_safe_browsing_database_ = nullptr;
   TestingBrowserProcess::GetGlobal()->safe_browsing_service()->ShutDown();
 

@@ -74,6 +74,10 @@ class ChromeDevToolsManagerDelegate :
   static std::unique_ptr<base::DictionaryValue> SetWindowBounds(
       int id,
       base::DictionaryValue* params);
+  static std::unique_ptr<base::DictionaryValue> EnableAdBlocking(
+      content::DevToolsAgentHost* agent_host,
+      int id,
+      base::DictionaryValue* params);
 
   std::unique_ptr<DevToolsNetworkProtocolHandler> network_protocol_handler_;
   std::map<content::DevToolsAgentHost*, std::unique_ptr<HostData>> host_data_;
