@@ -218,7 +218,8 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   AddFilter(filters, "flowtoIds*");
   AddFilter(filters, "detailsIds*");
   AddFilter(filters, "invalidState=*");
-  AddFilter(filters, "invalidState=1", Filter::DENY);  // Don't show false value
+  AddFilter(filters, "invalidState=false",
+            Filter::DENY);  // Don't show false value
 
   //
   // OS X
@@ -818,6 +819,20 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAriaTree) {
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAriaTreeGrid) {
   RunAriaTest(FILE_PATH_LITERAL("aria-treegrid.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAriaUndefined) {
+  RunAriaTest(FILE_PATH_LITERAL("aria-undefined.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       AccessibilityAriaUndefinedLiteral) {
+  RunAriaTest(FILE_PATH_LITERAL("aria-undefined-literal.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       AccessibilityAriaEmptyString) {
+  RunAriaTest(FILE_PATH_LITERAL("aria-empty-string.html"));
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
