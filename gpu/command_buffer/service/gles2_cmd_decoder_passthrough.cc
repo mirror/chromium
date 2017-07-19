@@ -4,11 +4,13 @@
 
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
+#include "base/callback.h"
 #include "base/strings/string_split.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gl_utils.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
+#include "ui/gl/angle_platform_impl.h"
 #include "ui/gl/gl_version_info.h"
 
 namespace gpu {
@@ -398,6 +400,15 @@ bool GLES2DecoderPassthroughImpl::MakeCurrent() {
     group_->LoseContexts(error::kUnknown);
     return false;
   }
+
+#if defined(USE_EGL)
+  // Establish the program binary caching callback.
+  if (group_->has_program_cache()) {
+    auto program_callback = base::BindRepeating(
+        &GLES2DecoderClient::CacheShader, base::Unretained(client_));
+    angle::SetCacheProgramCallback(program_callback);
+  }
+#endif  // defined(USE_EGL)
 
   return true;
 }
