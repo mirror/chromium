@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f52d8bfb_5edef997",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:07:52Z",
+      "side": 1,
+      "message": "You are correct that as implemented DeviceListChanged gets called immediately when the enabled state changes, but we probably shouldn\u0027t count on that implementation detail. Its an observer method and could easily get called asynchronously instead (i.e. as a queued task). In practice that is unlikely to change, but it\u0027s still good not to make that sort of assumption.\n\nAlso, this is all called on the *UI* thread, right? NSH calls are not allowed on any IO threads...",
+      "parentUuid": "527d5c04_1a52cf99",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 78
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0200e6_505b324b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 4
