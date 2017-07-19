@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4f45f26_8bc794ba",
+        "filename": "chrome/browser/vr/transition.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fc2e842_d0ae7215",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e291c7b8_4ff40e68",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-18T21:35:55Z",
       "side": 1,
       "message": "Since we\u0027re shooting for sugar, what about these wrappers that just configure the animation_player under the hood:\n\nelement-\u003eset_transitions(cc::TargetProperty::TRANSFORM | cc::TargetProperty::OPACITY);\nor\nelement-\u003eset_transitions({cc::TargetProperty::TRANSFORM, cc::TargetProperty::OPACITY});",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ad0050_5c3058d9",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "I\u0027ve added this AnimationPlayer::SetTransitionedProperties which takes a vector of properties. This does make this call site more sugary, and the sugar will be available to others if we move the player to gfx/animations. wdyt?",
+      "parentUuid": "e291c7b8_4ff40e68",
       "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "20f09d76_68c35de0",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "Yah, it\u0027s pretty gross. I\u0027ve added a using statement as you suggest and it did clean things up.",
+      "parentUuid": "d78dcf08_f70dd2fd",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8e1b154_7d912a35",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "57385e64_d11d5a18",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "I added another AnimationPlayer method for \"are you animating this property\". I\u0027ve also checked that the size does change.",
+      "parentUuid": "e8e1b154_7d912a35",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c68c7f10_ccac62a5",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-18T21:35:55Z",
       "side": 1,
       "message": "I\u0027ve been working on getting our \"Let x seconds elapse\" tool working.  I think we should try to make this look more like that.  As the animation players aren\u0027t timer based, what about something like:\n\nscene-\u003eFastForwardSceneBy(1000000);\n\nIe, a handy wrapper that will let all animations tick ahead and finish, without having to poke an individual element?  As is, it feels like your test is manually enacting a change, then checking to make sure the change happened.",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad80be8_52579dc2",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "That does sound better. I\u0027ve added UiSceneManagerTest::Animate(base::TimeDelta duration) which ticks animations over |duration|. It looks a lot nicer and will probably be helpful for other tests than work with animations.",
+      "parentUuid": "c68c7f10_ccac62a5",
       "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +209,30 @@
       "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f0f4bd_a79e6fca",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T02:39:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6fca7b_715d0a45",
+      "range": {
+        "startLine": 296,
+        "startChar": 1,
+        "endLine": 296,
+        "endChar": 2
+      },
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
