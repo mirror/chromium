@@ -24,6 +24,8 @@ enum class UserAgentType : short;
 @property(nonatomic, getter=hasNoOpenedTabs) BOOL noOpenedTabs;
 // Indicates that the menu is being shown while in incognito mode.
 @property(nonatomic, getter=isInIncognito) BOOL inIncognito;
+// Indicates that the menu should show a "NEW" badge on the reading list item.
+@property(nonatomic) BOOL showReadingListNewBadge;
 
 // Indicates that the menu is being shown while user agent is |userAgentType|.
 // If NONE, shows "Request Desktop Site" in disabled state.
