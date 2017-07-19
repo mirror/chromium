@@ -669,6 +669,64 @@ bool ColorSpace::GetTransferFunction(SkColorSpaceTransferFn* fn) const {
   return false;
 }
 
+bool ColorSpace::Serialize(base::Pickle* pickle) const {
+  if (!pickle->WriteUInt32(static_cast<uint32_t>(primaries_)) ||
+      !pickle->WriteUInt32(static_cast<uint32_t>(transfer_)) ||
+      !pickle->WriteUInt32(static_cast<uint32_t>(matrix_)) ||
+      !pickle->WriteUInt32(static_cast<uint32_t>(range_)) ||
+      !pickle->WriteUInt64(icc_profile_id_))
+    return false;
+  if (primaries_ == PrimaryID::CUSTOM &&
+      !pickle->WriteBytes(reinterpret_cast<const char*>(custom_primary_matrix_),
+                          sizeof(custom_primary_matrix_)))
+    return false;
+  if (transfer_ == TransferID::CUSTOM &&
+      !pickle->WriteBytes(
+          reinterpret_cast<const char*>(custom_transfer_params_),
+          sizeof(custom_transfer_params_)))
+    return false;
+  return true;
+}
+
+template <typename T>
+static bool ReadValue(base::PickleIterator* iter, T* result) {
+  uint32_t value;
+  if (!iter->ReadUInt32(&value))
+    return false;
+  *result = static_cast<T>(value);
+  if (*result > T::LAST)
+    return false;
+  return true;
+}
+
+bool ColorSpace::ReadFromPickle(base::PickleIterator* iter) {
+  if (!ReadValue(iter, &primaries_))
+    return false;
+  if (!ReadValue(iter, &transfer_))
+    return false;
+  if (!ReadValue(iter, &matrix_))
+    return false;
+  if (!ReadValue(iter, &range_))
+    return false;
+  if (!iter->ReadUInt64(&icc_profile_id_))
+    return false;
+
+  if (primaries_ == PrimaryID::CUSTOM) {
+    const char* data = nullptr;
+    if (!iter->ReadBytes(&data, sizeof(custom_primary_matrix_)))
+      return false;
+    memcpy(custom_primary_matrix_, data, sizeof(custom_primary_matrix_));
+  }
+  if (transfer_ == TransferID::CUSTOM) {
+    const char* data = nullptr;
+    if (!iter->ReadBytes(&data, sizeof(custom_transfer_params_)))
+      return false;
+    memcpy(custom_transfer_params_, data, sizeof(custom_transfer_params_));
+  }
+
+  return true;
+}
+
 bool ColorSpace::GetInverseTransferFunction(SkColorSpaceTransferFn* fn) const {
   if (!GetTransferFunction(fn))
     return false;
