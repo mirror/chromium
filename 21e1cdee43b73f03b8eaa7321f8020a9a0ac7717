@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0cdbce75_640f7cd3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Seeing how there is some question whether this makes sense, I\u0027ll skip it and we can refactor it later.  I\u0027ll reuse the \"On\" and \"Off\" for toggle-settings though.",
+      "parentUuid": "218febba_a201a34f",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1027ab2b_86c9c114",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0aa3372_0c744b12",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Will switch over to using https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?rcl\u003d28b06e6b5b9e1896dcfe4c24495b1b041abd233c\u0026l\u003d372",
+      "parentUuid": "1027ab2b_86c9c114",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b9442df8_66274e81",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/compiled_resources2.gyp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Fixed this, as well as some other closure compilation issues, thanks.",
+      "parentUuid": "975b2473_90cbb36d",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c5ed64_0acab4c1",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
         "patchSetId": 5
@@ -85,6 +139,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6570fbf6_3a5dd541",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c5ed64_0acab4c1",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "b46c9f6b_241a3a84",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e180453_832a2c12",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceaa2e91_90d093c4",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
         "patchSetId": 5
@@ -119,6 +209,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36e70aa_9d0845b7",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceaa2e91_90d093c4",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "0b89a500_bfd6b1bb",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "213eba2a_df929cb2",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b034d24_0a198c9a",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 5
@@ -153,6 +279,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f13f53_cdf3d830",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Switched the \u0027on\u0027 color to --settings-toggle-color.  Mocks are at https://gallery.googleplex.com/login?redirect_to\u003d%2Fprojects%2FMCHbtQVoQ2HCZXdtrkhTAHBP%2Ffiles%2FMCFrtjARIqeeI-1EJbPSBa22wMSJbxAVNpw (log-in with your google account)",
+      "parentUuid": "8b034d24_0a198c9a",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "7472f728_81a0c04d",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508cf38a_b245c23d",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4c937b_77b1f798",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 5
@@ -187,6 +349,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bd7f68_ff4d522a",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4c937b_77b1f798",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "b49fb02a_9f97f7a3",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8293588_a645253b",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c9d2af_014eb49a",
         "filename": "chrome/browser/resources/settings/search_page/search_page.js",
         "patchSetId": 5
@@ -221,6 +419,24 @@
       "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f0edb6_90dab566",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T23:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c9d2af_014eb49a",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
