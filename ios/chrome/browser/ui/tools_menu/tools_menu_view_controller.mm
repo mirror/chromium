@@ -113,6 +113,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
   // for the reading list badge.
   __weak ReadingListMenuNotifier* _readingListMenuNotifier;
 }
+@property(nonatomic) BOOL showReadingListNewBadge;
 @property(nonatomic, strong) ToolsMenuCollectionView* menuView;
 @property(nonatomic, strong) MDCInkView* touchFeedbackView;
 @property(nonatomic, assign) ToolbarType toolbarType;
@@ -127,6 +128,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 @implementation ToolsMenuViewController
 
+@synthesize showReadingListNewBadge = _showReadingListNewBadge;
 @synthesize menuView = _menuView;
 @synthesize isCurrentPageBookmarked = _isCurrentPageBookmarked;
 @synthesize touchFeedbackView = _touchFeedbackView;
@@ -217,6 +219,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 - (void)initializeMenuWithConfiguration:(ToolsMenuConfiguration*)configuration {
   self.requestStartTime = configuration.requestStartTime;
+  self.showReadingListNewBadge = configuration.showReadingListNewBadge;
 
   if (configuration.readingListMenuNotifier) {
     _readingListMenuNotifier = configuration.readingListMenuNotifier;
@@ -444,12 +447,19 @@ NS_INLINE void AnimateInViews(NSArray* views,
   AnimateInViews(visibleCells, 0, -10);
   [CATransaction commit];
 
-  [[self readingListCell]
-      updateBadgeCount:_readingListMenuNotifier.readingListUnreadCount
-              animated:YES];
-  [[self readingListCell]
-      updateSeenState:_readingListMenuNotifier.readingListUnseenItemsExist
-             animated:YES];
+  [[self readingListCell] updateShowNewFeatureBadge:_showReadingListNewBadge
+                                           animated:YES];
+  // The new feature badge should be prioritized over the number badge,
+  // so the number badge should only be visible when the new feature badge
+  // isn't.
+  if (!_showReadingListNewBadge) {
+    [[self readingListCell]
+        updateBadgeCount:_readingListMenuNotifier.readingListUnreadCount
+                animated:YES];
+    [[self readingListCell]
+        updateSeenState:_readingListMenuNotifier.readingListUnseenItemsExist
+               animated:YES];
+  }
 }
 
 - (void)hideContent {
@@ -648,11 +658,19 @@ NS_INLINE void AnimateInViews(NSArray* views,
 #pragma mark - ReadingListMenuNotificationDelegate Implementation
 
 - (void)unreadCountChanged:(NSInteger)unreadCount {
-  [[self readingListCell] updateBadgeCount:unreadCount animated:YES];
+  // The new feature badge takes precedence over the number badge, so
+  // it cannot be shown if the new feature badge is already visible.
+  if (!_showReadingListNewBadge) {
+    [[self readingListCell] updateBadgeCount:unreadCount animated:YES];
+  }
 }
 
 - (void)unseenStateChanged:(BOOL)unseenItemsExist {
-  [[self readingListCell] updateSeenState:unseenItemsExist animated:YES];
+  // The new feature badge takes precedence over the number badge, so
+  // it cannot be shown if the new feature badge is already visible.
+  if (!_showReadingListNewBadge) {
+    [[self readingListCell] updateSeenState:unseenItemsExist animated:YES];
+  }
 }
 
 @end
