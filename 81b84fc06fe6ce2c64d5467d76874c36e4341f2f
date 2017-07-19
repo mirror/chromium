@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a6a2f191_bb2d1816",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-19T00:34:10Z",
+      "side": 1,
+      "message": "Removed DCHECK.",
+      "parentUuid": "a3f54008_e8ae3e51",
+      "range": {
+        "startLine": 43,
+        "startChar": 67,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "285e0d32_218790db",
         "filename": "components/metrics/field_trials_provider.cc",
         "patchSetId": 1
@@ -213,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e7ddfc42_bff49de9",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-19T00:34:10Z",
+      "side": 1,
+      "message": "public/protected/private doesn\u0027t control what can override a method, just what can call it.\nThe \"final\" keyword prevents overriding the function.",
+      "parentUuid": "a06905cb_8605c1af",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af7966d4_33a91a91",
         "filename": "components/metrics/field_trials_provider.h",
         "patchSetId": 1
@@ -272,6 +320,30 @@
       "side": 1,
       "message": "Could you please expand this comment within the header, so that it makes sense to future readers of this code?  It\u0027s currently quite mysterious.\n\nAlso, a lot of providers report some value if it\u0027s been consistent over the lifetime of the log, and report something like \"ambiguous\" if that value ever changed.  Are all of those providers basically broken for the two initial logs?  I\u0027m not convinced that it\u0027s worth adding extra complexity to maintain a weird/broken state.  Do we actually want MetricsProviders to provide data for the initial log at all?",
       "parentUuid": "0c091fa6_5213ae98",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71085621_99bfa6bd",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-19T00:34:10Z",
+      "side": 1,
+      "message": "It seems highly likely that there are some bugs in this area.  We probably do want MetricsProviders to be able to provide data for the initial log, though it we should probably make it less of an anomalous log, and clarify the interface.  I\u0027m not really sure why we would pause a log to create the initial metrics log, rather than just doing a fast cut, but since we are it does mean that the first \"normal\" log will contain data like user actions that occur before the initial log was created.\n\nUpdated the comment to describe this more, and created crbug/746098 to track cleaning it up.",
+      "parentUuid": "10b6f9e4_bdc72563",
       "range": {
         "startLine": 39,
         "startChar": 56,
