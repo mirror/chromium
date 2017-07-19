@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d001f11_90fcc76e",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:56:36Z",
+      "side": 1,
+      "message": "While I think it makes sense to pull this out of DocumentInit, what about passing the KURL through so we call ShouldReuseDefaultView() consistently in one place, and it\u0027s harder to people to pass the wrong thing? Getting this wrong will result in a security bug.",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 73
+      },
+      "revId": "38cc46c2a3e42f7611b66e5ffa8609721e78478b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b58fb98_e54d47ec",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:56:36Z",
+      "side": 1,
+      "message": "Nit: let\u0027s name this |owner| or |owner_document|, since it\u0027s not very obvious from the context.",
+      "revId": "38cc46c2a3e42f7611b66e5ffa8609721e78478b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce60e1c3_34d4908e",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:56:36Z",
+      "side": 1,
+      "message": "Nit: please don\u0027t omit the name of bool parameters.\n\n(It would be even nicer if this was an enum, but that could be done in a followup)",
+      "range": {
+        "startLine": 100,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 54
+      },
+      "revId": "38cc46c2a3e42f7611b66e5ffa8609721e78478b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb033c8c_12c8afa2",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:56:36Z",
+      "side": 1,
+      "message": "Same comment here: let\u0027s also make sure we\u0027re consistent about using |owner| or |owner_document| consistently in the .cc (they\u0027re different right now)",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 31
+      },
+      "revId": "38cc46c2a3e42f7611b66e5ffa8609721e78478b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
