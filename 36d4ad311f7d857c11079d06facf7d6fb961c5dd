@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c1fbf5_9fe7baef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-19T21:57:18Z",
+      "side": 1,
+      "message": "s/2015/2017/",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138c2ee9_636eb805",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-19T21:57:18Z",
+      "side": 1,
+      "message": "s/2013/2017/",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b57bd3e_11f2625f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-19T21:57:18Z",
+      "side": 1,
+      "message": "is there some default values needed for all the members here?",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
