@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c00bd6ce_90fea35e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837d91d8_9c213245",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cea2398_3c6d2dfc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c6e786_1b2ac225",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cea2398_3c6d2dfc",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7928ee70_e17f731a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33673b64_3a686c52",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5370c971_f791c84e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "94815c4f_ea93f22e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5370c971_f791c84e",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45dbbcb_d9972f59",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 1
@@ -108,6 +204,24 @@
       "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b896eea_4865bc56",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2621,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45dbbcb_d9972f59",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "d56c870e_edc50fa2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4155,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "As it turns out, the above call only handles overscroll actions from GoogleLandingViewController. Overscroll actions originating anywhere but the non-incognito NTP have a different entry point. Thanks for catching that!",
+      "parentUuid": "b99cc263_9c39b9cb",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffc2cb43_dd5a30c8",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 1
@@ -142,6 +274,24 @@
       "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af4c5de_1f67737d",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc2cb43_dd5a30c8",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "5497dbef_898a62a7",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9236634e_7136c5b9",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce17eee_86642cb6",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 1
@@ -173,6 +341,24 @@
       "writtenOn": "2017-07-18T18:58:34Z",
       "side": 1,
       "message": "Why is there a switch statement here inside another switch statement?",
+      "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643b9d58_57f00740",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-19T20:32:49Z",
+      "side": 1,
+      "message": "The IDC_NEW_INCOGNITO_TAB case falls through to this case. The inner switch statement is used to disambiguate whether the command is \"New Tab\" or \"Incognito Tab\".",
+      "parentUuid": "9ce17eee_86642cb6",
       "revId": "0eeeae429867a5c913259920c2b210a0fac29381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
