@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b11a81a_1ba7dc6e",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-19T20:31:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change. Are you sure all devices will have one of these two extensions?\n\nIf yes, then can you simply remove this function and related logic around it? since it will always be true.",
+      "range": {
+        "startLine": 221,
+        "startChar": 9,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56dd23a_a4e98c81",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-19T20:31:00Z",
+      "side": 1,
+      "message": "Does level1 indicate lossless compression? If yes, can you add a comment because it\u0027s important and it\u0027s not self clear.",
+      "range": {
+        "startLine": 229,
+        "startChar": 40,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9b21c5_7a70a785",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-19T20:31:00Z",
+      "side": 1,
+      "message": "Should we CHECK here? because that indicates something seriously wrong (like disk/memory corrupted).",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad375d05_1a5c141c",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-19T20:31:00Z",
+      "side": 1,
+      "message": "Should we DCHECK here?",
+      "range": {
+        "startLine": 340,
+        "startChar": 11,
+        "endLine": 340,
+        "endChar": 31
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
