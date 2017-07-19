@@ -64,6 +64,7 @@
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
 #include "components/url_pattern_index/proto/rules.pb.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -215,7 +216,7 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     base::JoinString(RequiredFeatures(), ","));
   }
 
@@ -492,10 +493,10 @@ class SubresourceFilterWorkerFetchBrowserTest
     if (GetParam() == OffMainThreadFetchPolicy::kEnabled) {
       features.push_back(features::kOffMainThreadFetch.name);
     } else {
-      command_line->AppendSwitchASCII(switches::kDisableFeatures,
+      command_line->AppendSwitchASCII(variations::switches::kDisableFeatures,
                                       features::kOffMainThreadFetch.name);
     }
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     base::JoinString(features, ","));
   }
 

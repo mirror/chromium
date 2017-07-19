@@ -722,8 +722,9 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
                 << " or in chrome://flags)";
 
   feature_list->InitializeFromCommandLine(
-      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
-      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+      command_line->GetSwitchValueASCII(variations::switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(
+          variations::switches::kDisableFeatures));
 
 #if defined(FIELDTRIAL_TESTING_ENABLED)
   if (!command_line->HasSwitch(

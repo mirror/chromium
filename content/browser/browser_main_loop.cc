@@ -53,6 +53,7 @@
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/variations/variations_switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
@@ -815,8 +816,9 @@ int BrowserMainLoop::PreCreateThreads() {
   // Note that we do not initialize a new FeatureList when calling this for
   // the second time.
   base::FeatureList::InitializeInstance(
-      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
-      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+      command_line->GetSwitchValueASCII(variations::switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(
+          variations::switches::kDisableFeatures));
 
   InitializeMemoryManagementComponent();
 

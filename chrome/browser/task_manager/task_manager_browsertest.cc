@@ -36,6 +36,7 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_frame_host.h"
@@ -186,7 +187,7 @@ class TaskManagerMemoryCoordinatorBrowserTest : public TaskManagerBrowserTest {
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     features::kMemoryCoordinator.name);
   }
 

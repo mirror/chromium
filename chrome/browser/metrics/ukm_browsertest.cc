@@ -13,6 +13,7 @@
 #include "components/metrics_services_manager/metrics_services_manager.h"
 #include "components/sync/test/fake_server/fake_server_network_resources.h"
 #include "components/ukm/ukm_service.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/common/content_switches.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
@@ -25,7 +26,7 @@ class UkmBrowserTest : public SyncTest {
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     SyncTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     ukm::kUkmFeature.name);
   }
 

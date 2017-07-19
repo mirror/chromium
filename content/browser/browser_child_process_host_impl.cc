@@ -26,6 +26,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/variations/variations_switches.h"
 #include "content/browser/histogram_message_filter.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/profiler_message_filter.h"
@@ -204,8 +205,8 @@ void BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(
   // If we run base::FieldTrials, we want to pass to their state to the
   // child process so that it can act in accordance with each state.
   base::FieldTrialList::CopyFieldTrialStateToFlags(
-      switches::kFieldTrialHandle, switches::kEnableFeatures,
-      switches::kDisableFeatures, cmd_line);
+      switches::kFieldTrialHandle, variations::switches::kEnableFeatures,
+      variations::switches::kDisableFeatures, cmd_line);
 }
 
 void BrowserChildProcessHostImpl::Launch(
