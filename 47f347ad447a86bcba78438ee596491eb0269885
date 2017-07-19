@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f20dcdb8_647a8935",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T17:04:49Z",
+      "side": 1,
+      "message": "Sorry, but it looks like you forgot to commit fix for this comment - your last patch doesn\u0027t record action for the old promo.",
+      "parentUuid": "fe402eba_978725b1",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9f62dc_15f7cc02",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
         "patchSetId": 6

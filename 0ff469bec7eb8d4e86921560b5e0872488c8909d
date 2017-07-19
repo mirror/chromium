@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5238722_3fdb55de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T17:04:49Z",
+      "side": 1,
+      "message": "AFAIK, newline here is mandatory. \u0027git cl format\u0027 inserts one in such a case, too.",
+      "range": {
+        "startLine": 34,
+        "startChar": 40,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c42bf3_ccb228b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T17:04:49Z",
+      "side": 1,
+      "message": "I would prefer something like \"signin_promo_impressions_count\" - it\u0027s not ambiguous and descriptive.",
+      "range": {
+        "startLine": 36,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495cd62a_9ff51502",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T17:04:49Z",
+      "side": 1,
+      "message": "view.getImage().setLayoutParams(layoutParams) is necessary here, otherwise there\u0027s no guarantee that view will be layouted again.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 88
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
