@@ -27,6 +27,7 @@ class MediaStorageUtil {
   // device using the existence of DCIM directory.
   // Returns true if it looks like a media device, otherwise returns false.
   // Mac OS X behaves similarly, but this is not the only heuristic it uses.
+  // This method should only be called from a sequence that allows IO.
   // TODO(vandebo) Try to figure out how Mac OS X decides this, and rename
   // if additional OS X heuristic is implemented.
   static bool HasDcim(const base::FilePath& mount_point);
