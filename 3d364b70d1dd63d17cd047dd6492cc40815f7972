@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "644ddd62_065e7641",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3f31fe_1d73be7c",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e277563_8f1659c7",
         "filename": "chrome/renderer/resources/plugins/pdf_plugin.css",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5a2b9a_4d4b460a",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e277563_8f1659c7",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "337a8f4d_acca023c",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935dee0b_9aed3b5b",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aec9d81_c59bad16",
         "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df5de78_b9b778cd",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aec9d81_c59bad16",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f7566b28_23d2b6bd",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8504679_1a993396",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa8b4680_245e6532",
         "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
         "patchSetId": 5
@@ -110,6 +212,30 @@
       "writtenOn": "2017-07-19T21:06:17Z",
       "side": 1,
       "message": "Ah -- I assume this is the PDF icon from Max? I would suggest adding a:\n\u003c!-- Material Design PDF icon --\u003e comment since otherwise it\u0027d be hard to tell what this is.",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f3febe_0f281241",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "I actually saw this being used in the settings page and copied it over.",
+      "parentUuid": "aa8b4680_245e6532",
       "range": {
         "startLine": 11,
         "startChar": 26,
@@ -136,6 +262,24 @@
       "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5449abd_3f8754e5",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-19T21:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a44a6df_a1f1c1f2",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
