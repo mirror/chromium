@@ -52,7 +52,7 @@ void CopyOutputRequest::SendBitmapResult(std::unique_ptr<SkBitmap> bitmap) {
 void CopyOutputRequest::SendTextureResult(
     const gfx::Size& size,
     const viz::TextureMailbox& texture_mailbox,
-    std::unique_ptr<SingleReleaseCallback> release_callback) {
+    SingleReleaseCallback release_callback) {
   DCHECK(texture_mailbox.IsTexture());
   SendResult(CopyOutputResult::CreateTextureResult(
       size, texture_mailbox, std::move(release_callback)));
