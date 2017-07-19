@@ -1860,7 +1860,7 @@ bool PDFiumEngine::OnMouseUp(const pp::MouseInputEvent& event) {
       return true;
     }
     if (area == PDFiumPage::DOCLINK_AREA) {
-      client_->ScrollToPage(target.page);
+      client_->NavigateToPage(target.page);
       SetInFormTextArea(false);
       return true;
     }

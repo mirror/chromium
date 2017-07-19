@@ -253,6 +253,13 @@ function PDFViewer(browserApi) {
 
   // Request translated strings.
   chrome.resourcesPrivate.getStrings('pdf', this.handleStrings_.bind(this));
+
+  // Inject content script if our parent is a tab.
+  if (chrome.tabs && tabId != -1) {
+    chrome.tabs.executeScript(tabId, {file: 'content_script.js'});
+    chrome.runtime.onMessage.addListener(
+        this.handleContentScriptMessage.bind(this));
+  }
 }
 
 PDFViewer.prototype = {
@@ -524,8 +531,20 @@ PDFViewer.prototype = {
       // Document load complete.
       if (this.lastViewportPosition_)
         this.viewport_.position = this.lastViewportPosition_;
-      this.paramsParser_.getViewportFromUrlParams(
-          this.originalUrl_, this.handleURLParams_.bind(this));
+
+      if (chrome.tabs && this.browserApi_.getStreamInfo().tabId != -1) {
+        // Check if history.state is set in our embedder (for example if the tab
+        // is loaded by session restore or undo closed tab). Result will be
+        // handled by handleContentScriptMessage as a popstate event.
+        chrome.tabs.sendMessage(
+            this.browserApi_.getStreamInfo().tabId,
+            {type: 'getInitialHistoryState'});
+      } else {
+        // history.state is not accessible, so just use the url params.
+        this.paramsParser_.getViewportFromUrlParams(
+            this.originalUrl_, this.handleURLParams_.bind(this));
+      }
+
       this.loadState_ = LoadState.SUCCESS;
       this.sendDocumentLoadedMessage_();
       while (this.delayedScriptingMessages_.length > 0)
@@ -603,6 +622,17 @@ PDFViewer.prototype = {
         this.sendScriptingMessage_(message.data);
         break;
       case 'goToPage':
+        this.viewport_.goToPage(message.data.page);
+        break;
+      case 'navigateToPage':
+        // Can only update the history if we are in a normal tab.
+        if (chrome.tabs && this.browserApi_.getStreamInfo().tabId != -1) {
+          // Fork off a new history state, so that later on the user can go back
+          // to the position they were at before clicking the link.
+          chrome.tabs.sendMessage(
+              this.browserApi_.getStreamInfo().tabId,
+              {type: 'forkHistoryState'});
+        }
         this.viewport_.goToPage(message.data.page);
         break;
       case 'loadProgress':
@@ -788,6 +818,47 @@ PDFViewer.prototype = {
       viewportWidth: size.width,
       viewportHeight: size.height
     });
+
+    // Once loaded, update history state whenever the viewport changes, so that
+    // scroll position can be restored.
+    if (this.loadState_ == LoadState.SUCCESS) {
+      // Can only update the history if we are in a normal tab.
+      if (chrome.tabs && this.browserApi_.getStreamInfo().tabId != -1) {
+        // Normalize position to be independent of zoom.
+        var zoom = this.viewport_.zoom;
+        var state = this.viewport_.position;
+        state.x /= zoom;
+        state.y /= zoom;
+        chrome.tabs.sendMessage(
+            this.browserApi_.getStreamInfo().tabId,
+            {type: 'replaceHistoryState', state: state});
+      }
+    }
+  },
+
+  /**
+   * @private
+   * Handle a message from the extension's content script (that this injects
+   * into the tab that contains it).
+   * @param {MessageObject} message the message to handle.
+   * @param {MessageSender} sender info about the script context that sent it.
+   * @param {function} sendResponse allows sending back a response.
+   */
+  handleContentScriptMessage: function(request, sender, sendResponse) {
+    if (request.type == 'onpopstate') {
+      if (request.state && 'y' in request.state) {
+        // Switch back to the position stored in the history state (after
+        // scaling it to take current zoom into account).
+        var zoom = this.viewport_.zoom;
+        request.state.x *= zoom;
+        request.state.y *= zoom;
+        this.viewport_.position = request.state;
+      } else {
+        // See if the URL hash encodes a viewport position.
+        this.paramsParser_.getViewportFromUrlParams(
+            request.url, this.handleURLParams_.bind(this));
+      }
+    }
   },
 
   /**

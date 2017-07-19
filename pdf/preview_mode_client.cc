@@ -34,6 +34,10 @@ void PreviewModeClient::ScrollToPage(int page) {
   NOTREACHED();
 }
 
+void PreviewModeClient::NavigateToPage(int page) {
+  NOTREACHED();
+}
+
 void PreviewModeClient::NavigateTo(const std::string& url,
                                    WindowOpenDisposition disposition) {
   NOTREACHED();

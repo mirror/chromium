@@ -76,8 +76,10 @@ class PDFEngine {
     virtual void ScrollToX(int position) = 0;
     virtual void ScrollToY(int position) = 0;
 
-    // Scroll to zero-based |page|.
+    // Scroll to zero-based |page|. Replaces the current history entry.
     virtual void ScrollToPage(int page) = 0;
+    // Jump to zero-based |page|. Pushes a new entry on the history stack.
+    virtual void NavigateToPage(int page) = 0;
 
     // Navigate to the given url.
     virtual void NavigateTo(const std::string& url,

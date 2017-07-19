@@ -95,6 +95,7 @@ const char kJSPrintType[] = "print";
 const char kJSSaveType[] = "save";
 // Go to page (Plugin -> Page)
 const char kJSGoToPageType[] = "goToPage";
+const char kJSNavigateToPageType[] = "navigateToPage";
 const char kJSPageNumber[] = "page";
 // Reset print preview mode (Page -> Plugin)
 const char kJSResetPrintPreviewModeType[] = "resetPrintPreviewMode";
@@ -1085,6 +1086,16 @@ void OutOfProcessInstance::ScrollToPage(int page) {
 
   pp::VarDictionary message;
   message.Set(kType, kJSGoToPageType);
+  message.Set(kJSPageNumber, pp::Var(page));
+  PostMessage(message);
+}
+
+void OutOfProcessInstance::NavigateToPage(int page) {
+  if (engine_->GetNumberOfPages() == 0)
+    return;
+
+  pp::VarDictionary message;
+  message.Set(kType, kJSNavigateToPageType);
   message.Set(kJSPageNumber, pp::Var(page));
   PostMessage(message);
 }
