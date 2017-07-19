@@ -10,6 +10,10 @@
 
 class AccountId;
 
+namespace ui {
+class Layer;
+}
+
 namespace ash {
 
 class LockWindow;
@@ -39,6 +43,9 @@ class LockScreen {
 
   // Unowned pointer to the window which hosts the lock screen.
   LockWindow* window_ = nullptr;
+
+  // Unowned pointer to wallpaper layer.
+  ui::Layer* wallpaper_layer_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreen);
 };

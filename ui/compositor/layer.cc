@@ -93,6 +93,7 @@ Layer::Layer()
       fills_bounds_opaquely_(true),
       fills_bounds_completely_(false),
       background_blur_sigma_(0.0f),
+      layer_blur_sigma_(0.0f),
       layer_saturation_(0.0f),
       layer_brightness_(0.0f),
       layer_grayscale_(0.0f),
@@ -119,6 +120,7 @@ Layer::Layer(LayerType type)
       fills_bounds_opaquely_(true),
       fills_bounds_completely_(false),
       background_blur_sigma_(0.0f),
+      layer_blur_sigma_(0.0f),
       layer_saturation_(0.0f),
       layer_brightness_(0.0f),
       layer_grayscale_(0.0f),
@@ -174,6 +176,7 @@ std::unique_ptr<Layer> Layer::Clone() const {
   clone->SetLayerBrightness(GetTargetBrightness());
   clone->SetLayerGrayscale(GetTargetGrayscale());
   clone->SetLayerInverted(layer_inverted_);
+  clone->SetLayerBlur(layer_blur_sigma_);
   if (alpha_shape_)
     clone->SetAlphaShape(base::MakeUnique<SkRegion>(*alpha_shape_));
 
@@ -401,6 +404,12 @@ void Layer::SetBackgroundBlur(float blur_sigma) {
   SetLayerBackgroundFilters();
 }
 
+void Layer::SetLayerBlur(float blur_sigma) {
+  layer_blur_sigma_ = blur_sigma;
+
+  SetLayerFilters();
+}
+
 void Layer::SetLayerSaturation(float saturation) {
   layer_saturation_ = saturation;
   SetLayerFilters();
@@ -492,6 +501,10 @@ void Layer::SetLayerFilters() {
   }
   if (layer_inverted_)
     filters.Append(cc::FilterOperation::CreateInvertFilter(1.0));
+  if (layer_blur_sigma_) {
+    filters.Append(cc::FilterOperation::CreateBlurFilter(
+        layer_blur_sigma_, SkBlurImageFilter::kClamp_TileMode));
+  }
   // Brightness goes last, because the resulting colors neeed clamping, which
   // cause further color matrix filters to be applied separately. In this order,
   // they all can be combined in a single pass.

@@ -198,6 +198,10 @@ class COMPOSITOR_EXPORT Layer
   float background_blur() const { return background_blur_sigma_; }
   void SetBackgroundBlur(float blur_sigma);
 
+  // Blur pixels of this layer by 3 * this amount.
+  float layer_blur() const { return layer_blur_sigma_; }
+  void SetLayerBlur(float blur_sigma);
+
   // Saturate all pixels of this layer by this amount.
   // This effect will get "combined" with the inverted,
   // brightness and grayscale setting.
@@ -504,6 +508,7 @@ class COMPOSITOR_EXPORT Layer
   cc::Region paint_region_;
 
   float background_blur_sigma_;
+  float layer_blur_sigma_;
 
   // Several variables which will change the visible representation of
   // the layer.
