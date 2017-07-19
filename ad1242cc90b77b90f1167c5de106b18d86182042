@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d57bd5c_78b98deb",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-19T13:32:25Z",
+      "side": 1,
+      "message": "This feels off. If the text is RTL, then the bidi algorithm will automatically start with the first thing that\u0027s logically in the string and lay it out right-to-left. Have you played with a controller that\u0027s RTL? Can you show me pictures comparing, say, English to Hebrew, so I can confirm?",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 76
+      },
+      "revId": "ad1242cc90b77b90f1167c5de106b18d86182042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299b7462_325c964e",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-19T13:32:25Z",
+      "side": 1,
+      "message": "What does a tab (\\t) mean for display in the touchbar? Why not something like a space?",
+      "range": {
+        "startLine": 214,
+        "startChar": 53,
+        "endLine": 214,
+        "endChar": 55
+      },
+      "revId": "ad1242cc90b77b90f1167c5de106b18d86182042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
