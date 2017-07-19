@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ff1ec8_0511b4d6",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-19T07:40:48Z",
+      "side": 1,
+      "message": "Please set hidden attribute on #selection-menu-button in main.html, to avoid a potential flash of the icon due to this asynchronous call.",
+      "range": {
+        "startLine": 649,
+        "startChar": 41,
+        "endLine": 649,
+        "endChar": 47
+      },
+      "revId": "e8e4a8d82f01f4bbfff4a7f7ee4eca144637b326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
