@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8421fa_53eee529",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "SafeBrowsing WebUI",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e874e157_4267cc8a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "database manager... since it includes information about the update from update manager also.",
+      "range": {
+        "startLine": 11,
+        "startChar": 61,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75106478_b810dcea",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "So this becomes: V4DatabaseManagerInfo\n\nI would drop the V4 prefix so that we don\u0027t need to change the name of the proto for V5 :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcb2533_077ab269",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "why double and not int64?",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d1743c_b0a55f43",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "I would design the proto hierarchically like this:\nmessage DatabaseManagerInfo {\n  message UpdateInfo {\n    // An instance of this is passed to the UpdateManager to populate it.\n    optional int32 last_update_network_status \u003d 1;\n    optional int64 time_since_last_update_micros \u003d 2;\n    ...\n  } \n  optional UpdateInfo update_info \u003d 1;\n\n  message DatabaseInfo {\n    // An instance of this is passed to the Database to populate it.\n    message StoreInfo {\n      // An instance ...\n      \u003cstore info\u003e\n    }\n\n    optional int64 size \u003d 1; // But size may be a keyword. Not sure.\n    repeated StoreInfo store_infos \u003d 2;\n    ...\n  }",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0b1ef8_33ee336f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "The common convention is to not add a _list for repeated fields. So, store_files",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b3d7bb_0ffad966",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "Since this contains information about exactly one store, this should be called StoreFile.\n\nBetter yet, StoreInfo",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421be242_e3e56fe0",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "th prefix store_ can be dropped since the message name is StoreInfo or StoreFile",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85cf466_c9297a54",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "Perhaps we discussed this and I have forgotten but why is this double and not int32?",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073bcbd0_3357093a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc282afb_c86c6647",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T22:44:11Z",
+      "side": 1,
+      "message": "This should be int64, and then parsed into a string by WebUI or JS. Preferably JS.",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "00f4b84885f8ac5b2678084deba1aa629d17926d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
