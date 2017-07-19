@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d67255db_8426f360",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T15:00:38Z",
+      "side": 1,
+      "message": "Done. Note that these are not owning each other, so commented liftime a bit more details.",
+      "parentUuid": "d26d71a6_1b62c9dd",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f585ae_ecdcef08",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 1
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Thanks for sharing the ideas.\n\nI\u0027m not a big fan of IsRunningOnChromeOS() as it can easily be abused (although in this case the usage seems legitimate), so I\u0027d vote to (3).",
       "parentUuid": "fa93013c_f92f0c39",
+      "range": {
+        "startLine": 188,
+        "startChar": 25,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7753e7b7_5e89f4ca",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T15:00:38Z",
+      "side": 1,
+      "message": "Ok, done.",
+      "parentUuid": "aadaeedf_c6c99c50",
       "range": {
         "startLine": 188,
         "startChar": 25,
