@@ -77,6 +77,9 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return static_cast<TextDirection>(direction_);
   }
   bool Rtl() const { return Direction() == TextDirection::kRtl; }
+  // True if the |Width()| is in horizontal direction.
+  bool IsHorizontalAdvance() const;
+  // True if at least one glyph in this result has vertical offsets.
   bool HasVerticalOffsets() const { return has_vertical_offsets_; }
 
   // For memory reporting.
@@ -111,6 +114,12 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
                     const TextContainerType&,
                     bool is_rtl);
+  template <bool is_horizontal_advance>
+  void PrepareRunToInsert(ShapeResult::RunInfo*,
+                          unsigned start_glyph,
+                          unsigned num_glyphs,
+                          hb_buffer_t*,
+                          FloatRect* glyph_bounding_box);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>,
                  unsigned start_glyph,
                  unsigned num_glyphs,
