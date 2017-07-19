@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6e86c7_a0550037",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:30:54Z",
+      "side": 1,
+      "message": "This looks a bit too clever for just tracing. Can\u0027t we just have explicit TRACE_ macros in the code?",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7f92ef_e1df0444",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:30:54Z",
+      "side": 1,
+      "message": "|is_script_streaming| is true if the script is already installed and will \"streamed\" from the browser process.",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e574a814_d00f186d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:30:54Z",
+      "side": 1,
+      "message": "please docu",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
