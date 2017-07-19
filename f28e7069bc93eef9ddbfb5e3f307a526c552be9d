@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ff74e27_593b9508",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T16:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd20a3cf_a777c7de",
+      "range": {
+        "startLine": 51,
+        "startChar": 70,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "f28e7069bc93eef9ddbfb5e3f307a526c552be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2410909_280d6db9",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T16:41:48Z",
       "side": 1,
       "message": "How come we need this?",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "f28e7069bc93eef9ddbfb5e3f307a526c552be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b340fd_ae29dfbb",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T16:50:06Z",
+      "side": 1,
+      "message": "Seems to be a best practice: http://www.codingstandard.com/rule/12-5-4-declare-noexcept-the-move-constructor-and-move-assignment-operator/\n\nThe important change was to drop the explicit.",
+      "parentUuid": "a2410909_280d6db9",
       "range": {
         "startLine": 62,
         "startChar": 45,
@@ -62,6 +110,24 @@
       "revId": "f28e7069bc93eef9ddbfb5e3f307a526c552be9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a93395_29b11d8b",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T16:50:06Z",
+      "side": 1,
+      "message": "We do, but it happens at a different place. Deleted lines 156-158.",
+      "parentUuid": "423ff16f_b56978d3",
+      "revId": "f28e7069bc93eef9ddbfb5e3f307a526c552be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
