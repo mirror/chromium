@@ -20,6 +20,8 @@
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile.h"
@@ -350,6 +352,12 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       CloseWindow(browser_);
       break;
     case IDC_NEW_TAB:
+      // If the user has opened a new tab with Ctrl+T, the window frame
+      // context menu, or the app menu, alert the NewTabTracker that the
+      // OnNewTabOpened event has occurred.
+      feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+          ->GetForProfile(profile())
+          ->OnNewTabOpened();
       NewTab(browser_);
       break;
     case IDC_CLOSE_TAB:
