@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d0eaa21_8fadbfff",
+        "filename": "ash/drag_drop/drag_drop_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T04:51:41Z",
+      "side": 1,
+      "message": "quit_closure_.Run is always invoked after Cleanup(). Before calling Cleanup(), run_loop.Run(); at #236 keeps running, and drag_data_ is alive at least until StartDragAndDrop() returns.\n\nFor unittests where should_block_during_drag_drop_ is false, these tests have responsibility to keep drag_data_ alive.",
+      "parentUuid": "8db893cf_c2bea298",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d23b59fb_fa4ebfa4",
         "filename": "ui/aura/env.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2874b9e_004e9491",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T04:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23b59fb_fa4ebfa4",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "07c14c5a_1a054767",
+        "filename": "ui/aura/env_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T04:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7058b60_2ea31359",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a105be23_13dab79a",
         "filename": "ui/aura/mus/drag_drop_controller_mus.h",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb74ffec_c350c40d",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T04:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a105be23_13dab79a",
+      "revId": "707843fe2a021d21a5bf5541455fdc5743ba888b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
