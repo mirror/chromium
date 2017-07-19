@@ -287,6 +287,30 @@ RemoteSuggestion::CreateFromContentSuggestionsDictionary(
 }
 
 // static
+std::unique_ptr<RemoteSuggestion>
+RemoteSuggestion::CreateFromContextualSuggestionsDictionary(
+    const base::DictionaryValue& dict) {
+  std::string primary_id;
+  if (!dict.GetString("url", &primary_id) || primary_id.empty()) {
+    return nullptr;
+  }
+  std::vector<std::string> parsed_ids(1, primary_id);
+  auto snippet = MakeUnique(parsed_ids, /*remote_category_id=*/2);
+  GetURLValue(dict, "url", &snippet->url_);
+  if (!dict.GetString("title", &snippet->title_)) {
+    dict.GetString("source", &snippet->title_);
+  }
+  dict.GetString("snippet", &snippet->snippet_);
+  GetTimeValue(dict, "creationTime", &snippet->publish_date_);
+  GetTimeValue(dict, "expirationTime", &snippet->expiry_date_);
+  GetURLValue(dict, "imageUrl", &snippet->salient_image_url_);
+  if (!dict.GetString("attribution", &snippet->publisher_name_)) {
+    dict.GetString("source", &snippet->publisher_name_);
+  }
+  return snippet;
+}
+
+// static
 std::unique_ptr<RemoteSuggestion> RemoteSuggestion::CreateFromProto(
     const SnippetProto& proto) {
   // Need at least the id.

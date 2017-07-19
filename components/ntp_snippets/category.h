@@ -51,6 +51,9 @@ enum class KnownCategories {
   // Articles for you.
   ARTICLES,
 
+  // Contextual suggestion.
+  CONTEXTUAL,
+
   // Breaking News
   BREAKING_NEWS = 10008,
   // ****************** INSERT NEW REMOTE CATEGORIES HERE! ******************
