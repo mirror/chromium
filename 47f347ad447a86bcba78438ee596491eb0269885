@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe402eba_978725b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "786e7c1f_214d1674",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9f62dc_15f7cc02",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "47f347ad447a86bcba78438ee596491eb0269885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd538fe_6571b866",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf9f62dc_15f7cc02",
+      "range": {
+        "startLine": 110,
+        "startChar": 17,
+        "endLine": 110,
+        "endChar": 30
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b941c2d7_86baa2a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "The best name that I could come up with was setupOldPromo. Another name that I was considering was setupNotSignedInOldPromo but I thought this was way too long for a method name and the \"NotSignedIn\" part of it was obvious given that a promo is being shown. I do think that the if from the update function is a bit confusing as a result though, given that now it reads as \"if (shouldShowPromo) setupSigninPromo else setupOldPromo\".",
+      "parentUuid": "abab1bad_d969e4b5",
+      "range": {
+        "startLine": 133,
+        "startChar": 17,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2179823_d14cfbe5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "47f347ad447a86bcba78438ee596491eb0269885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06257e7_3f8c5d48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2179823_d14cfbe5",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 58
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7887cecb_8f8cdf26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da85cb4_b41364ef",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12c6076d_6f751295",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "47f347ad447a86bcba78438ee596491eb0269885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748031e2_7207a5ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12c6076d_6f751295",
+      "range": {
+        "startLine": 66,
+        "startChar": 79,
+        "endLine": 66,
+        "endChar": 94
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "42cd6c31_cd62c9ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d0a1dd0_b34b42d4",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6013964c_86886d96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 6
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "04e16e8c_16993561",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6013964c_86886d96",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 21
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3046d20_75a6d3da",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "47f347ad447a86bcba78438ee596491eb0269885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4d7127_59577785",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-19T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3046d20_75a6d3da",
+      "range": {
+        "startLine": 169,
+        "startChar": 73,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
