@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edbe6537_a84a9a3c",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "Not sure about what is the state of converging coding styles between blink and chromium, so take this (and some similar questions) with a grain of salt: aren\u0027t the new translation units being introduced supposed to be \".cc\" rather than \".cpp\"?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cf697c_a291dd71",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "put this in an anonymous namespace",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c93de6_5afbacdb",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "Not very familiar with blink patterns, but in chrome, since the C++11  switch (that introduced thread-safe static locals) one can just do:\nstatic auto* instance \u003d new InstanceCountersMemoryDumpProvider();\nreturn instance;\n(or even static auto* instance)",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45785deb_fc19ffd8",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "so about the dump format, what you are doing here is one column per type, like:\n      audio_handler   document    layout_object\ncounter          10         11               12  \n\nMy suggestion would be to pivot that and instead do:\n\n                object_count\naudio_handler\ndocument\nlayout_object\n...\n\n\nessentially this means one CreateAllocatorDump() call per type.\nWhy? I can think mainly of two reasons for this\n\n1) it should be easier to write a metric in telemetry in this way (jus iterate in all the rows that have a \"object_count\" column)\n\n2) If in future you want to break down some of these (say split \"document\" into \"top-level\" and \"non-toplevel\" you can leverage the hierarchy (document/toplevel) with rows, while you can\u0027t with columns.\n\n3) If one day you want to add some extra counters for these object (dunno, say \"live_object_count\" for oilpan stuff) you can leverage extra coulumns.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a078754_8f4dd780",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "Not sure about this: I thought that new files were supposed to use the chrome style:\nTHIRD_PARTY_WEBKIT_SOURCE_PLATFORM_INSTANCE_COUNTERS_MEMORY_DUMP_PROVIDER_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 44
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880c0cca_ad75e512",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-19T13:28:37Z",
+      "side": 1,
+      "message": "Maybe \"BlinkCounters\" ? Or \"BlinkObjectCounters\"?",
+      "range": {
+        "startLine": 149,
+        "startChar": 57,
+        "endLine": 149,
+        "endChar": 65
+      },
+      "revId": "3849e2d926acb21c11efd1f95f5c04fdc548cbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
