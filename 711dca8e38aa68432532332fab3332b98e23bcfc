@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4e31412_d6c25015",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T21:39:59Z",
+      "side": 1,
+      "message": "Please file the bug with enough justification.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 3
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a857af4_392f242d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T21:39:59Z",
+      "side": 1,
+      "message": "May be s/started_immediately_/started_immediately_on_schedule_/\nand then you can use that phrase everywhere.",
+      "range": {
+        "startLine": 362,
+        "startChar": 7,
+        "endLine": 362,
+        "endChar": 27
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ce695b9_35abb5f4",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "7fbb3cfb_b9df7ffd",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T21:39:59Z",
+      "side": 1,
+      "message": "histograms.xml entry is missing.",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 53
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a0013a8_c6e441bb",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
@@ -133,6 +202,29 @@
         "startChar": 37,
         "endLine": 445,
         "endChar": 38
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51aeb8df_8acf8ecf",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T21:39:59Z",
+      "side": 1,
+      "message": "\"spontaneous\" is undefined. May be use the phrase \"started immediately on schedule\".",
+      "range": {
+        "startLine": 1074,
+        "startChar": 22,
+        "endLine": 1074,
+        "endChar": 33
       },
       "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
