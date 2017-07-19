@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e6e9240_f15aeaac",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/gear_menu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-19T08:54:17Z",
+      "side": 1,
+      "message": "We don\u0027t specify @public for public variables.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "a3b14304f9a49c2f26c01a1802baf8ca0dd3284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
