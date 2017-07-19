@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfed0e95_e17a7c39",
+        "filename": "chrome/common/extensions/api/webview_tag.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "Instead of \"Returns\", you might want to use \"Queries whether ..\", since this returns asynchronously via callback.",
+      "range": {
+        "startLine": 695,
+        "startChar": 0,
+        "endLine": 695,
+        "endChar": 57
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f09f86_b95621e9",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704d87f5_b58ad9ae",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "here and in all other places: no space after \"function\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986da734_e6b8ca24",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "I know we are not very consistent with this, but prefer chrome.test.log for logging.",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9288eb03_908e2995",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "Remove this as it is not providing much helpful log.",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf97beb_c17a5873",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "no space after {, no space before }",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034cd0aa_d43bb586",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "indent 4 spaces from previous line",
+      "range": {
+        "startLine": 56,
+        "startChar": 17,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99854156_76650280",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4f4dc4_be374c1a",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "auto args \u003d base::MakeUnique\u003cbase::DictionaryValue\u003e();\n\"new\" is discouraged.",
+      "range": {
+        "startLine": 580,
+        "startChar": 24,
+        "endLine": 580,
+        "endChar": 39
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e54dfb_bbeb3b81",
+        "filename": "extensions/common/api/web_view_internal.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "Sets audio mute state ...",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 27
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26611286_4e35fd36",
+        "filename": "extensions/common/api/web_view_internal.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:05:45Z",
+      "side": 1,
+      "message": "Mute audio value.",
+      "range": {
+        "startLine": 200,
+        "startChar": 28,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "3241b1805f58f27f3a004a96d048893054226b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
