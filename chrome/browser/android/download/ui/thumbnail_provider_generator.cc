@@ -2,15 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/download/ui/thumbnail_provider.h"
-
+#include <chrome/browser/android/download/ui/thumbnail_provider_generator.h>
 #include "base/android/jni_string.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/image_decoder.h"
 #include "content/public/browser/browser_thread.h"
-#include "jni/ThumbnailProviderImpl_jni.h"
+#include "jni/ThumbnailProviderGenerator_jni.h"
 #include "skia/ext/image_operations.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/android/java_bitmap.h"
@@ -29,7 +28,7 @@ class ImageThumbnailRequest : public ImageDecoder::ImageRequest {
  public:
   static void Create(int icon_size,
                      const std::string& file_path,
-                     base::WeakPtr<ThumbnailProvider> weak_provider) {
+                     base::WeakPtr<ThumbnailProviderGenerator> weak_provider) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
     ImageThumbnailRequest* request =
         new ImageThumbnailRequest(icon_size, file_path, weak_provider);
@@ -68,7 +67,7 @@ class ImageThumbnailRequest : public ImageDecoder::ImageRequest {
  private:
   ImageThumbnailRequest(int icon_size,
                         const std::string& file_path,
-                        base::WeakPtr<ThumbnailProvider> weak_provider)
+                        base::WeakPtr<ThumbnailProviderGenerator> weak_provider)
       : icon_size_(icon_size),
         file_path_(file_path),
         weak_provider_(weak_provider) {}
@@ -102,35 +101,37 @@ class ImageThumbnailRequest : public ImageDecoder::ImageRequest {
 
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&ThumbnailProvider::OnThumbnailRetrieved,
+        base::Bind(&ThumbnailProviderGenerator::OnThumbnailRetrieved,
                    weak_provider_, file_path_, thumbnail));
     task_runner()->DeleteSoon(FROM_HERE, this);
   }
 
   const int icon_size_;
   std::string file_path_;
-  base::WeakPtr<ThumbnailProvider> weak_provider_;
+  base::WeakPtr<ThumbnailProviderGenerator> weak_provider_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(ImageThumbnailRequest);
 };
 
 }  // namespace
 
-ThumbnailProvider::ThumbnailProvider(const JavaParamRef<jobject>& jobj)
+ThumbnailProviderGenerator::ThumbnailProviderGenerator(
+    const JavaParamRef<jobject>& jobj)
     : java_delegate_(jobj), weak_factory_(this) {}
 
-ThumbnailProvider::~ThumbnailProvider() {
+ThumbnailProviderGenerator::~ThumbnailProviderGenerator() {
   java_delegate_.Reset();
 }
 
-void ThumbnailProvider::Destroy(JNIEnv* env,
-                                const JavaParamRef<jobject>& jobj) {
+void ThumbnailProviderGenerator::Destroy(JNIEnv* env,
+                                         const JavaParamRef<jobject>& jobj) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   delete this;
 }
 
-void ThumbnailProvider::OnThumbnailRetrieved(const std::string& file_path,
-                                             const SkBitmap& thumbnail) {
+void ThumbnailProviderGenerator::OnThumbnailRetrieved(
+    const std::string& file_path,
+    const SkBitmap& thumbnail) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (java_delegate_.is_null())
@@ -138,17 +139,17 @@ void ThumbnailProvider::OnThumbnailRetrieved(const std::string& file_path,
 
   // Send the bitmap back to Java-land.
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_ThumbnailProviderImpl_onThumbnailRetrieved(
+  Java_ThumbnailProviderGenerator_onThumbnailRetrieved(
       env, java_delegate_,
       base::android::ConvertUTF8ToJavaString(env, file_path),
-      thumbnail.drawsNothing() ? NULL
-          : gfx::ConvertToJavaBitmap(&thumbnail));
+      thumbnail.drawsNothing() ? NULL : gfx::ConvertToJavaBitmap(&thumbnail));
 }
 
-void ThumbnailProvider::RetrieveThumbnail(JNIEnv* env,
-                                          const JavaParamRef<jobject>& jobj,
-                                          jstring jfile_path,
-                                          jint icon_size) {
+void ThumbnailProviderGenerator::RetrieveThumbnail(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& jobj,
+    jstring jfile_path,
+    jint icon_size) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   // The ImageThumbnailRequest deletes itself on completion.  Don't track it
@@ -161,11 +162,12 @@ void ThumbnailProvider::RetrieveThumbnail(JNIEnv* env,
 }
 
 // static
-bool ThumbnailProvider::RegisterThumbnailProvider(JNIEnv* env) {
+bool ThumbnailProviderGenerator::RegisterThumbnailProviderGenerator(
+    JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 
 // static
 static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& jobj) {
-  return reinterpret_cast<intptr_t>(new ThumbnailProvider(jobj));
+  return reinterpret_cast<intptr_t>(new ThumbnailProviderGenerator(jobj));
 }

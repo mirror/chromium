@@ -121,7 +121,6 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
 
     /** @return String showing where the download resides. */
     abstract String getFilePath();
-
     /** @return The file where the download resides. */
     public final File getFile() {
         if (mFile == null) mFile = new File(getFilePath());
