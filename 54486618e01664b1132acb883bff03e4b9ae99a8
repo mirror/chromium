@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "507050a6_7a25ce91",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T16:50:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f51d505_e52c12d6",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc2b1d6_9bc61232",
         "filename": "components/safe_browsing/triggers/ad_sampler_trigger.h",
         "patchSetId": 2
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "No objection, but a question. This isn\u0027t really a size (or count, index, offset etc), and it currently doesn\u0027t get compared to any sizes. But who knows, it may one day. Would you recommend preferring size_t over int in general (eg: to future proof the code)?",
       "parentUuid": "dcc2b1d6_9bc61232",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "54486618e01664b1132acb883bff03e4b9ae99a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37b49ca4_08497f9a",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T16:50:24Z",
+      "side": 1,
+      "message": "I prefer size_t over int when counting things and when I know the entity shouldn\u0027t be negative.\nThough for the non-negative part, we can also use unsigned int so I am fine with using that here.",
+      "parentUuid": "851ae580_4d8d9fff",
       "range": {
         "startLine": 42,
         "startChar": 2,
