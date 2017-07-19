@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c12c6ca5_a29e8a8b",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-19T08:32:42Z",
+      "side": 1,
+      "message": "Sure, so I will use the original StartOneJob() function.",
+      "parentUuid": "62d3dbc3_8854c1bd",
+      "revId": "0363787aea53fda6758514d9ae27f3bb577b9124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68ad37b1_520031ba",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-19T08:22:01Z",
       "side": 1,
       "message": "Hm... I think instead of stopping the timer we should be removing this queue from the coordinator, as there is no more work for it do.\n\nSeems these should be something like:\nPop();\nif (jobs_.empty()) {\n  // Tell JobCoordinator to delete us\n}\n\nI\u0027m starting to think Han\u0027s original idea was better. The timer could be a repeating timer in ServiceWorkerJobCoordinator. It could go through all the job queues and just check if queue.front() has a timed out job. If so, it does:\n\nqueue.front()-\u003eAbort();\nqueue.front()-\u003ePop();\nif (queue.empty()) {\n  job_queues_.erase(queue);\n}\n\nSorry to give conflicting advice, I didn\u0027t think the problem through.",
+      "revId": "0363787aea53fda6758514d9ae27f3bb577b9124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174c85b7_38956b8a",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-19T08:32:42Z",
+      "side": 1,
+      "message": "Thanks, no problem, I will try this idea. :-)",
+      "parentUuid": "68ad37b1_520031ba",
       "revId": "0363787aea53fda6758514d9ae27f3bb577b9124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
