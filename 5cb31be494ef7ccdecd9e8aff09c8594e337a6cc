@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c952e475_6a798fa7",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T15:43:26Z",
+      "side": 1,
+      "message": "Can you clarify the comment here and above?\n\"extern const char kUkmProvisionalSaveFailure\" doesn\u0027t record  anything",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "5cb31be494ef7ccdecd9e8aff09c8594e337a6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
