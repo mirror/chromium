@@ -29,7 +29,6 @@
 #include "core/layout/BackgroundBleedAvoidance.h"
 #include "core/layout/ContentChangeType.h"
 #include "core/layout/LayoutObject.h"
-#include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -66,8 +65,6 @@ struct LayoutBoxModelObjectRareData {
 
  public:
   LayoutBoxModelObjectRareData() {}
-
-  StickyPositionScrollingConstraints sticky_position_scrolling_constraints_;
 };
 
 // This class is the base class for all CSS objects.
