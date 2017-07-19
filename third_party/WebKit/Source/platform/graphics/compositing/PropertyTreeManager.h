@@ -75,9 +75,7 @@ class PropertyTreeManager {
 
   int EnsureCompositorTransformNode(const TransformPaintPropertyNode*);
   int EnsureCompositorClipNode(const ClipPaintPropertyNode*);
-  // Update the layer->scroll and scroll->layer mapping. The latter is temporary
-  // until |owning_layer_id| is removed from the scroll node.
-  void UpdateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
+  int CompositorScrollNode(const ScrollPaintPropertyNode*);
 
   int SwitchToEffectNode(const EffectPaintPropertyNode& next_effect);
   int GetCurrentCompositorEffectNodeIndex() const {

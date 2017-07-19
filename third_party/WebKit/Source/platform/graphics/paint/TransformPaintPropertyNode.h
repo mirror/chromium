@@ -141,7 +141,13 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
   // Returns the scroll node this transform scrolls with respect to. If this
   // is a scroll translation, scrollNode() can be returned. Otherwise, a full
   // ancestor traversal can be required.
-  const ScrollPaintPropertyNode* FindEnclosingScrollNode() const;
+  const ScrollPaintPropertyNode* FindEnclosingScrollNode() const {
+    return NearestScrollTranslationNode()->ScrollNode();
+  }
+
+  // If this is a scroll translation, returns this node. Otherwise, returns the
+  // transform node that this scrolls with respect to.
+  const TransformPaintPropertyNode* NearestScrollTranslationNode() const;
 
   // If true, content with this transform node (or its descendant) appears in
   // the plane of its parent. This is implemented by flattening the total

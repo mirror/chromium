@@ -24,6 +24,7 @@
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
+#include "platform/graphics/paint/ScrollHitTestDisplayItem.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
 #include "platform/graphics/paint/Transform3DDisplayItem.h"
 #include "platform/wtf/Optional.h"
@@ -559,6 +560,19 @@ PaintResult PaintLayerPainter::PaintLayerContents(
                                  ? ClipRect()
                                  : filter_fragments[0].background_rect,
                              local_painting_info, paint_flags);
+    }
+
+    // TODO(pdr): Is this the right place to emit a scroll hit test layer?
+    // TODO(pdr): Document this.
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      const auto* properties = paint_layer_.GetLayoutObject().PaintProperties();
+      if (properties && properties->ScrollTranslation()) {
+        ScopedPaintChunkProperties scroll_properties(
+            context.GetPaintController(), paint_layer_,
+            paint_layer_.GetLayoutObject().ContentsProperties());
+        RecordScrollHitTest(context, paint_layer_.GetLayoutObject(),
+                            DisplayItem::kScrollHitTest);
+      }
     }
 
     bool is_painting_root_layer = (&paint_layer_) == painting_info.root_layer;

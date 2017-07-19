@@ -21,6 +21,7 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
+#include "platform/graphics/paint/ScrollHitTestDisplayItem.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/scroll/ScrollbarTheme.h"
 
@@ -73,6 +74,10 @@ void FramePainter::Paint(GraphicsContext& context,
         scoped_paint_chunk_properties.emplace(context.GetPaintController(),
                                               *GetFrameView().GetLayoutView(),
                                               properties);
+        if (properties.property_tree_state.Transform()->IsScrollTranslation()) {
+          RecordScrollHitTest(context, *GetFrameView().GetLayoutView(),
+                              DisplayItem::kScrollHitTest);
+        }
       }
     }
 
