@@ -16,6 +16,24 @@
       "revId": "52b462d54ea2002981195bb02606d5832500cf4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7cdaa9_470dad20",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-19T22:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced35eb9_543ba2cf",
+      "revId": "52b462d54ea2002981195bb02606d5832500cf4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
