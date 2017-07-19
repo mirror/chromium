@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc82a11_7d9f7a48",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-19T13:18:24Z",
+      "side": 1,
+      "message": "Comment obsolete.",
+      "revId": "a4eac2dcd07bb1960a1a46d3285c0264e6b7cb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93fb340_49760506",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-19T13:18:24Z",
+      "side": 1,
+      "message": "I think it would be better to use `tile` than `home_tile`. For example, `tile` might have a favicon, but `home_tile` doesn\u0027t. For the sake of metrics, you can set `tile.source` to HOMEPAGE.\n\nIf you\u0027re not using `home_tile` here, then you can defer creating it until below.",
+      "revId": "a4eac2dcd07bb1960a1a46d3285c0264e6b7cb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04fb01c_27f2a09b",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-19T13:18:24Z",
+      "side": 1,
+      "message": "// Assert that the home page replaces the final tile.\n\nCan you also include a version of this test that requests 8 tiles? The tests would be\n\n  ShouldReplaceLastTileWithHomePageWhenFull (this one)\n  ShouldAppendHomePageWhenNotFull\n\nThe point is: if we have space, then the homepage should be in addition to top sites. If we don\u0027t, then it should be in place of the last one.",
+      "revId": "a4eac2dcd07bb1960a1a46d3285c0264e6b7cb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
