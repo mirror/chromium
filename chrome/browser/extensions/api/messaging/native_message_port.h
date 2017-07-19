@@ -5,22 +5,30 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_API_MESSAGING_NATIVE_MESSAGE_PORT_H_
 #define CHROME_BROWSER_EXTENSIONS_API_MESSAGING_NATIVE_MESSAGE_PORT_H_
 
+#include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/browser/extensions/api/messaging/message_service.h"
+#include "chrome/browser/extensions/api/messaging/message_port.h"
 #include "extensions/common/api/messaging/port_id.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace extensions {
+class MessageService;
+class NativeMessageHost;
 
 // A port that manages communication with a native application.
 // All methods must be called on the UI Thread of the browser process.
-class NativeMessagePort : public MessageService::MessagePort {
+class NativeMessagePort : public MessagePort {
  public:
   NativeMessagePort(base::WeakPtr<MessageService> message_service,
                     const PortId& port_id,
                     std::unique_ptr<NativeMessageHost> native_message_host);
   ~NativeMessagePort() override;
 
-  // MessageService::MessagePort implementation.
+  // MessagePort implementation.
   bool IsValidPort() override;
   void DispatchOnMessage(const Message& message) override;
 

@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
+#include "chrome/browser/extensions/api/messaging/message_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_handle.h"
