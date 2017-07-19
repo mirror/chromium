@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "327a0053_1ab620d4",
+        "filename": "components/payments/core/subkey_requester.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T19:51:05Z",
+      "side": 1,
+      "message": "if (pending_subkey_request_ \u0026\u0026\n    !pending_subkey_region_code_.compare(region_code))",
+      "revId": "0766103fe629e0d844f0845ed1cd6242ef00fb0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5622d4_cdaa29d1",
+        "filename": "components/payments/core/subkey_requester.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T19:51:05Z",
+      "side": 1,
+      "message": "please use curly braces now {}",
+      "revId": "0766103fe629e0d844f0845ed1cd6242ef00fb0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
