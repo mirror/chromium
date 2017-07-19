@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75d1e010_bafcc823",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-19T03:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f3c4e53_16a51975",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa16ea8_a658e59b",
         "filename": "ash/shell.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599a71d0_a03e864f",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-19T03:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa16ea8_a658e59b",
+      "range": {
+        "startLine": 334,
+        "startChar": 12,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b9df649_b8bbbe4d",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-19T03:21:04Z",
+      "side": 1,
+      "message": "It\u0027s probably safe due to the if (!instance) return; in the callback, but switched to WeakPtr to be less confusing.",
+      "parentUuid": "b3d28921_035b53d7",
+      "range": {
+        "startLine": 874,
+        "startChar": 25,
+        "endLine": 874,
+        "endChar": 35
+      },
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30c124c5_d08384d7",
         "filename": "chrome/browser/browser_process_impl.h",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e1e123_68182805",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-19T03:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30c124c5_d08384d7",
+      "revId": "4e2db6ec44016c87ff4bcce57fbc5f53795af31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
