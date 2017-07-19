@@ -34,6 +34,24 @@
       "revId": "865d25fe0585384f10421d974147cfa91fd19d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631a0bf9_c23663f5",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-19T01:33:07Z",
+      "side": 1,
+      "message": "I don\u0027t know the details of CSSValue. So, my suggestion about DCHECK may be\nwrong.\n\nI just feel extracting value from CSSValue is fragile since it requires\ntype checking with CHECK().\n\nAnyway, is isn\u0027t your part and there are no simple way to extract value\nfrom CSSValue.",
+      "parentUuid": "a4972407_ff74c596",
+      "revId": "865d25fe0585384f10421d974147cfa91fd19d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
