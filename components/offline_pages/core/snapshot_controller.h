@@ -60,6 +60,18 @@ class SnapshotController {
     virtual ~Client() {}
   };
 
+  // Optional renovation client of SnapshotController. If a
+  // RenovationClient is supplied, it should live until either
+  // RunRenovations or Client::StartSnapshot is called.
+  class RenovationClient {
+   public:
+    // Invoked when the page is sufficiently loaded for running
+    // renovations. Will be called at most once. The client should
+    // call the callback when finished; otherwise, a snapshot will be
+    // taken after the given timeout.
+    virtual void RunRenovations(base::Closure callback) = 0;
+  };
+
   // Creates a SnapshotController with document available delay = 7s,
   // document on load delay = 1s and triggers snapshot on document available.
   static std::unique_ptr<SnapshotController> CreateForForegroundOfflining(
