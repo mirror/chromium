@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c8c8399_d92b610f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T01:55:23Z",
+      "side": 1,
+      "message": "for these boolean metrics, i would note that this emits either a 1 or 0",
+      "range": {
+        "startLine": 283,
+        "startChar": 13,
+        "endLine": 283,
+        "endChar": 14
+      },
+      "revId": "0e40794bf0184efca5d8f9a6c6a4c91d86703672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
