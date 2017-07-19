@@ -131,7 +131,7 @@ size_t ImageDecoder::FrameCount() {
 
 ImageFrame* ImageDecoder::FrameBufferAtIndex(size_t index) {
   if (index >= FrameCount())
-    return 0;
+    return nullptr;
 
   ImageFrame* frame = &frame_buffer_cache_[index];
   if (frame->GetStatus() != ImageFrame::kFrameComplete) {
