@@ -91,6 +91,9 @@ void MediaFactory::SetupMojo() {
   remote_interfaces_ = render_frame_->GetRemoteInterfaces();
   DCHECK(remote_interfaces_);
 
+  remote_interfaces_->GetInterface(
+      mojo::MakeRequest(&watch_time_recorder_provider_));
+
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   // Create the SinkAvailabilityObserver to monitor the remoting sink
   // availablity.
@@ -249,7 +252,8 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           max_keyframe_distance_to_disable_background_video_mse,
           enable_instant_source_buffer_gc,
           GetContentClient()->renderer()->AllowMediaSuspend(),
-          embedded_media_experience_enabled));
+          embedded_media_experience_enabled,
+          watch_time_recorder_provider_.get()));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
