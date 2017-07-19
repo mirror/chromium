@@ -22,6 +22,30 @@
       "revId": "e4663469c6fe70b8476b8ec0988d454cc99ed454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0201dc1d_dec62da8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T23:58:57Z",
+      "side": 1,
+      "message": "Thanks! Replying and I have one question regarding this.\n\nI\u0027ve definitely considered CONTINUE_ON_SHUTDOWN in the beginning but that uninitialized singleton scenario made me, .. um uncomfortable.\n\nLet\u0027s assume a case where I\u0027m absolutely sure there isn\u0027t a global usage in any code path, I use CONTINUE_ON_SHUTDOWN.\nLater on, someone changes the code to start using global (they can be farther down in the callback from where CONTINUE_ON_SHUTDOWN is specified, so it wasn\u0027t immediately obvious). How do we prevent that? To me it sounds like we might start seeing harder to diagnose crash reports.",
+      "parentUuid": "758bf9c1_a8d62735",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "e4663469c6fe70b8476b8ec0988d454cc99ed454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
