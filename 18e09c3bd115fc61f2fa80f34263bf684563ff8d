@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80557d91_9a223078",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T18:30:38Z",
+      "side": 1,
+      "message": "This also is a bit of an unrelated bugfix - we don\u0027t cache errors, so probably shouldn\u0027t be setting the callback on errors, and also, now we aren\u0027t initializing key to anything interesting in some cases where ResolveHelper returns false.",
+      "range": {
+        "startLine": 1972,
+        "startChar": 17,
+        "endLine": 1972,
+        "endChar": 0
+      },
+      "revId": "18e09c3bd115fc61f2fa80f34263bf684563ff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
