@@ -34,6 +34,24 @@
       "revId": "21f0a8aec0118781fe56ee2c11eefe7d12019995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed4db03_51350c3b",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T17:27:09Z",
+      "side": 1,
+      "message": "\u003e 1) Keep gfx::Font::FontStyle with bit-shifted literals.\n\u003e 2) Remove NUM_TEXT_STYLES.\n\u003e 3) Please can you let me know why do we need to remove STRIKE font style ?\n\u003e \n\u003e Please let me know if my above understanding is correct\n\nWe can keep STRIKE and move it into gfx::Font::FontStyle, but doing that and keeping bit-shifted values for combined bitfields means you\u0027ll definitely need to change the way RenderText::styles_ uses the enum values themselves as vector indices. It wouldn\u0027t make sense to use 0\u003dNORMAL, 1\u003dITALIC, 2\u003dUNDERLINE, and 4\u003dSTRIKE, we would instead want the indices to be 0\u003dITALIC, 1\u003dUNDERLINE, and 2\u003dSTRIKE (or we could break up |styles_| into |italic_|, |underline_|, and |strike_|).\n\nIf we consolidate TextStyle into FontStyle, please update identifiers and comments to use |FontStyle| and |font_style|, instead of the |TextStyle| and |text_style|. It would also be nice if gfx::Font::FontStyle converted to be an |enum class Style| (referenced as |gfx::Font::Style|), similar to |gfx::Font::Weight|, but it might make sense to pursue that change separately.\n\nAgain, I wish I had realized all this earlier... sorry for the inconvenience.",
+      "parentUuid": "ff8d4dde_f937f22b",
+      "revId": "21f0a8aec0118781fe56ee2c11eefe7d12019995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
