@@ -22,6 +22,30 @@
       "revId": "de916864fb6c40f254a167bd09dad614121bff8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c0f8e5_2108e117",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T15:29:50Z",
+      "side": 1,
+      "message": "The next line calls setSheetState(mCurrentState, false); How about something like this?\n\nif (mFullscreenManager...) {\n   setSheetState(SHEET_STATE_PEEK, false);\n} else {\n   setSheetState(mCurrentState, false);\n}",
+      "parentUuid": "9056e69b_33a63c1a",
+      "range": {
+        "startLine": 778,
+        "startChar": 24,
+        "endLine": 778,
+        "endChar": 56
+      },
+      "revId": "de916864fb6c40f254a167bd09dad614121bff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
