@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff7ba55_0fcf6f93",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T01:04:06Z",
+      "side": 1,
+      "message": "raymes: Should I be using WebsiteSettingsRegistry?",
+      "range": {
+        "startLine": 324,
+        "startChar": 11,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
