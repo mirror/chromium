@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0ef8e2_6918170a",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T17:32:40Z",
+      "side": 1,
+      "message": "nit: web_view_.frame \u003d CGRectMake... for consistent usage of dot syntax.",
+      "range": {
+        "startLine": 404,
+        "startChar": 17,
+        "endLine": 404,
+        "endChar": 36
+      },
+      "revId": "eb25f75de0f69dc4fb1fc7c9a8970b7ea29bcef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
