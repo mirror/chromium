@@ -52,6 +52,24 @@
       "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9257caa_2af5e2e9",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-19T20:49:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6857c53a_6faae60d",
+      "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
