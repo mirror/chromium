@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "07e6af25_dc0f3b79",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-19T15:40:58Z",
+      "side": 1,
+      "message": "Original idea was that if the UMA for did_swap (sample loss) is non-trivial then we\u0027d address this, but I\u0027m fine with addressing this now.\nResetting the time makes sense, otherwise we don\u0027t know when exactly to requeue the swap promise.",
+      "parentUuid": "ea0ad0a4_9aee4236",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e2912f_f351c3f7",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 2
