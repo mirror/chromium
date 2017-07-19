@@ -15,6 +15,7 @@
 #include <string>
 
 #include "base/base_export.h"
+#include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
@@ -544,6 +545,16 @@ BASE_EXPORT MachVMRegionResult GetBasicInfo(mach_port_t task,
                                             mach_vm_size_t* size,
                                             mach_vm_address_t* address,
                                             vm_region_basic_info_64* info);
+
+BASE_EXPORT bool GetMemoryBytesInRegion(mach_port_t task,
+                                        hash_set<int>* seen_objects,
+                                        mach_vm_size_t* size,
+                                        mach_vm_address_t address,
+                                        size_t* private_bytes,
+                                        size_t* shared_bytes,
+                                        size_t* resident_bytes,
+                                        size_t* locked_bytes);
+
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
 }  // namespace base
