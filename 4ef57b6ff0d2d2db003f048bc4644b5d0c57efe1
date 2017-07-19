@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6ef1855_409fdd02",
+        "filename": "chrome/browser/vr/animation_player.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bfade56_8863c586",
+      "range": {
+        "startLine": 64,
+        "startChar": 48,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa3f20c6_d0666f26",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-19T15:56:01Z",
       "side": 1,
       "message": "Since you\u0027re already doing a non-conventional for loop, this \"for + if\" combo could be a do {} while(current_time_ \u003c target_time)",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6614a9b_6759c75a",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Removed the if.",
+      "parentUuid": "aa3f20c6_d0666f26",
       "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2968c258_cf673854",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e41059c8_f9904da3",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c6a36bf_fcd4bfd9",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4b6c0642_97a983fe",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6a36bf_fcd4bfd9",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36414d57_eb5108cd",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe368f45_bee0800b",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36414d57_eb5108cd",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "4dad6bb2_7afd2834",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42bd654c_0832d6c8",
+      "range": {
+        "startLine": 286,
+        "startChar": 18,
+        "endLine": 286,
+        "endChar": 28
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "390e90b2_83e3ad6c",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 4
@@ -127,6 +247,30 @@
       "writtenOn": "2017-07-19T15:56:01Z",
       "side": 1,
       "message": "Maybe this could be AnimateByMs(1000)... no string feelings here.",
+      "range": {
+        "startLine": 287,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 11
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2095c5f9_117f10ba",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-19T16:32:51Z",
+      "side": 1,
+      "message": "I\u0027ve switched to AnimateBy since TimeDelta is agnostic to units.",
+      "parentUuid": "390e90b2_83e3ad6c",
       "range": {
         "startLine": 287,
         "startChar": 4,
