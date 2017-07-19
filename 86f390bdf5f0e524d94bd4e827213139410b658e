@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9f95c9ef_ab73eb27",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-19T22:54:16Z",
+      "side": 1,
+      "message": "Our client testing code expects to see both in order to fully test all the possible flows, including both StartCallback and OnDownloadSuccess/Failure. Maybe set_failed_download can be changed to set_download_failed_on_start and set_download_failed_in_process? I am fine with doing this in a separate CL.",
+      "parentUuid": "a3719e56_4360780b",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40405713_59069b4a",
         "filename": "components/download/internal/test/test_download_service.h",
         "patchSetId": 10
