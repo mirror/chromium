@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf93bd2a_6ca45096",
+        "filename": "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-19T18:39:58Z",
+      "side": 1,
+      "message": "Rephrase to be more clear about the fact that could_send_activation_to_renderer_ is set whenever it reached ReadyToCommitNavigation and is not dependent on the finch bit to use ruleset or not.\n\n// Becomes true when the throttle manager reaches ReadyToCommitNavigation. Makes sure a caller cannot take ownership of the subresource filter unless the throttle has reached this point. After this point the throttle manager can send an activation IPC to the render process. Note that an IPC is not always sent in case this activation is ignoring ruleset rules.",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212dad5a_2432e7c3",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-19T18:39:58Z",
+      "side": 1,
+      "message": "Could not find a call for this function.",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ba827e_77804a82",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-19T18:39:58Z",
+      "side": 1,
+      "message": "Why is this hardcoded to true?",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489b22fd_8b290d28",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-19T18:39:58Z",
+      "side": 1,
+      "message": "Since the finch param is not activation specific:\n\n\"// Only send the IPC to the renderer if not actively ignoring rules from our ruleset.\"",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
