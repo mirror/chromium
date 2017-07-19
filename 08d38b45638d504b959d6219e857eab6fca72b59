@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f86ee47_6329215d",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-19T15:27:19Z",
+      "side": 1,
+      "message": "I\u0027m inclined to agree here, even though the environment variable controls whether the gclient hook is operative.",
+      "parentUuid": "a267b458_3161abd5",
+      "revId": "08d38b45638d504b959d6219e857eab6fca72b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98a8ecf1_39f7dd8b",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
