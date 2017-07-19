@@ -167,9 +167,6 @@ void LegacyInputRouterImpl::SendGestureEvent(
 
   GestureEventWithLatencyInfo gesture_event(original_gesture_event);
 
-  if (touch_action_filter_.FilterGestureEvent(&gesture_event.event))
-    return;
-
   wheel_event_queue_.OnGestureScrollEvent(gesture_event);
 
   if (gesture_event.event.source_device ==
