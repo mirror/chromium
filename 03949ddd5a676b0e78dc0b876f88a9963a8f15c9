@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fe0718_f629de73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-19T14:03:45Z",
+      "side": 1,
+      "message": "Would there be any benefit to extending this now to cover cut/copy/paste? At some point we\u0027ll need those extra flags plumbed up, so should we do something like:\n\nGetOperations(bool* canCut, bool* canCopy, bool* canPaste)\n\nor something like that so we can retrieve all three with one call?\n\nOr, should we land this and extend later when we need?",
+      "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
