@@ -30,7 +30,7 @@ std::unique_ptr<base::Value> GetVariationsList() {
   }
 #else
   // In release mode, display the hashes only.
-  variations::GetFieldTrialActiveGroupIdsAsStrings(&variations);
+  variations::GetFieldTrialActiveGroupIdsAsStrings(std::string(), &variations);
 #endif
 
   std::unique_ptr<base::ListValue> variations_list(new base::ListValue);
