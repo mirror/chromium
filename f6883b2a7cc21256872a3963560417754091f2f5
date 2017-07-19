@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a96528db_cb0f859a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T15:42:10Z",
+      "side": 1,
+      "message": "I thought we also wanted to apply the gradient to download thumbnails?",
+      "range": {
+        "startLine": 214,
+        "startChar": 59,
+        "endLine": 214,
+        "endChar": 95
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b84c66_dd46ab1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T15:42:10Z",
+      "side": 1,
+      "message": "In the past we had issues with accidentally recycling bitmaps that were used by multiple clients, hence the first assert. The second assert is just because that is the contract of the image fetcher. We could still leave the asserts and put them into a helper method?",
+      "range": {
+        "startLine": 230,
+        "startChar": 11,
+        "endLine": 230,
+        "endChar": 57
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99cb3bc6_7d03b3f5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
         "patchSetId": 2
@@ -19,6 +65,23 @@
         "endLine": 32,
         "endChar": 43
       },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fdd143_e9e2ace1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T15:42:10Z",
+      "side": 1,
+      "message": "It might be interesting to measure how long this takes (both on a test device and in the real world)",
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +127,52 @@
         "startChar": 27,
         "endLine": 60,
         "endChar": 53
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9af3fa9_ecfc0ae5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T15:42:10Z",
+      "side": 1,
+      "message": "I think technically we don\u0027t need to check _all_ of the sides, just the ones that coincide with the border of the card. As an approximation, we could skip the left of right one (depending on the layout/direction).",
+      "range": {
+        "startLine": 68,
+        "startChar": 27,
+        "endLine": 68,
+        "endChar": 41
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f01c839_a66d23d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T15:42:10Z",
+      "side": 1,
+      "message": "It might be worth pulling these into local variables to avoid repeated method calls? No idea if the JIT will do that anyway...",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 45
       },
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
