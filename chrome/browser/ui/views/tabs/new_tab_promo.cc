@@ -4,8 +4,8 @@
 
 #include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 
-#include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/insets.h"
@@ -31,11 +31,19 @@ constexpr base::TimeDelta kBubbleCloseDelayShort =
 }  // namespace
 
 // static
-NewTabPromo* NewTabPromo::CreateSelfOwned(const gfx::Rect& anchor_rect) {
-  return new NewTabPromo(anchor_rect);
+NewTabPromo* NewTabPromo::CreateSelfOwned(
+    const gfx::Rect& anchor_rect,
+    const std::string& promo_string_specifier) {
+  return new NewTabPromo(anchor_rect, promo_string_specifier);
 }
 
-NewTabPromo::NewTabPromo(const gfx::Rect& anchor_rect) {
+bool NewTabPromo::IsPromoVisible() {
+  return GetWidget()->IsVisible();
+}
+
+NewTabPromo::NewTabPromo(const gfx::Rect& anchor_rect,
+                         const std::string& promo_string_specifier) {
+  SetStringForPromo(promo_string_specifier);
   SetAnchorRect(anchor_rect);
   set_arrow(views::BubbleBorder::LEFT_TOP);
   views::Widget* new_tab_promo_widget =
@@ -72,7 +80,7 @@ void NewTabPromo::Init() {
   box_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   SetLayoutManager(box_layout.release());
-  AddChildView(new views::Label(l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO)));
+  AddChildView(new views::Label(promo_string_));
 }
 
 void NewTabPromo::CloseBubble() {
@@ -81,4 +89,18 @@ void NewTabPromo::CloseBubble() {
 
 void NewTabPromo::StartAutoCloseTimer(base::TimeDelta auto_close_duration) {
   timer_.Start(FROM_HERE, auto_close_duration, this, &NewTabPromo::CloseBubble);
+}
+
+void NewTabPromo::SetStringForPromo(const std::string& specifier) {
+  if (specifier == "IDS_NEWTAB_PROMO_1") {
+    promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_1);
+    return;
+  } else if (specifier == "IDS_NEWTAB_PROMO_2") {
+    promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_2);
+    return;
+  } else if (specifier == "IDS_NEWTAB_PROMO_3") {
+    promo_string_ = l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_3);
+    return;
+  }
+  NOTREACHED();
 }
