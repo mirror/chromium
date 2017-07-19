@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d41602af_d86051a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a205bef6_5ed529ce",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb58656_5825c63f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ef6f8078_d39c611f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb58656_5825c63f",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5085799c_31029f39",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ReportingObserverCustom.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T18:26:47Z",
       "side": 1,
       "message": "Why can\u0027t we generate the bindings for the constructor?",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0ff49d_67719c59",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ReportingObserverCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "I am not sure about this. I haven\u0027t dealt with these bindings before, and was simply using the existing IntersectionObserver as a template. It makes a custom constructor like this one. Are you aware of a way to get the same functionality with auto-generated bindings?",
+      "parentUuid": "5085799c_31029f39",
       "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2f6273dd_17371e96",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a941126d_4d82c4ac",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f71e974_5c2467d0",
         "filename": "third_party/WebKit/Source/core/frame/Report.h",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02d29e50_b3db5097",
+        "filename": "third_party/WebKit/Source/core/frame/Report.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "Because this URL is exclusively used as a user-readable representation of the URL (to be returned as a String), so there is no need for it to be stored as anything other than a String.",
+      "parentUuid": "6f71e974_5c2467d0",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c43ea1_4259a24e",
         "filename": "third_party/WebKit/Source/core/frame/ReportingObserver.cpp",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6861771c_a4bbfb35",
+        "filename": "third_party/WebKit/Source/core/frame/ReportingObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-07-19T21:22:02Z",
+      "side": 1,
+      "message": "Ah, you are right. I have changed this to a reference, and am now copying the reports manually in ReportingContext::SendReports (along with a comment). The reason I am copying them there is because I have realized that I also need to clear the queue of reports before sending a copy of them to callbacks. Otherwise more reports may get queued as a result of the callbacks, and these new reports would then be cleared without ever being sent.",
+      "parentUuid": "90c43ea1_4259a24e",
+      "revId": "5f09f69def522cfc9cfa852ce25fce187b712f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
