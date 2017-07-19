@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56d61285_5fd83192",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9764,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-19T12:54:54Z",
+      "side": 1,
+      "message": "Maybe use the word \"Whitelist\" instead?\nThis would be consistent with existing policies (like \"ExtensionInstallWhitelist\", \"AttestationExtensionWhitelist\"). Also this would leave us space to introduce the pairing \"blacklist\" policy if there\u0027ll be a customer\u0027s request for that.",
+      "range": {
+        "startLine": 9764,
+        "startChar": 29,
+        "endLine": 9764,
+        "endChar": 36
+      },
+      "revId": "de3338ffaff8d84b02d7b5741ea3b0705acf3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674f1167_73802ef2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9786,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-19T12:54:54Z",
+      "side": 1,
+      "message": "Will be useful to explain what exactly is \"app ID\".\nIIUC, currently it\u0027s talking only about Chrome Apps, with a potential expanding to Android apps - or is it already meaning both?",
+      "range": {
+        "startLine": 9786,
+        "startChar": 101,
+        "endLine": 9786,
+        "endChar": 109
+      },
+      "revId": "de3338ffaff8d84b02d7b5741ea3b0705acf3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
