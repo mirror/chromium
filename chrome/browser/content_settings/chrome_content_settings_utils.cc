@@ -5,6 +5,8 @@
 #include "chrome/browser/content_settings/chrome_content_settings_utils.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/media/media_engagement_service.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
 
 namespace content_settings {
 
@@ -21,6 +23,27 @@ void RecordPluginsAction(PluginsAction action) {
 void RecordPopupsAction(PopupsAction action) {
   UMA_HISTOGRAM_ENUMERATION("ContentSettings.Popups", action,
                             POPUPS_ACTION_COUNT);
+}
+
+void GetHighMediaEngagementRules(Profile* profile,
+                                 RendererContentSettingRules* rules) {
+  MediaEngagementService* service = MediaEngagementService::Get(profile);
+  bool incognito =
+      profile->GetProfileType() == Profile::ProfileType::INCOGNITO_PROFILE;
+
+  for (auto const& pair : service->GetScoreMap()) {
+    if (pair.second) {
+      ContentSettingsPattern pattern =
+          ContentSettingsPattern::FromURL(pair.first);
+      rules->high_media_engagement_rules.push_back(ContentSettingPatternSource(
+          pattern, pattern, ContentSettingToValue(CONTENT_SETTING_ALLOW),
+          std::string(), incognito));
+    }
+  }
+
+  rules->high_media_engagement_rules.push_back(ContentSettingPatternSource(
+      ContentSettingsPattern::Wildcard(), ContentSettingsPattern::Wildcard(),
+      ContentSettingToValue(CONTENT_SETTING_BLOCK), std::string(), incognito));
 }
 
 }  // namespace content_settings

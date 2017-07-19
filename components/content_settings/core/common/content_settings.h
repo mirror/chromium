@@ -71,6 +71,7 @@ struct RendererContentSettingRules {
   ContentSettingsForOneType image_rules;
   ContentSettingsForOneType script_rules;
   ContentSettingsForOneType autoplay_rules;
+  ContentSettingsForOneType high_media_engagement_rules;
 };
 
 namespace content_settings {

@@ -51,8 +51,11 @@ class MediaEngagementService : public KeyedService,
   // Returns the engagement score of |url|.
   double GetEngagementScore(const GURL& url) const;
 
-  // Returns a map of all stored origins and their engagement levels.
-  std::map<GURL, double> GetScoreMapForTesting() const;
+  // Returns a map of all stored origins and whether their score is high
+  // enough to bypass autoplay policies. If the feature flag
+  // kMediaEngagementBypassAutoplayPolicies is disabled then it returns
+  // an empty map.
+  std::map<GURL, bool> GetScoreMap() const;
 
   // Record a visit of a |url|.
   void RecordVisit(const GURL& url);

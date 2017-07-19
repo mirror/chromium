@@ -59,6 +59,10 @@ bool MediaEngagementTimeFilterAdapter(
   return playback_time >= delete_begin && playback_time <= delete_end;
 }
 
+// Origins with scores higher than this will be allowed to bypass autoplay
+// policies.
+constexpr double kScoreAutoplayAllowed = 0.7;
+
 }  // namespace
 
 const char MediaEngagementService::kHistogramScoreAtStartupName[] =
@@ -66,7 +70,7 @@ const char MediaEngagementService::kHistogramScoreAtStartupName[] =
 
 // static
 bool MediaEngagementService::IsEnabled() {
-  return base::FeatureList::IsEnabled(media::kMediaEngagement);
+  return base::FeatureList::IsEnabled(media::kRecordMediaEngagementScores);
 }
 
 // static
@@ -182,12 +186,16 @@ double MediaEngagementService::GetEngagementScore(const GURL& url) const {
   return CreateEngagementScore(url).GetTotalScore();
 }
 
-std::map<GURL, double> MediaEngagementService::GetScoreMapForTesting() const {
-  std::map<GURL, double> score_map;
+std::map<GURL, bool> MediaEngagementService::GetScoreMap() const {
+  if (!base::FeatureList::IsEnabled(
+          media::kMediaEngagementBypassAutoplayPolicies))
+    return std::map<GURL, bool>();
+
+  std::map<GURL, bool> score_map;
   for (const GURL& url : GetEngagementOriginsFromContentSettings(profile_)) {
     if (!url.is_valid())
       continue;
-    score_map[url] = GetEngagementScore(url);
+    score_map[url] = GetEngagementScore(url) >= kScoreAutoplayAllowed;
   }
   return score_map;
 }

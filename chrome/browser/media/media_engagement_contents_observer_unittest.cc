@@ -115,8 +115,6 @@ class MediaEngagementContentsObserverTest
                     int expected_media_playbacks) {
     EXPECT_EQ(contents_observer_->service_->GetEngagementScore(url),
               expected_score);
-    EXPECT_EQ(contents_observer_->service_->GetScoreMapForTesting()[url],
-              expected_score);
 
     MediaEngagementScore score =
         contents_observer_->service_->CreateEngagementScore(url);

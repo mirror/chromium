@@ -75,6 +75,10 @@ class CORE_EXPORT ContentSettingsClient {
   // Controls whether autoplay is allowed for this frame.
   bool AllowAutoplay(bool default_value);
 
+  // Controls whether a frame can override autoplay policies because of a
+  // high media engagement score.
+  bool HasHighMediaEngagement(bool default_value);
+
   // Reports that passive mixed content was found at the provided URL. It may or
   // may not be actually displayed later, what would be flagged by
   // didDisplayInsecureContent.

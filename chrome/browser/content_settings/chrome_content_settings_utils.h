@@ -9,6 +9,9 @@
 // here would be meaningfully shared with other platforms, consider moving it to
 // components/content_settings/core/browser/content_settings_utils.h.
 
+#include "chrome/browser/profiles/profile.h"
+#include "components/content_settings/core/common/content_settings.h"
+
 namespace content_settings {
 
 // UMA histogram for the mixed script shield. The enum values correspond to
@@ -53,6 +56,9 @@ enum PopupsAction {
 };
 
 void RecordPopupsAction(PopupsAction action);
+
+void GetHighMediaEngagementRules(Profile* profile,
+                                 RendererContentSettingRules* rules);
 
 }  // namespace content_settings
 

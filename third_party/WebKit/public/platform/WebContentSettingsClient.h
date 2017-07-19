@@ -90,6 +90,12 @@ class WebContentSettingsClient {
   // Controls whether autoplay is allowed for this frame.
   virtual bool AllowAutoplay(bool default_value) { return default_value; }
 
+  // Controls whether a frame can override autoplay policies because of a
+  // high media engagement score.
+  virtual bool HasHighMediaEngagement(bool default_value) {
+    return default_value;
+  };
+
   // Reports that passive mixed content was found at the provided URL.
   virtual void PassiveInsecureContentFound(const WebURL&) {}
 

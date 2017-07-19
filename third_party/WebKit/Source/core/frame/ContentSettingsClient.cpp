@@ -106,6 +106,12 @@ bool ContentSettingsClient::AllowAutoplay(bool default_value) {
   return default_value;
 }
 
+bool ContentSettingsClient::HasHighMediaEngagement(bool default_value) {
+  if (client_)
+    return client_->HasHighMediaEngagement(default_value);
+  return default_value;
+}
+
 void ContentSettingsClient::PassiveInsecureContentFound(const KURL& url) {
   if (client_)
     return client_->PassiveInsecureContentFound(url);

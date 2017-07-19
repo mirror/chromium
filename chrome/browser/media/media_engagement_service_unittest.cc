@@ -101,7 +101,11 @@ std::unique_ptr<KeyedService> BuildTestHistoryService(
 class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
  public:
   void SetUp() override {
-    scoped_feature_list_.InitAndEnableFeature(media::kMediaEngagement);
+    scoped_feature_list_.InitWithFeatures(
+        {media::kRecordMediaEngagementScores,
+         media::kMediaEngagementBypassAutoplayPolicies},
+        {});
+
     ChromeRenderViewHostTestHarness::SetUp();
 
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -146,7 +150,6 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
                     int expected_media_playbacks,
                     base::Time expected_last_media_playback_time) {
     EXPECT_EQ(service->GetEngagementScore(url), expected_score);
-    EXPECT_EQ(service->GetScoreMapForTesting()[url], expected_score);
 
     MediaEngagementScore score = service->CreateEngagementScore(url);
     EXPECT_EQ(expected_visits, score.visits());
@@ -182,9 +185,7 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
     return service_->CreateEngagementScore(url).GetTotalScore();
   }
 
-  std::map<GURL, double> GetScoreMapForTesting() const {
-    return service_->GetScoreMapForTesting();
-  }
+  std::map<GURL, bool> GetScoreMap() const { return service_->GetScoreMap(); }
 
   void ClearDataBetweenTime(base::Time begin, base::Time end) {
     service_->ClearDataBetweenTime(begin, end);
@@ -403,7 +404,7 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
     waiter.Wait();
 
     // origin3's score should be removed but the rest should remain the same.
-    std::map<GURL, double> scores = GetScoreMapForTesting();
+    std::map<GURL, bool> scores = GetScoreMap();
     EXPECT_TRUE(scores.find(origin3) == scores.end());
     ExpectScores(origin1, 0.0, MediaEngagementScore::kScoreMinVisits, 0,
                  TimeNotSet());
@@ -485,4 +486,19 @@ TEST_F(MediaEngagementServiceTest, LogScoresOnStartupToHistogram) {
       MediaEngagementService::kHistogramScoreAtStartupName, 50, 1);
   histogram_tester.ExpectBucketCount(
       MediaEngagementService::kHistogramScoreAtStartupName, 83, 1);
+}
+
+TEST_F(MediaEngagementServiceTest, GetScoreMapHighEngagement) {
+  GURL url1("https://www.google.com");
+  GURL url2("https://www.google.co.uk");
+  GURL url3("https://www.example.com");
+
+  SetScores(url1, 1, 1);    // score should be 0.0
+  SetScores(url2, 71, 50);  // score should be 0.7
+  SetScores(url3, 7, 7);    // score should be 1.0
+
+  std::map<GURL, bool> scores = GetScoreMap();
+  EXPECT_FALSE(scores[url1]);
+  EXPECT_TRUE(scores[url2]);
+  EXPECT_TRUE(scores[url3]);
 }

@@ -40,6 +40,7 @@
 #include "chrome/browser/cache_stats_recorder.h"
 #include "chrome/browser/chrome_content_browser_client_parts.h"
 #include "chrome/browser/chrome_quota_permission_context.h"
+#include "chrome/browser/content_settings/chrome_content_settings_utils.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -1075,6 +1076,7 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
     GetRendererContentSettingRules(
         HostContentSettingsMapFactory::GetForProfile(profile), &rules);
   }
+  content_settings::GetHighMediaEngagementRules(profile, &rules);
   rc_interface->SetContentSettingRules(rules);
 }
 

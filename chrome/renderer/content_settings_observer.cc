@@ -435,6 +435,17 @@ void ContentSettingsObserver::PassiveInsecureContentFound(
   FilteredReportInsecureContentDisplayed(GURL(resource_url));
 }
 
+bool ContentSettingsObserver::HasHighMediaEngagement(bool default_value) {
+  if (!content_setting_rules_)
+    return default_value;
+
+  blink::WebFrame* frame = render_frame()->GetWebFrame()->Top();
+  return GetContentSettingFromRules(
+             content_setting_rules_->high_media_engagement_rules, frame,
+             url::Origin(frame->GetSecurityOrigin()).GetURL()) ==
+         CONTENT_SETTING_ALLOW;
+}
+
 void ContentSettingsObserver::DidNotAllowPlugins() {
   DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS);
 }

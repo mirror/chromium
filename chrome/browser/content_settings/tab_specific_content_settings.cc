@@ -34,6 +34,7 @@
 #include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -717,12 +718,13 @@ void TabSpecificContentSettings::OnContentSettingChanged(
   GURL entry_url;
   if (entry)
     entry_url = entry->GetURL();
+
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
   if (details.update_all() ||
       // The visible NavigationEntry is the URL in the URL field of a tab.
       // Currently this should be matched by the |primary_pattern|.
       details.primary_pattern().Matches(entry_url)) {
-    Profile* profile =
-        Profile::FromBrowserContext(web_contents()->GetBrowserContext());
     const HostContentSettingsMap* map =
         HostContentSettingsMapFactory::GetForProfile(profile);
 
@@ -739,6 +741,7 @@ void TabSpecificContentSettings::OnContentSettingChanged(
     }
     RendererContentSettingRules rules;
     GetRendererContentSettingRules(map, &rules);
+    content_settings::GetHighMediaEngagementRules(profile, &rules);
 
     IPC::ChannelProxy* channel =
         web_contents()->GetRenderProcessHost()->GetChannel();

@@ -70,7 +70,19 @@ AutoplayPolicy::Type AutoplayPolicy::GetAutoplayPolicyForDocument(
   if (IsDocumentWhitelisted(document))
     return Type::kNoUserGestureRequired;
 
+  if (IsAutoplayAllowedPerMediaEngagement(document))
+    return Type::kNoUserGestureRequired;
+
   return document.GetSettings()->GetAutoplayPolicy();
+}
+
+// static
+bool AutoplayPolicy::IsAutoplayAllowedPerMediaEngagement(
+    const Document& document) {
+  LocalFrame* frame = document.GetFrame();
+  if (!frame)
+    return false;
+  return frame->GetContentSettingsClient()->HasHighMediaEngagement(false);
 }
 
 // static
