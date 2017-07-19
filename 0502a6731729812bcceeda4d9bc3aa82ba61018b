@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecaebd3f_9fab7b13",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T05:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2e14e6_8d5b3ca9",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7d21f1_bb367d42",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
         "patchSetId": 2
@@ -118,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "85283222_4eb2ee44",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T05:20:40Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct. Shubhie, I\u0027ll defer to you. We could reset the value to 0.0 (render time) so it tries again on the next paint, or re-queue the SwapPromise. Or, see if this is an issue with the UMA.",
+      "parentUuid": "812bd180_4833587d",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e2912f_f351c3f7",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 2
@@ -132,6 +168,24 @@
       "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41566d3d_e834094a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T05:20:40Z",
+      "side": 1,
+      "message": "Done. FYI: There is an existing histogram in PaintTiming without this prefix: PageLoad.Internal.PaintTiming.HadUserInputBeforeFirstMeaningfulPaint.",
+      "parentUuid": "c7e2912f_f351c3f7",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "23639b08_875ada8d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T05:20:40Z",
+      "side": 1,
+      "message": "I totally agree and wanted to do this, just wasn\u0027t sure if that should come later down the road after we were sure of deltas and other possible discrepancies.\n\nIn the latest patchset I removed *Swap() methods and report *_swap_ times from FirstPaint(), FirstContentfulPaint(), etc. At least for now, the old values are exposed via FirstPaintRendered() and similarly named methods, but they are private and exposed to FirstMeaningfulPaintDetector[Test] via friend class/FRIEND_TEST. I didn\u0027t change the implementation of FirstMeaningfulPaintDetector, just naming/scope. Let me know if this looks OK.",
+      "parentUuid": "a2ed0313_150929a2",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1186ac7_9be5da38",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
         "patchSetId": 2
@@ -267,6 +345,24 @@
       "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c500d94_02900237",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T05:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307f6755_e0efcacf",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
