@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba5f2ed9_763f088d",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Thanks for pointing it out! It looks like the BiDi algorithm does apply using Hebrew. I removed this.",
+      "parentUuid": "7d57bd5c_78b98deb",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 76
+      },
+      "revId": "ad1242cc90b77b90f1167c5de106b18d86182042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "299b7462_325c964e",
         "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "ad1242cc90b77b90f1167c5de106b18d86182042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a20ca3_ebc32356",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299b7462_325c964e",
+      "range": {
+        "startLine": 214,
+        "startChar": 53,
+        "endLine": 214,
+        "endChar": 55
+      },
+      "revId": "ad1242cc90b77b90f1167c5de106b18d86182042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

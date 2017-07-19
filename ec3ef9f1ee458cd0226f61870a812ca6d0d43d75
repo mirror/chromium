@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4bae37e_95011b94",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bf59f78_2d6a908b",
+      "range": {
+        "startLine": 302,
+        "startChar": 5,
+        "endLine": 302,
+        "endChar": 26
+      },
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0177da64_21a6fb82",
         "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696e8ccc_eacd035c",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0177da64_21a6fb82",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "744bc447_6d126a43",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c9ccd7_8be37d61",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8a9b09_30f11c80",
         "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
         "patchSetId": 8
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "808e4707_76cadb07",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "I\u0027m confused with what you mean. Can you elaborate on the metrics?",
+      "parentUuid": "7f8a9b09_30f11c80",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7172fc5a_463d3526",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-07-19T02:54:58Z",
       "side": 1,
       "message": "Should credit card autofill be a case here? I\u0027m not following entirely.",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecee25a_83444e97",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "No, this translate the values in chrome_commands.h to the associated TouchBarAction.\nThis is for the default Chrome touch bar and it doesn\u0027t have anything to do with credit cards",
+      "parentUuid": "7172fc5a_463d3526",
       "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

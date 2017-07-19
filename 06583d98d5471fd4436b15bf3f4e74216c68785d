@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f6fe96d3_44a1647b",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-07-19T18:31:08Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "d7b78e2e_be2e364d",
+      "revId": "06583d98d5471fd4436b15bf3f4e74216c68785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a76fea7_793d3008",
         "filename": "chrome/common/chrome_features.h",
         "patchSetId": 5
