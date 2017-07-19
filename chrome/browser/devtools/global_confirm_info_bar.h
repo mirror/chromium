@@ -6,13 +6,14 @@
 #define CHROME_BROWSER_DEVTOOLS_GLOBAL_CONFIRM_INFO_BAR_H_
 
 #include <map>
+#include <memory>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
+#include "components/infobars/core/infobar_manager.h"
 
 namespace content {
 class WebContents;
@@ -22,11 +23,15 @@ class WebContents;
 // is dismissed or the close method is called.
 // It listens to all tabs in all browsers and adds/removes confirm infobar
 // to each of the tabs.
-class GlobalConfirmInfoBar : public TabStripModelObserver,
+class GlobalConfirmInfoBar : public base::RefCounted<GlobalConfirmInfoBar>,
+                             public TabStripModelObserver,
                              public infobars::InfoBarManager::Observer {
  public:
   static base::WeakPtr<GlobalConfirmInfoBar> Show(
       std::unique_ptr<ConfirmInfoBarDelegate> delegate);
+
+  // Closes all the infobars still under the responsability of
+  // GlobalConfirmInfoBar.
   void Close();
 
   // infobars::InfoBarManager::Observer:
@@ -34,9 +39,14 @@ class GlobalConfirmInfoBar : public TabStripModelObserver,
   void OnManagerShuttingDown(infobars::InfoBarManager* manager) override;
 
  private:
+  friend class base::RefCounted<GlobalConfirmInfoBar>;
+
   explicit GlobalConfirmInfoBar(
       std::unique_ptr<ConfirmInfoBarDelegate> delegate);
   ~GlobalConfirmInfoBar() override;
+
+  // Each info bar requires a unique delegate. This is used as a proxy to
+  // |delegate_|.
   class DelegateProxy;
 
   // TabStripModelObserver:
