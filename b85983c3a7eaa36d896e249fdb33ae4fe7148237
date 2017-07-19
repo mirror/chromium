@@ -117,6 +117,30 @@
       "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c1b00f_1fffedd5",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-19T08:46:48Z",
+      "side": 1,
+      "message": "Ok, then I\u0027m fine with the change for consistency with the other the tests.",
+      "parentUuid": "eb9beabf_a23cde40",
+      "range": {
+        "startLine": 309,
+        "startChar": 13,
+        "endLine": 309,
+        "endChar": 61
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
