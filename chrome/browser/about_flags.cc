@@ -67,6 +67,7 @@
 #include "components/search_provider_logos/features.h"
 #include "components/security_state/core/security_state.h"
 #include "components/security_state/core/switches.h"
+#include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_features.h"
 #include "components/signin/core/common/signin_switches.h"
 #include "components/spellcheck/common/spellcheck_features.h"
@@ -308,15 +309,33 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
      "1024"}};
 
 #if !BUILDFLAG(ENABLE_MIRROR)
-const FeatureEntry::Choice kAccountConsistencyChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kAccountConsistencyChoiceMirror,
-     switches::kAccountConsistency, switches ::kAccountConsistencyMirror},
+
+const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
+    {signin::kAccountConsistencyFeatureMethodParameter,
+     signin::kAccountConsistencyFeatureMethodMirror}};
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-    {flag_descriptions::kAccountConsistencyChoiceDice,
-     switches::kAccountConsistency, switches::kAccountConsistencyDice},
+const FeatureEntry::FeatureParam kAccountConsistencyDice[] = {
+    {signin::kAccountConsistencyFeatureMethodParameter,
+     signin::kAccountConsistencyFeatureMethodDice}};
+
+const FeatureEntry::FeatureParam kAccountConsistencyDiceFix[] = {
+    {signin::kAccountConsistencyFeatureMethodParameter,
+     signin::kAccountConsistencyFeatureMethodDiceFix}};
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+
+const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
+    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
+     nullptr}
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+    ,
+    {"Dice", kAccountConsistencyDice, arraysize(kAccountConsistencyDice),
+     nullptr},
+    {"Dice (fix only)", kAccountConsistencyDiceFix,
+     arraysize(kAccountConsistencyDiceFix), nullptr}
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 };
+
 #endif  // !BUILDFLAG(ENABLE_MIRROR)
 
 const FeatureEntry::Choice kSimpleCacheBackendChoices[] = {
@@ -1717,7 +1736,9 @@ const FeatureEntry kFeatureEntries[] = {
 #if !BUILDFLAG(ENABLE_MIRROR)
     {"account-consistency", flag_descriptions::kAccountConsistencyName,
      flag_descriptions::kAccountConsistencyDescription, kOsAll,
-     MULTI_VALUE_TYPE(kAccountConsistencyChoices)},
+     FEATURE_WITH_PARAMS_VALUE_TYPE(signin::kAccountConsistencyFeature,
+                                    kAccountConsistencyFeatureVariations,
+                                    "AccountConsistencyVariations")},
 #endif
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",

@@ -25,7 +25,7 @@ ExtensionFunction::ResponseAction IdentityGetAccountsFunction::Run() {
 
   std::vector<std::string> gaia_ids =
       IdentityAPI::GetFactoryInstance()->Get(GetProfile())->GetAccounts();
-  DCHECK(gaia_ids.size() < 2 || switches::IsExtensionsMultiAccount());
+  DCHECK(gaia_ids.size() < 2 || signin::IsExtensionsMultiAccount());
 
   std::unique_ptr<base::ListValue> infos(new base::ListValue());
 

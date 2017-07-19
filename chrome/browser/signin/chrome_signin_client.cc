@@ -197,7 +197,7 @@ net::URLRequestContextGetter* ChromeSigninClient::GetURLRequestContext() {
 }
 
 bool ChromeSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return !switches::IsAccountConsistencyMirrorEnabled();
+  return !signin::IsAccountConsistencyMirrorEnabled();
 }
 
 std::string ChromeSigninClient::GetProductVersion() {

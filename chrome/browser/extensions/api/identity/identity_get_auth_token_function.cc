@@ -140,7 +140,7 @@ void IdentityGetAuthTokenFunction::OnReceivedPrimaryAccountInfo(
   // Detect and handle the case where the extension is using an account other
   // than the primary account.
   if (!extension_gaia_id.empty() && extension_gaia_id != primary_gaia_id) {
-    if (!switches::IsExtensionsMultiAccount()) {
+    if (!signin::IsExtensionsMultiAccount()) {
       // TODO(courage): should this be a different error?
       CompleteFunctionWithError(identity_constants::kUserNotSignedIn);
       return;

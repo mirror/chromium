@@ -534,7 +534,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   AddSectionEntry(basic_info, "Chrome Version", product_version);
   AddSectionEntry(
       basic_info, "Account Consistency?",
-      switches::IsAccountConsistencyMirrorEnabled() == true ? "On" : "Off");
+      signin::IsAccountConsistencyMirrorEnabled() == true ? "On" : "Off");
   AddSectionEntry(basic_info, "Signin Status",
       signin_manager->IsAuthenticated() ? "Signed In" : "Not Signed In");
   OAuth2TokenServiceDelegate::LoadCredentialsState load_tokens_state =
