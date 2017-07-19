@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e1ac8eb_b1ed4f86",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "I just removed this log.",
+      "parentUuid": "5744e41b_96fcf921",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e64cde87_880d7e94",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "08ff3acc_b60e52ce",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e64cde87_880d7e94",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e41d14_2dbb6e3d",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T20:05:50Z",
       "side": 1,
       "message": "What if the client stopped responding or is misbehaving? Do we need a timeout at which we process event as if it was not handled?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a229bc94_8f8a8dd7",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "I added expiration logic.",
+      "parentUuid": "24e41d14_2dbb6e3d",
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6ba1efb3_46be08ac",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8b6667_f3e62d0a",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89337e69_a3b9ed2c",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-18T20:05:50Z",
       "side": 1,
       "message": "is \"event-\u003eStopPropagation()\" not needed anymore?",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b4d7e0_0c60bcb4",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "I added it. It\u0027s needed if another PostEventHandler is added.",
+      "parentUuid": "89337e69_a3b9ed2c",
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c3c5012f_2e5b2e40",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "No. This method can be private as of now.",
+      "parentUuid": "0255dceb_5a54845d",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35f1a74_ea6fcb8d",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a6142f_f3872f87",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35f1a74_ea6fcb8d",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "35b7b6b1_14bc8427",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8596c3d_d469e1fc",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c4e6360_c6f1ab5f",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d40451_9df2c887",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4e6360_c6f1ab5f",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "f936c4ea_6d74df7a",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91544609_fec847f6",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20fe3831_27accd45",
         "filename": "components/exo/keyboard_delegate.h",
         "patchSetId": 6
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-18T20:05:50Z",
       "side": 1,
       "message": "We shouldn\u0027t be referring to wayland here. How about:\n\n// Called when keyboard key state changed. |pressed| is true when |key|\n// was pressed and false if it was released. Should return the serial\n// number that will be used by the client to acknowledge the change in\n// key state.",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5058461b_f5523ccf",
+        "filename": "components/exo/keyboard_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Thank you for your advice! Done.",
+      "parentUuid": "20fe3831_27accd45",
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +401,24 @@
       "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251ffabe_c4c3cdb9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-19T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f478cba_eb605374",
+      "revId": "3c87e65b8fba7c95f51665869beeb856c87fa8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
