@@ -4,7 +4,7 @@
 
 // Custom binding for the Tab Capture API.
 
-var binding = require('binding').Binding.create('tabCapture');
+var binding = apiBridge || require('binding').Binding.create('tabCapture');
 var lastError = require('lastError');
 
 binding.registerCustomHook(function(bindingsAPI, extensionId) {
@@ -60,4 +60,5 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
   apiFunctions.setCustomCallback('captureOffscreenTab', proxyToGetUserMedia);
 });
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());
