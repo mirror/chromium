@@ -314,6 +314,10 @@ class NET_EXPORT URLFetcher {
   // the request has not failed.
   virtual HostPortPair GetSocketAddress() const = 0;
 
+  // Retrieve the MIME type from the request.  Must only be called after the
+  // OnURLFetchComplete callback has run.
+  virtual std::string GetMimeType() const = 0;
+
   // Returns true if the request was delivered through a proxy.  Must only
   // be called after the OnURLFetchComplete callback has run and the request
   // has not failed.

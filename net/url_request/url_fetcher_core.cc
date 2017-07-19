@@ -320,6 +320,10 @@ HostPortPair URLFetcherCore::GetSocketAddress() const {
   return socket_address_;
 }
 
+std::string URLFetcherCore::GetMimeType() const {
+  return mime_type_;
+}
+
 bool URLFetcherCore::WasFetchedViaProxy() const {
   return was_fetched_via_proxy_;
 }
@@ -428,6 +432,7 @@ void URLFetcherCore::OnResponseStarted(URLRequest* request, int net_error) {
     was_fetched_via_proxy_ = request_->was_fetched_via_proxy();
     was_cached_ = request_->was_cached();
     total_response_bytes_ = request_->GetExpectedContentSize();
+    request_->GetMimeType(&mime_type_);
   }
 
   DCHECK(!buffer_);

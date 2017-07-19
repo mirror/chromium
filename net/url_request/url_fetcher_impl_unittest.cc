@@ -1104,6 +1104,17 @@ TEST_F(URLFetcherTest, SocketAddress) {
             delegate.fetcher()->GetSocketAddress().host());
 }
 
+TEST_F(URLFetcherTest, MimeType) {
+  WaitingURLFetcherDelegate delegate;
+  delegate.CreateFetcher(test_server_->GetURL(kDefaultResponsePath),
+                         URLFetcher::GET, CreateSameThreadContextGetter());
+  delegate.StartFetcherAndWait();
+
+  EXPECT_TRUE(delegate.fetcher()->GetStatus().is_success());
+  EXPECT_EQ(200, delegate.fetcher()->GetResponseCode());
+  EXPECT_EQ("text/html", delegate.fetcher()->GetMimeType());
+}
+
 TEST_F(URLFetcherTest, StopOnRedirect) {
   const char kRedirectTarget[] = "http://redirect.target.com";
 

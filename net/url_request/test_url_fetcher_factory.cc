@@ -212,6 +212,11 @@ HostPortPair TestURLFetcher::GetSocketAddress() const {
   return HostPortPair();
 }
 
+std::string TestURLFetcher::GetMimeType() const {
+  NOTIMPLEMENTED();
+  return std::string();
+}
+
 bool TestURLFetcher::WasFetchedViaProxy() const {
   return fake_was_fetched_via_proxy_;
 }

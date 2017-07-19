@@ -115,6 +115,7 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
       std::unique_ptr<URLFetcherResponseWriter> response_writer);
   HttpResponseHeaders* GetResponseHeaders() const;
   HostPortPair GetSocketAddress() const;
+  std::string GetMimeType() const;
   bool WasFetchedViaProxy() const;
   bool WasCached() const;
   const GURL& GetOriginalURL() const;
@@ -260,6 +261,7 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
   int64_t received_response_content_length_;
   int64_t total_received_bytes_;
   HostPortPair socket_address_;
+  std::string mime_type_;
 
   bool upload_content_set_;          // SetUploadData has been called
   std::string upload_content_;       // HTTP POST payload
