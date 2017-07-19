@@ -16,6 +16,24 @@
       "revId": "5a7dffbb49ac8f0b9225ef6ba2d8cf9207111a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1387512_375735ba",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-19T00:49:04Z",
+      "side": 1,
+      "message": "M61 will be the first time to use background blur in the production code path of chromium. So either ways will be fine to define this API.\n\nRounding errors will be the major concern. Although GaussianBlur will take float sigma, what will be the effect if sigma * 3.0f has big difference than static_cast\u003cint\u003e(ceilf(sigma * 3.0f))? I can see everything will be approximate at last. The radius user set may not be the exact radius used in the blur. So this may not be an issue. \n\nsenorblanco@, WDYT?",
+      "parentUuid": "7478ebea_5300664f",
+      "revId": "5a7dffbb49ac8f0b9225ef6ba2d8cf9207111a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
