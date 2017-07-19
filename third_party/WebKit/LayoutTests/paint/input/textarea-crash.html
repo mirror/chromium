@@ -1,0 +1,20 @@
+<!-- Passes if it does not crash. -->
+<textarea id="target">
+  Test text test text
+</textarea>
+<script>
+if (window.testRunner)
+  window.testRunner.dumpAsText();
+var x = target.offsetLeft + (target.offsetWidth / 2);
+var y = target.offsetTop + (target.offsetHeight / 2);
+eventSender.mouseMoveTo(x, y);
+eventSender.mouseDown();
+x = target.offsetLeft + target.offsetWidth + 5;
+eventSender.mouseMoveTo(x, y);
+eventSender.mouseUp();
+</script>
+<style>
+textarea {
+  display: contents;
+}
+</style>
