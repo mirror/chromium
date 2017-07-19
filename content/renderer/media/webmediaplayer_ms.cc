@@ -268,7 +268,13 @@ void WebMediaPlayerMS::Load(LoadType load_type,
   }
   if (video_frame_provider_)
     video_frame_provider_->Start();
-  if (audio_renderer_ && !video_frame_provider_) {
+
+  // When associated with an <audio> element, we don't want to wait for the
+  // first video fram to become available as we do for <video> elements
+  // (<audio> elements can also be assigned video tracks).
+  // For more details, see crbug.com/738379
+  if (audio_renderer_ &&
+      (client_->IsAudioElement() || !video_frame_provider_)) {
     // This is audio-only mode.
     SetReadyState(WebMediaPlayer::kReadyStateHaveMetadata);
     SetReadyState(WebMediaPlayer::kReadyStateHaveEnoughData);
