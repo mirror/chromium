@@ -16,6 +16,24 @@
       "revId": "e2078c830eb9be5e2bbc9ba0df10a58f0e0e016d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11a1ec5_01fd59d0",
+        "filename": "chrome/browser/extensions/api/declarative/rules_registry_with_cache_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-19T18:00:33Z",
+      "side": 0,
+      "message": "The SetUp() function eventually calls ValueStoreFrontend::Get(), which creates the value store.\n\nThe difference is that I now use the post_task.h API in that function instead of posting a task to the File thread. In that test, the file thread task runner runs on the main thread, so no queued tasks gets run until line 264 where RunLoop().RunUntilIdle() is called. Which means the lazy init did not execute.\n\nWith the new version, the background thread runs immediately. and the lazy init runs before this assert. There is probably a race condition here so I\u0027ve added a RunUntilIdle in SetUp().",
+      "parentUuid": "fcb0a3ac_d4f82faf",
+      "revId": "e2078c830eb9be5e2bbc9ba0df10a58f0e0e016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

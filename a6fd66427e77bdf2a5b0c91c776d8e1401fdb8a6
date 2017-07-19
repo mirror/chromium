@@ -16,6 +16,24 @@
       "revId": "a6fd66427e77bdf2a5b0c91c776d8e1401fdb8a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ea0cdf_410e8ba5",
+        "filename": "extensions/browser/value_store/value_store_frontend.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-19T18:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c66a24_fae6c92d",
+      "revId": "a6fd66427e77bdf2a5b0c91c776d8e1401fdb8a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
