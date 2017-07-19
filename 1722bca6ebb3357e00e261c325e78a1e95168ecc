@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d32b82a1_76c4feea",
+        "filename": "ash/accelerators/debug_commands.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b7804f_b0d446bd",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a54198d_fe8a47d3",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7b3d8470_004182c3",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a54198d_fe8a47d3",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ba5366_0dd3f0b8",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T00:32:10Z",
       "side": 1,
       "message": "Add comments to all of these members",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfc2845_34447c3b",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "I think readers can refer to wallpaper::WallpaperInfo for more details as this is a mirror of it. Although in the original WallpaperInfo, the \u0027data\u0027 member does not have comments and somewhere else says it\u0027s already deprecated. \n\nLots of these codes need cleaning, and this CL cleans some of those (such as unused pref). But I really want to address others in a separate CL and this one focuses on caching.",
+      "parentUuid": "00ba5366_0dd3f0b8",
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1edf1a99_1c11f5de",
+        "filename": "ash/wallpaper/test_wallpaper_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d800cd5_1e18104e",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f43c1db_600d9f7c",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3d7591_73185d27",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f43c1db_600d9f7c",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "41d0421f_ed1ab1cd",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8bf01b5_5e2fd4ff",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "238fae64_664a9fc0",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -135,6 +243,24 @@
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9570ee_7b9ef590",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "238fae64_664a9fc0",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "7a9d11be_960e1f85",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7bdf453_40a2b82c",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2efe80ba_c0ba9b4e",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -166,6 +310,24 @@
       "writtenOn": "2017-07-19T00:32:10Z",
       "side": 1,
       "message": "Why LocalMidnight()?",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236b8f23_c2fa0273",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "A placeholder used by WallpaperManager.",
+      "parentUuid": "2efe80ba_c0ba9b4e",
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "6d3958ee_71c40d4a",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a25e11d_62f4042f",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dee1236e_0c3dd159",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -203,6 +383,24 @@
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2397199_e1e4dc44",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee1236e_0c3dd159",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "210e6e6f_ada5d1f5",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6088e62e_260ec564",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65ad2bca_85b4895c",
         "filename": "components/wallpaper/wallpaper_layout.h",
         "patchSetId": 9
@@ -234,6 +450,24 @@
       "writtenOn": "2017-07-19T00:32:10Z",
       "side": 1,
       "message": "Instead of mirroring this type for mojo just use the mojom-generated type directly.",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b6a114_c6c8bf3a",
+        "filename": "components/wallpaper/wallpaper_layout.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-19T02:23:37Z",
+      "side": 1,
+      "message": "As WallpaperInfo is widely used by WallpaperManager I\u0027m not sure if it\u0027s a good idea to make it depend on /ash for that. If we don\u0027t want to mirror it, we can pass location and layout separately, as the other two fields are not used.",
+      "parentUuid": "65ad2bca_85b4895c",
       "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
