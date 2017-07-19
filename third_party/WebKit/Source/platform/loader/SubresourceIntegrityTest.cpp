@@ -2,11 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/frame/SubresourceIntegrity.h"
+#include "platform/loader/SubresourceIntegrity.h"
 
-#include "core/HTMLNames.h"
-#include "core/dom/Document.h"
-#include "core/html/HTMLScriptElement.h"
 #include "platform/Crypto.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/RawResource.h"
@@ -16,6 +13,7 @@
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/testing/MockFetchContext.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/RefPtr.h"
@@ -69,8 +67,6 @@ class SubresourceIntegrityTest : public ::testing::Test {
 
  protected:
   virtual void SetUp() {
-    document = Document::Create();
-    script_element = HTMLScriptElement::Create(*document, true);
     context =
         MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
   }
@@ -199,16 +195,16 @@ class SubresourceIntegrityTest : public ::testing::Test {
   void CheckExpectedIntegrity(const char* integrity,
                               const TestCase test,
                               Expectation expectation) {
-    document->UpdateSecurityOrigin(SecurityOrigin::Create(test.origin));
     context->SetSecurityOrigin(SecurityOrigin::Create(test.origin));
-    script_element->setAttribute(HTMLNames::integrityAttr, integrity);
 
-    EXPECT_EQ(expectation == kIntegritySuccess,
-              SubresourceIntegrity::CheckSubresourceIntegrity(
-                  String(integrity), script_element->GetDocument(),
-                  kBasicScript, strlen(kBasicScript), test.target,
-                  *CreateTestResource(test.target, test.allow_origin_url,
-                                      test.service_worker)));
+    SubresourceIntegrity::ReportInfo report_info;
+    EXPECT_EQ(
+        expectation == kIntegritySuccess,
+        SubresourceIntegrity::CheckSubresourceIntegrity(
+            String(integrity), kBasicScript, strlen(kBasicScript), test.target,
+            *CreateTestResource(test.target, test.allow_origin_url,
+                                test.service_worker),
+            report_info));
   }
 
   Resource* CreateTestResource(const KURL& url,
@@ -262,9 +258,9 @@ class SubresourceIntegrityTest : public ::testing::Test {
   KURL sec_url;
   KURL insec_url;
 
-  Persistent<Document> document;
+  ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
+      platform_;
   Persistent<MockFetchContext> context;
-  Persistent<HTMLScriptElement> script_element;
 };
 
 TEST_F(SubresourceIntegrityTest, Prioritization) {
