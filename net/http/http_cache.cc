@@ -38,6 +38,7 @@
 #include "net/disk_cache/disk_cache.h"
 #include "net/http/http_cache_lookup_manager.h"
 #include "net/http/http_cache_transaction.h"
+#include "net/http/http_cache_writers.h"
 #include "net/http/http_network_layer.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_request_info.h"
@@ -94,8 +95,10 @@ int HttpCache::DefaultBackend::CreateBackend(
 
 //-----------------------------------------------------------------------------
 
-HttpCache::ActiveEntry::ActiveEntry(disk_cache::Entry* entry)
-    : disk_entry(entry) {}
+HttpCache::ActiveEntry::ActiveEntry(disk_cache::Entry* entry, HttpCache* cache)
+    : disk_entry(entry) {
+  writers = base::MakeUnique<Writers>(cache, this);
+}
 
 HttpCache::ActiveEntry::~ActiveEntry() {
   if (disk_entry) {
@@ -112,7 +115,7 @@ size_t HttpCache::ActiveEntry::EstimateMemoryUsage() const {
 }
 
 bool HttpCache::ActiveEntry::HasNoTransactions() {
-  return !writer && readers.empty() && add_to_entry_queue.empty() &&
+  return writers->IsEmpty() && readers.empty() && add_to_entry_queue.empty() &&
          done_headers_queue.empty() && !headers_transaction;
 }
 
@@ -350,7 +353,7 @@ HttpCache::~HttpCache() {
     entry->readers.clear();
     entry->done_headers_queue.clear();
     entry->headers_transaction = nullptr;
-    entry->writer = nullptr;
+    entry->writers->Clear();
     DeactivateEntry(entry);
   }
 
@@ -675,7 +678,7 @@ HttpCache::ActiveEntry* HttpCache::FindActiveEntry(const std::string& key) {
 HttpCache::ActiveEntry* HttpCache::ActivateEntry(
     disk_cache::Entry* disk_entry) {
   DCHECK(!FindActiveEntry(disk_entry->GetKey()));
-  ActiveEntry* entry = new ActiveEntry(disk_entry);
+  ActiveEntry* entry = new ActiveEntry(disk_entry, this);
   active_entries_[disk_entry->GetKey()] = base::WrapUnique(entry);
   return entry;
 }
@@ -827,7 +830,7 @@ int HttpCache::DoneWithResponseHeaders(ActiveEntry* entry,
   // If |transaction| is the current writer, do nothing. This can happen for
   // range requests since they can go back to headers phase after starting to
   // write.
-  if (entry->writer == transaction) {
+  if (entry->writers->HasTransaction(transaction)) {
     DCHECK(is_partial);
     return OK;
   }
@@ -847,10 +850,13 @@ int HttpCache::DoneWithResponseHeaders(ActiveEntry* entry,
     // Partial requests may have write mode even when there is a writer present
     // since they may be reader for a particular range and writer for another
     // range.
-    CHECK(is_partial || (!entry->writer && entry->done_headers_queue.empty()));
+    CHECK(is_partial || (entry->writers->CanAddWriters() &&
+                         entry->done_headers_queue.empty()));
 
-    if (!entry->writer) {
-      entry->writer = transaction;
+    if (entry->writers->CanAddWriters()) {
+      // TODO(shivanisha), is_exclusive should be set conditionally. Currently
+      // setting it for all cases to test the reduced case of atmost 1 writer.
+      entry->writers->AddTransaction(transaction, true /* is_exclusive */);
       ProcessQueuedTransactions(entry);
       return OK;
     }
@@ -888,7 +894,7 @@ void HttpCache::DoneWithEntry(ActiveEntry* entry,
   }
 
   // Transaction is removed in the headers phase.
-  if (transaction == entry->headers_transaction) {
+  if (transaction && transaction == entry->headers_transaction) {
     // If the response is not written (should_restart is true), consider it a
     // failure.
     DoneWritingToEntry(entry, !should_restart, transaction);
@@ -896,47 +902,59 @@ void HttpCache::DoneWithEntry(ActiveEntry* entry,
   }
 
   // Transaction is removed in the writing phase.
-  if (transaction == entry->writer) {
+  if (!transaction || entry->writers->HasTransaction(transaction)) {
     // Assume there was a failure.
-    bool success = false;
-    bool did_truncate = false;
     if (should_restart) {
       DCHECK(entry->disk_entry);
       // This is a successful operation in the sense that we want to keep the
-      // entry.
-      success = transaction->AddTruncatedFlag(&did_truncate);
-      // The previous operation may have deleted the entry.
-      if (!transaction->entry())
-        return;
+      // entry. If writers is already truncated or in the process of truncating,
+      // this will be a no-op.
+      entry->writers->TruncateEntry();
     }
-    if (success && (did_truncate || is_partial)) {
-      entry->writer = nullptr;
-      // Restart already validated transactions so that they are able to read
-      // the truncated status of the entry.
-      RestartHeadersPhaseTransactions(entry, transaction);
-      if (entry->HasNoTransactions() &&
-          !entry->will_process_queued_transactions) {
-        DestroyEntry(entry);
-      }
-      return;
-    }
-    DoneWritingToEntry(entry, success && !did_truncate, transaction);
+    DoneWithEntryWriters(entry, false, transaction);
     return;
   }
 
   // Transaction is reading from the entry.
+  // Transaction is only null if invoked from Writers.
+  DCHECK(transaction);
   DoneReadingFromEntry(entry, transaction);
+}
+
+void HttpCache::DoneWithEntryWriters(ActiveEntry* entry,
+                                     bool success,
+                                     Transaction* transaction) {
+  DCHECK(entry->writers);
+  if (success) {
+    DoneWritingToEntry(entry, success, transaction);
+    return;
+  }
+
+  if (entry->writers->keep_entry()) {
+    entry->writers->RemoveTransaction(transaction);
+    // Restart already validated transactions so that they are able to read
+    // the truncated status of the entry.
+    RestartHeadersPhaseTransactions(entry, transaction);
+    if (entry->HasNoTransactions() &&
+        !entry->will_process_queued_transactions) {
+      DestroyEntry(entry);
+    }
+    return;
+  }
+
+  DoneWritingToEntry(entry, false, transaction);
+  return;
 }
 
 void HttpCache::DoneWritingToEntry(ActiveEntry* entry,
                                    bool success,
                                    Transaction* transaction) {
-  DCHECK(transaction == entry->writer ||
+  DCHECK(entry->writers->HasTransaction(transaction) || !transaction ||
          transaction == entry->headers_transaction);
 
-  if (transaction == entry->writer)
-    entry->writer = nullptr;
-  else
+  if (entry->writers->HasTransaction(transaction))
+    entry->writers->RemoveTransaction(transaction);
+  else if (transaction == entry->headers_transaction)
     entry->headers_transaction = nullptr;
 
   if (!success)
@@ -947,7 +965,7 @@ void HttpCache::DoneWritingToEntry(ActiveEntry* entry,
 
 void HttpCache::DoneReadingFromEntry(ActiveEntry* entry,
                                      Transaction* transaction) {
-  DCHECK(!entry->writer);
+  DCHECK(entry->writers->IsEmpty());
   auto it = entry->readers.find(transaction);
   DCHECK(it != entry->readers.end());
   entry->readers.erase(it);
@@ -1069,14 +1087,17 @@ void HttpCache::ProcessAddToEntryQueue(ActiveEntry* entry) {
 }
 
 void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
-  DCHECK(!entry->writer);
+  DCHECK(entry->writers->CanAddWriters());
   DCHECK(!entry->done_headers_queue.empty());
 
   Transaction* transaction = entry->done_headers_queue.front();
 
   // If this transaction is responsible for writing the response body.
   if (transaction->mode() & Transaction::WRITE) {
-    entry->writer = transaction;
+    // TODO(shivanisha), is_exclusive should be set conditionally. Currently
+    // setting it for all cases to test the reduced case of exactly 1
+    // writer.
+    entry->writers->AddTransaction(transaction, true /* is_exclusive */);
   } else {
     // If a transaction is in front of this queue with only read mode set and
     // there is no writer, it implies response body is already written, convert
@@ -1100,7 +1121,7 @@ bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
   // If |transaction| is the current writer, do nothing. This can happen for
   // range requests since they can go back to headers phase after starting to
   // write.
-  if (entry->writer == transaction) {
+  if (entry->writers->HasTransaction(transaction)) {
     DCHECK(is_partial);
     return OK;
   }
@@ -1114,7 +1135,7 @@ bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
   // If its not a match then check if it is the transaction responsible for
   // writing the response body.
   if (!is_match) {
-    return !entry->writer && entry->done_headers_queue.empty() &&
+    return entry->writers->IsEmpty() && entry->done_headers_queue.empty() &&
            entry->readers.empty();
   }
 
@@ -1124,6 +1145,9 @@ bool HttpCache::CanTransactionWriteResponseHeaders(ActiveEntry* entry,
 bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
                                          Transaction* transaction,
                                          bool is_partial) const {
+  if (!transaction)
+    return true;
+
   if (transaction->method() == "HEAD" || transaction->method() == "DELETE")
     return false;
 
@@ -1148,7 +1172,7 @@ bool HttpCache::HasDependentTransactions(ActiveEntry* entry,
 }
 
 bool HttpCache::IsWritingInProgress(ActiveEntry* entry) const {
-  return entry->writer != nullptr;
+  return !entry->writers->IsEmpty();
 }
 
 LoadState HttpCache::GetLoadStateForPendingTransaction(
@@ -1160,8 +1184,9 @@ LoadState HttpCache::GetLoadStateForPendingTransaction(
     return LOAD_STATE_WAITING_FOR_CACHE;
   }
 
-  Transaction* writer = i->second->writer;
-  return writer ? writer->GetWriterLoadState() : LOAD_STATE_WAITING_FOR_CACHE;
+  Writers* writers = i->second->writers.get();
+  return !writers->IsEmpty() ? writers->GetWriterLoadState()
+                             : LOAD_STATE_WAITING_FOR_CACHE;
 }
 
 void HttpCache::RemovePendingTransaction(Transaction* trans) {
@@ -1249,7 +1274,7 @@ void HttpCache::OnProcessQueuedTransactions(ActiveEntry* entry) {
   // If another transaction is writing the response, let validated transactions
   // wait till the response is complete. If the response is not yet started, the
   // done_headers_queue transaction should start writing it.
-  if (!entry->writer && !entry->done_headers_queue.empty()) {
+  if (entry->writers->CanAddWriters() && !entry->done_headers_queue.empty()) {
     ProcessDoneHeadersQueue(entry);
     return;
   }

@@ -23,92 +23,40 @@ using net::test::IsOk;
 
 namespace net {
 
-class MockHttpCacheTransaction : public HttpCache::Transaction {
+class TestHttpCacheTransaction : public HttpCache::Transaction {
   typedef WebSocketHandshakeStreamBase::CreateHelper CreateHelper;
 
  public:
-  MockHttpCacheTransaction(RequestPriority priority, HttpCache* cache)
+  TestHttpCacheTransaction(RequestPriority priority, HttpCache* cache)
       : HttpCache::Transaction(priority, cache){};
-  ~MockHttpCacheTransaction() override{};
+  ~TestHttpCacheTransaction() override{};
 
-  // HttpCache::Transaction:
+  void SaveWritersNetworkTransactionInfo() override {}
+  void SetSharedWritingFailState(int error) override {}
+  void RecordHistograms() override {}
+  Transaction::Mode mode() const override { return Transaction::READ_WRITE; }
+};
 
-  int Start(const HttpRequestInfo* request,
-            const CompletionCallback& callback,
-            const NetLogWithSource& net_log) override {
-    return OK;
+class TestHttpCache : public HttpCache {
+ public:
+  TestHttpCache(std::unique_ptr<HttpTransactionFactory> network_layer,
+                std::unique_ptr<BackendFactory> backend_factory)
+      : HttpCache(std::move(network_layer), std::move(backend_factory), false) {
   }
 
-  int RestartIgnoringLastError(const CompletionCallback& callback) override {
-    return OK;
-  }
-
-  int RestartWithCertificate(scoped_refptr<X509Certificate> client_cert,
-                             scoped_refptr<SSLPrivateKey> client_private_key,
-                             const CompletionCallback& callback) override {
-    return OK;
-  }
-
-  int RestartWithAuth(const AuthCredentials& credentials,
-                      const CompletionCallback& callback) override {
-    return OK;
-  }
-
-  bool IsReadyToRestartForAuth() override { return true; }
-
-  int Read(IOBuffer* buf,
-           int buf_len,
-           const CompletionCallback& callback) override {
-    return OK;
-  }
-
-  void PopulateNetErrorDetails(NetErrorDetails* details) const override {}
-
-  void StopCaching() override {}
-
-  bool GetFullRequestHeaders(HttpRequestHeaders* headers) const override {
-    return true;
-  }
-
-  int64_t GetTotalReceivedBytes() const override { return OK; }
-
-  int64_t GetTotalSentBytes() const override { return OK; }
-
-  void DoneReading() override {}
-
-  const HttpResponseInfo* GetResponseInfo() const override { return nullptr; }
-
-  LoadState GetLoadState() const override { return LOAD_STATE_IDLE; }
-
-  void SetQuicServerInfo(QuicServerInfo* quic_server_info) override {}
-
-  bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override {
-    return true;
-  }
-
-  bool GetRemoteEndpoint(IPEndPoint* endpoint) const override { return true; }
-
-  void SetWebSocketHandshakeStreamCreateHelper(
-      CreateHelper* create_helper) override {}
-
-  void SetBeforeNetworkStartCallback(
-      const BeforeNetworkStartCallback& callback) override {}
-
-  void SetBeforeHeadersSentCallback(
-      const BeforeHeadersSentCallback& callback) override {}
-
-  int ResumeNetworkStart() override { return OK; }
-
-  void GetConnectionAttempts(ConnectionAttempts* out) const override {}
-
-  CreateHelper* websocket_handshake_stream_create_helper() { return nullptr; }
+  void DoneWithEntryWriters(ActiveEntry* entry,
+                            bool success,
+                            Transaction* transaction) override {}
 };
 
 class WritersTest : public testing::Test {
  public:
   enum class DeleteTransactionType { NONE, ACTIVE, WAITING, IDLE };
-
-  WritersTest() : disk_entry_(nullptr), request_(kSimpleGET_Transaction) {}
+  WritersTest()
+      : disk_entry_(nullptr),
+        test_cache_(base::MakeUnique<MockNetworkLayer>(),
+                    base::MakeUnique<MockBackendFactory>()),
+        request_(kSimpleGET_Transaction) {}
 
   ~WritersTest() override {
     if (disk_entry_)
@@ -118,7 +66,10 @@ class WritersTest : public testing::Test {
   void CreateWriters(const std::string& url) {
     cache_.CreateBackendEntry(kSimpleGET_Transaction.url, &disk_entry_,
                               nullptr);
-    writers_ = base::MakeUnique<HttpCache::Writers>(disk_entry_);
+    entry_ = base::MakeUnique<HttpCache::ActiveEntry>(disk_entry_,
+                                                      cache_.http_cache());
+    (static_cast<MockDiskEntry*>(disk_entry_))->AddRef();
+    writers_ = base::MakeUnique<HttpCache::Writers>(&test_cache_, entry_.get());
   }
 
   std::unique_ptr<HttpTransaction> CreateNetworkTransaction() {
@@ -139,14 +90,15 @@ class WritersTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     // Create a mock cache transaction.
-    std::unique_ptr<MockHttpCacheTransaction> transaction =
-        base::MakeUnique<MockHttpCacheTransaction>(DEFAULT_PRIORITY,
+    std::unique_ptr<TestHttpCacheTransaction> transaction =
+        base::MakeUnique<TestHttpCacheTransaction>(DEFAULT_PRIORITY,
                                                    cache_.http_cache());
 
     CreateWriters(kSimpleGET_Transaction.url);
     EXPECT_TRUE(writers_->IsEmpty());
-    writers_->AddTransaction(transaction.get(), std::move(network_transaction),
-                             is_exclusive);
+    writers_->AddTransaction(transaction.get(), is_exclusive);
+    writers_->SetNetworkTransaction(transaction.get(),
+                                    std::move(network_transaction));
     EXPECT_TRUE(writers_->HasTransaction(transaction.get()));
     transactions_.push_back(std::move(transaction));
   }
@@ -154,7 +106,7 @@ class WritersTest : public testing::Test {
   void CreateWritersAddTransactionPriority(net::RequestPriority priority,
                                            bool is_exclusive = false) {
     CreateWritersAddTransaction(is_exclusive);
-    MockHttpCacheTransaction* transaction = transactions_.begin()->get();
+    TestHttpCacheTransaction* transaction = transactions_.begin()->get();
     transaction->SetPriority(priority);
   }
 
@@ -162,17 +114,17 @@ class WritersTest : public testing::Test {
     EXPECT_TRUE(writers_);
 
     // Create a mock cache transaction.
-    std::unique_ptr<MockHttpCacheTransaction> transaction =
-        base::MakeUnique<MockHttpCacheTransaction>(DEFAULT_PRIORITY,
+    std::unique_ptr<TestHttpCacheTransaction> transaction =
+        base::MakeUnique<TestHttpCacheTransaction>(DEFAULT_PRIORITY,
                                                    cache_.http_cache());
 
-    writers_->AddTransaction(transaction.get(), nullptr, false);
+    writers_->AddTransaction(transaction.get(), false);
     transactions_.push_back(std::move(transaction));
   }
 
   int Read(std::string* result) {
     EXPECT_TRUE(transactions_.size() >= (size_t)1);
-    MockHttpCacheTransaction* transaction = transactions_.begin()->get();
+    TestHttpCacheTransaction* transaction = transactions_.begin()->get();
     TestCompletionCallback callback;
 
     std::string content;
@@ -205,7 +157,7 @@ class WritersTest : public testing::Test {
 
     // Check only the 1st Read and not the complete response because the smaller
     // buffer transaction will need to read the remaining response from the
-    // cache which will be tested when integrated with MockHttpCacheTransaction
+    // cache which will be tested when integrated with TestHttpCacheTransaction
     // layer.
 
     int rv = 0;
@@ -396,13 +348,13 @@ class WritersTest : public testing::Test {
   }
 
   bool StopCaching() {
-    MockHttpCacheTransaction* transaction = transactions_.begin()->get();
+    TestHttpCacheTransaction* transaction = transactions_.begin()->get();
     EXPECT_TRUE(transaction);
     return writers_->StopCaching(transaction);
   }
 
   void RemoveFirstTransaction() {
-    MockHttpCacheTransaction* transaction = transactions_.begin()->get();
+    TestHttpCacheTransaction* transaction = transactions_.begin()->get();
     EXPECT_TRUE(transaction);
     writers_->RemoveTransaction(transaction);
   }
@@ -415,6 +367,8 @@ class WritersTest : public testing::Test {
   MockHttpCache cache_;
   std::unique_ptr<HttpCache::Writers> writers_;
   disk_cache::Entry* disk_entry_;
+  std::unique_ptr<HttpCache::ActiveEntry> entry_;
+  TestHttpCache test_cache_;
 
   // Should be before transactions_ since it is accessed in the network
   // transaction's destructor.
@@ -422,7 +376,7 @@ class WritersTest : public testing::Test {
 
   static const int kDefaultBufferSize = 256;
 
-  std::vector<std::unique_ptr<MockHttpCacheTransaction>> transactions_;
+  std::vector<std::unique_ptr<TestHttpCacheTransaction>> transactions_;
 };
 
 // Tests successful addition of a transaction.
@@ -644,7 +598,7 @@ TEST_F(WritersTest, GetWriterLoadState) {
   EXPECT_EQ(LOAD_STATE_IDLE, writers_->GetWriterLoadState());
 }
 
-// Tests truncating the entry via Writers.
+// Tests truncating logic.
 TEST_F(WritersTest, TruncateEntry) {
   CreateWritersAddTransaction();
   EXPECT_FALSE(writers_->IsEmpty());
@@ -656,9 +610,12 @@ TEST_F(WritersTest, TruncateEntry) {
   std::string expected(kSimpleGET_Transaction.data);
   EXPECT_EQ(expected, content);
 
-  writers_->TruncateEntry();
+  // Should return false since the entry does not have strong validators and
+  // thus cannot be resumed.
+  EXPECT_FALSE(writers_->TruncateEntry());
   base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(writers_->IsTruncatedForTesting());
+
+  EXPECT_FALSE(writers_->truncated());
 }
 
 }  // namespace net
