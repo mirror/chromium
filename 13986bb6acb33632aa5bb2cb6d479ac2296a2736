@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d94b11_b0f36c5f",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/utils.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T04:59:55Z",
+      "side": 1,
+      "message": "Oops, I think this indent should\u0027ve been smaller; missed it in the previous review :(",
+      "revId": "13986bb6acb33632aa5bb2cb6d479ac2296a2736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
