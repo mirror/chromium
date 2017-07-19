@@ -105,6 +105,8 @@ class CORE_EXPORT V8ScriptValueDeserializer
   RefPtr<SerializedScriptValue> serialized_script_value_;
   v8::ValueDeserializer deserializer_;
 
+  HashMap<String, RefPtr<BlobDataHandle>> deserialized_blobs_;
+
   // Message ports which were transferred in.
   const MessagePortArray* transferred_message_ports_ = nullptr;
 

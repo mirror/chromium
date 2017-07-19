@@ -255,6 +255,32 @@ bool BlobData::CanConsolidateData(size_t length) {
   return true;
 }
 
+CrossThreadBlobDataHandleData::~CrossThreadBlobDataHandleData() {
+  if (!RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    BlobRegistry::RemoveBlobDataRef(uuid_);
+  }
+}
+
+CrossThreadBlobDataHandleData::CrossThreadBlobDataHandleData() {}
+
+std::unique_ptr<CrossThreadBlobDataHandleData> BlobDataHandle::CopyData()
+    const {
+  std::unique_ptr<CrossThreadBlobDataHandleData> data(
+      new CrossThreadBlobDataHandleData);
+  data->uuid_ = uuid_.IsolatedCopy();
+  data->type_ = type_.IsolatedCopy();
+  data->size_ = size_;
+  data->is_single_unknown_size_file_ = is_single_unknown_size_file_;
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    storage::mojom::blink::BlobPtr blob_clone;
+    blob_->Clone(MakeRequest(&blob_clone));
+    data->blob_ = blob_clone.PassInterface();
+  } else {
+    BlobRegistry::AddBlobDataRef(uuid_);
+  }
+  return data;
+}
+
 BlobDataHandle::BlobDataHandle()
     : uuid_(CreateCanonicalUUIDString()),
       size_(0),
@@ -393,6 +419,34 @@ BlobDataHandle::BlobDataHandle(const String& uuid,
     Platform::Current()->GetInterfaceProvider()->GetInterface(
         MakeRequest(&registry));
     registry->GetBlobFromUUID(MakeRequest(&blob_), uuid_);
+  } else {
+    BlobRegistry::AddBlobDataRef(uuid_);
+  }
+}
+
+BlobDataHandle::BlobDataHandle(
+    std::unique_ptr<CrossThreadBlobDataHandleData> data)
+    : uuid_(data->uuid_),
+      type_(data->type_),
+      size_(data->size_),
+      is_single_unknown_size_file_(data->is_single_unknown_size_file_) {
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    blob_.Bind(std::move(data->blob_));
+  } else {
+    BlobRegistry::AddBlobDataRef(uuid_);
+  }
+}
+
+BlobDataHandle::BlobDataHandle(const CrossThreadBlobDataHandleData* data)
+    : uuid_(data->uuid_),
+      type_(data->type_),
+      size_(data->size_),
+      is_single_unknown_size_file_(data->is_single_unknown_size_file_) {
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    storage::mojom::blink::BlobPtr temp_blob;
+    temp_blob.Bind(std::move(data->blob_));
+    temp_blob->Clone(MakeRequest(&blob_));
+    data->blob_ = temp_blob.PassInterface();
   } else {
     BlobRegistry::AddBlobDataRef(uuid_);
   }
