@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d300d051_2cda6d17",
+        "filename": "components/download/internal/config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-19T18:38:53Z",
+      "side": 1,
+      "message": "Done. I think base::TimeDelta is probably better. window_start_time_seconds is uint32_t because it passes to java as long and not used as Time in the code, but changed to TimeDelta here.\n\nNow 6 configs related to time all use TimeDelta.",
+      "parentUuid": "8d66da6a_93fdd23c",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c2c3c9e_6eb2dade",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T05:19:12Z",
       "side": 1,
       "message": "The only issue with this is that anything else that triggers UpdateDriverStates() will restart the download right away (which might not be a bad thing).  Should we set some kind of timer on Entry that states when it\u0027s possible to next start the download?",
+      "range": {
+        "startLine": 366,
+        "startChar": 19,
+        "endLine": 366,
+        "endChar": 64
+      },
+      "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3543fb8b_ab49aacd",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-19T18:38:53Z",
+      "side": 1,
+      "message": "If they trigger UpdateDriverStates() or UpdateDriverState(), it will consume only one retry if it can recover. If they keep calling UpdateDriverState, then something else is wrong.",
+      "parentUuid": "5c2c3c9e_6eb2dade",
       "range": {
         "startLine": 366,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "827a0a6e_68a5df96",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-19T18:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d8881e_3def122e",
+      "range": {
+        "startLine": 693,
+        "startChar": 21,
+        "endLine": 693,
+        "endChar": 48
+      },
+      "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf4790e_e43e4566",
         "filename": "components/download/internal/controller_impl_unittest.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b08f0dd_0942b39b",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-19T18:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf4790e_e43e4566",
+      "range": {
+        "startLine": 733,
+        "startChar": 2,
+        "endLine": 739,
+        "endChar": 67
+      },
+      "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
