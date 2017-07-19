@@ -69,6 +69,24 @@
       "revId": "87c597190f451b11114a46aea5d5871d97538c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5804f8_1251d1be",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T17:56:45Z",
+      "side": 1,
+      "message": "Thanks for the investigation; USER_VISIBLE sgtm.",
+      "parentUuid": "324400bd_6c9469d4",
+      "revId": "87c597190f451b11114a46aea5d5871d97538c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

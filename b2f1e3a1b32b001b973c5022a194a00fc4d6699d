@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "303f0be4_9443fa48",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T17:56:45Z",
+      "side": 1,
+      "message": "Optional: Get rid of this and just inline these calls in the import and export function?  Each branch only has one caller, so it might be a bit easier to grok when each action is taken if there\u0027s not the intermediary step of calling this method.",
+      "revId": "b2f1e3a1b32b001b973c5022a194a00fc4d6699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
