@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1e4dcf9_a3c4cc07",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "This assumes |paint_worklet| is always non-null. If this is correct, can you remove |paint_worklet| check from line 26 and add DCHECK(paint_worklet) to line 24 instead?",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d5e1d0_d0cfe0b8",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "How about using the delegated ctor?\n\nCSSPaintImageGeneratorImpl::CSSPaintImageGeneratorImpl(\n  PaintWorklet* paint_worklet,\n  const String\u0026 name)\n  : CSSPaintImageGeneratorImpl(nullptr, paint_worklet, name) {}",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97cc34b_46548ce7",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "I suspect |paint_worklet_| is always non-null. See my comment in CSSPaintImageGeneratorImpl::Create().",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a581d0_4605959a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "ditto(paint_worklet_)",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa33d77_b2740ae0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "const",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74141fcf_afe59e03",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "How about making the ctor \u0027public\u0027 instead of having Create()?",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac7889d_945ea9de",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22b502c_82321a6b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T05:55:09Z",
+      "side": 1,
+      "message": "Can you move this into PaintWorklet.cpp?",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
