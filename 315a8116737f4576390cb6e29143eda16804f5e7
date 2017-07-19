@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "078d2f14_788862a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-19T21:30:46Z",
+      "side": 1,
+      "message": "I don\u0027t love teh format of this parameter. Why should callers have to know the format of |origin|?  It seems that maybe there should be a wrapper object so it\u0027s obvious where to get |origin| from.  Or even that OfflinePageBridge should be able to get the origin on its own?",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdcfd9b_8134aa21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-19T21:30:46Z",
+      "side": 1,
+      "message": "now that I think about it, it seems that a better structure is a new class:\n\npublic class OfflinePageOrigin {\n  public OfflinePageOrigin(Tab tab) // used by production code\n  public OfflinePageOrigin() // represents Chrome, encodes to \"\"\n\n  public String encodeAsJsonString()\n  public boolean matchesPackage(String packageName, Context context) // checks current package signatures\n\n  @VisibleForTesting\n  OfflinePageOrigin(String packageName, Context context) // testing\n}\n\nthen bridge.downloadPage(\"url\", OfflinePageOrigin(mTab)) would be nice and obvious.  WDYT?",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2acda1_4a3dfede",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-19T21:30:46Z",
+      "side": 1,
+      "message": "Please document the JSON format here in the comment.  Something like:\n\n[\"com.company.packageName\",[\"...256 hex-encoded octets...\",\"...256 hex-encoded octets\", ...]]\n\nwhere the hex-encoded octets are the SHA256 of the Signature objects returned by package manager.",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53a1f8b_6e35ab7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-19T21:30:46Z",
+      "side": 1,
+      "message": "Why hex and not, say, base64?",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31f293d_cf664632",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 12
