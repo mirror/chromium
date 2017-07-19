@@ -54,4 +54,6 @@ public interface VrShell {
      * Returns the GVRLayout as a FrameLayout.
      */
     FrameLayout getContainer();
+
+    void requestToExitVr(OnExitVrListener onExitVrListener, @UiUnsupportedMode int reason);
 }
