@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c35e6d1_2f11352a",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T18:39:02Z",
+      "side": 1,
+      "message": "Maybe mention that we got some bonus error handling in the CL description \u003d)",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 45
+      },
+      "revId": "ba17370e0188ae78012e464a471dddff76c7344e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb798a1c_acad0d14",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T18:39:02Z",
+      "side": 1,
+      "message": "Super tiny nit: I wish LockPages and UnlockPages were in the same order as they\u0027re used \u003d)",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 1
+      },
+      "revId": "ba17370e0188ae78012e464a471dddff76c7344e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
