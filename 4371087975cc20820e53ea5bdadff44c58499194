@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5c1a899d_4dbaddbc",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T21:54:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bdb66d16_e4eb995f",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7e8f424_8ea233fa",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done.  Any chance there\u0027s a tool to help with this?",
       "parentUuid": "a7e8f424_8ea233fa",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86e47974_657f4f51",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T21:54:59Z",
+      "side": 1,
+      "message": "Sadly, none that I am aware of.",
+      "parentUuid": "864bb00d_5ce95b59",
       "revId": "4371087975cc20820e53ea5bdadff44c58499194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
