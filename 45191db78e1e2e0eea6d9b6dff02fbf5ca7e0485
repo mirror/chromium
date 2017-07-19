@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d7a7bd6_2479d0fd",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-19T03:54:34Z",
+      "side": 1,
+      "message": "nit: maybe add a comment that we should make this work at some point?",
+      "revId": "45191db78e1e2e0eea6d9b6dff02fbf5ca7e0485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
