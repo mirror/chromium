@@ -10,6 +10,7 @@
 
 #include <map>
 #include <memory>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -88,6 +89,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       int64_t service_worker_version_id,
       const GURL& service_worker_scope,
       const GURL& script_url,
+      bool is_script_streaming,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client);
@@ -243,6 +245,23 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
  private:
   struct WorkerContextData;
   class NavigationPreloadRequest;
+  class TraceEventTracker {
+   public:
+    TraceEventTracker(const char* name, const void* tag);
+    TraceEventTracker(const char* name,
+                      const void* tag,
+                      const char* arg1,
+                      const std::string& val1);
+    ~TraceEventTracker();
+
+    void AddParam(const char* arg, const std::string& val);
+
+   private:
+    const char* const name_;
+    const void* const tag_;
+    std::vector<std::pair<const char*, std::string>> params_;
+    DISALLOW_COPY_AND_ASSIGN(TraceEventTracker);
+  };
 
   // Get routing_id for sending message to the ServiceWorkerVersion
   // in the browser process.
@@ -358,6 +377,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   const int64_t service_worker_version_id_;
   const GURL service_worker_scope_;
   const GURL script_url_;
+  const bool is_script_streaming_;
   int network_provider_id_ = kInvalidServiceWorkerProviderId;
   scoped_refptr<ThreadSafeSender> sender_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
@@ -385,6 +405,8 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   base::TimeTicks blink_initialized_time_;
   base::TimeTicks start_worker_received_time_;
+
+  std::stack<TraceEventTracker> startup_trackers_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerContextClient);
 };
