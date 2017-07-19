@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34a05dd6_f7116fdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-19T23:04:37Z",
+      "side": 1,
+      "message": "I removed this method.",
+      "parentUuid": "8fe53cf7_93c32f94",
+      "range": {
+        "startLine": 1093,
+        "startChar": 35,
+        "endLine": 1093,
+        "endChar": 55
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41acccf5_8fff6f3b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T14:58:41Z",
       "side": 1,
       "message": "Do we know for sure that all of these will be non-null?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 15,
+        "endLine": 1094,
+        "endChar": 62
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9435714_a2bbd59c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-19T23:04:37Z",
+      "side": 1,
+      "message": "I approached it the other suggested way and added the host to Layout\u0027s constructor.",
+      "parentUuid": "41acccf5_8fff6f3b",
       "range": {
         "startLine": 1094,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3cd74cf8_ad92e8c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-19T23:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075cddaa_00706348",
+      "range": {
+        "startLine": 199,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d0c67b_dd27a079",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc68bc77_0a1a025e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-19T23:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71d0c67b_dd27a079",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 25
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
