@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4d5b7744_d91fe755",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-19T17:39:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "778ad77d_9afa805f",
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58597ad6_e0ce262a",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 19
@@ -107,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "268da5bf_b0fd9bd7",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-19T17:39:29Z",
+      "side": 1,
+      "message": "Done -- everyone feels more comfortable overall with the embedded server approach so I changed it to that.",
+      "parentUuid": "04d23233_775946ea",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb621ee5_46a9cc43",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 19
@@ -118,6 +160,24 @@
       "writtenOn": "2017-07-18T17:30:51Z",
       "side": 1,
       "message": "Is this function blocking?",
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529176a2_a48d4299",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-19T17:39:29Z",
+      "side": 1,
+      "message": "That appears to be the case. The function \"Returns true if it was able to do fast shutdown.\":\nhttps://cs.chromium.org/chromium/src/content/public/browser/render_process_host.h?q\u003dFastShutdownIf\u0026sq\u003dpackage:chromium\u0026l\u003d158\n\nFollowing the code path shows that the render process host calls ProcessDied which cleans up the RenderProcessHostImpl and checks the return code of the render process:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?sq\u003dpackage:chromium\u0026l\u003d2533",
+      "parentUuid": "cb621ee5_46a9cc43",
       "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
