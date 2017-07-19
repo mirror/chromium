@@ -274,8 +274,8 @@ int File::Write(int64_t offset, const char* data, int size) {
   int bytes_written = 0;
   int rv;
   do {
-    rv = HANDLE_EINTR(pwrite(file_.get(), data + bytes_written,
-                             size - bytes_written, offset + bytes_written));
+    rv = HANDLE_EINTR(pwrite64(file_.get(), data + bytes_written,
+                               size - bytes_written, offset + bytes_written));
     if (rv <= 0)
       break;
 
