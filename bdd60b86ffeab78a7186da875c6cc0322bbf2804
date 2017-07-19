@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622c46be_1a9b7de9",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T14:03:14Z",
+      "side": 1,
+      "message": "I think there is no need for that as codesign.py does already copy and rename the binary that is copied into the bundle, taking the value from Info.plist.\n\nI think that only the \"executable_name \u003d _output_name\" changes are necessary and the rest can be reverted.",
+      "revId": "bdd60b86ffeab78a7186da875c6cc0322bbf2804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
