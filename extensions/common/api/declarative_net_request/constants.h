@@ -8,6 +8,46 @@
 namespace extensions {
 namespace declarative_net_request {
 
+// The result of parsing JSON rules provided by an extension.
+enum class ParseResult {
+  SUCCESS,
+  ERROR_LIST_NOT_PASSED,
+  ERROR_DUPLICATE_IDS,
+  ERROR_RESOURCE_TYPE_DUPLICATED,
+  ERROR_PERSISTING_RULESET,
+  ERROR_EMPTY_REDIRECT_RULE_PRIORITY,
+  ERROR_EMPTY_REDIRECT_URL,
+  ERROR_INVALID_RULE_ID,
+  ERROR_INVALID_REDIRECT_RULE_PRIORITY,
+  ERROR_JSON_PARSE,
+  ERROR_RULE_NOT_MEANINGFUL,
+};
+
+// Minimum valid value of a declarative rule ID.
+constexpr int kMinValidID = 0;
+
+// Minimum valid value of a declarative rule priority.
+constexpr int kMinValidPriority = 0;
+
+// Default priority used for rules where the priority is not explicity provided
+// by an extension.
+constexpr int kDefaultPriority = 0;
+
+// JSON keys for the API.
+constexpr char kIDKey[] = "id";
+constexpr char kPriorityKey[] = "priority";
+constexpr char kConditionKey[] = "condition";
+constexpr char kActionKey[] = "action";
+constexpr char kUrlFilterKey[] = "urlFilter";
+constexpr char kUrlFilterIsCaseSensitiveKey[] = "IsUrlFilterCaseSensitive";
+constexpr char kDomainsKey[] = "domains";
+constexpr char kExcludedDomainsKey[] = "excludedDomains";
+constexpr char kResourceTypesKey[] = "resourceTypes";
+constexpr char kExcludedResourceTypesKey[] = "excludedResourceTypes";
+constexpr char kDomainTypeKey[] = "domainsType";
+constexpr char kActionTypeKey[] = "type";
+constexpr char kRedirectUrlKey[] = "redirectUrl";
+
 // Permission name.
 constexpr char kAPIPermission[] = "declarativeNetRequest";
 
