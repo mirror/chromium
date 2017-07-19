@@ -742,4 +742,23 @@ public class SafeBrowsingTest extends AwTestBase {
         assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_MALWARE,
                 mContentsClient.getLastThreatType());
     }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingHardcodedUrls() throws Throwable {
+        loadGreenPage();
+        int interstitialCount =
+                mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
+        String responseUrl = "chrome://safe-browsing/match?type=malware";
+        loadUrlAsync(mAwContents, responseUrl);
+        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
+        waitForInterstitialToLoad();
+
+        interstitialCount = mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
+        responseUrl = "chrome://safe-browsing/match?type=phishing";
+        loadUrlAsync(mAwContents, responseUrl);
+        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
+        waitForInterstitialToLoad();
+    }
 }
