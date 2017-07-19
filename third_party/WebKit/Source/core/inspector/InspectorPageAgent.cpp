@@ -34,6 +34,8 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptRegexp.h"
+#include "bindings/core/v8/ScriptSourceCode.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "build/build_config.h"
 #include "core/HTMLNames.h"
 #include "core/dom/DOMImplementation.h"
@@ -661,15 +663,32 @@ Response InspectorPageAgent::setDocumentContent(const String& frame_id,
 void InspectorPageAgent::DidClearDocumentOfWindowObject(LocalFrame* frame) {
   if (!GetFrontend())
     return;
-
   protocol::DictionaryValue* scripts =
       state_->getObject(PageAgentState::kPageAgentScriptsToEvaluateOnLoad);
   if (scripts) {
     for (size_t i = 0; i < scripts->size(); ++i) {
       auto script = scripts->at(i);
       String script_text;
-      if (script.second->asString(&script_text))
-        frame->GetScriptController().ExecuteScriptInMainWorld(script_text);
+      if (script.second->asString(&script_text)) {
+        ScriptState* script_state = ToScriptStateForMainWorld(frame);
+        if (!script_state || !script_state->ContextIsValid())
+          continue;
+        ScriptState::Scope script_scope(script_state);
+        v8::Local<v8::Value> result =
+            frame->GetScriptController().ExecuteScriptInMainWorldAndReturnValue(
+                ScriptSourceCode(script_text));
+        if (result.IsEmpty())
+          continue;
+        script_state = ToScriptStateForMainWorld(frame);
+        if (!script_state || !script_state->ContextIsValid())
+          continue;
+        auto obj = v8_session_->wrapObject(script_state->GetContext(), result,
+                                           v8_inspector::StringView());
+        int context_id = v8_inspector::V8ContextInfo::executionContextId(
+            script_state->GetContext());
+        GetFrontend()->evaluatedOnNewDocument(script.first, context_id,
+                                              std::move(obj));
+      }
     }
   }
   if (!script_to_evaluate_on_load_once_.IsEmpty()) {

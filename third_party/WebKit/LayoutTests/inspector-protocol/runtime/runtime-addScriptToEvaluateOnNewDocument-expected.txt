@@ -1,0 +1,44 @@
+
+Navigating..
+[
+    [0] : {
+        method : Page.evaluatedOnNewDocument
+        params : {
+            executionContextId : <executionContextId>
+            identifier : 1
+            object : {
+                description : 239
+                type : number
+                value : 239
+            }
+        }
+    }
+    [1] : {
+        method : Page.evaluatedOnNewDocument
+        params : {
+            executionContextId : <executionContextId>
+            identifier : 2
+            object : {
+                className : Object
+                description : Object
+                objectId : <objectId>
+                type : object
+            }
+        }
+    }
+]
+Navigating..
+{
+    method : Page.evaluatedOnNewDocument
+    params : {
+        executionContextId : <executionContextId>
+        identifier : 2
+        object : {
+            className : Object
+            description : Object
+            objectId : <objectId>
+            type : object
+        }
+    }
+}
+

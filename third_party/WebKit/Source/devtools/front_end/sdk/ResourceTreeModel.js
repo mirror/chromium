@@ -884,4 +884,10 @@ SDK.PageDispatcher = class {
   navigationRequested() {
     // Frontend is not interested in when navigations are requested.
   }
+
+  /**
+   * @override
+   */
+  evaluatedOnNewDocument() {
+  }
 };

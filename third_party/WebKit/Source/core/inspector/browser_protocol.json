@@ -705,6 +705,16 @@
                     { "name": "navigationId", "type": "integer" },
                     { "name": "url", "type": "string", "description": "URL of requested navigation." }
                 ]
+            },
+            {
+                "name": "evaluatedOnNewDocument",
+                "description": "Fired when a script evaluated on new document",
+                "parameters": [
+                    { "name": "identifier", "$ref": "ScriptIdentifier", "description": "Identifier of the evaluated script." },
+                    { "name": "executionContextId", "$ref": "Runtime.ExecutionContextId", "description": "Execution context id." },
+                    { "name": "object", "$ref": "Runtime.RemoteObject", "description": "Result of script evaluation." }
+                ],
+                "experimental": true
             }
         ]
     },

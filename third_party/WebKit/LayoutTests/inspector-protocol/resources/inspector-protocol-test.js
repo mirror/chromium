@@ -27,7 +27,7 @@ var TestRunner = class {
     var message = JSON.parse(JSON.stringify(originalMessage));
     if (message.id)
       message.id = '<messageId>';
-    const nonStableFields = new Set(['nodeId', 'objectId', 'scriptId', 'timestamp', 'backendNodeId', 'parentId', 'frameId', 'baseURL', 'documentURL']);
+    const nonStableFields = new Set(['nodeId', 'objectId', 'scriptId', 'timestamp', 'backendNodeId', 'parentId', 'frameId', 'baseURL', 'documentURL', 'executionContextId']);
     var objects = [message];
     while (objects.length) {
       var object = objects.shift();

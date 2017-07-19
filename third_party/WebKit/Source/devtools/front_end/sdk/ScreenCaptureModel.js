@@ -189,6 +189,12 @@ SDK.ScreenCaptureModel = class extends SDK.SDKModel {
    */
   navigationRequested() {
   }
+
+  /**
+   * @override
+   */
+  evaluatedOnNewDocument() {
+  }
 };
 
 SDK.SDKModel.register(SDK.ScreenCaptureModel, SDK.Target.Capability.ScreenCapture, false);
