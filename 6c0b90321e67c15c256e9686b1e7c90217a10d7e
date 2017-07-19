@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7046feb4_a7e730f6",
+        "filename": "components/metrics/field_trials_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T17:48:26Z",
+      "side": 1,
+      "message": "I\u0027d mention why this is needed since it\u0027s subtle",
+      "revId": "6c0b90321e67c15c256e9686b1e7c90217a10d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
