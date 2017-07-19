@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c5e21a5_cf64087d",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T17:59:43Z",
+      "side": 1,
+      "message": "I won\u0027t be able to make the decision, more details are in https://docs.google.com/document/d/17JxSi6c4pl9CT5MoDQ0jUydG9B5PhHOEUaN2BNdUzxU/edit?pli\u003d1#heading\u003dh.33ahqgyn47co\n\nchrisha@, wdyt?",
+      "parentUuid": "61b197a0_4c8a4300",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "467ca28b_f9b40de9",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-19T17:36:43Z",
       "side": 1,
       "message": "\"BackgroundAudioStarts\" does not reflect the \"duration\". That was why I didn\u0027t understand what this records. I can interpret it as \"how many times it starts\", etc. Is the same name used in other places? If not, maybe use a better name, e.g., DurationBeforeBackgroundAudioStarts or something similar.",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069d0be6_d915d649",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T17:59:43Z",
+      "side": 1,
+      "message": "I think you are right here. What about FromBackgroundedToFirstAudioStarts?",
+      "parentUuid": "467ca28b_f9b40de9",
       "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "167207fa_a9fce672",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T17:59:43Z",
+      "side": 1,
+      "message": "Done\n\nI think we may have to fix it outside of GRC. I will add a comment here saying it may not be set.",
+      "parentUuid": "e7f5c306_f35d52b1",
+      "range": {
+        "startLine": 116,
+        "startChar": 27,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc23b698_574d167e",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "10536de1_efceb163",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T17:59:43Z",
+      "side": 1,
+      "message": "Ack\nIt\u0027s a concept of |AudioRecentlyPlayed|. So yeah you can consider it that way.",
+      "parentUuid": "cc23b698_574d167e",
+      "range": {
+        "startLine": 121,
+        "startChar": 55,
+        "endLine": 121,
+        "endChar": 74
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f438b36_fd2c5485",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-19T17:36:43Z",
       "side": 1,
       "message": "A more general thought on the property\u0027s initial values. Each CU may require some initial value of some properties. We probably need a general solution here. We can discuss with Oystein and Matt together.",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a698d784_2e7b1524",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T17:59:43Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do that, services shouldn\u0027t assume browser state. Instead we should make sure we send the signal at the right place.",
+      "parentUuid": "8f438b36_fd2c5485",
       "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
