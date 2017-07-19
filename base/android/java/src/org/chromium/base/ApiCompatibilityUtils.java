@@ -39,6 +39,8 @@ import android.view.inputmethod.InputMethodSubtype;
 import android.widget.TextView;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Utility class to use new APIs that were added after ICS (API level 14).
@@ -669,6 +671,32 @@ public class ApiCompatibilityUtils {
 
             window.setFeatureInt(featureNumber, featureValue);
         }
+    }
+
+    /**
+     * @param activity The {@link Activity} to check.
+     * @return Whether or not {@code activity} is currently in Android N+ multi-window mode.
+     */
+    public boolean isInMultiWindowMode(Activity activity) {
+        if (activity == null) return false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                Method isInMultiWindowModeMethod = Activity.class.getMethod("isInMultiWindowMode");
+                boolean isInMultiWindowMode = (boolean) isInMultiWindowModeMethod.invoke(activity);
+                return isInMultiWindowMode;
+            } catch (NoSuchMethodException e) {
+                // Ignore.
+            } catch (IllegalAccessException e) {
+                // Ignore.
+            } catch (IllegalArgumentException e) {
+                // Ignore.
+            } catch (InvocationTargetException e) {
+                // Ignore.
+            }
+        }
+
+        return false;
     }
 
     /**
