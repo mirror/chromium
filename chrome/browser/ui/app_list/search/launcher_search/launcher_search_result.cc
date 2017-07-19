@@ -40,7 +40,7 @@ LauncherSearchResult::LauncherSearchResult(
 
   icon_image_loader_.reset(new LauncherSearchIconImageLoaderImpl(
       icon_url, profile, extension, GetPreferredIconDimension(),
-      std::move(error_reporter)));
+      std::move(error_reporter));
   icon_image_loader_->LoadResources();
 
   Initialize();
