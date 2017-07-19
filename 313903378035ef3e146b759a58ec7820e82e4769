@@ -62,6 +62,30 @@
       "revId": "313903378035ef3e146b759a58ec7820e82e4769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5e82b0_48653b54",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T20:35:12Z",
+      "side": 1,
+      "message": "We used reflection before the N SDK was upstreamed during initial multiwindow feature development, so it\u0027s definitely not needed anymore.",
+      "parentUuid": "9a54eb06_dcdd7437",
+      "range": {
+        "startLine": 685,
+        "startChar": 66,
+        "endLine": 685,
+        "endChar": 75
+      },
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
