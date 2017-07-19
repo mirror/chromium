@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "492d4de6_00129728",
+        "filename": "components/browsing_data/core/counters/sync_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-19T05:49:32Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e2ea37_56864392",
+        "filename": "components/browsing_data/core/counters/sync_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-19T05:49:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this has any advantage in practice (Callback copy is cheap, otherwise you wouldn\u0027t make a copy on line 22). And it\u0027s slightly confusing, since std::move is typically used with OnceCallback.",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01ee551_128b5775",
+        "filename": "components/browsing_data/core/counters/sync_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-19T05:49:32Z",
+      "side": 1,
+      "message": "FWIW, I would prefer inheritance (SyncAwareCounter : BrowsingDataCounter) rather than composition, but this is fine too.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
