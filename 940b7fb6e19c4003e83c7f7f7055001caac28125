@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68274db0_510098d9",
+        "filename": "chrome/browser/ui/hung_plugin_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T18:47:11Z",
+      "side": 1,
+      "message": "Reading the code in the .cc file, I don\u0027t see why this needs to be a smart pointer at all.  It seems like map\u003cint, PluginState\u003e would work just as well.",
+      "revId": "940b7fb6e19c4003e83c7f7f7055001caac28125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
