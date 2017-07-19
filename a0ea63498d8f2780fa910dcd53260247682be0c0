@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38a29ddd_055af5ed",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T08:02:55Z",
+      "side": 1,
+      "message": "could you please use \"the actual request\" here? it\u0027s well defined term in the CORS spec and it\u0027s easier to see that it means the request going out to the network from this class, not something received by this class from the client.",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58adda1_56e599cf",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T08:02:55Z",
+      "side": 1,
+      "message": "For the actual and preflight request.",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
