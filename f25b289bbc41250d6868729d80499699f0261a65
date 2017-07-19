@@ -16,6 +16,40 @@
       "revId": "f25b289bbc41250d6868729d80499699f0261a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1144d12d_f7ecbbba",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-19T14:40:04Z",
+      "side": 1,
+      "message": "Is this event dispatched after ProcessKey is called? ie; we want the touchmove event to occur when the button goes down not on the first move after the button goes down.",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cf4d07_3c991cd6",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-19T14:40:04Z",
+      "side": 1,
+      "message": "This test case seems indicate hover state. Does ozone expose this hover state? On windows we will get notification of barrel buttons when in the hover state yet the pen is not in contact with the digitizer.",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
