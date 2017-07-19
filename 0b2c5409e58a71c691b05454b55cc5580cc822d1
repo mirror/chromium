@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a49c5304_0b9a4eb7",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T17:35:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "686fa88b_9d251a50",
+      "revId": "0b2c5409e58a71c691b05454b55cc5580cc822d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e7d7be_057b821b",
         "filename": "ui/wm/core/easy_resize_window_targeter.h",
         "patchSetId": 5

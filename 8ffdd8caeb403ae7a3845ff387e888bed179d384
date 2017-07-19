@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "56d8476f_3908e3f2",
+        "filename": "ash/shelf/shelf_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T17:35:15Z",
+      "side": 1,
+      "message": "I think this could work. Let\u0027s see if the bots are still happy. I don\u0027t think it matter if shelf and status containers also have extended hit-test area whenever their children do (which is what will be happening if we always return true here). Done.",
+      "parentUuid": "fc8fb84f_39e75e2a",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a72dc5_83ed9a87",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca00e979_c0dee93f",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T17:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89a72dc5_83ed9a87",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
