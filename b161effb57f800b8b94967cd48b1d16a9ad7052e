@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19777619_d1bceafe",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "std::move is defined there and \u0027git cl lint\u0027 gets cranky if you omit it.",
+      "parentUuid": "3bf8b27a_bc1486ad",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47979a39_769683cb",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8fb3f1_9b76885e",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47979a39_769683cb",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c016a343_efb9dd16",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76a7f32_56a23405",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d07e66_6e1adbc3",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-18T21:56:14Z",
       "side": 1,
       "message": "Do we want to rename the SensitiveInputVisibility service since it\u0027s no longer going to be just about sensitive input visibility? (Or were you planning to do this rename in the follow-up where you expand the mojo interface? That would be fine w/ me)",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1941d7ea_8d198e90",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Yes, I\u0027m renaming the service in the followup CL where the new notification method is added.",
+      "parentUuid": "56d07e66_6e1adbc3",
       "range": {
         "startLine": 17,
         "startChar": 48,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ea36c2b7_a5fdf0fc",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Interesting. We have content::RenderProcess which lives inside Renderer. \"Renderer processes\" sounds wrong, so I\u0027ll just say \"from renderers, and ...\"",
+      "parentUuid": "fcb3ab5d_1805cdc6",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6af37a_8e7f7133",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "015e32a1_cdc64e58",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6af37a_8e7f7133",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 3
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85cd251a_09bbc803",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-18T21:56:14Z",
       "side": 1,
       "message": "Would be useful to document what this does when called the first time for a given RFH. Does it create the driver if needed, or does it return null if it hasn\u0027t been explicitly created? Are there any situations where it can return null?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5248fa72_2531d672",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Unused, deleted.",
+      "parentUuid": "85cd251a_09bbc803",
       "range": {
         "startLine": 29,
         "startChar": 2,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fbbfe276_60f14fb4",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a33622ce_702b2608",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 69
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d43b286_2d1442fe",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
         "patchSetId": 6
@@ -197,6 +389,30 @@
       "writtenOn": "2017-07-18T21:56:14Z",
       "side": 1,
       "message": "I think this should be DCHECK(factory) instead; it would be a bug somewhere if the above code doesn\u0027t result in a non-null |factory|.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0c725f_e8dc0284",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "DCHECK or CHECK?\n\nThe style guide suggests that \"Use CHECK() if the consequence of a failed assertion would be a security vulnerability, where crashing the browser is preferable.\" \n\nWhile it seems /unlikely/ that jumping to a near-null address would be exploitable, is there any reason not to use CHECK?",
+      "parentUuid": "4d43b286_2d1442fe",
       "range": {
         "startLine": 75,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "81da2b1f_faff23e1",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc3c54cf_61692241",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30639849_d352b92a",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
         "patchSetId": 6
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-18T21:56:14Z",
       "side": 1,
       "message": "I\u0027m not sure why ContentPasswordManagerDriverFactory uses this pattern; can you try making it a WebContentsUserData instead? That should be able to save you some boilerplate, e.g. you don\u0027t need to implement CreateForWebContents and FromWebContents yourself. See the documentation here: https://cs.chromium.org/chromium/src/content/public/browser/web_contents_user_data.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d19\n(don\u0027t forget the `friend class` bit, I always forget that)\n\nThis might be a fool\u0027s errand -- there might be some reason why this uses SupportsUserData::Data directly -- so don\u0027t hate me if it doesn\u0027t work... but at least we\u0027ll know why then (and can mention it in a comment).",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e272a7_1dea66fd",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "30639849_d352b92a",
       "range": {
         "startLine": 28,
         "startChar": 13,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "16f2db42_a54c4b48",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Declaration_Order\nWithin each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, ***factory functions***, constructors, assignment operators, ***destructor***, all other methods, data members.",
+      "parentUuid": "a24de4bb_8690beaf",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "714fb7f1_83efab50",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
         "patchSetId": 6
@@ -298,6 +586,30 @@
       "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e8ce78_209b82b4",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "714fb7f1_83efab50",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "0dcd92fa_42d9b92f",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c9ccb2_942bf754",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17fa71e4_2e15059b",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_unittest.cc",
         "patchSetId": 6
@@ -335,6 +671,30 @@
       "writtenOn": "2017-07-18T21:56:14Z",
       "side": 1,
       "message": "Huh, I\u0027ve never seen this pattern before (typedef\u0027ing ChromeRVHTestHarness instead of subclassing it). I would lean towards a trivial subclass a la https://cs.chromium.org/chromium/src/chrome/browser/extensions/favicon_downloader_unittest.cc?dr\u003dCSs\u0026l\u003d33 just for the sake of consistency, but I can\u0027t really defend that on any objective grounds so consider it optional :)",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6ff92a_e9e18d04",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Changed.\n\nI\u0027d only chosen this path because I\u0027d seen other tests do it. :)  \nInterestingly, https://cs.chromium.org/chromium/src/chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_unittest.cc?l\u003d12 appears to be the only one doing it for ChromeRVHTestHarness specifically.",
+      "parentUuid": "17fa71e4_2e15059b",
       "range": {
         "startLine": 18,
         "startChar": 0,
@@ -367,6 +727,30 @@
       "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f2b81c_4ccb30e8",
+        "filename": "chrome/browser/ssl/visible_password_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-19T23:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d613ed86_a19e1f74",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
