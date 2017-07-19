@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c7677a_491a1ee0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T22:45:00Z",
+      "side": 1,
+      "message": "This is extremely confusing. What does it mean to be an actual webcontents?\n\nWe should probably just have exclusively either a WebContents, or a GestureTarget passed to native, no need for a new boolean.",
+      "range": {
+        "startLine": 209,
+        "startChar": 24,
+        "endLine": 209,
+        "endChar": 43
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bdcbf2_75f78dae",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T22:45:00Z",
+      "side": 1,
+      "message": "If you take my suggestion in VrShellImpl.java, this would become something like:\nif (web_contents.obj()) {\n  content::WebContents* contents \u003d\n      content::WebContents::FromJavaWebContents(web_contents);\n  if (contents \u003d\u003d web_contents_)\n    return;\n} else {\n  DCHECK(android_ui_gesture_target.obj());\n  // equivalent check\n}",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 32
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d177a7d8_6bf25464",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T22:45:00Z",
+      "side": 1,
+      "message": "Would become if (android_ui_gesture_target.obj())",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6efc06_6acdb9e6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T22:45:00Z",
+      "side": 1,
+      "message": "s/view_delegate/android_ui_gesture_target",
+      "range": {
+        "startLine": 84,
+        "startChar": 64,
+        "endLine": 84,
+        "endChar": 77
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
