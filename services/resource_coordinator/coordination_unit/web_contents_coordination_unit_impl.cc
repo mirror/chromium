@@ -42,6 +42,19 @@ WebContentsCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
   }
 }
 
+void WebContentsCoordinationUnitImpl::PropagateProperty(
+    mojom::PropertyType property_type,
+    const base::Value& value) {
+  if (property_type == mojom::PropertyType::kVisible) {
+    for (auto* coordination_unit : children()) {
+      if (coordination_unit->id().type != CoordinationUnitType::kFrame)
+        continue;
+      coordination_unit->SetProperty(property_type,
+                                     base::MakeUnique<base::Value>(value));
+    }
+  }
+}
+
 double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   double cpu_usage = 0.0;
 
