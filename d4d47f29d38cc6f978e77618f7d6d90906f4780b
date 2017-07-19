@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c493fe9b_1e1587e9",
+        "filename": "android_webview/browser/aw_contents_statics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-19T21:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00a5d1c_a1cb69cd",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a421280_4daa1cf3",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T21:00:58Z",
       "side": 1,
       "message": "TODO for override",
+      "range": {
+        "startLine": 580,
+        "startChar": 20,
+        "endLine": 580,
+        "endChar": 26
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94877432_93a219b0",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-19T21:12:31Z",
+      "side": 1,
+      "message": "sure (intentionally assigning to you :)",
+      "parentUuid": "8a421280_4daa1cf3",
       "range": {
         "startLine": 580,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2448dd21_552b8c5c",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-19T21:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43326ee_fd78533e",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 440,
+        "endChar": 11
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab8e0e56_40cb0c2e",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3c329e9f_44ed8760",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-19T21:12:31Z",
+      "side": 1,
+      "message": "I think it is acceptable to put methods closer to where they are used?",
+      "parentUuid": "ab8e0e56_40cb0c2e",
+      "range": {
+        "startLine": 482,
+        "startChar": 17,
+        "endLine": 482,
+        "endChar": 36
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b553cb1_1ef273b9",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-19T21:00:58Z",
       "side": 1,
       "message": "Does this need to block?",
+      "range": {
+        "startLine": 485,
+        "startChar": 20,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0ec0dd_fd1bcfd4",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-19T21:12:31Z",
+      "side": 1,
+      "message": "I think here it does not matter either way.",
+      "parentUuid": "4b553cb1_1ef273b9",
       "range": {
         "startLine": 485,
         "startChar": 20,
