@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c71f785_88e7787d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T18:48:41Z",
+      "side": 1,
+      "message": "Can this be removed?",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee417cf_77acde3a",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T18:48:41Z",
+      "side": 1,
+      "message": "Move this up to right after UpdateMatchDestinationURL so it\u0027s grouped with the other non-accessor methods.\n\nAlso, \"Fix-up\" here reads a little vague to me. How about just saying \"Inline tails suggestion prefixes [...]\" instead?",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ce292a_3e0db839",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T18:48:41Z",
+      "side": 1,
+      "message": "Use a range-based for loop:\n\nfor (const auto\u0026 match : matches_) {\n\n(I know most of the loops in this file are using the old style but there\u0027s at least one range-based loop in here and we\u0027re generally using range-based in new code.)",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749caf7e_44a63a0c",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T18:48:41Z",
+      "side": 1,
+      "message": "And here:\n\nfor (auto\u0026 match : matches_)",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc038d6_68cdaa87",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T18:48:41Z",
+      "side": 1,
+      "message": "\"Inline\" instead of \"Fix-up\".",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
