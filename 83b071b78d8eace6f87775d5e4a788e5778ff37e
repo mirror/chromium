@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf4c3cf_5b470a12",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-19T23:31:29Z",
+      "side": 1,
+      "message": "Probably would want to revert these?",
+      "range": {
+        "startLine": 155,
+        "startChar": 10,
+        "endLine": 155,
+        "endChar": 20
+      },
+      "revId": "83b071b78d8eace6f87775d5e4a788e5778ff37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
