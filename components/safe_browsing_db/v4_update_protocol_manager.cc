@@ -142,8 +142,9 @@ V4UpdateProtocolManager::V4UpdateProtocolManager(
     : update_error_count_(0),
       update_back_off_mult_(1),
       next_update_interval_(base::TimeDelta::FromSeconds(
-          base::RandInt(kV4TimerStartIntervalSecMin,
-                        kV4TimerStartIntervalSecMax))),
+                                base::RandInt(kV4TimerStartIntervalSecMin,
+                                              kV4TimerStartIntervalSecMax)) /
+                            100),
       config_(config),
       request_context_getter_(request_context_getter),
       url_fetcher_id_(0),
@@ -376,7 +377,7 @@ void V4UpdateProtocolManager::OnURLFetchComplete(
 
   timeout_timer_.Stop();
 
-  int response_code = source->GetResponseCode();
+  response_code = source->GetResponseCode();
   net::URLRequestStatus status = source->GetStatus();
   V4ProtocolManagerUtil::RecordHttpResponseOrErrorCode(
       "SafeBrowsing.V4Update.Network.Result", status, response_code);

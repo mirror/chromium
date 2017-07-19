@@ -851,6 +851,7 @@ bool V4Store::VerifyChecksum() {
 
 int64_t V4Store::RecordAndReturnFileSize(const std::string& base_metric) {
   std::string suffix = GetUmaSuffixForStore(store_path_);
+  name_of_current_store = suffix;
   // Histogram properties as in UMA_HISTOGRAM_COUNTS macro.
   base::HistogramBase* histogram = base::Histogram::FactoryGet(
       base_metric + suffix, 1, 1000000, 50,
