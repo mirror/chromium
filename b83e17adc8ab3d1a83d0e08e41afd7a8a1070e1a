@@ -22,6 +22,30 @@
       "revId": "b83e17adc8ab3d1a83d0e08e41afd7a8a1070e1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c842f899_e3c8a669",
+        "filename": "remoting/ios/app/app_initializer_chromium.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-19T18:48:17Z",
+      "side": 1,
+      "message": "Done. Also added comment to AppInitializer for its purpose.",
+      "parentUuid": "c4a41114_2707238a",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "b83e17adc8ab3d1a83d0e08e41afd7a8a1070e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
