@@ -546,6 +546,12 @@ void Tab::SetData(const TabRendererData& data) {
   } else {
     Browser::FormatTitleForDisplay(&title);
   }
+#if 0
+  if (title_->text() != title)
+    NOTIMPLEMENTED() << " title changing from " << title_->text() << " to "
+                     << title << " state is " << data.network_state;
+#endif
+
   title_->SetText(title);
 
   if (!data_.IsCrashed()) {

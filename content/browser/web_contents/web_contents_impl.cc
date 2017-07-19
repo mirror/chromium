@@ -1258,11 +1258,15 @@ const base::string16& WebContentsImpl::GetTitle() const {
   //
   // Otherwise, we want to stick with the last committed entry's title during
   // new navigations, which have pending entries at index -1 with no title.
-  if (controller_.IsInitialNavigation() &&
+  if ((controller_.IsInitialNavigation()) &&
       ((controller_.GetVisibleEntry() &&
         !controller_.GetVisibleEntry()->GetTitle().empty()) ||
        controller_.GetPendingEntryIndex() != -1)) {
     entry = controller_.GetVisibleEntry();
+  } else if ((!entry || entry->GetTitle().empty()) && IsWaitingForResponse()) {
+    // If the new load has committed but there's no explicit title, and we
+    // haven't gotten a response yet, stick to the old page's title.
+    entry = controller_.GetEntryAtOffset(-1);
   }
 
   if (entry) {
