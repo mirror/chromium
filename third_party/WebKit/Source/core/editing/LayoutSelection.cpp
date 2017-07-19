@@ -81,10 +81,6 @@ SelectionPaintRange::Iterator::Iterator(const SelectionPaintRange* range) {
   }
   current_ = range->StartLayoutObject();
   included_end_ = range->EndLayoutObject();
-  stop_ = range->EndLayoutObject()->ChildAt(range->EndOffset());
-  if (stop_)
-    return;
-  stop_ = range->EndLayoutObject()->NextInPreOrderAfterChildren();
 }
 
 LayoutObject* SelectionPaintRange::Iterator::operator*() const {
@@ -94,9 +90,14 @@ LayoutObject* SelectionPaintRange::Iterator::operator*() const {
 
 SelectionPaintRange::Iterator& SelectionPaintRange::Iterator::operator++() {
   DCHECK(current_);
-  for (current_ = current_->NextInPreOrder(); current_ && current_ != stop_;
+  if (current_ == included_end_) {
+    current_ = nullptr;
+    return *this;
+  }
+
+  for (current_ = current_->NextInPreOrder(); current_ ;
        current_ = current_->NextInPreOrder()) {
-    if (current_ == included_end_ || current_->CanBeSelectionLeaf())
+    if (current_->CanBeSelectionLeaf())
       return *this;
   }
 
@@ -241,7 +242,13 @@ static void SetSelectionState(const SelectionPaintRange& range) {
   } else {
     range.StartLayoutObject()->SetSelectionStateIfNeeded(
         SelectionState::kStart);
-    range.EndLayoutObject()->SetSelectionStateIfNeeded(SelectionState::kEnd);
+    LayoutObject* const end_layout_object = range.EndLayoutObject();
+    if (end_layout_object->IsText() && range.EndOffset() == (int)ToLayoutText(end_layout_object)->TextLength() + 1) {
+      range.EndLayoutObject()->SetSelectionStateIfNeeded(SelectionState::kInside);
+    } else {
+      range.EndLayoutObject()->SetSelectionStateIfNeeded(SelectionState::kEnd);
+    }
+
   }
 
   for (LayoutObject* runner : range) {
@@ -350,6 +357,63 @@ void LayoutSelection::ClearSelection() {
   paint_range_ = SelectionPaintRange();
 }
 
+// Traverse FlatTree parent first backward.
+// It looks mirror of Next().
+/* static LayoutObject* Previous(const LayoutObject& layout_object) {
+  if (LayoutObject* last_child = layout_object.SlowLastChild())
+    return last_child;
+  if (LayoutObject* previous_sibling = layout_object.PreviousSibling())
+    return previous_sibling;
+  for (LayoutObject* ancestor = layout_object.Parent(); ancestor;) {
+    LayoutObject* ancestor_prev_sib = ancestor->PreviousSibling();
+    if (ancestor_prev_sib)
+      return ancestor_prev_sib;
+    LayoutObject* parent = layout_object.Parent();
+    // LayoutTests/paint/invalidation/text-selection-rect-in-overflow-2.html
+    // makes infinite self-parent loop. Strange.
+    if (parent == ancestor)
+      return nullptr;
+    ancestor = parent;
+  }
+  return nullptr;
+} */
+
+static LayoutObject* ComputeEndLayoutObject(LayoutObject* anchor, const PositionInFlatTree& end_pos) {
+  switch (end_pos.AnchorType()) {
+  case PositionAnchorType::kBeforeChildren:
+    return anchor->PreviousInPreOrder();
+  case PositionAnchorType::kAfterChildren:
+    return anchor->LastLeafChild();
+  case PositionAnchorType::kOffsetInAnchor: {
+    if (end_pos.OffsetInContainerNode() == 0)
+      return anchor->PreviousInPreOrder();
+    return anchor->ChildAt(end_pos.OffsetInContainerNode() - 1);
+  }
+  case PositionAnchorType::kBeforeAnchor:
+    return anchor->PreviousInPreOrder();
+  case PositionAnchorType::kAfterAnchor:
+    if (LayoutObject* last_leaf_child = anchor->LastLeafChild())
+      return last_leaf_child;
+    return anchor;
+  }
+  NOTREACHED();
+  return nullptr;
+}
+
+static std::pair<LayoutObject*, int> ComputeEndPaintPosition(const PositionInFlatTree& end_pos) {
+  LayoutObject* const anchor_layout_object = end_pos.AnchorNode()->GetLayoutObject();
+  if (end_pos.AnchorNode()->IsTextNode())
+    return { anchor_layout_object, end_pos.OffsetInContainerNode()};
+
+  LayoutObject* const end_layout_object = ComputeEndLayoutObject(anchor_layout_object, end_pos);
+  if (!end_layout_object)
+    return { anchor_layout_object, 1 };
+  if (end_layout_object->IsText())
+    return { end_layout_object , ToLayoutText(end_layout_object)->TextLength() + 1 };
+  // |-1| would not be used.
+  return { end_layout_object, 2 };
+}
+
 static SelectionPaintRange CalcSelectionPaintRange(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -361,20 +425,23 @@ static SelectionPaintRange CalcSelectionPaintRange(
   if (selection.IsCollapsed() || frame_selection.IsHidden())
     return SelectionPaintRange();
 
-  const PositionInFlatTree start_pos = selection.StartPosition();
-  const PositionInFlatTree end_pos = selection.EndPosition();
+  const PositionInFlatTree& start_pos = selection.StartPosition();
+  const PositionInFlatTree& end_pos = selection.EndPosition();
   DCHECK_LE(start_pos, end_pos);
-  LayoutObject* start_layout_object = start_pos.AnchorNode()->GetLayoutObject();
-  LayoutObject* end_layout_object = end_pos.AnchorNode()->GetLayoutObject();
+  LayoutObject* const start_layout_object = start_pos.AnchorNode()->GetLayoutObject();
+  LayoutObject* const end_pos_layout_object = end_pos.AnchorNode()->GetLayoutObject();
   DCHECK(start_layout_object);
-  DCHECK(end_layout_object);
-  DCHECK(start_layout_object->View() == end_layout_object->View());
-  if (!start_layout_object || !end_layout_object)
+  DCHECK(end_pos_layout_object);
+  DCHECK(start_layout_object->View() == end_pos_layout_object->View());
+  if (!start_layout_object || !end_pos_layout_object)
     return SelectionPaintRange();
 
+  LayoutObject* end_layout_object;
+  int end_layout_offset;
+  std::tie(end_layout_object, end_layout_offset) = ComputeEndPaintPosition(end_pos);
   return SelectionPaintRange(start_layout_object,
                              start_pos.ComputeEditingOffset(),
-                             end_layout_object, end_pos.ComputeEditingOffset());
+                             end_layout_object, end_layout_offset);
 }
 
 void LayoutSelection::SetHasPendingSelection() {
