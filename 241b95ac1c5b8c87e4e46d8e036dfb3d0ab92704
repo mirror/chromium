@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fef22706_417c00b2",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIAutoOrString.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-19T01:57:01Z",
+      "side": 1,
+      "message": "Done. Note that this is done in a few other places (I know at least of CSSPropertyAPITextIndent.cpp).",
+      "parentUuid": "ffa5d816_24406fcb",
+      "revId": "241b95ac1c5b8c87e4e46d8e036dfb3d0ab92704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77abcc8f_42dbea54",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIAutoOrString.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T00:55:02Z",
       "side": 1,
       "message": "nit: context arg isn\u0027t used so doesn\u0027t need to be named",
+      "revId": "241b95ac1c5b8c87e4e46d8e036dfb3d0ab92704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39340d6_eb3a2bf6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIAutoOrString.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-19T01:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77abcc8f_42dbea54",
       "revId": "241b95ac1c5b8c87e4e46d8e036dfb3d0ab92704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
