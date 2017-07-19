@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be020867_4e8cef4a",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-19T18:11:36Z",
+      "side": 1,
+      "message": "Looks like this got lost:\nhttps://chromium-review.googlesource.com/c/549057/32/chrome%252Fbrowser%252Ffeature_engagement_tracker%252Ffeatures%252Fnew_tab_tracker_unittest.cc#74",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "a91c47de3f19b4151ba654469a756144232c285a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00f9193_27238afd",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-19T18:11:36Z",
+      "side": 1,
+      "message": "Add period at the end.",
+      "range": {
+        "startLine": 102,
+        "startChar": 33,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "a91c47de3f19b4151ba654469a756144232c285a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
