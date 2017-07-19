@@ -164,11 +164,18 @@ void ChromeWebClient::PostBrowserURLRewriterCreation(
 NSString* ChromeWebClient::GetEarlyPageScript(
     web::BrowserState* browser_state) const {
   NSString* chrome_page_script = GetPageScript(@"chrome_bundle");
+  NSString* kScriptTemplate = @"%@; %@";
+
+  // TODO(crbug.com/435048) tgarbus: Add FeatureList::IsEnabled check
+  // (and create a proper Feature struct)
+  chrome_page_script = [NSString
+      stringWithFormat:kScriptTemplate, GetPageScript(@"credential_manager"),
+                       chrome_page_script];
+  GetPageScript(@"credential_manager");
 
   if (!base::FeatureList::IsEnabled(payments::features::kWebPayments))
     return chrome_page_script;
 
-  NSString* kScriptTemplate = @"%@; %@";
   return [NSString stringWithFormat:kScriptTemplate,
                                     GetPageScript(@"payment_request"),
                                     chrome_page_script];
