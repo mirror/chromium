@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b56f6bd_64f923ce",
+        "filename": "components/cast_certificate/cast_cert_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T18:48:05Z",
+      "side": 1,
+      "message": "Can this be removed?",
+      "revId": "6e8b51db40f147216ec2b372167a2e389e5dd2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838ea838_83efe6a4",
+        "filename": "components/cast_certificate/cast_cert_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T18:48:05Z",
+      "side": 1,
+      "message": "I suggest extracting this to its own function, and then here have:\n\n*cast_error \u003d MapToCastError(result);\nreturn false;\n\nI recommend that since this may grow in complexity, and having a separate function helps block out the logic a bit better IMO.",
+      "revId": "6e8b51db40f147216ec2b372167a2e389e5dd2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b6c0f8_6f23a92d",
+        "filename": "components/cast_certificate/cast_cert_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T18:48:05Z",
+      "side": 1,
+      "message": "Note that this is not going to be reachable - it only applies to blacklisted certificates from (system) trust store.",
+      "revId": "6e8b51db40f147216ec2b372167a2e389e5dd2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea72cc9_06765cca",
+        "filename": "components/cast_certificate/cast_cert_validator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T18:48:05Z",
+      "side": 1,
+      "message": "API question:\n* Do you want to report multiple errors?\n* What is the relationship between return value and |result|? How about changing return value from bool to CastCertError to avoid redundancy?",
+      "revId": "6e8b51db40f147216ec2b372167a2e389e5dd2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffee2e6_3d569aae",
+        "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T18:48:05Z",
+      "side": 1,
+      "message": "Perhaps this parameter can be removed now, in favor of checking that error !\u003d CastError::OK ?",
+      "range": {
+        "startLine": 484,
+        "startChar": 10,
+        "endLine": 484,
+        "endChar": 24
+      },
+      "revId": "6e8b51db40f147216ec2b372167a2e389e5dd2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
