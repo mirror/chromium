@@ -85,6 +85,24 @@
       "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d594d8_b22b2246",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-19T07:53:45Z",
+      "side": 1,
+      "message": "Why does this need to be private?\n\nDo you mean the subclasses shouldn\u0027t be allowed to override this function? I think you want to mark this as \u0027final\u0027 (and from the doc I am reading, it sounds like you can just mark the function final in the header, and don\u0027t actually need to provide any code for it in .cc, but not sure about it).",
+      "parentUuid": "cd313100_e22715d7",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
