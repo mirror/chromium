@@ -58,6 +58,7 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
   DefinitionMap paint_definitions_;
 
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
+  static int instance_count_;
 };
 
 DEFINE_TYPE_CASTS(PaintWorkletGlobalScope,

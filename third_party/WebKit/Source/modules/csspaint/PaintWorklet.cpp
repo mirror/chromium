@@ -7,9 +7,14 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
+#include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
+#include "platform/graphics/Image.h"
 
 namespace blink {
+
+static const unsigned kNumGlobalScopes = 2;
+static const DocumentPaintDefinition* kInvalidDocumentDefinition = nullptr;
 
 // static
 PaintWorklet* PaintWorklet::Create(LocalFrame* frame) {
@@ -25,10 +30,20 @@ PaintWorklet::~PaintWorklet() = default;
 CSSPaintDefinition* PaintWorklet::FindDefinition(const String& name) {
   if (GetNumberOfGlobalScopes() == 0)
     return nullptr;
+  if (!document_definition_map_.Contains(name))
+    return nullptr;
+
+  // Check if the existing document definition is valid or not.
+  DocumentPaintDefinition* document_definition =
+      document_definition_map_.at(name);
+  if (document_definition == kInvalidDocumentDefinition)
+    return nullptr;
 
   PaintWorkletGlobalScopeProxy* proxy =
       PaintWorkletGlobalScopeProxy::From(FindAvailableGlobalScope());
-  return proxy->FindDefinition(name);
+  CSSPaintDefinition* paint_definition = proxy->FindDefinition(name);
+  DCHECK(paint_definition);
+  return paint_definition;
 }
 
 void PaintWorklet::AddPendingGenerator(const String& name,
@@ -36,19 +51,23 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
+RefPtr<Image> PaintWorklet::Paint(const String& name,
+                                  const ImageResourceObserver& observer,
+                                  const IntSize& size,
+                                  const CSSStyleValueVector* data) {
+  // TODO(xidachen): add policy for which global scope to select.
+  // We have DCHECK in the FindDefinition(), so no need to null check here.
+  return FindDefinition(name)->Paint(observer, size, data);
+}
+
 DEFINE_TRACE(PaintWorklet) {
   visitor->Trace(pending_generator_registry_);
+  visitor->Trace(document_definition_map_);
   Worklet::Trace(visitor);
 }
 
 bool PaintWorklet::NeedsToCreateGlobalScope() {
-  // "The user agent must have, and select from at least two
-  // PaintWorkletGlobalScopes in the worklet's WorkletGlobalScopes list, unless
-  // the user agent is under memory constraints."
-  // https://drafts.css-houdini.org/css-paint-api-1/#drawing-an-image
-  // TODO(nhiroki): In the current impl, we create only one global scope. We
-  // should create at least two global scopes as the spec.
-  return !GetNumberOfGlobalScopes();
+  return GetNumberOfGlobalScopes() < kNumGlobalScopes;
 }
 
 WorkletGlobalScopeProxy* PaintWorklet::CreateGlobalScope() {
