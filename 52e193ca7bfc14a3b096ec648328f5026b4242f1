@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6415701_853db2a0",
+        "filename": "extensions/renderer/script_injection_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-19T08:44:44Z",
+      "side": 1,
+      "message": "Ah good point.\n\nIn the latest patchset I introduced AsyncScriptsRunInfo so that injections\nfor different frames / run_locations won\u0027t interfere with each other.",
+      "parentUuid": "b3865352_dcfa0574",
+      "revId": "52e193ca7bfc14a3b096ec648328f5026b4242f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bc73a38_35a9f491",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e This is logged in ScriptInjectionManager::OnInjectionFinished(), which is called only when the injection was posted as a separate task (not logged for synchronous injections).\n\nIsn\u0027t it also called when JS injections are blocked, even we\u0027re not just yielding?",
       "parentUuid": "e640ccbd_b1e8d2a4",
+      "revId": "52e193ca7bfc14a3b096ec648328f5026b4242f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1dc2c8_08773aec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21863,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-19T08:44:44Z",
+      "side": 1,
+      "message": "That\u0027s right.\n\nThat would be problematic when some scripts are executed immediately and some are blocked. When one of the blocked scripts is unblocked, the duration since the last (not-blocked) script execution will be recorded.\n\nBut I think that will be very rare, and could be easily filtered by removing extreme outliers.  It\u0027s hard to differentiate these cases (especially if the execution context is suspended after the task is posted).",
+      "parentUuid": "d345e111_9b4a83ed",
       "revId": "52e193ca7bfc14a3b096ec648328f5026b4242f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
