@@ -406,11 +406,12 @@ void BlinkTestRunner::SetPopupBlockingEnabled(bool block_popups) {
 }
 
 std::string BlinkTestRunner::makeURLErrorDescription(const WebURLError& error) {
-  std::string domain = error.domain.Utf8();
+  const auto& domain = error.domain;
+  std::string domain_string = "unknown";
   int code = error.reason;
 
-  if (domain == net::kErrorDomain) {
-    domain = "NSURLErrorDomain";
+  if (domain == WebURLError::Domain::kNet) {
+    domain_string = "NSURLErrorDomain";
     switch (error.reason) {
     case net::ERR_ABORTED:
       code = -999;  // NSURLErrorCancelled
@@ -418,7 +419,7 @@ std::string BlinkTestRunner::makeURLErrorDescription(const WebURLError& error) {
     case net::ERR_UNSAFE_PORT:
       // Our unsafe port checking happens at the network stack level, but we
       // make this translation here to match the behavior of stock WebKit.
-      domain = "WebKitErrorDomain";
+      domain_string = "WebKitErrorDomain";
       code = 103;
       break;
     case net::ERR_ADDRESS_INVALID:
@@ -432,7 +433,7 @@ std::string BlinkTestRunner::makeURLErrorDescription(const WebURLError& error) {
   }
 
   return base::StringPrintf("<NSError domain %s, code %d, failing URL \"%s\">",
-                            domain.c_str(), code,
+                            domain_string.c_str(), code,
                             error.unreachable_url.GetString().Utf8().data());
 }
 

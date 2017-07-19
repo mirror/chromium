@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "third_party/WebKit/public/platform/WebURLError.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -25,7 +26,7 @@ class LocalizedError {
   // Fills |error_strings| with values to be used to build an error page used
   // on HTTP errors, like 404 or connection reset.
   static void GetStrings(int error_code,
-                         const std::string& error_domain,
+                         blink::WebURLError::Domain error_domain,
                          const GURL& failed_url,
                          bool is_post,
                          bool stale_copy_in_cache,
@@ -36,14 +37,13 @@ class LocalizedError {
                          base::DictionaryValue* strings);
 
   // Returns a description of the encountered error.
-  static base::string16 GetErrorDetails(const std::string& error_domain,
+  static base::string16 GetErrorDetails(blink::WebURLError::Domain error_domain,
                                         int error_code,
                                         bool is_post);
 
   // Returns true if an error page exists for the specified parameters.
-  static bool HasStrings(const std::string& error_domain, int error_code);
-
-  static const char kHttpErrorDomain[];
+  static bool HasStrings(blink::WebURLError::Domain error_domain,
+                         int error_code);
 
  private:
 
