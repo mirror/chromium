@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414ad742_1acc362f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-19T21:50:58Z",
+      "side": 1,
+      "message": "One piece of functionality that this removes coverage for is whether we find a PR based on its Commit-Position or its Change-Id. Could you add a quick unit test to common_unittest.py asserting that pr_for_chromium_commit looks for Change-Id before Commit-Position?",
+      "revId": "1fd8765496f06978b62e761d27e39006dcc79b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
