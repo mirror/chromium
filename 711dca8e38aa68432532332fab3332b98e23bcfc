@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9a6f7f1e_9f776d01",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T23:13:26Z",
+      "side": 1,
+      "message": "Previously, we did not access |request| after this line of code.  If StartRequest could result in deleting it immediately (Like on error, or immediate completion), this new code would crash.",
+      "parentUuid": "47b661ee_7d1f7284",
+      "range": {
+        "startLine": 423,
+        "startChar": 40,
+        "endLine": 423,
+        "endChar": 59
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21ebc496_4edaf039",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "What we are trying to see is could we have done better by slightly delaying a delayable request that started immediately on schedule. This is because once we start throttling delayable requests based on the presence of non-delayable requests, if non-delayable requests come just after delayable requests to the scheduler, we would be better off waiting for some time. This experiment will also give us an idea of the timescale. We are not concerned with requests that were delayed by the resource scheduler, because we are not looking to delay them further.",
       "parentUuid": "3a0013a8_c6e441bb",
+      "range": {
+        "startLine": 444,
+        "startChar": 58,
+        "endLine": 444,
+        "endChar": 0
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2eab5ce2_e03d64cc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T23:13:26Z",
+      "side": 1,
+      "message": "But you are - if requests were delayed because of earlier delayable requests, by delaying those earlier delayable requests, you delay them, too.  I\u0027m very skeptical you can get any meaningful numbers from this.\n\nThis also heavily weights be numbers of non-delayable requests per page load.",
+      "parentUuid": "4b5b7423_ce48710d",
       "range": {
         "startLine": 444,
         "startChar": 58,
