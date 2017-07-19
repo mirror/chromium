@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "563f4b1d_a88c8a21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:50:44Z",
+      "side": 1,
+      "message": "Which UI, which platform?",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "1f907a1e0b3ca6da4ef570697205c4eb72adacaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec22bc5c_d46bd83e",
+        "filename": "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:50:44Z",
+      "side": 1,
+      "message": "Even when the experiment is on, an abstract child doesn\u0027t have to provide a 3rd button. You don\u0027t have any check for its existence.\nI\u0027d say that this class shouldn\u0027t know about the experiment. If the button was created by a child then it should be rendered.",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 63
+      },
+      "revId": "1f907a1e0b3ca6da4ef570697205c4eb72adacaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca59e5e_67e9b879",
+        "filename": "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:50:44Z",
+      "side": 1,
+      "message": "Can you give me a reference to the doc about this method?",
+      "range": {
+        "startLine": 129,
+        "startChar": 41,
+        "endLine": 129,
+        "endChar": 61
+      },
+      "revId": "1f907a1e0b3ca6da4ef570697205c4eb72adacaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
