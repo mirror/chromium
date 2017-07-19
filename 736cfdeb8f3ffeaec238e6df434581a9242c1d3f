@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d742e8_ccdb2723",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-19T23:28:39Z",
+      "side": 1,
+      "message": "This won\u0027t call call OnWebContentsLostFocus for WebContents observers anymore as it used to.  I\u0027m guessing this is ok given the comment above, that it really only needs to send Blur to the renderer?",
+      "range": {
+        "startLine": 285,
+        "startChar": 38,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "736cfdeb8f3ffeaec238e6df434581a9242c1d3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051119e3_9f06cd1e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-19T23:28:39Z",
+      "side": 1,
+      "message": "Similarly, this won\u0027t generate OnWebContentsLostFocus anymore, but I hope this is also ok given that it also doesn\u0027t fire OnWebContentsFocused since it\u0027s using Focus() above?",
+      "range": {
+        "startLine": 1627,
+        "startChar": 27,
+        "endLine": 1627,
+        "endChar": 31
+      },
+      "revId": "736cfdeb8f3ffeaec238e6df434581a9242c1d3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
