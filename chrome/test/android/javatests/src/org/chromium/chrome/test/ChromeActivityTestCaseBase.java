@@ -34,7 +34,7 @@ import java.util.concurrent.TimeoutException;
  */
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         // Preconnect causes issues with the single-threaded Java test server.
-        "--disable-features=NetworkPrediction"})
+        "disable-features=NetworkPrediction"})
 public abstract class ChromeActivityTestCaseBase<T extends ChromeActivity>
         extends BaseActivityInstrumentationTestCase<T> implements ChromeTestCommonCallback<T> {
     private final ChromeActivityTestCommon<T> mTestCommon;
