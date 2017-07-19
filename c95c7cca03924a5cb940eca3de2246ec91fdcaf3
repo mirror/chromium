@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "6536967e_b803d9c4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-19T18:16:48Z",
+      "side": 1,
+      "message": "This comment hasn\u0027t been resolved.",
+      "parentUuid": "709b1eb3_73ab7562",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7da1419b_a3bbeb29",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 4

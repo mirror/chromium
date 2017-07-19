@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e98fc3_b779b6c8",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-19T18:16:48Z",
+      "side": 1,
+      "message": "Was this not available in the tree?",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcfd3e9_ef3724d3",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-19T18:16:48Z",
+      "side": 1,
+      "message": "Gerrit lost one of my comments.\n\nNo else ifs when you use early returns if-statements.\n\nif () {\n  return\n}\n\nif () {\n  return\n}\n\nNOTREACHED()",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
