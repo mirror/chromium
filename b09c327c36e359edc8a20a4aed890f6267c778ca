@@ -70,6 +70,30 @@
       "revId": "b09c327c36e359edc8a20a4aed890f6267c778ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ace5dee2_af7ca185",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T15:35:08Z",
+      "side": 1,
+      "message": "I think you can abuse std::multiset::count here:\n\n  DCHECK_EQ(1u,\n      std::multiset\u003cBOOL\u003e({\n          IsURLNtp(url),\n          [_startupParameters launchVoiceSearch],\n          [_startupParameters launchQRScanner],\n          [_startupParameters launchFocusOmnibox],\n      }).count(YES));",
+      "parentUuid": "eec032a5_77238cfa",
+      "range": {
+        "startLine": 2222,
+        "startChar": 2,
+        "endLine": 2222,
+        "endChar": 11
+      },
+      "revId": "b09c327c36e359edc8a20a4aed890f6267c778ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
