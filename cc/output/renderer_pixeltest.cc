@@ -245,22 +245,18 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
 
   ResourceId y_resource = resource_provider->CreateResourceFromTextureMailbox(
       resources.mailboxes[media::VideoFrame::kYPlane],
-      SingleReleaseCallbackImpl::Create(
-          resources.release_callbacks[media::VideoFrame::kYPlane]));
+      std::move(resources.release_callbacks[media::VideoFrame::kYPlane]));
   ResourceId u_resource = resource_provider->CreateResourceFromTextureMailbox(
       resources.mailboxes[media::VideoFrame::kUPlane],
-      SingleReleaseCallbackImpl::Create(
-          resources.release_callbacks[media::VideoFrame::kUPlane]));
+      std::move(resources.release_callbacks[media::VideoFrame::kUPlane]));
   ResourceId v_resource = resource_provider->CreateResourceFromTextureMailbox(
       resources.mailboxes[media::VideoFrame::kVPlane],
-      SingleReleaseCallbackImpl::Create(
-          resources.release_callbacks[media::VideoFrame::kVPlane]));
+      std::move(resources.release_callbacks[media::VideoFrame::kVPlane]));
   ResourceId a_resource = 0;
   if (with_alpha) {
     a_resource = resource_provider->CreateResourceFromTextureMailbox(
         resources.mailboxes[media::VideoFrame::kAPlane],
-        SingleReleaseCallbackImpl::Create(
-            resources.release_callbacks[media::VideoFrame::kAPlane]));
+        std::move(resources.release_callbacks[media::VideoFrame::kAPlane]));
   }
 
   const gfx::Size ya_tex_size = video_frame->coded_size();
@@ -319,8 +315,7 @@ void CreateTestY16TextureDrawQuad_FromVideoFrame(
   EXPECT_EQ(1u, resources.release_callbacks.size());
 
   ResourceId y_resource = resource_provider->CreateResourceFromTextureMailbox(
-      resources.mailboxes[0],
-      SingleReleaseCallbackImpl::Create(resources.release_callbacks[0]));
+      resources.mailboxes[0], std::move(resources.release_callbacks[0]));
 
   TextureDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();

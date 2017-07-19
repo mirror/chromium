@@ -326,7 +326,7 @@ bool AuraWindowCaptureMachine::ProcessCopyOutputResponse(
   }
 
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
   if (!texture_mailbox.IsTexture()) {
@@ -369,11 +369,11 @@ void AuraWindowCaptureMachine::CopyOutputFinishedForVideo(
     base::TimeTicks event_time,
     const CaptureFrameCallback& capture_frame_cb,
     scoped_refptr<media::VideoFrame> target,
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+    cc::SingleReleaseCallback release_callback,
     bool result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  release_callback->Run(gpu::SyncToken(), false);
+  std::move(release_callback).Run(gpu::SyncToken(), false);
 
   // Render the cursor and deliver the captured frame if the
   // AuraWindowCaptureMachine has not been stopped (i.e., the WeakPtr is

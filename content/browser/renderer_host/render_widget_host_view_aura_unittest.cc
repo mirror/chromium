@@ -3544,7 +3544,7 @@ class RenderWidgetHostViewAuraCopyRequestTest
     std::unique_ptr<cc::CopyOutputRequest> request =
         std::move(view_->last_copy_request_);
     request->SendTextureResult(view_rect_.size(), request->texture_mailbox(),
-                               std::unique_ptr<cc::SingleReleaseCallback>());
+                               cc::SingleReleaseCallback());
     RunLoopUntilCallback();
   }
 
@@ -3663,7 +3663,7 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, DestroyedAfterCopyRequest) {
   // Send the result after-the-fact.  It goes nowhere since DelegatedFrameHost
   // has been destroyed.
   request->SendTextureResult(view_rect_.size(), request->texture_mailbox(),
-                             std::unique_ptr<cc::SingleReleaseCallback>());
+                             cc::SingleReleaseCallback());
 
   // Because the copy request callback may be holding state within it, that
   // state must handle the RWHVA and ImageTransportFactory going away before the
