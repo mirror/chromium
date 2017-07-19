@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "3a0f2efa_124dd74c",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-19T06:10:54Z",
+      "side": 1,
+      "message": "base::Option seems a good solution to me, it can stay private and we just have setter and getter functions to manage it. I think this way we can get rid of all overridden operators and remove the unittests as well.\n\nWhat do you think Dominic?",
+      "parentUuid": "ed7823a0_85af3dd1",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3655dfad_25c106c1",
         "filename": "components/download/internal/entry_unittest.cc",
         "patchSetId": 12
