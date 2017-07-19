@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include <sys/sysctl.h>
 
-#include "base/containers/hash_tables.h"
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/mach_logging.h"
@@ -154,10 +153,6 @@ bool ProcessMetrics::GetMemoryBytes(size_t* private_bytes,
                                     size_t* shared_bytes,
                                     size_t* resident_bytes,
                                     size_t* locked_bytes) const {
-  size_t private_pages_count = 0;
-  size_t shared_pages_count = 0;
-  size_t wired_pages_count = 0;
-
   mach_port_t task = TaskForPid(process_);
   if (task == MACH_PORT_NULL) {
     DLOG(ERROR) << "Invalid process";
@@ -192,67 +187,25 @@ bool ProcessMetrics::GetMemoryBytes(size_t* private_bytes,
       return false;
     address = next_address.ValueOrDie();
 
-    mach_vm_address_t address_copy = address;
-    vm_region_top_info_data_t info;
-    MachVMRegionResult result = GetTopInfo(task, &size, &address, &info);
-    if (result == MachVMRegionResult::Error)
+    size_t tmp_private_bytes = 0;
+    size_t tmp_shared_bytes = 0;
+    size_t tmp_resident_bytes = 0;
+    size_t tmp_locked_bytes = 0;
+    if (!GetMemoryBytesInRegion(task, &seen_objects, &size, address,
+                                &tmp_private_bytes, &tmp_shared_bytes,
+                                &tmp_resident_bytes, &tmp_locked_bytes)) {
       return false;
-    if (result == MachVMRegionResult::Finished)
-      break;
-
-    vm_region_basic_info_64 basic_info;
-    mach_vm_size_t dummy_size = 0;
-    result = GetBasicInfo(task, &dummy_size, &address_copy, &basic_info);
-    if (result == MachVMRegionResult::Error)
-      return false;
-    if (result == MachVMRegionResult::Finished)
-      break;
-
-    bool is_wired = basic_info.user_wired_count > 0;
-
-    if (IsAddressInSharedRegion(address, cpu_type) &&
-        info.share_mode != SM_PRIVATE)
-      continue;
-
-    if (info.share_mode == SM_COW && info.ref_count == 1)
-      info.share_mode = SM_PRIVATE;
-
-    switch (info.share_mode) {
-      case SM_LARGE_PAGE:
-      case SM_PRIVATE:
-        private_pages_count += info.private_pages_resident;
-        private_pages_count += info.shared_pages_resident;
-        break;
-      case SM_COW:
-        private_pages_count += info.private_pages_resident;
-        // Fall through
-      case SM_SHARED:
-      case SM_PRIVATE_ALIASED:
-      case SM_TRUESHARED:
-      case SM_SHARED_ALIASED:
-        if (seen_objects.count(info.obj_id) == 0) {
-          // Only count the first reference to this region.
-          seen_objects.insert(info.obj_id);
-          shared_pages_count += info.shared_pages_resident;
-        }
-        break;
-      default:
-        break;
     }
-    if (is_wired) {
-      wired_pages_count +=
-          info.private_pages_resident + info.shared_pages_resident;
-    }
+
+    if (private_bytes)
+      *private_bytes += tmp_private_bytes;
+    if (shared_bytes)
+      *shared_bytes = tmp_shared_bytes;
+    if (resident_bytes)
+      *resident_bytes = tmp_resident_bytes;
+    if (locked_bytes)
+      *locked_bytes = tmp_locked_bytes;
   }
-
-  if (private_bytes)
-    *private_bytes = private_pages_count * PAGE_SIZE;
-  if (shared_bytes)
-    *shared_bytes = shared_pages_count * PAGE_SIZE;
-  if (resident_bytes)
-    *resident_bytes = (private_pages_count + shared_pages_count) * PAGE_SIZE;
-  if (locked_bytes)
-    *locked_bytes = wired_pages_count * PAGE_SIZE;
 
   return true;
 }
@@ -502,6 +455,89 @@ MachVMRegionResult GetBasicInfo(mach_port_t task,
   // xnu-2422.90.20/osfmk/vm/vm_map.c vm_map_region.
   mach_port_deallocate(task, object_name);
   return ParseOutputFromMachVMRegion(kr);
+}
+
+bool GetMemoryBytesInRegion(mach_port_t task,
+                            hash_set<int>* seen_objects,
+                            mach_vm_size_t* size,
+                            mach_vm_address_t address,
+                            size_t* private_bytes,
+                            size_t* shared_bytes,
+                            size_t* resident_bytes,
+                            size_t* locked_bytes) {
+  cpu_type_t cpu_type;
+  if (!GetCPUTypeForProcess(0, &cpu_type))
+    return false;
+
+  size_t private_pages_count = 0;
+  size_t shared_pages_count = 0;
+  size_t wired_pages_count = 0;
+
+  mach_vm_address_t address_copy = address;
+  vm_region_top_info_data_t info;
+  MachVMRegionResult result = GetTopInfo(task, size, &address, &info);
+  if (result == MachVMRegionResult::Error)
+    return false;
+  if (result == MachVMRegionResult::Finished)
+    return true;
+
+  vm_region_basic_info_64 basic_info;
+  mach_vm_size_t dummy_size = 0;
+  result = GetBasicInfo(task, &dummy_size, &address_copy, &basic_info);
+  if (result == MachVMRegionResult::Error)
+    return false;
+  if (result == MachVMRegionResult::Finished)
+    return true;
+
+  bool is_wired = basic_info.user_wired_count > 0;
+
+  if (IsAddressInSharedRegion(address, cpu_type) &&
+      info.share_mode != SM_PRIVATE) {
+    return true;
+  }
+
+  if (info.share_mode == SM_COW && info.ref_count == 1)
+    info.share_mode = SM_PRIVATE;
+
+  switch (info.share_mode) {
+    case SM_LARGE_PAGE:
+    case SM_PRIVATE:
+      private_pages_count += info.private_pages_resident;
+      private_pages_count += info.shared_pages_resident;
+      break;
+    case SM_COW:
+      private_pages_count += info.private_pages_resident;
+    // Fall through
+    case SM_SHARED:
+    case SM_PRIVATE_ALIASED:
+    case SM_TRUESHARED:
+    case SM_SHARED_ALIASED:
+      if (!seen_objects || seen_objects->count(info.obj_id) == 0) {
+        if (seen_objects) {
+          // Only count the first reference to this region.
+          seen_objects->insert(info.obj_id);
+        }
+        shared_pages_count += info.shared_pages_resident;
+      }
+      break;
+    default:
+      break;
+  }
+  if (is_wired) {
+    wired_pages_count +=
+        info.private_pages_resident + info.shared_pages_resident;
+  }
+
+  if (private_bytes)
+    *private_bytes = private_pages_count * PAGE_SIZE;
+  if (shared_bytes)
+    *shared_bytes = shared_pages_count * PAGE_SIZE;
+  if (resident_bytes)
+    *resident_bytes = (private_pages_count + shared_pages_count) * PAGE_SIZE;
+  if (locked_bytes)
+    *locked_bytes = wired_pages_count * PAGE_SIZE;
+
+  return true;
 }
 
 }  // namespace base

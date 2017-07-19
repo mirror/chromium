@@ -21,6 +21,11 @@
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
 
+#if defined(OS_MACOSX) || defined(OS_IOS)
+#include <mach/mach.h>
+#include <mach/mach_vm.h>
+#endif
+
 #if defined(OS_IOS)
 #include <mach/vm_page_size.h>
 #endif
@@ -45,7 +50,8 @@ std::string GetSharedGlobalAllocatorDumpName(
   return "global/" + guid.ToString();
 }
 
-#if defined(COUNT_RESIDENT_BYTES_SUPPORTED)
+#if defined(COUNT_RESIDENT_BYTES_SUPPORTED) && !defined(OS_MACOSX) && \
+    !defined(OS_IOS)
 size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
   return (mapped_size + page_size - 1) / page_size;
 }
@@ -77,9 +83,24 @@ size_t ProcessMemoryDump::CountResidentBytes(void* start_address,
   const uintptr_t start_pointer = reinterpret_cast<uintptr_t>(start_address);
   DCHECK_EQ(0u, start_pointer % page_size);
 
-  size_t offset = 0;
   size_t total_resident_size = 0;
   bool failure = false;
+
+#if defined(OS_MACOSX) || defined(OS_IOS)
+
+  mach_vm_size_t dummy_size = 0;
+  mach_vm_address_t address =
+      reinterpret_cast<mach_vm_address_t>(start_address);
+  size_t resident_bytes = 0;
+  if (!GetMemoryBytesInRegion(mach_task_self(), nullptr, &dummy_size, address,
+                              nullptr, nullptr, &resident_bytes, nullptr)) {
+    return 0;
+  }
+  return resident_bytes;
+
+#else  // defined(OS_MACOSX) || defined(OS_IOS)
+
+  size_t offset = 0;
 
   // An array as large as number of pages in memory segment needs to be passed
   // to the query function. To avoid allocating a large array, the given block
@@ -87,9 +108,7 @@ size_t ProcessMemoryDump::CountResidentBytes(void* start_address,
   const size_t kMaxChunkSize = 8 * 1024 * 1024;
   size_t max_vec_size =
       GetSystemPageCount(std::min(mapped_size, kMaxChunkSize), page_size);
-#if defined(OS_MACOSX) || defined(OS_IOS)
-  std::unique_ptr<char[]> vec(new char[max_vec_size]);
-#elif defined(OS_WIN)
+#if defined(OS_WIN)
   std::unique_ptr<PSAPI_WORKING_SET_EX_INFORMATION[]> vec(
       new PSAPI_WORKING_SET_EX_INFORMATION[max_vec_size]);
 #elif defined(OS_POSIX)
@@ -101,14 +120,7 @@ size_t ProcessMemoryDump::CountResidentBytes(void* start_address,
     const size_t chunk_size = std::min(mapped_size - offset, kMaxChunkSize);
     const size_t page_count = GetSystemPageCount(chunk_size, page_size);
     size_t resident_page_count = 0;
-
-#if defined(OS_MACOSX) || defined(OS_IOS)
-    // mincore in MAC does not fail with EAGAIN.
-    failure =
-        !!mincore(reinterpret_cast<void*>(chunk_start), chunk_size, vec.get());
-    for (size_t i = 0; i < page_count; i++)
-      resident_page_count += vec[i] & MINCORE_INCORE ? 1 : 0;
-#elif defined(OS_WIN)
+#if defined(OS_WIN)
     for (size_t i = 0; i < page_count; i++) {
       vec[i].VirtualAddress =
           reinterpret_cast<void*>(chunk_start + i * page_size);
@@ -148,6 +160,8 @@ size_t ProcessMemoryDump::CountResidentBytes(void* start_address,
     total_resident_size += resident_page_count * page_size;
     offset += kMaxChunkSize;
   }
+
+#endif  // defined(OS_MACOSX) || defined(OS_IOS)
 
   DCHECK(!failure);
   if (failure) {
