@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RTCPeerConnection-ontrack</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+promise_test(function() {
+  let pc = new RTCPeerConnection();
+  return createStreams({audio:true, video:false}, 1)
+    .then(function(streams) {
+      let stream = streams[0];
+      pc.addStream(stream);
+      assert_array_equals(pc.getLocalStreams(), [ stream ]);
+      return Promise.all([ ontrack(pc, 1),
+                           makeRemoteStreamsMatchLocalStreams(pc) ]);
+    }).then(function(values) {
+      let firedEvents = values[0];
+      assert_equals(firedEvents.length, 1);
+      let firedEvent = firedEvents[0];
+
+      assert_equals(pc.getRemoteStreams().length, 1);
+      let stream = pc.getRemoteStreams()[0];
+      assert_equals(stream.getAudioTracks().length, 1);
+      assert_equals(stream.getVideoTracks().length, 0);
+      let track = stream.getAudioTracks()[0];
+      assert_equals(pc.getReceivers().length, 1);
+      let receiver = pc.getReceivers()[0];
+      assert_equals(receiver.track, track);
+
+      assert_equals(firedEvent.receiver, receiver);
+      assert_equals(firedEvent.track, track);
+      assert_array_equals(firedEvent.streams, [ stream ]);
+    });
+}, 'ontrack fire for a single track.');
+
+promise_test(function() {
+  let pc = new RTCPeerConnection();
+  return createStreams({audio:true, video:true}, 1)
+    .then(function(streams) {
+      stream = streams[0];
+      pc.addStream(stream);
+      assert_array_equals(pc.getLocalStreams(), [ stream ]);
+      return Promise.all([ ontrack(pc, 2),
+                           makeRemoteStreamsMatchLocalStreams(pc) ]);
+    }).then(function(values) {
+      let firedEvents = values[0];
+      assert_equals(firedEvents.length, 2);
+      let audioTrackEvent, videoTrackEvent;
+      if (firedEvents[0].track.kind == 'audio') {
+        assert_equals(firedEvents[1].track.kind, 'video');
+        audioTrackEvent = firedEvents[0];
+        videoTrackEvent = firedEvents[1];
+      } else {
+        assert_equals(firedEvents[1].track.kind, 'audio');
+        audioTrackEvent = firedEvents[1];
+        videoTrackEvent = firedEvents[0];
+      }
+
+      assert_equals(pc.getRemoteStreams().length, 1);
+      let stream = pc.getRemoteStreams()[0];
+      assert_equals(stream.getAudioTracks().length, 1);
+      assert_equals(stream.getVideoTracks().length, 1);
+      let audioTrack = stream.getAudioTracks()[0];
+      let videoTrack = stream.getVideoTracks()[0];
+      assert_equals(pc.getReceivers().length, 2);
+      let audioReceiver, videoReceiver;
+      if (pc.getReceivers()[0].track == audioTrack) {
+        assert_equals(pc.getReceivers()[1].track, videoTrack);
+        audioReceiver = pc.getReceivers()[0];
+        videoReceiver = pc.getReceivers()[1];
+      } else {
+        assert_equals(pc.getReceivers()[0].track, audioTrack);
+        assert_equals(pc.getReceivers()[1].track, audioTrack);
+        audioReceiver = pc.getReceivers()[1];
+        videoReceiver = pc.getReceivers()[0];
+      }
+
+      assert_equals(audioTrackEvent.receiver, audioReceiver);
+      assert_equals(audioTrackEvent.track, audioTrack);
+      assert_array_equals(audioTrackEvent.streams, [ stream ]);
+      assert_equals(videoTrackEvent.receiver, videoReceiver);
+      assert_equals(videoTrackEvent.track, videoTrack);
+      assert_array_equals(videoTrackEvent.streams, [ stream ]);
+    });
+}, 'ontrack fire for a multiple tracks.');
+
+/**
+ * Helper functions.
+ */
+
+function createStreams(constraints, numStreams, streamsSoFar = []) {
+  if (numStreams == 0) {
+    return Promise.resolve(streamsSoFar);
+  }
+  return navigator.mediaDevices.getUserMedia(constraints)
+    .then(function(stream) {
+      return createStreams(constraints,
+                           numStreams - 1,
+                           streamsSoFar.concat([stream]));
+    });
+}
+
+/**
+ * Makes the peer connection's remote streams match its local streams. New local
+ * streams result in cloning, removed local streams result in removing the
+ * corresponding remote stream.
+ *
+ * Returns a promise.
+ */
+function makeRemoteStreamsMatchLocalStreams(pc) {
+  // In LayoutTests a |MockWebRTCPeerConnectionHandler| is used and as such we
+  // cannot establish a real call. Instead we rely on the mock making remote
+  // streams match the local streams on |setRemoteDescription|.
+  return pc.setRemoteDescription(
+      new RTCSessionDescription({type:'answer', sdp:'remote'}))
+      .then(function() {
+        let localStreams = pc.getLocalStreams();
+        let remoteStreams = pc.getRemoteStreams();
+        assert_equals(localStreams.length, remoteStreams.length);
+        for (let i = 0; i < localStreams.length; i++) {
+          assert_equals(localStreams[i].getAudioTracks().length,
+                        remoteStreams[i].getAudioTracks().length);
+          assert_equals(localStreams[i].getVideoTracks().length,
+                        remoteStreams[i].getVideoTracks().length);
+        }
+        return Promise.resolve();
+      });
+}
+
+function ontrack(pc, fireCount) {
+  let firedEvents = [];
+  return new Promise(function(resolve, reject) {
+    pc.ontrack = function(event) {
+      firedEvents.push(event);
+      if (firedEvents.length == fireCount) {
+        resolve(firedEvents);
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>

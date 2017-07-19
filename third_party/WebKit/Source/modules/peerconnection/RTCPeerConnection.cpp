@@ -75,6 +75,7 @@
 #include "modules/peerconnection/RTCStatsCallback.h"
 #include "modules/peerconnection/RTCStatsReport.h"
 #include "modules/peerconnection/RTCStatsRequestImpl.h"
+#include "modules/peerconnection/RTCTrackEvent.h"
 #include "modules/peerconnection/RTCVoidRequestImpl.h"
 #include "modules/peerconnection/RTCVoidRequestPromiseImpl.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -1229,20 +1230,8 @@ HeapVector<Member<RTCRtpReceiver>> RTCPeerConnection::getReceivers() {
       peer_handler_->GetReceivers();
   HeapVector<Member<RTCRtpReceiver>> rtp_receivers(web_rtp_receivers.size());
   for (size_t i = 0; i < web_rtp_receivers.size(); ++i) {
-    uintptr_t id = web_rtp_receivers[i]->Id();
-    const auto it = rtp_receivers_.find(id);
-    if (it != rtp_receivers_.end()) {
-      rtp_receivers[i] = it->value;
-    } else {
-      // There does not exist a |RTCRtpReceiver| for this |WebRTCRtpReceiver|
-      // yet, create it.
-      MediaStreamTrack* track = GetTrack(web_rtp_receivers[i]->Track());
-      DCHECK(track);
-      RTCRtpReceiver* rtp_receiver =
-          new RTCRtpReceiver(std::move(web_rtp_receivers[i]), track);
-      rtp_receivers_.insert(id, rtp_receiver);
-      rtp_receivers[i] = rtp_receiver;
-    }
+    rtp_receivers[i] =
+        GetOrCreateRTCRtpReceiver(std::move(web_rtp_receivers[i]));
   }
   return rtp_receivers;
 }
@@ -1365,6 +1354,23 @@ MediaStreamTrack* RTCPeerConnection::GetTrack(
   return tracks_.at(static_cast<MediaStreamComponent*>(web_track));
 }
 
+RTCRtpReceiver* RTCPeerConnection::GetOrCreateRTCRtpReceiver(
+    std::unique_ptr<WebRTCRtpReceiver> web_rtp_receiver) {
+  DCHECK(web_rtp_receiver);
+  uintptr_t id = web_rtp_receiver->Id();
+  const auto it = rtp_receivers_.find(id);
+  if (it != rtp_receivers_.end())
+    return it->value;
+  // There does not exist a |RTCRtpReceiver| for this |WebRTCRtpReceiver|
+  // yet, create it.
+  MediaStreamTrack* track = GetTrack(web_rtp_receiver->Track());
+  DCHECK(track);
+  RTCRtpReceiver* rtp_receiver =
+      new RTCRtpReceiver(std::move(web_rtp_receiver), track);
+  rtp_receivers_.insert(id, rtp_receiver);
+  return rtp_receiver;
+}
+
 RTCDTMFSender* RTCPeerConnection::createDTMFSender(
     MediaStreamTrack* track,
     ExceptionState& exception_state) {
@@ -1455,7 +1461,8 @@ void RTCPeerConnection::DidChangeICEConnectionState(
 }
 
 void RTCPeerConnection::DidAddRemoteStream(
-    const WebMediaStream& remote_stream) {
+    const WebMediaStream& remote_stream,
+    WebVector<std::unique_ptr<WebRTCRtpReceiver>>* stream_web_rtp_receivers) {
   DCHECK(!closed_);
   DCHECK(GetExecutionContext()->IsContextThread());
 
@@ -1473,6 +1480,24 @@ void RTCPeerConnection::DidAddRemoteStream(
 
   ScheduleDispatchEvent(
       MediaStreamEvent::Create(EventTypeNames::addstream, stream));
+
+  // Fire a track event for each track added.
+  HeapVector<Member<MediaStream>> streams(1, stream);
+  for (auto& track : stream->getTracks()) {
+    std::unique_ptr<WebRTCRtpReceiver> track_web_rtp_receiver;
+    for (auto& web_rtp_receiver : *stream_web_rtp_receivers) {
+      if (!web_rtp_receiver)
+        continue;
+      if (static_cast<String>(web_rtp_receiver->Track().Id()) == track->id()) {
+        track_web_rtp_receiver.reset(web_rtp_receiver.release());
+        break;
+      }
+    }
+    RTCRtpReceiver* track_rtp_receiver =
+        GetOrCreateRTCRtpReceiver(std::move(track_web_rtp_receiver));
+    ScheduleDispatchEvent(
+        new RTCTrackEvent(track_rtp_receiver, track, streams));
+  }
 }
 
 void RTCPeerConnection::DidRemoveRemoteStream(
