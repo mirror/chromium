@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #include <QuartzCore/QuartzCore.h>
 
 #include <stdint.h>
@@ -399,6 +400,17 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                             font:[MDCTypography subheadFont]
                                        textColor:textColor
                                        tintColor:tintColor];
+
+  Class UIDropInteractionClass = NSClassFromString(@"UIDropInteraction");
+  if (UIDropInteractionClass) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    id dropInteraction = [UIDropInteractionClass performSelector:NSSelectorFromString(@"alloc")];
+    [dropInteraction performSelector:NSSelectorFromString(@"initWithDelegate:") withObject:self];
+    [_omniBox performSelector:NSSelectorFromString(@"addInteraction:")  withObject:dropInteraction];
+#pragma clang diagnostic pop
+  }
+
   if (_incognito) {
     [_omniBox setIncognito:YES];
     [_omniBox
@@ -2413,6 +2425,65 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       return [kDotComTLD substringFromIndex:1];
   }
   return text;
+}
+
+#pragma mark - UIDropInteractionDelegate
+
+- (void)dropInteraction:(id)interaction
+            performDrop:(id)session {
+
+  __weak WebToolbarController* weakSelf = self;
+
+  void (^completionBlock)(NSArray<NSString*>* objects) =
+  ^(NSArray<NSString*>* objects) {
+    WebToolbarController* strongSelf = weakSelf;
+    NSString* s = [objects firstObject];
+    [strongSelf loadURLForQuery:s];
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+  if ([session respondsToSelector:@selector(loadObjectsOfClass:completion:)]) {
+    [session performSelector:@selector(loadObjectsOfClass:completion:) withObject:[NSString class] withObject:completionBlock];
+  }
+#pragma clang diagnostic pop
+}
+
+- (BOOL)dropInteraction:(id)interaction
+       canHandleSession:(id)session {
+// TODO
+  /*
+  NSArray* identifiers = [NSArray
+                          arrayWithObjects:(NSString*)kUTTypeURL, (NSString*)kUTTypePlainText, nil];
+  return [session hasItemsConformingToTypeIdentifiers:identifiers] &&
+         session.items.count == 1;
+ */
+  return YES;
+}
+
+- (id)dropInteraction:(id)interaction
+                  sessionDidUpdate:(id)session {
+  Class UIDropProposalClass = NSClassFromString(@"UIDropProposal");
+  if (UIDropProposalClass) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    id dropProposal = [UIDropProposalClass performSelector:NSSelectorFromString(@"alloc")];
+    // NSUInteger v = UIDropOperationCopy;
+    NSUInteger v = 2;
+    SEL sel = @selector(initWithDropOperation:);
+    NSMethodSignature *signature = [UIDropProposalClass instanceMethodSignatureForSelector:sel];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.selector = sel;
+    // First argument is at the index "2".
+    [invocation setArgument:&v atIndex:2];
+    [invocation invokeWithTarget:dropProposal];
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+    return dropProposal;
+  }
+  return nil;
 }
 
 @end
