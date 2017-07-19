@@ -1,4 +1,3 @@
-<!-- NOTE: Test is being migrated (see crbug.com/667560) !-->
 <html>
 <head>
 <script src="../../http/tests/inspector/inspector-test.js"></script>
