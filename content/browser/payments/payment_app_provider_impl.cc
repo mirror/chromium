@@ -18,20 +18,22 @@
 namespace content {
 namespace {
 
-class ResponseCallback
-    : public payments::mojom::PaymentHandlerResponseCallback {
+class InvokeCallback : public payments::mojom::PaymentHandlerInvokeCallback {
  public:
-  static payments::mojom::PaymentHandlerResponseCallbackPtr Create(
+  static payments::mojom::PaymentHandlerInvokeCallbackPtr Create(
       int payment_request_id,
       scoped_refptr<ServiceWorkerVersion> service_worker_version,
-      const PaymentAppProvider::InvokePaymentAppCallback callback) {
-    ResponseCallback* response_callback = new ResponseCallback(
-        payment_request_id, std::move(service_worker_version), callback);
-    payments::mojom::PaymentHandlerResponseCallbackPtr callback_proxy;
-    response_callback->binding_.Bind(mojo::MakeRequest(&callback_proxy));
+      const PaymentAppProvider::InvokePaymentAppCallback callback,
+      const PaymentAppProvider::InvokePaymentAppStatusCallback
+          status_callback) {
+    InvokeCallback* invoke_callback = new InvokeCallback(
+        payment_request_id, std::move(service_worker_version), callback,
+        status_callback);
+    payments::mojom::PaymentHandlerInvokeCallbackPtr callback_proxy;
+    invoke_callback->binding_.Bind(mojo::MakeRequest(&callback_proxy));
     return callback_proxy;
   }
-  ~ResponseCallback() override {}
+  ~InvokeCallback() override {}
 
   void OnPaymentHandlerResponse(
       payments::mojom::PaymentHandlerResponsePtr response,
@@ -45,19 +47,30 @@ class ResponseCallback
     delete this;
   }
 
+  void IsCancelled(IsCancelledCallback callback) override {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    BrowserThread::PostTaskAndReplyWithResult<bool, bool>(
+        BrowserThread::UI, FROM_HERE, status_callback_, std::move(callback));
+  }
+
  private:
-  ResponseCallback(int payment_request_id,
-                   scoped_refptr<ServiceWorkerVersion> service_worker_version,
-                   const PaymentAppProvider::InvokePaymentAppCallback callback)
+  InvokeCallback(
+      int payment_request_id,
+      scoped_refptr<ServiceWorkerVersion> service_worker_version,
+      const PaymentAppProvider::InvokePaymentAppCallback callback,
+      const PaymentAppProvider::InvokePaymentAppStatusCallback status_callback)
       : payment_request_id_(payment_request_id),
         service_worker_version_(service_worker_version),
         callback_(callback),
+        status_callback_(status_callback),
         binding_(this) {}
 
   int payment_request_id_;
   scoped_refptr<ServiceWorkerVersion> service_worker_version_;
   const PaymentAppProvider::InvokePaymentAppCallback callback_;
-  mojo::Binding<payments::mojom::PaymentHandlerResponseCallback> binding_;
+  const PaymentAppProvider::InvokePaymentAppStatusCallback status_callback_;
+  mojo::Binding<payments::mojom::PaymentHandlerInvokeCallback> binding_;
 };
 
 void DidGetAllPaymentAppsOnIO(
@@ -85,29 +98,31 @@ void DispatchPaymentRequestEventError(
 void DispatchPaymentRequestEvent(
     payments::mojom::PaymentRequestEventDataPtr event_data,
     const PaymentAppProvider::InvokePaymentAppCallback& callback,
+    const PaymentAppProvider::InvokePaymentAppStatusCallback& status_callback,
     scoped_refptr<ServiceWorkerVersion> active_version) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(active_version);
 
-  int payment_request_id = active_version->StartRequest(
+  int event_request_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&DispatchPaymentRequestEventError));
   int event_finish_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
 
-  payments::mojom::PaymentHandlerResponseCallbackPtr response_callback_ptr =
-      ResponseCallback::Create(payment_request_id, active_version, callback);
-  DCHECK(response_callback_ptr);
+  payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback_ptr =
+      InvokeCallback::Create(event_request_id, active_version, callback,
+                             status_callback);
+  DCHECK(invoke_callback_ptr);
   active_version->event_dispatcher()->DispatchPaymentRequestEvent(
-      payment_request_id, std::move(event_data),
-      std::move(response_callback_ptr),
+      event_request_id, std::move(event_data), std::move(invoke_callback_ptr),
       active_version->CreateSimpleEventCallback(event_finish_id));
 }
 
 void DidFindRegistrationOnIO(
     payments::mojom::PaymentRequestEventDataPtr event_data,
     const PaymentAppProvider::InvokePaymentAppCallback& callback,
+    const PaymentAppProvider::InvokePaymentAppStatusCallback& status_callback,
     ServiceWorkerStatusCode service_worker_status,
     scoped_refptr<ServiceWorkerRegistration> service_worker_registration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -121,7 +136,7 @@ void DidFindRegistrationOnIO(
   active_version->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&DispatchPaymentRequestEvent,
-                 base::Passed(std::move(event_data)), callback,
+                 base::Passed(std::move(event_data)), callback, status_callback,
                  make_scoped_refptr(active_version)),
       base::Bind(&DispatchPaymentRequestEventError));
 }
@@ -130,13 +145,14 @@ void FindRegistrationOnIO(
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context,
     int64_t registration_id,
     payments::mojom::PaymentRequestEventDataPtr event_data,
-    const PaymentAppProvider::InvokePaymentAppCallback& callback) {
+    const PaymentAppProvider::InvokePaymentAppCallback& callback,
+    const PaymentAppProvider::InvokePaymentAppStatusCallback& status_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   service_worker_context->FindReadyRegistrationForIdOnly(
       registration_id,
       base::Bind(&DidFindRegistrationOnIO, base::Passed(std::move(event_data)),
-                 callback));
+                 callback, status_callback));
 }
 
 }  // namespace
@@ -172,7 +188,8 @@ void PaymentAppProviderImpl::InvokePaymentApp(
     BrowserContext* browser_context,
     int64_t registration_id,
     payments::mojom::PaymentRequestEventDataPtr event_data,
-    const InvokePaymentAppCallback& callback) {
+    const InvokePaymentAppCallback& callback,
+    const InvokePaymentAppStatusCallback& status_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
@@ -183,8 +200,8 @@ void PaymentAppProviderImpl::InvokePaymentApp(
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&FindRegistrationOnIO, std::move(service_worker_context),
-                 registration_id, base::Passed(std::move(event_data)),
-                 callback));
+                 registration_id, base::Passed(std::move(event_data)), callback,
+                 status_callback));
 }
 
 PaymentAppProviderImpl::PaymentAppProviderImpl() {}

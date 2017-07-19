@@ -40,6 +40,10 @@ void InvokePaymentAppCallback(
   *called = true;
 }
 
+bool IsInvokePaymentAppCancelled() {
+  return false;
+}
+
 }  // namespace
 
 class PaymentAppProviderTest : public PaymentAppContentUnitTestBase {
@@ -69,7 +73,8 @@ class PaymentAppProviderTest : public PaymentAppContentUnitTestBase {
                         payments::mojom::PaymentRequestEventDataPtr event_data,
                         PaymentAppProvider::InvokePaymentAppCallback callback) {
     PaymentAppProviderImpl::GetInstance()->InvokePaymentApp(
-        browser_context(), registration_id, std::move(event_data), callback);
+        browser_context(), registration_id, std::move(event_data), callback,
+        base::Bind(&IsInvokePaymentAppCancelled));
     base::RunLoop().RunUntilIdle();
   }
 

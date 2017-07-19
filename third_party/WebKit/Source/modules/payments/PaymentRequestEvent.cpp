@@ -20,16 +20,19 @@ namespace blink {
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer) {
-  return new PaymentRequestEvent(type, initializer, nullptr, nullptr);
+  // Use -1 as an invalid event id. This is fine since the value is not used if
+  // RespondWithObserver* is nullptr.
+  return new PaymentRequestEvent(type, initializer, -1, nullptr, nullptr);
 }
 
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
+    int event_id,
     RespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer) {
-  return new PaymentRequestEvent(type, initializer, respond_with_observer,
-                                 wait_until_observer);
+  return new PaymentRequestEvent(type, initializer, event_id,
+                                 respond_with_observer, wait_until_observer);
 }
 
 PaymentRequestEvent::~PaymentRequestEvent() {}
@@ -71,17 +74,40 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
                                               const String& url) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
+
+  if (observer_) {
+    ServiceWorkerGlobalScopeClient::From(ExecutionContext::From(script_state))
+        ->IsPaymentRequestCancelled(
+            event_id_,
+            ConvertToBaseCallback(WTF::Bind(
+                &PaymentRequestEvent::openWindowWithPaymentRequestStatus,
+                WrapPersistent(this), RefPtr<ScriptState>(script_state), url,
+                WrapPersistent(resolver))));
+    return promise;
+  }
+
+  openWindowWithPaymentRequestStatus(script_state, url, resolver, false);
+  return promise;
+}
+
+void PaymentRequestEvent::openWindowWithPaymentRequestStatus(
+    ScriptState* script_state,
+    const String& url,
+    ScriptPromiseResolver* resolver,
+    bool is_cancelled) {
+  if (is_cancelled) {
+    resolver->Reject(DOMException::Create(
+        kInvalidStateError,
+        "Payment Request from '" + payment_request_origin_ + "' is cancelled"));
+    return;
+  }
+
   ExecutionContext* context = ExecutionContext::From(script_state);
-
-  // TODO(gogerald): Check payment request state so as to reject promise with
-  // "InvalidStateError" appropriately (refer
-  // https://w3c.github.io/payment-handler/#dfn-open-window-algorithm).
-
   KURL parsed_url_to_open = context->CompleteURL(url);
   if (!parsed_url_to_open.IsValid()) {
     resolver->Reject(V8ThrowException::CreateTypeError(
         script_state->GetIsolate(), "'" + url + "' is not a valid URL."));
-    return promise;
+    return;
   }
 
   // TODO(gogerald): Once the issue of the spec is resolved, we should apply the
@@ -91,7 +117,7 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
     resolver->Reject(DOMException::Create(
         kSecurityError,
         "'" + parsed_url_to_open.ElidedString() + "' is not allowed."));
-    return promise;
+    return;
   }
 
   // TODO(gogerald): Once the issue of the spec is resolved, we should apply the
@@ -99,13 +125,12 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   if (!context->IsWindowInteractionAllowed()) {
     resolver->Reject(DOMException::Create(kInvalidAccessError,
                                           "Not allowed to open a window."));
-    return promise;
+    return;
   }
   context->ConsumeWindowInteraction();
 
   ServiceWorkerGlobalScopeClient::From(context)->OpenWindowForPaymentHandler(
       parsed_url_to_open, WTF::MakeUnique<NavigateClientCallback>(resolver));
-  return promise;
 }
 
 void PaymentRequestEvent::respondWith(ScriptState* script_state,
@@ -127,6 +152,7 @@ DEFINE_TRACE(PaymentRequestEvent) {
 PaymentRequestEvent::PaymentRequestEvent(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
+    int event_id,
     RespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer)
     : ExtendableEvent(type, initializer, wait_until_observer),
@@ -137,6 +163,7 @@ PaymentRequestEvent::PaymentRequestEvent(
       total_(initializer.total()),
       modifiers_(initializer.modifiers()),
       instrument_key_(initializer.instrumentKey()),
+      event_id_(event_id),
       observer_(respond_with_observer) {}
 
 }  // namespace blink

@@ -364,13 +364,12 @@ struct ServiceWorkerContextClient::WorkerContextData {
   // Pending callbacks for Background Sync Events.
   SyncEventCallbacksMap sync_event_callbacks;
 
-  // Pending callbacks for Payment App Response.
-  std::map<int /* payment_request_id */,
-           payments::mojom::PaymentHandlerResponseCallbackPtr>
-      payment_response_callbacks;
+  // Pending callbacks for Payment Handler Invoke.
+  std::map<int /* event_id */, payments::mojom::PaymentHandlerInvokeCallbackPtr>
+      payment_invoke_callbacks;
 
   // Pending callbacks for Payment Request Events.
-  std::map<int /* payment_request_id */, DispatchPaymentRequestEventCallback>
+  std::map<int /* event_id */, DispatchPaymentRequestEventCallback>
       payment_request_event_callbacks;
 
   // Pending callbacks for Notification Click Events.
@@ -1082,29 +1081,45 @@ void ServiceWorkerContextClient::DidHandleSyncEvent(
 }
 
 void ServiceWorkerContextClient::RespondToPaymentRequestEvent(
-    int payment_request_id,
+    int event_id,
     const blink::WebPaymentHandlerResponse& web_response,
     double dispatch_event_time) {
-  const payments::mojom::PaymentHandlerResponseCallbackPtr& response_callback =
-      context_->payment_response_callbacks[payment_request_id];
+  const payments::mojom::PaymentHandlerInvokeCallbackPtr& invoke_callback =
+      context_->payment_invoke_callbacks[event_id];
   payments::mojom::PaymentHandlerResponsePtr response =
       payments::mojom::PaymentHandlerResponse::New();
   response->method_name = web_response.method_name.Utf8();
   response->stringified_details = web_response.stringified_details.Utf8();
-  response_callback->OnPaymentHandlerResponse(
+  invoke_callback->OnPaymentHandlerResponse(
       std::move(response), base::Time::FromDoubleT(dispatch_event_time));
-  context_->payment_response_callbacks.erase(payment_request_id);
+  context_->payment_invoke_callbacks.erase(event_id);
+}
+
+void ServiceWorkerContextClient::IsPaymentRequestCancelled(
+    int event_id,
+    blink::WebIsPaymentRequestCancelledCallback callback) {
+  DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
+
+  auto it = context_->payment_invoke_callbacks.find(event_id);
+  DCHECK(it != context_->payment_invoke_callbacks.end());
+  if (it == context_->payment_invoke_callbacks.end()) {
+    worker_task_runner_->PostTask(FROM_HERE,
+                                  base::BindOnce(std::move(callback), true));
+    return;
+  }
+
+  it->second->IsCancelled(std::move(callback));
 }
 
 void ServiceWorkerContextClient::DidHandlePaymentRequestEvent(
-    int payment_request_id,
+    int event_id,
     blink::WebServiceWorkerEventResult result,
     double event_dispatch_time) {
   DispatchPaymentRequestEventCallback callback =
-      std::move(context_->payment_request_event_callbacks[payment_request_id]);
+      std::move(context_->payment_request_event_callbacks[event_id]);
   std::move(callback).Run(EventResultToStatus(result),
                           base::Time::FromDoubleT(event_dispatch_time));
-  context_->payment_request_event_callbacks.erase(payment_request_id);
+  context_->payment_request_event_callbacks.erase(event_id);
 }
 
 std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
@@ -1228,20 +1243,20 @@ void ServiceWorkerContextClient::DispatchSyncEvent(
 }
 
 void ServiceWorkerContextClient::DispatchPaymentRequestEvent(
-    int payment_request_id,
+    int event_id,
     payments::mojom::PaymentRequestEventDataPtr eventData,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+    payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
     DispatchPaymentRequestEventCallback callback) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::DispatchPaymentRequestEvent");
-  context_->payment_response_callbacks.insert(
-      std::make_pair(payment_request_id, std::move(response_callback)));
+  context_->payment_invoke_callbacks.insert(
+      std::make_pair(event_id, std::move(invoke_callback)));
   context_->payment_request_event_callbacks.insert(
-      std::make_pair(payment_request_id, std::move(callback)));
+      std::make_pair(event_id, std::move(callback)));
 
   blink::WebPaymentRequestEventData webEventData =
       mojo::ConvertTo<blink::WebPaymentRequestEventData>(std::move(eventData));
-  proxy_->DispatchPaymentRequestEvent(payment_request_id, webEventData);
+  proxy_->DispatchPaymentRequestEvent(event_id, webEventData);
 }
 
 void ServiceWorkerContextClient::Send(IPC::Message* message) {

@@ -130,6 +130,12 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
         }
     }
 
+    @CalledByNative
+    private static boolean isInvokePaymentAppCancelled(Object callback) {
+        assert callback instanceof PaymentInstrument.InstrumentDetailsCallback;
+        return ((PaymentInstrument.InstrumentDetailsCallback) callback).isCancelled();
+    }
+
     /*
      * TODO(tommyt): crbug.com/505554. Change the |callback| parameter below to
      * be of type PaymentInstrument.InstrumentDetailsCallback, once this JNI bug

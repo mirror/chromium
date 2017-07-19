@@ -20,10 +20,12 @@ class CONTENT_EXPORT PaymentAppProviderImpl : public PaymentAppProvider {
   // Should be accessed only on the UI thread.
   void GetAllPaymentApps(BrowserContext* browser_context,
                          GetAllPaymentAppsCallback callback) override;
-  void InvokePaymentApp(BrowserContext* browser_context,
-                        int64_t registration_id,
-                        payments::mojom::PaymentRequestEventDataPtr event_data,
-                        const InvokePaymentAppCallback& callback) override;
+  void InvokePaymentApp(
+      BrowserContext* browser_context,
+      int64_t registration_id,
+      payments::mojom::PaymentRequestEventDataPtr event_data,
+      const InvokePaymentAppCallback& callback,
+      const InvokePaymentAppStatusCallback& status_callback) override;
 
  private:
   PaymentAppProviderImpl();

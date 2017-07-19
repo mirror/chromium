@@ -257,13 +257,12 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
   void DispatchPaymentRequestEvent(
       int payment_request_id,
       payments::mojom::PaymentRequestEventDataPtr event_data,
-      payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+      payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
       DispatchPaymentRequestEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnPaymentRequestEventStub(std::move(event_data),
-                                       std::move(response_callback),
-                                       std::move(callback));
+    helper_->OnPaymentRequestEventStub(
+        std::move(event_data), std::move(invoke_callback), std::move(callback));
   }
 
   void DispatchExtendableMessageEvent(
@@ -528,10 +527,10 @@ void EmbeddedWorkerTestHelper::OnNotificationCloseEvent(
 
 void EmbeddedWorkerTestHelper::OnPaymentRequestEvent(
     payments::mojom::PaymentRequestEventDataPtr event_data,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+    payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
     mojom::ServiceWorkerEventDispatcher::DispatchPaymentRequestEventCallback
         callback) {
-  response_callback->OnPaymentHandlerResponse(
+  invoke_callback->OnPaymentHandlerResponse(
       payments::mojom::PaymentHandlerResponse::New(), base::Time::Now());
   std::move(callback).Run(SERVICE_WORKER_OK, base::Time::Now());
 }
@@ -792,13 +791,13 @@ void EmbeddedWorkerTestHelper::OnPushEventStub(
 
 void EmbeddedWorkerTestHelper::OnPaymentRequestEventStub(
     payments::mojom::PaymentRequestEventDataPtr event_data,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+    payments::mojom::PaymentHandlerInvokeCallbackPtr invoke_callback,
     mojom::ServiceWorkerEventDispatcher::DispatchPaymentRequestEventCallback
         callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&EmbeddedWorkerTestHelper::OnPaymentRequestEvent, AsWeakPtr(),
-                 base::Passed(&event_data), base::Passed(&response_callback),
+                 base::Passed(&event_data), base::Passed(&invoke_callback),
                  base::Passed(&callback)));
 }
 
