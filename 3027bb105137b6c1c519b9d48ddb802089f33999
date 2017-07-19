@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "049c4a68_4fb0af93",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 0,
+      "message": "Again, I\u0027m a bit lost. Can you give me a pointer on how to do this?",
+      "parentUuid": "0d2d19ee_11a43678",
+      "range": {
+        "startLine": 430,
+        "startChar": 45,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "3027bb105137b6c1c519b9d48ddb802089f33999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3688cf0f_5da8a730",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 0,
       "message": "I think this line should probably stay.  I wonder why Gheorghe removed it.",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "3027bb105137b6c1c519b9d48ddb802089f33999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6125439_63b40953",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 0,
+      "message": "Done. I am personally lost with the callback logic and these guard variables, so I\u0027m following your comments and just ensuring the service is working. I enabled here and removed from the other place you mentioned in another comment, and it\u0027s still working as expected.",
+      "parentUuid": "3688cf0f_5da8a730",
       "range": {
         "startLine": 198,
         "startChar": 15,

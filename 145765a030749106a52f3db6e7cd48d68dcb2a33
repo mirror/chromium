@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c954efe8_ba194d36",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "443a80b5_942fe7f3",
+      "range": {
+        "startLine": 20,
+        "startChar": 65,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e1d31e2_0b8b09fa",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "nit: prefer variable names in comments in |bars|",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5b128eb_9b1ea229",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e1d31e2_0b8b09fa",
       "range": {
         "startLine": 23,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "431ee3d6_326eb2f9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9689e041_b70cbd11",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3629e9_ebbe3010",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "nit: replace with \"/\"\nin Chrome field trial and experiment are basically synonymous",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e65dc96_d31aa009",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc3629e9_ebbe3010",
       "range": {
         "startLine": 39,
         "startChar": 27,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "35456de5_7bae3f3e",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4c76918_8c1db605",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93a9c32_0e0123dd",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "9c93c284_4510a7a9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "TBH I find this function very confusing. I think it does more than it should, and it\u0027s hard to explain it what it does. Is it alright with just \"|callback| is called with the fetcher producer by the |fetcher_delegated| as an argument.\"? I\u0027m not sure how to phrase this logic. PTAL.",
+      "parentUuid": "c93a9c32_0e0123dd",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "636b7a84_a3b7360f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -139,6 +271,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "I don\u0027t see this case in the code.  I don\u0027t think the fetcher can be invalid.  What am I missing.",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96c0eb3a_6e6f248b",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Well, there was an if statement that would return if the fetcher was nullptr, but because it can\u0027t be, this comment now doesn\u0027t make sense. Removed.",
+      "parentUuid": "636b7a84_a3b7360f",
       "range": {
         "startLine": 45,
         "startChar": 39,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "0b509ffa_c2d8b273",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5298bde0_7d48581c",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3c40f2_d11089df",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -185,6 +365,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "nit: |token_fetcher_|",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a29d0d2_6cee129c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e3c40f2_d11089df",
       "range": {
         "startLine": 50,
         "startChar": 18,
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "164796ea_045cb7bb",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done, but PTAL.",
+      "parentUuid": "31f92f68_b3ac5de0",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d11a374_6682968f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -225,6 +447,24 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "nit: experimental -\u003e is_experimental",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ba5bf6e_2bbce35c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d11a374_6682968f",
       "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -248,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "d7e8d1ae_fca56a39",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "I totally agree, but I\u0027m unsure what the original intent that Gheorghe had in mind was when he came up with this condition. I _believe_ I\u0027m fine either way, so I can remove it if you think it\u0027s alright.",
+      "parentUuid": "b7fbddd5_97082642",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c036f0b5_6a0313b4",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -259,6 +517,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "nit: return -\u003e returned",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de475a5f_f36ff6ef",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c036f0b5_6a0313b4",
       "range": {
         "startLine": 80,
         "startChar": 25,
@@ -294,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "e255fd08_48e8d65b",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8c28fe_002c8b5a",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffda834f_004d5105",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 4
@@ -305,6 +611,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "Please restore the period. :-)",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d51e0fde_21ab8673",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffda834f_004d5105",
       "range": {
         "startLine": 88,
         "startChar": 15,
@@ -340,6 +670,30 @@
     },
     {
       "key": {
+        "uuid": "b7a9a46d_dcf40018",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c11757a_a7bc272f",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9761f62_4626f64e",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -351,6 +705,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "Is GetContextualSuggestionsService() always going to be non-null?",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f44307c_41bb5877",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Following the stack of calls, it is always non-null. I could add a comment to AutocompleteProviderClient::GetContextualSuggestionsServer() to say that it\u0027s always non-null, but it would break the style in that file as all the other Get*() methods do not have accompanying comments and they seem to be used assuming that the returned pointer is always non-null. What do you think?",
+      "parentUuid": "a9761f62_4626f64e",
       "range": {
         "startLine": 181,
         "startChar": 8,
@@ -386,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "41ff537c_0cfcd218",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd764418_cf373dff",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 65
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f0bdee_24ec8a93",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -397,6 +799,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "Why / how can this happen?\nAlso, if you keep it, since we\u0027re not going to get any additional suggestions after this failure, I think you should set done_ to true here.",
+      "range": {
+        "startLine": 192,
+        "startChar": 13,
+        "endLine": 192,
+        "endChar": 14
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b0eb185_fa8ee978",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "From what I understand it can\u0027t happen. I removed the block.",
+      "parentUuid": "84f0bdee_24ec8a93",
       "range": {
         "startLine": 192,
         "startChar": 13,
@@ -432,6 +858,30 @@
     },
     {
       "key": {
+        "uuid": "f1d623a9_25a69ffe",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9e549f_f8deb5ce",
+      "range": {
+        "startLine": 196,
+        "startChar": 10,
+        "endLine": 196,
+        "endChar": 15
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff4c2a6_cedf5362",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 4
@@ -455,6 +905,30 @@
     },
     {
       "key": {
+        "uuid": "7b91c12d_f3d8695a",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "I don\u0027t know if we should explain the whole process here. I basically removed \"during Run()\". Please let me know if you have another recommendation for the comment.",
+      "parentUuid": "2ff4c2a6_cedf5362",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb369706_3d2763a3",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 4
@@ -466,6 +940,30 @@
       "writtenOn": "2017-07-19T19:57:25Z",
       "side": 1,
       "message": "Please comment.",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 46
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d5232dd_d0f918d2",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-19T20:50:22Z",
+      "side": 1,
+      "message": "Similar to the above comment. I\u0027m mostly just stating which service is called and what the returned |fetcher| is for. Let me know if you want to rephrase it.",
+      "parentUuid": "bb369706_3d2763a3",
       "range": {
         "startLine": 116,
         "startChar": 7,
