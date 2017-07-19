@@ -7,7 +7,6 @@
 
 #include "base/memory/ref_counted.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
-#include "device/sensors/public/interfaces/motion.mojom.h"
 #include "device/sensors/public/interfaces/orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
@@ -74,10 +73,6 @@ class DeviceService : public service_manager::Service {
   void BindFingerprintRequest(
       const service_manager::BindSourceInfo& source_info,
       mojom::FingerprintRequest request);
-
-  void BindMotionSensorRequest(
-      const service_manager::BindSourceInfo& source_info,
-      mojom::MotionSensorRequest request);
 
   void BindOrientationSensorRequest(
       const service_manager::BindSourceInfo& source_info,
