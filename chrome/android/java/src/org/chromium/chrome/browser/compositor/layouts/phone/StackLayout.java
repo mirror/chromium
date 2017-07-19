@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.compositor.LayerTitleCache;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.Animatable;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
+import org.chromium.chrome.browser.compositor.layouts.LayoutManagerHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.components.LayoutTab;
@@ -264,8 +265,9 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
      * @param renderHost  The {@link LayoutRenderHost} view for this layout.
      * @param eventFilter The {@link EventFilter} that is needed for this view.
      */
-    public StackLayout(Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost) {
-        super(context, updateHost, renderHost);
+    public StackLayout(Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost,
+            LayoutManagerHost managerHost) {
+        super(context, updateHost, renderHost, managerHost);
 
         mGestureHandler = new StackLayoutGestureHandler();
         mGestureEventFilter = new GestureEventFilter(context, mGestureHandler);

@@ -64,8 +64,9 @@ public class StaticLayout extends Layout {
      * @param panelManager        The {@link OverlayPanelManager} responsible for showing panels.
      */
     public StaticLayout(Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost,
-            EventFilter eventFilter, OverlayPanelManager panelManager) {
-        super(context, updateHost, renderHost);
+            EventFilter eventFilter, OverlayPanelManager panelManager,
+            LayoutManagerHost managerHost) {
+        super(context, updateHost, renderHost, managerHost);
 
         mHandler = new Handler();
         mUnstallRunnable = new UnstallRunnable();

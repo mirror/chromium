@@ -84,7 +84,8 @@ public class LayoutManagerDocument extends LayoutManager
         mOverlayPanelManager = new OverlayPanelManager();
 
         // Build Layouts
-        mStaticLayout = new StaticLayout(mContext, this, renderHost, null, mOverlayPanelManager);
+        mStaticLayout =
+                new StaticLayout(mContext, this, renderHost, null, mOverlayPanelManager, mHost);
 
         // Contextual Search scene overlay.
         mContextualSearchPanel = new ContextualSearchPanel(mContext, this, mOverlayPanelManager);

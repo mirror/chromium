@@ -13,6 +13,7 @@ import android.widget.ListView;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
+import org.chromium.chrome.browser.compositor.layouts.LayoutManagerHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
@@ -36,9 +37,9 @@ public class OverviewListLayout extends Layout implements AccessibilityTabModelA
     private final BlackHoleEventFilter mBlackHoleEventFilter;
     private final SceneLayer mSceneLayer;
 
-    public OverviewListLayout(
-            Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost) {
-        super(context, updateHost, renderHost);
+    public OverviewListLayout(Context context, LayoutUpdateHost updateHost,
+            LayoutRenderHost renderHost, LayoutManagerHost managerHost) {
+        super(context, updateHost, renderHost, managerHost);
         mBlackHoleEventFilter = new BlackHoleEventFilter(context);
         mDpToPx = context.getResources().getDisplayMetrics().density;
         mSceneLayer = new SceneLayer();

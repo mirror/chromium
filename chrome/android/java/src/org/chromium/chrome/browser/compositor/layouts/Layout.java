@@ -87,6 +87,9 @@ public abstract class Layout implements TabContentManager.ThumbnailChangeListene
     /** The current {@link Orientation} of the layout. */
     private int mCurrentOrientation;
 
+    /** The {@link LayoutManagerHost}, who is responsible for showing the active {@link Layout}. */
+    private final LayoutManagerHost mHost;
+
     // Tabs
     protected TabModelSelector mTabModelSelector;
     protected TabContentManager mTabContentManager;
@@ -111,7 +114,7 @@ public abstract class Layout implements TabContentManager.ThumbnailChangeListene
     private int mNextTabId = Tab.INVALID_TAB_ID;
 
     // The ratio of dp to px.
-    private final float mDpToPx;
+    protected final float mDpToPx;
 
     /**
      * The {@link Layout} is not usable until sizeChanged is called.
@@ -120,10 +123,12 @@ public abstract class Layout implements TabContentManager.ThumbnailChangeListene
      * @param updateHost   The parent {@link LayoutUpdateHost}.
      * @param renderHost   The parent {@link LayoutRenderHost}.
      */
-    public Layout(Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost) {
+    public Layout(Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost,
+            LayoutManagerHost managerHost) {
         mContext = context;
         mUpdateHost = updateHost;
         mRenderHost = renderHost;
+        mHost = managerHost;
 
         // Invalid sizes
         mWidthDp = -1;

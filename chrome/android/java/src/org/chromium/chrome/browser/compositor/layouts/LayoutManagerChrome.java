@@ -159,10 +159,10 @@ public class LayoutManagerChrome
         mToolbarSwipeHandler = createToolbarSwipeHandler(this);
 
         // Build Layouts
-        mOverviewListLayout = new OverviewListLayout(context, this, renderHost);
-        mToolbarSwipeLayout = new ToolbarSwipeLayout(context, this, renderHost);
+        mOverviewListLayout = new OverviewListLayout(context, this, renderHost, mHost);
+        mToolbarSwipeLayout = new ToolbarSwipeLayout(context, this, renderHost, mHost);
         if (createOverviewLayout) {
-            mOverviewLayout = new StackLayout(context, this, renderHost);
+            mOverviewLayout = new StackLayout(context, this, renderHost, mHost);
         }
     }
 

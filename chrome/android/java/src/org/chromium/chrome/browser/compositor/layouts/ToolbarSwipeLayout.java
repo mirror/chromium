@@ -72,6 +72,7 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
 
     private final BlackHoleEventFilter mBlackHoleEventFilter;
     private final TabListSceneLayer mSceneLayer;
+    private final LayoutManagerHost mHost;
 
     private final Interpolator mEdgeInterpolator = new DecelerateInterpolator();
 
@@ -81,9 +82,10 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
      * @param renderHost          The {@link LayoutRenderHost} view for this layout.
      * @param eventFilter         The {@link EventFilter} that is needed for this view.
      */
-    public ToolbarSwipeLayout(
-            Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost) {
-        super(context, updateHost, renderHost);
+    public ToolbarSwipeLayout(Context context, LayoutUpdateHost updateHost,
+            LayoutRenderHost renderHost, LayoutManagerHost managerHost) {
+        super(context, updateHost, renderHost, managerHost);
+        mHost = managerHost;
         mBlackHoleEventFilter = new BlackHoleEventFilter(context);
         Resources res = context.getResources();
         final float pxToDp = 1.0f / res.getDisplayMetrics().density;
@@ -195,6 +197,12 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
     private void prepareLayoutTabForSwipe(LayoutTab layoutTab, boolean anonymizeToolbar) {
         assert layoutTab != null;
         if (layoutTab.shouldStall()) layoutTab.setSaturation(0.0f);
+        float heightDp = layoutTab.getOriginalContentHeight();
+        // Clip the layout tab so it doesn't leak into the toolbar if it's at the bottom
+        if (mHost.getFullscreenManager().areBrowserControlsAtBottom()) {
+            heightDp = heightDp - mHost.getFullscreenManager().getBottomControlsHeight() / mDpToPx;
+        }
+        layoutTab.setClipSize(layoutTab.getOriginalContentWidth(), heightDp);
         layoutTab.setScale(1.f);
         layoutTab.setBorderScale(1.f);
         layoutTab.setDecorationAlpha(0.f);

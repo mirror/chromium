@@ -11,6 +11,7 @@ import android.view.animation.Interpolator;
 import org.chromium.chrome.browser.compositor.LayerTitleCache;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.Animatable;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
+import org.chromium.chrome.browser.compositor.layouts.LayoutManagerHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.components.LayoutTab;
@@ -75,9 +76,9 @@ public class SimpleAnimationLayout
      * @param updateHost  The {@link LayoutUpdateHost} view for this layout.
      * @param renderHost  The {@link LayoutRenderHost} view for this layout.
      */
-    public SimpleAnimationLayout(
-            Context context, LayoutUpdateHost updateHost, LayoutRenderHost renderHost) {
-        super(context, updateHost, renderHost);
+    public SimpleAnimationLayout(Context context, LayoutUpdateHost updateHost,
+            LayoutRenderHost renderHost, LayoutManagerHost managerHost) {
+        super(context, updateHost, renderHost, managerHost);
         mBlackHoleEventFilter = new BlackHoleEventFilter(context);
         mSceneLayer = new TabListSceneLayer();
     }
