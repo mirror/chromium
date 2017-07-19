@@ -122,6 +122,15 @@ void LayoutImage::ImageChanged(WrappedImagePtr new_image, const IntRect* rect) {
     did_increment_visually_non_empty_pixel_count_ = true;
   }
 
+  if (image_resource_->CachedImage() &&
+      image_resource_->CachedImage()->GetImage()) {
+    Image* image = image_resource_->CachedImage()->GetImage();
+    if (!image->has_on_load_handler() &&
+        GetNode()->HasEventListeners(EventTypeNames::load)) {
+      image->set_has_on_load_handler();
+    }
+  }
+
   InvalidatePaintAndMarkForLayoutIfNeeded();
 }
 

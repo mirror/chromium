@@ -36,6 +36,8 @@ enum class CheckerImagingDecision {
   kVetoedSmallerThanCheckeringSize,
   kVetoedLargerThanCacheSize,
 
+  kVetoedHasOnLoadHandler,
+
   kCheckerImagingDecisionCount,
 };
 
@@ -102,11 +104,18 @@ CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
   if (decision != CheckerImagingDecision::kCanChecker)
     return decision;
 
+  decision = GetSizeDecision(image, max_bytes);
+  if (decision != CheckerImagingDecision::kCanChecker)
+    return decision;
+
   decision = GetLoadDecision(image);
   if (decision != CheckerImagingDecision::kCanChecker)
     return decision;
 
-  return GetSizeDecision(image, max_bytes);
+  if (image.has_on_load_handler())
+    return CheckerImagingDecision::kVetoedHasOnLoadHandler;
+
+  return CheckerImagingDecision::kCanChecker;
 }
 
 }  // namespace

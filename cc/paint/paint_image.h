@@ -46,7 +46,8 @@ class CC_PAINT_EXPORT PaintImage {
                       AnimationType animation_type = AnimationType::STATIC,
                       CompletionState completion_state = CompletionState::DONE,
                       size_t frame_count = 0,
-                      bool is_multipart = false);
+                      bool is_multipart = false,
+                      bool has_on_load_handler = false);
   PaintImage(const PaintImage& other);
   PaintImage(PaintImage&& other);
   ~PaintImage();
@@ -63,6 +64,7 @@ class CC_PAINT_EXPORT PaintImage {
   CompletionState completion_state() const { return completion_state_; }
   size_t frame_count() const { return frame_count_; }
   bool is_multipart() const { return is_multipart_; }
+  bool has_on_load_handler() const { return has_on_load_handler_; }
 
  private:
   Id id_ = kUnknownStableId;
@@ -76,6 +78,10 @@ class CC_PAINT_EXPORT PaintImage {
 
   // Whether the data fetched for this image is a part of a multpart response.
   bool is_multipart_ = false;
+
+  // Whether the image is being used or has been used by an element with an
+  // on-load handler.
+  bool has_on_load_handler_ = false;
 };
 
 }  // namespace cc
