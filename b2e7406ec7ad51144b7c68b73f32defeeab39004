@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad65fd2_4cf6450c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T19:02:24Z",
+      "side": 1,
+      "message": "these all need units - perhaps just \"apps\"",
+      "range": {
+        "startLine": 1872,
+        "startChar": 20,
+        "endLine": 1872,
+        "endChar": 21
+      },
+      "revId": "b2e7406ec7ad51144b7c68b73f32defeeab39004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
