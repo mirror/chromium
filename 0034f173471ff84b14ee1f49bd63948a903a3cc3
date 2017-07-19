@@ -140,6 +140,24 @@
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccf185a_aee6bb66",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-19T21:00:50Z",
+      "side": 1,
+      "message": "There are more than one headers:\n\nIn host_frame_sink_manager.cc:\n  components/viz/service/frame_sinks/compositor_frame_sink_support.h\n  components/viz/service/frame_sinks/compositor_frame_sink_support_client.h\n  components/viz/service/frame_sinks/frame_sink_manager.h\n  components/viz/service/frame_sinks/frame_sink_manager_impl.h\n\nIn host_frame_sink_manager.h:\n  components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h\n\nShould I list all of them? If we are going to be moving them into common, for example, then maybe just on entry here, with a TODO?",
+      "parentUuid": "47c8762f_2075f0be",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
