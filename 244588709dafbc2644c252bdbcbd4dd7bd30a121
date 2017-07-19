@@ -68,6 +68,23 @@
       "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1c5879_228eebbc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 53236,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T02:00:45Z",
+      "side": 1,
+      "message": "did these older versions ever get used? If so you should leave the xml and mark them as obsolete.\n\nyou can delete like this if this was never enabled.",
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
