@@ -22634,6 +22634,7 @@ from previous Chrome versions.
   <int value="-1847776781"
       label="enable-loading-ipc-optimization-for-small-resources"/>
   <int value="-1839637286" label="AutofillCreditCardBankNameDisplay:disabled"/>
+  <int value="-1839496458" label="disable-file-manager-touch-mode"/>
   <int value="-1838482444" label="disable-settings-window"/>
   <int value="-1835975804" label="disable-offline-auto-reload"/>
   <int value="-1833149810" label="enable-accessibility-tab-switcher"/>
