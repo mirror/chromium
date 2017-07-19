@@ -8,6 +8,7 @@ import logging
 import os
 import pickle
 import re
+import pprint
 
 from devil.android import apk_helper
 from devil.android import device_temp_file
@@ -61,10 +62,12 @@ _PICKLE_FORMAT_VERSION = 12
 
 
 class MissingSizeAnnotationError(test_exception.TestException):
-  def __init__(self, class_name):
-    super(MissingSizeAnnotationError, self).__init__(class_name +
+  def __init__(self, test):
+    super(MissingSizeAnnotationError, self).__init__(GetTestName(test) +
         ': Test method is missing required size annotation. Add one of: ' +
-        ', '.join('@' + a for a in _VALID_ANNOTATIONS))
+        ', '.join('@' + a for a in _VALID_ANNOTATIONS) +
+        '. Test method currently has these annotations: ' +
+        ', '.join('@' + a for a in test['annotations'].keys()))
 
 
 class TestListPickleException(test_exception.TestException):
@@ -254,7 +257,8 @@ def FilterTests(tests, test_filter=None, annotations=None,
 def GetAllTestsFromRunner(device, test_apk, test_package, junit4_runner_class):
   pickle_path = '%s-runner.pickle' % test_apk.path
   try:
-    tests = _GetTestsFromPickle(pickle_path, test_apk.path)
+    tests = _GetAllTestsFromRunner(device, test_package, junit4_runner_class)
+    # tests = _GetTestsFromPickle(pickle_path, test_apk.path)
   except TestListPickleException as e:
     logging.info('Could not get tests from pickle: %s', e)
     logging.info('Getting tests by print tests in instrumentation runner')
@@ -850,6 +854,8 @@ class InstrumentationTestInstance(test_instance.TestInstance):
     if self._junit4_runner_class is None and any(
         t['is_junit4'] for t in inflated_tests):
       raise MissingJUnit4RunnerException()
+    for t in inflated_tests:
+      logging.warn('test: \n' + pprint.pformat(t))
     filtered_tests = FilterTests(
         inflated_tests, self._test_filter, self._annotations,
         self._excluded_annotations)
