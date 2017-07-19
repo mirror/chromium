@@ -16,6 +16,24 @@
       "revId": "14c2869baad5964e8f69375b895eefb610431117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d583db46_38f6c1c1",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-19T20:36:34Z",
+      "side": 1,
+      "message": "my personal preference is to avoid changing production code for the sake of tests.",
+      "parentUuid": "9bf404ff_34f88ae9",
+      "revId": "14c2869baad5964e8f69375b895eefb610431117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
