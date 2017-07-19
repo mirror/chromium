@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "48299cee_bfa15369",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Can we avoid this assumption?  If |merged_features.enabled_feature_list| is changed to own the strings, then we might be able to move/fold the loop below into GetFeatureVector (taking an optional vector of field trials) - this would avoid the assumption, right?",
+      "range": {
+        "startLine": 164,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 79
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df7c79e_84c770a5",
         "filename": "base/test/scoped_feature_list.cc",
         "patchSetId": 7
@@ -36,6 +59,30 @@
       "writtenOn": "2017-07-19T17:45:17Z",
       "side": 1,
       "message": "Why are you wrapping the features with pointers?",
+      "range": {
+        "startLine": 168,
+        "startChar": 14,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72a9a9e_a73fac03",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Can this be avoided if Features was changed to own the strings (i.e. changing the type of |Features::enabled_feature_list| from |std::vector\u003cStringPiece\u003e| to |std::vector\u003cstd::string\u003e|)?",
+      "parentUuid": "1df7c79e_84c770a5",
       "range": {
         "startLine": 168,
         "startChar": 14,
@@ -64,6 +111,98 @@
         "startChar": 69,
         "endLine": 78,
         "endChar": 0
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7449a866_d44b300b",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Another test scenario to consider: feature name and/or trial name that contains \"\u003c\" (or other \"weird\" characters).  Should the product code either 1) DCHECK or 2) handle escaping of the feature and/or trial name (in case it includes a \"\u003c\")?  Do we want unit test coverage for this scenario?",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236ad155_5eb7c1f1",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Another test scenario to consider:\n1. First a feature is enabled and associated with a trial \"TestFeature2\u003cTrialName2\"\n2. Then a test says: \"enable this feature\" (without saying anything about trials)\n\nShould this result in a DCHECK?  Should TestFeature2 continue to be associated with TrialName2?  Or is it okay if TestFeature2 is not associated with any trial at this point?  I think the last answer might be fine, but I wanted to explicitly discuss (+ was wondering if a test case might be useful for this).",
+      "range": {
+        "startLine": 130,
+        "startChar": 49,
+        "endLine": 130,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15b3e71_e2e29766",
+        "filename": "components/signin/core/browser/about_signin_internals.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Would it be possible to move out the namespace change into a separate CL?",
+      "range": {
+        "startLine": 539,
+        "startChar": 6,
+        "endLine": 539,
+        "endChar": 12
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d84f58b_5236919d",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-19T20:24:09Z",
+      "side": 1,
+      "message": "Is it possible to make this code (and management of |field_trial_list_|) reusable by other tests?  I hear from chaopeng@ that we would like to refactor content::EnableFeatureWithParam so that it doesn\u0027t go through base::CommandLine anymore.\n\nMaybe this kind of refactoring would belong in a separate CL (that the current CL can depend on?).  Not sure how to slice the code changes here.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 51
       },
       "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
