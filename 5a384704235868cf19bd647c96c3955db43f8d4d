@@ -34,6 +34,24 @@
       "revId": "5a384704235868cf19bd647c96c3955db43f8d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986f10c3_9ba4c74a",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T17:02:09Z",
+      "side": 0,
+      "message": "Sure. You can have both.",
+      "parentUuid": "0e83fbc6_e3556f4a",
+      "revId": "5a384704235868cf19bd647c96c3955db43f8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

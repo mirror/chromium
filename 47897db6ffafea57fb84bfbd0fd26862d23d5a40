@@ -34,6 +34,24 @@
       "revId": "47897db6ffafea57fb84bfbd0fd26862d23d5a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effd70af_eb3a7b3c",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T17:02:09Z",
+      "side": 1,
+      "message": "Having Buffer be defined in net::ntlm SGTM. Usually we put type declarations in a *_types.h. I.e. ntlm_types.h. It\u0027s okay for this file to declare just one type.\n\nThis way both ntlm_client.h and the implementation can depend on ntlm_types.h.",
+      "parentUuid": "ec19bf47_0fdc61fe",
+      "revId": "47897db6ffafea57fb84bfbd0fd26862d23d5a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
