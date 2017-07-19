@@ -403,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "19fe2710_0753e8f4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-19T21:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6536967e_b803d9c4",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "c95c7cca03924a5cb940eca3de2246ec91fdcaf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da1419b_a3bbeb29",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 4

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b8ad224_09dc7f30",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-19T21:25:04Z",
+      "side": 1,
+      "message": "I\u0027ve been looking into the views tree, and I\u0027m not sure if there is a way (or at least I haven\u0027t found) a way to locate a specific widget through the tree. I have been able navigate from the root view to the tabstrip and newtabbutton, and I think it makes sense for the newtabbutton to be aware of the promo that is attached to it, especially if there are multiple windows open. The object we need to check the visibility of is the widget that is associated with the newtabpromo. Both of these are owned by the native widget, which is created by the widget. I don\u0027t know if there is any connection between the views tree and the widgets/native widgets.",
+      "parentUuid": "91e98fc3_b779b6c8",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdcfd3e9_ef3724d3",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e466df8d_9bca5b40",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-19T21:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdcfd3e9_ef3724d3",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
