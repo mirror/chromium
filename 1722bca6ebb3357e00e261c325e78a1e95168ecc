@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3b7804f_b0d446bd",
+        "filename": "ash/accelerators/debug_commands.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "Use normal ctor\n\n  wallpaper::WallpaperInfo info(\"\", wallpaper::WALLPAPER_LAYOUT_STRETCH, ...);",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a54198d_fe8a47d3",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "wrapping",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba5366_0dd3f0b8",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "Add comments to all of these members",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d800cd5_1e18104e",
+        "filename": "ash/wallpaper/test_wallpaper_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "nit: ctor type (see above)",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f43c1db_600d9f7c",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "base::Optional\u003cstd::vector\u003cSkColor\u003e\u003e GetCachedColors()",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf350c35_a306dc24",
+        "filename": "ash/wallpaper/wallpaper_controller_test_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "nit: ctor type",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bf01b5_5e2fd4ff",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "nit: explicit ctor call wallpaper::WallpaperInfo(...)",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238fae64_664a9fc0",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "NULL -\u003e nullptr (but we use null in comments)",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bdf453_40a2b82c",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "nit: info(...)",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efe80ba_c0ba9b4e",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "Why LocalMidnight()?",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a25e11d_62f4042f",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "explicit ctor",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee1236e_0c3dd159",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "ctor",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6088e62e_260ec564",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "ctor",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ad2bca_85b4895c",
+        "filename": "components/wallpaper/wallpaper_layout.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T00:32:10Z",
+      "side": 1,
+      "message": "Instead of mirroring this type for mojo just use the mojom-generated type directly.",
+      "revId": "1722bca6ebb3357e00e261c325e78a1e95168ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
