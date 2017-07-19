@@ -387,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "f144e1eb_6a0d33fb",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T15:32:03Z",
+      "side": 1,
+      "message": "I don\u0027t see any such merge. You still have an else-block with a NOTREACHED() in the most current CL.",
+      "parentUuid": "c771968c_c35821ea",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2b2e86_f9ae6e81",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 11
@@ -416,6 +434,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "4f2b2e86_f9ae6e81",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bccc92d_8244a36b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T15:32:03Z",
+      "side": 1,
+      "message": "This does not look done in patch set 17.",
+      "parentUuid": "de17d5f3_54e465b7",
       "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

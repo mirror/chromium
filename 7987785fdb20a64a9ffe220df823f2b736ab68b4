@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c773eabf_627e244c",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T15:32:03Z",
+      "side": 1,
+      "message": "Nit: Add a comment that this should be last and that when adding more constants, they should be added *before* it.",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f676fe4d_0e1dd342",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T15:32:03Z",
+      "side": 1,
+      "message": "This is still incorrect:\n\n1) Call EnsurePolicyKeyLoaded()\n2) Line 73 sets cached_policy_key_load_attempted_ \u003d true\n3) Key loading starts in background\n4) Call EnsurePolicyKeyLoaded() again\n5) Callback provided in (4) is called *immediately* because cached_policy_key_load_attempted_ is true, implying the key lis loaded\n6) cached_policy_key() returns blank, because the loading started in (3) has not finished yet.",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8ff7e6_23d9b0ef",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T15:32:03Z",
+      "side": 1,
+      "message": "Nit: #include \"base/sequence_checker.h\"",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
