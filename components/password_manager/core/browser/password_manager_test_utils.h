@@ -58,9 +58,13 @@ struct PasswordFormData {
   const double creation_time;
 };
 
-// Creates and returns a new PasswordForm built from form_data.
+// Creates and returns a new PasswordForm built from form_data.  If
+// |set_unspecified_values| is true, then fields in PasswordForm not
+// explicitly covered by |form_data| will be set to test values; otherwise they
+// will be left as their defaults.
 std::unique_ptr<autofill::PasswordForm> CreatePasswordFormFromDataForTesting(
-    const PasswordFormData& form_data);
+    const PasswordFormData& form_data,
+    bool set_unspecified_values = true);
 
 // Convenience method that wraps the passed in forms in unique ptrs and returns
 // the result.
