@@ -142,8 +142,9 @@ bool DocumentWriteEvaluator::Evaluate(const String& script_source) {
   if (source.IsEmpty())
     return false;
   v8::TryCatch try_catch(isolate);
-  return !V8ScriptRunner::CompileAndRunInternalScript(source.ToLocalChecked(),
-                                                      isolate)
+  return !V8ScriptRunner::CompileAndRunInternalScript(
+              ExecutionContext::From(ScriptState::Current(isolate)),
+              source.ToLocalChecked(), isolate)
               .IsEmpty();
 }
 

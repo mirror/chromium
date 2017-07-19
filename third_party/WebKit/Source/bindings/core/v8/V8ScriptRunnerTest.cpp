@@ -58,11 +58,13 @@ class V8ScriptRunnerTest : public ::testing::Test {
     V8ScriptRunner::SetCacheTimeStamp(cache_handler);
   }
 
-  bool CompileScript(v8::Isolate* isolate, V8CacheOptions cache_options) {
+  bool CompileScript(ExecutionContext* execution_context,
+                     v8::Isolate* isolate,
+                     V8CacheOptions cache_options) {
     return !V8ScriptRunner::CompileScript(
-                V8String(isolate, Code()), Filename(), String(),
-                WTF::TextPosition(), isolate, resource_.Get(), nullptr,
-                resource_.Get() ? resource_->CacheHandler() : nullptr,
+                execution_context, V8String(isolate, Code()), Filename(),
+                String(), WTF::TextPosition(), isolate, resource_.Get(),
+                nullptr, resource_.Get() ? resource_->CacheHandler() : nullptr,
                 kNotSharableCrossOrigin, cache_options)
                 .IsEmpty();
   }
@@ -87,9 +89,12 @@ int V8ScriptRunnerTest::counter_ = 0;
 
 TEST_F(V8ScriptRunnerTest, resourcelessShouldPass) {
   V8TestingScope scope;
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), kV8CacheOptionsNone));
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), kV8CacheOptionsParse));
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), kV8CacheOptionsCode));
+  EXPECT_TRUE(CompileScript(scope.GetExecutionContext(), scope.GetIsolate(),
+                            kV8CacheOptionsNone));
+  EXPECT_TRUE(CompileScript(scope.GetExecutionContext(), scope.GetIsolate(),
+                            kV8CacheOptionsParse));
+  EXPECT_TRUE(CompileScript(scope.GetExecutionContext(), scope.GetIsolate(),
+                            kV8CacheOptionsCode));
 }
 
 TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
@@ -100,7 +105,8 @@ TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
 TEST_F(V8ScriptRunnerTest, parseOption) {
   V8TestingScope scope;
   SetResource();
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), kV8CacheOptionsParse));
+  EXPECT_TRUE(CompileScript(scope.GetExecutionContext(), scope.GetIsolate(),
+                            kV8CacheOptionsParse));
   EXPECT_TRUE(
       CacheHandler()->GetCachedMetadata(TagForParserCache(CacheHandler())));
   EXPECT_FALSE(
@@ -117,7 +123,8 @@ TEST_F(V8ScriptRunnerTest, codeOption) {
   SetResource();
   SetCacheTimeStamp(CacheHandler());
 
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), kV8CacheOptionsCode));
+  EXPECT_TRUE(CompileScript(scope.GetExecutionContext(), scope.GetIsolate(),
+                            kV8CacheOptionsCode));
 
   EXPECT_FALSE(
       CacheHandler()->GetCachedMetadata(TagForParserCache(CacheHandler())));

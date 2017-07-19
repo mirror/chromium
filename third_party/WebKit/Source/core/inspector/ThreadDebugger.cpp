@@ -250,6 +250,7 @@ void ThreadDebugger::installAdditionalCommandLineAPI(
   v8::Local<v8::Value> function_value;
   bool success =
       V8ScriptRunner::CompileAndRunInternalScript(
+          ExecutionContext::From(ScriptState::From(context)),
           V8String(isolate_, "(function(e) { console.log(e.type, e); })"),
           isolate_)
           .ToLocal(&function_value) &&
