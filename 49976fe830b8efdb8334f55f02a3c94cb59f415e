@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b555bbf8_53b681ec",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T07:27:50Z",
+      "side": 1,
+      "message": "According to comments in trace_event_common.h, \"ASYNC_STEP_* APIs should be only used by legacy code.\", so I avoid to use them. \nhttps://cs.chromium.org/chromium/src/base/trace_event/common/trace_event_common.h?q\u003dTRACE_EVENT_ASYNC\u0026sq\u003dpackage:chromium\u0026l\u003d517\n\nRemoved TraceEventTracker and used TRACE_* macros directly.",
+      "parentUuid": "8953fcaf_72f929f4",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d7f92ef_e1df0444",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cc9ffe61_ac07d7a2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T07:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7f92ef_e1df0444",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e574a814_d00f186d",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 5
@@ -68,6 +104,24 @@
       "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e6c3bd_4c574a24",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T07:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e574a814_d00f186d",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
