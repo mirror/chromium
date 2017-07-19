@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1fea1f9b_9ca667dc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-19T23:37:36Z",
+      "side": 1,
+      "message": "Never mind on that comment, done.",
+      "parentUuid": "3b8ad224_09dc7f30",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "9ee3c981fca6289543ddb74948b4ea5f69114965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdcfd3e9_ef3724d3",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 12
