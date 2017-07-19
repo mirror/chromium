@@ -34,6 +34,24 @@
       "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97d5a18b_e24f8e7b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T20:35:21Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve added a TODO. I have no idea what it would mean to request that a window be unfocused though :P What would the platform do? Focus some other window?\n\u003e \n\u003e Anyways, that\u0027s a problem for some other time.\n\nOh good point. I thought Blur was a overridden cross-platform method. It\u0027s not. So does anything still call this? Maybe it can just be removed now?",
+      "parentUuid": "b3de1411_ccd252fd",
+      "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
