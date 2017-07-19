@@ -12,6 +12,7 @@
 #import "chrome/browser/ui/cocoa/hover_close_button.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
+#include "components/password_manager/core/common/password_manager_features.h"
 #include "skia/ext/skia_utils_mac.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -53,12 +54,12 @@
 - (void)loadView {
   base::scoped_nsobject<NSView> view([[NSView alloc] initWithFrame:NSZeroRect]);
 
-  // -----------------------------------
-  // |  Title                        x |
-  // |  username   password            |
-  // |  Smart Lock  welcome (optional) |
-  // |            [Button1] [Button2]  |
-  // -----------------------------------
+  // ----------------------------------------
+  // |  Title                              x |
+  // |  username   password                  |
+  // |  Smart Lock  welcome (optional)       |
+  // |  ([Button3])     [Button1] [Button2]  |
+  // --------------------------------------
 
   // The title text depends on whether the user is signed in and therefore syncs
   // their password
@@ -68,6 +69,9 @@
   // The bubble should be wide enough to fit the title row, the username and
   // password row, and the buttons row on one line each, but not smaller than
   // kDesiredBubbleWidth.
+
+  // The button 3 is for editing the username and it is only shown when username
+  // correction experiment is on.
 
   // Create the elements and add them to the view.
 
@@ -116,6 +120,15 @@
   for (NSButton* button in buttons) {
     curX -= kRelatedControlHorizontalPadding + NSWidth([button frame]);
     [button setFrameOrigin:NSMakePoint(curX, curY)];
+  }
+
+  // Put [Edit] button to the left if username correction experiment is on.
+  if (base::FeatureList::IsEnabled(
+          password_manager::features::kEnableUsernameCorrection)) {
+    curX = kFramePadding - (NSWidth([buttons[2] frame]) -
+                            ([buttons[2] intrinsicContentSize]).width) /
+                               2;
+    [buttons[2] setFrameOrigin:NSMakePoint(curX, curY)];
   }
 
   curX = kFramePadding;
