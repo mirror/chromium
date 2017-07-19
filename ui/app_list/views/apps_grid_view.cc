@@ -693,6 +693,7 @@ void AppsGridView::Layout() {
     bounds_animator_.Cancel();
 
   gfx::Rect rect(GetContentsBounds());
+  rect.Inset(0, kSearchBoxBottomPadding, 0, 0);
 
   if (!folder_delegate_) {
     gfx::Rect indicator_rect(rect);
@@ -2131,13 +2132,15 @@ int AppsGridView::GetHeightOnTopOfAllAppsTiles() const {
     return 0;
 
   if (pagination_model_.selected_page() == 0) {
-    return suggested_apps_indicator_->GetPreferredSize().height() +
+    return kSearchBoxBottomPadding +
+           suggested_apps_indicator_->GetPreferredSize().height() +
            suggestions_container_->GetPreferredSize().height() +
            kSuggestionsAllAppsIndicatorPadding +
            all_apps_indicator_->GetPreferredSize().height() -
            kTileTopPaddingFullscreen;
   }
-  return all_apps_indicator_->GetPreferredSize().height() +
+  return kSearchBoxBottomPadding +
+         all_apps_indicator_->GetPreferredSize().height() +
          kAllAppsIndicatorExtraPadding;
 }
 
