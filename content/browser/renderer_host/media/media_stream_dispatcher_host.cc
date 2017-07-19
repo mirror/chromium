@@ -73,10 +73,6 @@ bool MediaStreamDispatcherHost::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(MediaStreamDispatcherHost, message)
     IPC_MESSAGE_HANDLER(MediaStreamHostMsg_GenerateStream, OnGenerateStream)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_OpenDevice,
-                        OnOpenDevice)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_SetCapturingLinkSecured,
-                        OnSetCapturingLinkSecured)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -113,36 +109,6 @@ void MediaStreamDispatcherHost::OnGenerateStream(
       controls, security_origin, user_gesture);
 }
 
-void MediaStreamDispatcherHost::OnOpenDevice(
-    int render_frame_id,
-    int page_request_id,
-    const std::string& device_id,
-    MediaStreamType type,
-    const url::Origin& security_origin) {
-  DVLOG(1) << __func__ << " render_frame_id=" << render_frame_id
-           << " page_request_id=" << page_request_id
-           << " device_id=" << device_id << " type=" << type
-           << " security_origin=" << security_origin;
-
-  if (!MediaStreamManager::IsOriginAllowed(render_process_id_, security_origin))
-    return;
-
-  media_stream_manager_->OpenDevice(this, render_process_id_, render_frame_id,
-                                    salt_, page_request_id, device_id, type,
-                                    security_origin);
-}
-
-void MediaStreamDispatcherHost::OnSetCapturingLinkSecured(int session_id,
-                                                          MediaStreamType type,
-                                                          bool is_secure) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DVLOG(1) << __func__ << " session_id=" << session_id << " type=" << type
-           << " is_secure=" << is_secure;
-
-  media_stream_manager_->SetCapturingLinkSecured(render_process_id_, session_id,
-                                                 type, is_secure);
-}
-
 void MediaStreamDispatcherHost::CancelGenerateStream(int render_frame_id,
                                                      int page_request_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -163,11 +129,41 @@ void MediaStreamDispatcherHost::StopStreamDevice(int render_frame_id,
                                           device_id);
 }
 
+void MediaStreamDispatcherHost::OpenDevice(int32_t render_frame_id,
+                                           int32_t page_request_id,
+                                           const std::string& device_id,
+                                           MediaStreamType type,
+                                           const url::Origin& security_origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DVLOG(1) << __func__ << " render_frame_id=" << render_frame_id
+           << " page_request_id=" << page_request_id
+           << " device_id=" << device_id << " type=" << type
+           << " security_origin=" << security_origin;
+
+  if (!MediaStreamManager::IsOriginAllowed(render_process_id_, security_origin))
+    return;
+
+  media_stream_manager_->OpenDevice(this, render_process_id_, render_frame_id,
+                                    salt_, page_request_id, device_id, type,
+                                    security_origin);
+}
+
 void MediaStreamDispatcherHost::CloseDevice(const std::string& label) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DVLOG(1) << __func__ << " label = " << label;
 
   media_stream_manager_->CancelRequest(label);
+}
+
+void MediaStreamDispatcherHost::SetCapturingLinkSecured(int32_t session_id,
+                                                        MediaStreamType type,
+                                                        bool is_secure) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DVLOG(1) << __func__ << " session_id=" << session_id << " type=" << type
+           << " is_secure=" << is_secure;
+
+  media_stream_manager_->SetCapturingLinkSecured(render_process_id_, session_id,
+                                                 type, is_secure);
 }
 
 void MediaStreamDispatcherHost::StreamStarted(const std::string& label) {
