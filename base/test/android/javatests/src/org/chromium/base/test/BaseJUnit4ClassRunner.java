@@ -15,12 +15,14 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
 import org.chromium.base.CollectionUtil;
+import org.chromium.base.TestTraceEvent;
 import org.chromium.base.test.BaseTestResult.PreTestHook;
 import org.chromium.base.test.util.DisableIfSkipCheck;
 import org.chromium.base.test.util.MinAndroidSdkLevelSkipCheck;
 import org.chromium.base.test.util.RestrictionSkipCheck;
 import org.chromium.base.test.util.SkipCheck;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,9 @@ import java.util.List;
 public class BaseJUnit4ClassRunner extends AndroidJUnit4ClassRunner {
     private final List<SkipCheck> mSkipChecks;
     private final List<PreTestHook> mPreTestHooks;
+
+    private static final String EXTRA_TRACE_FILE =
+            "org.chromium.base.test.BaseJUnit4ClassRunner.TraceFile";
 
     /**
      * Create a BaseJUnit4ClassRunner to run {@code klass} and initialize values
@@ -84,6 +89,21 @@ public class BaseJUnit4ClassRunner extends AndroidJUnit4ClassRunner {
         super(klass,
                 new AndroidRunnerParams(InstrumentationRegistry.getInstrumentation(),
                         InstrumentationRegistry.getArguments(), false, 0L, false));
+
+        String traceOutput = InstrumentationRegistry.getArguments().getString(EXTRA_TRACE_FILE);
+
+        if (traceOutput != null) {
+            File traceOutputFile = new File(traceOutput);
+            File traceOutputDir = traceOutputFile.getParentFile();
+
+            if (traceOutputDir != null) {
+                if (traceOutputDir.exists() || traceOutputDir.mkdirs()) {
+                    TestTraceEvent.setOutputFile(traceOutputFile);
+                    TestTraceEvent.setEnabled(true);
+                }
+            }
+        }
+
         mSkipChecks = mergeList(checks, defaultSkipChecks());
         mPreTestHooks = mergeList(hooks, defaultPreTestHooks());
     }
@@ -131,8 +151,22 @@ public class BaseJUnit4ClassRunner extends AndroidJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
+        long clockNanoTime = System.currentTimeMillis() * 1000000;
+        TestTraceEvent.setCurrentNanoTime(clockNanoTime);
+
+        String testName = method.getName();
+        if (TestTraceEvent.enabled()) {
+            TestTraceEvent.begin(testName);
+        }
+
         runPreTestHooks(method);
         super.runChild(method, notifier);
+
+        if (TestTraceEvent.enabled()) {
+            TestTraceEvent.end(testName);
+
+            TestTraceEvent.setEnabled(false);
+        }
     }
 
     /**
