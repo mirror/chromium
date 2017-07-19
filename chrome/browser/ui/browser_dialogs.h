@@ -59,6 +59,10 @@ namespace ui {
 class WebDialogDelegate;
 }
 
+namespace views {
+class Widget;
+}
+
 namespace chrome {
 
 // Shows or hides the Task Manager. |browser| can be NULL when called from Ash.
@@ -254,8 +258,8 @@ void RecordDialogCreation(DialogIdentifier identifier);
 
 // Shows the Chrome Cleanup dialog asking the user if they want to clean their
 // system from unwanted software. This is called when unwanted software has been
-// detected on the system.
-void ShowChromeCleanerPrompt(
+// detected on the system. Returns the dialog's widget.
+views::Widget* ShowChromeCleanerPrompt(
     Browser* browser,
     safe_browsing::ChromeCleanerDialogController* controller);
 

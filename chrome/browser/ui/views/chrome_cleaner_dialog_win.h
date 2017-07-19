@@ -20,6 +20,7 @@ class ChromeCleanerDialogController;
 namespace views {
 class Checkbox;
 class LabelButton;
+class Widget;
 }  // namespace views
 
 // A modal dialog asking the user if they want to remove harmful software from
@@ -41,7 +42,7 @@ class ChromeCleanerDialog : public views::DialogDelegateView,
       safe_browsing::ChromeCleanerDialogController* controller);
   ~ChromeCleanerDialog() override;
 
-  void Show(Browser* browser);
+  views::Widget* Show(Browser* browser);
 
   // views::WidgetDelegate overrides.
   ui::ModalType GetModalType() const override;

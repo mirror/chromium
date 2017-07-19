@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/views/widget/widget.h"
 
 namespace safe_browsing {
 
@@ -28,6 +29,7 @@ enum PromptDialogResponseHistogramValue {
   PROMPT_DIALOG_RESPONSE_DETAILS = 1,
   PROMPT_DIALOG_RESPONSE_CANCELLED = 2,
   PROMPT_DIALOG_RESPONSE_DISMISSED = 3,
+  PROMPT_DIALOG_RESPONSE_CLOSED_WITHOUT_USER_INTERACTION = 4,
 
   PROMPT_DIALOG_RESPONSE_MAX,
 };
@@ -61,6 +63,10 @@ void ChromeCleanerDialogControllerImpl::Accept(bool logs_enabled) {
   RecordPromptDialogResponseHistogram(PROMPT_DIALOG_RESPONSE_ACCEPTED);
   RecordCleanupStartedHistogram(CLEANUP_STARTED_FROM_PROMPT_DIALOG);
 
+  // Stop observing the cleaner controller before calling
+  // ReplyWithUserResponse() so that we don't get an unnecessary notification
+  // about state change.
+  cleaner_controller_->RemoveObserver(this);
   cleaner_controller_->ReplyWithUserResponse(
       browser_->profile(),
       logs_enabled
@@ -75,6 +81,10 @@ void ChromeCleanerDialogControllerImpl::Cancel() {
 
   RecordPromptDialogResponseHistogram(PROMPT_DIALOG_RESPONSE_CANCELLED);
 
+  // Stop observing the cleaner controller before calling
+  // ReplyWithUserResponse() so that we don't get an unnecessary notification
+  // about state change.
+  cleaner_controller_->RemoveObserver(this);
   cleaner_controller_->ReplyWithUserResponse(
       browser_->profile(), ChromeCleanerController::UserResponse::kDenied);
   OnInteractionDone();
@@ -83,8 +93,14 @@ void ChromeCleanerDialogControllerImpl::Cancel() {
 void ChromeCleanerDialogControllerImpl::Close() {
   DCHECK(browser_);
 
+  if (aborted_) {
+    OnInteractionDone();
+    return;
+  }
+
   RecordPromptDialogResponseHistogram(PROMPT_DIALOG_RESPONSE_DISMISSED);
 
+  cleaner_controller_->RemoveObserver(this);
   cleaner_controller_->ReplyWithUserResponse(
       browser_->profile(), ChromeCleanerController::UserResponse::kDismissed);
   OnInteractionDone();
@@ -109,22 +125,22 @@ bool ChromeCleanerDialogControllerImpl::LogsEnabled() {
 
 void ChromeCleanerDialogControllerImpl::OnIdle(
     ChromeCleanerController::IdleReason idle_reason) {
-  if (!dialog_shown_)
-    OnInteractionDone();
+  Abort();
 }
 
 void ChromeCleanerDialogControllerImpl::OnScanning() {
   // This notification is received when the object is first added as an observer
   // of cleaner_controller_.
-  //
+  DCHECK(!dialog_shown_);
+
   // TODO(alito): Close the dialog in case it has been kept open until the next
   // time the prompt is going to be shown. http://crbug.com/734689
-  DCHECK(!dialog_shown_);
 }
 
 void ChromeCleanerDialogControllerImpl::OnInfected(
     const std::set<base::FilePath>& files_to_delete) {
   DCHECK(!dialog_shown_);
+  DCHECK(!dialog_widget_);
 
   browser_ = chrome_cleaner_util::FindBrowser();
   if (!browser_) {
@@ -137,20 +153,39 @@ void ChromeCleanerDialogControllerImpl::OnInfected(
     return;
   }
 
-  chrome::ShowChromeCleanerPrompt(browser_, this);
-  RecordPromptShownHistogram();
+  dialog_widget_ = chrome::ShowChromeCleanerPrompt(browser_, this);
+  dialog_widget_->AddObserver(this);
   dialog_shown_ = true;
+  RecordPromptShownHistogram();
 }
 
 void ChromeCleanerDialogControllerImpl::OnCleaning(
     const std::set<base::FilePath>& files_to_delete) {
-  if (!dialog_shown_)
-    OnInteractionDone();
+  Abort();
 }
 
 void ChromeCleanerDialogControllerImpl::OnRebootRequired() {
-  if (!dialog_shown_)
+  Abort();
+}
+
+void ChromeCleanerDialogControllerImpl::OnWidgetClosing(views::Widget* widget) {
+  DCHECK_EQ(dialog_widget_, widget);
+  dialog_widget_->RemoveObserver(this);
+  dialog_widget_ = nullptr;
+}
+
+void ChromeCleanerDialogControllerImpl::Abort() {
+  if (!dialog_shown_) {
     OnInteractionDone();
+    return;
+  }
+
+  if (dialog_widget_) {
+    dialog_widget_->Close();
+    RecordPromptDialogResponseHistogram(
+        PROMPT_DIALOG_RESPONSE_CLOSED_WITHOUT_USER_INTERACTION);
+    aborted_ = true;
+  }
 }
 
 void ChromeCleanerDialogControllerImpl::OnInteractionDone() {
