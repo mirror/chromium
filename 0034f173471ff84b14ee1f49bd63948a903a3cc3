@@ -51,6 +51,24 @@
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7883dbf_8ea5b9c9",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-19T17:12:01Z",
+      "side": 1,
+      "message": "Yes, it\u0027s deliberate in the short term for in-process FrameSinkManagerImpl in Chrome production.",
+      "parentUuid": "4ef45056_84fc6f28",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
