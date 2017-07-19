@@ -52,10 +52,15 @@ class UiSceneManagerTest : public testing::Test {
   bool VerifyVisibility(const std::set<UiElementDebugId>& debug_ids,
                         bool visible);
 
+  // Advances current_time_ by delta. This is done in frame increments and
+  // UiScene::OnBeginFrame is called at each increment.
+  void AnimateBy(base::TimeDelta delta);
+
   base::MessageLoop message_loop_;
   std::unique_ptr<MockBrowserInterface> browser_;
   std::unique_ptr<UiScene> scene_;
   std::unique_ptr<UiSceneManager> manager_;
+  base::TimeTicks current_time_;
 };
 
 }  // namespace vr
