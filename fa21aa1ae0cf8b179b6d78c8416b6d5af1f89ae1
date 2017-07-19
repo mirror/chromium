@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29af6f5d_6095029c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T03:52:53Z",
+      "side": 1,
+      "message": "A comment like the following?\n\n// Posts a delayed task to forcibly terminate script execution in case the normal shutdown sequence does not start within a certain time period.",
+      "revId": "fa21aa1ae0cf8b179b6d78c8416b6d5af1f89ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
