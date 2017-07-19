@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad0625a5_ae60d114",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fda283d_28d36894",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 6
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2749756e_c3f71a87",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f824e7_44620b6a",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "I was maintaining similarity with the Web Request API - https://developer.chrome.com/extensions/webRequest#type-ResourceType",
+      "parentUuid": "2749756e_c3f71a87",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee27ad7c_8773102b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Changed to camel case. Seems we are a bit inconsistent with the style.",
+      "parentUuid": "fca812c0_443e2c3b",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a96697bd_e3e0e743",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26925604_66c2d26b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96697bd_e3e0e743",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "b068d40f_33e3df8b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ca1c03_52ee3d63",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44410a53_79ee60fe",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -158,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "ddae02d0_6e331a93",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44410a53_79ee60fe",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa75dc7_c11678d0",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -175,6 +313,24 @@
     },
     {
       "key": {
+        "uuid": "699d7746_ef2fb24b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Actually thinking about it more, have decided to disallow empty domains list and empty resourceTypes, since they doesn\u0027t make sense.",
+      "parentUuid": "9fa75dc7_c11678d0",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54ab462c_81bf7b0b",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -189,6 +345,24 @@
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5798171_2393e6e2",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54ab462c_81bf7b0b",
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -215,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "253e058d_22b343e0",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62027a1c_b5fb4119",
+      "range": {
+        "startLine": 97,
+        "startChar": 27,
+        "endLine": 97,
+        "endChar": 31
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542f6fea_efdd2a7c",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
@@ -235,6 +433,30 @@
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d31c35_2574655b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "542f6fea_efdd2a7c",
+      "range": {
+        "startLine": 102,
+        "startChar": 21,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "896018ce_c5476008",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Don\u0027t think unsigned ints are supported.",
+      "parentUuid": "f2e44a98_92fc3575",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2182af8c_538d60ac",
         "filename": "extensions/common/api/schema.gni",
         "patchSetId": 1
@@ -281,6 +527,30 @@
       "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62c64e2_ccfcaa6c",
+        "filename": "extensions/common/api/schema.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-19T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2182af8c_538d60ac",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
