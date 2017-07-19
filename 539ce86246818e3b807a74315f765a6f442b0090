@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53e0da4a_567571e3",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T10:58:31Z",
+      "side": 1,
+      "message": "I attempted to have various helper methods in this patch set https://chromium-review.googlesource.com/c/574982/10/third_party/WebKit/Source/core/dom/DocumentInit.h) as you just suggested. This does help reduce the nullptr-s. But unlike CreateWithImportsController(), we cannot give good meanings to these nullptr-hiding helper variants (so, they\u0027re just named FromSomething()). Also please note that e.g. the frame argument of FromFrame() can be nullptr and FromContext()\u0027s context_document can also be nullptr. So, they\u0027re nothing more than utility functions that help us omit definitely nullptr arguments.\n\nI\u0027d say that the HTMLImportsController argument is kinda key argument, but Document* context_document, Document* owner_document and KURL are kinda optional configurations. So, I rethought and reverted it back to the set up that is:\n- non-imports one\n- imports one\n- for-testing one\n\nCompared to the others, FromContext() might be easier to give a good meaning, yes...\n\nWe can also choose to adopt the builder pattern. I.e. init \u003d init.WithContextDocument(context_document).WithOwnerDocument(owner_document). This might look better. I can switch to it if you like it.",
+      "parentUuid": "04234047_3462010d",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652cacef_789ab6d2",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "67ab552c_fb8be50c",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T10:58:31Z",
+      "side": 1,
+      "message": "Please see https://chromium-review.googlesource.com/c/574982/13/third_party%252FWebKit%252FSource%252Fcore%252Floader%252FDocumentLoader.cpp#671",
+      "parentUuid": "652cacef_789ab6d2",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b144458_38a52953",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T10:37:52Z",
       "side": 1,
       "message": "ditto",
+      "revId": "539ce86246818e3b807a74315f765a6f442b0090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e992499e_b8721cc5",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T10:58:31Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "6b144458_38a52953",
       "revId": "539ce86246818e3b807a74315f765a6f442b0090",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
