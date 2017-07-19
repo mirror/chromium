@@ -58,6 +58,16 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(handle);
   }
 
+  void EchoBufferFormat(BufferFormat b,
+                        EchoBufferFormatCallback callback) override {
+    std::move(callback).Run(b);
+  }
+
+  void EchoBufferUsage(BufferUsage b,
+                       EchoBufferUsageCallback callback) override {
+    std::move(callback).Run(b);
+  }
+
   base::MessageLoop loop_;
   mojo::BindingSet<TraitsTestService> traits_test_bindings_;
 
@@ -190,6 +200,24 @@ TEST_F(StructTraitsTest, NullGpuMemoryBufferHandle) {
   GpuMemoryBufferHandle output;
   proxy->EchoGpuMemoryBufferHandle(GpuMemoryBufferHandle(), &output);
   EXPECT_TRUE(output.is_null());
+}
+
+TEST_F(StructTraitsTest, BufferFormat) {
+  BufferFormat output;
+  mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
+  for (int i = 0; i <= static_cast<int>(BufferFormat::LAST); ++i) {
+    proxy->EchoBufferFormat(static_cast<BufferFormat>(i), &output);
+    EXPECT_EQ(static_cast<BufferFormat>(i), output);
+  }
+}
+
+TEST_F(StructTraitsTest, BufferUsage) {
+  BufferUsage output;
+  mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
+  for (int i = 0; i <= static_cast<int>(BufferUsage::LAST); ++i) {
+    proxy->EchoBufferUsage(static_cast<BufferUsage>(i), &output);
+    EXPECT_EQ(static_cast<BufferUsage>(i), output);
+  }
 }
 
 }  // namespace gfx

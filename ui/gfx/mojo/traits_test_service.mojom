@@ -24,4 +24,10 @@ interface TraitsTestService {
   [Sync]
   EchoGpuMemoryBufferHandle(GpuMemoryBufferHandle g)
       => (GpuMemoryBufferHandle pass);
+
+  [Sync]
+  EchoBufferFormat(BufferFormat b) => (BufferFormat pass);
+
+  [Sync]
+  EchoBufferUsage(BufferUsage b) => (BufferUsage pass);
 };
