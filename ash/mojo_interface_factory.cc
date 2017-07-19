@@ -24,7 +24,7 @@
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wallpaper/wallpaper_controller.h"
-#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
@@ -119,10 +119,10 @@ void BindSystemTrayRequestOnMainThread(
   Shell::Get()->system_tray_controller()->BindRequest(std::move(request));
 }
 
-void BindTouchViewRequestOnMainThread(
+void BindTabletModeRequestOnMainThread(
     const service_manager::BindSourceInfo& source_info,
-    mojom::TouchViewManagerRequest request) {
-  Shell::Get()->maximize_mode_controller()->BindRequest(std::move(request));
+    mojom::TabletModeManagerRequest request) {
+  Shell::Get()->tablet_mode_controller()->BindRequest(std::move(request));
 }
 
 void BindTrayActionRequestOnMainThread(
@@ -185,7 +185,7 @@ void RegisterInterfaces(
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindSystemTrayRequestOnMainThread),
                          main_thread_task_runner);
-  registry->AddInterface(base::Bind(&BindTouchViewRequestOnMainThread),
+  registry->AddInterface(base::Bind(&BindTabletModeRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindTrayActionRequestOnMainThread),
                          main_thread_task_runner);

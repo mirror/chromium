@@ -643,7 +643,7 @@ const FeatureEntry::Choice kAshForceTabletModeChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flag_descriptions::kForceTabletModeTouchview,
      ash::switches::kAshForceTabletMode,
-     ash::switches::kAshForceTabletModeTouchView},
+     ash::switches::kAshForceTabletModeTabletMode},
     {flag_descriptions::kForceTabletModeClamshell,
      ash::switches::kAshForceTabletMode,
      ash::switches::kAshForceTabletModeClamshell},
