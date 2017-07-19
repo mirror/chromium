@@ -16,6 +16,8 @@ class SimWebFrameClient final : public FrameTestHelpers::TestWebFrameClient {
   explicit SimWebFrameClient(SimTest&);
 
   // WebFrameClient overrides:
+  // TODO(dcheng): Allow sim tests to hook plugin creation.
+  WebPlugin* CreatePlugin(const WebPluginParams&) override;
   void DidAddMessageToConsole(const WebConsoleMessage&,
                               const WebString& source_name,
                               unsigned source_line,
