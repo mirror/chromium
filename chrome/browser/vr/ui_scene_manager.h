@@ -25,6 +25,7 @@ class UiBrowserInterface;
 class UiElement;
 class UiScene;
 class UrlBar;
+class ExitPrompt;
 
 class UiSceneManager {
  public:
@@ -60,6 +61,9 @@ class UiSceneManager {
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnWebVrFrameAvailable();
 
+  void ShowExitVrPrompt(UiUnsupportedMode reason);
+  void CloseExitVrPrompt();
+
   void OnSecurityIconClickedForTesting();
   void OnExitPromptPrimaryButtonClickedForTesting();
 
@@ -81,7 +85,6 @@ class UiSceneManager {
   void ConfigureExclusiveScreenToast();
   void ConfigureIndicators();
   void UpdateBackgroundColor();
-  void CloseExitPrompt();
   void OnBackButtonClicked();
   void OnSecurityIconClicked();
   void OnExitPromptPrimaryButtonClicked();
@@ -100,7 +103,7 @@ class UiSceneManager {
   UiElement* permanent_security_warning_ = nullptr;
   TransientSecurityWarning* transient_security_warning_ = nullptr;
   ExclusiveScreenToast* exclusive_screen_toast_ = nullptr;
-  UiElement* exit_prompt_ = nullptr;
+  ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   UiElement* main_content_ = nullptr;
@@ -136,6 +139,8 @@ class UiSceneManager {
   bool screen_capturing_ = false;
   bool location_access_ = false;
   bool bluetooth_connected_ = false;
+  UiUnsupportedMode exit_vr_prompt_reason_ =
+      UiUnsupportedMode::kUnhandledCodePoint;
 
   int next_available_id_ = 1;
 

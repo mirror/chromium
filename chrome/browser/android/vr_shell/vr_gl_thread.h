@@ -70,6 +70,8 @@ class VrGLThread : public base::Thread,
   void NavigateBack() override;
   void ExitCct() override;
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
+  void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
+                            bool should_exit) override;
 
   // vr::UiInterface implementation (VrShell and GL calling to the UI).
   void SetFullscreen(bool enabled) override;
@@ -87,6 +89,8 @@ class VrGLThread : public base::Thread,
   void SetLocationAccessIndicator(bool enabled) override;
   void SetIsExiting() override;
   void SetSplashScreenIcon(const SkBitmap& bitmap) override;
+  void ShowExitVrPrompt(vr::UiUnsupportedMode reason) override;
+  void CloseExitVrPrompt() override;
 
  protected:
   void Init() override;
