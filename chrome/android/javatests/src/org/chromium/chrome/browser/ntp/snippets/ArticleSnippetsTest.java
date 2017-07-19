@@ -4,9 +4,11 @@
 
 package org.chromium.chrome.browser.ntp.snippets;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.text.format.DateUtils;
@@ -29,8 +31,10 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.base.test.util.parameter.CommandLineParameter;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
@@ -50,6 +54,7 @@ import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
+import org.chromium.chrome.browser.suggestions.ThumbnailGradient;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.displaystyle.VerticalDisplayStyle;
@@ -117,12 +122,18 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
+    @CommandLineParameter(
+            {"", "--enable-features=" + ChromeFeatureList.SUGGESTIONS_HOME_MODERN_LAYOUT})
     @RetryOnFailure
     public void testSnippetAppearance() throws IOException {
+        // Don't load the Bitmap on the UI thread - this is a StrictModeViolation.
+        final Bitmap watch = BitmapFactory.decodeFile(
+                UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/watch.jpg"));
+
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                setupTestData();
+                setupTestData(watch);
 
                 mContentView = new FrameLayout(mActivityTestRule.getActivity());
                 mUiConfig = new UiConfig(mContentView);
@@ -244,7 +255,7 @@ public class ArticleSnippetsTest {
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_thumbnail");
     }
 
-    private void setupTestData() {
+    private void setupTestData(Bitmap thumbnail) {
         @CategoryInt
         int fullCategory = 0;
         @CategoryInt
@@ -255,13 +266,13 @@ public class ArticleSnippetsTest {
                 10f, // Score
                 1466634774, // Fetch timestamp
                 false); // IsVideoSuggestion
-        Bitmap bitmap = BitmapFactory.decodeResource(mActivityTestRule.getActivity().getResources(),
-                R.drawable.signin_promo_illustration);
-        int thumbnailSize = mActivityTestRule.getActivity().getResources().getDimensionPixelSize(
-                R.dimen.snippets_thumbnail_size_large);
-        Bitmap thumbnail = ThumbnailUtils.extractThumbnail(
-                bitmap, thumbnailSize, thumbnailSize, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-        shortSnippet.setThumbnailBitmap(mUiDelegate.getReferencePool().put(thumbnail));
+
+        Resources resources = mActivityTestRule.getActivity().getResources();
+        Drawable thumbnailDrawable = new BitmapDrawable(resources, thumbnail);
+        if (ThumbnailGradient.shouldApply(thumbnail)) {
+            thumbnailDrawable = ThumbnailGradient.apply(thumbnailDrawable, resources);
+        }
+        shortSnippet.setThumbnail(mUiDelegate.getReferencePool().put(thumbnailDrawable));
 
         SnippetArticle longSnippet = new SnippetArticle(fullCategory, "id2",
                 new String(new char[20]).replace("\0", "Snippet "),
@@ -317,6 +328,10 @@ public class ArticleSnippetsTest {
         Bitmap favicon = BitmapFactory.decodeResource(
                 mActivityTestRule.getActivity().getResources(), R.drawable.star_green);
         mSnippetsSource.setDefaultFavicon(favicon);
+
+        if (isModern()) {
+            mRenderTestRule.setVariantPrefix("modern");
+        }
     }
 
     /**
@@ -438,4 +453,11 @@ public class ArticleSnippetsTest {
         }
     }
 
+    /**
+     * The test is parameterized on the Suggestions Modern layout, but only some tests make sense
+     * with Modern.
+     */
+    private boolean isModern() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.SUGGESTIONS_HOME_MODERN_LAYOUT);
+    }
 }
