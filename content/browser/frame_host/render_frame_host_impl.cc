@@ -1300,6 +1300,15 @@ void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   CSPContext::SetSelf(origin);
 }
 
+void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
+  last_committed_url_ = url;
+  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
+    GetFrameResourceCoordinator()->SetProperty(
+        resource_coordinator::mojom::PropertyType::kFrameURL,
+        base::MakeUnique<base::Value>(last_committed_url_.spec()));
+  }
+}
+
 void RenderFrameHostImpl::OnDetach() {
   frame_tree_->RemoveFrame(frame_tree_node_);
 }
