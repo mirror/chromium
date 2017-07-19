@@ -78,7 +78,6 @@ ResourceError ResourceError::Copy() const {
   error_copy.error_code_ = error_code_;
   error_copy.failing_url_ = failing_url_.Copy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
-  error_copy.is_null_ = is_null_;
   error_copy.is_access_check_ = is_access_check_;
   error_copy.was_ignored_by_handler_ = was_ignored_by_handler_;
   return error_copy;
