@@ -178,6 +178,10 @@ bool DevToolsAgentHostImpl::AttachClient(DevToolsAgentHostClient* client) {
   return true;
 }
 
+void DevToolsAgentHostImpl::AttachMultiClient(DevToolsAgentHostClient* client) {
+  InnerAttachClient(client);
+}
+
 void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
   if (!sessions_.empty())
