@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c24262f3_bab01944",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:49:52Z",
+      "side": 1,
+      "message": "It seems we require IO for PathService::Get() as it can call GetCurrentDirectory/MakeAbsoluteFilePath, which requires AssertIOAllowed:\nhttps://cs.chromium.org/chromium/src/base/path_service.cc?rcl\u003d7c9a1aa9457af05a50ae40d804eead66e5695f45\u0026l\u003d191\n\nSo seems I can\u0027t get rid of the PostTask, I\u0027ve simplified SELECT_OPEN_FILE case to use base::FilePath()",
+      "parentUuid": "434b7997_b4478f5a",
+      "revId": "87c597190f451b11114a46aea5d5871d97538c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20e630f7_5c218254",
         "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T15:03:13Z",
       "side": 1,
       "message": "Might be moot in this CL with the above, but I\u0027m not sure USER_VISIBLE is correct here.  In particular, we don\u0027t know why the extension is using the import/export function, so it may or may not be immediately user-visible.  From talking with the task gurus, they recommended just not including a priority here - this will allow the priority to be inherited (I don\u0027t know the details of inheritance, though).  At minimum, that also guarantees that we don\u0027t think we know the priority when we aren\u0027t certain (since this is a result of third-party code).\n\nBut, maybe this is exceptional since there are fewer non-user-visible use cases for using bookmarks import/export?",
+      "revId": "87c597190f451b11114a46aea5d5871d97538c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324400bd_6c9469d4",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T17:49:52Z",
+      "side": 1,
+      "message": "Interesting.\n\nbookmarks.import and bookmarks.export is used from 3 whitelisted extension and only from chrome://bookmarks:\nhttps://cs.chromium.org/chromium/src/chrome/common/extensions/api/_api_features.json?rcl\u003dbaff39d10685ef1abed65771cde8a49f913a7d33\u0026l\u003d148\n\nThese three are:\n1. Internal bookmark extension\n2. Save to google extension (by Google)\nand\n3. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d371562#c1 (can\u0027t find in store)\n\n#1 is the chrome://bookmarks export/import UI, so USER_VISIBLE is fine?\n#2 has \"bookmarks\" and \"bookmarksPrivate\" but not \"bookmarks.export\" or \"bookmarks.import\". I couldn\u0027t find any calls to bookmarks.import or bookmarks.export in their code.\n#3 can\u0027t find\n\nSo I\u0027ve left USER_VISIBLE. Let me know what you think.",
+      "parentUuid": "20e630f7_5c218254",
       "revId": "87c597190f451b11114a46aea5d5871d97538c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
