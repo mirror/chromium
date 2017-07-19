@@ -17,9 +17,9 @@ crbug.com/422982 [ Linux ] virtual/threaded [ Skip ]
 
 crbug.com/700795 [ Linux ] inspector/animation/animation-transition-setTiming-crash.html [ Skip ]
 
-crbug.com/454267 [ Linux ] virtual/gpu/fast/canvas/canvas-arc-360-winding.html [ Crash ]
-crbug.com/454267 [ Linux ] virtual/gpu/fast/canvas/canvas-ellipse-360-winding.html [ Crash ]
-crbug.com/522315 [ Linux ] virtual/gpu/fast/canvas/quadraticCurveTo.xml [ Crash ]
+crbug.com/454267 [ Linux ] virtual/gpu/fast/canvas/canvas-arc-360-winding.html [ Crash Pass ]
+crbug.com/454267 [ Linux ] virtual/gpu/fast/canvas/canvas-ellipse-360-winding.html [ Crash Pass ]
+crbug.com/522315 [ Linux ] virtual/gpu/fast/canvas/quadraticCurveTo.xml [ Crash Pass ]
 
 crbug.com/517704 [ Linux ] external/wpt/encoding/api-invalid-label.html [ Timeout Pass ]
 crbug.com/708175 [ Linux ] external/wpt/IndexedDB/interleaved-cursors.html [ Timeout ]
@@ -53,11 +53,11 @@ crbug.com/555703 [ Linux ] virtual/media-gpu-accelerated [ Skip ]
 # them as "Slow" doesn't seem to help the problem (see discussion on bug), so
 # marking them as "Timeout" while crbug.com/729136 is worked out.
 crbug.com/729136 [ Linux ] external/wpt/encoding/textdecoder-fatal-single-byte.html [ Timeout ]
-crbug.com/729136 [ Linux ] fast/css/css-selector-deeply-nested.html [ Timeout ]
+crbug.com/729136 [ Linux ] fast/css/css-selector-deeply-nested.html [ Timeout Pass ]
 crbug.com/729136 [ Linux ] http/tests/inspector/forced-layout-in-microtask.html [ Timeout ]
 crbug.com/729136 [ Linux ] http/tests/inspector/tracing/timeline-xhr-response-type-blob-event.html [ Timeout ]
 crbug.com/729136 [ Linux ] inspector/components/file-path-scoring.html [ Timeout ]
 crbug.com/729136 [ Linux ] inspector/elements/styles-4/styles-should-not-force-sync-style-recalc.html [ Timeout ]
-crbug.com/729136 [ Linux ] webaudio/mixing.html [ Timeout ]
+crbug.com/729136 [ Linux ] webaudio/mixing.html [ Timeout Pass ]
 
 crbug.com/739365 [ Linux ] virtual/layout_ng/fast/block/float/assert-when-moving-float.html [ Skip ]
