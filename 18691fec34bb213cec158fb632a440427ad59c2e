@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "d26d71a6_1b62c9dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-19T03:04:32Z",
+      "side": 1,
+      "message": "nit: Could you explicitly mention which owns which, or which destructs which and when?",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f585ae_ecdcef08",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 1
@@ -84,6 +107,30 @@
       "side": 1,
       "message": "Unfortunately, it wouldn\u0027t work with some of current browser_tests well,\nbecause those tests (ab-)using the launcher reset.\n\nAlso, IMHO, setup-teardown paring make the code easy to understandable.\nNow, Initialize/Shutdown, and OnPrimaryUserProfilePrepared/OnPrimaryUserProfileBeingDestroyed are pairs.\n\nWDYT?",
       "parentUuid": "07f585ae_ecdcef08",
+      "range": {
+        "startLine": 188,
+        "startChar": 25,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8c69cc_a10abda3",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-19T03:04:32Z",
+      "side": 1,
+      "message": "How difficult is it to fix such browser_tests? Just calling this Shutdown() seems cleaner to me too.",
+      "parentUuid": "016d20a0_e9bc5fc9",
       "range": {
         "startLine": 188,
         "startChar": 25,
