@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046e4483_a3ba13c5",
+        "filename": "chrome/renderer/chrome_content_renderer_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-19T20:13:41Z",
+      "side": 1,
+      "message": "Please don\u0027t change this :)",
+      "revId": "2dcac6b97b0d25790d16ec3d78c92553692b94d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
