@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c510a4_32874611",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "If we\u0027re exposing this listener, we should probably also report if we failed to exit, so callers aren\u0027t waiting indefinitely.",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be078cf_b6fd5046",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "We should probably make this a list in case multiple callers happen to try to exit VR at once. We would ignore second requests other than to add them to the list of listeners waiting on the first request.",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 28
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae040870_2c898250",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense, why would we want to clear the listener here? Don\u0027t we want to tell them we successfully exited VR?",
+      "range": {
+        "startLine": 622,
+        "startChar": 24,
+        "endLine": 622,
+        "endChar": 59
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9577c2_e5f606f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "nit: unsupported",
+      "range": {
+        "startLine": 1197,
+        "startChar": 19,
+        "endLine": 1197,
+        "endChar": 30
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b32df81_329937bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "/* package */",
+      "range": {
+        "startLine": 1309,
+        "startChar": 4,
+        "endLine": 1309,
+        "endChar": 10
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb95af7_29e4cbdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:35:40Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 664,
+        "startChar": 4,
+        "endLine": 664,
+        "endChar": 10
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
