@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b2e14e6_8d5b3ca9",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T03:07:34Z",
+      "side": 1,
+      "message": "Historgram -\u003e Histogram",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a7d21f1_bb367d42",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
         "patchSetId": 2
@@ -84,6 +101,40 @@
     },
     {
       "key": {
+        "uuid": "812bd180_4833587d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T03:07:34Z",
+      "side": 1,
+      "message": "if did_swap is false, does that mean we will never report a valid timing for the given PaintEvent? Should we instead be listening for swap times until we receive a callback where did_swap is true?",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e2912f_f351c3f7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T03:07:34Z",
+      "side": 1,
+      "message": "let\u0027s use PageLoad.Internal.Renderer prefix for all renderer-sourced histograms.",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a912315a_1aa4608c",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
         "patchSetId": 2
@@ -118,6 +169,30 @@
       "writtenOn": "2017-07-19T02:58:12Z",
       "side": 1,
       "message": "Removed FirstTextPaint() and FirstImagePaint().\nChanged CSSTiming to use FirstContentfulPaintSwap().\n\nThe rest are only used in FirstMeaningfulPaintDetector internals and\ntests, which I\u0027m dubious about changing. Most (?) of the tests will\nprobably break because I don\u0027t think the swap time is available, and\nneed to think about the FMP internals. Maybe best for a follow-up CL\nfor this?",
+      "parentUuid": "a912315a_1aa4608c",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ed0313_150929a2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T03:07:34Z",
+      "side": 1,
+      "message": "Yeah, if we are making a hard cut to using only the swap times, and no longer using the old impls, I\u0027d rather update FirstPaint(), FirstContentfulPaint(), etc to return the post-swap times. IMO the fact that we are using post-swap times is not a detail that belongs in the method name (the fact that we report post-swap times is an implementation detail specified in the FP/FCP spec; there are lots of other impl details not included in the method names), so I\u0027d like to drop the new method names suffixed with Swap().",
       "parentUuid": "a912315a_1aa4608c",
       "range": {
         "startLine": 63,
@@ -175,6 +250,23 @@
       "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "307f6755_e0efcacf",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T03:07:34Z",
+      "side": 1,
+      "message": "maybe add a TODO comment noting that the non-swap times are only tracked for reporting delta histograms, and should be removed once we confirm that the swap deltas look reasonable?",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
