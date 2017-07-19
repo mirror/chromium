@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f00ef16_349ebdb1",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "No, above is BROWSER, this is CHILD. Yay multi-DLL build.",
+      "parentUuid": "b8178079_add276da",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a34dda6_7660d51d",
         "filename": "chrome/profiling/allocation_event.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2be18e2_1832332c",
+        "filename": "chrome/profiling/allocation_event.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a34dda6_7660d51d",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "badcf828_99ed1e43",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2cb9efc_ea98d021",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7acc7410_8e8062fa",
         "filename": "chrome/profiling/allocation_event.h",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "7870c11c_0fc09347",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7acc7410_8e8062fa",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "732158a8_76251423",
         "filename": "chrome/profiling/allocation_event.h",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-19T21:03:27Z",
       "side": 1,
       "message": "This is sorta odd to have an incomplete equality.  This makes me think the AllocationEventSet should actually be an AllocationEventMap with the address as the key.  That\u0027s what you had originally...\n\nCombining the two makes this more confusing.",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d99e55_56e13203",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "It makes this particular lookup more confusing, but it also means that you can\u0027t pass an AllocationEvent around without separately passing the address (which I think it should, even if I don\u0027t strictly need that in this patch). I didn\u0027t want to duplicate the addresses, which is why I did it this way.",
+      "parentUuid": "732158a8_76251423",
       "range": {
         "startLine": 43,
         "startChar": 17,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f53979ca_2eb17172",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "The other one has a special weird functor because it\u0027s only a partial comparison. I thought it was confusing for it do to \"\u003c\" or \"\u003d\u003d\" on only the address when everything else could be different, that\u0027s why AllocationEvent has a special separate functor when you want to sort by address.\n\nIn this case I use the class-member operator\u003c which is what I would normally do.",
+      "parentUuid": "b62cae50_70a72e3a",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d2596b8_bd9327b4",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "11fc91f5_931fdb50",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d2596b8_bd9327b4",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b994678b_ededa797",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -168,6 +330,24 @@
       "writtenOn": "2017-07-19T21:03:27Z",
       "side": 1,
       "message": "This comment also doesn\u0027t make sense. What is \"maps\"?\n\nI think you are describing the general format?\n\nIf so, I think this should be a file level comment. Maybe even in the header. And it should start with a snippet showing a sample JSON.",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd18d2a_45e84c89",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "This was a note to myself, removed.",
+      "parentUuid": "b994678b_ededa797",
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "defcb133_1f8585c3",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dcaa237_66244ce9",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cd821b5_cd88fa3d",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -240,6 +444,30 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9568ec9c_baf933d1",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd821b5_cd88fa3d",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "d58fd427_72864edd",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c97c1283_6be570b5",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbcd0e70_699cc474",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -286,6 +538,30 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fef82c_456f7e76",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbcd0e70_699cc474",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "e92cf420_41e7b3e6",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60919d94_011136f8",
+      "range": {
+        "startLine": 98,
+        "startChar": 18,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381c39ac_551ee684",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -332,6 +632,30 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371c8f2e_bca7f338",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381c39ac_551ee684",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -358,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "4c2fa543_a45c452b",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf723e14_90418b3e",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b0cb5e5_4b629ebf",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -375,6 +723,24 @@
     },
     {
       "key": {
+        "uuid": "9f1a49c2_3bd23400",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0cb5e5_4b629ebf",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b73f11_fea2676c",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -389,6 +755,24 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1043b0_5d2ff465",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7b73f11_fea2676c",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -415,6 +799,30 @@
     },
     {
       "key": {
+        "uuid": "8d6416ec_40e5ecbf",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bf4170_32a80461",
+      "range": {
+        "startLine": 182,
+        "startChar": 62,
+        "endLine": 182,
+        "endChar": 65
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02dc72e7_77b77e22",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -426,6 +834,24 @@
       "writtenOn": "2017-07-19T21:03:27Z",
       "side": 1,
       "message": "This made me look closer at BacktraceStorage and I think the current implementation of BacktraceStorage::Key being the iterator into the std::unordered_set\u003c\u003e doesn\u0027t work out right.\n\nSee https://stackoverflow.com/questions/16781886/can-we-store-unordered-maptiterator.  The iterators will invalidate when enough elements are inserted to force a table growth + rehash.",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e000f9e7_3f007e6e",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Good catch! I would prefer to fix this in a followup since it will be more involved and touch more files.",
+      "parentUuid": "02dc72e7_77b77e22",
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -455,6 +881,30 @@
     },
     {
       "key": {
+        "uuid": "60f6a0cb_35fb6df7",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Because the loop changes the values.",
+      "parentUuid": "366d4dbd_824fbfe3",
+      "range": {
+        "startLine": 212,
+        "startChar": 18,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f335123_a141c9ff",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -469,6 +919,24 @@
       "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c31c049_8f1e6186",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:42:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f335123_a141c9ff",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
