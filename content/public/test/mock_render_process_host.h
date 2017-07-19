@@ -90,6 +90,7 @@ class MockRenderProcessHost : public RenderProcessHost {
   IPC::ChannelProxy* GetChannel() override;
   void AddFilter(BrowserMessageFilter* filter) override;
   bool FastShutdownForPageCount(size_t count) override;
+  bool ForceUnsafeFastShutdownForPageCount(size_t count) override;
   base::TimeDelta GetChildProcessIdleTime() const override;
   void FilterURL(bool empty_allowed, GURL* url) override;
 #if BUILDFLAG(ENABLE_WEBRTC)
