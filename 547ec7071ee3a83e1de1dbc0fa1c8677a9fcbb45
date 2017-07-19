@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb468e24_06bed49d",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T09:34:57Z",
+      "side": 1,
+      "message": "If the test does not deal with Incognito, I would argue that it should use \"ServiceAccessType::IMPLICIT_ACCESS\" instead.\n\nThis will return the same thing if the BrowserState is not incognito but will return nullptr if the BrowserState is off-the-record, thus will help detect bug (by crashing and failing the test) if this is ever called in a context where the BrowserState can be incognito.\n\nIf the change is made, it should probably be done in a followup CL.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 40
+      },
+      "revId": "547ec7071ee3a83e1de1dbc0fa1c8677a9fcbb45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
