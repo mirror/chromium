@@ -46,6 +46,26 @@ declare_args() {
   # Use absolute file paths in the compiler diagnostics and __FILE__ macro
   # if needed.
   msvc_use_absolute_paths = false
+
+  # Controls whether the command for the "copy" tool uses hard-links or
+  # does copy the files (this is only meaningful for system that support
+  # hard links).
+  #
+  # Using hard links is faster and reduce disk usage but interact badly
+  # with "git reset --hard HEAD" as creating a hard link may update the
+  # inode ctime (this is the case on macOS). This causes git to recreate
+  # the file during "git reset --hard HEAD" unless the index has been
+  # updated with "git update-index --refresh".
+  #
+  # This is generally not affecting individual developers as running
+  # "git status" updates the index, but it affects the bots as they run
+  # "git reset --hard HEAD" before the build to ensure the tree is in a
+  # pristine state, and thus forcing all the hard linked files to be
+  # recreated and the target to be considered dirty by ninja.
+  #
+  # Check issues https://crbug.com/740301, https://crbug.com/642711 and
+  # http://crbug.com/330461 for more information.
+  copy_command_uses_hard_link = true
 }
 
 if (generate_linker_map) {
@@ -125,5 +145,9 @@ if (host_os == "win") {
       "$python_path $_tool_wrapper_path recursive-mirror {{source}} {{output}}"
 } else {
   stamp_command = "touch {{output}}"
-  copy_command = "ln -f {{source}} {{output}} 2>/dev/null || (rm -rf {{output}} && cp -af {{source}} {{output}})"
+
+  copy_command = "rm -rf {{output}} && cp -af {{source}} {{output}}"
+  if (copy_command_uses_hard_link) {
+    copy_command = "ln -f {{source}} {{output}} 2>/dev/null || ($copy_command)"
+  }
 }

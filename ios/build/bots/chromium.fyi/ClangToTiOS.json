@@ -4,6 +4,7 @@
   ],
   "xcode version": "8.0",
   "gn_args": [
+    "copy_command_uses_hard_link=false",
     "ios_enable_code_signing=false",
     "is_component_build=false",
     "is_debug=false",
