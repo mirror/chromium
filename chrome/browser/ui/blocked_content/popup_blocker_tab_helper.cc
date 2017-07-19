@@ -163,6 +163,25 @@ void PopupBlockerTabHelper::ShowBlockedPopup(int32_t id) {
     PopupNotificationVisibilityChanged(false);
 }
 
+#if !defined(OS_ANDROID)
+void PopupBlockerTabHelper::ShowBlockedPopup(
+    int32_t id,
+    WindowOpenDisposition disposition) {
+  BlockedRequest* popup = blocked_popups_.Lookup(id);
+  if (!popup)
+    return;
+
+  // We set user_gesture to true here, so the new popup gets correctly focused.
+  popup->params.user_gesture = true;
+  popup->params.disposition = disposition;
+  chrome::Navigate(&popup->params);
+
+  blocked_popups_.Remove(id);
+  if (blocked_popups_.IsEmpty())
+    PopupNotificationVisibilityChanged(false);
+}
+#endif
+
 size_t PopupBlockerTabHelper::GetBlockedPopupsCount() const {
   return blocked_popups_.size();
 }
