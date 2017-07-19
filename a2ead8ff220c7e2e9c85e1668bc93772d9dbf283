@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00013cc6_38301572",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T18:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cfe4169_7c88138e",
+      "range": {
+        "startLine": 362,
+        "startChar": 13,
+        "endLine": 362,
+        "endChar": 21
+      },
+      "revId": "a2ead8ff220c7e2e9c85e1668bc93772d9dbf283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb0dd70_bb0fa3c0",
         "filename": "third_party/WebKit/Source/platform/graphics/ImagePattern.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T01:46:23Z",
       "side": 1,
       "message": "This still won\u0027t address the animated image use-case where the PaintImage has a vector of SkImage frames. T_T\n\nCould we instead add the option to create a PaintImage backed by a PaintRecord instead? This would also eliminate multiple other uses of SkImage::MakeFromPicture where we are transforming records to pictures in blink.",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 54
+      },
+      "revId": "a2ead8ff220c7e2e9c85e1668bc93772d9dbf283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610bfbdc_e808e482",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImagePattern.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-19T18:11:23Z",
+      "side": 1,
+      "message": "The intent being that we have a PaintImage wrapped in a PaintOpBuffer wrapped in PaintImage? The other uses are SVG and placeholder image, which can be backed by arbitrary paint op buffers it seems. \n\nI think maybe we should just create a picture PaintShader here and maybe specify a locked in scale or something like... I don\u0027t know. \n\nThe problem of backing PaintImage with a PaintOpBuffer is that we would still call SkImage::MakeFromPicture, right? We\u0027ll just do it in a different spot when we actually create SkShader.\n\nWhat exactly is the plan here wrt gifs?",
+      "parentUuid": "acb0dd70_bb0fa3c0",
       "range": {
         "startLine": 69,
         "startChar": 38,
