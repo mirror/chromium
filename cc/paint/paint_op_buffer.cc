@@ -1138,7 +1138,7 @@ void DrawImageOp::RasterWithFlags(const PaintOpWithFlags* base_op,
                                   SkCanvas* canvas,
                                   const SkMatrix& original_ctm) {
   auto* op = static_cast<const DrawImageOp*>(base_op);
-  canvas->drawImage(op->image.sk_image().get(), op->left, op->top,
+  canvas->drawImage(op->image.DefaultFrame().get(), op->left, op->top,
                     ToSkPaint(flags));
 }
 
@@ -1150,7 +1150,7 @@ void DrawImageRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
   // TODO(enne): Probably PaintCanvas should just use the skia enum directly.
   SkCanvas::SrcRectConstraint skconstraint =
       static_cast<SkCanvas::SrcRectConstraint>(op->constraint);
-  canvas->drawImageRect(op->image.sk_image().get(), op->src, op->dst,
+  canvas->drawImageRect(op->image.DefaultFrame().get(), op->src, op->dst,
                         ToSkPaint(flags), skconstraint);
 }
 
@@ -1437,7 +1437,7 @@ DrawImageOp::DrawImageOp(const PaintImage& image,
 bool DrawImageOp::HasDiscardableImages() const {
   // TODO(khushalsagar): Callers should not be able to change the lazy generated
   // state for a PaintImage.
-  return image.sk_image()->isLazyGenerated();
+  return image.is_lazy_generated();
 }
 
 DrawImageOp::~DrawImageOp() = default;
@@ -1456,7 +1456,7 @@ DrawImageRectOp::DrawImageRectOp(const PaintImage& image,
       constraint(constraint) {}
 
 bool DrawImageRectOp::HasDiscardableImages() const {
-  return image.sk_image()->isLazyGenerated();
+  return image.is_lazy_generated();
 }
 
 DrawImageRectOp::~DrawImageRectOp() = default;

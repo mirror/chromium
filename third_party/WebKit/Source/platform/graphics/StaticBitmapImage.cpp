@@ -31,7 +31,7 @@ void StaticBitmapImage::DrawHelper(PaintCanvas* canvas,
                                    ImageClampingMode clamp_mode,
                                    const PaintImage& image) {
   FloatRect adjusted_src_rect = src_rect;
-  adjusted_src_rect.Intersect(SkRect::Make(image.sk_image()->bounds()));
+  adjusted_src_rect.Intersect(SkRect::Make(image.bounds()));
 
   if (dst_rect.IsEmpty() || adjusted_src_rect.IsEmpty())
     return;  // Nothing to draw.
