@@ -29,6 +29,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/safe_browsing/CheckClientDownloadRequest.h"
 
 namespace content {
 class DownloadItem;
