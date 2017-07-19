@@ -76,6 +76,8 @@ source_set("cdm") {
     sources += [
       "cdm_adapter_factory.cc",
       "cdm_adapter_factory.h",
+      "cdm_module.cc",
+      "cdm_module.h",
     ]
   }
 }
