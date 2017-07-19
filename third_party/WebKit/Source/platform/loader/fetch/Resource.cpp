@@ -324,6 +324,30 @@ void Resource::SetLoader(ResourceLoader* loader) {
   status_ = ResourceStatus::kPending;
 }
 
+void Resource::CheckResourceIntegrity() {
+  // Loading error occurred? Then result is uncheckable.
+  if (ErrorOccurred()) {
+    integrity_disposition_ = ResourceIntegrityDisposition::kNotChecked;
+    return;
+  }
+
+  // No integrity attributes to check? Then we're passing.
+  if (IntegrityMetadata().IsEmpty()) {
+    integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
+    return;
+  }
+
+  CHECK(Data());
+  if (SubresourceIntegrity::CheckSubresourceIntegrity(
+          IntegrityMetadata(), Data()->Data(), Data()->size(), Url(), *this,
+          integrity_report_info_))
+    integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
+  else
+    integrity_disposition_ = ResourceIntegrityDisposition::kFailed;
+
+  DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
+}
+
 void Resource::CheckNotify() {
   if (IsLoading())
     return;
@@ -408,6 +432,7 @@ void Resource::FinishAsError(const ResourceError& error) {
   DCHECK(ErrorOccurred());
   ClearData();
   loader_ = nullptr;
+  CheckResourceIntegrity();
   CheckNotify();
 }
 
@@ -417,18 +442,12 @@ void Resource::Finish(double load_finish_time) {
   if (!ErrorOccurred())
     status_ = ResourceStatus::kCached;
   loader_ = nullptr;
+  CheckResourceIntegrity();
   CheckNotify();
 }
 
 AtomicString Resource::HttpContentType() const {
   return GetResponse().HttpContentType();
-}
-
-void Resource::SetIntegrityDisposition(
-    ResourceIntegrityDisposition disposition) {
-  DCHECK_NE(disposition, ResourceIntegrityDisposition::kNotChecked);
-  DCHECK(type_ == Resource::kScript || type_ == Resource::kCSSStyleSheet);
-  integrity_disposition_ = disposition;
 }
 
 bool Resource::MustRefetchDueToIntegrityMetadata(
