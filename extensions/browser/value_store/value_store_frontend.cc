@@ -7,31 +7,42 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted_delete_on_sequence.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/trace_event/trace_event.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/value_store/leveldb_value_store.h"
+#include "extensions/browser/value_store/value_store.h"
 #include "extensions/browser/value_store/value_store_factory.h"
 
-using content::BrowserThread;
 using extensions::ValueStoreFactory;
 
-class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
+class ValueStoreFrontend::Backend
+    : public base::RefCountedDeleteOnSequence<Backend> {
  public:
-  Backend(const scoped_refptr<ValueStoreFactory>& store_factory,
+  Backend(scoped_refptr<base::SequencedTaskRunner> task_runner,
+          const scoped_refptr<ValueStoreFactory>& store_factory,
           BackendType backend_type)
-      : store_factory_(store_factory), backend_type_(backend_type) {}
+      : base::RefCountedDeleteOnSequence<Backend>(std::move(task_runner)),
+        store_factory_(store_factory),
+        backend_type_(backend_type) {
+    // The instance is not created on |task_runner|, but it should only be
+    // accessed from it in the future.
+    DETACH_FROM_SEQUENCE(sequence_checker_);
+  }
 
-  void Get(const std::string& key,
-           const ValueStoreFrontend::ReadCallback& callback) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  std::unique_ptr<base::Value> Get(const std::string& key) {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
     LazyInit();
     ValueStore::ReadResult result = storage_->Get(key);
 
-    // Extract the value from the ReadResult and pass ownership of it to the
-    // callback.
+    // Extract the value from the ReadResult and return it.
     std::unique_ptr<base::Value> value;
     if (result->status().ok()) {
       result->settings().RemoveWithoutPathExpansion(key, &value);
@@ -40,13 +51,12 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
                    << " failed: " << result->status().message;
     }
 
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-        base::Bind(&ValueStoreFrontend::Backend::RunCallback,
-                   this, callback, base::Passed(&value)));
+    return value;
   }
 
   void Set(const std::string& key, std::unique_ptr<base::Value> value) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
     LazyInit();
     // We don't need the old value, so skip generating changes.
     ValueStore::WriteResult result = storage_->Set(
@@ -57,22 +67,21 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
   }
 
   void Remove(const std::string& key) {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
     LazyInit();
     storage_->Remove(key);
   }
 
  private:
-  friend class base::RefCountedThreadSafe<Backend>;
+  friend class base::RefCountedDeleteOnSequence<Backend>;
+  friend class base::DeleteHelper<Backend>;
 
-  virtual ~Backend() {
-    if (storage_ && !BrowserThread::CurrentlyOn(BrowserThread::FILE))
-      BrowserThread::DeleteSoon(BrowserThread::FILE, FROM_HERE,
-                                storage_.release());
-  }
+  virtual ~Backend() { DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_); }
 
   void LazyInit() {
-    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
     if (storage_)
       return;
     TRACE_EVENT0("ValueStoreFrontend::Backend", "LazyInit");
@@ -86,12 +95,6 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
     }
   }
 
-  void RunCallback(const ValueStoreFrontend::ReadCallback& callback,
-                   std::unique_ptr<base::Value> value) {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    callback.Run(std::move(value));
-  }
-
   // The factory which will be used to lazily create the ValueStore when needed.
   // Used exclusively on the FILE thread.
   scoped_refptr<ValueStoreFactory> store_factory_;
@@ -103,42 +106,46 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
 
   base::FilePath db_path_;
 
+  SEQUENCE_CHECKER(sequence_checker_);
+
   DISALLOW_COPY_AND_ASSIGN(Backend);
 };
 
 ValueStoreFrontend::ValueStoreFrontend(
     const scoped_refptr<ValueStoreFactory>& store_factory,
     BackendType backend_type)
-    : backend_(new Backend(store_factory, backend_type)) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    : task_runner_(
+          base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()})),
+      backend_(new Backend(task_runner_, store_factory, backend_type)) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 ValueStoreFrontend::~ValueStoreFrontend() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
-void ValueStoreFrontend::Get(const std::string& key,
-                             const ReadCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+void ValueStoreFrontend::Get(const std::string& key, ReadCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-      base::Bind(&ValueStoreFrontend::Backend::Get,
-                 backend_, key, callback));
+  base::PostTaskAndReplyWithResult(
+      task_runner_.get(), FROM_HERE,
+      base::BindOnce(&ValueStoreFrontend::Backend::Get, backend_, key),
+      std::move(callback));
 }
 
 void ValueStoreFrontend::Set(const std::string& key,
                              std::unique_ptr<base::Value> value) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-      base::Bind(&ValueStoreFrontend::Backend::Set,
-                 backend_, key, base::Passed(&value)));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&ValueStoreFrontend::Backend::Set, backend_,
+                                key, std::move(value)));
 }
 
 void ValueStoreFrontend::Remove(const std::string& key) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-      base::Bind(&ValueStoreFrontend::Backend::Remove,
-                 backend_, key));
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ValueStoreFrontend::Backend::Remove, backend_, key));
 }

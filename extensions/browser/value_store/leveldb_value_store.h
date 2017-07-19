@@ -14,13 +14,14 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "extensions/browser/value_store/lazy_leveldb.h"
 #include "extensions/browser/value_store/value_store.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 // Value store area, backed by a leveldb database.
-// All methods must be run on the FILE thread.
+// All methods must be run on a sequence where IO is allowed.
 class LeveldbValueStore : public ValueStore,
                           public LazyLevelDb,
                           public base::trace_event::MemoryDumpProvider {
@@ -29,12 +30,9 @@ class LeveldbValueStore : public ValueStore,
   // opened (i.e. may not be created) until one of the get/set/etc methods are
   // called - this is because opening the database may fail, and extensions
   // need to be notified of that, but we don't want to permanently give up.
-  //
-  // Must be created on the FILE thread.
   LeveldbValueStore(const std::string& uma_client_name,
                     const base::FilePath& path);
 
-  // Must be deleted on the FILE thread.
   ~LeveldbValueStore() override;
 
   // ValueStore implementation.

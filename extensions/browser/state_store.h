@@ -5,16 +5,20 @@
 #ifndef EXTENSIONS_BROWSER_STATE_STORE_H_
 #define EXTENSIONS_BROWSER_STATE_STORE_H_
 
+#include <memory>
 #include <set>
 #include <string>
 
-#include "base/files/file_path.h"
+#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
+#include "base/sequence_checker.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/browser/extension_registry_observer.h"
 #include "extensions/browser/value_store/value_store_frontend.h"
+
+class ValueStore;
 
 namespace content {
 class BrowserContext;
@@ -110,6 +114,10 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
 
   ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver>
       extension_registry_observer_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  DISALLOW_COPY_AND_ASSIGN(StateStore);
 };
 
 }  // namespace extensions
