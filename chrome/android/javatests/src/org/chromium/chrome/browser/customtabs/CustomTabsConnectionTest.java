@@ -51,7 +51,6 @@ public class CustomTabsConnectionTest {
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
         LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER).ensureInitialized();
         mCustomTabsConnection = CustomTabsTestUtils.setUpConnection();
-        mCustomTabsConnection.resetThrottling(Process.myUid());
     }
 
     @After
@@ -97,15 +96,15 @@ public class CustomTabsConnectionTest {
     @Test
     @SmallTest
     public void testCanWarmup() {
-        Assert.assertEquals(true, mCustomTabsConnection.warmup(0));
-        Assert.assertEquals(true, mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
+        CustomTabsTestUtils.warmUpAndWait();
     }
 
     @Test
     @SmallTest
     @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
     public void testCreateSpareRenderer() {
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
         // On UI thread because:
         // 1. takeSpareWebContents needs to be called from the UI thread.
         // 2. warmup() is non-blocking and posts tasks to the UI thread, it ensures proper ordering.
@@ -126,7 +125,7 @@ public class CustomTabsConnectionTest {
     @SmallTest
     @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
     public void testCreateSpareRendererCanBeRecreated() {
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -134,7 +133,7 @@ public class CustomTabsConnectionTest {
                 Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
             }
         });
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -192,7 +191,7 @@ public class CustomTabsConnectionTest {
     @SmallTest
     @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
     public void testMayLaunchUrlKeepsSpareRendererWithoutPrerendering() {
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
@@ -247,7 +246,7 @@ public class CustomTabsConnectionTest {
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
 
         final List<Bundle> urlsAsString = new ArrayList<>();
         Bundle urlStringBundle = new Bundle();
@@ -274,7 +273,7 @@ public class CustomTabsConnectionTest {
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
 
         final List<Bundle> invalidBundles = new ArrayList<>();
         Bundle invalidBundle = new Bundle();
@@ -322,7 +321,7 @@ public class CustomTabsConnectionTest {
     @SmallTest
     @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
     public void testPrefetchOnlyNoPrerenderHasSpareWebContents() {
-        Assert.assertTrue(mCustomTabsConnection.warmup(0));
+        CustomTabsTestUtils.warmUpAndWait();
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
@@ -353,6 +352,9 @@ public class CustomTabsConnectionTest {
             }
         });
 
+        // Two mayLaunchUrl() can be called so close to each other they get throttled.
+        CustomTabsConnection.getInstance().resetThrottling(Process.myUid());
+
         Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, null, null, null));
         // mayLaunchUrl() posts a task, the following has to run after it.
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -376,7 +378,7 @@ public class CustomTabsConnectionTest {
      */
     private CustomTabsSessionToken assertWarmupAndMayLaunchUrl(
             CustomTabsSessionToken token, String url, boolean shouldSucceed) {
-        mCustomTabsConnection.warmup(0);
+        CustomTabsTestUtils.warmUpAndWait();
         if (token == null) {
             token = CustomTabsSessionToken.createDummySessionTokenForTesting();
             mCustomTabsConnection.newSession(token);
@@ -509,9 +511,9 @@ public class CustomTabsConnectionTest {
     @SmallTest
     public void testThrottlingIsReset() {
         CustomTabsSessionToken token = assertWarmupAndMayLaunchUrl(null, URL, true);
-        mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null);
         // Depending on the timing, the delay should be 100 or 200ms here.
-        assertWarmupAndMayLaunchUrl(token, URL, false);
+        assertWarmupAndMayLaunchUrl(token, URL, true);
+        Assert.assertFalse(mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null));
         // Wait for more than 2 * MAX_POSSIBLE_DELAY to clear the delay
         try {
             Thread.sleep(450); // 2 * MAX_POSSIBLE_DELAY + 50ms
@@ -543,7 +545,7 @@ public class CustomTabsConnectionTest {
         for (int i = 0; i < 10; i++) {
             mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null);
         }
-        assertWarmupAndMayLaunchUrl(token2, URL, false);
+        Assert.assertFalse(mCustomTabsConnection.mayLaunchUrl(token2, Uri.parse(URL), null, null));
     }
 
     @Test
@@ -597,7 +599,7 @@ public class CustomTabsConnectionTest {
         CustomTabsSessionToken token = CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
         mCustomTabsConnection.setShouldPrerenderOnCellularForSession(token, true);
-        mCustomTabsConnection.warmup(0);
+        CustomTabsTestUtils.warmUpAndWait();
 
         // Needs the browser process to be initialized.
         FutureTask<Boolean> result = ThreadUtils.runOnUiThread(new Callable<Boolean>() {
@@ -637,7 +639,7 @@ public class CustomTabsConnectionTest {
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
         mCustomTabsConnection.setShouldPrerenderOnCellularForSession(token, true);
-        mCustomTabsConnection.warmup(0);
+        CustomTabsTestUtils.warmUpAndWait();
 
         Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null));
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -663,7 +665,7 @@ public class CustomTabsConnectionTest {
                 CustomTabsSessionToken.createDummySessionTokenForTesting();
         Assert.assertTrue(mCustomTabsConnection.newSession(token));
         mCustomTabsConnection.setShouldPrerenderOnCellularForSession(token, true);
-        mCustomTabsConnection.warmup(0);
+        CustomTabsTestUtils.warmUpAndWait();
 
         Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null));
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
