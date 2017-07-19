@@ -9,7 +9,8 @@
   `);
 
   var msg = await dp.Page.onceFrameScheduledNavigation();
-  testRunner.log('Scheduled navigation with delay ' + msg.params.delay);
+  testRunner.log('Scheduled navigation with delay ' + msg.params.delay +
+                 ' and type ' + msg.params.type);
 
   await dp.Page.onceFrameStartedLoading();
   // This event should be received before the scheduled navigation is cleared.

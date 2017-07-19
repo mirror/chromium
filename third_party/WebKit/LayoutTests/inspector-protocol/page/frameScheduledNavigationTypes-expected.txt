@@ -1,0 +1,5 @@
+Tests reporting of various types of Page.FrameScheduledNavigation
+Scheduled navigation type LocationChange
+Scheduled navigation type MetaTagRefresh
+Scheduled navigation type FormSubmission
+
