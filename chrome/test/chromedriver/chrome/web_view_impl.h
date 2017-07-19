@@ -44,6 +44,7 @@ class WebViewImpl : public WebView {
               std::string page_load_strategy);
   ~WebViewImpl() override;
 
+  Status IsDomainValid(const std::string& domain);
   // Overridden from WebView:
   std::string GetId() override;
   bool WasCrashed() override;

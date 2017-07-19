@@ -473,6 +473,32 @@ Status WebViewImpl::DeleteCookie(const std::string& name,
   return client_->SendCommand("Page.deleteCookie", params);
 }
 
+Status WebViewImpl::IsDomainValid(const std::string& domain) {
+  std::unique_ptr<base::Value> value;
+  std::string dummyCookie =
+      "document.cookie = 'ChromedriverDummyCookie= ; domain=" + domain + "'";
+  Status status = EvaluateScript(std::string(), dummyCookie, &value);
+  if (status.IsError())
+    return status;
+  EvaluateScript(std::string(),
+                 "document.cookie.indexOf('ChromedriverDummyCookie=')", &value);
+  int cookie_validity;
+  if (!value->GetAsInteger(&cookie_validity))
+    return Status(
+        kUnknownError,
+        "unable to determine whether the dummy cookie exists or not.");
+  if (cookie_validity == -1)
+    return Status(kInvalidCookieDomain);
+
+  // remove the dummy cookie after validating.
+  std::string remove_dummyCookie =
+      "document.cookie = 'ChromedriverDummyCookie= ; Max-Age=0; domain=" +
+      domain + "'";
+  EvaluateScript(std::string(), remove_dummyCookie, &value);
+
+  return Status(kOk);
+}
+
 Status WebViewImpl::AddCookie(const std::string& name,
                               const std::string& url,
                               const std::string& value,
@@ -490,6 +516,10 @@ Status WebViewImpl::AddCookie(const std::string& name,
   params.SetBoolean("secure", secure);
   params.SetBoolean("httpOnly", httpOnly);
   params.SetDouble("expirationDate", expiry);
+
+  Status status = IsDomainValid(domain);
+  if (status.IsError())
+    return status;
   return client_->SendCommand("Network.setCookie", params);
 }
 
