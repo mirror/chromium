@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00a5d1c_a1cb69cd",
+        "filename": "android_webview/browser/aw_contents_statics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:00:58Z",
+      "side": 1,
+      "message": "\"Set\" is a bit confusing here (sounds like the data structure). Maybe \"SafeBrowsingWhitelistFinished\" or \"SafeBrowsingWhitelistDone\"?",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a421280_4daa1cf3",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:00:58Z",
+      "side": 1,
+      "message": "TODO for override",
+      "range": {
+        "startLine": 580,
+        "startChar": 20,
+        "endLine": 580,
+        "endChar": 26
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43326ee_fd78533e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:00:58Z",
+      "side": 1,
+      "message": "Move up with other helper classes",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 440,
+        "endChar": 11
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8e0e56_40cb0c2e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:00:58Z",
+      "side": 1,
+      "message": "Move up with the other helper methods",
+      "range": {
+        "startLine": 482,
+        "startChar": 17,
+        "endLine": 482,
+        "endChar": 36
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b553cb1_1ef273b9",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:00:58Z",
+      "side": 1,
+      "message": "Does this need to block?",
+      "range": {
+        "startLine": 485,
+        "startChar": 20,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
