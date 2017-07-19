@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc3e033_3f93e547",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-19T00:14:52Z",
+      "side": 1,
+      "message": "I don\u0027t see callers comparing more than 6 bytes. Am I missing something?",
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5308ecd9_f4bc3ab5",
+        "filename": "third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-19T00:14:52Z",
+      "side": 1,
+      "message": "This cast is not safe, unfortunately because getBuffer() returns char16_t. Please, use icu::toUCharPtr() instead (it\u0027s in unistr.h so that there\u0027s no need to includ a header file).  \nSee  https://codereview.chromium.org/2740673002 and https://bugs.chromium.org/p/chromium/issues/detail?id\u003d732026",
+      "range": {
+        "startLine": 530,
+        "startChar": 16,
+        "endLine": 530,
+        "endChar": 46
+      },
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb0a2bc_28537daa",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecICU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-19T00:14:52Z",
+      "side": 1,
+      "message": "Will do !\nThanks !  Removing that is simple (just reverting a Chrome-specific patch).",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
