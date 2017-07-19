@@ -16,6 +16,24 @@
       "revId": "a144ea580dc30c0ada35e1a7307be787882dc40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23123b74_eb26d765",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T01:37:45Z",
+      "side": 1,
+      "message": "right - this actually doesn\u0027t work. Tests/bots only run the first listed experiment, so we suggest only listing one experiment. If there\u0027s multiple things being experimented on, we suggest the variant that is most likely to be shipped - ideally this is the most complicated version as well.",
+      "parentUuid": "192870cb_91cc5010",
+      "revId": "a144ea580dc30c0ada35e1a7307be787882dc40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
