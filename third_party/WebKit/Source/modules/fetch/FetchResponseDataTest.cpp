@@ -9,6 +9,7 @@
 #include "platform/blob/BlobData.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
+#include "public/platform/modules/serviceworker/service_worker_response_info.mojom-blink.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -59,7 +60,8 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerDefaultType) {
   FetchResponseData* internal_response = CreateInternalResponse();
 
   internal_response->PopulateWebServiceWorkerResponse(web_response);
-  EXPECT_EQ(kWebServiceWorkerResponseTypeDefault, web_response.ResponseType());
+  EXPECT_EQ(mojom::ServiceWorkerResponseType::kDefault,
+            web_response.ResponseType());
   CheckHeaders(web_response);
 }
 
@@ -91,7 +93,8 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerBasicType) {
       internal_response->CreateBasicFilteredResponse();
 
   basic_response_data->PopulateWebServiceWorkerResponse(web_response);
-  EXPECT_EQ(kWebServiceWorkerResponseTypeBasic, web_response.ResponseType());
+  EXPECT_EQ(mojom::ServiceWorkerResponseType::kBasic,
+            web_response.ResponseType());
   CheckHeaders(web_response);
 }
 
@@ -198,7 +201,8 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerCORSType) {
       internal_response->CreateCORSFilteredResponse();
 
   cors_response_data->PopulateWebServiceWorkerResponse(web_response);
-  EXPECT_EQ(kWebServiceWorkerResponseTypeCORS, web_response.ResponseType());
+  EXPECT_EQ(mojom::ServiceWorkerResponseType::kCORS,
+            web_response.ResponseType());
   CheckHeaders(web_response);
 }
 
@@ -248,7 +252,8 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerOpaqueType) {
       internal_response->CreateOpaqueFilteredResponse();
 
   opaque_response_data->PopulateWebServiceWorkerResponse(web_response);
-  EXPECT_EQ(kWebServiceWorkerResponseTypeOpaque, web_response.ResponseType());
+  EXPECT_EQ(mojom::ServiceWorkerResponseType::kOpaque,
+            web_response.ResponseType());
   CheckHeaders(web_response);
 }
 
@@ -259,7 +264,7 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerOpaqueRedirectType) {
       internal_response->CreateOpaqueRedirectFilteredResponse();
 
   opaque_redirect_response_data->PopulateWebServiceWorkerResponse(web_response);
-  EXPECT_EQ(kWebServiceWorkerResponseTypeOpaqueRedirect,
+  EXPECT_EQ(mojom::ServiceWorkerResponseType::kOpaqueRedirect,
             web_response.ResponseType());
   CheckHeaders(web_response);
 }

@@ -337,7 +337,7 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
       response_type_(NOT_DETERMINED),
       is_started_(false),
       service_worker_response_type_(
-          blink::kWebServiceWorkerResponseTypeDefault),
+          blink::mojom::ServiceWorkerResponseType::kDefault),
       client_id_(client_id),
       blob_storage_context_(blob_storage_context),
       resource_context_(resource_context),
@@ -919,7 +919,7 @@ void ServiceWorkerURLRequestJob::OnStartCompleted() const {
               false /* was_fetched_via_foreign_fetch */,
               false /* was_fallback_required */,
               std::vector<GURL>() /* url_list_via_service_worker */,
-              blink::kWebServiceWorkerResponseTypeDefault,
+              blink::mojom::ServiceWorkerResponseType::kDefault,
               base::TimeTicks() /* service_worker_start_time */,
               base::TimeTicks() /* service_worker_ready_time */,
               false /* response_is_in_cache_storage */,

@@ -18,12 +18,12 @@ class WebServiceWorkerResponsePrivate
  public:
   WebServiceWorkerResponsePrivate()
       : status(0),
-        response_type(kWebServiceWorkerResponseTypeDefault),
+        response_type(mojom::ServiceWorkerResponseType::kDefault),
         error(kWebServiceWorkerResponseErrorUnknown) {}
   WebVector<WebURL> url_list;
   unsigned short status;
   WebString status_text;
-  WebServiceWorkerResponseType response_type;
+  mojom::ServiceWorkerResponseType response_type;
   HTTPHeaderMap headers;
   RefPtr<BlobDataHandle> blob_data_handle;
   WebServiceWorkerResponseError error;
@@ -68,11 +68,12 @@ const WebString& WebServiceWorkerResponse::StatusText() const {
 }
 
 void WebServiceWorkerResponse::SetResponseType(
-    WebServiceWorkerResponseType response_type) {
+    mojom::ServiceWorkerResponseType response_type) {
   private_->response_type = response_type;
 }
 
-WebServiceWorkerResponseType WebServiceWorkerResponse::ResponseType() const {
+mojom::ServiceWorkerResponseType WebServiceWorkerResponse::ResponseType()
+    const {
   return private_->response_type;
 }
 

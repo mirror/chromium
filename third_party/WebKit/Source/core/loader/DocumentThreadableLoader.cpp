@@ -887,7 +887,7 @@ void DocumentThreadableLoader::HandleResponse(
     // https://github.com/w3c/preload/issues/100 is addressed.
     if (request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
         response.ServiceWorkerResponseType() ==
-            kWebServiceWorkerResponseTypeOpaque) {
+            mojom::ServiceWorkerResponseType::kOpaque) {
       StringBuilder builder;
       CrossOriginAccessControl::AccessControlErrorString(
           builder, CrossOriginAccessControl::kInvalidResponse, response,

@@ -1,0 +1,21 @@
+module blink.mojom;
+
+// Describes the type of response served by a service worker.
+// These correspond to the response types from the Fetch spec:
+// https://fetch.spec.whatwg.org/#concept-response
+//
+// It's not obvious why only service worker uses these types today. Eventually
+// this enum could probably have a more generic name and live in a more generic
+// place.
+//
+// This enum is used in histograms. Append-only.
+enum ServiceWorkerResponseType {
+  kBasic,
+  kCORS,
+  kDefault,
+  kError,
+  kOpaque,
+  kOpaqueRedirect,
+  // Add a new type here, then update kLast and enums.xml.
+  kLast = kOpaqueRedirect
+};
