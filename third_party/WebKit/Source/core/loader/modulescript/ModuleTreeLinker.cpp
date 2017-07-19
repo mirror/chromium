@@ -172,6 +172,10 @@ void ModuleTreeLinker::FetchSelf(const ModuleScriptFetchRequest& request) {
   // If the caller of this algorithm specified custom perform the fetch steps,
   // pass those along while fetching a single module script.
   AdvanceState(State::kFetchingSelf);
+  if (ModuleScript* ms = modulator_->GetFetchedModuleScript(request.Url())) {
+    NotifyModuleLoadFinished(ms);
+    return;
+  }
   modulator_->FetchSingle(request, level_, this);
 
   // Step 2. Return from this algorithm, and run the following steps when
@@ -232,6 +236,8 @@ class ModuleTreeLinker::DependencyModuleClient : public ModuleTreeClient {
   void NotifyModuleTreeLoadFinished(ModuleScript*) override;
 
   Member<ModuleTreeLinker> module_tree_linker_;
+
+ public:
   Member<ModuleScript> result_;
 };
 
@@ -323,6 +329,12 @@ void ModuleTreeLinker::FetchDescendants() {
         DependencyModuleClient::Create(this);
     dependency_clients_.insert(dependency_client);
 
+    if (ModuleScript* dms = modulator_->GetFetchedModuleScript(urls[i])) {
+      dependency_client->result_ = dms;
+      NotifyOneDescendantFinished();
+      continue;
+    }
+
     ModuleScriptFetchRequest request(
         urls[i], module_script_->Nonce(), module_script_->ParserState(),
         module_script_->CredentialsMode(),
@@ -334,7 +346,7 @@ void ModuleTreeLinker::FetchDescendants() {
 
   // Asynchronously continue processing after NotifyOneDescendantFinished() is
   // called num_incomplete_descendants_ times.
-  CHECK_GT(num_incomplete_descendants_, 0u);
+  // CHECK_GT(num_incomplete_descendants_, 0u);
 }
 
 void ModuleTreeLinker::DependencyModuleClient::NotifyModuleTreeLoadFinished(

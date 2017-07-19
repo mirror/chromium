@@ -89,6 +89,7 @@ void ModuleMap::Entry::NotifyNewSingleModuleFinished(
   module_script_ = module_script;
   is_fetching_ = false;
 
+  printf("NotifyNewSingleModuleFinished clients_ %u\n", clients_.size());
   for (const auto& client : clients_) {
     DispatchFinishedNotificationAsync(client);
   }
