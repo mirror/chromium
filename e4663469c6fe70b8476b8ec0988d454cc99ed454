@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "758bf9c1_a8d62735",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T23:23:44Z",
+      "side": 1,
+      "message": "If you want shutdown to proceed even if there\u0027s a pending file dialog then you need CONTINUE_ON_SHUTDOWN (I know the nomenclature is confusing, it comes from the old SequencedWorkerPool and will be reworked after we get rid of some shutdown issues that make us even require 3 states).\n\nCONTINUE_ON_SHUTDOWN is the loosest shutdown mode in that it skips tasks on shutdown but also doesn\u0027t block shutdown if the task is in progress (SKIP_ON_SHUTDOWN blocks shutdown if the task is in progress). CONTINUE_ON_SHUTDOWN comes with a caveat that you must not use any global/static/non-Leaky Singletons state as your task may still be running after main() unwinds and those things have been uninitialized.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "e4663469c6fe70b8476b8ec0988d454cc99ed454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
