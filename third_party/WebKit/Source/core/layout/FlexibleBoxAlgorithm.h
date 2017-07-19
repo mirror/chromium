@@ -74,6 +74,34 @@ class FlexItem {
   bool frozen;
 };
 
+struct FlexLine {
+  void Reset() {
+    line_items.clear();
+    sum_flex_base_size = LayoutUnit();
+    total_flex_grow = total_flex_shrink = total_weighted_flex_shrink = 0;
+    sum_hypothetical_main_size = LayoutUnit();
+    cross_axis_offset = max_ascent = cross_axis_extent = LayoutUnit();
+  }
+
+  // These fields get filled in by ComputeNextFlexLine.
+  Vector<FlexItem> line_items;
+  LayoutUnit sum_flex_base_size;
+  double total_flex_grow;
+  double total_flex_shrink;
+  double total_weighted_flex_shrink;
+  // The hypothetical main size of an item is the flex base size clamped
+  // according to its min and max main size properties
+  LayoutUnit sum_hypothetical_main_size;
+
+  // These get filled in by LayoutAndPlaceChildren (for now)
+  // TODO(cbiesinger): Move that to FlexibleBoxAlgorithm.
+  LayoutUnit cross_axis_offset;
+  LayoutUnit max_ascent;
+  // Initialized by AlignFlexLines (for now)
+  // TODO(cbiesinger): Move that to FlexibleBoxAlgorithm.
+  LayoutUnit cross_axis_extent;
+};
+
 class FlexLayoutAlgorithm {
   WTF_MAKE_NONCOPYABLE(FlexLayoutAlgorithm);
 
@@ -82,15 +110,7 @@ class FlexLayoutAlgorithm {
                       LayoutUnit line_break_length,
                       const Vector<FlexItem>& all_items);
 
-  // The hypothetical main size of an item is the flex base size clamped
-  // according to its min and max main size properties
-  bool ComputeNextFlexLine(size_t& next_index,
-                           Vector<FlexItem>& line_items,
-                           LayoutUnit& sum_flex_base_size,
-                           double& total_flex_grow,
-                           double& total_flex_shrink,
-                           double& total_weighted_flex_shrink,
-                           LayoutUnit& sum_hypothetical_main_size);
+  bool ComputeNextFlexLine(size_t* next_index, FlexLine*);
 
  private:
   bool IsMultiline() const { return style_->FlexWrap() != EFlexWrap::kNowrap; }
