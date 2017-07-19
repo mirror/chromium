@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80b16d4e_c62d17b1",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5c3a02_f1960b7c",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daa8327b_af036325",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "88479ece_8a8f073b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daa8327b_af036325",
+      "range": {
+        "startLine": 24,
+        "startChar": 35,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066942d0_438851b5",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed95897_19136e28",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066942d0_438851b5",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "cf45350c_eddd7967",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "I have to keep this here because this class will be a friend of ArcPlayStoreSearchProvider, and ArcPlayStoreSearchProvider will be protected.\n\nOtherwise if I move it to the anonymous namespace and call it in the test body, it\u0027s actually called by a macro-generated class.",
+      "parentUuid": "d259f5a3_225aaaa5",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47ae4932_96e7aa3d",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79b633f_b5ffa37c",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf65b952_5754b2a3",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046a124d_574aab8c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf65b952_5754b2a3",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b61fbe45_4bdcfdd8",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90b99f51_5f6bdfc9",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 28
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4132ad0_5939de2d",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "01c4791a_e54430b2",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4132ad0_5939de2d",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d301e3dc_412bdec2",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -200,6 +392,24 @@
       "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1d8341_31799d0e",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d301e3dc_412bdec2",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "891eb98f_2b595995",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13ade779_6d880770",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84437af7_d4410dcf",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -234,6 +462,24 @@
       "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1eb094_79aa4beb",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84437af7_d4410dcf",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "1ccb6921_c8ac0d04",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ccf321c_6d40f1be",
+      "range": {
+        "startLine": 93,
+        "startChar": 14,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e12034bc_aeee0f1c",
         "filename": "components/arc/test/fake_app_instance.cc",
         "patchSetId": 2
@@ -280,6 +550,30 @@
       "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c18c20_4b554cee",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T20:05:59Z",
+      "side": 1,
+      "message": "Done. Sorry I\u0027m complicating things here too.",
+      "parentUuid": "e12034bc_aeee0f1c",
+      "range": {
+        "startLine": 293,
+        "startChar": 55,
+        "endLine": 294,
+        "endChar": 40
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
