@@ -48,7 +48,7 @@
 
 namespace blink {
 
-class BlobDataHandle;
+class CrossThreadBlobDataHandleData;
 class Transferables;
 class ExceptionState;
 class SharedBuffer;
@@ -56,7 +56,8 @@ class StaticBitmapImage;
 class UnpackedSerializedScriptValue;
 class WebBlobInfo;
 
-typedef HashMap<String, RefPtr<BlobDataHandle>> BlobDataHandleMap;
+typedef HashMap<String, std::unique_ptr<CrossThreadBlobDataHandleData>>
+    BlobDataHandleMap;
 typedef Vector<WebBlobInfo> WebBlobInfoArray;
 
 class CORE_EXPORT SerializedScriptValue

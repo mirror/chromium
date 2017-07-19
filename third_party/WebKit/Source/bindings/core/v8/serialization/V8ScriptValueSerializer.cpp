@@ -184,8 +184,8 @@ bool V8ScriptValueSerializer::WriteDOMObject(ScriptWrappable* wrappable,
           "A Blob object has been closed, and could therefore not be cloned.");
       return false;
     }
-    serialized_script_value_->BlobDataHandles().Set(blob->Uuid(),
-                                                    blob->GetBlobDataHandle());
+    serialized_script_value_->BlobDataHandles().Set(
+        blob->Uuid(), blob->GetBlobDataHandle()->CopyData());
     if (blob_info_array_) {
       size_t index = blob_info_array_->size();
       DCHECK_LE(index, std::numeric_limits<uint32_t>::max());
@@ -443,8 +443,8 @@ bool V8ScriptValueSerializer::WriteFile(File* file,
         "A File object has been closed, and could therefore not be cloned.");
     return false;
   }
-  serialized_script_value_->BlobDataHandles().Set(file->Uuid(),
-                                                  file->GetBlobDataHandle());
+  serialized_script_value_->BlobDataHandles().Set(
+      file->Uuid(), file->GetBlobDataHandle()->CopyData());
   if (blob_info_array_) {
     size_t index = blob_info_array_->size();
     DCHECK_LE(index, std::numeric_limits<uint32_t>::max());

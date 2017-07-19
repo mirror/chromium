@@ -138,8 +138,8 @@ bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
 
 void IDBValueWrapper::ExtractBlobDataHandles(
     Vector<RefPtr<BlobDataHandle>>* blob_data_handles) {
-  for (const auto& kvp : serialized_value_->BlobDataHandles())
-    blob_data_handles->push_back(kvp.value);
+  for (auto& kvp : serialized_value_->BlobDataHandles())
+    blob_data_handles->push_back(BlobDataHandle::Create(std::move(kvp.value)));
   if (wrapper_handle_)
     blob_data_handles->push_back(std::move(wrapper_handle_));
 }
