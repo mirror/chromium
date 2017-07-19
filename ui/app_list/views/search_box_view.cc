@@ -527,9 +527,16 @@ void SearchBoxView::ContentsChanged(views::Textfield* sender,
   view_delegate_->AutoLaunchCanceled();
   NotifyQueryChanged();
   if (is_fullscreen_app_list_enabled_) {
-    if (is_search_box_active_ == search_box_->text().empty())
-      SetSearchBoxActive(!search_box_->text().empty());
-    app_list_view_->SetStateFromSearchBoxView(search_box_->text().empty());
+    SetSearchBoxActive(!search_box_->text().empty());
+    // If the query is only whitespaces, don't transition the AppListView state.
+    bool all_whitespace_query = true;
+    for (auto c : search_box_->text()) {
+      if (c != ' ') {
+        all_whitespace_query = false;
+        break;
+      }
+    }
+    app_list_view_->SetStateFromSearchBoxView(all_whitespace_query);
   }
 }
 
