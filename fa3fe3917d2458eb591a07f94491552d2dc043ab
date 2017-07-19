@@ -22,6 +22,30 @@
       "revId": "fa3fe3917d2458eb591a07f94491552d2dc043ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1828a76_d90d4de6",
+        "filename": "services/video_capture/public/uma/video_capture_service_event.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-19T23:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff36fb0_438f98ae",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "fa3fe3917d2458eb591a07f94491552d2dc043ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
