@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b160ec1_2a1f8777",
+        "filename": "chrome/browser/ui/views/apps/app_window_easy_resize_window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T16:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bacec457_013d115b",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "816de2c5_3b062240",
         "filename": "ui/aura/window_targeter.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9a7032e1_20696b73",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T16:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "816de2c5_3b062240",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "606e6ab6_99268704",
         "filename": "ui/aura/window_targeter.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0a1265_e42ea5f1",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T16:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606e6ab6_99268704",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +154,24 @@
       "side": 1,
       "message": "Why does this need to be private?\n\nDo you mean the subclasses shouldn\u0027t be allowed to override this function? I think you want to mark this as \u0027final\u0027 (and from the doc I am reading, it sounds like you can just mark the function final in the header, and don\u0027t actually need to provide any code for it in .cc, but not sure about it).",
       "parentUuid": "cd313100_e22715d7",
+      "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efff4209_6ce5eba6",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-19T16:38:25Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the reason (explained in the header). I wanted EasyResizeWindowTargeter\u0027s subclasses to not be allowed to override EventLocationInsideBounds() (but other WindowTargeter\u0027s subclasses can and still do (e.g. Masked* or Custom* used for shaped windows or Exo).\n\nJust marking it final is apparently not enough, getting this:\n\neasy_resize_window_targeter.cc:vtable for wm::EasyResizeWindowTargeter: error: undefined reference to \u0027wm::EasyResizeWindowTargeter::EventLocationInsideBounds(aura::Window*, ui::LocatedEvent const\u0026) const\u0027",
+      "parentUuid": "26d594d8_b22b2246",
       "revId": "45a143d15ff64a58187caa58a57e5efd3e6faa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
