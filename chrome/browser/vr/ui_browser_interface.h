@@ -20,6 +20,8 @@ class UiBrowserInterface {
   virtual void NavigateBack() = 0;
   virtual void ExitCct() = 0;
   virtual void OnUnsupportedMode(UiUnsupportedMode mode) = 0;
+  virtual void OnExitVrPromptResult(UiUnsupportedMode reason,
+                                    bool should_exit) = 0;
 };
 
 }  // namespace vr

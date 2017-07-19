@@ -172,7 +172,8 @@ class VrShell : public device::GvrDelegate,
   void ForceExitVr();
   void ExitPresent();
   void ExitFullscreen();
-  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode);
+  void OnUnsupportedMode(vr::UiUnsupportedMode mode);
+  void OnExitVrPromptResult(vr::UiUnsupportedMode reason, bool should_exit);
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
@@ -211,6 +212,9 @@ class VrShell : public device::GvrDelegate,
   void PollMediaAccessFlag();
 
   bool HasDaydreamSupport(JNIEnv* env);
+
+  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode,
+                                  bool show_exit_warning);
 
   bool vr_shell_enabled_;
 
