@@ -25,6 +25,98 @@
     },
     {
       "key": {
+        "uuid": "ed0df161_11b5e213",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "Seems like this is the central class for the API. I\u0027d appreciate a small diagram in the comment here of what the flow is. E.g.\n\nHow a call is handled:\nJS -\u003e CRWWebController -\u003e CredentialManager -\u003e (password store request, UI brought up)\n\nHow a value is returned\n(UI or other callback) -\u003e CredentialManager -\u003e JSCredentialManager -\u003e JS",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ea6775_fd549900",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d9515f_56155f84",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "no need for {}",
+      "range": {
+        "startLine": 19,
+        "startChar": 53,
+        "endLine": 19,
+        "endChar": 54
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03c0ea4_4e3b3d31",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "Who will own the object?",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c535da0f_14e2e4d3",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
         "patchSetId": 6
@@ -41,6 +133,29 @@
         "startChar": 11,
         "endLine": 20,
         "endChar": 29
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb0f088_c312177c",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "Please make sure that you have a feature already in this CL. We don\u0027t want to inject navigator.credentials everywhere before it fully works. It may break some existing sites.",
+      "range": {
+        "startLine": 170,
+        "startChar": 26,
+        "endLine": 170,
+        "endChar": 33
       },
       "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +186,29 @@
     },
     {
       "key": {
+        "uuid": "eeb30a16_50d1a5a0",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "Is it how \u0027git cl format\u0027 wants it to look like.",
+      "range": {
+        "startLine": 172,
+        "startChar": 40,
+        "endLine": 172,
+        "endChar": 53
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "314fd73f_cb4637fa",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 6
@@ -87,6 +225,29 @@
         "startChar": 18,
         "endLine": 174,
         "endChar": 36
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd30450e_d813e1d5",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:42:43Z",
+      "side": 1,
+      "message": "What is this?",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 12
       },
       "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
