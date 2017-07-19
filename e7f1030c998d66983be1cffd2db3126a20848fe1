@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "08ab8417_b3b511c7",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLPreloadScanner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-19T01:46:43Z",
+      "side": 1,
+      "message": "Oh, I see.",
+      "parentUuid": "a0e6b98a_fe92d0b6",
+      "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db7d7e09_952e3aed",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Wow. Thank you for that detailed information. I am saddened that tests did not catch all these errors :(\n\nThis patch is not urgent. Your plan sounds good to me.",
       "parentUuid": "db7d7e09_952e3aed",
+      "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b3bea8_cc478bae",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-19T01:46:43Z",
+      "side": 1,
+      "message": "I filed crbug.com/746115 and start working on it.",
+      "parentUuid": "e77f2306_5c843969",
       "revId": "e7f1030c998d66983be1cffd2db3126a20848fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
