@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298ba176_4bd427fa",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T16:36:35Z",
+      "side": 1,
+      "message": "Typo: using.",
+      "revId": "6ec76a07058537582647ac684b7d977689444f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9715c2_2f28fd8b",
+        "filename": "ios/chrome/browser/ui/commands/reading_list_add_command.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T16:36:35Z",
+      "side": 1,
+      "message": "So this class becomes a POD that stores the URL and title, but doesn\u0027t do anything else?\n\nAs potential followups, we could either:\n1) Subclass NSObject instead of GenericChromeCommand.\n2) Change the dispatch method to take a url and title directly, instead of stuffing them into an object.",
+      "revId": "6ec76a07058537582647ac684b7d977689444f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
