@@ -557,6 +557,12 @@ class PLATFORM_EXPORT ThreadState {
     return &FromObject(object)->Heap() == &Heap();
   }
 
+  void SetIncrementalMarking(bool value) { incremental_marking_ = value; }
+
+  bool IncrementalMarking() const { return incremental_marking_; }
+
+  void PushWithoutMarking(const void*);
+
  private:
   template <typename T>
   friend class PrefinalizerRegistration;
@@ -647,6 +653,8 @@ class PLATFORM_EXPORT ThreadState {
   BlinkGC::StackState stack_state_;
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;
+  bool incremental_marking_;
+  Vector<const void*> marking_worklist_;
 
   void* safe_point_scope_marker_;
   Vector<Address> safe_point_stack_copy_;

@@ -85,6 +85,7 @@ class MemberBase {
   template <typename U>
   MemberBase& operator=(const Persistent<U>& other) {
     raw_ = other;
+    WriteBarrier(raw_);
     CheckPointer();
     return *this;
   }
@@ -92,6 +93,7 @@ class MemberBase {
   template <typename U>
   MemberBase& operator=(const MemberBase<U>& other) {
     raw_ = other;
+    WriteBarrier(raw_);
     CheckPointer();
     return *this;
   }
@@ -99,12 +101,14 @@ class MemberBase {
   template <typename U>
   MemberBase& operator=(U* other) {
     raw_ = other;
+    WriteBarrier(raw_);
     CheckPointer();
     return *this;
   }
 
   MemberBase& operator=(std::nullptr_t) {
     raw_ = nullptr;
+    WriteBarrier(raw_);
     return *this;
   }
 
@@ -174,6 +178,25 @@ class MemberBase {
       DCHECK(creation_thread_state_ || !raw_);
     }
 #endif
+  }
+
+  // TODO(mlippautz): should also consider markbits of |source|.
+  void WriteBarrier(T* value) {
+    if (value) {
+#if DCHECK_IS_ON()
+      HeapObjectHeader::CheckFromPayload(value);
+#endif
+      ThreadState* const state = ThreadState::Current();
+      if (state->IncrementalMarking()) {
+        bool source_header_marked = true;
+        const HeapObjectHeader* const value_header =
+            HeapObjectHeader::FromPayload(value);
+        if (source_header_marked && !value_header->IsMarked()) {
+          // TODO(mlippautz): Value should be marked here.
+          state->PushWithoutMarking(value);
+        }
+      }
+    }
   }
 
   T* raw_;

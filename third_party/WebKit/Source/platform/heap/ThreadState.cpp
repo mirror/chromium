@@ -108,6 +108,7 @@ ThreadState::ThreadState()
       persistent_region_(WTF::MakeUnique<PersistentRegion>()),
       start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
+      incremental_marking_(true),
       safe_point_scope_marker_(nullptr),
       sweep_forbidden_(false),
       no_allocation_count_(0),
@@ -291,6 +292,13 @@ void ThreadState::VisitStack(Visitor* visitor) {
 #endif
     heap_->CheckAndMarkPointer(visitor, ptr);
     VisitAsanFakeStackForPointer(visitor, ptr);
+  }
+}
+
+void ThreadState::PushWithoutMarking(const void* object) {
+  marking_worklist_.push_back(object);
+  if (marking_worklist_.size() == 128) {
+    marking_worklist_.clear();
   }
 }
 
