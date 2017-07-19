@@ -16,6 +16,24 @@
       "revId": "94f1a4a035f7a67109d801a582bee047ea828421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f22cae4_a2023252",
+        "filename": "components/offline_pages/core/snapshot_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-19T20:10:14Z",
+      "side": 1,
+      "message": "\u003e It is not very clear why this client is separate form the Client. In reality, they are probably always the same object.\n\nThey won\u0027t be. The intention is that the PageRenovator will implement the RenovationClient interface. Then offliners wishing to use renovations will simply need to construct a PageRenovator and pass it to the SnapshotController. This relieves the offliner of the duty of forwarding the RunRenovations call to the PageRenovator, and forwarding the PageRenovator\u0027s completion callback to the SnapshotController.\n\n\u003e Also, there is a mismatch of callback mechanism: Client is supposed to call SnapshotController::PreviousSnapshotCompleted() when it\u0027s done with snapshot, while the RenovationClient is supposed to invoke a callback. This is inconsistent.\n\nI did this to loosen the coupling between the PageRenovator and the SnapshotController. Having the PageRenovator hold a reference to the SnapshotController creates a circular dependency that makes initialization a pain, and makes testing hard.\n\n\u003e Also, it looks that RenovationClient should not be optional. If SbnapshotController has to produce RunRenovations call, it should always do that, and leave it up to client to act upon it or not.\n\nWith the PageRenovator implementing RenovationClient, making it not optional seems like a bad idea. It would force offliners that don\u0027t run renovations to construct a PageRenovator anyway.\n\n\u003e Also, the \"otherwise a snapshot will be taken after the given timeout\" seems to create a flaky conditions that would depend on speeds of CPU/Network etc. It creates a race between 2 triggers. At the level of interface, there should be only one trigger.\n\nThis might be less of a concern after my reply to your first comment. I\u0027m not sure what another option would be; there needs to be a timeout since we don\u0027t want to wait indefinitely for the renovations to complete.",
+      "parentUuid": "c31bcbc7_db691b5c",
+      "revId": "94f1a4a035f7a67109d801a582bee047ea828421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
