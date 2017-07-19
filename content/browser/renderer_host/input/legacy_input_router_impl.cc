@@ -277,6 +277,12 @@ void LegacyInputRouterImpl::OnTouchEventAck(
 
   // Reset the touch action at the end of a touch-action sequence.
   if (WebTouchEventTraits::IsTouchSequenceEnd(event.event)) {
+    // Report how often the effective touch action computed by blink is or is
+    // not equivalent to the whitelisted touch action computed by the
+    // compositor.
+    UMA_HISTOGRAM_BOOLEAN("TouchAction.EquivalentEffectiveAndWhiteListed",
+                          touch_action_filter_.allowed_touch_action() ==
+                              touch_action_filter_.white_listed_touch_action());
     touch_action_filter_.ResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }

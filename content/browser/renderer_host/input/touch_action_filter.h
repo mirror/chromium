@@ -44,6 +44,9 @@ class CONTENT_EXPORT TouchActionFilter {
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action);
 
   cc::TouchAction allowed_touch_action() const { return allowed_touch_action_; }
+  cc::TouchAction white_listed_touch_action() const {
+    return white_listed_touch_action_;
+  }
 
  private:
   bool ShouldSuppressManipulation(const blink::WebGestureEvent&);

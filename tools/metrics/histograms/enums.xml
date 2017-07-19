@@ -9232,6 +9232,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="29" label="X25519"/>
 </enum>
 
+<enum name="EffectiveAndWhiteListed">
+  <int value="0" label="Different effective and whitelisted touch actions"/>
+  <int value="1" label="Equivalent effective and white listed touch actions"/>
+</enum>
+
 <enum name="EGLDisplayType">
   <int value="0" label="Default"/>
   <int value="1" label="SwiftShader"/>
