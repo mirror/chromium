@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
@@ -80,7 +81,7 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
 
-  std::unique_ptr<cc::BeginFrameSource> begin_frame_source;
+  std::unique_ptr<BeginFrameSource> begin_frame_source;
   auto display = display_provider_->CreateDisplay(frame_sink_id, surface_handle,
                                                   &begin_frame_source);
 
@@ -121,7 +122,7 @@ void FrameSinkManagerImpl::RegisterFrameSinkHierarchy(
 
   // If the parent has no source, then attaching it to this child will
   // not change any downstream sources.
-  cc::BeginFrameSource* parent_source =
+  viz::BeginFrameSource* parent_source =
       frame_sink_source_map_[parent_frame_sink_id].source;
   if (!parent_source)
     return;
@@ -165,7 +166,7 @@ void FrameSinkManagerImpl::UnregisterFrameSinkHierarchy(
 
   // If the parent does not have a begin frame source, then disconnecting it
   // will not change any of its children.
-  cc::BeginFrameSource* parent_source = iter->second.source;
+  viz::BeginFrameSource* parent_source = iter->second.source;
   if (!parent_source)
     return;
 
@@ -207,7 +208,7 @@ void FrameSinkManagerImpl::UnregisterFrameSinkManagerClient(
 }
 
 void FrameSinkManagerImpl::RegisterBeginFrameSource(
-    cc::BeginFrameSource* source,
+    viz::BeginFrameSource* source,
     const FrameSinkId& frame_sink_id) {
   DCHECK(source);
   DCHECK_EQ(registered_sources_.count(source), 0u);
@@ -219,7 +220,7 @@ void FrameSinkManagerImpl::RegisterBeginFrameSource(
 }
 
 void FrameSinkManagerImpl::UnregisterBeginFrameSource(
-    cc::BeginFrameSource* source) {
+    viz::BeginFrameSource* source) {
   DCHECK(source);
   DCHECK_EQ(registered_sources_.count(source), 1u);
 
@@ -240,13 +241,13 @@ void FrameSinkManagerImpl::UnregisterBeginFrameSource(
     RecursivelyAttachBeginFrameSource(source_iter.second, source_iter.first);
 }
 
-cc::BeginFrameSource* FrameSinkManagerImpl::GetPrimaryBeginFrameSource() {
+viz::BeginFrameSource* FrameSinkManagerImpl::GetPrimaryBeginFrameSource() {
   return &primary_source_;
 }
 
 void FrameSinkManagerImpl::RecursivelyAttachBeginFrameSource(
     const FrameSinkId& frame_sink_id,
-    cc::BeginFrameSource* source) {
+    viz::BeginFrameSource* source) {
   FrameSinkSourceMapping& mapping = frame_sink_source_map_[frame_sink_id];
   if (!mapping.source) {
     mapping.source = source;
@@ -266,7 +267,7 @@ void FrameSinkManagerImpl::RecursivelyAttachBeginFrameSource(
 
 void FrameSinkManagerImpl::RecursivelyDetachBeginFrameSource(
     const FrameSinkId& frame_sink_id,
-    cc::BeginFrameSource* source) {
+    viz::BeginFrameSource* source) {
   auto iter = frame_sink_source_map_.find(frame_sink_id);
   if (iter == frame_sink_source_map_.end())
     return;
@@ -319,7 +320,7 @@ void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceInfo& surface_info) {
 }
 
 bool FrameSinkManagerImpl::OnSurfaceDamaged(const SurfaceId& surface_id,
-                                            const cc::BeginFrameAck& ack) {
+                                            const BeginFrameAck& ack) {
   return false;
 }
 
@@ -327,9 +328,9 @@ void FrameSinkManagerImpl::OnSurfaceDiscarded(const SurfaceId& surface_id) {}
 
 void FrameSinkManagerImpl::OnSurfaceDestroyed(const SurfaceId& surface_id) {}
 
-void FrameSinkManagerImpl::OnSurfaceDamageExpected(
-    const SurfaceId& surface_id,
-    const cc::BeginFrameArgs& args) {}
+void FrameSinkManagerImpl::OnSurfaceDamageExpected(const SurfaceId& surface_id,
+                                                   const BeginFrameArgs& args) {
+}
 
 void FrameSinkManagerImpl::OnSurfaceWillDraw(const SurfaceId& surface_id) {}
 

@@ -17,9 +17,9 @@
 #include "cc/output/renderer_settings.h"
 #include "cc/output/software_renderer.h"
 #include "cc/output/texture_mailbox_deleter.h"
-#include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "components/viz/service/display/surface_aggregator.h"
@@ -376,14 +376,14 @@ void Display::DidReceiveTextureInUseResponses(
 void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
   aggregator_->SetFullDamageForSurface(current_surface_id_);
   if (scheduler_) {
-    cc::BeginFrameAck ack;
+    BeginFrameAck ack;
     ack.has_damage = true;
     scheduler_->ProcessSurfaceDamage(current_surface_id_, ack, true);
   }
 }
 
 bool Display::SurfaceDamaged(const SurfaceId& surface_id,
-                             const cc::BeginFrameAck& ack) {
+                             const BeginFrameAck& ack) {
   bool display_damaged = false;
   if (ack.has_damage) {
     if (aggregator_ &&

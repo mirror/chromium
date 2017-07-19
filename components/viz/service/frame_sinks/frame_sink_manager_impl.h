@@ -25,8 +25,6 @@
 
 namespace cc {
 
-class BeginFrameSource;
-
 namespace test {
 class SurfaceSynchronizationTest;
 }
@@ -35,6 +33,7 @@ class SurfaceSynchronizationTest;
 
 namespace viz {
 
+class BeginFrameSource;
 class DisplayProvider;
 class FrameSinkManagerClient;
 
@@ -99,24 +98,24 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // Associates a |source| with a particular framesink.  That framesink and
   // any children of that framesink with valid clients can potentially use
   // that |source|.
-  void RegisterBeginFrameSource(cc::BeginFrameSource* source,
+  void RegisterBeginFrameSource(viz::BeginFrameSource* source,
                                 const FrameSinkId& frame_sink_id);
-  void UnregisterBeginFrameSource(cc::BeginFrameSource* source);
+  void UnregisterBeginFrameSource(viz::BeginFrameSource* source);
 
   // Returns a stable BeginFrameSource that forwards BeginFrames from the first
   // available BeginFrameSource.
-  cc::BeginFrameSource* GetPrimaryBeginFrameSource();
+  viz::BeginFrameSource* GetPrimaryBeginFrameSource();
 
   cc::SurfaceManager* surface_manager() { return &surface_manager_; }
 
   // cc::SurfaceObserver implementation.
   void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
   bool OnSurfaceDamaged(const SurfaceId& surface_id,
-                        const cc::BeginFrameAck& ack) override;
+                        const BeginFrameAck& ack) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
   void OnSurfaceDestroyed(const SurfaceId& surface_id) override;
   void OnSurfaceDamageExpected(const SurfaceId& surface_id,
-                               const cc::BeginFrameArgs& args) override;
+                               const BeginFrameArgs& args) override;
   void OnSurfaceWillDraw(const SurfaceId& surface_id) override;
 
   void OnClientConnectionLost(const FrameSinkId& frame_sink_id);
@@ -133,9 +132,9 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   friend class cc::test::SurfaceSynchronizationTest;
 
   void RecursivelyAttachBeginFrameSource(const FrameSinkId& frame_sink_id,
-                                         cc::BeginFrameSource* source);
+                                         viz::BeginFrameSource* source);
   void RecursivelyDetachBeginFrameSource(const FrameSinkId& frame_sink_id,
-                                         cc::BeginFrameSource* source);
+                                         viz::BeginFrameSource* source);
 
   // Returns true if |child framesink| is or has |search_frame_sink_id| as a
   // child.
@@ -151,7 +150,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
     ~FrameSinkSourceMapping();
     bool has_children() const { return !children.empty(); }
     // The currently assigned begin frame source for this client.
-    cc::BeginFrameSource* source = nullptr;
+    viz::BeginFrameSource* source = nullptr;
     // This represents a dag of parent -> children mapping.
     std::vector<FrameSinkId> children;
   };
@@ -166,7 +165,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // Set of BeginFrameSource along with associated FrameSinkIds. Any child
   // that is implicitly using this framesink must be reachable by the
   // parent in the dag.
-  std::unordered_map<cc::BeginFrameSource*, FrameSinkId> registered_sources_;
+  std::unordered_map<viz::BeginFrameSource*, FrameSinkId> registered_sources_;
 
   PrimaryBeginFrameSource primary_source_;
 

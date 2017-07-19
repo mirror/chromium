@@ -11,6 +11,12 @@ viz_component("common") {
   defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
 
   sources = [
+    "begin_frame_args.cc",
+    "begin_frame_args.h",
+    "begin_frame_source.cc",
+    "begin_frame_source.h",
+    "delay_based_time_source.cc",
+    "delay_based_time_source.h",
     "gl_helper.cc",
     "gl_helper.h",
     "gl_helper_readback_support.cc",
@@ -82,6 +88,10 @@ viz_component("common") {
 viz_source_set("unit_tests") {
   testonly = true
   sources = [
+    "begin_frame_args_unittest.cc",
+    "begin_frame_source_test_unittest.cc",
+    "begin_frame_source_unittest.cc",
+    "delay_based_time_source_unittest.cc",
     "gl_helper_unittest.cc",
     "resources/buffer_to_texture_target_map_unittest.cc",
     "resources/platform_color_unittest.cc",
@@ -97,6 +107,7 @@ viz_source_set("unit_tests") {
     "//gpu/ipc:gl_in_process_context",
     "//gpu/ipc/common:surface_handle_type",
     "//media",
+    "//testing/gmock",
     "//testing/gtest",
   ]
 }

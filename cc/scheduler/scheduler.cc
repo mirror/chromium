@@ -18,7 +18,7 @@
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/debug/traced_value.h"
 #include "cc/scheduler/compositor_timing_history.h"
-#include "cc/scheduler/delay_based_time_source.h"
+#include "components/viz/common/delay_based_time_source.h"
 
 namespace cc {
 
@@ -101,7 +101,7 @@ void Scheduler::NotifyReadyToDraw() {
   ProcessScheduledActions();
 }
 
-void Scheduler::SetBeginFrameSource(BeginFrameSource* source) {
+void Scheduler::SetBeginFrameSource(viz::BeginFrameSource* source) {
   if (source == begin_frame_source_)
     return;
   if (begin_frame_source_ && observing_begin_frame_source_)
@@ -268,7 +268,7 @@ void Scheduler::OnBeginFrameSourcePausedChanged(bool paused) {
 // making a frame. Usually this means that user input for the frame is complete.
 // If the scheduler is busy, we queue the BeginFrame to be handled later as
 // a BeginRetroFrame.
-bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
+bool Scheduler::OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) {
   TRACE_EVENT1("cc,benchmark", "Scheduler::BeginFrame", "args", args.AsValue());
 
   // TEMPORARY: Compositor state for debugging BeginMainFrame renderer hang.
@@ -287,8 +287,8 @@ bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
 
   // Trace this begin frame time through the Chrome stack
   TRACE_EVENT_FLOW_BEGIN0(
-      TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"), "BeginFrameArgs",
-      args.frame_time.ToInternalValue());
+      TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"),
+      "viz::BeginFrameArgs", args.frame_time.ToInternalValue());
 
   if (settings_.using_synchronous_renderer_compositor) {
     BeginImplFrameSynchronous(args);
@@ -298,7 +298,7 @@ bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   if (inside_process_scheduled_actions_) {
     // The BFS can send a missed begin frame inside AddObserver. We can't handle
     // a begin frame inside ProcessScheduledActions so post a task.
-    DCHECK_EQ(args.type, BeginFrameArgs::MISSED);
+    DCHECK_EQ(args.type, viz::BeginFrameArgs::MISSED);
     DCHECK(missed_begin_frame_task_.IsCancelled());
     missed_begin_frame_task_.Reset(base::Bind(
         &Scheduler::BeginImplFrameWithDeadline, base::Unretained(this), args));
@@ -330,10 +330,10 @@ void Scheduler::OnDrawForLayerTreeFrameSink(bool resourceless_software_draw) {
   state_machine_.SetResourcelessSoftwareDraw(false);
 }
 
-void Scheduler::BeginImplFrameWithDeadline(const BeginFrameArgs& args) {
+void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   // The storage for |args| is owned by the missed begin frame task. Therefore
   // save |args| before cancelling the task either here or in the deadline.
-  BeginFrameArgs adjusted_args = args;
+  viz::BeginFrameArgs adjusted_args = args;
   // Cancel the missed begin frame task in case the BFS sends a begin frame
   // before the missed frame task runs.
   missed_begin_frame_task_.Cancel();
@@ -341,7 +341,7 @@ void Scheduler::BeginImplFrameWithDeadline(const BeginFrameArgs& args) {
   base::TimeTicks now = Now();
 
   // Discard missed begin frames if they are too late.
-  if (adjusted_args.type == BeginFrameArgs::MISSED &&
+  if (adjusted_args.type == viz::BeginFrameArgs::MISSED &&
       now > adjusted_args.deadline) {
     skipped_last_frame_missed_exceeded_deadline_ = true;
     SendBeginFrameAck(adjusted_args, kBeginFrameSkipped);
@@ -426,7 +426,7 @@ void Scheduler::BeginImplFrameWithDeadline(const BeginFrameArgs& args) {
   BeginImplFrame(adjusted_args, now);
 }
 
-void Scheduler::BeginImplFrameSynchronous(const BeginFrameArgs& args) {
+void Scheduler::BeginImplFrameSynchronous(const viz::BeginFrameArgs& args) {
   TRACE_EVENT1("cc,benchmark", "Scheduler::BeginImplFrame", "args",
                args.AsValue());
   // The main thread currently can't commit before we draw with the
@@ -450,7 +450,7 @@ void Scheduler::FinishImplFrame() {
   begin_impl_frame_tracker_.Finish();
 }
 
-void Scheduler::SendBeginFrameAck(const BeginFrameArgs& args,
+void Scheduler::SendBeginFrameAck(const viz::BeginFrameArgs& args,
                                   BeginFrameResult result) {
   bool did_submit = false;
   if (result == kBeginFrameFinished)
@@ -458,7 +458,7 @@ void Scheduler::SendBeginFrameAck(const BeginFrameArgs& args,
 
   if (!did_submit) {
     client_->DidNotProduceFrame(
-        BeginFrameAck(args.source_id, args.sequence_number, did_submit));
+        viz::BeginFrameAck(args.source_id, args.sequence_number, did_submit));
   }
 
   if (begin_frame_source_)
@@ -468,7 +468,7 @@ void Scheduler::SendBeginFrameAck(const BeginFrameArgs& args,
 // BeginImplFrame starts a compositor frame that will wait up until a deadline
 // for a BeginMainFrame+activation to complete before it times out and draws
 // any asynchronous animation and scroll/pinch updates.
-void Scheduler::BeginImplFrame(const BeginFrameArgs& args,
+void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
                                base::TimeTicks now) {
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
@@ -787,7 +787,7 @@ void Scheduler::UpdateCompositorTimingHistoryRecordingEnabled() {
 }
 
 bool Scheduler::ShouldRecoverMainLatency(
-    const BeginFrameArgs& args,
+    const viz::BeginFrameArgs& args,
     bool can_activate_before_deadline) const {
   DCHECK(!settings_.using_synchronous_renderer_compositor);
 
@@ -807,7 +807,7 @@ bool Scheduler::ShouldRecoverMainLatency(
 }
 
 bool Scheduler::ShouldRecoverImplLatency(
-    const BeginFrameArgs& args,
+    const viz::BeginFrameArgs& args,
     bool can_activate_before_deadline) const {
   DCHECK(!settings_.using_synchronous_renderer_compositor);
 
@@ -847,7 +847,7 @@ bool Scheduler::ShouldRecoverImplLatency(
 }
 
 bool Scheduler::CanBeginMainFrameAndActivateBeforeDeadline(
-    const BeginFrameArgs& args,
+    const viz::BeginFrameArgs& args,
     base::TimeDelta bmf_to_activate_estimate,
     base::TimeTicks now) const {
   // Check if the main thread computation and commit can be finished before the
@@ -864,9 +864,9 @@ bool Scheduler::IsBeginMainFrameSentOrStarted() const {
               SchedulerStateMachine::BEGIN_MAIN_FRAME_STATE_STARTED);
 }
 
-BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
-  return BeginFrameAck(begin_main_frame_args_.source_id,
-                       begin_main_frame_args_.sequence_number, true);
+viz::BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
+  return viz::BeginFrameAck(begin_main_frame_args_.source_id,
+                            begin_main_frame_args_.sequence_number, true);
 }
 
 }  // namespace cc

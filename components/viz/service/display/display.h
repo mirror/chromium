@@ -11,8 +11,8 @@
 #include "base/macros.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/resources/returned_resource.h"
-#include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/surface_manager.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -79,7 +79,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   bool DrawAndSwap() override;
   bool SurfaceHasUndrawnFrame(const SurfaceId& surface_id) const override;
   bool SurfaceDamaged(const SurfaceId& surface_id,
-                      const cc::BeginFrameAck& ack) override;
+                      const BeginFrameAck& ack) override;
   void SurfaceDiscarded(const SurfaceId& surface_id) override;
 
   // OutputSurfaceClient implementation.
