@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31f293d_cf664632",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T19:18:41Z",
+      "side": 1,
+      "message": "FYI there is an easier way of creating table rows without having to reconstruct them from scratch every time, using \u003ctemplate\u003e. See example at https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#Example, and another example from Chromium code at https://cs.chromium.org/chromium/src/chrome/browser/resources/media/media_engagement.js?l\u003d27-40.",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
