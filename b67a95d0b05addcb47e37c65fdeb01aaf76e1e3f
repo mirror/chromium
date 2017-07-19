@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745653a0_9f6ff918",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-19T22:19:53Z",
+      "side": 1,
+      "message": "missing the second value (|file_index| here)?",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ecd477_2c590861",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-19T22:19:53Z",
+      "side": 1,
+      "message": "nit: s/course/coarse",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23585b2d_faac9225",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-19T22:19:53Z",
+      "side": 1,
+      "message": "nit: maybe rephrase this to \n\"Failed reading \\\"constants.json\\\".\\n\"\nto be consistent with error messages for event file and end_netlog.json.",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a308e38_80012252",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-19T22:19:53Z",
+      "side": 1,
+      "message": "nit: s/end_netlog/end_netlog.json",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
