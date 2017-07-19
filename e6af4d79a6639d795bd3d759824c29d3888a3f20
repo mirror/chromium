@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cdec74_6b3f0fab",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T16:27:02Z",
+      "side": 1,
+      "message": "I guess we need to update the  widget size + gpu buffer size when the display size changed?",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "e6af4d79a6639d795bd3d759824c29d3888a3f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1debb217_52348b6c",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T16:27:02Z",
+      "side": 1,
+      "message": "same here. scale factor may change during runtime.",
+      "revId": "e6af4d79a6639d795bd3d759824c29d3888a3f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
