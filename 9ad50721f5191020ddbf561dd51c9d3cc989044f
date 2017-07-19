@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5242ea6_f188b234",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "HideExitVrPrompt(), to mirror Show?  Or, as we have so many Set..(enabled) calls, how about SetExitVrPromptEnabled(enabled, reason)?  Can just pass a dummy reason if disabling?  It\u0027d be one less interface method and cross-thread post helper...  thoughts?",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6131cf_73f7f40e",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "This should set_dirty() if the ID changes.",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff54d20a_25361b94",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Could do like around line 197 if you wanted to keep the element-\u003e look for consistency (optional).",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b3a370_4daa2a87",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Why DCHECK?  Couldn\u0027t we fail for multiple reasons?  Maybe just return if already prompting?",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e23b854_b45ec5d4",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Should either have this value here or in the switch, but not both.  I think the switch is cleaner.",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99d52c5_eeb4e053",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "content_ in this context means the content quad.  How about just string_id?",
+      "range": {
+        "startLine": 646,
+        "startChar": 36,
+        "endLine": 646,
+        "endChar": 54
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe378a91_b9320bf7",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "This will likely rebase away.",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f91e30_cbdf2f3d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Probably better to have one bound call to the prompt, to OnExitPromptChoice(bool exit);  Doesn\u0027t seem like there\u0027s value in two calls (here or for the testing wrappers).",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc70164_828f0705",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Can this be -1?  Will the type allow it?  It\u0027s not great to set it to a valid failure mode, IMO.",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 44
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4baaedef_998116a6",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T19:34:51Z",
+      "side": 1,
+      "message": "Times(1) is the default I believe - not required.",
+      "range": {
+        "startLine": 363,
+        "startChar": 7,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
