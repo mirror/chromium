@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e2fd67c_4644d77f",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbcc94cb_5e6c82ec",
+      "range": {
+        "startLine": 1924,
+        "startChar": 2,
+        "endLine": 1927,
+        "endChar": 3
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec2dadc_400f5745",
         "filename": "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2a6ee30_e48f8edc",
+        "filename": "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec2dadc_400f5745",
+      "range": {
+        "startLine": 78,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad726c6a_36ea157e",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7b6b0d_3890849c",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad726c6a_36ea157e",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "cc6f1f514f850b058af7315ff5bd8a149d4f3a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

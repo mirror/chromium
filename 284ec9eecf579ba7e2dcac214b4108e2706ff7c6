@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b74894fe_9bce9431",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "I went with \"sign-in\", just to be contrary.",
+      "parentUuid": "1364bade_c6417d08",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f44033_347f869a",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T09:18:23Z",
       "side": 1,
       "message": "Why the behavior change here, to reuse the existing settings controller instead of dropping the request?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513b05f6_278688cf",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "Before this change, if the settings nav controller was in the responder chain, it would handle the IDC command; under that scenario, having MainController handle the command would be wrong, so it was dropped. Since we can only dispatch commands to one place, the options were (a) to dynamically change the dispatch target when settings were opened and closed, which seemed like a bug-magnet, or (b) just have MC forward things that settings can handle when settings is up.",
+      "parentUuid": "b8f44033_347f869a",
       "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "580eb931_cf883840",
+        "filename": "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "It has subclasses that do -- the signin promo view controller and the first run signin view controller. My approach has been to move the dispatcher to the superclass if more than one subclass needs it.\n\n(I actually noticed this in my self review pass when writing the CL description and had the same initial reaction before I checked everything else).",
+      "parentUuid": "c72d60dd_9fc1320f",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bf3fe98_f8d4bc52",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b644d86_76050ef0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bf3fe98_f8d4bc52",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a9a51410_a95a2c5f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "It is allowed to be nil (this happens during testing). CommandDispatcher handily stores dispatch targets in a std::unordered_map, which is quite happy with nil values. I think that returning nil from -forwardingTargetForSelector just stops message dispatch.",
+      "parentUuid": "1272a737_c0d14e61",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e28ce83_c404347d",
         "filename": "ios/chrome/browser/ui/promos/signin_promo_view_controller.h",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-19T09:18:23Z",
       "side": 1,
       "message": "Is this necessary?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0c2bbe_50ed1d7e",
+        "filename": "ios/chrome/browser/ui/promos/signin_promo_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T09:53:52Z",
+      "side": 1,
+      "message": "It\u0027s just alphabetizing the forward declarations, not adding a new one.",
+      "parentUuid": "6e28ce83_c404347d",
       "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
