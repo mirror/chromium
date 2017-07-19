@@ -198,6 +198,10 @@ class DISPLAY_EXPORT Display final {
     color_space_ = color_space;
   }
 
+  // Set color depth and depth per component to values that indicate HDR
+  // capability to media query APIs.
+  void SetHDRCapable();
+
   // The number of bits per pixel. Used by media query APIs.
   int color_depth() const { return color_depth_; }
   void set_color_depth(int color_depth) {

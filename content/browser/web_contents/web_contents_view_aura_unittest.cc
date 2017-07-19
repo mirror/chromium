@@ -41,7 +41,7 @@ TEST_F(WebContentsViewAuraTest, ScreenInfoColorDepth) {
   EXPECT_EQ(8u, screen_info.depth_per_component);
 }
 
-// This test class is used when we want to have the kEnableHDROutput flag on.
+// This test class is used when we want to have the kEnableHDR flag on.
 class WebContentsViewAuraHDRTest : public WebContentsViewAuraTest {
  public:
   WebContentsViewAuraHDRTest() = default;
@@ -58,7 +58,7 @@ class WebContentsViewAuraHDRTest : public WebContentsViewAuraTest {
   base::test::ScopedCommandLine scoped_command_line_;
 };
 
-TEST_F(WebContentsViewAuraHDRTest, ScreenInfoColorDepth) {
+TEST_F(WebContentsViewAuraHDRTest, DISABLED_ScreenInfoColorDepth) {
   WebContentsView* web_contents_view = view();
 
   ScreenInfo screen_info;

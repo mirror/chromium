@@ -71,7 +71,9 @@ TEST(DisplayTest, ForcedDeviceScaleFactor) {
   Display::ResetForceDeviceScaleFactorForTesting();
 }
 
-TEST(DisplayTest, DisplayHDRValues) {
+// TODO(ccameron): Re-enable this test once we have a "force hdr" flag.
+// https://crbug.com/682416
+TEST(DisplayTest, DISABLED_DisplayHDRValues) {
   base::test::ScopedCommandLine scoped_command_line;
   base::CommandLine* command_line = scoped_command_line.GetProcessCommandLine();
   {

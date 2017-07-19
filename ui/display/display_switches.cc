@@ -43,8 +43,12 @@ const char kScreenConfig[] = "screen-config";
 // This is for debugging on linux desktop.
 const char kUseFirstDisplayAsInternal[] = "use-first-display-as-internal";
 
-// Use an fp16 scRGB swap chain compatible with HDR output.
+// Force use an fp16 scRGB swap chain compatible with HDR output.
 const char kEnableHDR[] = "enable-hdr";
+
+// Enable dynamically switching between HDR and SDR mode based on system
+// capabilities (still under development).
+const char kEnableHDRAutoDetect[] = "enable-hdr-auto-detect";
 
 #if defined(OS_CHROMEOS)
 const char kDisableDisplayColorCalibration[] =

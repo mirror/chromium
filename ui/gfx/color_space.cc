@@ -198,6 +198,14 @@ ColorSpace ColorSpace::GetParametricApproximation() const {
   return CreateSRGB();
 }
 
+gfx::ColorSpace ColorSpace::GetRasterColorSpace() const {
+  // Rasterize HDR content in sRGB.
+  // TODO(ccameron): P3 would be a better choice here.
+  if (IsHDR())
+    return CreateSRGB();
+  return GetParametricApproximation();
+}
+
 bool ColorSpace::operator!=(const ColorSpace& other) const {
   return !(*this == other);
 }
