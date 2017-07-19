@@ -393,6 +393,7 @@ UserMediaClientImpl::~UserMediaClientImpl() {
 
 void UserMediaClientImpl::RequestUserMedia(
     const blink::WebUserMediaRequest& user_media_request) {
+  LOG(ERROR) << "UserMediaClientImpl::RequestUserMedia";
   // Save histogram data so we can see how much GetUserMedia is used.
   // The histogram counts the number of calls to the JS API
   // webGetUserMedia.

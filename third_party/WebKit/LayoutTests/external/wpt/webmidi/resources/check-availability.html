@@ -1,0 +1,10 @@
+<script src=featurepolicytest.js></script>
+<script>
+'use strict';
+
+Promise.resolve().then(() => getFeatureTestPromise()).then(devices => {
+  window.parent.postMessage('#OK', '*');
+}, error => {
+  window.parent.postMessage('#' + error.name, '*');
+});
+</script>

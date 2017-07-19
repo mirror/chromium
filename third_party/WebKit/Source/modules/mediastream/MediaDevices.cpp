@@ -97,6 +97,7 @@ ScriptPromise MediaDevices::enumerateDevices(ScriptState* script_state) {
 ScriptPromise MediaDevices::getUserMedia(ScriptState* script_state,
                                          const MediaStreamConstraints& options,
                                          ExceptionState& exception_state) {
+  LOG(ERROR) << "MediaDevices::getUserMedia";
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
 
   NavigatorUserMediaSuccessCallback* success_callback =

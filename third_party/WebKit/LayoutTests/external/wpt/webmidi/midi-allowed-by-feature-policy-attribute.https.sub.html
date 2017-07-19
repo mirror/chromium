@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<body>
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<script src=resources/featurepolicytest.js></script>
+<script>
+'use strict';
+
+async_test(t => {
+  assert_available_in_iframe_with_allow(t, 'https://{{domains[www]}}:{{ports[https][0]}}', '#OK');
+}, 'Feature policy "' + getFeatureName() + '" can be enabled in cross-origin iframes using "allowed" attribute.');
+</script>
+</body>

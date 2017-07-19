@@ -536,6 +536,7 @@ void MediaStreamManager::GenerateStream(MediaStreamRequester* requester,
                                         const StreamControls& controls,
                                         const url::Origin& security_origin,
                                         bool user_gesture) {
+  LOG(ERROR) << "MediaStreamManager::GenerateStream";
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DVLOG(1) << "GenerateStream()";
 
@@ -933,6 +934,7 @@ void MediaStreamManager::ReadOutputParamsAndPostRequestToUI(
     DeviceRequest* request,
     const MediaDeviceEnumeration& enumeration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "MediaStreamManager::ReadOutputParamsAndPostRequestToUI";
 
   // Actual audio parameters are required only for MEDIA_TAB_AUDIO_CAPTURE.
   // TODO(guidou): MEDIA_TAB_AUDIO_CAPTURE should not be a special case. See

@@ -167,6 +167,7 @@ MediaStreamUIProxy::~MediaStreamUIProxy() {
 void MediaStreamUIProxy::RequestAccess(
     std::unique_ptr<MediaStreamRequest> request,
     ResponseCallback response_callback) {
+  LOG(ERROR) << " MediaStreamUIProxy::RequestAccess";
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   response_callback_ = std::move(response_callback);

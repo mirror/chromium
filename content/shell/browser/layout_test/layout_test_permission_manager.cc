@@ -29,8 +29,8 @@ LayoutTestPermissionManager::PermissionDescription::PermissionDescription(
     const GURL& origin,
     const GURL& embedding_origin)
     : type(type),
-      origin(origin),
-      embedding_origin(embedding_origin) {
+      origin(origin.GetOrigin()),
+      embedding_origin(embedding_origin.GetOrigin()) {
 }
 
 bool LayoutTestPermissionManager::PermissionDescription::operator==(
@@ -69,7 +69,13 @@ int LayoutTestPermissionManager::RequestPermission(
     const GURL& requesting_origin,
     bool user_gesture,
     const base::Callback<void(blink::mojom::PermissionStatus)>& callback) {
+  LOG(ERROR) << "LayoutTestPermissionManager::RequestPermission " << static_cast<int>(permission);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  LOG(ERROR) << GetPermissionStatus(
+      permission, requesting_origin,
+      WebContents::FromRenderFrameHost(render_frame_host)
+          ->GetLastCommittedURL().GetOrigin());
 
   callback.Run(GetPermissionStatus(
       permission, requesting_origin,
@@ -85,10 +91,11 @@ int LayoutTestPermissionManager::RequestPermissions(
     bool user_gesture,
     const base::Callback<
         void(const std::vector<blink::mojom::PermissionStatus>&)>& callback) {
+  LOG(ERROR) << "LayoutTestPermissionManager::RequestPermissions ";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   std::vector<blink::mojom::PermissionStatus> result;
-  result.reserve(permissions.size());
+  LOG(ERROR) << "WEBCONTENTS: " << WebContents::FromRenderFrameHost(render_frame_host);
   const GURL& embedding_origin =
       WebContents::FromRenderFrameHost(render_frame_host)
           ->GetLastCommittedURL().GetOrigin();
@@ -97,7 +104,9 @@ int LayoutTestPermissionManager::RequestPermissions(
         permission, requesting_origin, embedding_origin));
   }
 
+  LOG(ERROR) << "Finished getting results";
   callback.Run(result);
+  LOG(ERROR) << "Run callback";
   return kNoPendingOperation;
 }
 
@@ -124,6 +133,7 @@ blink::mojom::PermissionStatus LayoutTestPermissionManager::GetPermissionStatus(
     PermissionType permission,
     const GURL& requesting_origin,
     const GURL& embedding_origin) {
+  LOG(ERROR) << "LayoutTestPermissionManager::GetPermissionStatus " << static_cast<int>(permission);
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI) ||
          BrowserThread::CurrentlyOn(BrowserThread::IO));
 

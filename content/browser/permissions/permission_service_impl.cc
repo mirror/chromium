@@ -113,6 +113,7 @@ bool AllowedByFeaturePolicy(RenderFrameHost* rfh, PermissionType type) {
 void PermissionRequestResponseCallbackWrapper(
     base::OnceCallback<void(PermissionStatus)> callback,
     const std::vector<PermissionStatus>& vector) {
+  LOG(ERROR) << vector.size();
   DCHECK_EQ(vector.size(), 1ul);
   std::move(callback).Run(vector[0]);
 }
@@ -232,13 +233,19 @@ void PermissionServiceImpl::RequestPermissions(
   std::vector<PermissionType> request_types;
   for (size_t i = 0; i < types.size(); ++i) {
     // Check feature policy.
-    if (!AllowedByFeaturePolicy(context_->render_frame_host(), types[i]))
+    LOG(ERROR) << "Checking policy";
+    if (!AllowedByFeaturePolicy(context_->render_frame_host(), types[i])) {
+      LOG(ERROR) << "Disabled by policy";
       pending_request->SetResult(i, PermissionStatus::DENIED);
+    }
     else
       request_types.push_back(types[i]);
   }
 
+  LOG(ERROR) << "Request";
   int pending_request_id = pending_requests_.Add(std::move(pending_request));
+  LOG(ERROR) << "Request2" << browser_context->GetPermissionManager();
+  LOG(ERROR) << "Request3" << context_->render_frame_host();
   int id = browser_context->GetPermissionManager()->RequestPermissions(
       request_types, context_->render_frame_host(), origin.GetURL(),
       user_gesture,
@@ -247,6 +254,7 @@ void PermissionServiceImpl::RequestPermissions(
 
   // Check if the request still exists. It may have been removed by the
   // the response callback.
+  LOG(ERROR) << "PermissionServiceImpl::RequestPermissions2";
   PendingRequest* in_progress_request =
       pending_requests_.Lookup(pending_request_id);
   if (!in_progress_request)
@@ -257,6 +265,7 @@ void PermissionServiceImpl::RequestPermissions(
 void PermissionServiceImpl::OnRequestPermissionsResponse(
     int pending_request_id,
     const std::vector<PermissionStatus>& partial_result) {
+  LOG(ERROR) << "PermissionServiceImpl::OnRequestPermissionsResponse";
   PendingRequest* request = pending_requests_.Lookup(pending_request_id);
   auto partial_result_it = partial_result.begin();
   // Fill in the unset results in the request. Some results in the request are
@@ -274,6 +283,7 @@ void PermissionServiceImpl::OnRequestPermissionsResponse(
 
   request->RunCallback();
   pending_requests_.Remove(pending_request_id);
+  LOG(ERROR) << "PermissionServiceImpl::OnRequestPermissionsResponse2";
 }
 
 void PermissionServiceImpl::HasPermission(PermissionDescriptorPtr permission,
