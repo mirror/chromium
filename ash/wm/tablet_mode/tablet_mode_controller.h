@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_WM_MAXIMIZE_MODE_MAXIMIZE_MODE_CONTROLLER_H_
-#define ASH_WM_MAXIMIZE_MODE_MAXIMIZE_MODE_CONTROLLER_H_
+#ifndef ASH_WM_TABLET_MODE_TABLET_MODE_CONTROLLER_H_
+#define ASH_WM_TABLET_MODE_TABLET_MODE_CONTROLLER_H_
 
 #include <memory>
 
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/public/interfaces/touch_view.mojom.h"
+#include "ash/public/interfaces/tablet_mode.mojom.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "base/compiler_specific.h"
@@ -38,15 +38,17 @@ class Vector3dF;
 namespace ash {
 
 class ScopedDisableInternalMouseAndKeyboard;
-class MaximizeModeWindowManager;
+class TabletModeControllerTest;
+class TabletModeWindowManager;
+class TabletModeWindowManagerTest;
 
-// MaximizeModeController listens to accelerometer events and automatically
-// enters and exits maximize mode when the lid is opened beyond the triggering
-// angle and rotates the display to match the device when in maximize mode.
-class ASH_EXPORT MaximizeModeController
+// TabletModeController listens to accelerometer events and automatically
+// enters and exits tablet mode when the lid is opened beyond the triggering
+// angle and rotates the display to match the device when in tablet mode.
+class ASH_EXPORT TabletModeController
     : public chromeos::AccelerometerReader::Observer,
       public chromeos::PowerManagerClient::Observer,
-      NON_EXPORTED_BASE(public mojom::TouchViewManager),
+      NON_EXPORTED_BASE(public mojom::TabletModeManager),
       public ShellObserver,
       public WindowTreeHostManager::Observer,
       public SessionObserver {
@@ -59,36 +61,36 @@ class ASH_EXPORT MaximizeModeController
     TOUCHVIEW,
   };
 
-  MaximizeModeController();
-  ~MaximizeModeController() override;
+  TabletModeController();
+  ~TabletModeController() override;
 
-  // True if it is possible to enter maximize mode in the current
+  // True if it is possible to enter tablet mode in the current
   // configuration. If this returns false, it should never be the case that
-  // maximize mode becomes enabled.
-  bool CanEnterMaximizeMode();
+  // tablet mode becomes enabled.
+  bool CanEnterTabletMode();
 
-  // TODO(jonross): Merge this with EnterMaximizeMode. Currently these are
+  // TODO(jonross): Merge this with EnterTabletMode. Currently these are
   // separate for several reasons: there is no internal display when running
   // unittests; the event blocker prevents keyboard input when running ChromeOS
   // on linux. http://crbug.com/362881
-  // Turn the always maximize mode window manager on or off.
-  void EnableMaximizeModeWindowManager(bool should_enable);
+  // Turn the always tablet mode window manager on or off.
+  void EnableTabletModeWindowManager(bool should_enable);
 
-  // Test if the MaximizeModeWindowManager is enabled or not.
-  bool IsMaximizeModeWindowManagerEnabled() const;
+  // Test if the TabletModeWindowManager is enabled or not.
+  bool IsTabletModeWindowManagerEnabled() const;
 
-  // Add a special window to the MaximizeModeWindowManager for tracking. This is
+  // Add a special window to the TabletModeWindowManager for tracking. This is
   // only required for special windows which are handled by other window
   // managers like the |MultiUserWindowManager|.
-  // If the maximize mode is not enabled no action will be performed.
+  // If the tablet mode is not enabled no action will be performed.
   void AddWindow(aura::Window* window);
 
-  // Binds the mojom::TouchViewManager interface request to this object.
-  void BindRequest(mojom::TouchViewManagerRequest request);
+  // Binds the mojom::TabletModeManager interface request to this object.
+  void BindRequest(mojom::TabletModeManagerRequest request);
 
   // ShellObserver:
-  void OnMaximizeModeStarted() override;
-  void OnMaximizeModeEnded() override;
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
   void OnShellInitialized() override;
 
   // WindowTreeHostManager::Observer:
@@ -110,16 +112,16 @@ class ASH_EXPORT MaximizeModeController
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
  private:
-  friend class MaximizeModeControllerTest;
-  friend class MaximizeModeWindowManagerTest;
+  friend class TabletModeControllerTest;
+  friend class TabletModeWindowManagerTest;
   friend class MultiUserWindowManagerChromeOSTest;
   friend class VirtualKeyboardControllerTest;
 
   // Used for recording metrics for intervals of time spent in
-  // and out of TouchView.
-  enum TouchViewIntervalType {
-    TOUCH_VIEW_INTERVAL_INACTIVE,
-    TOUCH_VIEW_INTERVAL_ACTIVE
+  // and out of TabletMode.
+  enum TabletModeIntervalType {
+    TABLET_MODE_INTERVAL_INACTIVE,
+    TABLET_MODE_INTERVAL_ACTIVE
   };
 
   // Set the TickClock. This is only to be used by tests that need to
@@ -127,7 +129,7 @@ class ASH_EXPORT MaximizeModeController
   void SetTickClockForTest(std::unique_ptr<base::TickClock> tick_clock);
 
   // Detect hinge rotation from base and lid accelerometers and automatically
-  // start / stop maximize mode.
+  // start / stop tablet mode.
   void HandleHingeRotation(
       scoped_refptr<const chromeos::AccelerometerUpdate> update);
 
@@ -137,35 +139,35 @@ class ASH_EXPORT MaximizeModeController
   // Returns true if the lid was recently opened.
   bool WasLidOpenedRecently() const;
 
-  // Enables MaximizeModeWindowManager, and determines the current state of
+  // Enables TabletModeWindowManager, and determines the current state of
   // rotation lock.
-  void EnterMaximizeMode();
+  void EnterTabletMode();
 
-  // Removes MaximizeModeWindowManager and resets the display rotation if there
+  // Removes TabletModeWindowManager and resets the display rotation if there
   // is no rotation lock.
-  void LeaveMaximizeMode();
+  void LeaveTabletMode();
 
-  // Record UMA stats tracking TouchView usage. If |type| is
-  // TOUCH_VIEW_INTERVAL_INACTIVE, then record that TouchView has been
+  // Record UMA stats tracking TabletMode usage. If |type| is
+  // TABLET_MODE_INTERVAL_INACTIVE, then record that TabletMode has been
   // inactive from |touchview_usage_interval_start_time_| until now.
-  // Similarly, record that TouchView has been active if |type| is
-  // TOUCH_VIEW_INTERVAL_ACTIVE.
-  void RecordTouchViewUsageInterval(TouchViewIntervalType type);
+  // Similarly, record that TabletMode has been active if |type| is
+  // TABLET_MODE_INTERVAL_ACTIVE.
+  void RecordTabletModeUsageInterval(TabletModeIntervalType type);
 
-  // Returns TOUCH_VIEW_INTERVAL_ACTIVE if TouchView is currently active,
-  // otherwise returns TOUCH_VIEW_INTERNAL_INACTIVE.
-  TouchViewIntervalType CurrentTouchViewIntervalType();
+  // Returns TABLET_MODE_INTERVAL_ACTIVE if TabletMode is currently active,
+  // otherwise returns TABLET_MODE_INTERNAL_INACTIVE.
+  TabletModeIntervalType CurrentTabletModeIntervalType();
 
-  // mojom::TouchViewManager:
-  void AddObserver(mojom::TouchViewObserverPtr observer) override;
+  // mojom::TabletModeManager:
+  void AddObserver(mojom::TabletModeObserverPtr observer) override;
 
-  // Checks whether we want to allow entering and exiting maximize mode. This
+  // Checks whether we want to allow entering and exiting tablet mode. This
   // returns false if the user set a flag for the software to behave in a
   // certain way regardless of configuration.
-  bool AllowEnterExitMaximizeMode() const;
+  bool AllowEnterExitTabletMode() const;
 
   // The maximized window manager (if enabled).
-  std::unique_ptr<MaximizeModeWindowManager> maximize_mode_window_manager_;
+  std::unique_ptr<TabletModeWindowManager> tablet_mode_window_manager_;
 
   // A helper class which when instantiated will block native events from the
   // internal keyboard and touchpad.
@@ -190,10 +192,10 @@ class ASH_EXPORT MaximizeModeController
   // Source for the current time in base::TimeTicks.
   std::unique_ptr<base::TickClock> tick_clock_;
 
-  // Set when tablet mode switch is on. This is used to force maximize mode.
+  // Set when tablet mode switch is on. This is used to force tablet mode.
   bool tablet_mode_switch_is_on_;
 
-  // Tracks when the lid is closed. Used to prevent entering maximize mode.
+  // Tracks when the lid is closed. Used to prevent entering tablet mode.
   bool lid_is_closed_;
 
   // Tracks smoothed accelerometer data over time. This is done when the hinge
@@ -202,22 +204,22 @@ class ASH_EXPORT MaximizeModeController
   gfx::Vector3dF base_smoothed_;
   gfx::Vector3dF lid_smoothed_;
 
-  // Bindings for the TouchViewManager interface.
-  mojo::BindingSet<mojom::TouchViewManager> bindings_;
+  // Bindings for the TabletModeManager interface.
+  mojo::BindingSet<mojom::TabletModeManager> bindings_;
 
   // The set of touchview observers to be notified about mode changes.
-  mojo::InterfacePtrSet<mojom::TouchViewObserver> observers_;
+  mojo::InterfacePtrSet<mojom::TabletModeObserver> observers_;
 
-  // Tracks whether a flag is used to force maximize mode.
+  // Tracks whether a flag is used to force tablet mode.
   ForceTabletMode force_tablet_mode_ = ForceTabletMode::NONE;
 
   ScopedSessionObserver scoped_session_observer_;
 
-  base::WeakPtrFactory<MaximizeModeController> weak_factory_;
+  base::WeakPtrFactory<TabletModeController> weak_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(MaximizeModeController);
+  DISALLOW_COPY_AND_ASSIGN(TabletModeController);
 };
 
 }  // namespace ash
 
-#endif  // ASH_WM_MAXIMIZE_MODE_MAXIMIZE_MODE_CONTROLLER_H_
+#endif  // ASH_WM_TABLET_MODE_TABLET_MODE_CONTROLLER_H_

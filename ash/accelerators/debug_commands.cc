@@ -13,7 +13,7 @@
 #include "ash/system/toast/toast_manager.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
-#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/widget_finder.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_util.h"
@@ -146,10 +146,10 @@ void HandleToggleTouchscreen() {
   delegate->UpdateTouchscreenStatusFromPrefs();
 }
 
-void HandleToggleTouchView() {
-  MaximizeModeController* controller = Shell::Get()->maximize_mode_controller();
-  controller->EnableMaximizeModeWindowManager(
-      !controller->IsMaximizeModeWindowManagerEnabled());
+void HandleToggleTabletMode() {
+  TabletModeController* controller = Shell::Get()->tablet_mode_controller();
+  controller->EnableTabletModeWindowManager(
+      !controller->IsTabletModeWindowManagerEnabled());
 }
 
 void HandleTriggerCrash() {
@@ -205,8 +205,8 @@ void PerformDebugActionIfEnabled(AcceleratorAction action) {
     case DEBUG_TOGGLE_TOUCH_SCREEN:
       HandleToggleTouchscreen();
       break;
-    case DEBUG_TOGGLE_TOUCH_VIEW:
-      HandleToggleTouchView();
+    case DEBUG_TOGGLE_TABLET_MODE:
+      HandleToggleTabletMode();
       break;
     case DEBUG_TOGGLE_WALLPAPER_MODE:
       HandleToggleWallpaperMode();
