@@ -65,7 +65,7 @@ template("build_webapp_html") {
             "../../third_party/closure_compiler/externs/metrics_private.js",
           ]
 
-      script = "../../third_party/closure_compiler/compile.py"
+      script = "../../third_party/closure_compiler/compile2.py"
       inputs = js_files
       outputs = [
         target_jscompile_stamp,
@@ -79,7 +79,6 @@ template("build_webapp_html") {
 
       args = rebase_path(js_files, root_build_dir)
       args += [
-                "--no_single_file",
                 "--out_file",
                 rebase_path(target_jscompile_stamp, root_build_dir),
                 "--closure_args",
