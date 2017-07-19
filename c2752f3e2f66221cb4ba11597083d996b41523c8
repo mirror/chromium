@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1f684a2a_7a690050",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:51:03Z",
+      "side": 1,
+      "message": "Confirmed with sgabriel@ that it\u0027s uncapitalized.",
+      "parentUuid": "37bf306a_0106c8e7",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d890e73a_c1e6e858",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 2

@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8c22af4_eadea480",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:51:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "91bef380_d3b788cf",
+      "range": {
+        "startLine": 26,
+        "startChar": 81,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "866c974d_d6944f51",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 4
