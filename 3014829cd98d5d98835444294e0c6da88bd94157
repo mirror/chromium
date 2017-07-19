@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e55920_6669d7ef",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T20:36:27Z",
+      "side": 1,
+      "message": "style/nit: replace if/else with if/return to emphasize the guard nature.",
+      "revId": "3014829cd98d5d98835444294e0c6da88bd94157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
