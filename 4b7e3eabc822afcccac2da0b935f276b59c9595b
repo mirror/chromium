@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c33174_dfde7da7",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T22:20:39Z",
+      "side": 0,
+      "message": "There\u0027s also a RobotoMediumStyle in v21 that needs to move.",
+      "range": {
+        "startLine": 576,
+        "startChar": 17,
+        "endLine": 576,
+        "endChar": 34
+      },
+      "revId": "4b7e3eabc822afcccac2da0b935f276b59c9595b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
