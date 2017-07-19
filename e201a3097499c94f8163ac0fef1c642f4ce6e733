@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06923fd8_01c44d78",
+        "filename": "remoting/client/server_log_entry_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-07-19T22:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c369c128_27954189",
+      "range": {
+        "startLine": 5,
+        "startChar": 59,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "e201a3097499c94f8163ac0fef1c642f4ce6e733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20462478_f5420a9e",
         "filename": "remoting/host/it2me/it2me_host.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T20:28:25Z",
       "side": 1,
       "message": "I think propagating both error message and error code throughout the whole code is a bit messy. If two error conditions are distinct enough to warrant different messages, then they should have different codes--allowing both a code and a message seems to encourage reuse of codes. By contrast, if the error message is just to provide some context (for example, what parameter was missing or what value was deemed invalid) then that should be logged, and will make it into the webapp logs via the _debug_message message.\n\nIf we need to keep the error message for now to support the Chrome app, then I\u0027m okay with that, but can you add a TODO somewhere to clean up the API going forward?",
+      "range": {
+        "startLine": 66,
+        "startChar": 63,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "e201a3097499c94f8163ac0fef1c642f4ce6e733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e82fd82_f6cc564d",
+        "filename": "remoting/host/it2me/it2me_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-07-19T22:53:23Z",
+      "side": 1,
+      "message": "Turns out the webapp is only logging the error message, I think it is safe for me to remove it in this CL and switch to error code instead.",
+      "parentUuid": "20462478_f5420a9e",
       "range": {
         "startLine": 66,
         "startChar": 63,
