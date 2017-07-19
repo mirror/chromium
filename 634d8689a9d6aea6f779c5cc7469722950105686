@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d86eb2ac_fca18d13",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-19T17:49:20Z",
+      "side": 1,
+      "message": "I didn\u0027t think so either, but it wouldn\u0027t work unless I did this.",
+      "parentUuid": "b4db95f1_119b06a0",
+      "revId": "634d8689a9d6aea6f779c5cc7469722950105686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "337331fd_f2e46d1e",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "634d8689a9d6aea6f779c5cc7469722950105686",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad418390_3adb85e2",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-19T17:49:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "337331fd_f2e46d1e",
+      "revId": "634d8689a9d6aea6f779c5cc7469722950105686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
