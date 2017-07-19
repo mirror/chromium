@@ -1,0 +1,352 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ed2804c_ebad2911",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "FYI: IIRC, PreTargetHandller won\u0027t work on mustash and you may need different solution for mustash. +jamescook@",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a272d26_d55d65c3",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 50
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d394514_6d07dfb6",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 50
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7619648_0eaf8a37",
+        "filename": "ash/highlighter/highlighter_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "optinoal: maybe HighlighterSelectionListener/Observer?\n\nDelegate is used to delegate a part of the task to another object,\nwhile a listener/observer is to implement an action for certain event it observes (selection happened).",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbebf6a_fceaf0fb",
+        "filename": "ash/highlighter/highlighter_gesture_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: nuke {}",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8dae5e_fe51367b",
+        "filename": "ash/highlighter/highlighter_gesture_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0715e697_c70bfdf5",
+        "filename": "ash/highlighter/highlighter_gesture_util.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: nuke \"(c)\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2022a42_ab8eca0c",
+        "filename": "ash/highlighter/highlighter_gesture_util.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "can you document these?",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8b933d_a6405530",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d58f51c_c3d99dd3",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "optional: consider using gfx:Path",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acff0206_4f01faf3",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934bb1ef_26e8227b",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: MakeUnique",
+      "range": {
+        "startLine": 162,
+        "startChar": 27,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83834136_6ea9f68f",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "you need to keep this the same size as the root window. Just switching to fullscreen would work.",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54df600c_f7f1eff1",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: MakeUnique",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddaff60_80ee7ecc",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "The tween and duration looks the same. Any reason to apply animation separately?",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c865b1d_0a9688df",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6488b3a_3c406739",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "just\n\n// cc::LayerTreeFrameSinkClient:\n\n\n(one you used is old format)",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 15
+      },
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f3c4cd_237809bf",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-19T21:36:21Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "748bd7bfad2151b83956aa10e2e36ae6f764c025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
