@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a48497da_dacaac40",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-19T17:05:40Z",
+      "side": 1,
+      "message": "This view is supposed to exist only for as long as the stylus is down (see the event handling code in laser_pointer_controller.cc). It is highly unlikely that a resolution change will occur during that time, and even if it does, in my opinion it is impractical to try to handle that gracefully. Even if the ink trace becomes garbled, it will disappear as soon as the stylus goes up.",
+      "parentUuid": "77cdec74_6b3f0fab",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "e6af4d79a6639d795bd3d759824c29d3888a3f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1debb217_52348b6c",
         "filename": "ash/fast_ink/fast_ink_view.cc",
         "patchSetId": 5
