@@ -70,6 +70,24 @@
       "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf75e8a_ea20c341",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T18:24:42Z",
+      "side": 1,
+      "message": "Isn\u0027t it too subtle? If you want to rely upon it, create open_devices in Emulate and drag it through the process as we drag devices? That would be easier to follow.",
+      "parentUuid": "b5204b62_38e72fb6",
+      "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
