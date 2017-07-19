@@ -587,7 +587,7 @@ struct CrossThreadResourceResponseData {
   long long encoded_body_length_;
   long long decoded_body_length_;
   String downloaded_file_path_;
-  RefPtr<BlobDataHandle> downloaded_file_handle_;
+  std::unique_ptr<CrossThreadBlobDataHandleData> downloaded_file_handle_;
 };
 
 }  // namespace blink

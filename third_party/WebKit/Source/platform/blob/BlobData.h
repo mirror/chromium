@@ -219,8 +219,29 @@ class PLATFORM_EXPORT BlobData {
   BlobDataItemList items_;
 };
 
-class PLATFORM_EXPORT BlobDataHandle
-    : public ThreadSafeRefCounted<BlobDataHandle> {
+// This class is needed to copy a BlobDataHandle across threads, because it
+// has some members which cannot be transferred across threads.
+class PLATFORM_EXPORT CrossThreadBlobDataHandleData {
+ public:
+  ~CrossThreadBlobDataHandleData();
+
+ private:
+  friend class BlobDataHandle;
+  CrossThreadBlobDataHandleData();
+
+  String uuid_;
+  String type_;
+  long long size_;
+  bool is_single_unknown_size_file_;
+  // mutable to make it possible to construct a BlobDataHandle from this without
+  // having to move out the blob_ from here (by moving it out, cloning it, and
+  // moving it back in).
+  mutable storage::mojom::blink::BlobPtrInfo blob_;
+
+  WTF_MAKE_NONCOPYABLE(CrossThreadBlobDataHandleData);
+};
+
+class PLATFORM_EXPORT BlobDataHandle : public RefCounted<BlobDataHandle> {
  public:
   // For empty blob construction.
   static PassRefPtr<BlobDataHandle> Create() {
@@ -240,6 +261,19 @@ class PLATFORM_EXPORT BlobDataHandle
     return AdoptRef(new BlobDataHandle(uuid, type, size));
   }
 
+  // For passing across thread boundaries.
+  static PassRefPtr<BlobDataHandle> Create(
+      std::unique_ptr<CrossThreadBlobDataHandleData> data) {
+    return AdoptRef(new BlobDataHandle(std::move(data)));
+  }
+  static PassRefPtr<BlobDataHandle> Create(
+      const CrossThreadBlobDataHandleData* data) {
+    return AdoptRef(new BlobDataHandle(data));
+  }
+
+  // Gets a copy of the data suitable for passing to another thread.
+  std::unique_ptr<CrossThreadBlobDataHandleData> CopyData() const;
+
   String Uuid() const { return uuid_.IsolatedCopy(); }
   String GetType() const { return type_.IsolatedCopy(); }
   unsigned long long size() const { return size_; }
@@ -252,6 +286,8 @@ class PLATFORM_EXPORT BlobDataHandle
   BlobDataHandle();
   BlobDataHandle(std::unique_ptr<BlobData>, long long size);
   BlobDataHandle(const String& uuid, const String& type, long long size);
+  BlobDataHandle(std::unique_ptr<CrossThreadBlobDataHandleData>);
+  BlobDataHandle(const CrossThreadBlobDataHandleData*);
 
   const String uuid_;
   const String type_;
