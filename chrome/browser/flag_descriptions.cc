@@ -558,12 +558,12 @@ const char kFillOnAccountSelectDescription[] =
 const char kForceTabletModeName[] = "Force Tablet Mode";
 const char kForceTabletModeDescription[] =
     R"*(This flag can be used to force a certain mode on to a chromebook, )*"
-    R"*(despite its current orientation. "TouchView" means that the )*"
+    R"*(despite its current orientation. "TabletMode" means that the )*"
     R"*(chromebook will act as if it were in touch view mode. "Clamshell" )*"
     R"*(means that the chromebook will act as if it were in clamshell )*"
     R"*(mode . "Auto" means that the chromebook will alternate between )*"
     R"*(the two, based on its orientation.)*";
-const char kForceTabletModeTouchview[] = "TouchView";
+const char kForceTabletModeTouchview[] = "TabletMode";
 const char kForceTabletModeClamshell[] = "Clamshell";
 const char kForceTabletModeAuto[] = "Auto (default)";
 

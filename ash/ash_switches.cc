@@ -50,8 +50,10 @@ const char kAshEnablePaletteOnAllDisplays[] =
 // Enables the split view on tablet mode.
 const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
 
-// Enables the observation of accelerometer events to enter touch-view mode.
-const char kAshEnableTouchView[] = "enable-touchview";
+// Enables the observation of accelerometer events to enter tablet
+// mode.  The flag is "enable-touchview" not "enable-tabletmode" as this
+// is used to enable tablet mode on convertible devices.
+const char kAshEnableTabletMode[] = "enable-touchview";
 
 // Enables mirrored screen.
 const char kAshEnableMirroredScreen[] = "ash-enable-mirrored-screen";
@@ -79,7 +81,7 @@ const char kAshForceTabletMode[] = "force-tablet-mode";
 // Values for the kAshForceTabletMode flag.
 const char kAshForceTabletModeAuto[] = "auto";
 const char kAshForceTabletModeClamshell[] = "clamshell";
-const char kAshForceTabletModeTouchView[] = "touch_view";
+const char kAshForceTabletModeTabletMode[] = "touch_view";
 
 // Hides notifications that are irrelevant to Chrome OS device factory testing,
 // such as battery level updates.
