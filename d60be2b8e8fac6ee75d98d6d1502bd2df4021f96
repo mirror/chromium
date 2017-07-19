@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8248adbc_20f735fd",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "There\u0027s a unit test for this... in layout_provider_unittest.cc\n\nTEST(LayoutProviderTest, ExplicitTypographyLineHeight)\n\nIf we need to change this number, then that test should need an update too. (Or that test is broken in some other way. It\u0027s not disabled, but it can bail out if the machine doesn\u0027t have a \"default\" configuration).",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392ac550_7917898a",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "font_context -\u003e kTextContext  (technically line height isn\u0027t a property of a font, but of RenderText)",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf30bf8f_ce08876a",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "font_style -\u003e kTextStyle",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9f0654_fdb7f3ac",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the right fit. DISTANCE_RELATED_LABEL_HORIZONTAL is the space between a Label and a control - typically in a \u003cform\u003e. But cell_element_spacing is the space between an image and text in a cell (or after the grouping \"pill\"). Going from 6 to 16 (or even to 10 in non-Harmony) is probably going to make Chrome\u0027s Task Manager look odd.",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc66ad7_205368d9",
+        "filename": "ui/views/controls/table/table_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "comments for these? (TableView is pretty consistent with its member function comments). E.g. the comments (or the names) should make it clear these are horizontal margins/spacing)",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44953f1e_718d2827",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T23:34:03Z",
+      "side": 1,
+      "message": "prefix these with DistanceMetric:: to be consistent?  (or drop it from all of them..)",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
