@@ -566,6 +566,8 @@ target(link_target_type, "renderer") {
     sources += [
       "image_capture/image_capture_frame_grabber.cc",
       "image_capture/image_capture_frame_grabber.h",
+      "image_capture/video_frame_reader.cc",
+      "image_capture/video_frame_reader.h",
       "media/aec_dump_message_filter.cc",
       "media/aec_dump_message_filter.h",
       "media/audio_repetition_detector.cc",
