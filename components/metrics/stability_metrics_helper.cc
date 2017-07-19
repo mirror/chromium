@@ -189,6 +189,9 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
     case base::TERMINATION_STATUS_ABNORMAL_TERMINATION:
     case base::TERMINATION_STATUS_OOM:
       if (was_extension_process) {
+#if defined(OS_ANDROID)
+        NOTREACHED();
+#endif
         IncrementPrefValue(prefs::kStabilityExtensionRendererCrashCount);
 
         UMA_HISTOGRAM_SPARSE_SLOWLY("CrashExitCodes.Extension",
