@@ -16,6 +16,7 @@
 #include "components/content_settings/core/browser/content_settings_observable_provider.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
+#include "components/content_settings/core/browser/user_modifiable_provider.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -44,7 +45,7 @@ struct NotificationChannel {
 // content settings, but defers to supervised user and policy settings - see
 // ordering of the ProviderType enum values in HostContentSettingsMap.
 class NotificationChannelsProviderAndroid
-    : public content_settings::ObservableProvider {
+    : public content_settings::UserModifiableProvider {
  public:
   // Helper class to make the JNI calls.
   class NotificationChannelsBridge {
@@ -77,11 +78,12 @@ class NotificationChannelsProviderAndroid
   void ClearAllContentSettingsRules(ContentSettingsType content_type) override;
   void ShutdownOnUIThread() override;
 
+  // UserModifiableProvider methods.
   base::Time GetWebsiteSettingLastModified(
       const ContentSettingsPattern& primary_pattern,
       const ContentSettingsPattern& secondary_pattern,
       ContentSettingsType content_type,
-      const content_settings::ResourceIdentifier& resource_identifier);
+      const content_settings::ResourceIdentifier& resource_identifier) override;
 
  private:
   explicit NotificationChannelsProviderAndroid(
