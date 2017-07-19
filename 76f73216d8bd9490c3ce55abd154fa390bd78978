@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bde75d5_b81099ff",
+        "filename": "ios/web/navigation/legacy_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T21:40:56Z",
+      "side": 1,
+      "message": "Is it necessary to explicitly call constructor?",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "76f73216d8bd9490c3ce55abd154fa390bd78978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102255b8_61659647",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T21:40:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "76f73216d8bd9490c3ce55abd154fa390bd78978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
