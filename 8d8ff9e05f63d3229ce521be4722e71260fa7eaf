@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "758f530c_8bc48fe9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-19T04:21:52Z",
+      "side": 1,
+      "message": "At first I went ahead and made this change because it looked slightly cleaner, but turns out changing this actually makes SiteDetailsTest \u0027correct pref settings are shown\u0027 fail, because you then need to add promises that wait for \u0027getDefaultValueForContentType()\u0027 to get called before you can test the value of `this.$.permission.value`.\n\nThis complicates the logic of the test a lot, so I think it\u0027s simpler to leave it as-is. Making the test pref names the same as the category names would probably go a long way to simplifying the logic there (and then we can just use bracket notation instead of dot notation), but I think that should go in a separate CL. See the tracking bug calamity@ filed for refactoring here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d742706",
+      "parentUuid": "adfbd77f_e5debe5b",
+      "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "257d7e4f_f1ac31da",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T01:15:28Z",
       "side": 1,
       "message": "consider making this a kSomeConstValue",
+      "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92faca08_1c1b013d",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-19T04:21:52Z",
+      "side": 1,
+      "message": "If you\u0027re OK with waiting for the next patch, this is coming up in https://chromium-review.googlesource.com/c/567787/ - let me know?",
+      "parentUuid": "257d7e4f_f1ac31da",
       "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "902605a9_0be4b101",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-19T04:21:52Z",
+      "side": 1,
+      "message": "Agreed, changed it to https://foo.com:443 :)",
+      "parentUuid": "89479d27_487b92c5",
+      "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d0f9cfd_a17caa5c",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2fca9e_ecfc134d",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-19T04:21:52Z",
+      "side": 1,
+      "message": "Done for exceptions, but not for defaults (I don\u0027t think all tests use the defaults, so it\u0027s not always needed).",
+      "parentUuid": "8d0f9cfd_a17caa5c",
+      "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
