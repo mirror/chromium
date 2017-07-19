@@ -25,19 +25,9 @@
 namespace web {
 
 WKBasedNavigationManagerImpl::WKBasedNavigationManagerImpl()
-    : delegate_(nullptr), browser_state_(nullptr) {}
+    : NavigationManagerImpl() {}
 
 WKBasedNavigationManagerImpl::~WKBasedNavigationManagerImpl() = default;
-
-void WKBasedNavigationManagerImpl::SetDelegate(
-    NavigationManagerDelegate* delegate) {
-  delegate_ = delegate;
-}
-
-void WKBasedNavigationManagerImpl::SetBrowserState(
-    BrowserState* browser_state) {
-  browser_state_ = browser_state;
-}
 
 void WKBasedNavigationManagerImpl::SetSessionController(
     CRWSessionController* session_controller) {}
