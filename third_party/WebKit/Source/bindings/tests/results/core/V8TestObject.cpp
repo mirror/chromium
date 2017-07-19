@@ -9503,6 +9503,9 @@ static void namedPropertyQuery(const AtomicString& name, const v8::PropertyCallb
   bool result = impl->NamedPropertyQuery(scriptState, name, exceptionState);
   if (!result)
     return;
+  // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
+  // 2.7. If |O| implements an interface with a named property setter, then set
+  //      desc.[[Writable]] to true, otherwise set it to false.
   V8SetReturnValueInt(info, v8::None);
 }
 
@@ -9531,6 +9534,42 @@ static void indexedPropertyGetter(uint32_t index, const v8::PropertyCallbackInfo
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
   ScriptValue result = impl->item(scriptState, index);
   V8SetReturnValue(info, result.V8Value());
+}
+
+static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
+  // Steps 1.1 to 1.2.4 are covered here: we rely on indexedPropertyGetter() to
+  // call the getter function and check that |index| is a valid property index,
+  // in which case it will have set info.GetReturnValue() to something other
+  // than undefined.
+  indexedPropertyGetter(index, info);
+  v8::Local<v8::Value> getterValue = info.GetReturnValue().Get();
+  if (!getterValue->IsUndefined()) {
+    // 1.2.5. Let |desc| be a newly created Property Descriptor with no fields.
+    v8::Local<v8::Object> desc = v8::Object::New(info.GetIsolate());
+    // 1.2.6. Set desc.[[Value]] to the result of converting value to an
+    //        ECMAScript value.
+    desc->Set(info.GetIsolate()->GetCurrentContext(),
+              V8String(info.GetIsolate(), "value"), getterValue)
+        .ToChecked();
+    // 1.2.7. If O implements an interface with an indexed property setter,
+    //        then set desc.[[Writable]] to true, otherwise set it to false.
+    desc->Set(info.GetIsolate()->GetCurrentContext(),
+              V8String(info.GetIsolate(), "writable"),
+              ToV8(true, info.Holder(), info.GetIsolate()))
+        .ToChecked();
+    // 1.2.8. Set desc.[[Enumerable]] and desc.[[Configurable]] to true.
+    desc->Set(info.GetIsolate()->GetCurrentContext(),
+              V8String(info.GetIsolate(), "enumerable"),
+              ToV8(true, info.Holder(), info.GetIsolate()))
+        .ToChecked();
+    desc->Set(info.GetIsolate()->GetCurrentContext(),
+              V8String(info.GetIsolate(), "configurable"),
+              ToV8(true, info.Holder(), info.GetIsolate()))
+        .ToChecked();
+    // 1.2.9. Return |desc|.
+    info.GetReturnValue().Set(desc);
+  }
 }
 
 static void indexedPropertySetter(uint32_t index, v8::Local<v8::Value> v8Value, const v8::PropertyCallbackInfo<v8::Value>& info) {
@@ -12257,6 +12296,10 @@ void V8TestObject::indexedPropertyGetterCallback(uint32_t index, const v8::Prope
   TestObjectV8Internal::indexedPropertyGetter(index, info);
 }
 
+void V8TestObject::indexedPropertyDescriptorCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  TestObjectV8Internal::indexedPropertyDescriptor(index, info);
+}
+
 void V8TestObject::indexedPropertySetterCallback(uint32_t index, v8::Local<v8::Value> v8Value, const v8::PropertyCallbackInfo<v8::Value>& info) {
   TestObjectV8Internal::indexedPropertySetter(index, v8Value, info);
 }
@@ -12898,7 +12941,7 @@ static void installV8TestObjectTemplate(
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(
       V8TestObject::indexedPropertyGetterCallback,
       V8TestObject::indexedPropertySetterCallback,
-      nullptr,
+      V8TestObject::indexedPropertyDescriptorCallback,
       V8TestObject::indexedPropertyDeleterCallback,
       IndexedPropertyEnumerator<TestObject>,
       V8TestObject::indexedPropertyDefinerCallback,
