@@ -301,9 +301,12 @@ void V4Database::RecordFileSizeHistograms() {
   for (const auto& store_map_iter : *store_map_) {
     const int64_t size =
         store_map_iter.second->RecordAndReturnFileSize(kV4DatabaseSizeMetric);
+    list_sizes[kV4DatabaseSizeMetric +
+               store_map_iter.second->name_of_current_store] = size / 1024;
     db_size += size;
   }
   const int64_t db_size_kilobytes = static_cast<int64_t>(db_size / 1024);
+  db_size_instance = db_size_kilobytes;
   UMA_HISTOGRAM_COUNTS(kV4DatabaseSizeMetric, db_size_kilobytes);
 }
 

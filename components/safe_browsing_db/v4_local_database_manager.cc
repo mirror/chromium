@@ -12,11 +12,14 @@
 #include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
+#include "base/i18n/time_formatting.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
@@ -171,13 +174,36 @@ V4LocalDatabaseManager::PendingCheck::PendingCheck(
 }
 
 V4LocalDatabaseManager::PendingCheck::~PendingCheck() {}
+// static
+scoped_refptr<V4LocalDatabaseManager>
+    V4LocalDatabaseManager::local_database_manager_instance;
 
 // static
 scoped_refptr<V4LocalDatabaseManager> V4LocalDatabaseManager::Create(
     const base::FilePath& base_path,
     ExtendedReportingLevelCallback extended_reporting_level_callback) {
-  return make_scoped_refptr(
-      new V4LocalDatabaseManager(base_path, extended_reporting_level_callback));
+  return local_database_manager_instance =
+             make_scoped_refptr(new V4LocalDatabaseManager(
+                 base_path, extended_reporting_level_callback));
+}
+
+void V4LocalDatabaseManager::SetV4DatabaseParams(
+    V4DatabaseInfo* v4_database_info) {
+  v4_database_info->set_network_status(
+      v4_update_protocol_manager_->response_code);
+
+  for (auto& file : v4_database_->list_sizes) {
+    V4DatabaseInfo::StoreFiles* new_store_added =
+        v4_database_info->add_store_files_list();
+
+    new_store_added->set_store_file_name(file.first);
+    new_store_added->set_store_file_size(file.second);
+  }
+  v4_database_info->set_database_size(v4_database_->db_size_instance);
+
+  v4_database_info->set_time_since_last_update_response(
+      UTF16ToASCII(TimeFormatShortDateAndTime(
+          v4_update_protocol_manager_->last_response_time_)));
 }
 
 V4LocalDatabaseManager::V4LocalDatabaseManager(

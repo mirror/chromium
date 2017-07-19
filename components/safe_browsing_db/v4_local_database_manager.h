@@ -12,6 +12,7 @@
 #include <unordered_set>
 
 #include "base/memory/weak_ptr.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/database_manager.h"
 #include "components/safe_browsing_db/hit_report.h"
 #include "components/safe_browsing_db/v4_database.h"
@@ -33,6 +34,13 @@ class V4LocalDatabaseManager : public SafeBrowsingDatabaseManager {
   static scoped_refptr<V4LocalDatabaseManager> Create(
       const base::FilePath& base_path,
       ExtendedReportingLevelCallback extended_reporting_level_callback);
+
+  // Fills the protobuf with the database data to be displayed the
+  // chrome://safe-browsing page.
+  void SetV4DatabaseParams(V4DatabaseInfo* v4_database_info);
+
+  // Instance of the V4LocalDatabaseManager object
+  static scoped_refptr<V4LocalDatabaseManager> local_database_manager_instance;
 
   //
   // SafeBrowsingDatabaseManager implementation
