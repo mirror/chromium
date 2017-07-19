@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "560d7a79_b884e206",
+        "filename": "third_party/WebKit/LayoutTests/inspector/components/color-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-19T20:32:15Z",
+      "side": 1,
+      "message": "How is it possible to convert color with alpha to hsv?",
+      "revId": "2f6599e85140811886a66063954a7c445676bce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f77fc349_0af0c15f",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 9
