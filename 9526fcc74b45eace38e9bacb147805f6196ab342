@@ -16,6 +16,24 @@
       "revId": "9526fcc74b45eace38e9bacb147805f6196ab342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6082d2d2_8f96f3e8",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-19T05:29:55Z",
+      "side": 0,
+      "message": "I have another cl that removes Consume4Values, and I\u0027ll land that cl before this cl.\n \nSeparately, I have to add Consume2Values back as someone just added parsing of a shorthand property (scroll-boundary-behavior) to CSSPropertyParser (crrev.com/2769793002), which uses Consume2Values. I\u0027ll have to prepare another cl to ribbonize this new shorthand property and remove Consume2Values at the same time.",
+      "parentUuid": "35907abd_65753945",
+      "revId": "9526fcc74b45eace38e9bacb147805f6196ab342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
