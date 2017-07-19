@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced35eb9_543ba2cf",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T14:06:12Z",
+      "side": 1,
+      "message": "nit: maybe just \"inherit from fileSystem\" or \"inherit from fileSystem\u0027s default_parent\"?",
+      "revId": "52b462d54ea2002981195bb02606d5832500cf4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
