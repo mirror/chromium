@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346e1274_2cd38ef3",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-19T17:45:17Z",
+      "side": 1,
+      "message": "nit: DCHECK_LE",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 8
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df7c79e_84c770a5",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-19T17:45:17Z",
+      "side": 1,
+      "message": "Why are you wrapping the features with pointers?",
+      "range": {
+        "startLine": 168,
+        "startChar": 14,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3e61ae_80c54fbb",
+        "filename": "base/test/scoped_feature_list.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-19T17:45:17Z",
+      "side": 1,
+      "message": "Please document the lifetime expectations for the |trial|.  Likewise below.",
+      "range": {
+        "startLine": 78,
+        "startChar": 69,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

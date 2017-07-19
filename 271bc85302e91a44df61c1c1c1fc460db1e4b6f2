@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23b9df63_fe689884",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-19T17:45:17Z",
+      "side": 0,
+      "message": "Thanks for this namespace cleanup!  Would you mind splitting this off to a separate CL, so that the remaining ScopedFeatureList changes stand out more?",
+      "range": {
+        "startLine": 101,
+        "startChar": 27,
+        "endLine": 101,
+        "endChar": 33
+      },
+      "revId": "271bc85302e91a44df61c1c1c1fc460db1e4b6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
