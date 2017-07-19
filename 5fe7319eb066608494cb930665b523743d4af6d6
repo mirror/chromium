@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de81db50_849e393f",
+        "filename": "third_party/WebKit/LayoutTests/paint/input/textarea-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-19T22:18:42Z",
+      "side": 1,
+      "message": "Add \u003c!doctype html\u003e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "5fe7319eb066608494cb930665b523743d4af6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059bcaa7_7a272fa1",
+        "filename": "third_party/WebKit/LayoutTests/paint/input/textarea-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-19T22:18:42Z",
+      "side": 1,
+      "message": "Probably want something like an early-out in the script like:\n\nif (!window.eventSender) {\n  console.log(\u0027This test requires event sender availability.\u0027);\n  return;\n}",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "5fe7319eb066608494cb930665b523743d4af6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
