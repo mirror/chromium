@@ -22,6 +22,30 @@
       "revId": "c72b72f1c1fd77c3b2573c2d4b00ba014ac380b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e3999_e3917833",
+        "filename": "chrome/browser/ui/cocoa/browser_window_command_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-19T19:00:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we do - the menu item should already have been disabled at this point - but I\u0027m not fully sure.",
+      "parentUuid": "51ab6048_b07a6264",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "c72b72f1c1fd77c3b2573c2d4b00ba014ac380b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
