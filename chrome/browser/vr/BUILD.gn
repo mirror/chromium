@@ -40,6 +40,8 @@ static_library("vr_common") {
     "elements/insecure_content_permanent_texture.h",
     "elements/insecure_content_transient_texture.cc",
     "elements/insecure_content_transient_texture.h",
+    "elements/linear_layout.cc",
+    "elements/linear_layout.h",
     "elements/loading_indicator.cc",
     "elements/loading_indicator.h",
     "elements/loading_indicator_texture.cc",
