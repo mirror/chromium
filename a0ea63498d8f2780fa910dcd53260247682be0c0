@@ -105,6 +105,24 @@
       "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe51a8a_4b61efbc",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T14:33:49Z",
+      "side": 1,
+      "message": "The previous change somehow didn\u0027t pick up the comment changes, but done in the latest one.\n\nReg: ResourceFetcherImpl - not really suggesting anything, just thought creating a new loader/loaderclient to send a preflight request feels a bit awkward and I imagined we might want to use/create a convenient utility implementation.",
+      "parentUuid": "7d08747f_66787612",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
