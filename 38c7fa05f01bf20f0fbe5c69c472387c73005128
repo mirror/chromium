@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d07ff5b_6618356b",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T00:41:19Z",
+      "side": 1,
+      "message": "To simplify the function, can you make this return \u0027bool\u0027 instead of taking a bool ptr like this?\n\nbool SharedWorkerHost::AllowIndexedDB(const GURL\u0026 url,\n                                      const base::string16\u0026 name) {\n  return GetContentClient()-\u003ebrowser()-\u003eAllowWorkerIndexedDB(...);\n}",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ac7e7e_cf87a247",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T00:41:19Z",
+      "side": 1,
+      "message": "Ditto. Can you make this return \u0027bool\u0027 instead of taking a \u0027bool\u0027 ptr?",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5e6457_cc7faaec",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T00:41:19Z",
+      "side": 1,
+      "message": "\"This is assumed to be used only by shared worker.\"\n\n^^^ This seems to be redundant because this has \"SharedWorker\" prefix on its class name.",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d71a226_fffa7428",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T00:41:19Z",
+      "side": 1,
+      "message": "Did you forget to remove this comment? :)",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
