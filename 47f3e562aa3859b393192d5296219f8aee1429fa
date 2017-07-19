@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4f40fa4d_a55bb1be",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T18:14:11Z",
+      "side": 1,
+      "message": "My opinion: \"is_\" is superfluous on an \"enabled\" boolean - it\u0027s implied.  We do it in places, but I\u0027d rather remove them.  Also, it makes the setter sound weird \"set_is_web_vr_rendering_enabled()\" (is that a question or a request? :-)",
+      "parentUuid": "beb28fc5_bc3d8dbb",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46b7f2f7_81ea8a30",
         "filename": "chrome/browser/vr/ui_scene.h",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "74bb3614_4de6d544",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T18:14:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46b7f2f7_81ea8a30",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e01f783_bd0442e1",
         "filename": "chrome/browser/vr/ui_scene.h",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-19T17:37:31Z",
       "side": 1,
       "message": "I think we don\u0027t need that anymore.",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0801d0d1_41ee410d",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T18:14:11Z",
+      "side": 1,
+      "message": "Done.  Good catch!  That was the point of this CL.  :)",
+      "parentUuid": "9e01f783_bd0442e1",
       "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -114,6 +168,30 @@
       "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facb45ca_d86a2ece",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T18:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a81a55c_f99d2d76",
+      "range": {
+        "startLine": 487,
+        "startChar": 40,
+        "endLine": 487,
+        "endChar": 71
+      },
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
