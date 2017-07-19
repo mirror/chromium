@@ -34,6 +34,24 @@
       "revId": "5a7dffbb49ac8f0b9225ef6ba2d8cf9207111a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bdb52d_823997f6",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-19T13:48:34Z",
+      "side": 1,
+      "message": "If it\u0027s a new API, I\u0027d prefer a float sigma here, as used elsewhere in Skia, Blink and in the web platform specs. It allows subpixel blurring, which can be nice for animation. I also don\u0027t think pretending that the sigma is an integer pixel measurement has much value, since the affected area may be greater or fewer than 3 * sigma pixels in width anyway. (An integer radius is even more misleading on that front.)",
+      "parentUuid": "d1387512_375735ba",
+      "revId": "5a7dffbb49ac8f0b9225ef6ba2d8cf9207111a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
