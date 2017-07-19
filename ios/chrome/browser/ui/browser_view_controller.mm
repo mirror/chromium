@@ -38,6 +38,8 @@
 #include "base/threading/thread_restrictions.h"
 #include "components/bookmarks/browser/base_bookmark_model_observer.h"
 #include "components/bookmarks/browser/bookmark_model.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "components/image_fetcher/ios/ios_image_data_fetcher_wrapper.h"
 #include "components/infobars/core/infobar_manager.h"
 #include "components/payments/core/features.h"
@@ -56,6 +58,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/favicon/favicon_loader.h"
 #include "ios/chrome/browser/favicon/ios_chrome_favicon_loader_factory.h"
+#include "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_controller.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_model.h"
 #import "ios/chrome/browser/find_in_page/find_tab_helper.h"
@@ -3979,6 +3982,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _readingListMenuNotifier = [[ReadingListMenuNotifier alloc]
         initWithReadingList:ReadingListModelFactory::GetForBrowserState(
                                 _browserState)];
+  }
+
+  if (FeatureEngagementTrackerFactory::GetForBrowserState(_browserState)
+          ->ShouldTriggerHelpUI(
+              feature_engagement_tracker::kIPHBadgedReadingListFeature)) {
+    [configuration setShowReadingListNewBadge:YES];
   }
   [configuration setReadingListMenuNotifier:_readingListMenuNotifier];
 

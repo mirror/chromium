@@ -17,6 +17,7 @@
 @synthesize inTabSwitcher = _inTabSwitcher;
 @synthesize noOpenedTabs = _noOpenedTabs;
 @synthesize inIncognito = _inIncognito;
+@synthesize showReadingListNewBadge = _showReadingListNewBadge;
 @synthesize userAgentType = _userAgentType;
 @synthesize requestStartTime = _requestStartTime;
 
