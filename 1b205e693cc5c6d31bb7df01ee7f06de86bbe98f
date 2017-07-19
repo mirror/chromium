@@ -16,6 +16,24 @@
       "revId": "1b205e693cc5c6d31bb7df01ee7f06de86bbe98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74558f4_139ed50b",
+        "filename": "ash/touch/touch_uma.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-19T01:51:28Z",
+      "side": 1,
+      "message": "Yes, exactly. We are trying to deprecate is_null() in the Time classes for just that reason; that \"0\" is a legitimate value, and this can easily cause unintended bugs (and has!). I figured I\u0027d help move that along since I\u0027m already touching this file, and it also seems to help the code here self-describe a bit better. :)",
+      "parentUuid": "2492fb02_d6203bc1",
+      "revId": "1b205e693cc5c6d31bb7df01ee7f06de86bbe98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
