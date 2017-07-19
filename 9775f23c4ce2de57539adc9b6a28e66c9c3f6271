@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1ff59f6_f3c1d9e8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-19T00:02:07Z",
+      "side": 1,
+      "message": "The bit is sticky. It will stay even if the handler is removed, or the image is used by another element that does not have a handler.",
+      "parentUuid": "a4a2c0da_d647ad72",
+      "revId": "9775f23c4ce2de57539adc9b6a28e66c9c3f6271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6878489_b72d6dfb",
         "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9775f23c4ce2de57539adc9b6a28e66c9c3f6271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e082aa1c_9c63cd73",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-19T00:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6878489_b72d6dfb",
+      "revId": "9775f23c4ce2de57539adc9b6a28e66c9c3f6271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
