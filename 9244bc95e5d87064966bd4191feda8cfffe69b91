@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "36fb6651_4c03611a",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T16:05:03Z",
+      "side": 1,
+      "message": "Set is_waiting_for_wifi_to_enable_ to false here to ensure we don\u0027t attempt to create the wifi config twice.",
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a99d04f_615ba210",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 3
@@ -105,6 +122,30 @@
       "writtenOn": "2017-07-19T00:27:43Z",
       "side": 1,
       "message": "We shouldn\u0027t just set this to false; if we get another connection attempt just after this, there\u0027s a chance that accidentally call SetTechnologyEnabled() again unnecessarily. See my other comments.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0333b033_e0c6fb80",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T16:05:03Z",
+      "side": 1,
+      "message": "This should be fine either way with the change after line 81. There\u0027s no harm in calling SetTechnologyEnabled() more than once.",
+      "parentUuid": "ac59d762_d31f516d",
       "range": {
         "startLine": 154,
         "startChar": 0,
