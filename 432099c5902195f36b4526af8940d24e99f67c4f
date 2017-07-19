@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d8e5e5b_b4f3cd4c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "made it const int64_t. I think that the auto does not help here.",
+      "parentUuid": "b18be0fb_e9aa35e6",
+      "range": {
+        "startLine": 376,
+        "startChar": 4,
+        "endLine": 376,
+        "endChar": 11
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be75fab5_5f455ec7",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f080305_fc6186f9",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be75fab5_5f455ec7",
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2aec5faa_415d145f",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87985a27_c2badb25",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 70
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6107f77e_6bcf95a4",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "d76dbd5d_1d31360b",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Reduced to 100. Yes. This is for ordering items for better organization.",
+      "parentUuid": "6107f77e_6bcf95a4",
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f4c9cd7_af69384e",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 3
@@ -93,6 +177,30 @@
       "writtenOn": "2017-07-18T14:35:52Z",
       "side": 1,
       "message": "naming nit: How about IsDeduplicatedUserAction? Or maybe turn it around and call the opposite IsRepeatedUserAction?",
+      "range": {
+        "startLine": 335,
+        "startChar": 16,
+        "endLine": 335,
+        "endChar": 29
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc2a79d_3ca4a369",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Done.\n\nNote that I have kept one_time_report_user_actions instead of changing this to non_repeated_user_actions, which would be confusing in my opinion.",
+      "parentUuid": "6f4c9cd7_af69384e",
       "range": {
         "startLine": 335,
         "startChar": 16,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "588c1339_ad4fa8b7",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52049754_f64f25ff",
+      "range": {
+        "startLine": 572,
+        "startChar": 2,
+        "endLine": 572,
+        "endChar": 20
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ba971a_279f8c64",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -148,6 +280,30 @@
       "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60dd325_ded10720",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39ba971a_279f8c64",
+      "range": {
+        "startLine": 849,
+        "startChar": 48,
+        "endLine": 849,
+        "endChar": 67
+      },
+      "revId": "432099c5902195f36b4526af8940d24e99f67c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
