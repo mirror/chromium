@@ -376,7 +376,7 @@ void V4UpdateProtocolManager::OnURLFetchComplete(
 
   timeout_timer_.Stop();
 
-  int response_code = source->GetResponseCode();
+  response_code = source->GetResponseCode();
   net::URLRequestStatus status = source->GetStatus();
   V4ProtocolManagerUtil::RecordHttpResponseOrErrorCode(
       "SafeBrowsing.V4Update.Network.Result", status, response_code);

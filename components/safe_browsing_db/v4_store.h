@@ -215,6 +215,8 @@ class V4Store {
   // which blocks resource loads.
   bool VerifyChecksum();
 
+  std::string name_of_current_store;
+
  protected:
   HashPrefixMap hash_prefix_map_;
 

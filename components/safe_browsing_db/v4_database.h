@@ -163,6 +163,11 @@ class V4Database {
   // with the combined size of all the stores.
   void RecordFileSizeHistograms();
 
+  // Records database size in kilobytes.
+  double db_size_instance;
+
+  std::map<std::string, double> list_sizes;
+
  protected:
   V4Database(const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
              std::unique_ptr<StoreMap> store_map);
