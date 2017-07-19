@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690d49bf_62f96fe0",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-19T23:32:35Z",
+      "side": 1,
+      "message": "I believe you should use histogram_buckets notation, as this is not a global constant.",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
