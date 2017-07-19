@@ -10,9 +10,10 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "chrome/browser/media/router/presentation_request.h"
 #include "chrome/browser/media/router/render_frame_host_id.h"
 #include "chrome/common/media_router/media_route.h"
+#include "content/public/browser/presentation_request.h"
+// TODO(imcheng): Needed?
 #include "content/public/browser/presentation_service_delegate.h"
 
 namespace content {
@@ -55,7 +56,7 @@ class CreatePresentationConnectionRequest {
       PresentationConnectionErrorCallback error_cb);
   ~CreatePresentationConnectionRequest();
 
-  const PresentationRequest& presentation_request() const {
+  const content::PresentationRequest& presentation_request() const {
     return presentation_request_;
   }
 
@@ -73,7 +74,7 @@ class CreatePresentationConnectionRequest {
       const RouteRequestResult& result);
 
  private:
-  const PresentationRequest presentation_request_;
+  const content::PresentationRequest presentation_request_;
   PresentationConnectionCallback success_cb_;
   PresentationConnectionErrorCallback error_cb_;
   bool cb_invoked_;
