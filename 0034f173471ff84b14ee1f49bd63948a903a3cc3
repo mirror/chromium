@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b7f455f_77b1b685",
+        "filename": "components/viz/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:17:54Z",
+      "side": 1,
+      "message": "Hm these 2 shouldn\u0027t be here.. the mojo thing is test-only? And ui/gl/ is for tests also?\n\nThese are both in viz/test/DEPS, should they be deleted?",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46f9632e_dc415492",
         "filename": "components/viz/client/DEPS",
         "patchSetId": 2
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "Yes, it\u0027s deliberate in the short term for in-process FrameSinkManagerImpl in Chrome production.",
       "parentUuid": "4ef45056_84fc6f28",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7eb994_571b7855",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:17:54Z",
+      "side": 1,
+      "message": "Why isn\u0027t that interface header somewhere other than service? It seems like it should go in common/frame_sinks since its shared? At best this should be only allowing that one header.",
+      "parentUuid": "b7883dbf_8ea5b9c9",
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
