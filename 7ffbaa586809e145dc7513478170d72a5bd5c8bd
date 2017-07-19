@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d11d01c4_d85c700c",
+        "filename": "components/policy/core/common/policy_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:13:37Z",
+      "side": 1,
+      "message": "This is one of the few cases where the pointers can actually be null, thus this extra check is needed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "7ffbaa586809e145dc7513478170d72a5bd5c8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0eee6f_b183bfd8",
+        "filename": "components/policy/core/common/policy_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T18:13:37Z",
+      "side": 1,
+      "message": "This check is not so trivial, which is why I added the comment here.",
+      "revId": "7ffbaa586809e145dc7513478170d72a5bd5c8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
