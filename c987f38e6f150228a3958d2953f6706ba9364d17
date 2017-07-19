@@ -1,0 +1,613 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92185c0b_8811ff6c",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Do you want to use nullable annotation to clarify if URL string can be null.",
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5960d492_2c5640db",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "This does not look like mock (which allows to set expectation and verify that everything was called). This looks more like \"fake\" object, we have bunch of them here: ios/web/public/test/fakes\n\nDo you want to rename this class and move to other fakes?",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004f9285_374c38ab",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Could you please add comments to all non-trivial methods.",
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f05b7a3_3ae64ce2",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "s/Url/URL and s/url/URL in the implementation",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de1de6b_6a95584c",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "s/createMockItem/mockItemWithURLString\n\nFrom Google Obj-C Style Guide: \"A method that returns an object should have a name beginning with a noun identifying the object returned:\"\n\n\nFrom Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1417e916_6769724e",
+        "filename": "ios/web/navigation/crw_back_forward_list_mock.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f546014_4dcfa564",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "s/Create/Creates",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 11
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35260f8c_52a3a7b5",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Is it nil if pending_item_index_ !\u003d -1. Could you please document",
+      "range": {
+        "startLine": 129,
+        "startChar": 28,
+        "endLine": 129,
+        "endChar": 38
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6692e0ba_8a449ce5",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Some comments refer to \"main frame\" and some don\u0027t. Is it fair to say that this class represents only main frame navigation and document that in class level comments?",
+      "range": {
+        "startLine": 132,
+        "startChar": 25,
+        "endLine": 132,
+        "endChar": 35
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d86a1d_0c085356",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "URL is not really a unique identifier, so this method will give many false positives. You can use associated object API to associate web::NavigationItem with WKBackForwardListItem to check for equivalence. Using associated object will give you other benefits, like you will not need to maintain navigation_item_impls_. See objc_getAssociatedObject function as an example.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301f5cb4_16a998d1",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we have special tests for this API. Could you please add the test.",
+      "range": {
+        "startLine": 90,
+        "startChar": 35,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686a31e1_c4c2ece6",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something, pending_item_ will be nil during back-forward navigation, but this DCHECK should not fire, right?",
+      "range": {
+        "startLine": 99,
+        "startChar": 9,
+        "endLine": 99,
+        "endChar": 22
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdce243_298b77cd",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Did you mean didStartProvisionalNavigation? I think AddPending item is called inside didStartProvisionalNavigation only for renderer initiated navigations.",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 67
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189e7761_b2569b06",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "nit: avoid \"we\" in the comments (go/avoidwe)",
+      "range": {
+        "startLine": 117,
+        "startChar": 66,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b3f117_63661c41",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "nit: Could you please keep the same methods order as in the header.",
+      "range": {
+        "startLine": 168,
+        "startChar": 30,
+        "endLine": 168,
+        "endChar": 50
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0f6327_682e021d",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "This looks like a code duplication. Can we avoid it?",
+      "range": {
+        "startLine": 186,
+        "startChar": 30,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e0b9e9_aaa8aa62",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Looks like it is not possible to maintain navigation_item_impls_ in sync. Maintaining WKBackForwardListItem -\u003e web::NavigationItem association and using WKBackForwardList as a source of truth will guarantee correctness.",
+      "range": {
+        "startLine": 244,
+        "startChar": 39,
+        "endLine": 244,
+        "endChar": 43
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fac336_6fe68c7a",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "nit: Avoid \"we\" in the comments",
+      "range": {
+        "startLine": 244,
+        "startChar": 45,
+        "endLine": 244,
+        "endChar": 47
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70df6159_8a5cc601",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "s/INT_MIN/-1 ?",
+      "range": {
+        "startLine": 319,
+        "startChar": 13,
+        "endLine": 319,
+        "endChar": 20
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ccbb85_f2c0c56a",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Does this method return correct value if pending_item_index_ !\u003d -1 ?",
+      "range": {
+        "startLine": 343,
+        "startChar": 9,
+        "endLine": 343,
+        "endChar": 22
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab2cb70_8685f7d5",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we have special tests for this API. Could you please add the test.",
+      "range": {
+        "startLine": 350,
+        "startChar": 35,
+        "endLine": 350,
+        "endChar": 59
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a773adc4_84e0068b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "nit: From Chromium Style Guide: \"Don\u0027t use else after return\"\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "range": {
+        "startLine": 399,
+        "startChar": 4,
+        "endLine": 399,
+        "endChar": 8
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc90f405_efc9c4aa",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "Maintaining WKBackForwardListItem -\u003e web::NavigationItem association and using WKBackForwardList as a source of truth will guarantee correctness of this method. with current implementation navigation_item_impls_ can be out of sync.",
+      "range": {
+        "startLine": 403,
+        "startChar": 11,
+        "endLine": 403,
+        "endChar": 33
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a89472a_21bd47b9",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "This API does not have tests. Could you please write them.",
+      "range": {
+        "startLine": 455,
+        "startChar": 35,
+        "endLine": 455,
+        "endChar": 41
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dde71e3_3e4ec5e2",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 463,
+        "startChar": 35,
+        "endLine": 463,
+        "endChar": 44
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974a3c27_b306e677",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "nit: There is no need to put tests into anonymous namespace. Conceptually tests are the part of \"web\" package.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e0325b_98bb50cc",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T16:35:35Z",
+      "side": 1,
+      "message": "s/Test/Tests",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "c987f38e6f150228a3958d2953f6706ba9364d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
