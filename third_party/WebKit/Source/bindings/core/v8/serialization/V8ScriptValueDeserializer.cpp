@@ -544,11 +544,18 @@ RefPtr<BlobDataHandle> V8ScriptValueDeserializer::GetOrCreateBlobDataHandle(
   // blob in the src process happens to still exist at the time the dest process
   // is deserializing.
   // For example in sharedWorker.postMessage(...).
+  auto blob_it = deserialized_blobs_.find(uuid);
+  if (blob_it != deserialized_blobs_.end())
+    return blob_it->value;
   BlobDataHandleMap& handles = serialized_script_value_->BlobDataHandles();
   BlobDataHandleMap::const_iterator it = handles.find(uuid);
+  RefPtr<BlobDataHandle> result;
   if (it != handles.end())
-    return it->value;
-  return BlobDataHandle::Create(uuid, type, size);
+    result = BlobDataHandle::Create(it->value.get());
+  else
+    result = BlobDataHandle::Create(uuid, type, size);
+  deserialized_blobs_.Set(uuid, result);
+  return result;
 }
 
 v8::MaybeLocal<v8::Object> V8ScriptValueDeserializer::ReadHostObject(
