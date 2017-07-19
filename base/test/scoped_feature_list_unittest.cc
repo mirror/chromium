@@ -5,6 +5,8 @@
 #include "base/test/scoped_feature_list.h"
 
 #include <string>
+#include <utility>
+
 #include "base/metrics/field_trial.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -70,6 +72,66 @@ TEST_F(ScopedFeatureListTest, BasicScoped) {
   }
   ExpectFeatures(std::string(), std::string());
   EXPECT_FALSE(FeatureList::IsEnabled(kTestFeature1));
+}
+
+TEST_F(ScopedFeatureListTest, EnableWithTrial) {
+  base::FieldTrialList trial_list(nullptr);
+  base::FieldTrial* trial =
+      base::FieldTrialList::CreateFieldTrial("test_name", "test_group");
+  test::ScopedFeatureList feature_list1;
+  feature_list1.InitAndEnableFeatureWithFieldTrialOverride(kTestFeature1,
+                                                           trial);
+  ExpectFeatures("TestFeature1<test_name", std::string());
+  EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature1));
+}
+
+TEST_F(ScopedFeatureListTest, OverrideWithTrial) {
+  base::FieldTrialList trial_list(nullptr);
+  base::FieldTrial* trial =
+      base::FieldTrialList::CreateFieldTrial("test_name", "test_group");
+
+  test::ScopedFeatureList feature_list1;
+  feature_list1.InitFromCommandLine("TestFeature1", std::string());
+  ExpectFeatures("TestFeature1", std::string());
+
+  {
+    test::ScopedFeatureList feature_list2;
+    feature_list2.InitAndEnableFeatureWithFieldTrialOverride(kTestFeature1,
+                                                             trial);
+    ExpectFeatures("TestFeature1<test_name", std::string());
+    EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature1));
+  }
+}
+
+TEST_F(ScopedFeatureListTest, InitWithFeaturesAndTrials) {
+  base::FieldTrialList trial_list(nullptr);
+  base::FieldTrial* trial_1 =
+      base::FieldTrialList::CreateFieldTrial("name1", "group1");
+  base::FieldTrial* trial_2 =
+      base::FieldTrialList::CreateFieldTrial("name2", "group2");
+
+  test::ScopedFeatureList feature_list1;
+  feature_list1.InitFromCommandLine("TestFeature1,TestFeature2<name2",
+                                    "TestFeature3");
+  ExpectFeatures("TestFeature1,TestFeature2<name2", "TestFeature3");
+
+  {
+    test::ScopedFeatureList feature_list2;
+    feature_list2.InitWithFeaturesAndFieldTrials({kTestFeature1, kTestFeature2},
+                                                 {trial_2, trial_1}, {});
+    ExpectFeatures("TestFeature1<name2,TestFeature2<name1", "TestFeature3");
+    EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature1));
+    EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature2));
+  }
+
+  {
+    test::ScopedFeatureList feature_list2;
+    feature_list2.InitWithFeaturesAndFieldTrials({kTestFeature1}, {trial_1},
+                                                 {});
+    ExpectFeatures("TestFeature1<name1,TestFeature2<name2", "TestFeature3");
+    EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature1));
+    EXPECT_TRUE(FeatureList::IsEnabled(kTestFeature2));
+  }
 }
 
 TEST_F(ScopedFeatureListTest, EnableFeatureOverrideDisable) {
