@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "055a0908_7ab7eb81",
+        "filename": "chrome/browser/resources/settings/people_page/manage_profile.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-19T19:09:00Z",
+      "side": 1,
+      "message": "The real change is the addition of\nno-label-float",
+      "revId": "beed079dc5f8e55c4486b46c0e849e02af948ee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
