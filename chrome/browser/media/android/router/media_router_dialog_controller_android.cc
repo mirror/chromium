@@ -153,8 +153,8 @@ void MediaRouterDialogControllerAndroid::CreateMediaRouterDialog() {
 
   JNIEnv* env = base::android::AttachCurrentThread();
 
-  const std::vector<MediaSource> sources =
-      create_connection_request()->presentation_request().GetMediaSources();
+  auto sources = MediaSourcesForPresentationUrls(
+      create_connection_request()->presentation_request().presentation_urls());
 
   // If it's a single route with the same source, show the controller dialog
   // instead of the device picker.
