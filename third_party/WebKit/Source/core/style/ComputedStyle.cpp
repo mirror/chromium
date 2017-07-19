@@ -205,7 +205,8 @@ StyleSelfAlignmentData ResolvedSelfAlignment(
     const StyleSelfAlignmentData& value,
     ItemPosition normal_value_behavior) {
   if (value.GetPosition() == kItemPositionNormal ||
-      value.GetPosition() == kItemPositionAuto)
+      value.GetPosition() == kItemPositionAuto ||
+      value.GetPosition() == kItemPositionLegacy)
     return {normal_value_behavior, kOverflowAlignmentDefault};
   return value;
 }
