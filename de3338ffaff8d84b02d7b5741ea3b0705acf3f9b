@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2f04ff6_f7601750",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9764,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T16:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d61285_5fd83192",
+      "range": {
+        "startLine": 9764,
+        "startChar": 29,
+        "endLine": 9764,
+        "endChar": 36
+      },
+      "revId": "de3338ffaff8d84b02d7b5741ea3b0705acf3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "674f1167_73802ef2",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T12:54:54Z",
       "side": 1,
       "message": "Will be useful to explain what exactly is \"app ID\".\nIIUC, currently it\u0027s talking only about Chrome Apps, with a potential expanding to Android apps - or is it already meaning both?",
+      "range": {
+        "startLine": 9786,
+        "startChar": 101,
+        "endLine": 9786,
+        "endChar": 109
+      },
+      "revId": "de3338ffaff8d84b02d7b5741ea3b0705acf3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1622f48f_5c69bb0c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9786,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T16:25:27Z",
+      "side": 1,
+      "message": "I added a note that this is for Chrome apps only, and that ID is extension ID",
+      "parentUuid": "674f1167_73802ef2",
       "range": {
         "startLine": 9786,
         "startChar": 101,
