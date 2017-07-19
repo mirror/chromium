@@ -21,6 +21,7 @@ import datetime
 import doctest
 import os
 import sys
+import time
 
 
 def GetFirstSundayOfMonth(year, month):
@@ -88,7 +89,10 @@ def main():
     # Format is expected to be "Mmm DD YYYY HH:MM:SS".
     build_date = args.build_date_override
   else:
-    now = datetime.datetime.utcnow()
+    epoch = int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))
+    assert epoch < time.time() + 12*60*60,
+        'SOURCE_DATE_EPOCH must not be in the far future'
+    now = datetime.datetime.utcfromtimestamp(epoch)
     if now.hour < 5:
       # The time is locked at 5:00 am in UTC to cause the build cache
       # invalidation to not happen exactly at midnight. Use the same calculation
