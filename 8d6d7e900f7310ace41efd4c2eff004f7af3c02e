@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c1358c_910e5940",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T16:04:55Z",
+      "side": 1,
+      "message": "I wonder if we should just create this within Blink, and only expose WebTaskRunner to blink consumers?  It might possibly allow us to replace the underlying infra to sequenced task runner or something else at some point. (And I think we want to avoid directly referring to WebThread as much as possible)\n\nGetFileThreadTaskRunner can get the file WebTaskRunner from blink_platform_impl_ and return SingleThreadTaskRunner by calling its ToSingleThreadTaskRunner method.\n\n(Also interested in what scheduler folks / others think)",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
