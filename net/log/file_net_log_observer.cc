@@ -96,6 +96,11 @@ void AppendToFileThenDelete(const base::FilePath& source_path,
   base::DeleteFile(source_path, false);
 }
 
+void FlushFile(FILE* file) {
+  if (file)
+    fflush(file);
+}
+
 }  // namespace
 
 namespace net {
@@ -554,6 +559,11 @@ void FileNetLogObserver::FileWriter::Flush(
 
     local_file_queue.pop();
   }
+
+  // Events are already buffered by the WriteQueue. Flushing here means better
+  // better logs when not gracefully shutdown, since event lines are likely to
+  // be complete.
+  FlushFile(IsBounded() ? final_log_file_.get() : current_event_file_.get());
 }
 
 void FileNetLogObserver::FileWriter::DeleteAllFiles() {
@@ -737,7 +747,7 @@ void FileNetLogObserver::FileWriter::CreateInprogressDirectory() const {
       "\n"
       "https://chromium.googlesource.com/chromium/src/+/master/net/tools/"
       "stitch_net_log_files.py\n");
-  fflush(final_log_file_.get());
+  FlushFile(final_log_file_.get());
 }
 
 }  // namespace net
