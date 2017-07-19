@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676184da_4410f037",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T20:33:53Z",
+      "side": 1,
+      "message": "Why are you making it ref-counted?",
+      "revId": "b7dc01edbc6c00bc589e7c7be3bf7f5d727e653d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf3ed7b_e65e6eef",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T20:33:53Z",
+      "side": 1,
+      "message": "We should not do weak pointers to ref-counted objects, that adds too much complexity into the lifetime tracking.",
+      "revId": "b7dc01edbc6c00bc589e7c7be3bf7f5d727e653d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
