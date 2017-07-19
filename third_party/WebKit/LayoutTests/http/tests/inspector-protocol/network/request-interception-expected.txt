@@ -1,7 +1,4 @@
-CONSOLE MESSAGE: line 1: Hello from the mock resource
-CONSOLE MESSAGE: line 13: Post - ECHO SUCCESS!
 Tests interception blocking, modification of network fetches.
-
 Test started
 Network agent enabled
 Request interception enabled

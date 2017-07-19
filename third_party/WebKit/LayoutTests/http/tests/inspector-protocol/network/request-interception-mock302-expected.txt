@@ -1,6 +1,4 @@
-CONSOLE MESSAGE: line 1: Hello from final.js!
 Tests a mock 302 resource.
-
 Test started
 Network agent enabled
 Request interception enabled

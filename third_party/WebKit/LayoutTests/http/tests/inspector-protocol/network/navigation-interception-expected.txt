@@ -1,6 +1,4 @@
-CONSOLE MESSAGE: line 1: Hello from the mocked iframe.
 Tests a mocking of a navigation fetch.
-
 Test started
 Network agent enabled
 Request interception enabled
