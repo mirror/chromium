@@ -325,7 +325,8 @@ TEST(SimpleIndexPerfTest, EvictionPerformance) {
   int iterations = 0;
   while (iterations < 61000) {
     ++iterations;
-    disk_cache::SimpleIndex index(nullptr, &delegate, net::DISK_CACHE, nullptr);
+    disk_cache::SimpleIndex index(nullptr, nullptr, &delegate, net::DISK_CACHE,
+                                  nullptr);
 
     // Make sure large enough to not evict on insertion.
     index.SetMaxSize(kEntries * 2);
