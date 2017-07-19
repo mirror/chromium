@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "46f9632e_dc415492",
+        "filename": "components/viz/client/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-19T17:04:14Z",
+      "side": 1,
+      "message": "Huh? The client can depend on the host?",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ef45056_84fc6f28",
         "filename": "components/viz/host/DEPS",
         "patchSetId": 2
