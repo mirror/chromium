@@ -28,7 +28,7 @@ TEST(TextureMailboxDeleterTest, Destroy) {
   EXPECT_TRUE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());
 
-  std::unique_ptr<SingleReleaseCallback> cb =
+  SingleReleaseCallback cb =
       deleter->GetReleaseCallback(context_provider, texture_id);
   EXPECT_FALSE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());
@@ -41,7 +41,7 @@ TEST(TextureMailboxDeleterTest, Destroy) {
 
   // Run the scoped release callback before destroying it, but it won't do
   // anything.
-  cb->Run(gpu::SyncToken(), false);
+  std::move(cb).Run(gpu::SyncToken(), false);
 }
 
 TEST(TextureMailboxDeleterTest, NullTaskRunner) {
@@ -58,12 +58,12 @@ TEST(TextureMailboxDeleterTest, NullTaskRunner) {
   EXPECT_TRUE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());
 
-  std::unique_ptr<SingleReleaseCallback> cb =
+  SingleReleaseCallback cb =
       deleter->GetReleaseCallback(context_provider, texture_id);
   EXPECT_FALSE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());
 
-  cb->Run(gpu::SyncToken(), false);
+  std::move(cb).Run(gpu::SyncToken(), false);
 
   // With no task runner the callback will immediately drops its ref on the
   // viz::ContextProvider and delete the texture.
