@@ -34,6 +34,24 @@
       "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62becc60_c8c5815d",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T05:33:07Z",
+      "side": 1,
+      "message": "- Let\u0027s say we call EnumerateOnUIThread twice on UI thread.\n- UsbService calls back OpenAndroidDevices twice.\n- OpenAndroidDevice is called twice\n- g_open_devices does not have device-\u003eguid() yet, so this check passes twice for the same guid.\n- We try to open device twice.\n\nnot sure if we succeed at opening twice, but if we do, we end up with a dupe in g_devices. Or what did I miss?",
+      "parentUuid": "e83d6513_7298b066",
+      "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
