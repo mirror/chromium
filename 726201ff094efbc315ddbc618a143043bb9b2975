@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "782fe3a8_147b3326",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-07-19T23:46:24Z",
+      "side": 1,
+      "message": "This line isn\u0027t right (returns 8 instead of 0) for the abspos in\n\n\u003cdiv relpos\u003e\n  \u003cdiv inline-block\u003e\n  \u003cdiv abspos\u003e\n\nhttps://jsfiddle.net/dgrogan/z1rkbaxp/\n\nWhich is derived from failing test external/wpt/css/CSS2/normal-flow/block-non-replaced-width-001.xht",
+      "revId": "726201ff094efbc315ddbc618a143043bb9b2975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
