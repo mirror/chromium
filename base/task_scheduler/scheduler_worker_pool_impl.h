@@ -93,6 +93,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // TODO(fdoray): Remove this method. https://crbug.com/687264
   int GetMaxConcurrentTasksDeprecated() const;
 
+  // Waits until at least |n| workers are idle.
+  void WaitForWorkersIdleForTesting(size_t n);
+
   // Waits until all workers are idle.
   void WaitForAllWorkersIdleForTesting();
 
@@ -110,12 +113,22 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // change if workers are woken up or timeout during this call.
   size_t NumberOfAliveWorkersForTesting();
 
+  // Returns |worker_capacity_|.
+  size_t WorkerCapacityForTesting();
+
+  // Returns the number of workers in the |idle_workers_stack_|.
+  size_t NumberOfIdleWorkersForTesting();
+
  private:
   class SchedulerWorkerDelegateImpl;
 
   SchedulerWorkerPoolImpl(const SchedulerWorkerPoolParams& params,
                           TaskTracker* task_tracker,
                           DelayedTaskManager* delayed_task_manager);
+
+  // Waits until at least |n| workers are idle. |lock_| must be held to call
+  // this function.
+  void WaitForWorkersIdleAssertLockForTesting(size_t n);
 
   // Wakes up the last worker from this worker pool to go idle, if any.
   void WakeUpOneWorker();
@@ -143,6 +156,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // this also calls Start() on the worker.
   scoped_refptr<SchedulerWorker> CreateRegisterAndStartSchedulerWorker();
 
+  // Returns true if the |worker| is currently suspended.
+  bool WorkerIsSuspended(const SchedulerWorker* worker) const;
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -157,7 +173,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   SchedulerBackwardCompatibility backward_compatibility_;
 
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
-  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_| and
+  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|, and
   // |num_wake_ups_before_start_|. Has |shared_priority_queue_|'s lock as
   // its predecessor so that a worker can be pushed to |idle_workers_stack_|
   // within the scope of a Transaction (more details in GetWork()).
@@ -177,7 +193,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // is pushed on this stack when it receives nullptr from GetWork().
   SchedulerWorkerStack idle_workers_stack_;
 
-  // Signaled when all workers become idle.
+  // Signaled when a worker is added to the idle workers stack.
   std::unique_ptr<ConditionVariable> idle_workers_stack_cv_for_testing_;
 
   // Number of wake ups that occurred before Start(). Never modified after
@@ -194,6 +210,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 #if DCHECK_IS_ON()
   // Set after all the initial workers have been created.
   AtomicFlag workers_created_;
+
+  // When set, indicates that no new workers should be added to |workers_|.
+  AtomicFlag worker_creation_disallowed_;
 #endif
 
   // TaskScheduler.NumTasksBeforeDetach.[worker pool name] histogram.
@@ -207,7 +226,76 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
 
+  // TODO(jeffreyhe): Remove this friend designation once ScopedMayBlock is
+  // added.
+  friend class TaskSchedulerWorkerPoolBlockedUnblockedTest;
+
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
+};
+
+class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
+    : public SchedulerWorker::Delegate,
+      BlockingObserver {
+ public:
+  // |outer| owns the worker for which this delegate is constructed.
+  SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer,
+                              const SchedulerLock* predecessor_lock);
+  ~SchedulerWorkerDelegateImpl() override;
+
+  // SchedulerWorker::Delegate:
+  void OnMainEntry(SchedulerWorker* worker) override;
+  scoped_refptr<Sequence> GetWork(SchedulerWorker* worker) override;
+  void DidRunTask() override;
+  void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override;
+  TimeDelta GetSleepTimeout() override;
+  bool CanTimeout(SchedulerWorker* worker) override;
+  void OnTimeout() override;
+  void RemoveWorker(SchedulerWorker* worker) override;
+
+  // BlockingObserver:
+  void TaskBlocked() override;
+  void TaskUnblocked() override;
+
+ private:
+  SchedulerWorkerPoolImpl* outer_;
+
+  // Time of the last detach.
+  TimeTicks last_detach_time_;
+
+  // Time when GetWork() first returned nullptr.
+  TimeTicks idle_start_time_;
+
+  // Indicates whether the last call to GetWork() returned nullptr.
+  bool last_get_work_returned_nullptr_ = false;
+
+  // Indicates whether the SchedulerWorker was detached since the last call to
+  // GetWork().
+  bool did_detach_since_last_get_work_ = false;
+
+  // Number of tasks executed since the last time the
+  // TaskScheduler.NumTasksBetweenWaits histogram was recorded.
+  size_t num_tasks_since_last_wait_ = 0;
+
+  // Number of tasks executed since the last time the
+  // TaskScheduler.NumTasksBeforeDetach histogram was recorded.
+  size_t num_tasks_since_last_detach_ = 0;
+
+  // Synchronizes access to |blocked_start_time_| and
+  // |increased_capacity_since_blocked_|.
+  mutable SchedulerLock blocked_lock_;
+
+  // Time when TaskBlocked() was last called.
+  TimeTicks blocked_start_time_;
+
+  // Indicates whether |worker_capacity_| was incremented due to the last call
+  // to TaskBlocked().
+  bool increased_capacity_since_blocked_ = false;
+
+  // TODO(jeffrey): Remove this and move this class back into
+  // scheduler_worker_pool_impl.cc when ScopedMayBlock is added.
+  friend class TaskSchedulerWorkerPoolBlockedUnblockedTest;
+
+  DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
 
 }  // namespace internal

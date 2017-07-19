@@ -247,5 +247,43 @@ TEST_F(TaskSchedulerWorkerStackTest, PushTwice) {
   EXPECT_DCHECK_DEATH({ stack.Push(worker_a_.get()); });
 }
 
+// Verify that Find() correctly returns the position of workers in the stack.
+TEST_F(TaskSchedulerWorkerStackTest, PushFind) {
+  SchedulerWorkerStack stack;
+  EXPECT_EQ(stack.Find(worker_a_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_b_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+
+  stack.Push(worker_a_.get());
+  EXPECT_EQ(stack.Find(worker_a_.get()), 0);
+  EXPECT_EQ(stack.Find(worker_b_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+
+  stack.Push(worker_b_.get());
+  EXPECT_EQ(stack.Find(worker_a_.get()), 0);
+  EXPECT_EQ(stack.Find(worker_b_.get()), 1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+
+  stack.Push(worker_c_.get());
+  EXPECT_EQ(stack.Find(worker_a_.get()), 0);
+  EXPECT_EQ(stack.Find(worker_b_.get()), 1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), 2);
+
+  stack.Pop();
+  EXPECT_EQ(stack.Find(worker_a_.get()), 0);
+  EXPECT_EQ(stack.Find(worker_b_.get()), 1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+
+  stack.Pop();
+  EXPECT_EQ(stack.Find(worker_a_.get()), 0);
+  EXPECT_EQ(stack.Find(worker_b_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+
+  stack.Pop();
+  EXPECT_EQ(stack.Find(worker_a_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_b_.get()), -1);
+  EXPECT_EQ(stack.Find(worker_c_.get()), -1);
+}
+
 }  // namespace internal
 }  // namespace base
