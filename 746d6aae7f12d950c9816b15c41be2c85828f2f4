@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a656b8c_e881a3a6",
+        "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-19T14:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68778dd_c29b08e9",
+      "range": {
+        "startLine": 457,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 22
+      },
+      "revId": "746d6aae7f12d950c9816b15c41be2c85828f2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cb545e_ef9588bf",
         "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T08:49:28Z",
       "side": 1,
       "message": "I think this method is not used. Please remove it.",
+      "range": {
+        "startLine": 464,
+        "startChar": 23,
+        "endLine": 464,
+        "endChar": 29
+      },
+      "revId": "746d6aae7f12d950c9816b15c41be2c85828f2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220263b4_95a9b5fa",
+        "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-19T14:25:27Z",
+      "side": 1,
+      "message": "It is used by existing tests. I changed it to just seed the account info in the AccountTrackerService, as that\u0027s all that those tests want to have happen.",
+      "parentUuid": "f1cb545e_ef9588bf",
       "range": {
         "startLine": 464,
         "startChar": 23,
@@ -87,6 +135,54 @@
         "startChar": 8,
         "endLine": 63,
         "endChar": 15
+      },
+      "revId": "746d6aae7f12d950c9816b15c41be2c85828f2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58e81af_508efeb8",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_accounts_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-19T14:25:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd733f77_b82288b9",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "746d6aae7f12d950c9816b15c41be2c85828f2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5dc34dda_7d6a5851",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_accounts_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-19T14:25:27Z",
+      "side": 1,
+      "message": "Good point. I exercised chrome.identity.getAccounts() and chrome.identity.getAuthToken() locally in a ChromeOS build on my Linux box. They work as expected.",
+      "parentUuid": "991be80b_2ba79124",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 21
       },
       "revId": "746d6aae7f12d950c9816b15c41be2c85828f2f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
