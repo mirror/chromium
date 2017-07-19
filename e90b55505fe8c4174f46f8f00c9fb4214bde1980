@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6824217_a98ce5f1",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-19T15:39:06Z",
+      "side": 1,
+      "message": "We\u0027d now have whitespace layout object children of e.g. table/flex etc if we have PreserveNewLine()? That seems wrong looking at https://drafts.csswg.org/css-flexbox-1/#flex-items\n\nI think the correct behavior for flex would be to do the previous_in_flow-\u003eIsText() \u0026\u0026 !EndsWithWhitespace() as part of CanHaveWhitespaceChildren() in the previous position.",
+      "revId": "e90b55505fe8c4174f46f8f00c9fb4214bde1980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
