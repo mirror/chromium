@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95407e36_1c072421",
+        "filename": "chrome/browser/chromeos/note_taking_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T21:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cbb3d0_ce37236c",
+      "revId": "d59e7985406be0f89a855e45eda8ea5283cc2d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06685ba9_3f8d926e",
         "filename": "chrome/browser/chromeos/note_taking_helper.h",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T17:35:49Z",
       "side": 1,
       "message": "nit: I think this would be more clear if this were just a set\u003cstring\u003e instead of an owned pointer. An empty set would be equivalent to a nullptr. It also allows us to return/pass a const\u0026 instead of a const* which I think is a bit more clear.",
+      "revId": "d59e7985406be0f89a855e45eda8ea5283cc2d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a861afb9_fe8bcbe7",
+        "filename": "chrome/browser/chromeos/note_taking_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T21:49:33Z",
+      "side": 1,
+      "message": "actually, empty set and nullptr are semantically different\n- nullptr means that there is no whitelist\n- empty set means that the whitelist is empty.\n\nI reshuffled/updated the code a little to make this distinction more explicit.\n(changed lock_screen_apps_allowed_by_policy_loaded_ to an enum that has a value to indicate \u0027no-whitelist\u0027 state, instead of lock_screen_apps_allowed_by_policy_ being nullptr)",
+      "parentUuid": "06685ba9_3f8d926e",
       "revId": "d59e7985406be0f89a855e45eda8ea5283cc2d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
