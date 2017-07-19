@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fa93013c_f92f0c39",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T06:11:08Z",
+      "side": 1,
+      "message": "For long term, IMHO, we should make ArcSessionManager KeyedService, too.\nIt actually tied to Profile, and then we can resolve the dependency by DependsOn.\n\nHowever, it looks long journey, and I\u0027d like to move forward with some short term plan.\nHere are some ideas;\n1) Expose arc_service_launcher_ in chrome_main_chromeos_browser. Probably not realistic.\n\n2) Remove arc_service_launcher_ from chrome_main_chromeos_browser, and make Initialize() and Shutdown() static. So;\nArcServiceLauncher::Initialize();\n// Profile construction.\nArcServiceLauncher::Get()-\u003eSetProfile(profile);\n// BrowserContextKeyedService with deps graph construction.\nArcServiceLauncher::Get()-\u003eOnPrimaryUserProfilePrepared(profile);\nArcServiceLauncher::Get()-\u003eOnPrimaryUserProfileBeingDestroyed();\n// Profile destruction.\nArcServiceLauncher::Shutdown();\nwill be the expected sequence.\n\nIn test,\nArcServiceLaunahcer::Shutdown();\nArcServiceLaunahcer::Initialize();\nwill reset the state to inject profile later.\n\n3) Introduce ResetForTesting(), and remove Initialize(), then.\nChromeBrowserMainChromeOS::arc_service_launcher_ \u003d base::MakeUnique\u003cArcServiceLauncher\u003e();\nArcServiceLauncher::Get()-\u003eSetProfile(profile);\n// BrowserContextKeyedService with deps graph construction.\nArcServiceLauncher::Get()-\u003eOnPrimaryUserProfile(profile);\nArcServiceLauncher::Get()-\u003eShutdown();\n// Profile destruction\nChromeBrowserMainChromeOS::arc_service_launcher_.reset();\n\nIn test;\nTestingProfile profile;\nArcServiceLauncher::Get()-\u003eResetForTesting();\nArcServiceLauncher::Get()-\u003eSetProfile(\u0026profile);\nArcServiceLauncher::Get()-\u003eOnPrimaryUserProfilePrepared(\u0026profile);\n\n4) Check if it runs on real device or not in OnPrimaryUserProfilePrepared() in addition to IsArcAllowedForProfile().\nSetProfile(profile) {\n  if (!IsAllowedForProfile(profile)) {\n    return;\n  }\n  if (!IsRunningOnChromeOS() \u0026\u0026 !g_use_for_testing) {\n    // Skip for browser test.\n    return;\n  }\n  ...\n}\n\nSo, in production\nbase::MakeUnique\u003cArcServiceLauncher\u003e();\nSetProfile(profile);\nOnPrimaryUserProfilePrepared(profile);\nShutdown();\n// Profile destruction.\narc_service_launcher_.reset();\n\nThen, in browser test,\nTestingProfile profile;\nSetUp() {\n  g_use_for_testing \u003d true;\n  ArcServiceLauncher::Get()-\u003eSetProfile(\u0026profile);\n  ArcServiceLauncher::Get()-\u003eOnPrimaryUserProfilePrepared(\u0026profile);\n  ...\n}\n\nI think 4) looks a bit more appropriate, because it won\u0027t initialize BCKS instances for the first process, but 3) looks closer to the current structure?",
+      "parentUuid": "8e8c69cc_a10abda3",
+      "range": {
+        "startLine": 188,
+        "startChar": 25,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c33b4e5f_0b863d83",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
