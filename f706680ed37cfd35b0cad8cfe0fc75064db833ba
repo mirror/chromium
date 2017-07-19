@@ -16,6 +16,24 @@
       "revId": "f706680ed37cfd35b0cad8cfe0fc75064db833ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27dd4f15_4a365434",
+        "filename": "components/omnibox/bug-triage.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T21:18:52Z",
+      "side": 1,
+      "message": "The first is accurate and a notable improvement.  Done.",
+      "parentUuid": "8d10da7d_fb156173",
+      "revId": "f706680ed37cfd35b0cad8cfe0fc75064db833ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
