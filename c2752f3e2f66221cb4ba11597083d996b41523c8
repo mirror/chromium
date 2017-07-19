@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "da72d595_f134ce7a",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96366d58_50768a85",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d39d361_1fd74ee7",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 2
@@ -484,6 +502,24 @@
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672dcae5_259e64d5",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:45:46Z",
+      "side": 1,
+      "message": "This section is already within a #if defined(OS_CHROMEOS) block.",
+      "parentUuid": "dfa1bc1f_6faf15ee",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
