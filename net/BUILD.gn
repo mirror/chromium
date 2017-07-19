@@ -688,6 +688,8 @@ component("net") {
       "disk_cache/cache_util.h",
       "disk_cache/cache_util_posix.cc",
       "disk_cache/cache_util_win.cc",
+      "disk_cache/cleanup_context.cc",
+      "disk_cache/cleanup_context.h",
       "disk_cache/disk_cache.cc",
       "disk_cache/disk_cache.h",
       "disk_cache/memory/mem_backend_impl.cc",

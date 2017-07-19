@@ -85,9 +85,7 @@ DiskCacheTestWithCache::DiskCacheTestWithCache()
       new_eviction_(false),
       first_cleanup_(true),
       integrity_(true),
-      use_current_thread_(false),
-      cache_thread_("CacheThread") {
-}
+      use_current_thread_(false) {}
 
 DiskCacheTestWithCache::~DiskCacheTestWithCache() {}
 
@@ -113,7 +111,7 @@ void DiskCacheTestWithCache::SimulateCrash() {
   cache_.reset();
   EXPECT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, mask_));
 
-  CreateBackend(disk_cache::kNoRandom, &cache_thread_);
+  CreateBackend(disk_cache::kNoRandom);
 }
 
 void DiskCacheTestWithCache::SetTestMode() {
@@ -281,8 +279,6 @@ void DiskCacheTestWithCache::TearDown() {
   disk_cache::SimpleBackendImpl::FlushWorkerPoolForTesting();
   base::RunLoop().RunUntilIdle();
   cache_.reset();
-  if (cache_thread_.IsRunning())
-    cache_thread_.Stop();
 
   if (!memory_only_ && !simple_cache_mode_ && integrity_) {
     EXPECT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, mask_));
@@ -307,27 +303,14 @@ void DiskCacheTestWithCache::InitDiskCache() {
   if (first_cleanup_)
     ASSERT_TRUE(CleanupCacheDir());
 
-  if (!cache_thread_.IsRunning()) {
-    ASSERT_TRUE(cache_thread_.StartWithOptions(
-        base::Thread::Options(base::MessageLoop::TYPE_IO, 0)));
-  }
-  ASSERT_TRUE(cache_thread_.message_loop() != NULL);
-
-  CreateBackend(disk_cache::kNoRandom, &cache_thread_);
+  CreateBackend(disk_cache::kNoRandom);
 }
 
-void DiskCacheTestWithCache::CreateBackend(uint32_t flags,
-                                           base::Thread* thread) {
-  scoped_refptr<base::SingleThreadTaskRunner> runner;
-  if (use_current_thread_)
-    runner = base::ThreadTaskRunnerHandle::Get();
-  else
-    runner = thread->task_runner();
-
+void DiskCacheTestWithCache::CreateBackend(uint32_t flags) {
   if (simple_cache_mode_) {
     net::TestCompletionCallback cb;
     std::unique_ptr<disk_cache::SimpleBackendImpl> simple_backend(
-        new disk_cache::SimpleBackendImpl(cache_path_, size_, type_, runner,
+        new disk_cache::SimpleBackendImpl(cache_path_, nullptr, size_, type_,
                                           NULL));
     int rv = simple_backend->Init(cb.callback());
     ASSERT_THAT(cb.GetResult(rv), IsOk());
@@ -342,10 +325,11 @@ void DiskCacheTestWithCache::CreateBackend(uint32_t flags,
     return;
   }
 
-  if (mask_)
-    cache_impl_ = new disk_cache::BackendImpl(cache_path_, mask_, runner, NULL);
+  if (use_current_thread_)
+    cache_impl_ = new disk_cache::BackendImpl(
+        cache_path_, mask_, base::ThreadTaskRunnerHandle::Get(), NULL);
   else
-    cache_impl_ = new disk_cache::BackendImpl(cache_path_, runner, NULL);
+    cache_impl_ = new disk_cache::BackendImpl(cache_path_, mask_, NULL);
   cache_.reset(cache_impl_);
   ASSERT_TRUE(cache_);
   if (size_)
