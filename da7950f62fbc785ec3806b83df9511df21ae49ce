@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26bb23b_f8276bd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:55:37Z",
+      "side": 1,
+      "message": "nit: in?",
+      "range": {
+        "startLine": 204,
+        "startChar": 48,
+        "endLine": 204,
+        "endChar": 50
+      },
+      "revId": "da7950f62fbc785ec3806b83df9511df21ae49ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43eb4bcf_5f844efd",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:55:37Z",
+      "side": 1,
+      "message": "nit: kHomePageUrl",
+      "range": {
+        "startLine": 565,
+        "startChar": 34,
+        "endLine": 565,
+        "endChar": 49
+      },
+      "revId": "da7950f62fbc785ec3806b83df9511df21ae49ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
