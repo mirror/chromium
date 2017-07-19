@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534c51ba_bdaa78fb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26967,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T02:07:16Z",
+      "side": 1,
+      "message": "We have support for calculating these sorts of things server side (how many users emitted a histogram over N days), and I\u0027d prefer not adding extra client side metrics unless we really need it.\n\nCan we simplify and just emit when a user is using the feature?",
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c802f9_eaead10a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26971,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T02:07:16Z",
+      "side": 1,
+      "message": "can you reword these descriptions - the metric description should be in reference to a single client, not several users. i.e. speak specifically when a client would emit this metric.",
+      "range": {
+        "startLine": 26971,
+        "startChar": 37,
+        "endLine": 26971,
+        "endChar": 38
+      },
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7215f977_88a9687e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27104,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T02:07:16Z",
+      "side": 1,
+      "message": "can you mention when this is emitted",
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
