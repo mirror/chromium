@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
+#include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
@@ -53,7 +54,8 @@ ComputePartialAbsoluteWithChildInlineSize(
     const NGConstraintSpace& space,
     const ComputedStyle& style,
     const NGStaticPosition&,
-    const Optional<MinMaxContentSize>& child_minmax);
+    const Optional<MinMaxContentSize>& child_minmax,
+    const Optional<NGLogicalSize>& replaced_size);
 
 // Compute rest of NGPhysicalRect that depends on child's block_size.
 CORE_EXPORT void ComputeFullAbsoluteWithChildBlockSize(
@@ -61,11 +63,9 @@ CORE_EXPORT void ComputeFullAbsoluteWithChildBlockSize(
     const ComputedStyle& style,
     const NGStaticPosition&,
     const Optional<LayoutUnit>& child_block_size,
+    const Optional<NGLogicalSize>& replaced_size,
     NGAbsolutePhysicalPosition* position);
 
-// TODO(atotic) Absolute coordinates for replaced elements
-// ComputeAbsoluteReplaced.
-// https://www.w3.org/TR/css-position-3/#abs-replaced-width
 }  // namespace blink
 
 #endif  // NGAbsoluteUtils_h
