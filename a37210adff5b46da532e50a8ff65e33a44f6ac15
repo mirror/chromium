@@ -46,6 +46,30 @@
       "revId": "a37210adff5b46da532e50a8ff65e33a44f6ac15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5efb9e4_d42e459b",
+        "filename": "chrome/browser/resources/chromeos/echo/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-07-19T15:03:36Z",
+      "side": 1,
+      "message": "I find it crazy that we need to go through so many contortions for a team inside our company, but whatevs.",
+      "parentUuid": "f5983db3_16ae413e",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "a37210adff5b46da532e50a8ff65e33a44f6ac15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
