@@ -36,6 +36,16 @@
 
 namespace blink {
 
+class HTMLMediaElement;
+class InspectedFrames;
+class InspectorDOMAgent;
+class InspectorSession;
+class LocalFrame;
+class MediaControls;
+class Page;
+class ShadowRoot;
+class WorkerClients;
+
 class CORE_EXPORT CoreInitializer {
   USING_FAST_MALLOC(CoreInitializer);
   WTF_MAKE_NONCOPYABLE(CoreInitializer);
@@ -47,8 +57,41 @@ class CORE_EXPORT CoreInitializer {
   // Should be called by clients before trying to create Frames.
   virtual void Initialize();
 
+  // Callbacks set by modules/
+  using LocalFrameCallback = void (*)(LocalFrame&);
+  static void RegisterLocalFrameInitCallback(LocalFrameCallback);
+  static LocalFrameCallback GetLocalFrameInitCallback();
+  static void RegisterChromeClientSupplementInstallCallback(LocalFrameCallback);
+  static LocalFrameCallback GetChromeClientSupplementInstallCallback();
+  using WorkerClientsCallback = void (*)(WorkerClients&);
+  static void RegisterWorkerClientsLocalFileSystemCallback(
+      WorkerClientsCallback);
+  static WorkerClientsCallback GetWorkerClientsLocalFileSystemCallback();
+  static void RegisterWorkerClientsIndexedDBCallback(WorkerClientsCallback);
+  static WorkerClientsCallback GetWorkerClientsIndexedDBCallback();
+  using MediaControlsFactory = MediaControls* (*)(HTMLMediaElement&,
+                                                  ShadowRoot&);
+  static void RegisterMediaControlsFactory(MediaControlsFactory);
+  static MediaControlsFactory GetMediaControlsFactory();
+  using InspectorAgentSessionInitCallback = void (*)(InspectorSession*,
+                                                     bool,
+                                                     InspectorDOMAgent*,
+                                                     InspectedFrames*,
+                                                     Page*);
+  static void RegisterInspectorAgentSessionInitCallback(
+      InspectorAgentSessionInitCallback);
+  static InspectorAgentSessionInitCallback
+  GetInspectorAgentSessionInitCallback();
+
  protected:
   bool IsInitialized() const { return is_initialized_; }
+  static LocalFrameCallback local_frame_initialization_callback_;
+  static LocalFrameCallback chrome_client_supplement_install_callback_;
+  static WorkerClientsCallback worker_clients_local_file_system_callback_;
+  static WorkerClientsCallback worker_clients_indexed_db_callback_;
+  static MediaControlsFactory media_controls_factory_;
+  static InspectorAgentSessionInitCallback
+      inspector_agent_session_init_callback_;
 
  private:
   void RegisterEventFactory();

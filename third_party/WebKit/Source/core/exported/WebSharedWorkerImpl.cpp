@@ -32,6 +32,7 @@
 
 #include <memory>
 #include "bindings/core/v8/V8CacheOptions.h"
+#include "core/CoreInitializer.h"
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
@@ -80,9 +81,6 @@ namespace blink {
 
 // TODO(toyoshim): Share implementation with WebEmbeddedWorkerImpl as much as
 // possible.
-
-template class CORE_TEMPLATE_EXPORT
-    WorkerClientsInitializer<WebSharedWorkerImpl>;
 
 WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
     : web_view_(nullptr),
@@ -326,7 +324,8 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   SecurityOrigin* starter_origin = loading_document_->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  WorkerClientsInitializer<WebSharedWorkerImpl>::Run(worker_clients);
+  CoreInitializer::GetWorkerClientsLocalFileSystemCallback()(*worker_clients);
+  CoreInitializer::GetWorkerClientsIndexedDBCallback()(*worker_clients);
 
   WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
   ProvideContentSettingsClientToWorker(
