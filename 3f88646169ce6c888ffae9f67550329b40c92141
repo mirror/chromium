@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "4a5e334c_973dd226",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T18:49:54Z",
+      "side": 1,
+      "message": "Maybe FromBackgroundedToAudioStarts. I removed \"First\". Is it ever possible that in the background tab, an audio plays, then stops for \u003e1 minutes, and then starts again? In this case, it is recorded twice I think.",
+      "parentUuid": "069d0be6_d915d649",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7f5c306_f35d52b1",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 4
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I don\u0027t think we should do that, services shouldn\u0027t assume browser state. Instead we should make sure we send the signal at the right place.",
       "parentUuid": "8f438b36_fd2c5485",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69b5ed9_9ec9368c",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T18:49:54Z",
+      "side": 1,
+      "message": "I think you are right that browser side should set the states correctly.\n\nBut for properties that propagates, I think it is the CU graph\u0027s responsibility to make sure the property is propagated to newly created CUs. One example is when a frame is created, the visibility property should also propagate from WebContents to Frame if available already. Otherwise, we can be in a situation where tab CU has visibility while its frame does not.\n\nIf that is too much trouble, we can also just store visibility in tab CU and use something like:\nframe_cu-\u003eGetTabCU()-\u003eGetProperty(kVisible)",
+      "parentUuid": "a698d784_2e7b1524",
       "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

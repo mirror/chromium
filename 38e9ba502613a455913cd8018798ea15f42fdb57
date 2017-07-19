@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee9e6998_8de96190",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T18:49:54Z",
+      "side": 1,
+      "message": "I would still remove this is_bool check and make sure visibility is passed in when a tab is created. How about adding in ResourceCoordinatorWebContentsObserver\u0027s constructor\n\n// GRC needs to be updated when WebContents is initially invisible.\nif (!web_contents-\u003eIsVisible())\n  WasHidden();\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc?l\u003d25",
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

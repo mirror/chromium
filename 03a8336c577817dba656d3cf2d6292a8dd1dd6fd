@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "2f50025f_c4c7aa09",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T18:49:54Z",
+      "side": 1,
+      "message": "Nope. Only main frame is attached to the tab. So look at:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc?l\u003d110-112\n\nGetFrameResourceCoordinator() will create the subframe add it to parent frame.\ntab_resource_coordinator_-\u003eAddChild(...) will do nothing if the subframe is already attached to a parent frame.\n\nI agree this is confusing. We need some comments there. And another good reason to have a README. :)\n\nWhether we should do it in this way or not is a different discussion. I think Oystein made the decision and we can meet with him to understand the reason for it.",
+      "parentUuid": "b45c4e38_62859e98",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1ec9c8_838e6f64",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
