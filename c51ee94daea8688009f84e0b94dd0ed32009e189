@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be78a356_c2bfd3d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T23:15:54Z",
+      "side": 1,
+      "message": "Do we need the whole host? Can this just be the ChromeFullscreenManager? It feels weird for a layout to own its manager\u0027s host.",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "c51ee94daea8688009f84e0b94dd0ed32009e189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5dc9da_c8992662",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T23:15:54Z",
+      "side": 1,
+      "message": "Parent class already has this right?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 27
+      },
+      "revId": "c51ee94daea8688009f84e0b94dd0ed32009e189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
