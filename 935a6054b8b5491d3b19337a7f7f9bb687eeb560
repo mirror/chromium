@@ -16,6 +16,24 @@
       "revId": "935a6054b8b5491d3b19337a7f7f9bb687eeb560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3849db0f_6e073bb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-19T00:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431d8190_4ab961f8",
+      "revId": "935a6054b8b5491d3b19337a7f7f9bb687eeb560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
