@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "36f1a549_b7167643",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "OK, let\u0027s do that. Why is it called manual auth code fetcher?",
+      "parentUuid": "e7716199_3f406406",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "598ae6fb_bb607545",
         "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
         "patchSetId": 4
@@ -277,6 +295,24 @@
       "side": 1,
       "message": "Thanks, could you update the arg name, member name, too?",
       "parentUuid": "cfdc24ec_30676199",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bf2743_e90a01aa",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done. I\u0027m just a little concerned that things like active_directory_auth_device_management_url_prefix_ starts making reading the code difficult. Isn\u0027t it enough to explain the term in a few places? DM server is a pretty common term in enterprise management.",
+      "parentUuid": "b011c7fa_5815649e",
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -333,6 +369,24 @@
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21056f0f_e8387cb2",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a42d2323_bc9bb2c1",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -441,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "4bc652ba_d4a01e35",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c7c0f65_e6ee6837",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a44dcfd_26eab0c7",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 4
@@ -511,6 +583,24 @@
     },
     {
       "key": {
+        "uuid": "c7210461_58cff1d3",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57f446ad_0f7a9dd5",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd071b2f_c3494139",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 4
@@ -564,6 +654,24 @@
     },
     {
       "key": {
+        "uuid": "4aa266a8_e4f99d1b",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2e27ee2_a59b195d",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce5e09f2_2e864428",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 4
@@ -611,6 +719,24 @@
       "side": 1,
       "message": "Then you can quit the message loop, I think?",
       "parentUuid": "79f6cfba_09ab16dc",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f595ff52_750d564b",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Possible, I\u0027ll have to pass more run loops around.",
+      "parentUuid": "85a0f9e5_400d9b08",
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -842,6 +968,24 @@
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679adf41_b18ad97a",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51bfe4ea_2106c885",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

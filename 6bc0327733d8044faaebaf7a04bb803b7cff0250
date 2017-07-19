@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d59a519a_8cad026a",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4de61716_5e3f599d",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e77ddde_0b9e0893",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f5bf3d51_edd7d252",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e77ddde_0b9e0893",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f94868_5415cc4a",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T12:02:26Z",
       "side": 1,
       "message": "Maybe:\n\nprotected:\n  ~FakeArcSupportObserverBase() override \u003d default;",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e57634_a5bc3f50",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done, but why? To prevent that someone deletes my object by deleting the base class pointer?",
+      "parentUuid": "c0f94868_5415cc4a",
       "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4042d234_724ae642",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done. I just felt a more conventional bind is readable here, but I guess it doesn\u0027t make a big difference.",
+      "parentUuid": "b87e3819_b77555bf",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86e8daef_87799a96",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a7180f0a_26bd8a72",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86e8daef_87799a96",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02077dde_9349c938",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-19T12:02:26Z",
       "side": 1,
       "message": "Better to avoid CHECK, because it blocks other test runs.\nASSERT_NE is the one which should be used here.\nThen, you should wrap callers by ASSERT_NO_FATAL_FAILURE() (optional, if it is the last expectation, but probably better to have it for consistency, IMHO).",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84419e1d_b83511cc",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "In this case an EXPECT is actually fine. The rest still makes sense to run. I try not to use ASSERT / ASSERT_NO_FATAL_FAILURE() whenever possible since the latter is very easy to forget.",
+      "parentUuid": "02077dde_9349c938",
       "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "72b463ed_ffbb5272",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done. It just makes the derived classes more bloaty.",
+      "parentUuid": "db60333f_f0f91c3e",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba73238a_765c226b",
         "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
         "patchSetId": 7
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "cecd5fcd_0b60742d",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba73238a_765c226b",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f6e7b52_3444c2c9",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 7
@@ -152,6 +296,24 @@
       "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38b018c_f1878ed7",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T15:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f6e7b52_3444c2c9",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
