@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "752434d8_b7e3aeee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-19T17:57:31Z",
+      "side": 1,
+      "message": "Thanks for the explanation. IsComplete will do the trick, but I need to do it in a loop since an incomplete Payment App will be suggested before a complete card it seems.",
+      "parentUuid": "80175ddf_0aee60cb",
+      "range": {
+        "startLine": 1577,
+        "startChar": 44,
+        "endLine": 1577,
+        "endChar": 53
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ff21e37_d06c7050",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
         "patchSetId": 7

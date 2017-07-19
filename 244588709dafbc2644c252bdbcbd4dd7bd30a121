@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5677930_2d9290ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-19T17:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca06c1c9_20fc9f4d",
+      "range": {
+        "startLine": 605,
+        "startChar": 48,
+        "endLine": 605,
+        "endChar": 57
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf51944f_38db75cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5eb24ff_e3f93b9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-19T17:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf51944f_38db75cc",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 99
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a294f7e_7ee18e3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-19T17:57:31Z",
+      "side": 1,
+      "message": "This is not the current goal of this metric, but it would be a good thing to add. Good suggestion!",
+      "parentUuid": "ce64ade3_e279d85e",
+      "range": {
+        "startLine": 1098,
+        "startChar": 27,
+        "endLine": 1098,
+        "endChar": 52
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c1c5879_228eebbc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -82,6 +154,24 @@
       "writtenOn": "2017-07-19T02:00:45Z",
       "side": 1,
       "message": "did these older versions ever get used? If so you should leave the xml and mark them as obsolete.\n\nyou can delete like this if this was never enabled.",
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226e1aed_6c3ac981",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 53236,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-19T17:57:31Z",
+      "side": 1,
+      "message": "Put it back and marked as obselete.",
+      "parentUuid": "5c1c5879_228eebbc",
       "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
