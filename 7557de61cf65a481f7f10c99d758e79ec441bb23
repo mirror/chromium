@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "518fc225_a913dd07",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-19T01:17:51Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/\nnit: s/too_long/is_too_long/ [1]\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Precede-boolean-values-with-words-like-is_and-did",
+      "revId": "7557de61cf65a481f7f10c99d758e79ec441bb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a091fba_95c9048f",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-19T01:17:51Z",
+      "side": 1,
+      "message": "Could you move this expression into function to avoid |FinishComposingText| getting large?\n\nconst bool \u003d is_too_long \u003d IsCompositionTooLong(*GetDocument().FocusedElement());\n\nbool IsCompositionTooLong(const Element\u0026 element) {\n  if (isHTMLInputElement(element))\n    return toHTMLInputElement(element).TooLong();\n  if (isHTMLTextAreaElement(element))\n    return toHTMLTextAreaElement(element).TooLong();\n  return false;\n}",
+      "revId": "7557de61cf65a481f7f10c99d758e79ec441bb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
