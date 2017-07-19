@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de35acba_b261e02e",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-19T09:20:52Z",
+      "side": 1,
+      "message": "Just out of curiosity: What is the reason for these (and other similar) changes?",
+      "range": {
+        "startLine": 1155,
+        "startChar": 253,
+        "endLine": 1155,
+        "endChar": 261
+      },
+      "revId": "d6d2ebe22c7d2b1661e7fc0bf9a14dbbfe6374c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
