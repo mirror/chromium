@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "218febba_a201a34f",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T22:25:12Z",
+      "side": 1,
+      "message": "It\u0027s a question of whether or not the usage is consistent. e.g. I combined network + bluetooth into a common \u0027device enabled\u0027 string, but \u0027Enabled\u0027 in this context may be different for \u0027Google assistant\u0027, \u0027Input method\u0027, and \u0027Home button\u0027 in different languages.\n\nWe do have a handful of common words here, and it\u0027s arguable that Enabled / Disabled are generic enough to move there, but I would want to check with the l10n team first:\nhttps://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?l\u003d310",
+      "parentUuid": "e66b6189_aaa4cfda",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1027ab2b_86c9c114",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 5
