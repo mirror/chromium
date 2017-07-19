@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c9a612_5b6f2eda",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T14:04:59Z",
+      "side": 1,
+      "message": "With this change the ready state changes regardless of |frame|, but even when we only care about audio it is necessary to have a |video_frame_provider_|.\n\nIs there any point to starting the video frame provider if we only care about audio?\nAre there any unintended consequences to being \"ready\" before video arrives if it arrives later?\nDoes it make sense that OnSourceError is invoked (doing SetNetworkState(kNetworkStateFormatError)) if a video error occurs for our audio-only tag?\n\nShould we add a TODO?",
+      "revId": "711201877733aec3e509be2590492e3565494f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
