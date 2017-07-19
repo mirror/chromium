@@ -104,6 +104,24 @@
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec5dd6a_6215d5cb",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-19T17:21:11Z",
+      "side": 1,
+      "message": "No it definitely belongs to service, what we\u0027re doing in HostFrameSinkManager is a short term solution to enable surface references in Chrome. +1 to be only allowing that one header.",
+      "parentUuid": "6e7eb994_571b7855",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
