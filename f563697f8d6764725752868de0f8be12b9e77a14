@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba0ce7ed_8f672aee",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1e4dcf9_a3c4cc07",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44d5e1d0_d0cfe0b8",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6391eb27_13707a2f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d5e1d0_d0cfe0b8",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e97cc34b_46548ce7",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4392f3_b18c2f7d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97cc34b_46548ce7",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "cf42a1e2_ff489660",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a581d0_4605959a",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa33d77_b2740ae0",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.h",
         "patchSetId": 18
@@ -90,6 +168,24 @@
       "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af13dcad_09f8f61f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa33d77_b2740ae0",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "321cc411_0e3c7c69",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74141fcf_afe59e03",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac7889d_945ea9de",
         "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
         "patchSetId": 18
@@ -121,6 +235,24 @@
       "writtenOn": "2017-07-19T05:55:09Z",
       "side": 1,
       "message": "const?",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb28ae_e0277976",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Now that we changed DocumentPaintDefinition to keep a Member\u003cCSSPaintDefinition\u003e, this doesn\u0027t apply.",
+      "parentUuid": "6ac7889d_945ea9de",
       "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +273,24 @@
       "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056229b2_18cc8711",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-19T20:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22b502c_82321a6b",
+      "revId": "f563697f8d6764725752868de0f8be12b9e77a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
