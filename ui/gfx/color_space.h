@@ -10,6 +10,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/pickle.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColorSpace.h"
 #include "ui/gfx/color_space_export.h"
@@ -176,6 +177,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // This will return nullptr for non-RGB spaces, spaces with non-FULL
   // range, and unspecified spaces.
   sk_sp<SkColorSpace> ToSkColorSpace() const;
+
+  bool Serialize(base::Pickle* pickle) const;
+  bool ReadFromPickle(base::PickleIterator* iter);
 
   // Populate |icc_profile| with an ICC profile that represents this color
   // space. Returns false if this space is not representable.
