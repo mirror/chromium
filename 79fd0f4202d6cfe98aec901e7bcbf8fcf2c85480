@@ -50,6 +50,24 @@
       "revId": "79fd0f4202d6cfe98aec901e7bcbf8fcf2c85480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c9d5c2_15447b61",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-19T03:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d41520_0c20378f",
+      "revId": "79fd0f4202d6cfe98aec901e7bcbf8fcf2c85480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
