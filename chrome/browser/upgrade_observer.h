@@ -11,6 +11,8 @@ class UpgradeObserver {
  public:
   // Triggered when a software update is available, but downloading requires
   // user's agreement as current connection is cellular.
+  // TODO: Only called on Chrome OS? Maybe delete this method?
+  // UpgradeDetector is not used on Android (where cellular is also important).
   virtual void OnUpdateOverCellularAvailable() {}
 
   // Triggered when Chrome believes an update has been installed and available

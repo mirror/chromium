@@ -224,6 +224,13 @@ void SystemTrayClient::SetFlashUpdateAvailable() {
   HandleUpdateAvailable();
 }
 
+void SystemTrayClient::NotifyUpdateOverCellularTargetSet(bool success) {
+  LOG(ERROR) << "chrome NotifyUpdateOverCellularTargetSet " << success;
+  // TODO: Only do this on success? Roll this into HandleUpdateAvailable?
+  if (success)
+    system_tray_->OnAcceptUpdateOverCellular();
+}
+
 void SystemTrayClient::SetPrimaryTrayEnabled(bool enabled) {
   system_tray_->SetPrimaryTrayEnabled(enabled);
 }
@@ -483,10 +490,12 @@ void SystemTrayClient::OnSystemClockChanged(
 ////////////////////////////////////////////////////////////////////////////////
 // UpgradeDetector::UpgradeObserver:
 void SystemTrayClient::OnUpdateOverCellularAvailable() {
+  LOG(ERROR) << "OnUpdateOverCellularAvailable";
   HandleUpdateOverCellularAvailable();
 }
 
 void SystemTrayClient::OnUpgradeRecommended() {
+  LOG(ERROR) << "OnUpgradeRecommended";
   HandleUpdateAvailable();
 }
 

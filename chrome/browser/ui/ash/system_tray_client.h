@@ -51,6 +51,9 @@ class SystemTrayClient : public ash::mojom::SystemTrayClient,
   // when the update is applied.
   void SetFlashUpdateAvailable();
 
+  // TODO: docs. Also, it would be nice if this had a better name.
+  void NotifyUpdateOverCellularTargetSet(bool success);
+
   // Wrappers around ash::mojom::SystemTray interface:
   void SetPrimaryTrayEnabled(bool enabled);
   void SetPrimaryTrayVisible(bool visible);

@@ -77,6 +77,7 @@ class ASH_EXPORT SystemTrayController
                       bool factory_reset_required,
                       mojom::UpdateType update_type) override;
   void ShowUpdateOverCellularAvailableIcon() override;
+  void OnAcceptUpdateOverCellular() override;
 
  private:
   // Client interface in chrome browser. May be null in tests.

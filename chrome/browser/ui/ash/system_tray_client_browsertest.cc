@@ -57,6 +57,11 @@ IN_PROC_BROWSER_TEST_F(SystemTrayClientTest, FlashUpdateTrayIcon) {
   EXPECT_TRUE(tray_update->tray_view()->visible());
 }
 
+IN_PROC_BROWSER_TEST_F(SystemTrayClientTest, UpdateOverCellular) {
+  // TODO: Add test coverage. Calling directly into ash::Shell is OK here
+  // because we don't have a test interface yet for mustash.
+}
+
 using SystemTrayClientEnterpriseTest = policy::DevicePolicyCrosBrowserTest;
 
 IN_PROC_BROWSER_TEST_F(SystemTrayClientEnterpriseTest, TrayEnterprise) {

@@ -54,4 +54,9 @@ TEST_F(TrayUpdateTest, VisibilityAfterFlashUpdate) {
   EXPECT_EQ("Restart to update Adobe Flash Player", base::UTF16ToUTF8(label));
 }
 
+TEST_F(TrayUpdateTest, ShowUpdateOverCellularAvailableIcon) {
+  // TODO: Add tests for showing/hiding the menu row.
+  // TODO: Add tests for how this interacts with Flash updates.
+}
+
 }  // namespace ash

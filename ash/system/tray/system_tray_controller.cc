@@ -12,6 +12,23 @@
 
 namespace ash {
 
+namespace {
+
+// Returns all system trays (one per initialized display). Do not cache the
+// pointers because a display may be disconnected at any time.
+std::vector<SystemTray*> GetAllSystemTrays() {
+  std::vector<SystemTray*> trays;
+  for (RootWindowController* root : Shell::GetAllRootWindowControllers()) {
+    ash::SystemTray* tray = root->GetSystemTray();
+    // External monitors might not have a tray yet.
+    if (tray)
+      trays.push_back(tray);
+  }
+  return trays;
+}
+
+}  // namespace
+
 SystemTrayController::SystemTrayController()
     : hour_clock_type_(base::GetHourClockType()) {}
 
@@ -207,11 +224,7 @@ void SystemTrayController::ShowUpdateIcon(mojom::UpdateSeverity severity,
                                           bool factory_reset_required,
                                           mojom::UpdateType update_type) {
   // Show the icon on all displays.
-  for (RootWindowController* root : Shell::GetAllRootWindowControllers()) {
-    ash::SystemTray* tray = root->GetSystemTray();
-    // External monitors might not have a tray yet.
-    if (!tray)
-      continue;
+  for (ash::SystemTray* tray : GetAllSystemTrays()) {
     tray->tray_update()->ShowUpdateIcon(severity, factory_reset_required,
                                         update_type);
   }
@@ -219,12 +232,14 @@ void SystemTrayController::ShowUpdateIcon(mojom::UpdateSeverity severity,
 
 void SystemTrayController::ShowUpdateOverCellularAvailableIcon() {
   // Show the icon on all displays.
-  for (auto* root_window_controller : Shell::GetAllRootWindowControllers()) {
-    ash::SystemTray* tray = root_window_controller->GetSystemTray();
-    // External monitors might not have a tray yet.
-    if (!tray)
-      continue;
+  for (ash::SystemTray* tray : GetAllSystemTrays()) {
     tray->tray_update()->ShowUpdateOverCellularAvailableIcon();
+  }
+}
+
+void SystemTrayController::OnAcceptUpdateOverCellular() {
+  for (ash::SystemTray* tray : GetAllSystemTrays()) {
+    tray->tray_update()->OnAcceptUpdateOverCellular();
   }
 }
 

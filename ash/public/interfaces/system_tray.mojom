@@ -35,6 +35,9 @@ interface SystemTray {
   // Shows an icon in the system tray indicating that a software update is
   // available. Once shown the icon persists until reboot. |severity| and
   // |factory_reset_required| are used to set the icon, color, and tooltip.
+  // TODO: Could update_over_cellular be a parameter here and eliminate
+  // ShowUpdateOverCellularAvailableIcon? It would be nice if all the info
+  // about updates was sent atomically to ash in this method.
   ShowUpdateIcon(UpdateSeverity severity,
                  bool factory_reset_required,
                  UpdateType update_type);
@@ -43,6 +46,14 @@ interface SystemTray {
   // available but user's agreement is required as current connection is
   // cellular. Once shown the icon persists until reboot.
   ShowUpdateOverCellularAvailableIcon();
+
+  // Called when the user accepts a update over cellular. Exists because this
+  // dialog uses Chrome's webui settings.
+  // TODO: Could ShowUpdateOverCellularAvailableIcon() take a bool visible?
+  // But Show...Icon(false) sounds like it would hide the icon. Should the
+  // icon disappear or just the line in the menu?
+  // TODO: Is this only called on accept, or whenever the dialog is closed?
+  OnAcceptUpdateOverCellular();
 };
 
 // Allows ash system tray to control a client (e.g. Chrome browser). Requests

@@ -30,6 +30,7 @@ class CHROMEOS_EXPORT UpdateEngineClient : public DBusClient {
   //    ...
   //    FINALIZING->UPDATE_NEED_REBOOT
   // Any state can transition to REPORTING_ERROR_EVENT and then on to IDLE.
+  // TODO: Update this to discuss how NEED_PERMISSION_TO_UPDATE works.
   enum UpdateStatusOperation {
     UPDATE_STATUS_ERROR = -1,
     UPDATE_STATUS_IDLE = 0,
@@ -41,6 +42,8 @@ class CHROMEOS_EXPORT UpdateEngineClient : public DBusClient {
     UPDATE_STATUS_UPDATED_NEED_REBOOT,
     UPDATE_STATUS_REPORTING_ERROR_EVENT,
     UPDATE_STATUS_ATTEMPTING_ROLLBACK,
+    // TODO: reorder this to match the typical transition order, perhaps after
+    // CHECKING_FOR_UPDATE
     UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE,
   };
 

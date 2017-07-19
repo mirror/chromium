@@ -140,12 +140,9 @@ class TrayUpdate::UpdateView : public ActionableView {
 
 TrayUpdate::TrayUpdate(SystemTray* system_tray)
     : TrayImageItem(system_tray, kSystemTrayUpdateIcon, UMA_UPDATE) {
-  Shell::Get()->system_tray_notifier()->AddUpdateObserver(this);
 }
 
-TrayUpdate::~TrayUpdate() {
-  Shell::Get()->system_tray_notifier()->RemoveUpdateObserver(this);
-}
+TrayUpdate::~TrayUpdate() {}
 
 bool TrayUpdate::GetInitialVisibility() {
   // If chrome tells ash there is an update available before this item's system
@@ -163,16 +160,6 @@ views::View* TrayUpdate::CreateDefaultView(LoginStatus status) {
 
 void TrayUpdate::OnDefaultViewDestroyed() {
   update_view_ = nullptr;
-}
-
-void TrayUpdate::OnUpdateOverCellularTargetSet(bool success) {
-  if (!success)
-    return;
-
-  tray_view()->SetVisible(false);
-  update_over_cellular_available_ = false;
-  if (update_view_)
-    update_view_->GetWidget()->Close();
 }
 
 void TrayUpdate::ShowUpdateIcon(mojom::UpdateSeverity severity,
@@ -201,6 +188,17 @@ void TrayUpdate::ShowUpdateOverCellularAvailableIcon() {
   // Use low severity for update available over cellular connection.
   SetIconColor(IconColorForUpdateSeverity(mojom::UpdateSeverity::LOW, false));
   tray_view()->SetVisible(true);
+}
+
+void TrayUpdate::OnAcceptUpdateOverCellular() {
+  LOG(ERROR) << "OnAcceptUpdateOverCellular";
+  tray_view()->SetVisible(false);
+  update_over_cellular_available_ = false;
+  // TODO: Is it safe to close the widget? What is this trying to do? Close the
+  // menu bubble? If so, that should probably be handed by calling a method like
+  // SystemTray::CloseSystemBubble().
+  if (update_view_)
+    update_view_->GetWidget()->Close();
 }
 
 }  // namespace ash

@@ -601,6 +601,7 @@ class UpdateEngineClientStubImpl : public UpdateEngineClient {
 class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
  public:
   UpdateEngineClientFakeImpl() : weak_factory_(this) {
+    LOG(ERROR) << "new UpdateEngineClientFakeImpl";
   }
 
   ~UpdateEngineClientFakeImpl() override {}
@@ -621,6 +622,7 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
   }
 
   void RequestUpdateCheck(const UpdateCheckCallback& callback) override {
+    LOG(ERROR) << "JAMES RequestUpdateCheck";
     if (last_status_.status != UPDATE_STATUS_IDLE) {
       callback.Run(UPDATE_RESULT_FAILED);
       return;
@@ -638,6 +640,29 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
 
   Status GetLastStatus() override { return last_status_; }
 
+  void SetUpdateOverCellularPermission(bool allowed,
+                                       const base::Closure& callback) override {
+    LOG(ERROR) << "SetUpdateOverCellularPermission " << allowed;
+    // TODO: Order of callback vs. state transition?
+    callback.Run();
+    StateTransition();
+  }
+
+  void SetUpdateOverCellularTarget(
+      const std::string& target_version,
+      int64_t target_size,
+      const SetUpdateOverCellularTargetCallback& callback) override {
+    LOG(ERROR) << "SetUpdateOverCellularTarget " << target_version;
+    const bool success = true;
+    callback.Run(success);
+    for (auto& observer : observers_) {
+      observer.OnUpdateOverCellularTargetSet(success);
+    }
+    // HACK
+    last_status_.status = UPDATE_STATUS_UPDATE_AVAILABLE;
+    StateTransition();
+  }
+
  private:
   void StateTransition() {
     UpdateStatusOperation next_status = UPDATE_STATUS_ERROR;
@@ -648,10 +673,18 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
       case UPDATE_STATUS_UPDATED_NEED_REBOOT:
       case UPDATE_STATUS_REPORTING_ERROR_EVENT:
       case UPDATE_STATUS_ATTEMPTING_ROLLBACK:
-      case UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE:
         return;
       case UPDATE_STATUS_CHECKING_FOR_UPDATE:
-        next_status = UPDATE_STATUS_UPDATE_AVAILABLE;
+        // TODO: I'm pretty sure the state transitions I'm simulating here are
+        // wrong.
+        // TODO: Maybe add a flag to test cellular update? Or maybe we should
+        // always assume cellular update to better exercise the UI?
+        next_status = UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE;
+        // next_status = UPDATE_STATUS_UPDATE_AVAILABLE;
+        break;
+      case UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE:
+        next_status = UPDATE_STATUS_REPORTING_ERROR_EVENT;
+        // TODO: Notify observers here?
         break;
       case UPDATE_STATUS_UPDATE_AVAILABLE:
         next_status = UPDATE_STATUS_DOWNLOADING;
@@ -673,6 +706,8 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
         next_status = UPDATE_STATUS_IDLE;
         break;
     }
+    LOG(ERROR) << "StateTransition from " << last_status_.status << " to "
+               << next_status;
     last_status_.status = next_status;
     for (auto& observer : observers_)
       observer.UpdateStatusChanged(last_status_);

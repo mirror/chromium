@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/update_engine_client.h"
 
@@ -105,6 +106,15 @@ void UpgradeDetectorChromeos::UpdateStatusChanged(
     // downloading over cellular connection requires user's agreement.
     NotifyUpdateOverCellularAvailable();
   }
+}
+
+void UpgradeDetectorChromeos::OnUpdateOverCellularTargetSet(bool success) {
+  LOG(ERROR) << "OnUpdateOverCellularTargetSet";
+  // TODO: Maybe only do this on success?
+  // TODO: The if() may not be needed. Test when Shutdown() is called vs.
+  // when SystemTrayClient is destroyed.
+  if (SystemTrayClient::Get())
+    SystemTrayClient::Get()->NotifyUpdateOverCellularTargetSet(success);
 }
 
 void UpgradeDetectorChromeos::NotifyOnUpgrade() {

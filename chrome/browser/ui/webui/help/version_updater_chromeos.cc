@@ -280,9 +280,11 @@ void VersionUpdaterCros::UpdateStatusChanged(
       progress = static_cast<int>(round(status.download_progress * 100));
       // Fall through.
     case UpdateEngineClient::UPDATE_STATUS_UPDATE_AVAILABLE:
+      LOG(ERROR) << "update available";
       my_status = UPDATING;
       break;
     case UpdateEngineClient::UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE:
+      LOG(ERROR) << "need permission";
       my_status = NEED_PERMISSION_TO_UPDATE;
       break;
     case UpdateEngineClient::UPDATE_STATUS_VERIFYING:
