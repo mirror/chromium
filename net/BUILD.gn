@@ -42,8 +42,8 @@ enable_net_mojo = !is_ios && !is_proto_quic
 # in addition to use_openssl_certs or use_nss_certs, in that case byte certs
 # are used internally but OpenSSL or NSS are used for certificate verification.
 # TODO(mattm): crbug.com/671420: Implement and enable this for all platforms.
-use_byte_certs =
-    is_mac || is_android || is_nacl || is_ios || is_win || is_fuchsia
+use_byte_certs = is_mac || is_android || is_nacl || is_ios || is_win ||
+                 is_fuchsia || is_linux
 
 buildflag_header("features") {
   header = "net_features.h"
@@ -4644,6 +4644,7 @@ test("net_unittests") {
     "cert/x509_cert_types_unittest.cc",
     "cert/x509_certificate_unittest.cc",
     "cert/x509_util_ios_and_mac_unittest.cc",
+    "cert/x509_util_nss_unittest.cc",
     "cert/x509_util_unittest.cc",
     "cert_net/cert_net_fetcher_impl_unittest.cc",
     "cert_net/nss_ocsp_unittest.cc",
@@ -5288,6 +5289,7 @@ test("net_unittests") {
     sources -= [
       "cert/internal/trust_store_nss_unittest.cc",
       "cert/nss_cert_database_unittest.cc",
+      "cert/x509_util_nss_unittest.cc",
       "ssl/client_cert_store_nss_unittest.cc",
       "ssl/ssl_platform_key_nss_unittest.cc",
     ]

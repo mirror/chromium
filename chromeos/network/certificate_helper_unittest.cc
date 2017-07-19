@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// XXX update this file
+
 #include "chromeos/network/certificate_helper.h"
 
 #include "crypto/scoped_test_nss_db.h"

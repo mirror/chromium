@@ -99,7 +99,7 @@ bool ParseCertificateSandboxed(const base::StringPiece& certificate,
     return false;
 
   ParsedTbsCertificate parsed_tbs_cert;
-  if (!ParseTbsCertificate(tbs_cert, ParseCertificateOptions(),
+  if (!ParseTbsCertificate(tbs_cert, DefaultParseCertificateOptions(),
                            &parsed_tbs_cert, nullptr))
     return false;
 
@@ -135,6 +135,12 @@ bool ParseCertificateSandboxed(const base::StringPiece& certificate,
   }
 
   return true;
+}
+
+ParseCertificateOptions DefaultParseCertificateOptions() {
+  ParseCertificateOptions options;
+  options.allow_invalid_serial_numbers = true;
+  return options;
 }
 
 }  // namespace x509_util

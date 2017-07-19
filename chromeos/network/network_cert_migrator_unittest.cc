@@ -85,6 +85,7 @@ class NetworkCertMigratorTest : public testing::Test {
     ASSERT_TRUE(test_client_cert_.get());
 
     int slot_id = -1;
+    // XXX update this
     test_client_cert_pkcs11_id_ = CertLoader::GetPkcs11IdAndSlotForCert(
         *test_client_cert_, &slot_id);
     ASSERT_FALSE(test_client_cert_pkcs11_id_.empty());
