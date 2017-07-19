@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "459f8274_43868c8e",
+        "filename": "chrome/common/extensions/api/webview_tag.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "nit: Sets audio mute state of the webview.",
+      "range": {
+        "startLine": 683,
+        "startChar": 28,
+        "endLine": 683,
+        "endChar": 33
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7822bf_088f6991",
+        "filename": "chrome/common/extensions/api/webview_tag.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "nit: Mute audio value",
+      "range": {
+        "startLine": 688,
+        "startChar": 13,
+        "endLine": 688,
+        "endChar": 24
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c2de80_217feeb2",
+        "filename": "chrome/common/extensions/api/webview_tag.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "This should not return boolean, the callback would. So remove this?",
+      "range": {
+        "startLine": 695,
+        "startChar": 9,
+        "endLine": 695,
+        "endChar": 16
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829ad26b_ecc8479c",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "We are deprecating AsyncExtensionFunction::RunAsync:\nhttps://cs.chromium.org/chromium/src/extensions/browser/extension_function.h?rcl\u003d993d5a05009d3576e58e0f88b9159b0c2fea7031\u0026l\u003d674\nYou should instead extend UIThreadExtensionFunction then implement Run(), in particular I think you can just extend WebViewInternalExtensionFunction and override Run(), it should take care of making sure a guest with the given instance_id exists or not and then access it through |guest_|",
+      "range": {
+        "startLine": 432,
+        "startChar": 7,
+        "endLine": 432,
+        "endChar": 19
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009bf338_8da6e642",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "Same ^^^ applies to this one",
+      "range": {
+        "startLine": 449,
+        "startChar": 7,
+        "endLine": 449,
+        "endChar": 19
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1ec079_2a22f620",
+        "filename": "extensions/common/api/web_view_internal.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T00:22:17Z",
+      "side": 1,
+      "message": "nit: Callback that returns...",
+      "range": {
+        "startLine": 207,
+        "startChar": 33,
+        "endLine": 207,
+        "endChar": 40
+      },
+      "revId": "b51ff7ad1d2e31bf0f26599d64f5bf994d48c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
