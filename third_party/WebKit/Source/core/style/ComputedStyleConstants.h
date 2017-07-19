@@ -221,6 +221,7 @@ inline Containment& operator|=(Containment& a, Containment b) {
 
 enum ItemPosition {
   kItemPositionAuto,
+  kItemPositionLegacy,
   kItemPositionNormal,
   kItemPositionStretch,
   kItemPositionBaseline,

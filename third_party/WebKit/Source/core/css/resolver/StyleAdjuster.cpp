@@ -555,9 +555,9 @@ void StyleAdjuster::AdjustComputedStyle(
     style.SetSubtreeIsSticky(true);
 
   // If the inherited value of justify-items includes the 'legacy' keyword,
-  // 'auto' computes to the the inherited value.  Otherwise, 'auto' computes to
-  // 'normal'.
-  if (style.JustifyItemsPosition() == kItemPositionAuto) {
+  // 'legacy' computes to the the inherited value.  Otherwise, 'legacy' computes
+  // to 'normal'.
+  if (style.JustifyItemsPosition() == kItemPositionLegacy) {
     if (parent_style.JustifyItemsPositionType() == kLegacyPosition)
       style.SetJustifyItems(parent_style.JustifyItems());
   }
