@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c27628e5_ee69986f",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "Do you mean the performance overhead?\n\nThe benefit of GetChildCoordinationUnitsOfType is that it gets you children, grand-children, grand-grand-children ... for you. I think here you will need to propagate to subframes, too. Or you will need to override PropagateProperty in FrameCU.",
+      "parentUuid": "472a941a_18b64c21",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1ec9c8_838e6f64",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
@@ -299,6 +317,30 @@
       "side": 1,
       "message": "We get signal from WasShown and WasHidden. So I think yes.",
       "parentUuid": "df1ec9c8_838e6f64",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6099f4b7_31543ed9",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "I just tested when WasShown and WasHidden is called. So here is a case which may break. If one opens a background tab by ctrl-clicking a url. The tab is opened in background. WasHidden is not called (because it was already hidden initially). WasShown is also not called because it is background. So if the user never select that tab, we never know that tab\u0027s visibility.\n\nThis is not this CL\u0027s problem. But we will need to fix that, e.g., by passing initial visibility information when creating a tab (and propagate that when a frame is created).",
+      "parentUuid": "80a24094_302d65ac",
       "range": {
         "startLine": 40,
         "startChar": 2,

@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61b197a0_4c8a4300",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "Can we just start from 0 instead of 1 second? (though practically that may not make any difference)",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467ca28b_f9b40de9",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "\"BackgroundAudioStarts\" does not reflect the \"duration\". That was why I didn\u0027t understand what this records. I can interpret it as \"how many times it starts\", etc. Is the same name used in other places? If not, maybe use a better name, e.g., DurationBeforeBackgroundAudioStarts or something similar.",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f5c306_f35d52b1",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "I kind of understand why the check of is_bool() may be needed. If visibility property is not set, base::Value() is returned, which has Type::NONE. And then GetBool() will fail.\n\nI think the solution is not to check is_bool. It is better to make sure the values are available when needed. More comments in the mojo file.",
+      "range": {
+        "startLine": 116,
+        "startChar": 27,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc23b698_574d167e",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "So silence within one minute is considered as the audio play is continued from previous playing and not counted as new play?",
+      "range": {
+        "startLine": 121,
+        "startChar": 55,
+        "endLine": 121,
+        "endChar": 74
+      },
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f438b36_fd2c5485",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:36:43Z",
+      "side": 1,
+      "message": "A more general thought on the property\u0027s initial values. Each CU may require some initial value of some properties. We probably need a general solution here. We can discuss with Oystein and Matt together.",
+      "revId": "3f88646169ce6c888ffae9f67550329b40c92141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
