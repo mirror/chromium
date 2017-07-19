@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f65a7adb_da920f2b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Fixed this line so that it can handle null icon_resource.",
+      "revId": "c7da294c7841cdf5747d7584b14313d7a34e2548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

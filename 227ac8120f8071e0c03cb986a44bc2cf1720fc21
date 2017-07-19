@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dd1ebf1_77ee613e",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde2482a_1c1dca3a",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e64ecb78_f20a8498",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T12:49:16Z",
       "side": 1,
       "message": "who is the owner of the returned DataOffer?",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4de941b_2e68ed37",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "DataDeviceDelegate has responsibility to release the returned DataOffer instance. Added the comment about it.\nWaylandDataDeviceDelegate did it by passing DataOffer object to SetImplementation helper function which uses DestroyUserData\u003cT\u003e.",
+      "parentUuid": "e64ecb78_f20a8498",
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "58a8649a_853a0335",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done. Thank you for correction!",
+      "parentUuid": "f27ab598_7ea54b48",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ee7ba76_009d9103",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d427682a_7b6bd3c5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee7ba76_009d9103",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6b474464_06e21974",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad58b11_6163eb33",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "010e6be0_ecd2e1a6",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d77ee02_414546e5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010e6be0_ecd2e1a6",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "402b45ea_261357db",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a55a31_136232db",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66a788ec_e43368b9",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "65b52880_fccacb96",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66a788ec_e43368b9",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e39f0b4e_1123913b",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -152,6 +296,24 @@
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42e8c7e_e475abbe",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39f0b4e_1123913b",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "456a7236_92f988c0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a6e476c_6af0c225",
+      "range": {
+        "startLine": 2836,
+        "startChar": 61,
+        "endLine": 2836,
+        "endChar": 76
+      },
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c364af8_e715c3f9",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "8526e6f4_578c33ad",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c364af8_e715c3f9",
+      "range": {
+        "startLine": 2844,
+        "startChar": 25,
+        "endLine": 2844,
+        "endChar": 40
+      },
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb39333_ef185450",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -215,6 +425,24 @@
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abfa5cf_11b3fb9b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb39333_ef185450",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "e14bd11d_4a71f440",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2880,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6abbd24_b9f07ea5",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fecaea5_8eee9a64",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -249,6 +495,24 @@
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1435d5b4_dcd94040",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2891,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-19T01:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fecaea5_8eee9a64",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
