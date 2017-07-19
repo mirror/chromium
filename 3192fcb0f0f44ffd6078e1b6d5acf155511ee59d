@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be07da93_5a983428",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T06:58:16Z",
+      "side": 1,
+      "message": "Does this really need to be weak? Aren\u0027t we able to unregister the context when it becomes unnecessary?\n\nI\u0027m asking this because the use of WeakMember is generally not encouraged because of overhead etc.\n\nhttps://chromium.googlesource.com/chromium/src/+/fee38fe5d637a5f0ea3d06708ec12a9981fce6bb/third_party/WebKit/Source/platform/heap/BlinkGCAPIReference.md#Member_WeakMember\n\n\"The use of WeakMember\u003cT\u003e incurs some overhead in garbage collector\u0027s performance. Use it sparingly. Usually, weak members are not necessary at all, because reference cycles with members are allowed.\"\n\"More specifically, WeakMember\u003cT\u003e should be used only if the owner of a weak member can outlive the pointed object. Otherwise, Member\u003cT\u003e should be used.\"",
+      "revId": "3192fcb0f0f44ffd6078e1b6d5acf155511ee59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9e73ee_54fe265f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T06:58:16Z",
+      "side": 1,
+      "message": "Can you add a class-level comment like AudioWorkletMessagingProxy?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "3192fcb0f0f44ffd6078e1b6d5acf155511ee59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

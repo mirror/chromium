@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fdede2a_33b30c53",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-19T06:58:16Z",
+      "side": 0,
+      "message": "\u003cmemory\u003e is still used for std::unique_ptr.",
+      "revId": "4a4a734896cc777dd9fb69675e21dbd7c2886f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
