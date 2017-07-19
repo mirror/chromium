@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c06ae873_8b25520d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/webSocketFrameView.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-07-19T01:58:39Z",
+      "side": 1,
+      "message": "Nit: Can you put the hex here? I never remember which green is which.",
+      "revId": "d3faab7d75d2ba3d6d362d807456af93881132a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
