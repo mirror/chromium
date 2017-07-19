@@ -239,6 +239,23 @@ ui::EventType GetTouchEventType(POINTER_FLAGS pointer_flags) {
   return ui::ET_TOUCH_MOVED;
 }
 
+int GetTouchEventFlags(UINT message, POINTER_INFO pointer_info) {
+  int flags = ui::EF_NONE;
+  if (pointer_info.pointerFlags & POINTER_FLAG_FIRSTBUTTON)
+    flags |= ui::EF_LEFT_MOUSE_BUTTON;
+
+  if (pointer_info.pointerFlags & POINTER_FLAG_SECONDBUTTON)
+    flags |= ui::EF_RIGHT_MOUSE_BUTTON;
+
+  if (message == WM_POINTERUP) {
+    if (pointer_info.ButtonChangeType == POINTER_CHANGE_SECONDBUTTON_UP)
+      flags |= ui::EF_RIGHT_MOUSE_BUTTON;
+    else
+      flags |= ui::EF_LEFT_MOUSE_BUTTON;
+  }
+  return flags;
+}
+
 const int kTouchDownContextResetTimeout = 500;
 
 // Windows does not flag synthesized mouse messages from touch in all cases.
@@ -2777,65 +2794,30 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypePen(UINT message,
   POINT client_point = pointer_pen_info.pointerInfo.ptPixelLocationRaw;
   ScreenToClient(hwnd(), &client_point);
   gfx::Point point = gfx::Point(client_point.x, client_point.y);
-  ui::EventType event_type = ui::ET_MOUSE_MOVED;
-  int flag = 0;
-  int click_count = 0;
-  switch (message) {
-    case WM_POINTERDOWN:
-      event_type = ui::ET_MOUSE_PRESSED;
-      if (pointer_pen_info.pointerInfo.ButtonChangeType ==
-          POINTER_CHANGE_SECONDBUTTON_DOWN) {
-        flag = ui::EF_RIGHT_MOUSE_BUTTON;
-      } else {
-        flag = ui::EF_LEFT_MOUSE_BUTTON;
-      }
-      click_count = 1;
-      break;
-    case WM_POINTERUP:
-      event_type = ui::ET_MOUSE_RELEASED;
-      if (pointer_pen_info.pointerInfo.ButtonChangeType ==
-          POINTER_CHANGE_SECONDBUTTON_UP) {
-        flag = ui::EF_RIGHT_MOUSE_BUTTON;
-      } else {
-        flag = ui::EF_LEFT_MOUSE_BUTTON;
-      }
-      click_count = 1;
-      break;
-    case WM_POINTERUPDATE:
-      event_type = ui::ET_MOUSE_DRAGGED;
-      if (pointer_pen_info.pointerInfo.pointerFlags &
-          POINTER_FLAG_FIRSTBUTTON) {
-        flag = ui::EF_LEFT_MOUSE_BUTTON;
-      } else if (pointer_pen_info.pointerInfo.pointerFlags &
-                 POINTER_FLAG_SECONDBUTTON) {
-        flag = ui::EF_RIGHT_MOUSE_BUTTON;
-      } else {
-        event_type = ui::ET_MOUSE_MOVED;
-      }
-      break;
-    case WM_POINTERENTER:
-      event_type = ui::ET_MOUSE_ENTERED;
-      break;
-    case WM_POINTERLEAVE:
-      event_type = ui::ET_MOUSE_EXITED;
-      break;
-    default:
-      NOTREACHED();
-  }
+  const base::TimeTicks event_time = ui::EventTimeForNow();
+  ui::EventType event_type =
+      GetTouchEventType(pointer_pen_info.pointerInfo.pointerFlags);
+  int flags = GetTouchEventFlags(message, pointer_pen_info.pointerInfo);
+  int rotation_angle = rotation;
+  rotation_angle %= 180;
+  if (rotation_angle < 0)
+    rotation_angle += 180;
   ui::PointerDetails pointer_details(
       input_type, pointer_id, /* radius_x */ 0.0f, /* radius_y */ 0.0f,
       pressure, tilt_x, tilt_y, /* tangential_pressure */ 0.0f, rotation);
-  ui::MouseEvent event(event_type, point, point, base::TimeTicks::Now(), flag,
-                       flag, pointer_details);
-  event.SetClickCount(click_count);
+  ui::TouchEvent event(event_type, point, event_time, pointer_details, flags,
+                       rotation_angle);
+
+  event.latency()->AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0, event_time, 1);
 
   // There are cases where the code handling the message destroys the
   // window, so use the weak ptr to check if destruction occured or not.
   base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
-  bool handled = delegate_->HandleMouseEvent(event);
+  delegate_->HandleTouchEvent(event);
 
   if (ref)
-    SetMsgHandled(handled);
+    SetMsgHandled(TRUE);
   return 0;
 }
 
