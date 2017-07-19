@@ -189,6 +189,8 @@ Still reading?
   <issue id="MissingVersion">
     <ignore path="AndroidManifest.xml"/>
   </issue>
+  <!-- TODO(crbug.com/739746): Remove once platform-tools is updated. -->
+  <issue id="NewApi" severity="ignore"/>
   <issue id="NewApi">
     <ignore regexp="Attribute `paddingStart` referenced here can result in a crash on some specific devices older than API 17"/>
     <ignore regexp="chrome/android/java/res/values-v17/styles.xml"/>
@@ -234,6 +236,7 @@ Still reading?
   </issue>
   <issue id="PackageManagerGetSignatures">
     <ignore regexp="chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java"/>
+    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/customtabs/OriginVerifier.java"/>
   </issue>
   <issue id="PluralsCandidate" severity="Error">
     <ignore regexp="chrome/android/chrome_strings_grd.resources.zip/values-en-rGB/android_chrome_strings.xml"/>
@@ -295,7 +298,6 @@ Still reading?
   <!-- Our generated enums are allowed to have the same values. -->
   <issue id="UniqueConstants" severity="ignore"/>
   <!-- TODO(crbug.com/635567): Fix this properly. -->
-  <issue id="UnusedResources" severity="ignore"/>
   <issue id="UnusedResources">
     <!-- The two dimens below will be changing soon so please leave them in -->
     <ignore regexp="design_bottom_navigation_text_size"/>
