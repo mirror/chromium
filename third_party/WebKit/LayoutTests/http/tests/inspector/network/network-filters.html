@@ -10,93 +10,62 @@ async function test()
 
     InspectorTest.recordNetwork();
 
-    InspectorTest.makeFetch("resources/style.css", {}, ensureAllResources);
-    InspectorTest.makeFetch("resources/abe.png", {}, () => {
-      // Ensures result is cached.
-      InspectorTest.makeFetch("resources/abe.png", {}, ensureAllResources);
-      ensureAllResources();
-    });
-    InspectorTest.makeFetch("missing/foo.bar", {}, ensureAllResources);
+    await requestResource('resources/style.css');
+    await requestResource('resources/abe.png');
+    // Second one should be from cache.
+    await requestResource('resources/abe.png');
+    await requestResource('missing/foo.bar');
 
-    var filterChecks = [{
-        filterText: "-.css",
-        isRegex: false
-    }, {
-        filterText: "-.png",
-        isRegex: false
-    }, {
-        filterText: "css",
-        isRegex: false
-    }, {
-        filterText: "",
-        isRegex: false
-    }, {
-        filterText: ".*",
-        isRegex: true
-    }, {
-        filterText: ".*\\..*",
-        isRegex: true
-    }, {
-        filterText: ".*\\.png",
-        isRegex: true
-    }, {
-        filterText: "NOTHINGTOMATCH",
-        isRegex: true
-    }, {
-        filterText: "",
-        isRegex: true
-    }, {
-        filterText: "png",
-        isRegex: false
-    }, {
-        filterText: "-missing",
-        isRegex: false
-    }, {
-        filterText: "is:from-cache",
-        isRegex: false
-    }, {
-        filterText: "-is:from-cache",
-        isRegex: false
-    }];
+    checkFilter("-.css", false);
+    checkFilter("-.png", false);
+    checkFilter("css", false);
+    checkFilter("", false);
+    checkFilter(".*", true);
+    checkFilter(".*\\..*", true);
+    checkFilter(".*\\.png", true);
+    checkFilter("NOTHINGTOMATCH", true);
+    checkFilter("", true);
+    checkFilter("png", false);
+    checkFilter("-missing", false);
+    checkFilter("is:from-cache", false);
+    checkFilter("-is:from-cache", false);
+    checkFilter("foo method:GET", false);
+    checkFilter("foo", false);
 
-    var resourceCount = 0;
-    var totalResourceCount = 4;
-    function ensureAllResources()
-    {
-        if (++resourceCount >= totalResourceCount)
-            checkFilters();
-    }
+    InspectorTest.completeTest();
 
-    function checkFilters()
-    {
-        for (var filterObj of filterChecks) {
-            InspectorTest.addResult("filterText: " + filterObj.filterText);
-            InspectorTest.addResult("isRegex: " + filterObj.isRegex);
+    /**
+     * @param {string} filterText
+     * @param {boolean} isRegex
+     */
+    function checkFilter(filterText, isRegex) {
+        InspectorTest.addResult("filterText: " + filterText);
+        InspectorTest.addResult("isRegex: " + isRegex);
 
-            setNetworkLogFilter(filterObj.filterText, filterObj.isRegex);
+        UI.panels.network._networkLogView._textFilterUI._regexCheckBox.checked = isRegex;
+        UI.panels.network._networkLogView._textFilterUI.setValue(filterText);
+        UI.panels.network._networkLogView._filterChanged(null); // event not used in this method, so passing null
 
-            var nodes = UI.panels.network._networkLogView.flatNodesList();
-            var foundNodesCount = 0;
-            for (var i = 0; i < nodes.length; i++) {
-                if (!nodes[i][Network.NetworkLogView._isFilteredOutSymbol])
-                    foundNodesCount++;
-            }
-
-            InspectorTest.addResult("Found results: " + foundNodesCount);
-            InspectorTest.addResult("");
+        var nodes = UI.panels.network._networkLogView.flatNodesList();
+        var foundNodesCount = 0;
+        for (var i = 0; i < nodes.length; i++) {
+            if (!nodes[i][Network.NetworkLogView._isFilteredOutSymbol])
+                foundNodesCount++;
         }
-        InspectorTest.completeTest();
+
+        InspectorTest.addResult("Found results: " + foundNodesCount);
+        InspectorTest.addResult("");
     }
 
     /**
-     * @param {string} value
-     * @param {RegExp} isRegex
+     * @param {string} url
+     * @return {!Promise}
      */
-    function setNetworkLogFilter(value, isRegex)
-    {
-        UI.panels.network._networkLogView._textFilterUI._regexCheckBox.checked = isRegex;
-        UI.panels.network._networkLogView._textFilterUI.setValue(value);
-        UI.panels.network._networkLogView._filterChanged(null); // event not used in this method, so passing null
+    async function requestResource(url) {
+        InspectorTest.evaluateInPage(`fetch('${url}')`);
+        var request = await InspectorTest.waitForEvent(SDK.NetworkManager.Events.RequestFinished, InspectorTest.networkManager,
+            request => request.url().endsWith(url));
+        await InspectorTest.waitForNetworkLogViewNodeForRequest(request);
     }
 }
 </script>
