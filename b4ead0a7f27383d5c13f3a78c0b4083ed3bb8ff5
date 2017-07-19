@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e6fae7d_e0b47a6e",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T22:59:12Z",
+      "side": 1,
+      "message": "It\u0027s also good idea to run the change through the fuchsia try bot before landing.",
+      "range": {
+        "startLine": 71,
+        "startChar": 3,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "b4ead0a7f27383d5c13f3a78c0b4083ed3bb8ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
