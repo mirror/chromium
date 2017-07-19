@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31c111dc_688d5aa2",
+        "filename": "components/viz/client/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-19T17:09:06Z",
+      "side": 1,
+      "message": "Yep. It\u0027s because host is a ... no wait, sorry, copy pasta error! Fixed.\n\nIt looks like code in client currently only include from common/. So it didn\u0027t get caught.",
+      "parentUuid": "46f9632e_dc415492",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ef45056_84fc6f28",
         "filename": "components/viz/host/DEPS",
         "patchSetId": 2
