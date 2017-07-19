@@ -26,6 +26,7 @@ bindings_core_v8_files =
                     "core/v8/custom/V8PerformanceObserverCustom.cpp",
                     "core/v8/custom/V8PopStateEventCustom.cpp",
                     "core/v8/custom/V8PromiseRejectionEventCustom.cpp",
+                    "core/v8/custom/V8ReportingObserverCustom.cpp",
                     "core/v8/custom/V8WindowCustom.cpp",
                     "core/v8/custom/V8XMLHttpRequestCustom.cpp",
                     "core/v8/ArrayValue.cpp",
