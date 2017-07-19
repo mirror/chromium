@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeaada47_a61fa4e6",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "Oh, sorry for poor explanation. I meant, these fields are params of the ShowPage message.\nWould you mind to fix?\n\nThis is relatively minor to me now, so if you think it needs a bit more amount of work, I\u0027m ok to go with TODO, expecting the fix CL sometime soon.",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226d0ca8_081aef03",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "nit: FakeArcSupport* const fake_arc_support_;\n\nIn ARC code, we annotate const like this if the field is not expected to be changed.",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c546460_1ce52fa1",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "Style:\nSorry I overlooked this in the previous iteration.\n\n@param {type} varname\n\nis the expected pattern. So\n\n@param {string} federationUrl ...\n\nDitto for below.",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d39496_5ae800ef",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "nit/style:\n\n/**\n * Auth view ...\n ...\n */",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2658db0_1f170b74",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "@param for |details|?",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3526d658_e930beee",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "nit: details.startsWith(this.deviceManagementUrlPrefix_)",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174bc3e6_a4d1defe",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "nit/style/optional: Considering the comment,\n\nif (details.error \u003d\u003d \u0027net::ERR_ABORTED\u0027) {\n  return;\n}\nsendNativeMessage(...);\n\nlooks more appropriate? Up to you.",
+      "revId": "6ef00041aa999c1519d9d9a48f55f81703390932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

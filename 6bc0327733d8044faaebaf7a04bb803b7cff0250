@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b9276067_731ab606",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "Yes, to inherit Observer\u0027s dtor characteristic.",
+      "parentUuid": "06e57634_a5bc3f50",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87e3819_b77555bf",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "In this case an EXPECT is actually fine. The rest still makes sense to run. I try not to use ASSERT / ASSERT_NO_FATAL_FAILURE() whenever possible since the latter is very easy to forget.",
       "parentUuid": "02077dde_9349c938",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8aea411_977e0706",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "I got it. Thank you for explanation.",
+      "parentUuid": "84419e1d_b83511cc",
       "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

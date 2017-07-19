@@ -319,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "277e3c0b_e716b6cd",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:11:08Z",
+      "side": 1,
+      "message": "I see, but it is not for non-enterprise world, IMHO.\nAnd this looks similar to the forth of the \"Donts\" example in\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules\n\nAs for the length of the variable, I agreed with you that it looks longer.\nI think it is because it is consisted with two parts conceptually.\n\"active_directory_auth\" and \"device_management_url_prefix_\".\n\nSo, to shorten it, I would:\n\nstruct ActiveDirectoryPageParam {\n  ...\n  std::string device_management_url_prefix_;\n};\n\nActiveDirectoryPageParam active_directory_page_param;\n\nor, more over wrap ActiveDirectoryPage class,\nthen, in the class the context \"this is for ActiveDirectoryAuthPage\" is known so that that part can be omitted.\n\nAnyway, TBH, it looks overkill, and indeed it looks slightly longer the current naming works for me, now.",
+      "parentUuid": "42bf2743_e90a01aa",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29dc95a2_f8ed4ed9",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
         "patchSetId": 4
