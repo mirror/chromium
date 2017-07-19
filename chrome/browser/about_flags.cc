@@ -1402,6 +1402,10 @@ const FeatureEntry kFeatureEntries[] = {
      kOsCrOS,
      SINGLE_VALUE_TYPE(
          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)},
+    {"enable-easyunlock-promotions",
+     flag_descriptions::kEasyUnlockPromotionsName,
+     flag_descriptions::kEasyUnlockPromotionsDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kEasyUnlockPromotions)},
     {"spurious-power-button-window",
      flag_descriptions::kSpuriousPowerButtonWindowName,
      flag_descriptions::kSpuriousPowerButtonWindowDescription, kOsCrOS,
