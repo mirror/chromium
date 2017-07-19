@@ -279,6 +279,8 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
 
   void SetHasWillChangeTransformHint(bool);
 
+  void SetIsResizedByBrowserControls(bool);
+
  protected:
   String DebugName(cc::Layer*) const;
   bool ShouldFlattenTransform() const { return should_flatten_transform_; }

@@ -149,6 +149,11 @@ void GraphicsLayer::SetHasWillChangeTransformHint(
   layer_->Layer()->SetHasWillChangeTransformHint(has_will_change_transform);
 }
 
+void GraphicsLayer::SetIsResizedByBrowserControls(
+    bool is_resized_by_browser_controls) {
+  PlatformLayer()->SetIsResizedByBrowserControls(is_resized_by_browser_controls);
+}
+
 void GraphicsLayer::SetParent(GraphicsLayer* layer) {
 #if DCHECK_IS_ON()
   DCHECK(!layer || !layer->HasAncestor(this));
