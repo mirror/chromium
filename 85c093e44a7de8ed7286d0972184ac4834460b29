@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37736d5_8a113b63",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-19T19:37:00Z",
+      "side": 1,
+      "message": "It\u0027s a bit nasty that we have to use a protected member for this...\n\nBut I\u0027m assuming that we can move this to a private member once we move WebViewImpl to core/exported/ and merge it into WebViewBase.",
+      "revId": "85c093e44a7de8ed7286d0972184ac4834460b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af300555_d00a4d2b",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-19T19:37:00Z",
+      "side": 1,
+      "message": "Do you know why we need to run the SupplementInstallCallback for both ChromeClients and LocalFrameClients? Can\u0027t we install everything in ChromeClient\u0027s SupplementInstallCallback?\n\nIf we can do that, we don\u0027t need to add the callback installation code to LocalFrameClient.h/cpp.",
+      "revId": "85c093e44a7de8ed7286d0972184ac4834460b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
