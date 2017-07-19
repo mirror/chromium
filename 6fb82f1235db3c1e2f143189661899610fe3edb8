@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77c0ddc9_d46e258d",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-19T00:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603b6ed9_3c35df1e",
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfef2427_ddc5763f",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fc4f61e7_179d2aed",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-19T00:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfef2427_ddc5763f",
+      "range": {
+        "startLine": 1791,
+        "startChar": 39,
+        "endLine": 1791,
+        "endChar": 73
+      },
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5de9ad_9396606a",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f59886_61a64278",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-19T00:36:07Z",
+      "side": 1,
+      "message": "Done - No, in which case it would make sense to just check |editable_form_text_area_|.",
+      "parentUuid": "be5de9ad_9396606a",
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1660217_1d8caa0f",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-19T00:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a2b538_fc06a7c6",
+      "range": {
+        "startLine": 3670,
+        "startChar": 31,
+        "endLine": 3670,
+        "endChar": 49
+      },
+      "revId": "6fb82f1235db3c1e2f143189661899610fe3edb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
