@@ -2613,7 +2613,6 @@ if (is_android) {
       "android/java/src/org/chromium/base/process_launcher/ChildConnectionAllocator.java",
       "android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
       "android/java/src/org/chromium/base/process_launcher/ChildProcessConstants.java",
-      "android/java/src/org/chromium/base/process_launcher/ChildProcessCreationParams.java",
       "android/java/src/org/chromium/base/process_launcher/ChildProcessLauncher.java",
       "android/java/src/org/chromium/base/process_launcher/ChildProcessService.java",
       "android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
@@ -2721,6 +2720,15 @@ if (is_android) {
     ]
   }
 
+  android_library("base_java_process_launcher_test_support") {
+    testonly = true
+    deps = [
+      ":base_java",
+      ":base_java_test_support",
+    ]
+    java_files = [ "test/android/javatests/src/org/chromium/base/test/TestChildProcessConnection.java" ]
+  }
+
   junit_binary("base_junit_tests") {
     java_files = [
       "android/junit/src/org/chromium/base/BaseChromiumApplicationTest.java",
@@ -2729,6 +2737,7 @@ if (is_android) {
       "android/junit/src/org/chromium/base/NonThreadSafeTest.java",
       "android/junit/src/org/chromium/base/PromiseTest.java",
       "android/junit/src/org/chromium/base/process_launcher/ChildConnectionAllocatorTest.java",
+      "android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
       "test/android/junit/src/org/chromium/base/test/SetUpStatementTest.java",
       "test/android/junit/src/org/chromium/base/test/util/DisableIfTest.java",
       "test/android/junit/src/org/chromium/base/test/util/MinAndroidSdkLevelSkipCheckTest.java",
@@ -2737,6 +2746,7 @@ if (is_android) {
     ]
     deps = [
       ":base_java",
+      ":base_java_process_launcher_test_support",
       ":base_java_test_support",
     ]
     srcjar_deps = [ ":base_build_config_gen" ]
