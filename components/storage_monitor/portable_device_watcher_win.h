@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string16.h"
 #include "components/storage_monitor/storage_monitor.h"
 
@@ -28,7 +29,7 @@ class TestPortableDeviceWatcherWin;
 // This class watches the portable device mount points and sends notifications
 // about the attached/detached media transfer protocol (MTP) devices.
 // This is a singleton class instantiated by StorageMonitorWin. This class is
-// created, destroyed and operates on the UI thread, except for long running
+// created, destroyed and operates on the same sequence, except for long running
 // tasks it spins off to a SequencedTaskRunner.
 class PortableDeviceWatcherWin {
  public:
@@ -134,11 +135,13 @@ class PortableDeviceWatcherWin {
   MTPStorageMap storage_map_;
 
   // The task runner used to execute tasks that may take a long time and thus
-  // should not be performed on the UI thread.
+  // should not run on the same sequence.
   scoped_refptr<base::SequencedTaskRunner> media_task_runner_;
 
   // The notifications object to use to signal newly attached devices.
   StorageMonitor::Receiver* storage_notifications_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   // Used by |media_task_runner_| to create cancelable callbacks.
   base::WeakPtrFactory<PortableDeviceWatcherWin> weak_ptr_factory_;
