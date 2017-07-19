@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
+#include "chrome/browser/ui/views/extensions/extension_installed_bubble_view.h"
 #include "chrome/browser/ui/views/importer/import_lock_dialog_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
@@ -24,7 +25,29 @@
 // runtime whether to show a Cocoa dialog, or the toolkit-views dialog defined
 // here (declared in browser_dialogs.h).
 
+namespace {
+
+class ExtensionInstalledBubbleUiMac : public ExtensionInstalledBubbleUi {
+ public:
+  using ExtensionInstalledBubbleUi::ExtensionInstalledBubbleUi;
+
+  // ExtensionInstalledBubbleUi:
+  void OnBubbleShown(views::BubbleDialogDelegateView* bubble) override {
+    KeepBubbleAnchored(bubble);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ExtensionInstalledBubbleUiMac);
+};
+
+}  // namespace
+
 namespace chrome {
+
+std::unique_ptr<BubbleUi> BuildViewsExtensionInstalledBubbleUi(
+    ExtensionInstalledBubble* bubble) {
+  return base::WrapUnique(new ExtensionInstalledBubbleUiMac(bubble));
+}
 
 void ShowPageInfoBubbleViewsAtPoint(
     const gfx::Point& anchor_point,
