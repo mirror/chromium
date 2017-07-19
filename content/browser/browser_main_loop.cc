@@ -795,7 +795,6 @@ int BrowserMainLoop::PreCreateThreads() {
   // base::SequencedWorkerPool::EnableForProcess().
   // TODO(fdoray): Uncomment this line.
   // DCHECK(!base::SequencedWorkerPool::IsEnabled());
-
   if (parts_) {
     TRACE_EVENT0("startup",
         "BrowserMainLoop::CreateThreads:PreCreateThreads");
