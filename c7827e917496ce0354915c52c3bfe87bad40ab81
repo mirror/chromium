@@ -16,6 +16,24 @@
       "revId": "c7827e917496ce0354915c52c3bfe87bad40ab81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8102a767_591a9e12",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/sticky-input-box-position.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-19T21:20:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e6a87a_1715d197",
+      "revId": "c7827e917496ce0354915c52c3bfe87bad40ab81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
