@@ -34,7 +34,7 @@ void PolicyChangeRegistrar::OnPolicyUpdated(const PolicyNamespace& ns,
        it != callback_map_.end(); ++it) {
     const base::Value* prev = previous.GetValue(it->first);
     const base::Value* cur = current.GetValue(it->first);
-    if (!base::Value::Equals(prev, cur))
+    if (*prev != *cur)
       it->second.Run(prev, cur);
   }
 }
