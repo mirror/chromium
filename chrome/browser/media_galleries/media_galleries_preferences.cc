@@ -19,6 +19,9 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -37,7 +40,6 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/storage_monitor/media_storage_util.h"
 #include "components/storage_monitor/storage_monitor.h"
-#include "content/public/browser/browser_thread.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/pref_names.h"
@@ -364,7 +366,7 @@ base::string16 GetDisplayNameForSubFolder(const base::string16& device_name,
 }
 
 void InitializeImportedMediaGalleryRegistryOnFileThread() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   ImportedMediaGalleryRegistry::GetInstance()->Initialize();
 }
 
@@ -474,7 +476,7 @@ MediaGalleriesPreferences::~MediaGalleriesPreferences() {
 }
 
 void MediaGalleriesPreferences::EnsureInitialized(base::Closure callback) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (IsInitialized()) {
     if (!callback.is_null())
@@ -522,6 +524,7 @@ bool MediaGalleriesPreferences::IsInitialized() const { return initialized_; }
 Profile* MediaGalleriesPreferences::profile() { return profile_; }
 
 void MediaGalleriesPreferences::OnInitializationCallbackReturned() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!IsInitialized());
   DCHECK_GT(pre_initialization_callbacks_waiting_, 0);
   if (--pre_initialization_callbacks_waiting_ == 0)
@@ -529,6 +532,7 @@ void MediaGalleriesPreferences::OnInitializationCallbackReturned() {
 }
 
 void MediaGalleriesPreferences::FinishInitialization() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!IsInitialized());
 
   initialized_ = true;
@@ -669,8 +673,8 @@ void MediaGalleriesPreferences::OnFinderDeviceID(const std::string& device_id) {
 
     if (!gallery_name.empty()) {
       pre_initialization_callbacks_waiting_++;
-      content::BrowserThread::PostTaskAndReply(
-          content::BrowserThread::FILE, FROM_HERE,
+      base::PostTaskWithTraitsAndReply(
+          FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
           base::BindOnce(&InitializeImportedMediaGalleryRegistryOnFileThread),
           base::BindOnce(
               &MediaGalleriesPreferences::OnInitializationCallbackReturned,

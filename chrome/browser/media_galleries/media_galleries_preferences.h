@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -147,7 +148,7 @@ typedef std::map<MediaGalleryPrefId, MediaGalleryPrefInfo>
 typedef std::set<MediaGalleryPrefId> MediaGalleryPrefIdSet;
 
 // A class to manage the media gallery preferences.  There is one instance per
-// user profile. This class lives on the UI thread.
+// user profile.
 class MediaGalleriesPreferences
     : public KeyedService,
       public storage_monitor::RemovableStorageObserver {
@@ -184,9 +185,10 @@ class MediaGalleriesPreferences
   // non-null, will be called when initialization is complete. If initialization
   // has already completed, this callback will be invoked in the calling stack.
   // Before the callback is run, other calls may not return the correct results.
-  // Should be invoked on the UI thread; callbacks will be run on the UI thread.
+  // Should be invoked on the same sequence as creation. Callbacks will be also
+  // run on the same sequence.
   // This call also ensures that the StorageMonitor is initialized.
-  // Note for unit tests: This requires an active FILE thread and
+  // Note for unit tests: This requires an active ScopedTaskEnvironment and
   // EnsureMediaDirectoriesExists instance to complete reliably.
   void EnsureInitialized(base::Closure callback);
 
@@ -283,7 +285,7 @@ class MediaGalleriesPreferences
   typedef std::map<std::string /*device id*/, MediaGalleryPrefIdSet>
       DeviceIdPrefIdsMap;
 
-  // These must be called on the UI thread.
+  // These must be called on the same sequence as creation.
   void OnInitializationCallbackReturned();
   void FinishInitialization();
 
@@ -385,6 +387,8 @@ class MediaGalleriesPreferences
   DeviceIdPrefIdsMap device_map_;
 
   base::ObserverList<GalleryChangeObserver> gallery_change_observers_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<MediaGalleriesPreferences> weak_factory_;
 
