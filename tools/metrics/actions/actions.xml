@@ -9256,6 +9256,22 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Launcher_OpenPlayStoreInstantApp">
+  <owner>hejq@chromium.com</owner>
+  <description>
+    Recorded when the user opens the an instant app from a Play Store app search
+    query.
+  </description>
+</action>
+
+<action name="Launcher_OpenPlayStoreUninstalledApp">
+  <owner>hejq@chromium.com</owner>
+  <description>
+    Recorded when the user opens the installing page of a Play Store app search
+    result.
+  </description>
+</action>
+
 <action name="Launcher_Show">
   <owner>vadimt@chromium.org</owner>
   <description>Launcher got shown.</description>

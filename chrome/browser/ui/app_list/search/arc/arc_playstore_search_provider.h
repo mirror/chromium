@@ -37,6 +37,10 @@ class ArcPlayStoreSearchProvider : public SearchProvider {
   // list_controller_ is owned by AppListServiceAsh and lives
   // until the service finishes.
   AppListControllerDelegate* const list_controller_;
+
+  // Time when the current query started.
+  base::TimeTicks query_start_time_;
+
   base::WeakPtrFactory<ArcPlayStoreSearchProvider> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcPlayStoreSearchProvider);
