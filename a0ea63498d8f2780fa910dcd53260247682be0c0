@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbc48948_cac9a92d",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T09:50:23Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "38a29ddd_055af5ed",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c58adda1_56e599cf",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T08:02:55Z",
       "side": 1,
       "message": "For the actual and preflight request.",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13411503_e50fc143",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T09:50:23Z",
+      "side": 1,
+      "message": "Loader is per-request, so I think we\u0027ll need another pair of loader/client... or might we be using ResourceFetcherImpl?",
+      "parentUuid": "c58adda1_56e599cf",
       "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
