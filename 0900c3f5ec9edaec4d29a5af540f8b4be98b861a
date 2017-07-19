@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "ad0fa8b9_2843a2b7",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T01:49:32Z",
+      "side": 1,
+      "message": "Thanks for posting the screenshots! It looks like there are still some dependencies between what Hannah mocked and the current screenshots. Can we get this to match Hannah\u0027s spec?",
+      "parentUuid": "da7286d4_10f9084e",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "0900c3f5ec9edaec4d29a5af540f8b4be98b861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2c55280_ab1d26ef",
         "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
         "patchSetId": 2
