@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "ea0ad0a4_9aee4236",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T13:17:10Z",
+      "side": 1,
+      "message": "without understanding the code more deeply, not reporting because did_swap is false for a given swap callback concerns me. if we do end up painting on a subsequent swap, then we should be reporting at that time.\n\nwe should figure out how to report the first valid swap time after the paint event before we land this change else behavior would diverge from intended behavior in an undesirable way.\n\nalso, can you add a comment here to explain why did_swap can be false?",
+      "parentUuid": "85283222_4eb2ee44",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e2912f_f351c3f7",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 2
@@ -272,6 +290,30 @@
       "side": 1,
       "message": "I totally agree and wanted to do this, just wasn\u0027t sure if that should come later down the road after we were sure of deltas and other possible discrepancies.\n\nIn the latest patchset I removed *Swap() methods and report *_swap_ times from FirstPaint(), FirstContentfulPaint(), etc. At least for now, the old values are exposed via FirstPaintRendered() and similarly named methods, but they are private and exposed to FirstMeaningfulPaintDetector[Test] via friend class/FRIEND_TEST. I didn\u0027t change the implementation of FirstMeaningfulPaintDetector, just naming/scope. Let me know if this looks OK.",
       "parentUuid": "a2ed0313_150929a2",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569af02a_e9784e4d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-19T13:17:10Z",
+      "side": 1,
+      "message": "This seems good to me, thanks! Let\u0027s open a bug to update FirstMeaningfulPaintDetector etc to no longer depend on the old values and make sure we find an owner who can commit to the cleanup before we land this patch.",
+      "parentUuid": "23639b08_875ada8d",
       "range": {
         "startLine": 63,
         "startChar": 1,
