@@ -22,6 +22,30 @@
       "revId": "5c73949779fa2113c84e9a121a38fb88b5fb2063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdd6645_f0e8da29",
+        "filename": "device/serial/serial.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-19T00:59:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773e2ab2_2066d6ed",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5c73949779fa2113c84e9a121a38fb88b5fb2063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
