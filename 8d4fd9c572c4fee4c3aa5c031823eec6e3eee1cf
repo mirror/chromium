@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "983ba24d_33957688",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-19T18:11:40Z",
+      "side": 1,
+      "message": "details_button? Or maybe just say some place other than default as that is what really matters.",
+      "range": {
+        "startLine": 99,
+        "startChar": 22,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "8d4fd9c572c4fee4c3aa5c031823eec6e3eee1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
