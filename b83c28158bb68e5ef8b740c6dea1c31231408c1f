@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135a1270_2e9d6ae4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-19T05:24:22Z",
+      "side": 1,
+      "message": "Oops!  Sorry if I lost this in my change.  Should we add a test for this?",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 30
+      },
+      "revId": "b83c28158bb68e5ef8b740c6dea1c31231408c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b09e3c4_46998634",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-19T05:24:22Z",
+      "side": 1,
+      "message": "This is fine, but you could also do something like:\n\nstatic_cast\u003cint\u003e(std::ceil(start_time.InSecondsF()))",
+      "range": {
+        "startLine": 850,
+        "startChar": 32,
+        "endLine": 851,
+        "endChar": 58
+      },
+      "revId": "b83c28158bb68e5ef8b740c6dea1c31231408c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
