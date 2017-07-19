@@ -354,6 +354,15 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
                                                         WebTaskRunner*) = 0;
 
   virtual void AnnotatedRegionsChanged() = 0;
+
+  using SupplementInstallCallback = void (*)(Document&, Settings&);
+  // Allows for the registration of a callback that is used to install
+  // supplements on a specified LocalFrame.
+  static void RegisterSupplementInstallCallback(SupplementInstallCallback);
+  virtual void InstallSupplements(Document&, Settings&);
+
+ protected:
+  static SupplementInstallCallback supplement_install_callback_;
 };
 
 }  // namespace blink

@@ -5,6 +5,8 @@
 #ifndef WebFactory_h
 #define WebFactory_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "public/platform/WebPageVisibilityState.h"
 #include "public/web/WebSandboxFlags.h"
@@ -12,6 +14,7 @@
 namespace blink {
 
 class ChromeClient;
+class HTMLMediaElement;
 class WebView;
 class WebViewBase;
 class WebLocalFrameBase;
@@ -19,6 +22,12 @@ class WebViewClient;
 class WebFrameClient;
 class InterfaceRegistry;
 class WebFrame;
+class WebMediaPlayer;
+class WebMediaPlayerSource;
+class WebMediaPlayerClient;
+class WebRemotePlaybackClient;
+class LinkResource;
+class HTMLLinkElement;
 enum class WebTreeScopeType;
 
 // WebFactory is a temporary class implemented in web/ that allows classes to
@@ -40,6 +49,15 @@ class CORE_EXPORT WebFactory {
       WebFrameClient*,
       InterfaceRegistry*,
       WebFrame* opener) const = 0;
+
+  virtual std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(
+      HTMLMediaElement&,
+      const WebMediaPlayerSource&,
+      WebMediaPlayerClient*) = 0;
+  virtual WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
+      HTMLMediaElement&) = 0;
+  virtual LinkResource* CreateServiceWorkerLinkResource(
+      HTMLLinkElement* owner) = 0;
 
  protected:
   // Takes ownership of |factory|.

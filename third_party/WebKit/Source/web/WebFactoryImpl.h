@@ -29,6 +29,16 @@ class WebFactoryImpl : public WebFactory {
                                              WebFrameClient*,
                                              InterfaceRegistry*,
                                              WebFrame* opener) const override;
+  std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(
+      HTMLMediaElement&,
+      const WebMediaPlayerSource&,
+      WebMediaPlayerClient*) override;
+
+  WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
+      HTMLMediaElement&) override;
+
+  LinkResource* CreateServiceWorkerLinkResource(
+      HTMLLinkElement* owner) override;
 };
 
 }  // namespace blink

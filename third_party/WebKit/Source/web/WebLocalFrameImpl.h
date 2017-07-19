@@ -32,6 +32,7 @@
 #define WebLocalFrameImpl_h
 
 #include "core/editing/VisiblePosition.h"
+#include "core/exported/LocalFrameClientImpl.h"
 #include "core/exported/WebInputMethodControllerImpl.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
@@ -44,7 +45,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
-#include "web/LocalFrameClientImpl.h"
 #include "web/WebExport.h"
 
 #include <memory>
