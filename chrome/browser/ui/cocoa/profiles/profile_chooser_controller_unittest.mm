@@ -36,6 +36,7 @@
 #include "components/signin/core/browser/fake_account_fetcher_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_pref_names.h"
@@ -251,8 +252,8 @@ TEST_F(ProfileChooserControllerTest,
 
 TEST_F(ProfileChooserControllerTest,
        SignedInProfileActiveCardLinksWithAccountConsistency) {
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  signin::ScopedAccountConsistency scoped_mirror(
+      signin::AccountConsistencyMethod::kMirror);
 
   SignInFirstProfile();
 
@@ -295,8 +296,8 @@ TEST_F(ProfileChooserControllerTest,
 }
 
 TEST_F(ProfileChooserControllerTest, AccountManagementLayout) {
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  signin::ScopedAccountConsistency scoped_mirror(
+      signin::AccountConsistencyMethod::kMirror);
 
   SignInFirstProfile();
 

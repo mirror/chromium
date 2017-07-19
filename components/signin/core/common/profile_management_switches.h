@@ -9,17 +9,26 @@
 #ifndef COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 #define COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 
-#include "components/signin/core/common/signin_features.h"
+#include "base/feature_list.h"
 
-namespace base {
-class CommandLine;
-}
+namespace signin {
 
-namespace switches {
+// Account consistency feature. Only used on platforms where Mirror is not
+// always enabled (ENABLE_MIRROR is false).
+extern const base::Feature kAccountConsistencyFeature;
+
+// The account consistency method parameter name.
+extern const char kAccountConsistencyFeatureMethodParameter[];
+
+// Account consistency method values.
+extern const char kAccountConsistencyFeatureMethodMirror[];
+extern const char kAccountConsistencyFeatureMethodDiceFix[];
+extern const char kAccountConsistencyFeatureMethodDice[];
 
 enum class AccountConsistencyMethod {
   kDisabled,  // No account consistency.
   kMirror,    // Account management UI in the avatar bubble.
+  kDiceFix,   // No account consistency, but Dice fixes authentication errors.
   kDice       // Account management UI on Gaia webpages.
 };
 
@@ -32,19 +41,12 @@ bool IsAccountConsistencyMirrorEnabled();
 
 // Checks whether Dice account consistency is enabled. If enabled, then account
 // management UI is available on the Gaia webpages.
+// Returns true when the account consitency method is kDiceFix or kDice.
 bool IsAccountConsistencyDiceEnabled();
 
 // Whether the chrome.identity API should be multi-account.
 bool IsExtensionsMultiAccount();
 
-// Called in tests to force enable Mirror account consistency.
-void EnableAccountConsistencyMirrorForTesting(base::CommandLine* command_line);
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-// Called in tests to force enable Dice account consistency.
-void EnableAccountConsistencyDiceForTesting(base::CommandLine* command_line);
-#endif
-
-}  // namespace switches
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
