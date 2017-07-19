@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae9f0c4_dcb83de1",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T22:02:51Z",
+      "side": 1,
+      "message": "Does this leave the views::Widget bounds in the correct state at the end of the animation? It seems like this might detach the layer from the widget and just slide the layer around. That might look right, but could affect event targeting and the like. I can\u0027t remember if it\u0027s safe to do it this way. Some logging, or the ash debug shortcut keys ctrl-alt-shift-w and ctrl-alt-shelf-l might be helpful to verify.\n\nIf this doesn\u0027t leave the Widget in the right position there\u0027s another trick. We sometimes set the widget bounds to the new position, grab the layer and move it to the old position, then animate the layer to the new position.",
+      "revId": "8f84db400fdaff9f9d2e280502f7ead39b15d97b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
