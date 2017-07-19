@@ -16,6 +16,24 @@
       "revId": "126b50c64899d9c278990ed0b5b1dda54b238d82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5f6b22_87d621c2",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-19T00:15:27Z",
+      "side": 1,
+      "message": "that is better. Thanks, done.",
+      "parentUuid": "464da472_aa5612dd",
+      "revId": "126b50c64899d9c278990ed0b5b1dda54b238d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
