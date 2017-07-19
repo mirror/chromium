@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c51884b9_08707c33",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "Nit: I think exploration should be singular, and optionally sites should be plural, consistently with other existing docs :-)",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c46dad_01508175",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "If the only reason why we don\u0027t replace the previous signature (I\u0027m not even convinced we should rename the function) is iOS, as per my other comment about updating iOS code, I believe we should go ahead and do it in this CL. Otherwise there\u0027s quite some unnecessary delta and noise in revision history.",
+      "range": {
+        "startLine": 94,
+        "startChar": 67,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5377b2_2ad0e68b",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "Is this needed? The feature is disabled by default. I would in fact remove kNtpMostLikelyFaviconsFromServerFeature too (but I wouldn\u0027t do it as part of this CL to reduce the diff as much as possible).",
+      "range": {
+        "startLine": 362,
+        "startChar": 55,
+        "endLine": 362,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

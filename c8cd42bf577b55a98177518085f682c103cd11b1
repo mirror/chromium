@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "faf14f05_6780f9f4",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "What\u0027s the problem with updating iOS? You\u0027d probably only need to update the bridge so it adapts to the old signature and only propagates the personalized category.",
+      "parentUuid": "956c058c_ac02cf42",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "822b410d_4903a2b8",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 5
@@ -230,6 +254,30 @@
     },
     {
       "key": {
+        "uuid": "e3956e52_c54ec8ac",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "I\u0027m not really convinced: the function anyway accesses popular_sites_ so the possibility to pass in an arbitrary |sites| seems an illusion and error-prone. I see two slightly better alternatives:\n1. Make this function static such that popular_sites_ is not read at all (and keep |sites|). This would presumably involve moving the various empty-returning case-handling to the callers side.\n2. Revert introducing |sites| and instead rename the function to something like CreatePopularSitesForPersonalizedSection().",
+      "parentUuid": "750eebe1_7a426066",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2897f40e_421d4cfe",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
@@ -312,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "b387afe7_b3c266c2",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8bad436_d0126dda",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a239de_438088a3",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 5
@@ -388,6 +454,24 @@
       "side": 1,
       "message": "I considered that and would really like to keep the key and the vector visible.\nEspecially, because there are two very similar maps:\nstd::map\u003cSectionType, SitesVector\u003e and\nstd::map\u003cSectionType, NTPTilesVector\u003e\nBeing conscious about the first and second value here is not easy - even without having to look up what map is hidden behind a typedef.\n\nYou can easily convince me otherwise as I don\u0027t really enjoy typing this. WDYT?\n\n(BTW: in one zine-weekly, we had feedback, that our code is hard to read because we use a huge amount of typedefs for vectors and maps already.)",
       "parentUuid": "880f7d05_cadcbe33",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef268760_dac03480",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-19T08:57:39Z",
+      "side": 1,
+      "message": "I agree leaving without typedefs is also fine and arguably more readable (I myself usually like typedefs for maps, but this is somewhat arbitrary).\n\nAs per the naming collision or subtle differences in the two maps, it would be mitigated by the fact that you could typedef within the class, and fully qualifying the typedef would avoid ambiguities, e.g. PopularSites::SitesPerSectionMap vs MostVisitedSites::TilesPerSectionMap.\n\nIn this particular case, I think the vector typedefs (SitesVector and NTPTilesVector) would be better candidates to drop as opposed to the maps IMO.\n\nI\u0027m fine either way though.",
+      "parentUuid": "b460eb91_46dae5cd",
       "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
