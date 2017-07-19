@@ -50,6 +50,29 @@
       "revId": "f25b289bbc41250d6868729d80499699f0261a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3f5905_fc28549b",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-07-19T16:57:33Z",
+      "side": 1,
+      "message": "I think this should be 4, or 6 if hovers can be reported via touchevent. Since this is reported through touch events now, please dirty the touch slot state whenever the button state changes so that an event goes out at the end of the report.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 16,
+        "endLine": 1218,
+        "endChar": 20
+      },
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
