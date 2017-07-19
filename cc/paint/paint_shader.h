@@ -10,6 +10,7 @@
 
 #include "base/optional.h"
 #include "cc/paint/paint_export.h"
+#include "cc/paint/paint_image.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkScalar.h"
 #include "third_party/skia/include/core/SkShader.h"
@@ -21,6 +22,17 @@ using PaintRecord = PaintOpBuffer;
 
 class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
  public:
+  enum Type {
+    kColor,
+    kLinearGradient,
+    kRadialGradient,
+    kTwoPointConicalGradient,
+    kSweepGradient,
+    kImage,
+    kPaintRecord,
+    kShaderCount
+  };
+
   static sk_sp<PaintShader> MakeColor(SkColor color);
 
   static sk_sp<PaintShader> MakeLinearGradient(
@@ -67,7 +79,7 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
       const SkMatrix* local_matrix = nullptr,
       SkColor fallback_color = SK_ColorTRANSPARENT);
 
-  static sk_sp<PaintShader> MakeImage(sk_sp<const SkImage> image,
+  static sk_sp<PaintShader> MakeImage(const PaintImage& image,
                                       SkShader::TileMode tx,
                                       SkShader::TileMode ty,
                                       const SkMatrix* local_matrix);
@@ -83,20 +95,14 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
   SkMatrix GetLocalMatrix() const {
     return local_matrix_ ? *local_matrix_ : SkMatrix::I();
   }
+  Type shader_type() const { return shader_type_; }
+  const PaintImage& paint_image() {
+    DCHECK_EQ(kImage, shader_type_);
+    return image_;
+  }
 
  private:
   friend class PaintFlags;
-
-  enum Type {
-    kColor,
-    kLinearGradient,
-    kRadialGradient,
-    kTwoPointConicalGradient,
-    kSweepGradient,
-    kImage,
-    kPaintRecord,
-    kShaderCount
-  };
 
   explicit PaintShader(Type type);
 
@@ -126,7 +132,7 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
   SkPoint start_point_ = SkPoint::Make(0, 0);
   SkPoint end_point_ = SkPoint::Make(0, 0);
 
-  sk_sp<const SkImage> image_;
+  PaintImage image_;
   sk_sp<PaintRecord> record_;
 
   std::vector<SkColor> colors_;

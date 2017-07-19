@@ -103,13 +103,13 @@ sk_sp<PaintShader> PaintShader::MakeSweepGradient(SkScalar cx,
   return shader;
 }
 
-sk_sp<PaintShader> PaintShader::MakeImage(sk_sp<const SkImage> image,
+sk_sp<PaintShader> PaintShader::MakeImage(const PaintImage& image,
                                           SkShader::TileMode tx,
                                           SkShader::TileMode ty,
                                           const SkMatrix* local_matrix) {
   sk_sp<PaintShader> shader(new PaintShader(kImage));
 
-  shader->image_ = std::move(image);
+  shader->image_ = image;
   shader->SetMatrixAndTiling(local_matrix, tx, ty);
 
   return shader;
@@ -171,7 +171,7 @@ sk_sp<SkShader> PaintShader::GetSkShader() const {
           local_matrix_ ? &*local_matrix_ : nullptr);
       break;
     case kImage:
-      cached_shader_ = image_->makeShader(
+      cached_shader_ = image_.sk_image()->makeShader(
           tx_, ty_, local_matrix_ ? &*local_matrix_ : nullptr);
       break;
     case kPaintRecord:

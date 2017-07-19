@@ -19,7 +19,7 @@ PassRefPtr<ImagePattern> ImagePattern::Create(PassRefPtr<Image> image,
 }
 
 ImagePattern::ImagePattern(PassRefPtr<Image> image, RepeatMode repeat_mode)
-    : Pattern(repeat_mode), tile_image_(image->ImageForCurrentFrame()) {
+    : Pattern(repeat_mode), tile_image_(image->PaintImageForCurrentFrame()) {
   previous_local_matrix_.setIdentity();
 }
 
@@ -55,31 +55,31 @@ sk_sp<PaintShader> ImagePattern::CreateShader(const SkMatrix& local_matrix) {
   // Create a transparent image 2 pixels wider and/or taller than the
   // original, then copy the orignal into the middle of it.
   const SkISize tile_size =
-      SkISize::Make(tile_image_->width() + 2 * border_pixel_x,
-                    tile_image_->height() + 2 * border_pixel_y);
+      SkISize::Make(tile_image_.sk_image()->width() + 2 * border_pixel_x,
+                    tile_image_.sk_image()->height() + 2 * border_pixel_y);
   SkPictureRecorder recorder;
   recorder.beginRecording(tile_size.width(), tile_size.height());
 
   SkPaint paint;
   paint.setBlendMode(SkBlendMode::kSrc);
-  recorder.getRecordingCanvas()->drawImage(tile_image_, border_pixel_x,
-                                           border_pixel_y, &paint);
+  recorder.getRecordingCanvas()->drawImage(
+      tile_image_.sk_image(), border_pixel_x, border_pixel_y, &paint);
   // Note: we use a picture *image* (as opposed to a picture *shader*) to
   // lock-in the resolution (for 1px padding in particular).
-  sk_sp<SkImage> tile_image = SkImage::MakeFromPicture(
+  PaintImage tile_image = tile_image_.CloneWithSkImage(SkImage::MakeFromPicture(
       recorder.finishRecordingAsPicture(), tile_size, nullptr, nullptr,
-      SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
+      SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB()));
 
   previous_local_matrix_ = local_matrix;
   SkMatrix adjusted_matrix(local_matrix);
   adjusted_matrix.postTranslate(-border_pixel_x, -border_pixel_y);
 
-  return PaintShader::MakeImage(std::move(tile_image), tile_mode_x, tile_mode_y,
+  return PaintShader::MakeImage(tile_image, tile_mode_x, tile_mode_y,
                                 &adjusted_matrix);
 }
 
 bool ImagePattern::IsTextureBacked() const {
-  return tile_image_ && tile_image_->isTextureBacked();
+  return tile_image_.sk_image() && tile_image_.sk_image()->isTextureBacked();
 }
 
 }  // namespace blink
