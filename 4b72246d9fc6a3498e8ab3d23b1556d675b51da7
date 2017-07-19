@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47db63e8_8558b091",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-19T23:46:06Z",
+      "side": 1,
+      "message": "nit: Resets",
+      "revId": "4b72246d9fc6a3498e8ab3d23b1556d675b51da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
