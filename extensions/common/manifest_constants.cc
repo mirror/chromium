@@ -32,6 +32,8 @@ const char kConvertedFromUserScript[] = "converted_from_user_script";
 const char kCss[] = "css";
 const char kCtrlKey[] = "ctrlKey";
 const char kCurrentLocale[] = "current_locale";
+const char kDeclarativeNetRequestRulesetLocation[] =
+    "declarative_net_request_rules";
 const char kDefaultLocale[] = "default_locale";
 const char kDescription[] = "description";
 const char kDevToolsPage[] = "devtools_page";
@@ -295,6 +297,8 @@ const char kCannotScriptSigninPage[] =
     "The sign-in page cannot be scripted.";
 const char kChromeVersionTooLow[] =
     "This extension requires * version * or greater.";
+const char kDeclarativeNetRequestPermissionNeeded[] =
+    "The extension requires '*' permission for the '*' manifest key.";
 const char kDisabledByPolicy[] =
     "This extension has been disabled by your administrator.";
 const char kExpectString[] = "Expect string value.";
@@ -731,6 +735,17 @@ const char kPermissionUnknownOrMalformed[] =
     "Permission '*' is unknown or URL pattern is malformed.";
 const char kReservedMessageFound[] =
     "Reserved key * found in message catalog.";
+const char kRulesetLocationIsAbsolutePath[] =
+    "Invalid value for key '*': It should be a path relative to the extension "
+    "directory.";
+const char kRulesetLocationIsInvalidPath[] =
+    "Invalid value for key '*': The provided path is invalid.";
+const char kRulesetLocationNotJSON[] =
+    "Invalid value for key '*': It should be a json file.";
+const char kRulesetLocationNotString[] =
+    "Invalid value for key '*': It should be a string.";
+const char kRulesetLocationRefersParent[] =
+    "Invalid value for key '*': It should not refer to the parent directory.";
 const char kUnrecognizedManifestKey[] = "Unrecognized manifest key '*'.";
 const char kUnrecognizedManifestProperty[] =
     "Unrecognized property '*' of manifest key '*'.";
