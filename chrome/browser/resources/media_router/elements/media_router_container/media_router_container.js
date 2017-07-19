@@ -964,6 +964,8 @@ Polymer({
         return 'media-router:speaker';
       case media_router.SinkIconType.CAST_AUDIO_GROUP:
         return 'media-router:speaker-group';
+      case media_router.SinkIconType.EDUCATION:
+        return 'media-router:education';
       case media_router.SinkIconType.GENERIC:
         return 'media-router:tv';
       case media_router.SinkIconType.HANGOUT:

@@ -263,6 +263,8 @@ struct EnumTraits<media_router::mojom::MediaSink::IconType,
         return media_router::mojom::MediaSink::IconType::HANGOUT;
       case media_router::MediaSink::MEETING:
         return media_router::mojom::MediaSink::IconType::MEETING;
+      case media_router::MediaSink::EDUCATION:
+        return media_router::mojom::MediaSink::IconType::EDUCATION;
       case media_router::MediaSink::GENERIC:
         return media_router::mojom::MediaSink::IconType::GENERIC;
     }
@@ -287,6 +289,9 @@ struct EnumTraits<media_router::mojom::MediaSink::IconType,
         return true;
       case media_router::mojom::MediaSink::IconType::MEETING:
         *output = media_router::MediaSink::MEETING;
+        return true;
+      case media_router::mojom::MediaSink::IconType::EDUCATION:
+        *output = media_router::MediaSink::EDUCATION;
         return true;
       case media_router::mojom::MediaSink::IconType::GENERIC:
         *output = media_router::MediaSink::GENERIC;
