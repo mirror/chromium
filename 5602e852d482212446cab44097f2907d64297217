@@ -16,6 +16,24 @@
       "revId": "5602e852d482212446cab44097f2907d64297217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668fb153_cce12837",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/redirect-interception-mocked-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-19T19:08:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "385039bc_fd4ffa13",
+      "revId": "5602e852d482212446cab44097f2907d64297217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
