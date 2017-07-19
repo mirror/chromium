@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e57b5de_1e4e43cd",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d050f101_7e0a8fec",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c0abe17_c1c29cbf",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24af0d62_effc1716",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Oh, and when should we use \"// ClassName overrides:\"? I saw other classes using this.\n(https://cs.chromium.org/search/?q\u003d%22AppListTestBase+overrides:%22)",
+      "parentUuid": "2c0abe17_c1c29cbf",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1d0fb514_16284fa1",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87dd9313_5c4ac281",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b17f55_b2491f8b",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a7e65ca6_73be6461",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b17f55_b2491f8b",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b20c6e29_7578fb8d",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-19T01:25:14Z",
       "side": 1,
       "message": "do you really need this for pointer?",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c94851_5122880e",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "I think it\u0027s the same as |push_back| here. Is that the point?",
+      "parentUuid": "b20c6e29_7578fb8d",
       "range": {
         "startLine": 49,
         "startChar": 21,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "69cb1ae5_0004268d",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab90dc99_b44aecfe",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca2863_02a4e6dc",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116bebf5_60693b5a",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-19T03:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22ca2863_02a4e6dc",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "c80e3622de64ccd33ffa66dcb97030ad62f23966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
