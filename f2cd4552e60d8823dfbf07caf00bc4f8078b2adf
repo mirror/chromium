@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdcd7724_ae13e18a",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-19T23:50:05Z",
+      "side": 1,
+      "message": "Instead of caching wallpaper_layer_ just write a helper function GetWallpaperLayerForWindow(...) in the anonymous namespace.",
+      "revId": "f2cd4552e60d8823dfbf07caf00bc4f8078b2adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
