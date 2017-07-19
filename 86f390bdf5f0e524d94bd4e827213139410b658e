@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f088c48b_14f0c3b4",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-19T21:30:27Z",
+      "side": 1,
+      "message": "Maybe this may not be needed for this change, but returning a const base::TimeDelta\u0026 is very wierd in the base class. TimeDelta itself is just an int64, so there is no point to return a reference of it.  It is ok to fix this in another CL",
+      "parentUuid": "bab0eef0_c0bf2d7e",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fed3b0_b708dfc1",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
