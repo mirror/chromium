@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "46519200_e3f670ca",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T15:33:01Z",
+      "side": 1,
+      "message": "This no longer serves any purpose I think. The SequencedTaskRunner takes care of ensuring CreateDirectory is the first task anyways so I don\u0027t see why we should block other work until it happens, but if you think we still need to the wait should be posted to |io_task_runner_|.",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 70
+      },
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a88bfa4e_c9a57f8d",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 1
@@ -67,6 +90,52 @@
       "side": 1,
       "message": "\u003e As for this specific callsite, this CL results in creating a new sequence inline for a single call which is equivalent to posting an unsequenced (parallel) task which has virtually no ordering guarantees.\n\nThe sequenced task runner is passed to the Profile (see line 341) and is then used for all IO operations.",
       "parentUuid": "3dceda07_ab668123",
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9f5551_ef337a9d",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T15:33:01Z",
+      "side": 1,
+      "message": "Oh nvm ok I just saw this which trickles all the way into chrome_prefs::CreateProfilePrefs() from here. I thought it was a standalone SequencedTaskRunner above because Gerrit had hidden the last few lines of this method from me per \"no diff\".",
+      "range": {
+        "startLine": 341,
+        "startChar": 35,
+        "endLine": 341,
+        "endChar": 62
+      },
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6af7c9_c2876183",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T15:33:01Z",
+      "side": 1,
+      "message": "While you\u0027re here this should be a scoped_refptr\u003cbase::SequencedTaskRunner\u003e and the arguments should be std::move()\u0027d in and out of it.\n\nAlso agreed with Mihai that this would be cleaner if the member variable was named \"io_task_runner_\" and the parameter \"io_task_runner\".",
+      "range": {
+        "startLine": 427,
+        "startChar": 25,
+        "endLine": 427,
+        "endChar": 73
+      },
       "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
