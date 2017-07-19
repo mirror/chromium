@@ -22,6 +22,30 @@
       "revId": "550f7d0cdf6408306b8111c2798a0e81a9ad3ac5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38457129_26538af2",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T09:22:03Z",
+      "side": 1,
+      "message": ":O and I apparently overlooked this important omission... :)",
+      "parentUuid": "85c0ffe2_3cd21855",
+      "range": {
+        "startLine": 831,
+        "startChar": 6,
+        "endLine": 831,
+        "endChar": 36
+      },
+      "revId": "550f7d0cdf6408306b8111c2798a0e81a9ad3ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
