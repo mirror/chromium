@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89fb672a_b8234d2b",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51884b9_08707c33",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4c46dad_01508175",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2bef4b15_a29e2626",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4c46dad_01508175",
+      "range": {
+        "startLine": 94,
+        "startChar": 67,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d5377b2_2ad0e68b",
         "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "1900166fe70284a242a473178c4c66568d04d126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ae590a_4fcb3d70",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 1,
+      "message": "Gone.\n(My initial thought was, that the tests shouldn\u0027t break when the feature gets enabled by default. But actually, they probably should - to make the enabler aware about the consequences.)",
+      "parentUuid": "0d5377b2_2ad0e68b",
+      "range": {
+        "startLine": 362,
+        "startChar": 55,
+        "endLine": 362,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

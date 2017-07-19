@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b19f8ca_9f0809da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d170f0e0_3d9717cd",
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f58b4e1_85f355e9",
         "filename": "components/ntp_tiles/constants.h",
         "patchSetId": 5

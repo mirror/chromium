@@ -22,6 +22,30 @@
       "revId": "321f2c5ec1080dbaa7144b869c9e2f8b4902a7ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1441d87_95fe1c19",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 0,
+      "message": "This code already exists in the CreatePopularSitesTiles that is called by NotifyObserverForCurrentTiles. This code is a duplicate.\n\nIf we don\u0027t notify here, the front-end updates only if new personalized results get pushed or we cold start the browser again.\n(Both front-ends don\u0027t update visible UI but store the fresh data for when it\u0027s not visible. Especially for Chrome Home, this makes sense as popular sites is long-lived --\u003e crbug/650589.)\n\nIf you like, I can move this into the upcoming parsing CL.",
+      "parentUuid": "132a33d8_4e8739e8",
+      "range": {
+        "startLine": 515,
+        "startChar": 58,
+        "endLine": 515,
+        "endChar": 0
+      },
+      "revId": "321f2c5ec1080dbaa7144b869c9e2f8b4902a7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

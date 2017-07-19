@@ -22,6 +22,30 @@
       "revId": "7a358ecde8036612beb87400a1bf6567291eb7af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f4ac01_f838947f",
+        "filename": "components/ntp_tiles/section_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-19T16:44:41Z",
+      "side": 1,
+      "message": "Done. \nThanks for the OVERRIDE annotation that made this change really easy!",
+      "parentUuid": "cc5689b3_a9f0eae5",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "7a358ecde8036612beb87400a1bf6567291eb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
