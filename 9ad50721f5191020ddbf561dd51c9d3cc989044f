@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2090e1ce_dc319a82",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-19T20:24:34Z",
+      "side": 1,
+      "message": "This api is a bit confusing to me in that we\u0027re trying to move the logic of what to do when the exit prompt is interacted with in VrShell (e.g. close the prompt, or exit it), but the UiSceneManager is telling it what to do via a parameter.\n\nSo it goes as, (UiManager) security icon clicked -\u003e (VrShell) okay show prompot -\u003e (UiManager) they clicked cancel, we should not cancel -\u003e (VrShell) kay close the prompt. It may be better to change the api so that we pass in the result in the form of primary, secondary, or backplane was hit and have VrShell decide what do with that.\n\nThoughs?",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 37
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5242ea6_f188b234",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 3
@@ -18,6 +41,52 @@
         "startChar": 7,
         "endLine": 93,
         "endChar": 24
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f78c22_9b0a7923",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-19T20:24:34Z",
+      "side": 1,
+      "message": "make this private?",
+      "range": {
+        "startLine": 585,
+        "startChar": 14,
+        "endLine": 585,
+        "endChar": 40
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49902c78_71d0cb1a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-19T20:24:34Z",
+      "side": 1,
+      "message": "Another thought, since we\u0027re always going to close the prompt when \"should_exit\", maybe we should only show the result when there\u0027s something actionable. The ui_scene_manager can decide to just hide the prompt and that would save us a thread hop.\n\nthoughts?",
+      "range": {
+        "startLine": 618,
+        "startChar": 14,
+        "endLine": 618,
+        "endChar": 34
       },
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
