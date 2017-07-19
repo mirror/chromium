@@ -387,17 +387,6 @@ std::unique_ptr<VariationsService> VariationsService::Create(
     const char* disable_network_switch,
     const UIStringOverrider& ui_string_overrider) {
   std::unique_ptr<VariationsService> result;
-#if !defined(GOOGLE_CHROME_BUILD)
-  // Unless the URL was provided, unsupported builds should return NULL to
-  // indicate that the service should not be used.
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kVariationsServerURL) &&
-      !g_enabled_for_testing) {
-    DVLOG(1) << "Not creating VariationsService in unofficial build without --"
-             << switches::kVariationsServerURL << " specified.";
-    return result;
-  }
-#endif
   result.reset(new VariationsService(
       std::move(client),
       base::MakeUnique<web_resource::ResourceRequestAllowedNotifier>(
@@ -706,6 +695,17 @@ void VariationsService::GetClientFilterableStateForVersionCalledForTesting() {
 
 std::string VariationsService::GetLatestCountry() const {
   return field_trial_creator_.GetLatestCountry();
+}
+
+bool VariationsService::SetupFieldTrials(
+    std::unique_ptr<base::FieldTrialList>& field_trial_list,
+    std::unique_ptr<base::FeatureList>& feature_list,
+    std::vector<std::string>& variation_ids,
+    variations::PlatformFieldTrials* platform_field_trials,
+    const char kEnableGpuBenchmarking[]) {
+  return field_trial_creator_.SetupFieldTrials(
+      field_trial_list, feature_list, variation_ids, platform_field_trials,
+      CreateLowEntropyProvider(), kEnableGpuBenchmarking);
 }
 
 bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {

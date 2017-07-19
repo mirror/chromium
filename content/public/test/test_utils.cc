@@ -20,6 +20,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "components/variations/variations_params_manager.h"
+#include "components/variations/variations_switches.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/url_schemes.h"
 #include "content/public/browser/browser_child_process_host_iterator.h"
@@ -222,7 +223,7 @@ void EnableFeatureWithParam(const base::Feature& feature,
 
   // Enable all the |feature|, associating them with |trial_name|.
   command_line->AppendSwitchASCII(
-      switches::kEnableFeatures,
+      variations::switches::kEnableFeatures,
       std::string(feature.name) + "<" + kFakeTrialName);
 
   std::map<std::string, std::string> param_values = {{param_name, param_value}};
