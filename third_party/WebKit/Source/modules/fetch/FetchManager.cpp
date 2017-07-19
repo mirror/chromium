@@ -398,21 +398,21 @@ void FetchManager::Loader::DidReceiveResponse(
   }
   if (response.WasFetchedViaServiceWorker()) {
     switch (response.ServiceWorkerResponseType()) {
-      case kWebServiceWorkerResponseTypeBasic:
-      case kWebServiceWorkerResponseTypeDefault:
+      case mojom::ServiceWorkerResponseType::kBasic:
+      case mojom::ServiceWorkerResponseType::kDefault:
         tainting = FetchRequestData::kBasicTainting;
         break;
-      case kWebServiceWorkerResponseTypeCORS:
+      case mojom::ServiceWorkerResponseType::kCORS:
         tainting = FetchRequestData::kCORSTainting;
         break;
-      case kWebServiceWorkerResponseTypeOpaque:
+      case mojom::ServiceWorkerResponseType::kOpaque:
         tainting = FetchRequestData::kOpaqueTainting;
         break;
-      case kWebServiceWorkerResponseTypeOpaqueRedirect:
+      case mojom::ServiceWorkerResponseType::kOpaqueRedirect:
         DCHECK(
             NetworkUtils::IsRedirectResponseCode(response_http_status_code_));
         break;  // The code below creates an opaque-redirect filtered response.
-      case kWebServiceWorkerResponseTypeError:
+      case mojom::ServiceWorkerResponseType::kError:
         LOG(FATAL) << "When ServiceWorker respond to the request from fetch() "
                       "with an error response, FetchManager::Loader::didFail() "
                       "must be called instead.";

@@ -15,6 +15,7 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
+#include "public/platform/modules/serviceworker/service_worker_response_info.mojom-blink.h"
 
 namespace blink {
 

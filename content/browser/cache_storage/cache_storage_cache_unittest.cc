@@ -443,7 +443,7 @@ class CacheStorageCacheTest : public testing::Test {
       std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_header_names) {
     return ServiceWorkerResponse(
         base::MakeUnique<std::vector<GURL>>(1, GURL(url)), 200, "OK",
-        blink::kWebServiceWorkerResponseTypeDefault, std::move(headers),
+        blink::mojom::ServiceWorkerResponseType::kDefault, std::move(headers),
         blob_uuid, blob_size, blink::kWebServiceWorkerResponseErrorUnknown,
         base::Time::Now(), false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
@@ -671,7 +671,7 @@ class CacheStorageCacheTest : public testing::Test {
       run_loop->Quit();
   }
 
-  bool TestResponseType(blink::WebServiceWorkerResponseType response_type) {
+  bool TestResponseType(blink::mojom::ServiceWorkerResponseType response_type) {
     body_response_.response_type = response_type;
     EXPECT_TRUE(Put(body_request_, body_response_));
     EXPECT_TRUE(Match(body_request_));
@@ -1408,11 +1408,15 @@ TEST_P(CacheStorageCacheTestP, QuickStressBody) {
 }
 
 TEST_P(CacheStorageCacheTestP, PutResponseType) {
-  EXPECT_TRUE(TestResponseType(blink::kWebServiceWorkerResponseTypeBasic));
-  EXPECT_TRUE(TestResponseType(blink::kWebServiceWorkerResponseTypeCORS));
-  EXPECT_TRUE(TestResponseType(blink::kWebServiceWorkerResponseTypeDefault));
-  EXPECT_TRUE(TestResponseType(blink::kWebServiceWorkerResponseTypeError));
-  EXPECT_TRUE(TestResponseType(blink::kWebServiceWorkerResponseTypeOpaque));
+  EXPECT_TRUE(
+      TestResponseType(blink::mojom::ServiceWorkerResponseType::kBasic));
+  EXPECT_TRUE(TestResponseType(blink::mojom::ServiceWorkerResponseType::kCORS));
+  EXPECT_TRUE(
+      TestResponseType(blink::mojom::ServiceWorkerResponseType::kDefault));
+  EXPECT_TRUE(
+      TestResponseType(blink::mojom::ServiceWorkerResponseType::kError));
+  EXPECT_TRUE(
+      TestResponseType(blink::mojom::ServiceWorkerResponseType::kOpaque));
 }
 
 TEST_P(CacheStorageCacheTestP, WriteSideData) {
@@ -1517,7 +1521,7 @@ TEST_F(CacheStorageCacheTest, CaselessServiceWorkerResponseHeaders) {
   // headers so that it can quickly lookup vary headers.
   ServiceWorkerResponse response(
       base::MakeUnique<std::vector<GURL>>(), 200, "OK",
-      blink::kWebServiceWorkerResponseTypeDefault,
+      blink::mojom::ServiceWorkerResponseType::kDefault,
       base::MakeUnique<ServiceWorkerHeaderMap>(), "", 0,
       blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
       false /* is_in_cache_storage */,

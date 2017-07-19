@@ -22,8 +22,8 @@
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerState.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_response_info.mojom.h"
 #include "url/gurl.h"
 
 // This file is to have common definitions that are to be shared by
@@ -135,7 +135,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
       std::unique_ptr<std::vector<GURL>> url_list,
       int status_code,
       const std::string& status_text,
-      blink::WebServiceWorkerResponseType response_type,
+      blink::mojom::ServiceWorkerResponseType response_type,
       std::unique_ptr<ServiceWorkerHeaderMap> headers,
       const std::string& blob_uuid,
       uint64_t blob_size,
@@ -152,7 +152,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   std::vector<GURL> url_list;
   int status_code;
   std::string status_text;
-  blink::WebServiceWorkerResponseType response_type;
+  blink::mojom::ServiceWorkerResponseType response_type;
   ServiceWorkerHeaderMap headers;
   // |blob_uuid| and |blob_size| are set when the body is a blob. For other
   // types of responses, the body is provided separately in Mojo IPC via
