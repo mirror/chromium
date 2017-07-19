@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08bd799a_b1c89bbc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "s/was_started_immediately/started_immediately/",
+      "range": {
+        "startLine": 317,
+        "startChar": 7,
+        "endLine": 317,
+        "endChar": 30
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896a2dd7_87fc7371",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "May be save the StartMode which is already defined.",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 6
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f373edc0_6a75a573",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "why not do this in StartRequest?\nIt is possible to infer if the request was started immediately or not in StartRequest() from StartMode.",
+      "range": {
+        "startLine": 424,
+        "startChar": 15,
+        "endLine": 424,
+        "endChar": 29
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4de7234_99652e4b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "say why we should not iterate?\nMay be something along the lines of \"To avoid processing overhead...\"",
+      "range": {
+        "startLine": 431,
+        "startChar": 28,
+        "endLine": 431,
+        "endChar": 35
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16af4e4c_05e99bc4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "s/ as soon as they were scheduled/synchronously/\n\nsince  START_SYNC,  START_ASYNC Start modes are already defined in this file.",
+      "range": {
+        "startLine": 430,
+        "startChar": 58,
+        "endLine": 431,
+        "endChar": 20
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f08c62_eae9831c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "extraneous line break?",
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664dc46e_9a0242e2",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "typo in immidiately",
+      "range": {
+        "startLine": 986,
+        "startChar": 40,
+        "endLine": 986,
+        "endChar": 51
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c3a140_0c0b8ec3",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "s/absense/absence/",
+      "range": {
+        "startLine": 999,
+        "startChar": 43,
+        "endLine": 999,
+        "endChar": 50
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619e4a85_be86c22f",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "Is the following code dependent on the code above? If not, would it be better to make it a separate test?",
+      "range": {
+        "startLine": 1027,
+        "startChar": 5,
+        "endLine": 1027,
+        "endChar": 10
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1a9ca6_8482d447",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-19T16:58:20Z",
+      "side": 1,
+      "message": "s/high/low/",
+      "range": {
+        "startLine": 1032,
+        "startChar": 55,
+        "endLine": 1032,
+        "endChar": 60
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
