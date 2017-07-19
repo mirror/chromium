@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daca1d3d_2b3617d8",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T05:50:39Z",
+      "side": 1,
+      "message": "Did you mean to assert this? Also, maybe just move this to the start of the method? the launcher handler is probably not helpful to temporarily create before the assert?",
+      "revId": "2db4b9f2b2700ea242eb6e5e1456d048ad108667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e375ee03_fa14fd22",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildProcessConnectionTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T05:50:39Z",
+      "side": 1,
+      "message": "Could you just use -1 with a nice constant name or some other incorrect value here?\nFirst few times I read this I totally misread this and was wondering why on earth the intValue had to be incremented by 1 :-/ I know it\u0027s my bad, but... oh well..",
+      "range": {
+        "startLine": 188,
+        "startChar": 62,
+        "endLine": 188,
+        "endChar": 74
+      },
+      "revId": "2db4b9f2b2700ea242eb6e5e1456d048ad108667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
