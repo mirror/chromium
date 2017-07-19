@@ -45,6 +45,30 @@
       "revId": "2b56e8ad363aebc7a1a063f5be673ba38f86e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940f4517_0990b4bb",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:50:18Z",
+      "side": 1,
+      "message": "Done. Also s/shut down ARC/destroy ARC/ as Shutdown() is used above.",
+      "parentUuid": "7f97fc2d_123a11f5",
+      "range": {
+        "startLine": 1115,
+        "startChar": 36,
+        "endLine": 1115,
+        "endChar": 53
+      },
+      "revId": "2b56e8ad363aebc7a1a063f5be673ba38f86e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
