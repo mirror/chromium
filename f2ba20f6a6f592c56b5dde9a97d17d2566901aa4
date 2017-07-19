@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07051425_ba11ff9d",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-19T09:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "239266f9_cac36be8",
+      "range": {
+        "startLine": 50,
+        "startChar": 32,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9555c92_d6d85c15",
         "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed3290c_eeff52ec",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-19T09:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9555c92_d6d85c15",
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69eb88a_4b822720",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-19T09:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97896c24_975fe910",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
