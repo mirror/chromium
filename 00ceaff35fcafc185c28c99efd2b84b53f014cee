@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "3ee06f86_91a73b3f",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-19T22:37:47Z",
+      "side": 1,
+      "message": "May want to call this out in a comment, and mention that it will end up getting resolved if we hook up to the \"OnAddTrack\" callback instead of \"OnAddStream\", since \"OnAddTrack\" includes the receiver.",
+      "parentUuid": "def38a43_6eba758e",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5f59c68_416bec9b",
         "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
         "patchSetId": 3

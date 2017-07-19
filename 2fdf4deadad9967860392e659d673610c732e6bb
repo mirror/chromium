@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d56a65f4_8c73b576",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-19T22:37:47Z",
+      "side": 1,
+      "message": "Is it normal to have comments summarizing the main thing the test is trying to test? For example, in this case it\u0027s that the \"track\" event has the expected \"receiver\", \"track\" and \"streams\" members; things like \"assert_equals(pc.getRemoteStreams().length, 1);\" are secondary.\n\nIn our C++ tests, it\u0027s customary to use \"ASSERT\" macros for these secondary assertions, and \"EXPECT\" macros for the primary assertions. I don\u0027t know what the equivalent pattern is for layout tests.",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0efe3f_29d1b714",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-19T22:37:47Z",
+      "side": 1,
+      "message": "Using \"Promise.all\" and then getting the tracks out of \"values[0]\" seems a little overcomplex. If the \"setRemoteDescription\" promise is guaranteed to be resolved after all \"track\" events have fired (there should be something testing this if there isn\u0027t), then you can just hook up \"ontrack\" in the test itself, and be assured that you\u0027ll have collected all the events by the time you enter the \"then\" block.",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e45a04_852d6ed7",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-19T22:37:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like these assertions should be necessary here; they\u0027re verifying the behavior of MockWebRTCPeerConnectionHandler, which ideally would be tested by something else independently. Doing that would allow this test to be simpler, and eliminate some duplication between it and RTCPeerConnection-getReceivers.html.",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e63ab6e_6781e3fd",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-19T22:37:47Z",
+      "side": 1,
+      "message": "nit: Maybe call this \"receiveTrackEvents\", \"waitForTrackEvents\", or something like that, to make it clear that this returns a promise that resolves when N \"track\" events have fired.",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
