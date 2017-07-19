@@ -417,7 +417,7 @@ void ShapeResult::InsertRun(std::unique_ptr<ShapeResult::RunInfo> run_to_insert,
     has_vertical_offsets |= (offset_y != 0);
 
     FloatRect glyph_bounds = current_font_data->BoundsForGlyph(glyph);
-    glyph_bounds.Move(glyph_origin.X(), glyph_origin.Y());
+    glyph_bounds.Move(glyph_origin.X() + offset_x, glyph_origin.Y() + offset_y);
     glyph_bounding_box_.Unite(glyph_bounds);
     glyph_origin += FloatSize(advance + offset_x, offset_y);
   }
