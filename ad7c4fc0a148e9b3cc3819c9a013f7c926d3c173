@@ -69,6 +69,24 @@
       "revId": "ad7c4fc0a148e9b3cc3819c9a013f7c926d3c173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7ab37e_9274e121",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-19T15:26:03Z",
+      "side": 1,
+      "message": "Sounds good. Thanks!",
+      "parentUuid": "3c52b9c9_6766fc8c",
+      "revId": "ad7c4fc0a148e9b3cc3819c9a013f7c926d3c173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
