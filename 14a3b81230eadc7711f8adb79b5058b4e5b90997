@@ -22,6 +22,30 @@
       "revId": "14a3b81230eadc7711f8adb79b5058b4e5b90997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef15b0bf_9752c7a1",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T18:19:00Z",
+      "side": 1,
+      "message": "Done. Then let\u0027s call it tpm_attestation_does_key_exist_should_succeed.",
+      "parentUuid": "db1c1852_463d952f",
+      "range": {
+        "startLine": 324,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 46
+      },
+      "revId": "14a3b81230eadc7711f8adb79b5058b4e5b90997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
