@@ -363,12 +363,6 @@ class WEB_EXPORT WebViewImpl final
   void CleanupPagePopup() override;
   LocalDOMWindow* PagePopupWindow() const override;
 
-  // Returns the input event we're currently processing. This is used in some
-  // cases where the WebCore DOM event doesn't have the information we need.
-  static const WebInputEvent* CurrentInputEvent() {
-    return current_input_event_;
-  }
-
   GraphicsLayer* RootGraphicsLayer() override;
   void RegisterViewportLayersWithCompositor() override;
   PaintLayerCompositor* Compositor() const override;
@@ -677,7 +671,6 @@ class WEB_EXPORT WebViewImpl final
   GraphicsLayer* root_graphics_layer_;
   GraphicsLayer* visual_viewport_container_layer_;
   bool matches_heuristics_for_gpu_rasterization_;
-  static const WebInputEvent* current_input_event_;
 
   MediaKeysClient media_keys_client_impl_;
   std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;
