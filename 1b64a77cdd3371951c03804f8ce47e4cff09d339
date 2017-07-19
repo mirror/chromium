@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "63f42ed6_33b4c135",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T19:12:54Z",
+      "side": 1,
+      "message": "Fair point that it\u0027s an implementation detail. I\u0027m okay with leaving this here, then.\n\nAnd yes, my mistake - I meant the UI thread :)",
+      "parentUuid": "f52d8bfb_5edef997",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 78
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0200e6_505b324b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 4
