@@ -22,6 +22,30 @@
       "revId": "e8e4a8d82f01f4bbfff4a7f7ee4eca144637b326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba00efe5_1923bc95",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-19T16:43:45Z",
+      "side": 1,
+      "message": "Done.\nI thought it\u0027d be practically OK as it\u0027s also hidden by display:none before entering the selection mode. However made it initially hidden just in case, as you suggested. Thanks for the good catch.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/css/file_manager.css?q\u003dselection-menu-button\u0026sq\u003dpackage:chromium\u0026l\u003d430",
+      "parentUuid": "c0ff1ec8_0511b4d6",
+      "range": {
+        "startLine": 649,
+        "startChar": 41,
+        "endLine": 649,
+        "endChar": 47
+      },
+      "revId": "e8e4a8d82f01f4bbfff4a7f7ee4eca144637b326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
