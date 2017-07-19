@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab51cf0_ae6078a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "Remove space in the end of the line 39 and also line 52",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01b6026_6462627b",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "Copyright 2017",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88398006_0ed2280d",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "If you moved one file to another place, you should also modify #ifndef according to the location of the file.",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0402ddbb_36930fc5",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "// namespace base",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6faad2_a4425ba3",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "also modify // ASH_PUBLIC_INTERFACES_WALLPAPER_STRUCT_TRAITS_H_",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1475155f_ab73b25d",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "Remove the space in the end of the line. The same as other places in this file.",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a70e5e8_1672ca29",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "What happened if a user set a new wallpaper? I didn\u0027t see the codes to remove the old [key, value] pair from the kWallpaperColors pref?",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7fb346_90338482",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "const and \u0026",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777c8969_bc01e1f5",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "const and \u0026",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e32c0c5_dd383506",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "const and \u0026",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f604763_df5e45e2",
+        "filename": "components/wallpaper/wallpaper_layout.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "It might make sense to rename this file to wallpaper_info.h now.",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468d28c8_613c6908",
+        "filename": "components/wallpaper/wallpaper_manager_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-19T23:29:20Z",
+      "side": 1,
+      "message": "const WallpaperInfo\u0026 info",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
