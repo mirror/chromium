@@ -58,6 +58,7 @@
 #include "public/platform/WebSocketHandshakeThrottle.h"
 #include "public/platform/WebStorageNamespace.h"
 #include "public/platform/WebThread.h"
+#include "public/platform/WebVideoFrameReader.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -243,6 +244,10 @@ Platform::CreateWebSocketHandshakeThrottle() {
 
 std::unique_ptr<WebImageCaptureFrameGrabber>
 Platform::CreateImageCaptureFrameGrabber() {
+  return nullptr;
+}
+
+std::unique_ptr<WebVideoFrameReader> Platform::CreateVideoFrameReader() {
   return nullptr;
 }
 
