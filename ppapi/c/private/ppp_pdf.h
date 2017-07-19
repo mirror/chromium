@@ -65,6 +65,9 @@ struct PPP_Pdf_1_1 {
       PP_PdfPrintPresetOptions_Dev* options);
 
   void (*EnableAccessibility)(PP_Instance instance);
+
+  // Return true if plugin text can be cut.
+  PP_Bool (*CanCut)(PP_Instance instance);
 };
 
 typedef PPP_Pdf_1_1 PPP_Pdf;

@@ -285,6 +285,12 @@ WebString PepperWebPluginImpl::SelectionAsMarkup() const {
   return WebString::FromUTF16(instance_->GetSelectedText(true));
 }
 
+bool PepperWebPluginImpl::CanCut() const {
+  if (!instance_)
+    return false;
+  return instance_->CanCut();
+}
+
 WebURL PepperWebPluginImpl::LinkAtPosition(const WebPoint& position) const {
   // Re-entrancy may cause JS to try to execute script on the plugin before it
   // is fully initialized. See: crbug.com/715747.
