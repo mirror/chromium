@@ -100,6 +100,8 @@ struct Element {
 struct ElementMatch {
   Element old_element;
   Element new_element;
+
+  bool IsValid() const { return old_element.exe_type == new_element.exe_type; }
 };
 
 }  // namespace zucchini
