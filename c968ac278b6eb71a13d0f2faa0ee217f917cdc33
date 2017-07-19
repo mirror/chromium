@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb7408fb_f4100981",
+        "filename": "chrome/browser/chromeos/login/users/default_user_image/default_user_images.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "shouldn\u0027t we have some descriptions for these new images?",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d79f090_54bc3d15",
+        "filename": "chrome/browser/chromeos/login/users/default_user_image/default_user_images.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "nit: use GetFirstLastIndex here instead of duplicating the command line flag checking",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cf6cac_46e124a5",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "We add some complexity from having this flag. Do you think it\u0027s necessary or should we just switch to these new images without a flag? Not important but if it\u0027s useful then maybe we should make it kUseUserImagesSet\u003dname so we reuse it in the future if we change it again.",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2858427b_55d358fc",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/harmony/1-bird.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "is 288x288 the size we want? old user images are 256x256",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599d371d_cde008a6",
+        "filename": "ui/chromeos/resources/default_200_percent/default_user_images/harmony/1-bird.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "is 576x576 the size we want? old 2x user images are 512x512",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93647e29_89fddc14",
+        "filename": "ui/chromeos/resources/ui_chromeos_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T03:31:29Z",
+      "side": 1,
+      "message": "why do some files have a \"NUMBER-\" prefix and some a \"NUMBER_\" prefix? why a prefix at all?",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
