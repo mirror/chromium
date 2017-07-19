@@ -576,6 +576,13 @@ void WebViewGuest::FindReply(WebContents* source,
                          active_match_ordinal, final_update);
 }
 
+void WebViewGuest::OnAudioStateChanged(bool audible) {
+  std::unique_ptr<base::DictionaryValue> args(new base::DictionaryValue());
+  args->Set(webview::kAudible, base::MakeUnique<base::Value>(audible));
+  DispatchEventToView(base::MakeUnique<GuestViewEvent>(
+      webview::kEventAudioStateChanged, std::move(args)));
+}
+
 double WebViewGuest::GetZoom() const {
   double zoom_level =
       ZoomController::FromWebContents(web_contents())->GetZoomLevel();
