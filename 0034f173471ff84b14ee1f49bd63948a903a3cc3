@@ -122,6 +122,24 @@
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c8762f_2075f0be",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:23:22Z",
+      "side": 1,
+      "message": "I guess it does, it\u0027s a dep injection to service. But it\u0027s weird for host to *implement* it is what\u0027s going on. The browser content code could implement it (by calling host) and then you don\u0027t have this weird.",
+      "parentUuid": "3ec5dd6a_6215d5cb",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
