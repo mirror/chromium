@@ -117,6 +117,13 @@ template("blink_core_sources") {
                            ])
   }
 }
+
+template("blink_unit_test_source_set") {
+  jumbo_source_set(target_name) {
+    forward_variables_from(invoker, "*")
+  }
+}
+
 set_defaults("blink_core_sources") {
   # This sets the default list of configs when the blink_core_sources target
   # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
@@ -126,4 +133,8 @@ set_defaults("blink_core_sources") {
   # Compile each of the core sources targets with (core) precompiled header
   # support, for lower Windows build times.
   configs += [ "//third_party/WebKit/Source/core:blink_core_pch" ]
+}
+
+set_defaults("blink_unit_test_source_set") {
+  configs = default_compiler_configs
 }
