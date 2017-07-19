@@ -65,6 +65,9 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   unsigned videoWidth() const;
   unsigned videoHeight() const;
 
+  unsigned videoVisibleWidth() const;
+  unsigned videoVisibleHeight() const;
+
   // Fullscreen
   void webkitEnterFullscreen();
   void webkitExitFullscreen();
@@ -123,6 +126,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   bool IsHTMLVideoElement() const override { return true; }
   int SourceWidth() override { return videoWidth(); }
   int SourceHeight() override { return videoHeight(); }
+
   // Video elements currently always go through RAM when used as a canvas image
   // source.
   bool IsAccelerated() const override { return false; }

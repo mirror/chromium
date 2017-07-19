@@ -36,6 +36,7 @@
 #include "WebContentDecryptionModule.h"
 #include "WebMediaSource.h"
 #include "WebSetSinkIdCallbacks.h"
+#include "WebSize.h"
 #include "WebString.h"
 
 #include "cc/paint/paint_flags.h"
@@ -148,6 +149,8 @@ class WebMediaPlayer {
 
   // Dimension of the video.
   virtual WebSize NaturalSize() const = 0;
+
+  virtual WebSize VisibleRect() { return WebSize(); }
 
   // Getters of playback state.
   virtual bool Paused() const = 0;
