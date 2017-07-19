@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc314671_2958df39",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T09:02:33Z",
+      "side": 1,
+      "message": "Fixed, thank you!",
+      "parentUuid": "7be56b62_8743a716",
+      "revId": "18b5ccd6a674ec77863d449b4a8c070839198e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0387026c_87878754",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "18b5ccd6a674ec77863d449b4a8c070839198e55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07994bfe_cab35d02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T09:02:33Z",
+      "side": 1,
+      "message": "Updated in the latest upload. Please check and make sure it looks good to you!",
+      "parentUuid": "0387026c_87878754",
+      "revId": "18b5ccd6a674ec77863d449b4a8c070839198e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
