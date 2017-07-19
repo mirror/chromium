@@ -277,6 +277,12 @@ bool MockRenderProcessHost::FastShutdownForPageCount(size_t count) {
   return false;
 }
 
+bool MockRenderProcessHost::ForceUnsafeFastShutdownForPageCount(size_t count) {
+  if (GetActiveViewCount() == count)
+    return FastShutdownIfPossible();
+  return false;
+}
+
 base::TimeDelta MockRenderProcessHost::GetChildProcessIdleTime() const {
   return base::TimeDelta::FromMilliseconds(0);
 }

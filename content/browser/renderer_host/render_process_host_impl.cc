@@ -3176,6 +3176,30 @@ bool RenderProcessHostImpl::FastShutdownForPageCount(size_t count) {
   return false;
 }
 
+bool RenderProcessHostImpl::ForceUnsafeFastShutdownForPageCount(size_t count) {
+  if (GetActiveViewCount() != count)
+    return false;
+
+  if (run_renderer_in_process())
+    return false;  // Single process mode never shuts down the renderer.
+
+  if (!child_process_launcher_.get() || child_process_launcher_->IsStarting() ||
+      !GetHandle())
+    return false;  // Render process hasn't started or is probably crashed.
+
+  // We deliberately ignore checking SuddenTerminationAllowed() here as
+  // this is called in situations where it's critical to the user that the
+  // tab is shut down ASAP without any memory swapping caused by waking up the
+  // renderer process to run unload etc happening.
+
+  // Set this before ProcessDied() so observers can tell if the render process
+  // died due to fast shutdown versus another cause.
+  fast_shutdown_started_ = true;
+
+  ProcessDied(false /* already_dead */, nullptr);
+  return true;
+}
+
 bool RenderProcessHostImpl::FastShutdownStarted() const {
   return fast_shutdown_started_;
 }
