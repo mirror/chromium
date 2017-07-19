@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2e41b9a_c775acd2",
+        "filename": "third_party/WebKit/Source/build/scripts/keyword_utils.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-19T00:55:07Z",
+      "side": 1,
+      "message": "nit: can we rename this to \n\nsort_keyword_properties_by_canonical_order(css_properties, css_value_keywords_file, json5_file_parameters):\n   \"\"\"Sorts the given css_properties to be in the same order as in css_value_keywords_file.\n\nAlso, please document what each parameter is meant to be - I know we haven\u0027t really been conforming to documentation standards in our generators yet, but it\u0027s never a bad time to start! Standard PyDoc is\n(https://engdoc.corp.google.com/eng/doc/devguide/py/styleguide.shtml?cl\u003dhead#s3.8.3-functions-and-methods)\n\n\"\"\"One-line summary of what this function does.\n\nMulti-line expanded documentation\nabout this function.\n\nArgs:\n  arg_name: Description of arg_name.\n  arg2_name: Description of arg2_name.\n\nReturns:\n  Description of what this function returns.\n\"\"\"",
+      "revId": "32b8750ff74a254f383706d7984c5594ec404597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be93b4a0_b3be86cc",
+        "filename": "third_party/WebKit/Source/build/scripts/keyword_utils.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-19T00:55:07Z",
+      "side": 1,
+      "message": "Nit: The comment about why we have this function possibly belongs at the call site?\n\nedit: Actually you already have it there, so you can remove the part about sorting making more efficient conversions from here.",
+      "revId": "32b8750ff74a254f383706d7984c5594ec404597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3a6876_ebeedd18",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-19T00:55:07Z",
+      "side": 1,
+      "message": "Nit: Please add a comment for why these are sorted this way here.",
+      "revId": "32b8750ff74a254f383706d7984c5594ec404597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
