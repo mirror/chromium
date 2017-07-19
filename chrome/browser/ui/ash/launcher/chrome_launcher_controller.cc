@@ -280,9 +280,10 @@ void ChromeLauncherController::Init() {
     ash::mojom::ShelfObserverAssociatedPtrInfo ptr_info;
     observer_binding_.Bind(mojo::MakeRequest(&ptr_info));
     shelf_controller_->AddObserver(std::move(ptr_info));
-    // ShelfModel's constructor should have initialized the app list item.
-    DCHECK_EQ(1, model_->item_count());
+    // ShelfModel initializes the app list and browser shortcut items.
+    DCHECK_EQ(2, model_->item_count());
     DCHECK_EQ(ash::kAppListId, model_->items()[0].id.app_id);
+    DCHECK_EQ(kChromeAppId, model_->items()[1].id.app_id);
   }
 
   CreateBrowserShortcutLauncherItem();
@@ -1102,18 +1103,18 @@ void ChromeLauncherController::CreateBrowserShortcutLauncherItem() {
   // service may not yet be initialized.
   ScopedPinSyncDisabler scoped_pin_sync_disabler = GetScopedPinSyncDisabler();
 
-  ash::ShelfItem browser_shortcut;
-  browser_shortcut.type = ash::TYPE_BROWSER_SHORTCUT;
+  ash::ShelfItem browser_shortcut = model_->items()[1];
+  DCHECK_EQ(ash::TYPE_BROWSER_SHORTCUT, browser_shortcut.type);
+  DCHECK_EQ(ash::ShelfID(kChromeAppId), browser_shortcut.id);
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   browser_shortcut.image = *rb.GetImageSkiaNamed(IDR_PRODUCT_LOGO_32);
   browser_shortcut.title = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
-  browser_shortcut.id = ash::ShelfID(kChromeAppId);
   std::unique_ptr<BrowserShortcutLauncherItemController> item_delegate =
       base::MakeUnique<BrowserShortcutLauncherItemController>(model_);
   BrowserShortcutLauncherItemController* item_controller = item_delegate.get();
   // Set the delegate first to avoid constructing another one in ShelfItemAdded.
   model_->SetShelfItemDelegate(browser_shortcut.id, std::move(item_delegate));
-  model_->AddAt(0, browser_shortcut);
+  model_->Set(1, browser_shortcut);
   item_controller->UpdateBrowserItemState();
 }
 
@@ -1295,9 +1296,9 @@ void ChromeLauncherController::OnShelfItemAdded(int32_t index,
   DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
 
-  // Ignore notifications of adding the AppList item; it should already exist.
-  if (item.id.app_id == ash::kAppListId) {
-    DCHECK_EQ(0, model_->ItemIndexByID(item.id));
+  // Ignore the app list and browser shortcut items; they should already exist.
+  if (item.id.app_id == ash::kAppListId || item.id.app_id == kChromeAppId) {
+    DCHECK_GE(model_->ItemIndexByID(item.id), 0);
     return;
   }
 

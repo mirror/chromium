@@ -96,11 +96,10 @@ void ShelfController::AddObserver(
       const ShelfItem& item = model_.items()[i];
       observer_ptr->OnShelfItemAdded(i, item);
       ShelfItemDelegate* delegate = model_.GetShelfItemDelegate(item.id);
-      mojom::ShelfItemDelegatePtr delegate_ptr;
-      if (delegate)
-        delegate_ptr = delegate->CreateInterfacePtrAndBind();
-      observer_ptr->OnShelfItemDelegateChanged(item.id,
-                                               std::move(delegate_ptr));
+      if (delegate) {
+        observer_ptr->OnShelfItemDelegateChanged(item.id,
+                                                 delegate->CreateInterfacePtrAndBind());
+      }
     }
   }
 
@@ -128,6 +127,7 @@ void ShelfController::SetAutoHideBehavior(ShelfAutoHideBehavior auto_hide,
 }
 
 void ShelfController::AddShelfItem(int32_t index, const ShelfItem& item) {
+  LOG(ERROR) << "MSW ShelfController::AddShelfItem " << item.id.app_id;
   DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
   index = index < 0 ? model_.item_count() : index;

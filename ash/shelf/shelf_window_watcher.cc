@@ -127,6 +127,7 @@ void ShelfWindowWatcher::UserWindowObserver::OnWindowPropertyChanged(
     ShelfID new_id = ShelfID::Deserialize(window->GetProperty(kShelfIDKey));
     if (old_id != new_id && !old_id.IsNull() && !new_id.IsNull() &&
         window_watcher_->model_->ItemIndexByID(old_id) >= 0) {
+      LOG(ERROR) << "MSW ShelfWindowWatcher changing item id: " << old_id.app_id << " -> " << new_id.app_id;
       // Id changing is not supported; remove the item and it will be re-added.
       window_watcher_->user_windows_with_items_.erase(window);
       const int index = window_watcher_->model_->ItemIndexByID(old_id);
@@ -187,6 +188,8 @@ void ShelfWindowWatcher::AddShelfItem(aura::Window* window) {
       item.id,
       base::MakeUnique<ShelfWindowWatcherItemDelegate>(item.id, window));
 
+  if (item.id.app_id == "mgndgikekgjfcpckkfioiadnlibdjbkf")
+    LOG(ERROR) << "MSW ShelfWindowWatcher::AddShelfItem CHROME FAIL!!!";
   // Panels are inserted on the left so as not to push all existing panels over.
   model_->AddAt(item.type == TYPE_APP_PANEL ? 0 : model_->item_count(), item);
 }

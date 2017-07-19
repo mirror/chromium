@@ -8,7 +8,7 @@
 
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model_observer.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ash {
 
 namespace {
@@ -44,6 +44,9 @@ bool CompareByWeight(const ShelfItem& a, const ShelfItem& b) {
 }  // namespace
 
 const char kAppListId[] = "jlfapfmkapbjlfbpjedlinehodkccjee";
+const char kChromeAppId[] = "mgndgikekgjfcpckkfioiadnlibdjbkf";
+
+bool msw = false; 
 
 ShelfModel::ShelfModel() {
   // Add the app list item; its title and delegate are set in ShelfController.
@@ -51,8 +54,17 @@ ShelfModel::ShelfModel() {
   ShelfItem item;
   item.type = TYPE_APP_LIST;
   item.id = ShelfID(kAppListId);
-  const int index = Add(item);
+  int index = Add(item);
   DCHECK_EQ(0, index);
+  // Add a Chrome browser shortcut placeholder; its details are set by Chrome.
+  // This avoids flaky conflicts between ChromeLauncherController adding the
+  // shortcut, and ShelfWindowWatcher observing the first Chrome window.
+  item.type = TYPE_BROWSER_SHORTCUT;
+  item.id = ShelfID(kChromeAppId);
+  index = Add(item);
+  DCHECK_EQ(1, index);
+
+  msw = true; 
 }
 
 ShelfModel::~ShelfModel() = default;
@@ -115,6 +127,9 @@ int ShelfModel::Add(const ShelfItem& item) {
 }
 
 int ShelfModel::AddAt(int index, const ShelfItem& item) {
+  LOG(ERROR) << "MSW ShelfModel::AddAt " << this << " " << item.id.app_id;
+  if (msw && item.id.app_id == kChromeAppId) 
+    base::debug::StackTrace().Print(); 
   // Items should have unique non-empty ids to avoid undefined model behavior.
   DCHECK(!item.id.IsNull()) << " The id is null.";
   DCHECK_EQ(ItemIndexByID(item.id), -1) << " The id is not unique: " << item.id;

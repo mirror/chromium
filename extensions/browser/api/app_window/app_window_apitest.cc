@@ -35,23 +35,25 @@ using ExperimentalAppWindowApiTest = ExperimentalPlatformAppBrowserTest;
 
 // Tests chrome.app.window.setIcon.
 IN_PROC_BROWSER_TEST_F(ExperimentalAppWindowApiTest, SetIcon) {
+  LOG(ERROR) << "MSW TEST A";
   ExtensionTestMessageListener listener("ready", true);
-
+  LOG(ERROR) << "MSW TEST B";
   // Launch the app and wait for it to be ready.
   LoadAndLaunchPlatformApp("windows_api_set_icon", &listener);
   listener.Reply("");
-
+  LOG(ERROR) << "MSW TEST C";
   AppWindow* app_window = GetFirstAppWindow();
   ASSERT_TRUE(app_window);
-
+  LOG(ERROR) << "MSW TEST D";
   // Now wait until the WebContent has decoded the icon and chrome has
   // processed it. This needs to be in a loop since the renderer runs in a
   // different process.
   while (app_window->custom_app_icon().IsEmpty())
     base::RunLoop().RunUntilIdle();
-
+  LOG(ERROR) << "MSW TEST E";
   EXPECT_NE(std::string::npos,
             app_window->app_icon_url().spec().find("icon.png"));
+  LOG(ERROR) << "MSW TEST F";
 }
 
 // TODO(asargent) - Figure out what to do about the fact that minimize events
