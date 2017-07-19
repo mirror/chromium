@@ -11,19 +11,49 @@
 
 namespace net {
 
+namespace {
+
+struct MimeToExtension {
+  const char* mime_type;
+  const char* extension;
+};
+
+const struct MimeToExtension kMimeToExtensionMap[] = {
+    {"application/pdf", "pdf"}, {"application/x-tar", "tar"},
+    {"application/zip", "zip"}, {"audio/mpeg", "mp3"},
+    {"image/gif", "gif"},       {"image/jpeg", "jpg"},
+    {"image/png", "png"},       {"text/html", "html"},
+    {"video/mp4", "mp4"},       {"video/mpeg", "mpg"},
+    {"text/plain", "txt"},      {"text/x-sh", "sh"},
+};
+
+}  // namespace
+
 bool PlatformMimeUtil::GetPlatformMimeTypeFromExtension(
-    const base::FilePath::StringType& ext,
+    const base::FilePath::StringType& extension,
     std::string* result) const {
-  // TODO(fuchsia): Is there MIME DB on Fuchsia? Do we need it?
-  NOTIMPLEMENTED();
+  for (const auto& mime_to_extension : kMimeToExtensionMap) {
+    if (mime_to_extension.extension == extension) {
+      *result = mime_to_extension.mime_type;
+      return true;
+    }
+  }
+
+  // TODO(fuchsia): Integrate with MIME DB when Fuchsia provides an API.
   return false;
 }
 
 bool PlatformMimeUtil::GetPreferredExtensionForMimeType(
     const std::string& mime_type,
-    base::FilePath::StringType* ext) const {
-  // TODO(fuchsia): Is there MIME DB on Fuchsia? Do we need it?
-  NOTIMPLEMENTED();
+    base::FilePath::StringType* extension) const {
+  for (const auto& mime_to_extension : kMimeToExtensionMap) {
+    if (mime_to_extension.mime_type == mime_type) {
+      *extension = mime_to_extension.extension;
+      return true;
+    }
+  }
+
+  // TODO(fuchsia): Integrate with MIME DB when Fuchsia provides an API.
   return false;
 }
 
