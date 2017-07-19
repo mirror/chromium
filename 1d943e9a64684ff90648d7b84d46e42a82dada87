@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2deea42e_1b57896e",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08bd799a_b1c89bbc",
+      "range": {
+        "startLine": 317,
+        "startChar": 7,
+        "endLine": 317,
+        "endChar": 30
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "896a2dd7_87fc7371",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0540d47a_11bdf21b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "IIUC, it has different semantics. START_SYNC is when request-\u003eStart is called, as opposed to it being posted as a task.",
+      "parentUuid": "896a2dd7_87fc7371",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 6
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f373edc0_6a75a573",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-19T16:58:20Z",
       "side": 1,
       "message": "why not do this in StartRequest?\nIt is possible to infer if the request was started immediately or not in StartRequest() from StartMode.",
+      "range": {
+        "startLine": 424,
+        "startChar": 15,
+        "endLine": 424,
+        "endChar": 29
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff9a29e_d31de35d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Any particular reason to do so?",
+      "parentUuid": "f373edc0_6a75a573",
       "range": {
         "startLine": 424,
         "startChar": 15,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "38433671_e8a5b4b3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4de7234_99652e4b",
+      "range": {
+        "startLine": 431,
+        "startChar": 28,
+        "endLine": 431,
+        "endChar": 35
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93a589ad_28349da4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "The problem with this is START_SYNC is also used to start a pending request. The semantics of START_SYNC iiuc is start the request now as opposed to posting it as a task.",
+      "parentUuid": "16af4e4c_05e99bc4",
+      "range": {
+        "startLine": 430,
+        "startChar": 58,
+        "endLine": 431,
+        "endChar": 20
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74f08c62_eae9831c",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 6
@@ -131,6 +251,24 @@
       "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb060b1_80de27b8",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f08c62_eae9831c",
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "dbc82186_f7219eb2",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "664dc46e_9a0242e2",
+      "range": {
+        "startLine": 986,
+        "startChar": 40,
+        "endLine": 986,
+        "endChar": 51
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c3a140_0c0b8ec3",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 6
@@ -177,6 +339,30 @@
       "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d100b585_1f5cea06",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Obsolete",
+      "parentUuid": "37c3a140_0c0b8ec3",
+      "range": {
+        "startLine": 999,
+        "startChar": 43,
+        "endLine": 999,
+        "endChar": 50
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "a0dbc876_5b1f54b7",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "619e4a85_be86c22f",
+      "range": {
+        "startLine": 1027,
+        "startChar": 5,
+        "endLine": 1027,
+        "endChar": 10
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1a9ca6_8482d447",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 6
@@ -223,6 +433,30 @@
       "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df38a229_0ffabefc",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-19T20:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f1a9ca6_8482d447",
+      "range": {
+        "startLine": 1032,
+        "startChar": 55,
+        "endLine": 1032,
+        "endChar": 60
+      },
+      "revId": "1d943e9a64684ff90648d7b84d46e42a82dada87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
