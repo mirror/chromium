@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a99d04f_615ba210",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "If the user starts connecting to a Tether network, then starts connecting to another Tether network soon after, we\u0027ll hit this case again.\n\nYou should use \"else if (!is_waiting_for_wifi_to_enable_)\" to fix this.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 8
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8db0ce_a209aa30",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "Add a comment explaining that this call will eventually result in DeviceListChanged() being called below.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34d626d_e9db09e0",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "/* enabled */",
+      "range": {
+        "startLine": 85,
+        "startChar": 36,
+        "endLine": 85,
+        "endChar": 40
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa8607d_272bc41f",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "There\u0027a race condition here:\n\n1) Call ConnectToWifiHotspot() with Wi-Fi disabled.\n2) SetTechnologyEnabled() is called, and we start waiting for DeviceListChanged().\n3) Connection times out, and InvokeWifiConnectionCallback() is called.\n4) ssid_.clear() is called.\n5) Wi-Fi is enabled, and DeviceListChanged() is called.\n6) Since ssid_.empty() is true, we never enter this block, and is_waiting_for_wifi_to_enable_ remains true.\n\nChange to this:\n\n  if (is_waiting_for_wifi_to_enable_ \u0026\u0026\n      network_state_handler_-\u003eIsTechnologyEnabled(NetworkTypePattern::WiFi())) {\n    is_waiting_for_wifi_to_enable_ \u003d false;\n\n    if (!ssid_.empty())\n      CreateWifiConfiguration();\n  }",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 3
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac59d762_d31f516d",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "We shouldn\u0027t just set this to false; if we get another connection attempt just after this, there\u0027s a chance that accidentally call SetTechnologyEnabled() again unnecessarily. See my other comments.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcd8373_6b820d8f",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "nit: Add a comment explaining that this will eventually cause NetworkPropertiesUpdated() to be called.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 36
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fba084_77628637",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "Please add some additional tests:\n\n1) Call ConnectToWifiHotspot() with Wi-Fi disabled.\n2) Enable some other DeviceStates instead of Wi-Fi first, and ensure that nothing happens.\n3) Enable Wi-Fi and verify things work correctly.\n\n1) Call ConnectToWifiHotspot() with Wi-Fi disabled.\n2) Have the attempt time out and verify that the attempt failed.\n3) Enable Wi-Fi and verify nothing additional happens.\n\n1) Call ConnectToWifiHotspot() with Wi-Fi disabled. We start waiting for Wi-Fi to become enabled.\n2) Call ConnectToWifiHotspot() again with a different network before Wi-Fi becomes enabled and verify that the first connection has failed.\n3) Enable Wi-Fi and verify that the second connection completes.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c34cd7_f2001b2f",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "Instead, let\u0027s move this comment to below where the FinishCreateConfiguration() call occurs.\n\nYou can replace this comment with something like \"Only configure the service if the RunLoop is on another thread.\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 71
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd248fc7_e93560e1",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "nit: Move to above the NetworkConnect overrides, and add a comment about what is happening. Let\u0027s also change the name to ConfigureServiceWithLastNetworkConfig().",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b679ced_8c3c2873",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T00:27:43Z",
+      "side": 1,
+      "message": "Add a comment about what this is accomplishing.",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 1
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
