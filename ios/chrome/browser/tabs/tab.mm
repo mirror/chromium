@@ -479,7 +479,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
-  _printObserver = base::MakeUnique<PrintObserver>(self.webState);
+  _printObserver =
+      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
 
   id<PasswordsUiDelegate> passwordsUiDelegate =
       [[PasswordsUiDelegateImpl alloc] init];
