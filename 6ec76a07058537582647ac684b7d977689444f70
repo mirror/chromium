@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc04aad3_6e6b4b5a",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T16:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298ba176_4bd427fa",
+      "revId": "6ec76a07058537582647ac684b7d977689444f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b9715c2_2f28fd8b",
         "filename": "ios/chrome/browser/ui/commands/reading_list_add_command.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T16:36:35Z",
       "side": 1,
       "message": "So this class becomes a POD that stores the URL and title, but doesn\u0027t do anything else?\n\nAs potential followups, we could either:\n1) Subclass NSObject instead of GenericChromeCommand.\n2) Change the dispatch method to take a url and title directly, instead of stuffing them into an object.",
+      "revId": "6ec76a07058537582647ac684b7d977689444f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e7b443_62e3f7a1",
+        "filename": "ios/chrome/browser/ui/commands/reading_list_add_command.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T16:49:54Z",
+      "side": 1,
+      "message": "1) Yes, once nobody is using GenericChromeCommand itself, its children can just become NSObjects.\n\n2) The advantage of using a command object, even a trivial one, is that if we start having a case where we need to sometimes add another parameter, we can avoid exploding the command API.",
+      "parentUuid": "6b9715c2_2f28fd8b",
       "revId": "6ec76a07058537582647ac684b7d977689444f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
