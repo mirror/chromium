@@ -52,6 +52,24 @@
       "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49684e40_c426780b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:48:40Z",
+      "side": 1,
+      "message": "Oh, yes actually. Removed.",
+      "parentUuid": "97d5a18b_e24f8e7b",
+      "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
