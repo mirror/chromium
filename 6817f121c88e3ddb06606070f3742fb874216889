@@ -33,6 +33,24 @@
       "revId": "6817f121c88e3ddb06606070f3742fb874216889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdc8384_d99bb50c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T02:21:53Z",
+      "side": 1,
+      "message": "I will try to change it to an enum separately.",
+      "parentUuid": "10294088_e212aa3f",
+      "revId": "6817f121c88e3ddb06606070f3742fb874216889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
