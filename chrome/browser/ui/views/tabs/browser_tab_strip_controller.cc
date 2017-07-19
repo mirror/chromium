@@ -14,6 +14,8 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/favicon/favicon_utils.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
@@ -358,6 +360,11 @@ bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
 }
 
 void BrowserTabStripController::CreateNewTab() {
+  // If the user has opened a new tab with the New Tab Button, alert the
+  // NewTabTracker that the OnNewTabOpened event has occurred.
+  feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+      ->GetForProfile(browser_view_->browser()->profile())
+      ->OnNewTabOpened();
   model_->delegate()->AddTabAt(GURL(), -1, true);
 }
 
