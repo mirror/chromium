@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f7c94c7a_77b0c946",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T12:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d7632e_33b7e744",
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad05e0d_3f7e6970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 4
