@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4513cde7_342eab97",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-19T20:33:59Z",
+      "side": 1,
+      "message": "This function could use a comment explaining what it does.",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "7b785fd89d3938342a58a4bd0f6880e22271a5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
