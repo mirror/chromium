@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e8743a43_40a2bbc1",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-19T17:28:32Z",
+      "side": 1,
+      "message": "Thank you! I\u0027ll keep an eye on it once this lands, and if there is indeed a flake, I\u0027ll revert it.",
+      "parentUuid": "132c0f68_f6adc638",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 13
+      },
+      "revId": "b85983c3a7eaa36d896e249fdb33ae4fe7148237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05f9fc5b_a86a0ec0",
         "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
         "patchSetId": 2
