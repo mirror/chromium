@@ -588,6 +588,9 @@ BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD = ['system_health.common_desktop',
                                                'system_health.memory_mobile']
 
 
+BENCHMARKS_TO_OUTPUT_HISTOGRAMS = ['dummy_benchmark']
+
+
 def generate_telemetry_test(swarming_dimensions,
       benchmark_name, browser, for_fyi_waterfall=False):
   # The step name must end in 'test' or 'tests' in order for the
@@ -608,6 +611,8 @@ def generate_telemetry_test(swarming_dimensions,
   if (for_fyi_waterfall and
       benchmark_name in BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD):
     test_args.append('--output-format=json-test-results')
+  if benchmark_name in BENCHMARKS_TO_OUTPUT_HISTOGRAMS:
+    test_args.append('--output-format=histograms')
 
   ignore_task_failure = False
   step_name = benchmark_name
