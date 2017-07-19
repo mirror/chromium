@@ -133,9 +133,10 @@ class InstantService : public KeyedService,
   void OnTopSitesReceived(const history::MostVisitedURLList& data);
 
   // ntp_tiles::MostVisitedSites::Observer implementation.
-  void OnMostVisitedURLsAvailable(
-      const ntp_tiles::NTPTilesVector& tiles) override;
   void OnIconMadeAvailable(const GURL& site_url) override;
+  void OnExplorationTilesAvailable(
+      const std::map<ntp_tiles::SectionType, ntp_tiles::NTPTilesVector>&
+          sections) override;
 
   // Notifies the observer about the last known most visited items.
   void NotifyAboutMostVisitedItems();

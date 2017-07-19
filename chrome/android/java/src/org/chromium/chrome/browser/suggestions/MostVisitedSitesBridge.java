@@ -73,18 +73,19 @@ public class MostVisitedSitesBridge
 
         Observer wrappedObserver = new Observer() {
             @Override
-            public void onMostVisitedURLsAvailable(
-                    String[] titles, String[] urls, String[] whitelistIconPaths, int[] sources) {
-                // Don't notify observer if we've already been destroyed.
-                if (mNativeMostVisitedSitesBridge != 0) {
-                    observer.onMostVisitedURLsAvailable(titles, urls, whitelistIconPaths, sources);
-                }
-            }
-            @Override
             public void onIconMadeAvailable(String siteUrl) {
                 // Don't notify observer if we've already been destroyed.
                 if (mNativeMostVisitedSitesBridge != 0) {
                     observer.onIconMadeAvailable(siteUrl);
+                }
+            }
+            @Override
+            public void onExplorationTilesAvailable(String[] titles, String[] urls, int[] sections,
+                    String[] whitelistIconPaths, int[] sources) {
+                // Don't notify observer if we've already been destroyed.
+                if (mNativeMostVisitedSitesBridge != 0) {
+                    observer.onExplorationTilesAvailable(
+                            titles, urls, sections, whitelistIconPaths, sources);
                 }
             }
         };

@@ -49,8 +49,9 @@ class MostVisitedSitesWaiter : public MostVisitedSites::Observer {
     return tiles_;
   }
 
-  void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) override {
-    tiles_ = tiles;
+  void OnExplorationTilesAvailable(
+      const std::map<SectionType, NTPTilesVector>& sections) override {
+    tiles_ = tiles.at(SectionType::PERSONALIZED);
     if (!quit_closure_.is_null()) {
       quit_closure_.Run();
     }
