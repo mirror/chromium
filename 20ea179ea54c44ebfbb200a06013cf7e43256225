@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd59c127_236d9492",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-19T20:45:58Z",
+      "side": 1,
+      "message": "Oops, there is a call that requires 10, down in TextResourceDecoder::CheckForCSSCharset - I\u0027ll put it back.",
+      "parentUuid": "994e3971_209a7528",
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5308ecd9_f4bc3ab5",
         "filename": "third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp",
         "patchSetId": 4
