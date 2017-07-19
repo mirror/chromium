@@ -982,6 +982,135 @@ TEST_F(ResourceSchedulerTest, RequestStartedAfterClientDeletedManyDelayable) {
   EXPECT_TRUE(lowest->started());
 }
 
+// Test that interarrival time is not recorded when there are no delayable
+// requests present.
+TEST_F(ResourceSchedulerTest, NoDelayableInterarrivalNotRecorded) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  std::vector<std::unique_ptr<TestRequest>> non_delayable_requests;
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/high";
+    non_delayable_requests.push_back(NewRequest(url.c_str(), net::HIGHEST));
+    EXPECT_TRUE(non_delayable_requests[index]->started());
+  }
+  histograms.ExpectTotalCount(histogram_name, 0);
+}
+
+// Test that interarrival time is recorded for each delayable request that was
+// started immediately.
+TEST_F(ResourceSchedulerTest, InterarrivalRecordedForEachDelayable) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  std::vector<std::unique_ptr<TestRequest>> delayable_requests;
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(delayable_requests[index]->started());
+  }
+  // Add a non-delayable request and check that it started.
+  std::unique_ptr<TestRequest> non_delayable_request =
+      NewRequest("http://host/high", net::HIGHEST);
+  EXPECT_TRUE(non_delayable_request->started());
+  histograms.ExpectTotalCount(histogram_name, 10);
+}
+
+// Test that interarrival time is recorded for each non-delayable request when
+// a delayable request that was started immediately is in-flight.
+TEST_F(ResourceSchedulerTest, InterarrivalRecordedForEachNonDelayable) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  std::vector<std::unique_ptr<TestRequest>> non_delayable_requests;
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  // Add a delayable request and check that it started.
+  std::unique_ptr<TestRequest> delayable_request =
+      NewRequest("http://host/low", net::LOWEST);
+  EXPECT_TRUE(delayable_request->started());
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/high";
+    non_delayable_requests.push_back(NewRequest(url.c_str(), net::HIGHEST));
+    EXPECT_TRUE(non_delayable_requests[index]->started());
+  }
+  histograms.ExpectTotalCount(histogram_name, 10);
+}
+
+// Test that only in-flight delayable requests result in the recording of the
+// interarrival time.
+TEST_F(ResourceSchedulerTest, InterarrivalRecordedInFlightDelayable) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  std::vector<std::unique_ptr<TestRequest>> delayable_requests;
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  for (int index = 0; index < 10; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(delayable_requests[index]->started());
+  }
+  for (int index = 0; index < 5; ++index) {
+    delayable_requests.pop_back();
+  }
+  base::RunLoop().RunUntilIdle();
+  // There are only 5 spontaneous delayable requests in-flight. Add a
+  // non-delayable request and verify that there were 5 entries added to the
+  // histogram.
+  std::unique_ptr<TestRequest> non_delayable_request =
+      NewRequest("http://host/high", net::HIGHEST);
+  EXPECT_TRUE(non_delayable_request->started());
+  histograms.ExpectTotalCount(histogram_name, 5);
+}
+
+// Test that the interarrival time is recorded only for delayable requests that
+// were started immediately.
+TEST_F(ResourceSchedulerTest, InterarrivalRecordedImmediatelyStartedDelayable) {
+  base::HistogramTester histograms;
+  const std::string histogram_name =
+      "ResourceScheduler.InterarrivalTime."
+      "SpontaneousDelayableToNonDelayableStart";
+  InitializeScheduler();
+  std::vector<std::unique_ptr<TestRequest>> delayable_requests;
+  // Delayable requests will be started once the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  for (int index = 0; index < 15; ++index) {
+    std::string url = "http://host" + base::IntToString(index) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+  }
+  // The last 5 requests were not started because
+  // |kMaxNumDelayableRequestsPerClient| is set to 10. The last 5 requests will
+  // start when atleast 5 other requests are done.
+  for (int index = 0; index < 5; ++index) {
+    delayable_requests[index].reset();
+  }
+  // Add a high priority request. Although there are 10 delayable requests
+  // in-flight, only 5 of them were started spontaneously. Hence, there must be
+  // 5 new entries in the histogram.
+  std::unique_ptr<TestRequest> non_delayable_request =
+      NewRequest("http://host/high", net::HIGHEST);
+  EXPECT_TRUE(non_delayable_request->started());
+  histograms.ExpectTotalCount(histogram_name, 5);
+}
+
 }  // unnamed namespace
 
 }  // namespace content
