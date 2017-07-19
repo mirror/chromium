@@ -644,6 +644,11 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         }
 
         @Override
+        public String getContentId() {
+            return mSnippet.getAssetDownloadGuid();
+        }
+
+        @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
             assert !thumbnail.isRecycled();
 

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/android/chrome_jni_registrar.h"
+#include <chrome/browser/android/download/ui/thumbnail_provider_generator.h>
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_registrar.h"
@@ -48,7 +49,6 @@
 #include "chrome/browser/android/download/download_manager_service.h"
 #include "chrome/browser/android/download/items/offline_content_aggregator_factory_android.h"
 #include "chrome/browser/android/download/service/download_background_task.h"
-#include "chrome/browser/android/download/ui/thumbnail_provider.h"
 #include "chrome/browser/android/favicon_helper.h"
 #include "chrome/browser/android/feature_engagement_tracker/feature_engagement_tracker_factory_android.h"
 #include "chrome/browser/android/feature_utilities.h"
@@ -434,7 +434,8 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"TabStripSceneLayer", RegisterTabStripSceneLayer},
     {"TabWebContentsDelegateAndroid", RegisterTabWebContentsDelegateAndroid},
     {"TemplateUrlServiceAndroid", TemplateUrlServiceAndroid::Register},
-    {"ThumbnailProvider", ThumbnailProvider::RegisterThumbnailProvider},
+    {"ThumbnailProviderGenerator",
+     ThumbnailProviderGenerator::RegisterThumbnailProviderGenerator},
     {"ToolbarModelAndroid", ToolbarModelAndroid::RegisterToolbarModelAndroid},
     {"ToolbarSceneLayer", RegisterToolbarSceneLayer},
     {"TranslateCompactInfoBar", RegisterTranslateCompactInfoBar},
