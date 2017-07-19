@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7805b280_bccbc0c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/skip-waiting-installed.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T01:56:39Z",
+      "side": 1,
+      "message": "nit: this blank line might be redundant?",
+      "revId": "2256ed61b315000c27f6c8b0dd94a3f025c4adc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e27e61_4b838c29",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/skip-waiting-installed.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T01:56:39Z",
+      "side": 1,
+      "message": "What do you think of moving this to L.63? It might be clearer to say \"skipWaiting should make worker become active\".",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "2256ed61b315000c27f6c8b0dd94a3f025c4adc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
