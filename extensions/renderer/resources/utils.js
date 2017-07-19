@@ -7,16 +7,23 @@ var logActivity = requireNative('activityLogger');
 var exceptionHandler = require('uncaught_exception_handler');
 
 var runCallbackWithLastError;
+var hasLastError;
 if (bindingUtil) {
   runCallbackWithLastError = function(name, message, stack, callback, args) {
-    bindingUtil.runCallbackWithLastError(message, function() {
-      $Function.apply(callback, null, args);
-    });
+    bindingUtil.runCallbackWithLastError(
+        message, $Function.bind(callback, null, args));
   }
+  hasLastError = bindingUtil.hasLastError.bind(bindingUtil);
 } else {
   var lastError = require('lastError');
-  if (lastError)  // lastError can be undefined in unittests.
+  if (lastError) { // lastError can be undefined in unittests.
     runCallbackWithLastError = lastError.run;
+    hasLastError = $Function.bind(lastError.hasError, null, chrome);
+  } else {
+    // Lame version for testing.
+    // TODO(devlin): All this is badly in need of a clean up.
+    hasLastError = function() { return !!chrome.runtime.lastError; };
+  }
 }
 
 /**

@@ -7,6 +7,17 @@ var AssertTrue = assert.AssertTrue;
 var AssertFalse = assert.AssertFalse;
 var utils = require('utils');
 
+function runCallbackWithLastError(message, callback) {
+  if (bindingUtil) {
+    bindingUtil.runCallbackWithLastError(message, callback);
+  } else {
+    // Unittests don't include the last error module, so we fake it.
+    chrome.runtime.lastError = {message: 'error message'};
+    callback();
+    chrome.runtime.lastError = null;
+  }
+}
+
 function testSuperClass() {
   function SuperClassImpl() {}
 
