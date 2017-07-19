@@ -92,6 +92,16 @@ class WifiHotspotConnectorTest : public NetworkStateTest {
       last_configuration_ =
           base::MakeUnique<base::DictionaryValue>(*shill_properties);
 
+      // Prevent nested RunLoops when FinishCreateConfiguration() calls
+      // NetworkStateTest::ConfigureService(); that causes threading issues.
+      // If a RunLoop is running right now, the client which was running the
+      // RunLoop can manually call FinishCreateConfiguration() once done.
+      if (!base::RunLoop::IsRunningOnCurrentThread()) {
+        FinishCreateConfiguration();
+      }
+    }
+
+    void FinishCreateConfiguration() {
       std::string wifi_guid;
       EXPECT_TRUE(
           last_configuration_->GetString(shill::kGuidProperty, &wifi_guid));
@@ -124,6 +134,10 @@ class WifiHotspotConnectorTest : public NetworkStateTest {
     NetworkStateTest::SetUp();
     network_state_handler()->SetTetherTechnologyState(
         NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED);
+    network_state_handler()->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true,
+        chromeos::network_handler::ErrorCallback());
+    base::RunLoop().RunUntilIdle();
 
     SetUpShillState();
 
@@ -366,6 +380,43 @@ TEST_F(WifiHotspotConnectorTest, TestConnect_Success_EmptyPassword) {
                  base::Unretained(this)));
 
   std::string wifi_guid = VerifyLastConfiguration(std::string(kSsid), "");
+  EXPECT_FALSE(wifi_guid.empty());
+
+  // Network becomes connectable.
+  NotifyConnectable(test_network_connect_->last_service_path_created());
+  VerifyTetherAndWifiNetworkAssociation(
+      wifi_guid, kTetherNetworkGuid, 1u /* expected_num_connection_attempts */);
+  EXPECT_EQ(wifi_guid, test_network_connect_->network_id_to_connect());
+  EXPECT_EQ(0u, connection_callback_responses_.size());
+
+  // Connection to network successful.
+  NotifyConnected(test_network_connect_->last_service_path_created());
+  EXPECT_EQ(1u, connection_callback_responses_.size());
+  EXPECT_EQ(wifi_guid, connection_callback_responses_[0]);
+  VerifyTimerStopped();
+}
+
+TEST_F(WifiHotspotConnectorTest, TestConnect_Success_WifiDisabled) {
+  network_state_handler()->SetTechnologyEnabled(
+      NetworkTypePattern::WiFi(), false,
+      chromeos::network_handler::ErrorCallback());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(
+      network_state_handler()->IsTechnologyEnabled(NetworkTypePattern::WiFi()));
+
+  wifi_hotspot_connector_->ConnectToWifiHotspot(
+      std::string(kSsid), std::string(kPassword), kTetherNetworkGuid,
+      base::Bind(&WifiHotspotConnectorTest::WifiConnectionCallback,
+                 base::Unretained(this)));
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(
+      network_state_handler()->IsTechnologyEnabled(NetworkTypePattern::WiFi()));
+
+  test_network_connect_->FinishCreateConfiguration();
+
+  std::string wifi_guid =
+      VerifyLastConfiguration(std::string(kSsid), std::string(kPassword));
   EXPECT_FALSE(wifi_guid.empty());
 
   // Network becomes connectable.

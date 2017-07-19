@@ -44,6 +44,7 @@ class WifiHotspotConnector : public NetworkStateHandlerObserver {
                                     const WifiConnectionCallback& callback);
 
   // NetworkStateHandlerObserver:
+  void DeviceListChanged() override;
   void NetworkPropertiesUpdated(const NetworkState* network) override;
 
  private:
@@ -54,6 +55,7 @@ class WifiHotspotConnector : public NetworkStateHandlerObserver {
   // Passes an empty string as |wifi_guid| to signal that the connection did not
   // succeed.
   void InvokeWifiConnectionCallback(const std::string& wifi_guid);
+  void CreateWifiConfiguration();
   base::DictionaryValue CreateWifiPropertyDictionary(
       const std::string& ssid,
       const std::string& password);
@@ -70,6 +72,7 @@ class WifiHotspotConnector : public NetworkStateHandlerObserver {
   std::string tether_network_guid_;
   std::string wifi_network_guid_;
   WifiConnectionCallback callback_;
+  bool is_waiting_for_wifi_to_enable_ = false;
   bool has_initiated_connection_to_current_network_ = false;
 
   base::WeakPtrFactory<WifiHotspotConnector> weak_ptr_factory_;

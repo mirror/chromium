@@ -74,9 +74,25 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
                 base::Bind(&WifiHotspotConnector::OnConnectionTimeout,
                            weak_ptr_factory_.GetWeakPtr()));
 
-  base::DictionaryValue properties =
-      CreateWifiPropertyDictionary(ssid, password);
-  network_connect_->CreateConfiguration(&properties, false /* shared */);
+  // If Wi-Fi is enabled, continue with creating the configuration of the
+  // hotspot. Otherwise, request that Wi-Fi be enabled and wait; see
+  // DeviceListChanged().
+  if (network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
+    CreateWifiConfiguration();
+  } else {
+    is_waiting_for_wifi_to_enable_ = true;
+    network_state_handler_->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true,
+        chromeos::network_handler::ErrorCallback());
+  }
+}
+
+void WifiHotspotConnector::DeviceListChanged() {
+  if (is_waiting_for_wifi_to_enable_ && !ssid_.empty() &&
+      network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
+    is_waiting_for_wifi_to_enable_ = false;
+    CreateWifiConfiguration();
+  }
 }
 
 void WifiHotspotConnector::NetworkPropertiesUpdated(
@@ -135,11 +151,18 @@ void WifiHotspotConnector::InvokeWifiConnectionCallback(
   password_.clear();
   wifi_network_guid_.clear();
   has_initiated_connection_to_current_network_ = false;
+  is_waiting_for_wifi_to_enable_ = false;
 
   timer_->Stop();
 
   callback_.Run(wifi_network_guid_copy);
   callback_.Reset();
+}
+
+void WifiHotspotConnector::CreateWifiConfiguration() {
+  base::DictionaryValue properties =
+      CreateWifiPropertyDictionary(ssid_, password_);
+  network_connect_->CreateConfiguration(&properties, false /* shared */);
 }
 
 base::DictionaryValue WifiHotspotConnector::CreateWifiPropertyDictionary(
