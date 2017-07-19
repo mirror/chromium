@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f8122a7_4a3567ee",
+        "filename": "remoting/ios/app/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-19T18:07:12Z",
+      "side": 0,
+      "message": "the source set \"main\" has the job of holding main.mm, but you are removing it? what?",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 14
+      },
+      "revId": "f0b8cf5e3ba5bc7574273e42d2122d4c0578b31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a41114_2707238a",
+        "filename": "remoting/ios/app/app_initializer_chromium.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-19T18:07:12Z",
+      "side": 1,
+      "message": "Can you add a comment that says this is being done because this is dependency injection. Without that context it looks like this should just be a part of the instance methods.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "b83e17adc8ab3d1a83d0e08e41afd7a8a1070e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
