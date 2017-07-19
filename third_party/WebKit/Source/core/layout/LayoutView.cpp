@@ -51,6 +51,7 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
+#include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -123,6 +124,46 @@ bool LayoutView::HitTest(HitTestResult& result) {
   return HitTestNoLifecycleUpdate(result);
 }
 
+void LayoutView::AdjustHitTestResultForScrollbars(HitTestResult& result) {
+  IntPoint frame_point = GetFrameView()->ContentsToFrame(
+        result.GetHitTestLocation().RoundedPoint());
+
+  Scrollbar* scrollbar = result.GetScrollbar();
+
+  // If hitTestResult include overlay scrollbar, check the hit test part is not
+  // kNoPart since aura overlay scrollbar only have thumb part but mac overlay
+  // scrollbar has track and android overlay scrollbar always return
+  if (scrollbar && scrollbar->IsOverlayScrollbar()) {
+    ScrollbarPart part = scrollbar->GetTheme().HitTest(*scrollbar, frame_point);
+    LOG(ERROR) << "part: " << part;
+    if (part == kNoPart)
+      result.SetScrollbar(nullptr);
+  }
+  // If hitTestResult include scrollbar, innerNode should be the parent of the
+  // scrollbar.
+  if (result.GetScrollbar()) {
+    // Clear innerNode if we hit a scrollbar whose ScrollableArea isn't
+    // associated with a LayoutBox so we aren't hitting some random element
+    // below too.
+    result.SetInnerNode(nullptr);
+    result.SetURLElement(nullptr);
+    ScrollableArea* scrollable_area =
+        result.GetScrollbar()->GetScrollableArea();
+    if (scrollable_area && scrollable_area->GetLayoutBox() &&
+        scrollable_area->GetLayoutBox()->GetNode()) {
+      Node* node = scrollable_area->GetLayoutBox()->GetNode();
+
+      // If scrollbar belongs to Document, we should set innerNode to the
+      // <html> element to match other browser.
+      if (node->IsDocumentNode())
+        node = node->GetDocument().documentElement();
+
+      result.SetInnerNode(node);
+      result.SetURLElement(node->EnclosingLinkEventParentOrSelf());
+    }
+  }
+}
+
 bool LayoutView::HitTestNoLifecycleUpdate(HitTestResult& result) {
   TRACE_EVENT_BEGIN0("blink,devtools.timeline", "HitTest");
   hit_test_count_++;
@@ -151,29 +192,7 @@ bool LayoutView::HitTestNoLifecycleUpdate(HitTestResult& result) {
             GetFrameView()->ScrollbarAtFramePoint(frame_point))
       result.SetScrollbar(frame_scrollbar);
 
-    // If hitTestResult include scrollbar, innerNode should be the parent of the
-    // scrollbar.
-    if (result.GetScrollbar()) {
-      // Clear innerNode if we hit a scrollbar whose ScrollableArea isn't
-      // associated with a LayoutBox so we aren't hitting some random element
-      // below too.
-      result.SetInnerNode(nullptr);
-      result.SetURLElement(nullptr);
-      ScrollableArea* scrollable_area =
-          result.GetScrollbar()->GetScrollableArea();
-      if (scrollable_area && scrollable_area->GetLayoutBox() &&
-          scrollable_area->GetLayoutBox()->GetNode()) {
-        Node* node = scrollable_area->GetLayoutBox()->GetNode();
-
-        // If scrollbar belongs to Document, we should set innerNode to the
-        // <html> element to match other browser.
-        if (node->IsDocumentNode())
-          node = node->GetDocument().documentElement();
-
-        result.SetInnerNode(node);
-        result.SetURLElement(node->EnclosingLinkEventParentOrSelf());
-      }
-    }
+    AdjustHitTestResultForScrollbars(result);
 
     if (hit_layer)
       hit_test_cache_->AddCachedResult(result, dom_tree_version);
