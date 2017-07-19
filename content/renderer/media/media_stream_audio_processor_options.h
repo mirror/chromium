@@ -16,6 +16,7 @@
 #include "media/base/audio_point.h"
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 #include "third_party/webrtc/api/mediastreaminterface.h"
+#include "third_party/webrtc/base/task_queue.h"
 #include "third_party/webrtc/media/base/mediachannel.h"
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
 
@@ -190,7 +191,8 @@ void EnableTypingDetection(AudioProcessing* audio_processing,
 
 // Starts the echo cancellation dump in |audio_processing|.
 void StartEchoCancellationDump(AudioProcessing* audio_processing,
-                               base::File aec_dump_file);
+                               base::File aec_dump_file,
+                               rtc::TaskQueue* tq);
 
 // Stops the echo cancellation dump in |audio_processing|.
 // This method has no impact if echo cancellation dump has not been started on
