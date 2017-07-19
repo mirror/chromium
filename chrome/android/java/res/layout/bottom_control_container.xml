@@ -7,6 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
+    android:clipChildren="false"
     android:layout_height="wrap_content" >
 
     <FrameLayout
@@ -21,13 +22,15 @@
         android:id="@+id/control_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:minHeight="@dimen/bottom_control_container_height" >
 
         <view
             class="org.chromium.chrome.browser.toolbar.ToolbarControlContainer$ToolbarViewResourceFrameLayout"
             android:id="@+id/toolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:clipChildren="false" >
 
             <ImageView
                 android:id="@+id/bottom_toolbar_shadow"

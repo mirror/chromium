@@ -255,8 +255,8 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             }
         });
 
-        OfflinePageBridge offlinePageBridge =
-                OfflinePageBridge.getForProfile(Profile.getLastUsedProfile());
+        Profile profile = Profile.getLastUsedProfile();
+        OfflinePageBridge offlinePageBridge = OfflinePageBridge.getForProfile(profile);
 
         mTileGridLayout = (TileGridLayout) mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
         mTileGridLayout.setMaxRows(getMaxTileRows(searchProviderHasLogo));
@@ -273,7 +273,8 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             logoParams.height = dpToPx(experimentalLogoHeightDp);
             mSearchProviderLogoView.setLayoutParams(logoParams);
         }
-        mLogoDelegate = new LogoDelegateImpl(tab, mSearchProviderLogoView);
+        mLogoDelegate = new LogoDelegateImpl(
+                mManager.getNavigationDelegate(), mSearchProviderLogoView, profile);
 
         mSearchBoxView = mNewTabPageLayout.findViewById(R.id.search_box);
         mNoSearchLogoSpacer = mNewTabPageLayout.findViewById(R.id.no_search_logo_spacer);

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
@@ -19,13 +20,20 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
+import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
+import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
+import org.chromium.chrome.browser.ntp.LogoDelegateImpl;
+import org.chromium.chrome.browser.ntp.LogoView;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
+import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
@@ -40,8 +48,9 @@ import java.util.Locale;
 /**
  * Provides content to be displayed inside of the Home tab of bottom sheet.
  */
-public class SuggestionsBottomSheetContent
-        implements BottomSheet.BottomSheetContent, BottomSheetNewTabController.Observer {
+public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent,
+                                                      BottomSheetNewTabController.Observer,
+                                                      TemplateUrlServiceObserver {
     private final View mView;
     private final FadingShadowView mShadowView;
     private final SuggestionsRecyclerView mRecyclerView;
@@ -49,6 +58,11 @@ public class SuggestionsBottomSheetContent
     private final SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
     private final TileGroup.Delegate mTileGroupDelegate;
     private final SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
+
+    private boolean mNewTabShown;
+    private LogoView mLogoView;
+    private LogoDelegateImpl mLogoDelegate;
+    private boolean mSearchProviderHasLogo = true;
 
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
@@ -136,6 +150,48 @@ public class SuggestionsBottomSheetContent
                 super.onSheetClosed();
                 mRecyclerView.setAdapter(null);
             }
+
+            @Override
+            public void onSheetOffsetChanged(float heightFraction) {
+                mLogoView.setVisibility(mNewTabShown ? View.VISIBLE : View.GONE);
+
+                float bottomStart = 0.3f;
+                float bottomEnd = 0.1f;
+                float topStart = 0.75f;
+                float topEnd = 0.95f;
+
+                float transitionFraction;
+                if (!mNewTabShown) {
+                    transitionFraction = 1.0f;
+                } else if (heightFraction > topStart) {
+                    float range = topEnd - topStart;
+                    transitionFraction =
+                            MathUtils.clamp((heightFraction - topStart) / range, 0.0f, 1.0f);
+                } else if (heightFraction < bottomStart) {
+                    float range = bottomStart - bottomEnd;
+                    transitionFraction =
+                            MathUtils.clamp((bottomStart - heightFraction) / range, 0.0f, 1.0f);
+                } else {
+                    transitionFraction = 0.0f;
+                }
+
+                ViewGroup.MarginLayoutParams logoParams =
+                        (ViewGroup.MarginLayoutParams) mLogoView.getLayoutParams();
+                mLogoView.setTranslationY(logoParams.topMargin * -transitionFraction);
+                mLogoView.setAlpha(Math.max(0.0f, 1.0f - (transitionFraction * 3.0f)));
+
+                View toolbarView = activity.findViewById(R.id.toolbar_holder);
+                ViewGroup.MarginLayoutParams toolbarParams =
+                        (ViewGroup.MarginLayoutParams) toolbarView.getLayoutParams();
+                float maxToolbarOffset =
+                        logoParams.height + logoParams.topMargin + logoParams.bottomMargin;
+                float toolbarOffset = maxToolbarOffset * (1.0f - transitionFraction);
+                toolbarView.setTranslationY(toolbarOffset);
+
+                int recyclerViewOffset =
+                        ((int) toolbarOffset) + toolbarParams.height + toolbarParams.topMargin;
+                mRecyclerView.setTranslationY(recyclerViewOffset);
+            }
         };
 
         mShadowView = (FadingShadowView) mView.findViewById(R.id.shadow);
@@ -164,7 +220,42 @@ public class SuggestionsBottomSheetContent
             }
         });
 
+        mLogoView = (LogoView) mView.findViewById(R.id.search_provider_logo);
+        updateSearchProviderHasLogo();
+        mLogoDelegate = new LogoDelegateImpl(navigationDelegate, mLogoView, profile);
+        mLogoView.showSearchProviderInitialView();
+        loadSearchProviderLogo();
+        TemplateUrlService.getInstance().addObserver(this);
         sheet.getNewTabController().addObserver(this);
+    }
+
+    private void updateSearchProviderHasLogo() {
+        mSearchProviderHasLogo = TemplateUrlService.getInstance().doesDefaultSearchEngineHaveLogo();
+    }
+
+    /**
+     * Loads the search provider logo (e.g. Google doodle), if any.
+     */
+    private void loadSearchProviderLogo() {
+        if (!mSearchProviderHasLogo) return;
+
+        mLogoView.showSearchProviderInitialView();
+
+        mLogoDelegate.getSearchProviderLogo(new LogoObserver() {
+            @Override
+            public void onLogoAvailable(Logo logo, boolean fromCache) {
+                if (logo == null && fromCache) return;
+
+                mLogoView.setDelegate(mLogoDelegate);
+                mLogoView.updateLogo(logo);
+            }
+        });
+    }
+
+    @Override
+    public void onTemplateURLServiceChanged() {
+        updateSearchProviderHasLogo();
+        loadSearchProviderLogo();
     }
 
     @Override
@@ -197,6 +288,7 @@ public class SuggestionsBottomSheetContent
         mBottomSheetObserver.onDestroy();
         mSuggestionsUiDelegate.onDestroy();
         mTileGroupDelegate.destroy();
+        TemplateUrlService.getInstance().removeObserver(this);
     }
 
     @Override
@@ -210,10 +302,14 @@ public class SuggestionsBottomSheetContent
     }
 
     @Override
-    public void onNewTabShown() {}
+    public void onNewTabShown() {
+        mNewTabShown = true;
+    }
 
     @Override
-    public void onNewTabHidden() {}
+    public void onNewTabHidden() {
+        mNewTabShown = false;
+    }
 
     private void updateContextualSuggestions(String url) {
         mSuggestionsUiDelegate.getSuggestionsSource().fetchContextualSuggestions(
