@@ -5,12 +5,14 @@
 #ifndef COMPONENTS_EXO_KEYBOARD_H_
 #define COMPONENTS_EXO_KEYBOARD_H_
 
+#include <map>
 #include <vector>
 
 #include "base/macros.h"
 #include "components/exo/keyboard_observer.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
 namespace ui {
@@ -70,6 +72,10 @@ class Keyboard : public ui::EventHandler,
   // Returns the effective focus for |window|.
   Surface* GetEffectiveFocus(aura::Window* window) const;
 
+  // Record a sent key event to sent_key_events_.
+  void RecordSentKey(uint32_t serail, ui::KeyEvent* event);
+  void ProcessExpiredPendingKeyAcks();
+
   // The delegate instance that all events except for events about device
   // configuration are dispatched to.
   KeyboardDelegate* const delegate_;
@@ -78,7 +84,7 @@ class Keyboard : public ui::EventHandler,
   // to.
   KeyboardDeviceConfigurationDelegate* device_configuration_delegate_ = nullptr;
 
-  bool are_keyboard_key_acks_needed = false;
+  bool are_keyboard_key_acks_needed_ = false;
 
   // The current focus surface for the keyboard.
   Surface* focus_ = nullptr;
@@ -89,7 +95,12 @@ class Keyboard : public ui::EventHandler,
   // Current set of modifier flags.
   int modifier_flags_ = 0;
 
+  // Key state changes that are expected to be acknowledged.
+  std::map<uint32_t, ui::KeyEvent> pending_key_acks_;
+
   base::ObserverList<KeyboardObserver> observer_list_;
+
+  base::WeakPtrFactory<Keyboard> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Keyboard);
 };
