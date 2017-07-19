@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a248160_1306f3f0",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-19T01:01:46Z",
+      "side": 1,
+      "message": "What happens if an extension uses this API to set the location permission for something to \u0027ask\u0027?\n\nhttps://developer.chrome.com/extensions/contentSettings",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
