@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c4cb2e3_a60d31a6",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-19T01:46:33Z",
+      "side": 1,
+      "message": "This assumes post_process_package_resources_args are file paths, which I don\u0027t think is true (e.g. could be a \"--flag\" entry in there)",
+      "revId": "cd110a9dcce48d7db625393aa9ecf177f537c8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
