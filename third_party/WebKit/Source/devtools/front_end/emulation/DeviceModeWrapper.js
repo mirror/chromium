@@ -92,6 +92,8 @@ Emulation.DeviceModeWrapper.ActionDelegate = class {
         case 'emulation.toggle-device-mode':
           Emulation.DeviceModeView._wrapperInstance._toggleDeviceMode();
           return true;
+        case 'toggle-ad-blocking':
+          return true;
       }
     }
     return false;

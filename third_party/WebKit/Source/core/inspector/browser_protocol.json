@@ -69,6 +69,10 @@
         "description": "Actions and events related to the inspected page belong to the page domain.",
         "dependencies": ["Debugger", "DOM", "Network"],
         "types": [
+	    {
+		"id": "BlockAds",
+		"type": "boolean"
+	    },
             {
                 "id": "ResourceType",
                 "type": "string",
@@ -293,6 +297,16 @@
                 ],
                 "description": "Reloads given page optionally ignoring the cache."
             },
+	    {
+                "name": "enableAdBlocking",
+                "description": "Enable Chrome's experimental ad filter.",
+                "parameters": [
+                    { "name": "block", "$ref": "BlockAds", "description": "Whether to block ads." }
+                ],
+                "returns": [
+                ],
+		"experimental": true
+	    },
             {
                 "name": "navigate",
                 "parameters": [

@@ -84,6 +84,7 @@ static const char kPageAgentScriptsToEvaluateOnLoad[] =
     "pageAgentScriptsToEvaluateOnLoad";
 static const char kScreencastEnabled[] = "screencastEnabled";
 static const char kAutoAttachToCreatedPages[] = "autoAttachToCreatedPages";
+static const char kAdBlockingEnabled[] = "adBlockingEnabled";
 }
 
 namespace {
@@ -462,6 +463,11 @@ Response InspectorPageAgent::removeScriptToEvaluateOnNewDocument(
 
 Response InspectorPageAgent::setAutoAttachToCreatedPages(bool auto_attach) {
   state_->setBoolean(PageAgentState::kAutoAttachToCreatedPages, auto_attach);
+  return Response::OK();
+}
+
+Response InspectorPageAgent::enableAdBlocking(bool enable) {
+  state_->setBoolean(PageAgentState::kAdBlockingEnabled, enable);
   return Response::OK();
 }
 
