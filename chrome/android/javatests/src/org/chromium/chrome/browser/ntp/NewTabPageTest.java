@@ -28,6 +28,7 @@ import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
@@ -53,6 +54,7 @@ import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.util.TestWebServer;
+import org.chromium.policy.test.annotations.Policies;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.IOException;
@@ -495,6 +497,32 @@ public class NewTabPageTest {
                 Assert.assertEquals(View.GONE, ntpView.getPlaceholder().getVisibility());
             }
         });
+    }
+
+    @Test
+    @SmallTest
+    public void testRemoteSuggestionsEnabledByDefault() {
+        Assert.assertTrue(
+                mNtp.getManagerForTesting().getSuggestionsSource().areRemoteSuggestionsEnabled());
+    }
+
+    // @Test
+    // @SmallTest
+    @DisabledTest(message = "http://crbug.com/746436")
+    @CommandLineFlags.Add("--disable-features=" + ChromeFeatureList.NTP_REMOTE_SUGGESTIONS)
+    public void testRemoteSuggestionsEnabledWhenFeatureDisabled() {
+        Assert.assertFalse(ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_REMOTE_SUGGESTIONS));
+        // Verifies crash from https://crbug.com/742056.
+        Assert.assertFalse(
+                mNtp.getManagerForTesting().getSuggestionsSource().areRemoteSuggestionsEnabled());
+    }
+
+    @Test
+    @SmallTest
+    @Policies.Add(@Policies.Item(key = "NTPContentSuggestionsEnabled", string = "false"))
+    public void testRemoteSuggestionsEnabledWhenDisabledByPolicy() {
+        Assert.assertFalse(
+                mNtp.getManagerForTesting().getSuggestionsSource().areRemoteSuggestionsEnabled());
     }
 
     private void assertThumbnailInvalidAndRecapture() {

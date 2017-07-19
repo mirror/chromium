@@ -96,6 +96,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebVrAutopresent,
     &kWebVRCardboardSupport,
     &kXGEOVisibleNetworks,
+    &ntp_snippets::kArticleSuggestionsFeature,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
