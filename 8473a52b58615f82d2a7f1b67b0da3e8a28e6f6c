@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ddb8a17_e3fbe9f3",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T02:57:52Z",
+      "side": 1,
+      "message": "yes, I agree - I\u0027ve been thinking about doing something like this in a follow-up (in addition to extracting preference handling code to a separate class, either browser-context keyed service, or something owned by NoteTakingHelper).\n\nBut I\u0027ll do this part now.",
+      "parentUuid": "f422e8e9_a63614bd",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "238e2a16_9a9d9502",
         "filename": "chrome/browser/resources/settings/device_page/stylus.html",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4a23bc16_081f7cf5",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T02:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "238e2a16_9a9d9502",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6db1ec_aab11be2",
         "filename": "chrome/browser/resources/settings/device_page/stylus.html",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T23:41:10Z",
       "side": 1,
       "message": "To use iron-flex classes, you now need to:\n\n* include iron-flex-layout-classes.html\n* include iron-flex in \u003cstyle include\u003d (for basic flex classes)\n\nAlso you have two class definitions here.",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7559f84a_1a65348b",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T02:57:52Z",
+      "side": 1,
+      "message": "hm, actually, I don\u0027t think I need these - .start should do what I want.",
+      "parentUuid": "fa6db1ec_aab11be2",
       "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7ee5eecd_41d6f31a",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T02:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65682809_d8279277",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40636810_c614f71e",
         "filename": "chrome/browser/resources/settings/device_page/stylus.js",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d865bd_d02b4056",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-19T02:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40636810_c614f71e",
+      "revId": "8473a52b58615f82d2a7f1b67b0da3e8a28e6f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
