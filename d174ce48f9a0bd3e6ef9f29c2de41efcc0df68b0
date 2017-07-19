@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1faa6c_7836a610",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-19T21:10:12Z",
+      "side": 1,
+      "message": "Double checking: is there some guarantee that this won\u0027t be called twice?",
+      "range": {
+        "startLine": 171,
+        "startChar": 80,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "d174ce48f9a0bd3e6ef9f29c2de41efcc0df68b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
