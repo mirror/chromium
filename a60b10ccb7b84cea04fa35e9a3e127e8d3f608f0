@@ -1,0 +1,895 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "973ce343_6b8406c4",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Provide a function to check file size and CRC, for when when data is available?",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 60
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a09c83e_1321f7a5",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Can move to .cc file?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba19119_779c3a69",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should be in .h file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb2a09_b2fdb600",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Why not use varint? If you want to keep this, please add comment.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c53c736_ee2b79d1",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "NIT: sizeof(uint64_t) + buffer.size();\n(to keep same order as write).",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cafc20_36d855b7",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delta-encode, and bias this by 1, like BSDiff? And add comments?\n\nIf you plan for caller to do the biasing, it shouldn\u0027t, since biasing is an encoding optimization that should be hidden from the caller.",
+      "range": {
+        "startLine": 126,
+        "startChar": 26,
+        "endLine": 126,
+        "endChar": 43
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4724f38_2a58dff1",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should comment on the fact that you\u0027re biasing, in order to get more zeros.\n\nAnd per comment in .h file, probably better to bias this by reference size.",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 31
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc6b42c_6d68f8c9",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998bc3a2_6032ca9d",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Move to .cc file?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d2d837_fc28212a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "serialize",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6067b52e_f547b194",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "These write",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13cc42a_370af526",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Extra space",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb4f688_1aa8cb9b",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should \"Sink\" be renamed to \"Writer\" here as well?",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8966afa8_5d2e1f8a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Don\u0027t need?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7d0f1a_b2781f7f",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused, and if not required by lint. Should leave out.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a523ff5_1c9bdaf6",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Order of these don\u0027t match .cc file.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dc1348_412d5c0a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed8d980_0709a6f6",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should mention this is delta-encoded, and stored as signed varint.",
+      "range": {
+        "startLine": 73,
+        "startChar": 60,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13683625_50816c2d",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should mention this is delta-encoded, and stored as unsigned varint.",
+      "range": {
+        "startLine": 75,
+        "startChar": 65,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2f6054_f75d4d04",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Should mention this is stored as unsigned varint.\n\nShould we bias this value? Maybe add TODO to experiment on this?",
+      "range": {
+        "startLine": 77,
+        "startChar": 62,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3034aaf9_3b1bfbc8",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8caead_cfae2998",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8926eccf_23492353",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Don\u0027t need.",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d06c5b3_433a6203",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 14
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bad8fa4_75d94eee",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "RawDeltaUnit is small enough to be a value type?",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08cf4940_f19ace76",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0899fe6_938a77a5",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 20
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aaf5900_262165e8",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "There\u0027s one of this per type? If so, an optimization opportunity is to inject the size of the reference, and bias by that.",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554ea20b_4d246715",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 12
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015a99f8_7d611b9a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 12
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75ca29e_fc2ede37",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Mention targets are delta-encoded, and biased by 1.",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 5
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b55d919_29600743",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Unwrap",
+      "range": {
+        "startLine": 183,
+        "startChar": 65,
+        "endLine": 183,
+        "endChar": 0
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dd2557_ec4de6fe",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 20
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cfff70_14f98c9a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Delete if unused.",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 20
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b931d0_7e7780e3",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Seems to be a lot of effort and boiler plate to get \u0026\u0026. Would it be simpler to just have a pointer owned by caller, or unique_ptr\u003c\u003e if data are owned by PatchElementWriter?",
+      "range": {
+        "startLine": 202,
+        "startChar": 41,
+        "endLine": 202,
+        "endChar": 43
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a91573d_d7ea16bd",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 216,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c36cc6_bbbef58e",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Don\u0027t need.",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c270a579_08d4a2cc",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Pass * if owned by caller; use unique_ptr and also use it in storage.",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930235b9_69beaae1",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T19:58:59Z",
+      "side": 1,
+      "message": "Add comma after",
+      "range": {
+        "startLine": 254,
+        "startChar": 28,
+        "endLine": 254,
+        "endChar": 33
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
