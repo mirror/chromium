@@ -1,5 +1,6 @@
 include_rules = [
   "+components/tracing",
+  "+components/variations",
   "+content",
   "+device/bluetooth",
   "+device/gamepad",

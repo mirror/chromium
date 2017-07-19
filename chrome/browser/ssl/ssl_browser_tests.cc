@@ -2672,10 +2672,10 @@ class SSLUIWorkerFetchTest
   void SetUpCommandLine(base::CommandLine* command_line) override {
     SSLUITest::SetUpCommandLine(command_line);
     if (GetParam().first == OffMainThreadFetchMode::kEnabled) {
-      command_line->AppendSwitchASCII(switches::kEnableFeatures,
+      command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                       features::kOffMainThreadFetch.name);
     } else {
-      command_line->AppendSwitchASCII(switches::kDisableFeatures,
+      command_line->AppendSwitchASCII(variations::switches::kDisableFeatures,
                                       features::kOffMainThreadFetch.name);
     }
   }

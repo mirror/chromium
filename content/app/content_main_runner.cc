@@ -42,6 +42,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/tracing/common/trace_startup.h"
+#include "components/variations/variations_switches.h"
 #include "content/app/mojo/mojo_init.h"
 #include "content/common/url_schemes.h"
 #include "content/public/app/content_main.h"
@@ -172,8 +173,8 @@ void InitializeFieldTrialAndFeatureList(
 
   std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
   base::FieldTrialList::CreateFeaturesFromCommandLine(
-      command_line, switches::kEnableFeatures, switches::kDisableFeatures,
-      feature_list.get());
+      command_line, variations::switches::kEnableFeatures,
+      variations::switches::kDisableFeatures, feature_list.get());
   base::FeatureList::SetInstance(std::move(feature_list));
 }
 

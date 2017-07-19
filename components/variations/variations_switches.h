@@ -11,8 +11,10 @@ namespace switches {
 // Alphabetical list of switches specific to the variations component. Document
 // each in the .cc file.
 
+extern const char kDisableFeatures[];
 extern const char kDisableFieldTrialTestingConfig[];
 extern const char kEnableBenchmarking[];
+extern const char kEnableFeatures[];
 extern const char kFakeVariationsChannel[];
 extern const char kForceFieldTrialParams[];
 extern const char kForceVariationIds[];

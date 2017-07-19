@@ -36,6 +36,7 @@
 #include "components/search_engines/template_url_data.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
@@ -269,7 +270,8 @@ class LocalNTPSmokeTest : public InProcessBrowserTest {
 
  protected:
   void SetUpCommandLine(base::CommandLine* cmdline) override {
-    cmdline->AppendSwitchASCII(switches::kEnableFeatures, "UseGoogleLocalNtp");
+    cmdline->AppendSwitchASCII(variations::switches::kEnableFeatures,
+                               "UseGoogleLocalNtp");
   }
 
   void SetUserSelectedDefaultSearchProvider(const std::string& base_url) {
@@ -376,7 +378,7 @@ class LocalNTPOneGoogleBarSmokeTest : public InProcessBrowserTest {
 
  protected:
   void SetUpCommandLine(base::CommandLine* cmdline) override {
-    cmdline->AppendSwitchASCII(switches::kEnableFeatures,
+    cmdline->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                "UseGoogleLocalNtp,OneGoogleBarOnLocalNtp");
   }
 

@@ -79,6 +79,7 @@
 #include "components/translate/core/browser/translate_infobar_delegate.h"
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
+#include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -3330,8 +3331,9 @@ void ConvertFlagsToSwitches(flags_ui::FlagsStorage* flags_storage,
     return;
 
   FlagsStateSingleton::GetFlagsState()->ConvertFlagsToSwitches(
-      flags_storage, command_line, sentinels, switches::kEnableFeatures,
-      switches::kDisableFeatures);
+      flags_storage, command_line, sentinels,
+      variations::switches::kEnableFeatures,
+      variations::switches::kDisableFeatures);
 }
 
 std::vector<std::string> RegisterAllFeatureVariationParameters(
