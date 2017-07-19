@@ -34,6 +34,41 @@
       "revId": "711201877733aec3e509be2590492e3565494f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f285c40f_59eb2dcc",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:31:39Z",
+      "side": 1,
+      "message": "Ack, I think this is fine then :)\nThe question about video error for an audio element was about the error callback set up with the video_frame_provider_ (line 241), I was thinking video errors are N/A (along with the provider), but since it\u0027s necessary to have a video frame provider this makes sense.",
+      "parentUuid": "c60c1892_aa84a4b9",
+      "revId": "711201877733aec3e509be2590492e3565494f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e9a12ab_d4695240",
+        "filename": "content/renderer/media/webmediaplayer_ms_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:31:39Z",
+      "side": 1,
+      "message": "Should you have the same EXPECT_CALL here as in the above test (kNetworkStateLoading, kReadyStateHaveNothing)?\n\nAt the end of the tests can you expect that it has the right state since the EXPECT_CALLs don\u0027t ensure order.",
+      "revId": "711201877733aec3e509be2590492e3565494f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
