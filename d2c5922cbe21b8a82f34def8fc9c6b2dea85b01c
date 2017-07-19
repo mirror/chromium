@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9557b033_e973231c",
+        "filename": "extensions/renderer/module_system_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T21:20:52Z",
+      "side": 1,
+      "message": "One line description of this class with the intention would be helpful.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "d2c5922cbe21b8a82f34def8fc9c6b2dea85b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
