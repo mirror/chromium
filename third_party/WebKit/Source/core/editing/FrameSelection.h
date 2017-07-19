@@ -169,7 +169,7 @@ class CORE_EXPORT FrameSelection final
   void DidChangeFocus();
 
   const SelectionInDOMTree& GetSelectionInDOMTree() const;
-  bool IsDirectional() const { return GetSelectionInDOMTree().IsDirectional(); }
+  bool IsDirectional() const { return is_directional_; }
 
   void DocumentAttached(Document*);
 
@@ -248,6 +248,9 @@ class CORE_EXPORT FrameSelection final
   base::Optional<int> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
 
+  void SetIsDirectional(bool is_directional) {
+    is_directional_ = is_directional;
+  }
   DECLARE_TRACE();
 
  private:
@@ -295,6 +298,7 @@ class CORE_EXPORT FrameSelection final
   TextGranularity granularity_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
 
+  bool is_directional_ = false;
   bool focused_ : 1;
 
   // Controls text granularity used to adjust the selection's extent in

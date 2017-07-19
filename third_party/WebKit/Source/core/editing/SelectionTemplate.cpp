@@ -5,6 +5,8 @@
 #include "core/editing/SelectionTemplate.h"
 
 #include <ostream>  // NOLINT
+#include "core/editing/FrameSelection.h"
+#include "core/frame/LocalFrame.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -14,7 +16,6 @@ SelectionTemplate<Strategy>::SelectionTemplate(const SelectionTemplate& other)
     : base_(other.base_),
       extent_(other.extent_),
       affinity_(other.affinity_),
-      is_directional_(other.is_directional_),
       is_handle_visible_(other.is_handle_visible_)
 #if DCHECK_IS_ON()
       ,
@@ -39,7 +40,6 @@ bool SelectionTemplate<Strategy>::operator==(
   DCHECK_EQ(base_.GetDocument(), other.GetDocument()) << *this << ' ' << other;
   return base_ == other.base_ && extent_ == other.extent_ &&
          affinity_ == other.affinity_ &&
-         is_directional_ == other.is_directional_ &&
          is_handle_visible_ == other.is_handle_visible_;
 }
 
@@ -83,6 +83,13 @@ bool SelectionTemplate<Strategy>::IsCaret() const {
 template <typename Strategy>
 bool SelectionTemplate<Strategy>::IsRange() const {
   return base_ != extent_;
+}
+
+template <typename Strategy>
+bool SelectionTemplate<Strategy>::IsDirectional() const {
+  if (!GetDocument())
+    return false;
+  return GetDocument()->GetFrame()->Selection().IsDirectional();
 }
 
 template <typename Strategy>
@@ -301,7 +308,10 @@ SelectionTemplate<Strategy>::Builder::SetBaseAndExtentDeprecated(
 template <typename Strategy>
 typename SelectionTemplate<Strategy>::Builder&
 SelectionTemplate<Strategy>::Builder::SetIsDirectional(bool is_directional) {
-  selection_.is_directional_ = is_directional;
+  if (selection_.GetDocument()) {
+    selection_.GetDocument()->GetFrame()->Selection().SetIsDirectional(
+        is_directional);
+  }
   return *this;
 }
 
