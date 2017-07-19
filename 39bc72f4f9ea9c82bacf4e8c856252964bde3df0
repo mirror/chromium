@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a04dbf76_8d82e34c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T20:14:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e17c1b61_24489780",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ca2a5d4_6f40c859",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bdf7e95f_eb524477",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T20:14:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ca2a5d4_6f40c859",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42040dfe_a7fc8b3a",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T23:03:10Z",
       "side": 1,
       "message": "Can you explain how we are getting two detail pages on the route stack? That seems like the root problem here; preventing that would be a more robust fix.\n\nAlso, if we can\u0027t easily prevent that, we should be able to strip out the query params instead of adding this hacky variable.",
+      "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cb0004_57cfe1b2",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T20:14:08Z",
+      "side": 1,
+      "message": "Changed to reflect what we discussed offline. Now, internet_detail_page.js shows the tether dialog itself instead of firing an event handled by internet_page.js.",
+      "parentUuid": "42040dfe_a7fc8b3a",
       "revId": "39bc72f4f9ea9c82bacf4e8c856252964bde3df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
