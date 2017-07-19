@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5bbae257_5ed0d635",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "This looks better, but I was suggesting that a wrapper hide the presence of animation_player() (could it even become private/protected)?  Why should owners of of elements need to care that an animation player is managing animations?",
+      "parentUuid": "f9ad0050_5c3058d9",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d78dcf08_f70dd2fd",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "I added another AnimationPlayer method for \"are you animating this property\". I\u0027ve also checked that the size does change.",
       "parentUuid": "e8e1b154_7d912a35",
+      "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b137b021_6d2d4a55",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "Same as above; \"content_quad-\u003eIsAnimating(TRANSFORM)\" seems legit to me. Thoughts?",
+      "parentUuid": "57385e64_d11d5a18",
       "revId": "45a78005e8f38b4be7017cb37fe8351f05b5ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

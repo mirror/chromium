@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bfade56_8863c586",
+        "filename": "chrome/browser/vr/animation_player.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "const reference?",
+      "range": {
+        "startLine": 64,
+        "startChar": 48,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3f20c6_d0666f26",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "Since you\u0027re already doing a non-conventional for loop, this \"for + if\" combo could be a do {} while(current_time_ \u003c target_time)",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41059c8_f9904da3",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "Just to avoid confusion with element\u0027s Animate, which is not delta-based, possibly AnimateByTime() or AnimateBy()?",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6a36bf_fcd4bfd9",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "Also check position?  It moves back in fullscreen.",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36414d57_eb5108cd",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "This SCOPED_TRACE() looks obsolete - nothing in the scope calls a test method that in turn uses EXPECTS, right?  Same with others (and not the fault of your CL).",
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bd654c_0832d6c8",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "nit: missing \".\"",
+      "range": {
+        "startLine": 286,
+        "startChar": 18,
+        "endLine": 286,
+        "endChar": 28
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390e90b2_83e3ad6c",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T15:56:01Z",
+      "side": 1,
+      "message": "Maybe this could be AnimateByMs(1000)... no string feelings here.",
+      "range": {
+        "startLine": 287,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 11
+      },
+      "revId": "4ef57b6ff0d2d2db003f048bc4644b5d0c57efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
