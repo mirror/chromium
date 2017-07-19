@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e66b6189_aaa4cfda",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Do we need new strings for Enabled/Disabled? Those strings already exist in this file, see\nhttps://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?type\u003dcs\u0026q\u003dsettings_Strings\u0026sq\u003dpackage:chromium\u0026l\u003d1721\nand \nhttps://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?type\u003dcs\u0026q\u003dsettings_Strings\u0026sq\u003dpackage:chromium\u0026l\u003d275\n\nCould we just reuse them (and change their IDS_ name to be more generic)?",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1027ab2b_86c9c114",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Some for on/off, see https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?type\u003dcs\u0026q\u003dsettings_Strings\u0026sq\u003dpackage:chromium\u0026l\u003d353-358.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975b2473_90cbb36d",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/compiled_resources2.gyp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "?\n\nThis does not seem right. Did the code succesfully pass closure compilation (git cl try -b closure_compilation) ?",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c5ed64_0acab4c1",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "s/assistantEnabled/enabled\n\nI think the prefix is redundant in this context.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e180453_832a2c12",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceaa2e91_90d093c4",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Can fit in one line?\n\n/** @implements {...} */",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213eba2a_df929cb2",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Nit: Unnecessary blank line.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b034d24_0a198c9a",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Is this toggle different than other toggle buttons in settings? Why does this need custom styling?\n\nFor example this seems unnecessary, it should be using https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?l\u003d75 instead. Maybe sharing a screenshot of what you are trying to achieve would help.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508cf38a_b245c23d",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4c937b_77b1f798",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Semicolon missing.",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8293588_a645253b",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "One line (here and elsewhere where possible);\n/** @private */",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c9d2af_014eb49a",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T22:17:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be wrapped in a chromeos-only block?",
+      "revId": "21e1cdee43b73f03b8eaa7321f8020a9a0ac7717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
