@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.SystemClock;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -115,6 +116,7 @@ public class AccountSigninView extends FrameLayout {
     private Delegate mDelegate;
     private String mForcedAccountName;
     private ProfileDataCache mProfileData;
+    private final ProfileDataCache.Observer mProfileDataCacheObserver;
     private boolean mSignedIn;
     private int mCancelButtonTextId;
     private boolean mIsChildAccount;
@@ -131,6 +133,12 @@ public class AccountSigninView extends FrameLayout {
     public AccountSigninView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mAccountManagerHelper = AccountManagerHelper.get();
+        mProfileDataCacheObserver = new ProfileDataCache.Observer() {
+            @Override
+            public void onProfileDataUpdated(String accountId) {
+                updateProfileData();
+            }
+        };
     }
 
     /**
@@ -144,16 +152,14 @@ public class AccountSigninView extends FrameLayout {
     public void init(ProfileDataCache profileData, boolean isChildAccount, String forcedAccountName,
             Delegate delegate, Listener listener) {
         mProfileData = profileData;
-        mProfileData.addObserver(new ProfileDataCache.Observer() {
-            @Override
-            public void onProfileDataUpdated(String accountId) {
-                updateProfileData();
-            }
-        });
         mIsChildAccount = isChildAccount;
         mForcedAccountName = TextUtils.isEmpty(forcedAccountName) ? null : forcedAccountName;
         mDelegate = delegate;
         mListener = listener;
+
+        if (ViewCompat.isAttachedToWindow(this)) {
+            mProfileData.addObserver(mProfileDataCacheObserver);
+        }
         showSigninPage();
     }
 
@@ -193,6 +199,17 @@ public class AccountSigninView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         updateAccounts();
+        if (mProfileData != null) {
+            mProfileData.addObserver(mProfileDataCacheObserver);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        if (mProfileData != null) {
+            mProfileData.removeObserver(mProfileDataCacheObserver);
+        }
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -264,6 +281,13 @@ public class AccountSigninView extends FrameLayout {
                 }
                 mIsGooglePlayServicesOutOfDate = false;
 
+                if (!ViewCompat.isAttachedToWindow(AccountSigninView.this)) {
+                    // This callback is invoked after AccountSigninView is detached from window
+                    // (e.g., Chrome is minimized). Updating view now is redundant and dangerous
+                    // (getFragmentManager() can return null, etc.). See https://crbug.com/733117.
+                    return;
+                }
+
                 if (mSignedIn) {
                     // If sign-in completed in the mean time, return in order to avoid showing the
                     // wrong state in the UI.
@@ -298,12 +322,7 @@ public class AccountSigninView extends FrameLayout {
                         && (mAccountNames.isEmpty()
                                    || mAccountNames.get(accountToSelect)
                                               .equals(oldAccountNames.get(oldSelectedAccount)));
-                // There is a race condition where the FragmentManager can be null. This
-                // presumably happens once the AccountSigninView has been detached (the bug is
-                // triggered when Chrome is hidden). Since we are detached, the dialogs will
-                // have already been deleted so we don't need to cancel them.
-                // https://crbug.com/733117
-                if (selectedAccountChanged && mDelegate.getFragmentManager() != null) {
+                if (selectedAccountChanged) {
                     // Any dialogs that may have been showing are now invalid (they were created
                     // for the previously selected account).
                     ConfirmSyncDataStateMachine.cancelAllDialogs(mDelegate.getFragmentManager());
