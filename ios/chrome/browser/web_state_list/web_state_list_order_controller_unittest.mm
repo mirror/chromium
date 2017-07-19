@@ -59,8 +59,8 @@ class WebStateListOrderControllerTest : public PlatformTest {
 };
 
 TEST_F(WebStateListOrderControllerTest, DetermineInsertionIndex) {
-  web_state_list_.InsertWebState(0, CreateWebState());
-  web_state_list_.InsertWebState(1, CreateWebState());
+  web_state_list_.InsertWebState(0, CreateWebState(), false);
+  web_state_list_.InsertWebState(1, CreateWebState(), false);
   web::WebState* opener = web_state_list_.GetWebStateAt(0);
 
   // Verify that first child WebState is inserted after |opener| if there are
@@ -79,7 +79,7 @@ TEST_F(WebStateListOrderControllerTest, DetermineInsertionIndex) {
 
   // Add a child WebState to |opener|, and verify that a second child would be
   // inserted after the first.
-  web_state_list_.InsertWebState(2, CreateWebState());
+  web_state_list_.InsertWebState(2, CreateWebState(), false);
   web_state_list_.SetOpenerOfWebStateAt(2, WebStateOpener(opener));
 
   EXPECT_EQ(3, order_controller_.DetermineInsertionIndex(
@@ -87,7 +87,7 @@ TEST_F(WebStateListOrderControllerTest, DetermineInsertionIndex) {
 
   // Add a grand-child to |opener|, and verify that adding another child to
   // |opener| would be inserted before the grand-child.
-  web_state_list_.InsertWebState(3, CreateWebState());
+  web_state_list_.InsertWebState(3, CreateWebState(), false);
   web_state_list_.SetOpenerOfWebStateAt(
       3, WebStateOpener(web_state_list_.GetWebStateAt(1)));
 

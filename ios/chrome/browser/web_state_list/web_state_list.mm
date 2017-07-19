@@ -138,7 +138,8 @@ int WebStateList::GetIndexOfLastWebStateOpenedBy(const web::WebState* opener,
 }
 
 void WebStateList::InsertWebState(int index,
-                                  std::unique_ptr<web::WebState> web_state) {
+                                  std::unique_ptr<web::WebState> web_state,
+                                  bool foreground) {
   DCHECK(ContainsIndex(index) || index == count());
   delegate_->WillAddWebState(web_state.get());
 
@@ -150,19 +151,24 @@ void WebStateList::InsertWebState(int index,
   if (active_index_ >= index)
     ++active_index_;
 
+  const bool activating = foreground;
   for (auto& observer : observers_)
-    observer.WebStateInsertedAt(this, web_state_ptr, index);
+    observer.WebStateInsertedAt(this, web_state_ptr, index, activating);
+
+  if (foreground)
+    ActivateWebStateAt(index);
 }
 
 void WebStateList::AppendWebState(ui::PageTransition transition,
                                   std::unique_ptr<web::WebState> web_state,
-                                  WebStateOpener opener) {
+                                  WebStateOpener opener,
+                                  bool foreground) {
   int index =
       order_controller_->DetermineInsertionIndex(transition, opener.opener);
   if (index < 0 || count() < index)
     index = count();
 
-  InsertWebState(index, std::move(web_state));
+  InsertWebState(index, std::move(web_state), foreground);
 
   if (opener.opener)
     SetOpenerOfWebStateAt(index, opener);
@@ -207,11 +213,11 @@ std::unique_ptr<web::WebState> WebStateList::ReplaceWebStateAt(
   std::unique_ptr<web::WebState> old_web_state =
       web_state_wrappers_[index]->ReplaceWebState(std::move(web_state));
 
+  web::WebState* old_web_state_ptr = old_web_state.get();
   for (auto& observer : observers_)
-    observer.WebStateReplacedAt(this, old_web_state.get(), web_state_ptr,
-                                index);
+    observer.WebStateReplacedAt(this, old_web_state_ptr, web_state_ptr, index);
 
-  delegate_->WebStateDetached(old_web_state.get());
+  delegate_->WebStateDetached(old_web_state_ptr);
   return old_web_state;
 }
 

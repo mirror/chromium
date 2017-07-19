@@ -180,7 +180,7 @@
       web::WebState::Create(webStateCreateParams);
   webState->SetWebUsageEnabled(true);
   self.webStateList.InsertWebState(self.webStateList.count(),
-                                   std::move(webState));
+                                   std::move(webState), false);
   [self showTabGridTabAtIndex:self.webStateList.count() - 1];
 }
 

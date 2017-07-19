@@ -21,6 +21,18 @@ TabUsageRecorderWebStateListObserver::TabUsageRecorderWebStateListObserver(
 TabUsageRecorderWebStateListObserver::~TabUsageRecorderWebStateListObserver() =
     default;
 
+void TabUsageRecorderWebStateListObserver::WebStateInsertedAt(
+    WebStateList* web_state_list,
+    web::WebState* web_state,
+    int index,
+    bool activating) {
+  if (!activating)
+    return;
+
+  tab_usage_recorder_->TabCreatedForSelection(
+      LegacyTabHelper::GetTabForWebState(web_state));
+}
+
 void TabUsageRecorderWebStateListObserver::WebStateActivatedAt(
     WebStateList* web_state_list,
     web::WebState* old_web_state,
