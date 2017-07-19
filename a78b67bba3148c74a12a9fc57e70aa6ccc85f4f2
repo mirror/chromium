@@ -159,6 +159,24 @@
       "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82791f84_f842d7eb",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-07-19T23:04:37Z",
+      "side": 1,
+      "message": "so for now I think you\u0027ll also (unfortunately) need to add `shell\u003dis_windows`. The problem is that \u0027cipd\u0027 is sometimes \u0027cipd.exe\u0027 and sometimes \u0027cipd.bat\u0027, and CreateProcess just blindly appends \u0027.exe\u0027. shell\u003dTrue will allow it to search PATH for bat and exe correctly.\n\nWe\u0027re working to remove all of the .bat files (so that it\u0027s just .exe in all environments), but it\u0027ll be a little while.",
+      "parentUuid": "ce6296ba_2e90fe13",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
