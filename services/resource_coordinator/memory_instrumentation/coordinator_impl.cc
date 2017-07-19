@@ -89,6 +89,9 @@ CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
   g_coordinator_impl = this;
   base::trace_event::MemoryDumpManager::GetInstance()->set_tracing_process_id(
       mojom::kServiceTracingProcessId);
+
+  tracing_observer_ = base::MakeUnique<TracingObserver>(
+      base::trace_event::TraceLog::GetInstance(), nullptr);
 }
 
 CoordinatorImpl::~CoordinatorImpl() {
@@ -250,7 +253,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({client, ResponseType::kOSDump});
     auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                   base::Unretained(this), client);
-    client->RequestOSMemoryDump({pid}, os_callback);
+    client->RequestOSMemoryDump({base::kNullProcessId}, os_callback);
 #endif  // !defined(OS_LINUX)
   }
 
@@ -370,6 +373,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   QueuedMemoryDumpRequest* request = &queued_memory_dump_requests_.front();
   if (request->pending_responses.size() > 0)
     return;
+  const bool global_success = request->failed_memory_dump_count == 0;
 
   // Reconstruct a map of pid -> ProcessMemoryDump by reassembling the responses
   // received by the clients for this dump. In some cases the response coming
@@ -404,12 +408,21 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
       os_dumps[extra_pid] = std::move(extra_dump);
     }
 
+#if defined(OS_LINUX)
     for (auto& kv : response.second.os_dumps) {
       const base::ProcessId pid = kv.first;
       mojom::RawOSMemDumpPtr dump = std::move(kv.second);
       DCHECK_EQ(0u, os_dumps.count(pid));
       os_dumps[pid] = std::move(dump);
     }
+#else
+    const OSMemDumpMap& extra_os_dumps = response.second.os_dumps;
+    DCHECK_LE(extra_os_dumps.size(), 1u);
+    if (extra_os_dumps.size() == 1u) {
+      DCHECK_EQ(base::kNullProcessId, extra_os_dumps.begin()->first);
+      os_dumps[pid] = std::move(extra_os_dumps.begin()->second);
+    }
+#endif
   }
 
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
@@ -427,6 +440,9 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     pmd->process_type = response.second.process_type;
     pmd->chrome_dump = std::move(response.second.dump_ptr->chrome_dump);
     pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
+    if (global_success)
+      tracing_observer_->AddOsDumpToTraceIfEnabled(
+          request->args, pid, pmd->os_dump.get(), &os_dumps[pid]->memory_maps);
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
@@ -443,7 +459,6 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   }
 
   const auto& callback = request->callback;
-  const bool global_success = request->failed_memory_dump_count == 0;
   callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
 
   char guid_str[20];
