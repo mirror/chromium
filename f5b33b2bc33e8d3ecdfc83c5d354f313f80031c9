@@ -238,6 +238,24 @@
     },
     {
       "key": {
+        "uuid": "7217a0f3_3d4a224a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-19T09:44:25Z",
+      "side": 1,
+      "message": "Done, here and in other places.",
+      "parentUuid": "64db4007_e5ea8d08",
+      "revId": "f5b33b2bc33e8d3ecdfc83c5d354f313f80031c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede840c8_60ad98bc",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 18
