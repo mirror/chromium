@@ -387,6 +387,30 @@
       "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9a4058_1de1b0fe",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-19T04:50:23Z",
+      "side": 1,
+      "message": "My concern was we need to construct a TestFullCardRequest in autofill_payment_instrument_unittest.cc and test_payment_request_delegate.cc.\n\nEverything in full_card_request_unittest.cc is fine.",
+      "parentUuid": "5228c3fd_1803b709",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
