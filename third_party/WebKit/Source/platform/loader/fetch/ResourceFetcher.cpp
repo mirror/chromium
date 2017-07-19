@@ -561,7 +561,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()),
       params.Options(),
       /* Don't send security violation reports for speculative preloads */
-      reporting_policy, params.GetOriginRestriction());
+      reporting_policy, params.GetOriginRestriction(),
+      resource_request.GetRedirectStatus());
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DCHECK(!substitute_data.ForceSynchronousLoad());
     return kBlock;
@@ -1667,7 +1668,8 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
   Context().CanRequest(resource->GetType(), resource->LastResourceRequest(),
                        resource->LastResourceRequest().Url(), params.Options(),
                        SecurityViolationReportingPolicy::kReport,
-                       params.GetOriginRestriction());
+                       params.GetOriginRestriction(),
+                       resource->LastResourceRequest().GetRedirectStatus());
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
 }
 
