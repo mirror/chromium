@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebf0a334_00934384",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T20:22:26Z",
+      "side": 1,
+      "message": "\"transient\", but maybe we should be calling this the WebVR URL bar. :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "cac5f52b26bd448f59cd8d5c284d12f9003b2a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a3a1a0_58d6c53a",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T20:22:26Z",
+      "side": 1,
+      "message": "Did Josh specify DMM-based locations or are you just trying to make things consistent?",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "cac5f52b26bd448f59cd8d5c284d12f9003b2a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
