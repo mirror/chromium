@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c8bf3a_bd32fc40",
+        "filename": "third_party/WebKit/Source/core/animation/CSSFontWeightInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-19T01:14:59Z",
+      "side": 1,
+      "message": "super-nit: Can we save a level of nesting by doing\n\nif (value.IsPrimitiveValue()) {\n  return CreateFontWeightValue(\n        FontSelectionValue(ToCSSPrimitiveValue(value).GetFloatValue()));\n}\n\nif (!value.IsIdentifierValue())\n  return nullptr;\n\n// what we had before",
+      "revId": "5064aa8e622864470cc14745edda49f4e4546fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
