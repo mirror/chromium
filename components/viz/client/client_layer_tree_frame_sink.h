@@ -15,8 +15,13 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+namespace aura {
+class HitTestDataProviderMusTest;
+}
+
 namespace viz {
 
+class HitTestDataProvider;
 class LocalSurfaceIdProvider;
 class SharedBitmapManager;
 
@@ -33,6 +38,7 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
           synthetic_begin_frame_source,
       cc::mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
       cc::mojom::CompositorFrameSinkClientRequest client_request,
+      std::unique_ptr<HitTestDataProvider> hit_test_data_provider,
       std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
       bool enable_surface_synchronization);
 
@@ -42,6 +48,7 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
           synthetic_begin_frame_source,
       cc::mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
       cc::mojom::CompositorFrameSinkClientRequest client_request,
+      std::unique_ptr<HitTestDataProvider> hit_test_data_provider,
       std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
       bool enable_surface_synchronization);
 
@@ -57,6 +64,8 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   void DidNotProduceFrame(const cc::BeginFrameAck& ack) override;
 
  private:
+  friend class aura::HitTestDataProviderMusTest;
+
   // cc::mojom::CompositorFrameSinkClient implementation:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
@@ -71,6 +80,7 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
                                     const std::string& description);
 
   LocalSurfaceId local_surface_id_;
+  std::unique_ptr<HitTestDataProvider> hit_test_data_provider_;
   std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider_;
   std::unique_ptr<cc::ExternalBeginFrameSource> begin_frame_source_;
   std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source_;

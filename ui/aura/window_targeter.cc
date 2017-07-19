@@ -162,6 +162,16 @@ bool WindowTargeter::ShouldUseExtendedBounds(const aura::Window* window) const {
   return true;
 }
 
+void WindowTargeter::SetInsets(const gfx::Insets& mouse_extend,
+                               const gfx::Insets& touch_extend) {
+  mouse_extend_ = mouse_extend;
+  touch_extend_ = touch_extend;
+}
+
+bool WindowTargeter::ShouldUseExtendedBounds(const aura::Window* window) const {
+  return true;
+}
+
 bool WindowTargeter::GetHitTestRects(Window* window,
                                      gfx::Rect* hit_test_rect_mouse,
                                      gfx::Rect* hit_test_rect_touch) const {
