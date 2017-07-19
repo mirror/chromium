@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0293d7a8_ff9234a0",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T06:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9889306d_55276cae",
+      "revId": "b7178a1149f862c6449755945982440861f08f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c249a552_10d84ede",
         "filename": "third_party/WebKit/Source/controller/OWNERS",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b7178a1149f862c6449755945982440861f08f93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fae8b70_64926f32",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T06:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c249a552_10d84ede",
+      "revId": "b7178a1149f862c6449755945982440861f08f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
