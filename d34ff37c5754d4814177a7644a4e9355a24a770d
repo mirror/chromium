@@ -22,6 +22,30 @@
       "revId": "d34ff37c5754d4814177a7644a4e9355a24a770d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73c0d8d_43a85d82",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-07-19T18:06:06Z",
+      "side": 1,
+      "message": "I moved the suppression to just fireDisconnect(); seems like fireDisconnect() is too late to take any useful action.",
+      "parentUuid": "98d21338_ec729800",
+      "range": {
+        "startLine": 452,
+        "startChar": 12,
+        "endLine": 452,
+        "endChar": 30
+      },
+      "revId": "d34ff37c5754d4814177a7644a4e9355a24a770d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
