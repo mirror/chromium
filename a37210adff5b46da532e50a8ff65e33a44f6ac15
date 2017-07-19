@@ -22,6 +22,30 @@
       "revId": "a37210adff5b46da532e50a8ff65e33a44f6ac15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5983db3_16ae413e",
+        "filename": "chrome/browser/resources/chromeos/echo/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2017-07-19T06:40:07Z",
+      "side": 1,
+      "message": "The webmaster team moved all the chromebook pages under https://www.google.com/chromebook/\nThe old goodies page just redirects to the new one. That\u0027s fine for an end-user reaching the page, but the extension whitelisting doesn\u0027t know about the new location.\n\nIf you\u0027d like I can change things to:\n\n\"*://www.google.com/*chromebook/offers*\",\n\"*://www.google.com/*chromebook/older*\",\n\"*://chromebook-dot-googwebreview.appspot.com/*chromebook/offers*\",\n\"*://chromebook-dot-googwebreview.appspot.com/*chromebook/older*\"\n\nIt\u0027s a little more specific. But also more subject to breakage from changes by the webmaster team. Overall, it\u0027s a little too fragile for my taste, but I don\u0027t think anything can be done about it.",
+      "parentUuid": "760125ab_49b7928e",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "a37210adff5b46da532e50a8ff65e33a44f6ac15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
