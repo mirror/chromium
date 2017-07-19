@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28e6824e_99bd4102",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-19T18:29:32Z",
+      "side": 1,
+      "message": "nit: file_extension or filename_extension?",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f510e3_70caa454",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-19T18:29:32Z",
+      "side": 1,
+      "message": "nit: Any reason for this particular set of MIME types? Are these all required by particular tests? If not then can we trim down to only those we actually need and add more later?",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbbc285_a8e32e8c",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-19T18:29:32Z",
+      "side": 1,
+      "message": "File a bug for integrating w/ native MIME DB when available, and link here?",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6051d52_7258bad1",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-19T18:29:32Z",
+      "side": 1,
+      "message": "nit: for (const auto\u0026 mime_to_ext : kMimeToExtMap)",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
