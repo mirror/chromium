@@ -336,8 +336,8 @@ TEST_F(SimpleIndexFileTest, SimpleCacheUpgrade) {
   ASSERT_TRUE(cache_thread.StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0)));
   disk_cache::SimpleBackendImpl* simple_cache =
-      new disk_cache::SimpleBackendImpl(cache_path, 0, net::DISK_CACHE,
-                                        cache_thread.task_runner().get(), NULL);
+      new disk_cache::SimpleBackendImpl(cache_path, nullptr, 0, net::DISK_CACHE,
+                                        nullptr);
   net::TestCompletionCallback cb;
   int rv = simple_cache->Init(cb.callback());
   EXPECT_THAT(cb.GetResult(rv), IsOk());

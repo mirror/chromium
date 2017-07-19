@@ -107,8 +107,8 @@ class SimpleIndexTest  : public testing::Test, public SimpleIndexDelegate {
   void SetUp() override {
     std::unique_ptr<MockSimpleIndexFile> index_file(new MockSimpleIndexFile());
     index_file_ = index_file->AsWeakPtr();
-    index_.reset(
-        new SimpleIndex(NULL, this, net::DISK_CACHE, std::move(index_file)));
+    index_.reset(new SimpleIndex(nullptr, nullptr, this, net::DISK_CACHE,
+                                 std::move(index_file)));
 
     index_->Initialize(base::Time());
   }
