@@ -16,6 +16,40 @@
       "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f251c6ad_c8039849",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-19T01:27:40Z",
+      "side": 1,
+      "message": "I believe the ! on !string is not needed. E.g.\n\n{!Array\u003cstring\u003e}\n\nReference: https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#non-nullable-type",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8485fc24_148c2194",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-19T01:27:40Z",
+      "side": 1,
+      "message": "Is this a merge accidentally reverting this (or is it intentional)?",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
