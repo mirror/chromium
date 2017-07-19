@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4a774d61_090b88a3",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T18:19:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd185e58_83f5ca1d",
+      "range": {
+        "startLine": 742,
+        "startChar": 38,
+        "endLine": 742,
+        "endChar": 46
+      },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00c67d97_07100b64",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 9
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1762a9a5_16f60f53",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2904,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T18:19:40Z",
+      "side": 1,
+      "message": "Actually on further thought, I think despite the mojo StrongBinding it\u0027s not guaranteed to be safe. I\u0027ve modified the code to use the RoutingID and ProcessID, and make sure the RFH isn\u0027t null before using it.",
+      "parentUuid": "00c67d97_07100b64",
+      "range": {
+        "startLine": 2904,
+        "startChar": 55,
+        "endLine": 2904,
+        "endChar": 65
+      },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c475bd_86594c8b",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 9
@@ -89,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "366c483e_8d485315",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T18:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4c475bd_86594c8b",
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac99aa6_d7636a37",
         "filename": "content/browser/web_contents/web_contents_view_android.h",
         "patchSetId": 9
@@ -103,6 +169,24 @@
       "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365d9e2f_f2c47a10",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T18:19:40Z",
+      "side": 1,
+      "message": "I\u0027ve implemented LostFocus and made it symmetric with GotFocus across platforms.",
+      "parentUuid": "7ac99aa6_d7636a37",
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
