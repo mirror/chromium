@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832c48b1_3a90875b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T20:48:14Z",
+      "side": 1,
+      "message": "Is there a situation where the user will need the result from BubbleAnchorPoint outside of immediately passing it to BubbleOrigin? If no, then you might want to consider making one public method that does both, and make BubbleAnchorPoint and BubbleOrigin private.",
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43260d5_ecd8c20a",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T20:48:14Z",
+      "side": 1,
+      "message": "Good to make this |frame| so that it is clear that |frame| is the target element\u0027s frame.",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62e03bc_f2ddbbd5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T20:48:14Z",
+      "side": 1,
+      "message": "The leading edge switches in RTL to right side. Another way to say this would be to refer to the bubble view\u0027s frame origin.",
+      "range": {
+        "startLine": 26,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 65
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765fcd25_4db4fb7d",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T20:48:14Z",
+      "side": 1,
+      "message": "Nit: Should be capitalized and in |...| to indicate that it is code.",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "54e834999e6fbe16c981d9ced579dc003eb1e6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
