@@ -34,6 +34,24 @@
       "revId": "c88103f24897254f33a9c6f903aef65b981956e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7391e28_08094c26",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-19T18:09:45Z",
+      "side": 1,
+      "message": "\u003e ScriptResource::DestroyDecodedDataForFailedRevalidation\nIIUC, String() and AtomicString() are null (IsNull() is true), so ScriptResource::DestroyDecodedDataForFailedRevalidation() sets |source_text_| to null.",
+      "parentUuid": "ab9dffaa_905b870c",
+      "revId": "c88103f24897254f33a9c6f903aef65b981956e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
