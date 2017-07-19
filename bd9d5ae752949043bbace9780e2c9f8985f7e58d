@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "426b9a87_9fac296d",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-19T04:55:37Z",
+      "side": 1,
+      "message": "Is this method defined in WebKit.h but implemented in BlinkInitializer.cpp? If so, seems strange.",
+      "revId": "bd9d5ae752949043bbace9780e2c9f8985f7e58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec8d416_cb6a8701",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-19T04:55:37Z",
+      "side": 1,
+      "message": "I guess alpha sorted is nice.",
+      "revId": "bd9d5ae752949043bbace9780e2c9f8985f7e58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
