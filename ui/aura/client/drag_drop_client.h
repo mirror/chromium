@@ -21,6 +21,8 @@ namespace aura {
 class Window;
 namespace client {
 
+class DragDropClientObserver;
+
 // An interface implemented by an object that controls a drag and drop session.
 class AURA_EXPORT DragDropClient {
  public:
@@ -41,6 +43,9 @@ class AURA_EXPORT DragDropClient {
 
   // Returns true if a drag and drop session is in progress.
   virtual bool IsDragDropInProgress() = 0;
+
+  virtual void AddObserver(DragDropClientObserver* observer) = 0;
+  virtual void RemoveObserver(DragDropClientObserver* observer) = 0;
 };
 
 AURA_EXPORT void SetDragDropClient(Window* root_window,
