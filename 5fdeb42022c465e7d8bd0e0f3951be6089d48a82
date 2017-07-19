@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5514c521_57f46dd2",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T15:43:05Z",
+      "side": 1,
+      "message": "Right, FWIW, I added that comment in the spreadsheet after someone on my team pointed this code to me in an early fixit that was testing the waters of this migration :). It struck me as something that could encode a lot of subtle dependencies. Now that the migration has made a lot of headway I think it\u0027s correct to remove it (it will shortly be meaningless anyways as nothing should be left on the FILE thread by the end of the month).",
+      "parentUuid": "31358c38_0dd4c3dc",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 70
+      },
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a88bfa4e_c9a57f8d",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 1
