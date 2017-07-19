@@ -4,8 +4,6 @@
 
 #include "chrome/browser/password_manager/password_store_win.h"
 
-#include <windows.h>
-
 #include <memory>
 #include <string>
 #include <vector>
@@ -16,12 +14,10 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
-#include "base/sequenced_task_runner.h"
-#include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/os_crypt/ie7_password_win.h"
@@ -31,18 +27,14 @@
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/webdata/logins_table.h"
 #include "components/password_manager/core/browser/webdata/password_web_data_service_win.h"
-#include "components/password_manager/core/common/password_manager_pref_names.h"
-#include "components/prefs/pref_service.h"
 #include "components/webdata/common/web_database_service.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "crypto/wincrypt_shim.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using autofill::PasswordForm;
-using base::WaitableEvent;
-using content::BrowserThread;
 using password_manager::LoginDatabase;
 using password_manager::PasswordFormData;
 using password_manager::PasswordStore;
@@ -82,9 +74,7 @@ class MockWebDataServiceConsumer : public WebDataServiceConsumer {
 
 class PasswordStoreWinTest : public testing::Test {
  protected:
-  PasswordStoreWinTest()
-      : test_browser_thread_bundle_(
-            content::TestBrowserThreadBundle::REAL_DB_THREAD) {}
+  PasswordStoreWinTest() {}
 
   bool CreateIE7PasswordInfo(const std::wstring& url,
                              const base::Time& created,
@@ -137,15 +127,19 @@ class PasswordStoreWinTest : public testing::Test {
     profile_.reset(new TestingProfile());
 
     base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
-    wdbs_ = new WebDatabaseService(
-        path, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
+    // TODO(pkasting): http://crbug.com/740773 This should likely be sequenced,
+    // not single-threaded.
+    auto db_thread = base::CreateSingleThreadTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+    wdbs_ = new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
+                                   db_thread);
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
-    wds_ = new PasswordWebDataService(
-        wdbs_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-        WebDataServiceBase::ProfileErrorCallback());
+    wds_ =
+        new PasswordWebDataService(wdbs_, base::ThreadTaskRunnerHandle::Get(),
+                                   WebDataServiceBase::ProfileErrorCallback());
     wds_->Init();
   }
 
@@ -160,12 +154,7 @@ class PasswordStoreWinTest : public testing::Test {
       wdbs_->ShutdownDatabase();
       wdbs_ = nullptr;
     }
-    base::WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                             base::WaitableEvent::InitialState::NOT_SIGNALED);
-    BrowserThread::PostTask(
-        BrowserThread::DB, FROM_HERE,
-        base::Bind(&base::WaitableEvent::Signal, base::Unretained(&done)));
-    done.Wait();
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   base::FilePath test_login_db_file_path() const {
@@ -175,7 +164,7 @@ class PasswordStoreWinTest : public testing::Test {
   PasswordStoreWin* CreatePasswordStore() {
     return new PasswordStoreWin(
         base::SequencedTaskRunnerHandle::Get(),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB),
+        base::SequencedTaskRunnerHandle::Get(),
         base::MakeUnique<LoginDatabase>(test_login_db_file_path()), wds_.get());
   }
 
@@ -187,11 +176,6 @@ class PasswordStoreWinTest : public testing::Test {
   scoped_refptr<WebDatabaseService> wdbs_;
   scoped_refptr<PasswordStore> store_;
 };
-
-ACTION(QuitUIMessageLoop) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::MessageLoop::current()->QuitWhenIdle();
-}
 
 MATCHER(EmptyWDResult, "") {
   return static_cast<
@@ -212,10 +196,10 @@ TEST_F(PasswordStoreWinTest, ReportIE7NoImport) {
                                           "http://example.com/origin",
                                           GURL("http://example.com/origin"));
 
-  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillOnce(QuitUIMessageLoop());
+  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
+
   store_->GetLogins(observed_form, &consumer);
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.IE7LookupResult",
       password_manager::metrics_util::IE7_RESULTS_ABSENT, 1);
@@ -240,17 +224,36 @@ TEST_F(PasswordStoreWinTest, ReportIE7Import) {
                                           "http://example.com/origin",
                                           GURL("http://example.com/origin"));
 
-  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillOnce(QuitUIMessageLoop());
+  // The returned form will not have 'action' or '*_element' fields set. This
+  // is because credentials imported from IE don't have this information.
+  PasswordFormData expected_form_data = {
+      PasswordForm::SCHEME_HTML,
+      "http://example.com/origin",
+      "http://example.com/origin",
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
+      L"abcdefgh",
+      L"abcdefghijkl",
+      true,
+      1,
+  };
+  std::vector<std::unique_ptr<PasswordForm>> expected_forms;
+  expected_forms.push_back(
+      CreatePasswordFormFromDataForTesting(expected_form_data, false));
+
+  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(
+                            UnorderedPasswordFormElementsAre(&expected_forms)));
+
   store_->GetLogins(observed_form, &consumer);
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.IE7LookupResult",
       password_manager::metrics_util::IE7_RESULTS_PRESENT, 1);
 }
 
-// Hangs flakily, http://crbug.com/71385.
-TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
+TEST_F(PasswordStoreWinTest, ConvertIE7Login) {
   IE7PasswordInfo password_info;
   ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
                                     base::Time::FromDoubleT(1),
@@ -262,23 +265,10 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
   // This IE7 password will be retrieved by the GetLogins call.
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
-  WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                     base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
-  done.Wait();
-
   store_ = CreatePasswordStore();
   EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));
 
-  MockPasswordStoreConsumer consumer;
-
-  // Make sure we quit the MessageLoop even if the test fails.
-  ON_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillByDefault(QuitUIMessageLoop());
+  MockPasswordStoreConsumer password_consumer;
 
   PasswordFormData form_data = {
       PasswordForm::SCHEME_HTML,
@@ -288,8 +278,8 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
       L"submit_element",
       L"username_element",
       L"password_element",
-      L"",
-      L"",
+      nullptr,
+      nullptr,
       true,
       1,
   };
@@ -302,10 +292,10 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
       PasswordForm::SCHEME_HTML,
       "http://example.com/",
       "http://example.com/origin",
-      "",
-      L"",
-      L"",
-      L"",
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
       L"abcdefgh",
       L"abcdefghijkl",
       true,
@@ -313,14 +303,16 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
   };
   std::vector<std::unique_ptr<PasswordForm>> expected_forms;
   expected_forms.push_back(
-      CreatePasswordFormFromDataForTesting(expected_form_data));
+      CreatePasswordFormFromDataForTesting(expected_form_data, false));
 
   // The IE7 password should be returned.
-  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(
-                            UnorderedPasswordFormElementsAre(&expected_forms)));
+  EXPECT_CALL(password_consumer,
+              OnGetPasswordStoreResultsConstRef(
+                  UnorderedPasswordFormElementsAre(&expected_forms)));
 
-  store_->GetLogins(form, &consumer);
-  base::RunLoop().Run();
+  store_->GetLogins(form, &password_consumer);
+
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
@@ -335,8 +327,8 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
       L"submit_element",
       L"username_element",
       L"password_element",
-      L"",
-      L"",
+      nullptr,
+      nullptr,
       true,
       1,
   };
@@ -354,33 +346,20 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
   wdbs_->ShutdownDatabase();
   wdbs_ = nullptr;
 
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
-// Hangs flakily, see http://crbug.com/43836.
-TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
+TEST_F(PasswordStoreWinTest, MultipleWDSQueriesOnDifferentThreads) {
   IE7PasswordInfo password_info;
   ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
                                     base::Time::FromDoubleT(1),
                                     &password_info));
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
-  WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                     base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
-  done.Wait();
-
   store_ = CreatePasswordStore();
   EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));
 
   MockPasswordStoreConsumer password_consumer;
-  // Make sure we quit the MessageLoop even if the test fails.
-  ON_CALL(password_consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillByDefault(QuitUIMessageLoop());
 
   PasswordFormData form_data = {
       PasswordForm::SCHEME_HTML,
@@ -390,22 +369,24 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
       L"submit_element",
       L"username_element",
       L"password_element",
-      L"",
-      L"",
+      nullptr,
+      nullptr,
       true,
       1,
   };
   PasswordStore::FormDigest form(
       *CreatePasswordFormFromDataForTesting(form_data));
 
+  // The returned form will not have 'action' or '*_element' fields set. This
+  // is because credentials imported from IE don't have this information.
   PasswordFormData expected_form_data = {
       PasswordForm::SCHEME_HTML,
       "http://example.com/",
       "http://example.com/origin",
-      "http://example.com/action",
-      L"submit_element",
-      L"username_element",
-      L"password_element",
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
       L"abcdefgh",
       L"abcdefghijkl",
       true,
@@ -413,7 +394,7 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
   };
   std::vector<std::unique_ptr<PasswordForm>> expected_forms;
   expected_forms.push_back(
-      CreatePasswordFormFromDataForTesting(expected_form_data));
+      CreatePasswordFormFromDataForTesting(expected_form_data, false));
 
   // The IE7 password should be returned.
   EXPECT_CALL(password_consumer,
@@ -423,17 +404,10 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
   store_->GetLogins(form, &password_consumer);
 
   MockWebDataServiceConsumer wds_consumer;
-
-  EXPECT_CALL(wds_consumer, OnWebDataServiceRequestDoneStub())
-      .WillOnce(QuitUIMessageLoop());
-
+  EXPECT_CALL(wds_consumer, OnWebDataServiceRequestDoneStub());
   wds_->GetIE7Login(password_info, &wds_consumer);
 
-  // Run the MessageLoop twice: once for the GetIE7Login that PasswordStoreWin
-  // schedules on the DB thread and once for the one we just scheduled on the UI
-  // thread.
-  base::RunLoop().Run();
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyLogins) {
@@ -448,8 +422,8 @@ TEST_F(PasswordStoreWinTest, EmptyLogins) {
       L"submit_element",
       L"username_element",
       L"password_element",
-      L"",
-      L"",
+      nullptr,
+      nullptr,
       true,
       1,
   };
@@ -457,15 +431,10 @@ TEST_F(PasswordStoreWinTest, EmptyLogins) {
       *CreatePasswordFormFromDataForTesting(form_data));
 
   MockPasswordStoreConsumer consumer;
-
-  // Make sure we quit the MessageLoop even if the test fails.
-  ON_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillByDefault(QuitUIMessageLoop());
-
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
-
   store_->GetLogins(form, &consumer);
-  base::RunLoop().Run();
+
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyBlacklistLogins) {
@@ -473,15 +442,10 @@ TEST_F(PasswordStoreWinTest, EmptyBlacklistLogins) {
   store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
 
   MockPasswordStoreConsumer consumer;
-
-  // Make sure we quit the MessageLoop even if the test fails.
-  ON_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillByDefault(QuitUIMessageLoop());
-
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
-
   store_->GetBlacklistLogins(&consumer);
-  base::RunLoop().Run();
+
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyAutofillableLogins) {
@@ -489,13 +453,8 @@ TEST_F(PasswordStoreWinTest, EmptyAutofillableLogins) {
   store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
 
   MockPasswordStoreConsumer consumer;
-
-  // Make sure we quit the MessageLoop even if the test fails.
-  ON_CALL(consumer, OnGetPasswordStoreResultsConstRef(_))
-      .WillByDefault(QuitUIMessageLoop());
-
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
-
   store_->GetAutofillableLogins(&consumer);
-  base::RunLoop().Run();
+
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
