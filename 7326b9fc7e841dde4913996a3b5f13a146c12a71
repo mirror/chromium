@@ -46,6 +46,30 @@
       "revId": "7326b9fc7e841dde4913996a3b5f13a146c12a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2324ec6f_25f2ccf5",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-19T16:20:19Z",
+      "side": 0,
+      "message": "I like keeping it async. I suspect we\u0027ll need notification at some point that prefs are available, but we can do that later.",
+      "parentUuid": "05b8e5a3_0929ed73",
+      "range": {
+        "startLine": 438,
+        "startChar": 41,
+        "endLine": 438,
+        "endChar": 57
+      },
+      "revId": "7326b9fc7e841dde4913996a3b5f13a146c12a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
