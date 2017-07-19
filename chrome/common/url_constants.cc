@@ -150,6 +150,10 @@ const char kChromeUITabModalConfirmDialogURL[] =
     "chrome://tab-modal-confirm-dialog/";
 #endif
 
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+extern const char kChromeUIMemoryInternalsURL[] = "chrome://memory-internals/";
+#endif
+
 #if BUILDFLAG(ENABLE_WEBRTC)
 const char kChromeUIWebRtcLogsURL[] = "chrome://webrtc-logs/";
 #endif
@@ -343,6 +347,10 @@ const char kChromeUIMetroFlowHost[] = "make-metro";
 
 #if (defined(OS_LINUX) && defined(TOOLKIT_VIEWS)) || defined(USE_AURA)
 const char kChromeUITabModalConfirmDialogHost[] = "tab-modal-confirm-dialog";
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+extern const char kChromeUIMemoryInternalsHost[] = "memory-internals";
 #endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
