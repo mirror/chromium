@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8677e6f_7521e049",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-19T23:00:49Z",
+      "side": 1,
+      "message": "All the implementations here are adapted from message_service.cc, but gerrit won\u0027t show it as a \"A+\" with diffs.",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
