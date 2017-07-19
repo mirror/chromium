@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "672e64ba_bf81f8bd",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:49:50Z",
+      "side": 1,
+      "message": "Question 1: The two strings are identical from CrOS and non-CrOS, is the differentiation necessary?\n\nQuestion 2: The UI being added is only visible for CrOS. Do we need a non-CrOS string? Will it ever be displayed?",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acbd010a_9907c8ce",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-19T18:43:22Z",
       "side": 1,
       "message": "Remove console.log.",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65467e77_d0b9872e",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:49:50Z",
+      "side": 1,
+      "message": "Are you planning to add tests for this page in a follow up CL?",
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +81,23 @@
       "writtenOn": "2017-07-19T18:43:22Z",
       "side": 1,
       "message": "This ID already exists above. Can\u0027t use the same ID twice, otherwise the wrong subpage will be highlighted when searchding.",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f04d517_1975cf1c",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:49:50Z",
+      "side": 1,
+      "message": "This aria-label does not seem correct. It is just resusing the same string as the other supbage above. Shouldn\u0027t it be specific to google assistant?",
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
