@@ -12,6 +12,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
@@ -121,7 +122,8 @@ bool PresentationRequest::HasPendingActivity() const {
 }
 
 ScriptPromise PresentationRequest::start(ScriptState* script_state) {
-  Settings* context_settings = GetSettings(GetExecutionContext());
+  ExecutionContext* execution_context = GetExecutionContext();
+  Settings* context_settings = GetSettings(execution_context);
   bool is_user_gesture_required =
       !context_settings ||
       context_settings->GetPresentationRequiresUserGesture();
@@ -135,13 +137,21 @@ ScriptPromise PresentationRequest::start(ScriptState* script_state) {
             "PresentationRequest::start() requires user gesture."));
 
   WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
+      PresentationController::ClientFromContext(execution_context);
   if (!client)
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(
             kInvalidStateError,
             "The PresentationRequest is no longer associated to a frame."));
+
+  if (execution_context->IsSecureContext()) {
+    UseCounter::Count(execution_context,
+                      WebFeature::kPresentationRequestStartSecureOrigin);
+  } else {
+    Deprecation::CountDeprecation(
+        execution_context, WebFeature::kPresentationRequestStartInsecureOrigin);
+  }
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   client->StartPresentation(
