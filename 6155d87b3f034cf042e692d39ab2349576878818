@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "c0d0fa8b_da549523",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-19T10:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd7ba52_7b1c4f48",
+      "range": {
+        "startLine": 35,
+        "startChar": 74,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "6155d87b3f034cf042e692d39ab2349576878818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71cf32ba_61355baa",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-19T10:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a420c40c_dc69a2de",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "6155d87b3f034cf042e692d39ab2349576878818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abde5912_6f09b17b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-19T06:31:28Z",
       "side": 1,
       "message": "nit: Please add the base\u003d\"true\" attribute to indicate that this histogram name is not emitted to directly, but rather only with suffixes.",
+      "range": {
+        "startLine": 64978,
+        "startChar": 60,
+        "endLine": 64978,
+        "endChar": 0
+      },
+      "revId": "6155d87b3f034cf042e692d39ab2349576878818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19120f0b_b1b0538c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64978,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-19T10:00:59Z",
+      "side": 1,
+      "message": "I didn\u0027t know about that, thanks.",
+      "parentUuid": "abde5912_6f09b17b",
       "range": {
         "startLine": 64978,
         "startChar": 60,
@@ -91,6 +163,30 @@
       "revId": "6155d87b3f034cf042e692d39ab2349576878818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb468387_b535609a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 97466,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-19T10:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc40f3f6_456916d4",
+      "range": {
+        "startLine": 97464,
+        "startChar": 0,
+        "endLine": 97466,
+        "endChar": 28
+      },
+      "revId": "6155d87b3f034cf042e692d39ab2349576878818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
