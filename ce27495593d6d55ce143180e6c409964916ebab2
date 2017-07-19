@@ -111,6 +111,23 @@
       "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5409d52e_4b4980d2",
+        "filename": "media/midi/chromeos/midi_manager_cros.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-19T06:09:26Z",
+      "side": 1,
+      "message": "Let me add a new comment about crbug.com/719489 here.",
+      "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
