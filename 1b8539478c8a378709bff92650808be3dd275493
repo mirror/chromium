@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cff95f5_a8803cc8",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b24150db_9c40c159",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6baac50c_39aaf995",
         "filename": "content/browser/renderer_host/offscreen_canvas_provider_impl_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1b8539478c8a378709bff92650808be3dd275493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04ac0e9_366783d3",
+        "filename": "content/browser/renderer_host/offscreen_canvas_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6baac50c_39aaf995",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f2f1f37_a02890ce",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2587,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f25fdae_e4e99b19",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54b402e3_1fc13807",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 5
@@ -64,6 +118,58 @@
       "writtenOn": "2017-07-18T21:04:13Z",
       "side": 1,
       "message": "and here?",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189d6528_3662d7e0",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2728,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b402e3_1fc13807",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b21ad01d_04a50c26",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Making this as 0 as this is not currently in use.",
+      "revId": "1b8539478c8a378709bff92650808be3dd275493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b918c04b_a19f9611",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-19T18:42:17Z",
+      "side": 1,
+      "message": "Making this as 0 since this is not used in this CL.",
       "revId": "1b8539478c8a378709bff92650808be3dd275493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
