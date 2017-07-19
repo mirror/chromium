@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43c4d71e_cb6bcd80",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T22:07:17Z",
+      "side": 1,
+      "message": "doesn\u0027t need to be final in interface",
+      "range": {
+        "startLine": 50,
+        "startChar": 32,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "35b8f3cc5d2a705543cf0f18551165e23841f8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1c3747_ff198651",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T22:07:17Z",
+      "side": 1,
+      "message": "uber nit time\n\nWhat if instead, factor out a \"private stopWithoutNotify\" method, and the public stop can call that? Then after that, should stopWithoutNotify be merged with unbind? unbind is only exposed for testing I think.",
+      "revId": "35b8f3cc5d2a705543cf0f18551165e23841f8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a500b1a_f2c5d07e",
+        "filename": "base/android/junit/src/org/chromium/base/process_launcher/ChildConnectionAllocatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T22:07:17Z",
+      "side": 1,
+      "message": "I think rule of thumb is still avoid enums in java, even though this is only a test..\n\n(I didn\u0027t find an explicit style guide rule, and found more and more violations the higher up layer you go, but at least there\u0027s no enum in base yet, so let\u0027s keep it that way?)",
+      "revId": "35b8f3cc5d2a705543cf0f18551165e23841f8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3251f0_d96fcc3d",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T22:07:17Z",
+      "side": 1,
+      "message": "I think this is incorrectly passing here because having a launcher here doesn\u0027t necessarily imply there\u0027s a connection backing it",
+      "revId": "35b8f3cc5d2a705543cf0f18551165e23841f8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83a45a0_9a504abc",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/ChildProcessLauncherTestHelperService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T22:07:17Z",
+      "side": 1,
+      "message": "this should call unbindService I guess? kinda makes me wonder how the test is passing..",
+      "revId": "35b8f3cc5d2a705543cf0f18551165e23841f8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
