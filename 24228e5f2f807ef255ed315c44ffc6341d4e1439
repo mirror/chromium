@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35eec712_0f32d689",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T22:15:26Z",
+      "side": 1,
+      "message": "Will you also add a comment above line 334 :\n\n// Remove an item from the date bucket with two items. Wait for two callbacks as notifyDataSetChanged()\n//  is called once when setHeaders() is called and once when items are loaded.\nAssert.assertEquals(2, mObserver.onChangedCallback.getCallCount());",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 56
+      },
+      "revId": "24228e5f2f807ef255ed315c44ffc6341d4e1439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
