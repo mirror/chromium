@@ -194,9 +194,9 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
       continue;
 
     // We can simply erase the current entry in the request table if we aren't
-    // showing the dialog, or if we are showing it and it can accept the update.
-    bool can_erase = view_->CanAcceptRequestUpdate();
-    if (can_erase) {
+    // showing the dialog (because we switched tabs with an active prompt), or
+    // if we are showing it and it can accept the update.
+    if (!view_ || view_->CanAcceptRequestUpdate()) {
       DeleteBubble();
 
       RequestFinishedIncludingDuplicates(*requests_iter);
