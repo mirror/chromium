@@ -1,0 +1,69 @@
+/* Copyright 2017 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+svg {
+  height: 24px;
+  width: 24px;
+}
+
+path {
+  fill: #bdbdbd;
+}
+
+#svg-container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+#footer {
+  align-items: center;
+  background-color: #4285f4;
+  border-radius: 2px;
+  bottom: 0;
+  color: white;
+  display: flex;
+  font-size: 14px;
+  justify-content: space-between;
+  left: 0;
+  max-height: 52px;
+  min-height: 20px;
+  padding: 14px 24px;
+  position: absolute;
+  right: 0;
+}
+
+p,
+a {
+  line-height: 20px;
+}
+
+p {
+  font-family: Roboto;
+  margin: 0;
+}
+
+a {
+  font-family: Roboto Medium;
+  margin-left: 48px;
+}
+
+a:link,
+a:visited {
+  color: white;
+  text-decoration: none;
+}
