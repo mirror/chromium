@@ -219,6 +219,8 @@ bool WebContentsDelegate::ShouldBlockMediaRequest(const GURL& url) {
 }
 #endif
 
+void WebContentsDelegate::SetOverlayMode(bool use_overlay_mode) {}
+
 bool WebContentsDelegate::RequestPpapiBrokerPermission(
     WebContents* web_contents,
     const GURL& url,
