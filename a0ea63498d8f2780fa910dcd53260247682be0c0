@@ -87,6 +87,24 @@
       "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d08747f_66787612",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-19T10:00:10Z",
+      "side": 1,
+      "message": "Re: ResourceFetcherImpl, what do you suggest by that?",
+      "parentUuid": "d08ff36d_7678a811",
+      "revId": "a0ea63498d8f2780fa910dcd53260247682be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
