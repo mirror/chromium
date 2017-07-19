@@ -262,6 +262,7 @@ void ControllerImpl::OnStartScheduledTask(
         ActivateMoreDownloads();
       } else if (task_type == DownloadTaskType::CLEANUP_TASK) {
         RemoveCleanupEligibleDownloads();
+        ScheduleCleanupTask();
       }
       break;
     case State::UNAVAILABLE:
@@ -846,7 +847,8 @@ void ControllerImpl::ScheduleCleanupTask() {
   base::TimeDelta end_time = start_time + config_->file_cleanup_window;
 
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
-                                start_time.InSeconds(), end_time.InSeconds());
+                                start_time.InSeconds() + 1,
+                                end_time.InSeconds() + 1);
 }
 
 void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {

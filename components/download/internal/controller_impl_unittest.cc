@@ -33,6 +33,7 @@
 using testing::_;
 using testing::NiceMock;
 using testing::Return;
+using testing::SaveArg;
 
 namespace download {
 
@@ -762,11 +763,14 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadSucceeded) {
   driver_entry.completion_time = base::Time::Now();
   driver_entry.current_file_path = base::FilePath::FromUTF8Unsafe("123");
 
+  long start_time = 0;
   EXPECT_CALL(*task_scheduler_,
               ScheduleTask(DownloadTaskType::CLEANUP_TASK, _, _, _, _))
-      .Times(1);
+      .WillOnce(SaveArg<3>(&start_time));
   driver_->NotifyDownloadSucceeded(driver_entry);
   EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry.guid)->state);
+  EXPECT_LE(driver_entry.completion_time + config_->file_keep_alive_time,
+            base::Time::Now() + base::TimeDelta::FromSeconds(start_time));
 
   task_runner_->RunUntilIdle();
 }
@@ -791,7 +795,7 @@ TEST_F(DownloadServiceControllerImplTest, CleanupTaskScheduledAtEarliestTime) {
   driver_entry.current_file_path = base::FilePath::FromUTF8Unsafe("123");
 
   EXPECT_CALL(*task_scheduler_, ScheduleTask(DownloadTaskType::CLEANUP_TASK,
-                                             false, false, 479, 779))
+                                             false, false, 480, 780))
       .Times(1);
   driver_->NotifyDownloadSucceeded(driver_entry);
   EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry1.guid)->state);
