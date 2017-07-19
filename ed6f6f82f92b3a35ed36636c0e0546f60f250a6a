@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "19871678_ed77d9f5",
+        "filename": "content/browser/screen_orientation/screen_orientation_delegate_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-19T15:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf053cbb_360b8a0c",
+      "revId": "ed6f6f82f92b3a35ed36636c0e0546f60f250a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33135c9c_f8f2421b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
         "patchSetId": 2

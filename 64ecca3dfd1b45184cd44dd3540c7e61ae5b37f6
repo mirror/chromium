@@ -16,6 +16,24 @@
       "revId": "64ecca3dfd1b45184cd44dd3540c7e61ae5b37f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7b2c6c_7167502b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ScreenOrientationDelegateManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-19T15:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deeff906_5788ffa3",
+      "revId": "64ecca3dfd1b45184cd44dd3540c7e61ae5b37f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
