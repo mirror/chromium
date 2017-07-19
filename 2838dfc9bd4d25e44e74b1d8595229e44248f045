@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8789204c_eb708ced",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-19T05:16:50Z",
+      "side": 1,
+      "message": "Introduce/plumb the this._comboBox.setMinWidth?",
+      "revId": "2838dfc9bd4d25e44e74b1d8595229e44248f045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
