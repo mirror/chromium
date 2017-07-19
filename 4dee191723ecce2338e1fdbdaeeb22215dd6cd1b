@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c27a36b_3338c73c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T04:46:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5ace0b_4d610608",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "4dee191723ecce2338e1fdbdaeeb22215dd6cd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fd3ef8c_9249d7cd",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T03:11:41Z",
       "side": 1,
       "message": "Optional: Could you make this constructor protected? (I believe you can do this in minimum effort, but otherwise you can skip)",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 65
+      },
+      "revId": "4dee191723ecce2338e1fdbdaeeb22215dd6cd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6bd480_0b1f8f5f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T04:46:04Z",
+      "side": 1,
+      "message": "Not really, unfortunately.\n(BTW, You meant, private rather than protected? This class is not inherited.)\n\nI already have a related TODO (in arc_browser_context_keyed_service_factory_base.h), so please let me skip it in this CL.",
+      "parentUuid": "0fd3ef8c_9249d7cd",
       "range": {
         "startLine": 107,
         "startChar": 0,
