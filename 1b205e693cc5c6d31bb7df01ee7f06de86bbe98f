@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2492fb02_d6203bc1",
+        "filename": "ash/touch/touch_uma.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-19T01:22:58Z",
+      "side": 1,
+      "message": "is is_null() discouraged for detecting unset base::TickTicks values? i know that that can represent a legitimate value, but i don\u0027t think that value can occur in this usage.",
+      "revId": "1b205e693cc5c6d31bb7df01ee7f06de86bbe98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
