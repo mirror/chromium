@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "badc6140_515ed69b",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overidden_user_select_in_dom_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-19T21:42:26Z",
+      "side": 1,
+      "message": "nit: remove \u0027because\u0027",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c818cec_4637bb41",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overriden_user_select_in_shadow_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-19T21:42:26Z",
+      "side": 1,
+      "message": "nit: s/bar/shadowbar",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1892c9d_4aebc0e9",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 3339,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-19T21:42:26Z",
+      "side": 1,
+      "message": "This has web-visible consequences, is there a spec for this change? I expect this isn\u0027t likely to break any content so I don\u0027t think an intent-to-ship is needed but it wouldn\u0027t hurt to send a PSA to blink-dev.",
+      "range": {
+        "startLine": 3339,
+        "startChar": 18,
+        "endLine": 3339,
+        "endChar": 22
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
