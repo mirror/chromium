@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6e6bcbd5_ee58ed92",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-19T23:49:41Z",
+      "side": 1,
+      "message": "LaunchProcess() calls ForkWithFlags(), which gets to here for the child process, and returns 0. Then in LaunchProcess(), it goes on to check the pid. If it\u0027s 0, the code path goes on to eventually call execvp(). At the beginning of the if (pid \u003d\u003d 0) block, there\u0027s a big DANGER sign. I believe that DANGER sign applies here.\n\nThere\u0027s no direct malloc() calls here, but what does pthread_self(), fork() and waitpid() do internally? Even though \"man waitpid\" says it\u0027s a system call, I believe what this actually calls is a wrapper in glibc. Hopefully all the wrappers are just straight forward pass-throughs to the syscalls, but it would be good to verify.",
+      "parentUuid": "4cbfe740_cc5b1e0c",
+      "revId": "8da6e2638097b7df717e7c2acae984695bca7c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "505a191d_069edc56",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 3
