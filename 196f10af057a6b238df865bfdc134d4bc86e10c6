@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f05085_993d1f2f",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T17:18:15Z",
+      "side": 1,
+      "message": "Should this be a TabHelper instead?",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c535da0f_14e2e4d3",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T17:18:15Z",
+      "side": 1,
+      "message": "This script is already a part of GetEarlyScript, so there is no need to specify it here.",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7927b8d0_28f71ae2",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T17:18:15Z",
+      "side": 1,
+      "message": "Please add this script to chrome_bundle.js instead.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 20
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314fd73f_cb4637fa",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-19T17:18:15Z",
+      "side": 1,
+      "message": "Is there a reason why this script is injected twice?",
+      "range": {
+        "startLine": 174,
+        "startChar": 18,
+        "endLine": 174,
+        "endChar": 36
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
