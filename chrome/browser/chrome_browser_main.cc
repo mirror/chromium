@@ -1605,6 +1605,14 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   // Desktop construction occurs here, (required before profile creation).
   PreProfileInit();
 
+  // This has to come before the first GetInstance() call.
+  // OfflinePageInfoHandler::Register() below calls GetInstance().
+  // Also ChromeSerializedNavigationDriver object can be sometimes used in local
+  // sync code just after profile creation.
+  // TODO(thestig): See if the Android code below can be moved to later.
+  sessions::ContentSerializedNavigationDriver::SetInstance(
+      ChromeSerializedNavigationDriver::GetInstance());
+
   // Profile creation ----------------------------------------------------------
 
   metrics::MetricsService::SetExecutionPhase(
@@ -1782,13 +1790,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
       metrics::ExecutionPhase::THREAD_WATCHER_START,
       g_browser_process->local_state());
   ThreadWatcherList::StartWatchingAll(parsed_command_line());
-
-  // This has to come before the first GetInstance() call. PreBrowserStart()
-  // seems like a reasonable place to put this, except on Android,
-  // OfflinePageInfoHandler::Register() below calls GetInstance().
-  // TODO(thestig): See if the Android code below can be moved to later.
-  sessions::ContentSerializedNavigationDriver::SetInstance(
-      ChromeSerializedNavigationDriver::GetInstance());
 
 #if defined(OS_ANDROID)
   ThreadWatcherAndroid::RegisterApplicationStatusListener();
