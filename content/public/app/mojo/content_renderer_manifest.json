@@ -19,7 +19,11 @@
         ]
       },
       "requires": {
-        "content_browser": [ "memory_instrumentation", "renderer" ],
+        "content_browser": [
+          "memory_instrumentation",
+          "renderer",
+          "url_keyed_metrics"
+        ],
         "device": [
           "device:battery_monitor",
           "device:power_monitor",
