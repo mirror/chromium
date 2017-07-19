@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad52ad26_ad6422f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-07-19T23:04:13Z",
+      "side": 1,
+      "message": "Moved to components/variations. And I guess s/is/so/.",
+      "revId": "005d25e57046f6b0f47742b59b92a78725359aa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
