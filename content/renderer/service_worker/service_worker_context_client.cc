@@ -556,6 +556,50 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
   mojo::ScopedDataPipeConsumerHandle body_;
 };
 
+ServiceWorkerContextClient::TraceEventTracker::TraceEventTracker(
+    const char* name,
+    const void* tag)
+    : name_(name), tag_(tag) {
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", name_, tag_);
+}
+
+ServiceWorkerContextClient::TraceEventTracker::TraceEventTracker(
+    const char* name,
+    const void* tag,
+    const char* arg1,
+    const std::string& val1)
+    : name_(name), tag_(tag) {
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker", name_, tag_, arg1, val1);
+}
+
+ServiceWorkerContextClient::TraceEventTracker::~TraceEventTracker() {
+  switch (params_.size()) {
+    case 0:
+      TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", name_, tag_);
+      return;
+    case 1:
+      TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker", name_, tag_,
+                                      params_[0].first, params_[0].second);
+      return;
+    case 2:
+      TRACE_EVENT_NESTABLE_ASYNC_END2("ServiceWorker", name_, tag_,
+                                      params_[0].first, params_[0].second,
+                                      params_[1].first, params_[1].second);
+      return;
+  }
+  DCHECK_LT(params_.size(), 2u);
+  TRACE_EVENT_NESTABLE_ASYNC_END2("ServiceWorker", name_, tag_,
+                                  params_[0].first, params_[0].second,
+                                  params_[1].first, params_[1].second);
+}
+
+void ServiceWorkerContextClient::TraceEventTracker::AddParam(
+    const char* arg,
+    const std::string& val) {
+  params_.emplace_back(arg, val);
+  DCHECK_LE(params_.size(), 2u);
+}
+
 ServiceWorkerContextClient*
 ServiceWorkerContextClient::ThreadSpecificInstance() {
   return g_worker_client_tls.Pointer()->Get();
@@ -566,6 +610,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
     int64_t service_worker_version_id,
     const GURL& service_worker_scope,
     const GURL& script_url,
+    bool is_script_streaming,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client)
@@ -573,6 +618,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
       service_worker_version_id_(service_worker_version_id),
       service_worker_scope_(service_worker_scope),
       script_url_(script_url),
+      is_script_streaming_(is_script_streaming),
       sender_(ChildThreadImpl::current()->thread_safe_sender()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       proxy_(nullptr),
@@ -581,14 +627,13 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   instance_host_ =
       mojom::ThreadSafeEmbeddedWorkerInstanceHostAssociatedPtr::Create(
           std::move(instance_host), main_thread_task_runner_);
-  TRACE_EVENT_ASYNC_BEGIN0("ServiceWorker",
-                           "ServiceWorkerContextClient::StartingWorkerContext",
-                           this);
-  TRACE_EVENT_ASYNC_STEP_INTO0(
-      "ServiceWorker",
-      "ServiceWorkerContextClient::StartingWorkerContext",
-      this,
-      "PrepareWorker");
+  startup_trackers_.emplace("ServiceWorkerContextClient", this, "script_url",
+                            script_url_.spec());
+  if (is_script_streaming_)
+    startup_trackers_.emplace("START_WORKER_THREAD", this);
+  else
+    startup_trackers_.emplace("LOAD_WORKER_SCRIPT", this, "Type",
+                              "ResourceLoader");
 }
 
 ServiceWorkerContextClient::~ServiceWorkerContextClient() {}
@@ -684,12 +729,22 @@ void ServiceWorkerContextClient::WorkerContextFailedToStart() {
   (*instance_host_)->OnScriptLoadFailed();
   (*instance_host_)->OnStopped();
 
+  DCHECK_EQ(2u, startup_trackers_.size());
+  startup_trackers_.top().AddParam("Status", "Failed to start a worker thread");
+  startup_trackers_.pop();
+  startup_trackers_.pop();
+
   DCHECK(embedded_worker_client_);
   embedded_worker_client_->WorkerContextDestroyed();
 }
 
 void ServiceWorkerContextClient::WorkerScriptLoaded() {
   (*instance_host_)->OnScriptLoaded();
+  startup_trackers_.pop();
+  if (is_script_streaming_)
+    startup_trackers_.emplace("EVALUATE_SCRIPT", this);
+  else
+    startup_trackers_.emplace("START_WORKER_THREAD", this);
 }
 
 bool ServiceWorkerContextClient::HasAssociatedRegistration() {
@@ -731,11 +786,12 @@ void ServiceWorkerContextClient::WorkerContextStarted(
       ->OnThreadStarted(WorkerThread::GetCurrentId(),
                         provider_context_->provider_id());
 
-  TRACE_EVENT_ASYNC_STEP_INTO0(
-      "ServiceWorker",
-      "ServiceWorkerContextClient::StartingWorkerContext",
-      this,
-      "ExecuteScript");
+  startup_trackers_.pop();
+  if (is_script_streaming_)
+    startup_trackers_.emplace("LOAD_WORKER_SCRIPT", this, "Type",
+                              "Script streaming");
+  else
+    startup_trackers_.emplace("EVALUATE_SCRIPT", this);
 }
 
 void ServiceWorkerContextClient::DidEvaluateWorkerScript(bool success) {
@@ -748,6 +804,11 @@ void ServiceWorkerContextClient::DidEvaluateWorkerScript(bool success) {
   worker_task_runner_->PostTask(
       FROM_HERE, base::Bind(&ServiceWorkerContextClient::SendWorkerStarted,
                             GetWeakPtr()));
+
+  DCHECK_EQ(2u, startup_trackers_.size());
+  startup_trackers_.top().AddParam("Status", success ? "Success" : "Failure");
+  startup_trackers_.pop();
+  startup_trackers_.pop();
 }
 
 void ServiceWorkerContextClient::DidInitializeWorkerContext(
