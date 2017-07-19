@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a04cc350_b67085ac",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-19T18:20:00Z",
+      "side": 1,
+      "message": "I\u0027m okay with that.",
+      "parentUuid": "92faca08_1c1b013d",
+      "revId": "8d8ff9e05f63d3229ce521be4722e71260fa7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89479d27_487b92c5",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 14
