@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe887eab_609c5a73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-07-19T14:39:46Z",
+      "side": 1,
+      "message": "I can stick it on crbug.com/548423 or file a new bug for it (as a blocker of 548423).",
+      "parentUuid": "85760ec0_41c143e6",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "640755e43b484ecef3a2bf9afed7db51983b9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccb0158a_f68c974f",
         "filename": "net/cookies/cookie_monster.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "640755e43b484ecef3a2bf9afed7db51983b9547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98177e42_5fda9efa",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-07-19T14:39:46Z",
+      "side": 1,
+      "message": "No, it isn\u0027t needed.",
+      "parentUuid": "ccb0158a_f68c974f",
+      "range": {
+        "startLine": 934,
+        "startChar": 25,
+        "endLine": 934,
+        "endChar": 26
+      },
+      "revId": "640755e43b484ecef3a2bf9afed7db51983b9547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
