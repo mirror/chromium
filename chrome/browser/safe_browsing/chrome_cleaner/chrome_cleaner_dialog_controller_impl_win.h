@@ -11,14 +11,20 @@
 #include "base/macros.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_win.h"
+#include "ui/views/widget/widget_observer.h"
 
 class Browser;
+
+namespace views {
+class Widget;
+}
 
 namespace safe_browsing {
 
 class ChromeCleanerDialogControllerImpl
     : public ChromeCleanerDialogController,
-      public ChromeCleanerController::Observer {
+      public ChromeCleanerController::Observer,
+      public views::WidgetObserver {
  public:
   // An instance should only be created when |cleaner_controller| is in the
   // kScanning state.
@@ -41,14 +47,24 @@ class ChromeCleanerDialogControllerImpl
   void OnCleaning(const std::set<base::FilePath>& files_to_delete) override;
   void OnRebootRequired() override;
 
+  // views::WidgetObserver overrides.
+  void OnWidgetClosing(views::Widget* widget) override;
+
  protected:
   ~ChromeCleanerDialogControllerImpl() override;
 
  private:
+  // Called when the cleaner controller leaves the infected state without the
+  // user interacting with the dialog. This can happen due to IPC errors or if
+  // the user interacts with the Chrome Cleaner's webui card in the settings
+  // page in a different window.
+  void Abort();
   void OnInteractionDone();
 
   ChromeCleanerController* cleaner_controller_ = nullptr;
   bool dialog_shown_ = false;
+  views::Widget* dialog_widget_ = nullptr;
+  bool aborted_ = false;
   Browser* browser_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeCleanerDialogControllerImpl);
