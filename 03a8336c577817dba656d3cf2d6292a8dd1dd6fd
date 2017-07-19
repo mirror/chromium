@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "b45c4e38_62859e98",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-19T18:05:50Z",
+      "side": 1,
+      "message": "memory, cpu usage when the set needs to be expanded, etc.\n\nAll frames are attached directly to their tabs.",
+      "parentUuid": "c27628e5_ee69986f",
+      "revId": "03a8336c577817dba656d3cf2d6292a8dd1dd6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1ec9c8_838e6f64",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
