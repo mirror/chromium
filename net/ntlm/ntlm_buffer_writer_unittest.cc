@@ -20,9 +20,8 @@ const uint8_t* GetBufferPtr(const NtlmBufferWriter& writer) {
 
 // Helper method to get a byte at a specific index in the buffer.
 uint8_t GetByteFromBuffer(const NtlmBufferWriter& writer, size_t index) {
-  base::StringPiece piece(writer.GetBuffer());
-  EXPECT_TRUE(index < piece.length());
-  return static_cast<uint8_t>(piece.data()[index]);
+  EXPECT_TRUE(index < writer.GetLength());
+  return writer.GetBuffer()[index];
 }
 
 }  // namespace
