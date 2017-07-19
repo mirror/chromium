@@ -270,10 +270,6 @@ WebViewBase* WebViewImpl::Create(WebViewClient* client,
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
 }
 
-const WebInputEvent* WebViewBase::CurrentInputEvent() {
-  return WebViewImpl::CurrentInputEvent();
-}
-
 void WebView::SetUseExternalPopupMenus(bool use_external_popup_menus) {
   g_should_use_external_popup_menus = use_external_popup_menus;
 }
@@ -2116,8 +2112,6 @@ bool WebViewImpl::HasVerticalScrollbar() {
       ->LayoutViewportScrollableArea()
       ->VerticalScrollbar();
 }
-
-const WebInputEvent* WebViewImpl::current_input_event_ = nullptr;
 
 WebInputEventResult WebViewImpl::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event) {

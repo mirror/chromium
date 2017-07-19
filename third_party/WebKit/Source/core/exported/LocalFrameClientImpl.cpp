@@ -29,7 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/LocalFrameClientImpl.h"
+#include "core/exported/LocalFrameClientImpl.h"
 
 #include <memory>
 
@@ -44,6 +44,7 @@
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebDevToolsFrontendImpl.h"
+#include "core/exported/WebFactory.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -60,21 +61,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/HistoryItem.h"
-#include "core/origin_trials/OriginTrials.h"
 #include "core/page/Page.h"
-#include "modules/audio_output_devices/HTMLMediaElementAudioOutputDevice.h"
-#include "modules/device_orientation/DeviceMotionController.h"
-#include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
-#include "modules/device_orientation/DeviceOrientationController.h"
-#include "modules/encryptedmedia/HTMLMediaElementEncryptedMedia.h"
-#include "modules/gamepad/NavigatorGamepad.h"
-#include "modules/presentation/PresentationReceiver.h"
-#include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
-#include "modules/remoteplayback/RemotePlayback.h"
-#include "modules/serviceworkers/NavigatorServiceWorker.h"
-#include "modules/serviceworkers/ServiceWorkerLinkResource.h"
-#include "modules/storage/DOMWindowStorageController.h"
-#include "modules/vr/NavigatorVR.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebFrameScheduler.h"
@@ -174,20 +161,8 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
     web_frame_->Client()->DidClearWindowObject();
     Document* document = web_frame_->GetFrame()->GetDocument();
     if (document) {
-      DeviceMotionController::From(*document);
-      DeviceOrientationController::From(*document);
-      DeviceOrientationAbsoluteController::From(*document);
-      NavigatorGamepad::From(*document);
-      NavigatorServiceWorker::From(*document);
-      DOMWindowStorageController::From(*document);
-      if (RuntimeEnabledFeatures::WebVREnabled() ||
-          OriginTrials::webVREnabled(document->GetExecutionContext()))
-        NavigatorVR::From(*document);
-      if (RuntimeEnabledFeatures::PresentationEnabled() &&
-          web_frame_->GetFrame()->GetSettings()->GetPresentationReceiver()) {
-        // Call this in order to ensure the object is created.
-        PresentationReceiver::From(*document);
-      }
+      Settings* settings = web_frame_->GetFrame()->GetSettings();
+      InstallSupplements(*document, *settings);
     }
   }
   // FIXME: when extensions go out of process, this whole concept stops working.
@@ -843,24 +818,14 @@ std::unique_ptr<WebMediaPlayer> LocalFrameClientImpl::CreateWebMediaPlayer(
     HTMLMediaElement& html_media_element,
     const WebMediaPlayerSource& source,
     WebMediaPlayerClient* client) {
-  WebLocalFrameBase* web_frame =
-      WebLocalFrameBase::FromFrame(html_media_element.GetDocument().GetFrame());
-
-  if (!web_frame || !web_frame->Client())
-    return nullptr;
-
-  HTMLMediaElementEncryptedMedia& encrypted_media =
-      HTMLMediaElementEncryptedMedia::From(html_media_element);
-  WebString sink_id(
-      HTMLMediaElementAudioOutputDevice::sinkId(html_media_element));
-  return WTF::WrapUnique(web_frame->Client()->CreateMediaPlayer(
-      source, client, &encrypted_media,
-      encrypted_media.ContentDecryptionModule(), sink_id));
+  return WebFactory::GetInstance().CreateWebMediaPlayer(html_media_element,
+                                                        source, client);
 }
 
 WebRemotePlaybackClient* LocalFrameClientImpl::CreateWebRemotePlaybackClient(
     HTMLMediaElement& html_media_element) {
-  return HTMLMediaElementRemotePlayback::remote(html_media_element);
+  return WebFactory::GetInstance().CreateWebRemotePlaybackClient(
+      html_media_element);
 }
 
 WebCookieJar* LocalFrameClientImpl::CookieJar() const {
@@ -1003,7 +968,7 @@ BlameContext* LocalFrameClientImpl::GetFrameBlameContext() {
 
 LinkResource* LocalFrameClientImpl::CreateServiceWorkerLinkResource(
     HTMLLinkElement* owner) {
-  return ServiceWorkerLinkResource::Create(owner);
+  return WebFactory::GetInstance().CreateServiceWorkerLinkResource(owner);
 }
 
 WebEffectiveConnectionType LocalFrameClientImpl::GetEffectiveConnectionType() {

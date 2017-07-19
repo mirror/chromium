@@ -5,6 +5,8 @@
 #ifndef WebFactory_h
 #define WebFactory_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "public/platform/WebPageVisibilityState.h"
 #include "public/web/WebSandboxFlags.h"
@@ -12,13 +14,20 @@
 namespace blink {
 
 class ChromeClient;
+class HTMLLinkElement;
+class HTMLMediaElement;
+class InterfaceRegistry;
+class LinkResource;
+class WebFrame;
+class WebFrameClient;
+class WebLocalFrameBase;
+class WebMediaPlayer;
+class WebMediaPlayerSource;
+class WebMediaPlayerClient;
+class WebRemotePlaybackClient;
 class WebView;
 class WebViewBase;
-class WebLocalFrameBase;
 class WebViewClient;
-class WebFrameClient;
-class InterfaceRegistry;
-class WebFrame;
 enum class WebTreeScopeType;
 
 // WebFactory is a temporary class implemented in web/ that allows classes to
@@ -40,6 +49,17 @@ class CORE_EXPORT WebFactory {
       WebFrameClient*,
       InterfaceRegistry*,
       WebFrame* opener) const = 0;
+
+  // TODO(joelhockey): Cleanup these methods that are purely to create objects
+  // of classes defined in modules from core. See crbug.com/734450
+  virtual std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(
+      HTMLMediaElement&,
+      const WebMediaPlayerSource&,
+      WebMediaPlayerClient*) = 0;
+  virtual WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
+      HTMLMediaElement&) = 0;
+  virtual LinkResource* CreateServiceWorkerLinkResource(
+      HTMLLinkElement* owner) = 0;
 
  protected:
   // Takes ownership of |factory|.
