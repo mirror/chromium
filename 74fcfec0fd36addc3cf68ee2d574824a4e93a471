@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3807ed00_bfbb04ae",
+        "filename": "extensions/browser/sandboxed_unpacker_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T18:40:41Z",
+      "side": 1,
+      "message": "Check the unpack error here, to ensure that the failure was correctly reported?",
+      "revId": "74fcfec0fd36addc3cf68ee2d574824a4e93a471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
