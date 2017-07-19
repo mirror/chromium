@@ -42,25 +42,27 @@ void EasyResizeWindowTargeter::SetInsets(const gfx::Insets& mouse_extend,
       ->SetExtendedHitRegionForChildren(mouse_extend, touch_extend);
 }
 
-bool EasyResizeWindowTargeter::EventLocationInsideBounds(
-    aura::Window* window,
-    const ui::LocatedEvent& event) const {
-  if (ShouldUseExtendedBounds(window)) {
-    // Note that |event|'s location is in |window|'s parent's coordinate system,
-    // so convert it to |window|'s coordinate system first.
-    gfx::Point point = event.location();
-    if (window->parent())
-      aura::Window::ConvertPointToTarget(window->parent(), window, &point);
+bool EasyResizeWindowTargeter::GetHitTestRects(aura::Window* window,
+                                               gfx::Rect* rect_mouse,
+                                               gfx::Rect* rect_touch) const {
+  if (!ShouldUseExtendedBounds(window))
+    return WindowTargeter::GetHitTestRects(window, rect_mouse, rect_touch);
 
-    gfx::Rect bounds(window->bounds().size());
-    if (event.IsTouchEvent() || event.IsGestureEvent())
-      bounds.Inset(touch_extend_);
-    else
-      bounds.Inset(mouse_extend_);
-
-    return bounds.Contains(point);
+  if (rect_mouse) {
+    *rect_mouse = gfx::Rect(window->bounds());
+    rect_mouse->Inset(mouse_extend_);
   }
-  return WindowTargeter::EventLocationInsideBounds(window, event);
+  if (rect_touch) {
+    *rect_touch = gfx::Rect(window->bounds());
+    rect_touch->Inset(touch_extend_);
+  }
+  return true;
+}
+
+bool EasyResizeWindowTargeter::EventLocationInsideBounds(
+    aura::Window* target,
+    const ui::LocatedEvent& event) const {
+  return WindowTargeter::EventLocationInsideBounds(target, event);
 }
 
 bool EasyResizeWindowTargeter::ShouldUseExtendedBounds(
