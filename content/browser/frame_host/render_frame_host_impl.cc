@@ -39,6 +39,7 @@
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
+#include "content/browser/geolocation/geolocation_service_impl.h"
 #include "content/browser/image_capture/image_capture_impl.h"
 #include "content/browser/installedapp/installed_app_provider_impl_default.h"
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
@@ -106,7 +107,6 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
-#include "device/geolocation/geolocation_context.h"
 #include "device/vr/features/features.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
@@ -2846,9 +2846,6 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
 }
 
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
-  device::GeolocationContext* geolocation_context =
-      delegate_ ? delegate_->GetGeolocationContext() : NULL;
-
 #if !defined(OS_ANDROID)
   // The default (no-op) implementation of InstalledAppProvider. On Android, the
   // real implementation is provided in Java.
@@ -2856,19 +2853,19 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&InstalledAppProviderImplDefault::Create));
 #endif  // !defined(OS_ANDROID)
 
-  if (geolocation_context) {
-    // TODO(creis): Bind process ID here so that GeolocationImpl
-    // can perform permissions checks once site isolation is complete.
-    // crbug.com/426384
-    // NOTE: At shutdown, there is no guaranteed ordering between destruction of
-    // this object and destruction of any GeolocationsImpls created via
-    // the below service registry, the reason being that the destruction of the
-    // latter is triggered by receiving a message that the pipe was closed from
-    // the renderer side. Hence, supply the reference to this object as a weak
-    // pointer.
+  if (delegate_) {
+    device::GeolocationContext* geolocation_context =
+        delegate_->GetGeolocationContext();
+    PermissionManager* permission_manager = delegate_->GetPermissionManager();
+    if (geolocation_context && permission_manager) {
+      geolocation_service_.reset(new GeolocationServiceImpl(
+          geolocation_context, permission_manager, this));
+    }
+  }
+  if (geolocation_service_) {
     GetInterfaceRegistry()->AddInterface(
-        base::Bind(&device::GeolocationContext::Bind,
-                   base::Unretained(geolocation_context)));
+        base::Bind(&GeolocationServiceImpl::Bind,
+                   base::Unretained(geolocation_service_.get())));
   }
 
   GetInterfaceRegistry()->AddInterface<device::mojom::WakeLock>(base::Bind(
