@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c1a8f8c_d9117ec8",
+        "filename": "base/values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:38:38Z",
+      "side": 1,
+      "message": "I\u0027m fine either way. Since we want to move to value semantics, there is some benefit in making the call sites more obviously elaborate to encourage using the new scheme.",
+      "parentUuid": "aacbdf1b_80feb739",
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5dc17f_7aeba935",
         "filename": "base/values.h",
         "patchSetId": 6
@@ -99,6 +117,30 @@
       "writtenOn": "2017-07-19T18:29:20Z",
       "side": 1,
       "message": "Here I had to be creative, because gtest does not play nicely with move-only types and tries to make a copy. Hence the previous code wouldn\u0027t compile anymore.",
+      "range": {
+        "startLine": 747,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 61
+      },
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c61e245_b2530e52",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-19T23:38:38Z",
+      "side": 1,
+      "message": ":( I hate it when people get too fancy with gmock.",
+      "parentUuid": "ccb598c4_f1893dea",
       "range": {
         "startLine": 747,
         "startChar": 0,
