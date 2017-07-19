@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "605c6f0a_12a80e62",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:49:58Z",
+      "side": 1,
+      "message": "Then swap with base::RunLoop().RunUntilIdle();",
+      "parentUuid": "8ebb053c_349e010c",
+      "range": {
+        "startLine": 368,
+        "startChar": 33,
+        "endLine": 368,
+        "endChar": 59
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86eba8ab_44ffb226",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
         "patchSetId": 5
