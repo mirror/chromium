@@ -69,3 +69,6 @@ class PixelExpectations(GpuTestExpectations):
     # TODO(junov): update reference images
     self.Fail('Pixel_CSSFilterEffects', ['mac'], bug=721727)
     self.Fail('Pixel_CSSFilterEffects_NoOverlays', ['mac'], bug=721727)
+
+    # TODO(dshwang): remove these after new reference images are generated.
+    self.Fail('Pixel_DirectComposition_Video_MP4', bug=615325)
