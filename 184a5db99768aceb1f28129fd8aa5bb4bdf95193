@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd185e58_83f5ca1d",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T00:28:59Z",
+      "side": 1,
+      "message": "\u003e this one is really confusing, because RWHI is really confusing.. what\u0027s the difference between GotFocus and Focus? Why is there a Blur to match Focus, but not a LostFocus to match GotFocus? Any owners here know?\n\nOops, misread. This is RWHVA, not RHWI. Ignore above comment",
+      "parentUuid": "b697dee7_9d76f01c",
+      "range": {
+        "startLine": 742,
+        "startChar": 38,
+        "endLine": 742,
+        "endChar": 46
+      },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00c67d97_07100b64",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 9
@@ -42,6 +66,23 @@
         "endLine": 2904,
         "endChar": 65
       },
+      "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c475bd_86594c8b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T00:28:59Z",
+      "side": 1,
+      "message": "the existing code here is wrong, I filed crbug.com/746099 just now. can you add a TODO comment mentioning the bug",
       "revId": "184a5db99768aceb1f28129fd8aa5bb4bdf95193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
