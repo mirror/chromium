@@ -139,6 +139,24 @@
       "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54c00283_6c89c8cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/test/MockPaintCanvas.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T17:24:31Z",
+      "side": 1,
+      "message": "Why can\u0027t they depend on cc:test_support?",
+      "parentUuid": "9f1037c9_7b6bd47c",
+      "revId": "9b279e00bab66d512c6b4dabfa432e969da27177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
