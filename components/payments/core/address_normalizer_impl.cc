@@ -184,6 +184,7 @@ void AddressNormalizerImpl::OnAddressValidationRulesLoaded(
     }
     pending_normalization_.erase(it);
   }
+
 }
 
 }  // namespace payments
