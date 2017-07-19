@@ -16,6 +16,24 @@
       "revId": "29a6ef53faf116f6c4f68b3f66830fbd76964206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e928cc0_f2a9027f",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-19T08:37:53Z",
+      "side": 1,
+      "message": "I had initially used DeleteSoon here, but that wasn\u0027t safe enough.\nPlease see piman@\u0027s comments and its history at\nhttps://crrev.com/c/525672/9/content%252Fbrowser%252Frenderer_host%252Fmedia%252Fvideo_capture_gpu_jpeg_decoder.cc#46\nhttps://crrev.com/c/525672/12/content%252Fbrowser%252Frenderer_host%252Fmedia%252Fvideo_capture_gpu_jpeg_decoder.cc#45",
+      "parentUuid": "266d619e_12e99e45",
+      "revId": "29a6ef53faf116f6c4f68b3f66830fbd76964206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
