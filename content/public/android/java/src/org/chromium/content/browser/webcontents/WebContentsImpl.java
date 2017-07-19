@@ -13,6 +13,7 @@ import android.os.Message;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
+import android.view.View;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
@@ -21,6 +22,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content.browser.MediaSessionImpl;
 import org.chromium.content.browser.RenderCoordinates;
+import org.chromium.content.browser.SyntheticGestureTarget;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
 import org.chromium.content.browser.framehost.RenderFrameHostImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
@@ -110,6 +112,10 @@ import java.util.UUID;
     // The media session for this WebContents. It is constructed by the native MediaSession and has
     // the same life time as native MediaSession.
     private MediaSessionImpl mMediaSession;
+
+    // Synthesizes motion events from other inputs for embedders. The instance is accessed through
+    // its native object but WebContentsImpl holds its reference to keep it from being gc'ed.
+    private SyntheticGestureTarget mSyntheticGestureTarget;
 
     class SmartClipCallbackImpl implements SmartClipCallback {
         public SmartClipCallbackImpl(final Handler smartClipHandler) {
@@ -620,6 +626,16 @@ import java.util.UUID;
     @CalledByNative
     private static void createSizeAndAddToList(List<Rect> sizes, int width, int height) {
         sizes.add(new Rect(0, 0, width, height));
+    }
+
+    @CalledByNative
+    private final long createSyntheticGestureTarget(
+            long renderWidgetHost, View target, float scaleFactor) {
+        if (mSyntheticGestureTarget == null) {
+            mSyntheticGestureTarget =
+                    new SyntheticGestureTarget(renderWidgetHost, target, scaleFactor);
+        }
+        return mSyntheticGestureTarget.getNativeObject();
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
