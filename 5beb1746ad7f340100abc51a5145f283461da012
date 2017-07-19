@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f479c36a_70c4f91f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionEditor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-19T14:42:04Z",
+      "side": 1,
+      "message": "can we directly call GetDocument() ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "5beb1746ad7f340100abc51a5145f283461da012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
