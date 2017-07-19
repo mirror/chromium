@@ -20,6 +20,7 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/signin/core/browser/webdata/token_web_data.h"
@@ -181,9 +182,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, PersistenceDBUpgrade) {
   AddAuthTokenManually(kLSOService, "lsoToken");
   AddAuthTokenManually(GaiaConstants::kGaiaOAuth2LoginRefreshToken,
                        main_refresh_token);
-
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
 
   // Force LoadCredentials.
   oauth2_service_delegate_->LoadCredentials(main_account_id);
@@ -297,8 +297,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
 
 TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
        PersistenceLoadCredentials) {
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
 
   // Ensure DB is clean.
   oauth2_service_delegate_->RevokeAllCredentials();
@@ -357,8 +357,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
        PersistenceLoadCredentialsEmptyPrimaryAccountId_DiceEnabled) {
-  switches::EnableAccountConsistencyDiceForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kDice);
 
   // Ensure DB is clean.
   oauth2_service_delegate_->RevokeAllCredentials();
@@ -598,8 +598,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, CanonicalizeAccountId) {
   tokens["AccountId-Foo.Bar@gmail.com"] = "refresh_token";
   tokens["AccountId-12345"] = "refresh_token";
 
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
   oauth2_service_delegate_->LoadAllCredentialsIntoMemory(tokens);
 
   EXPECT_TRUE(
@@ -615,8 +615,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   tokens["AccountId-Foo.Bar@gmail.com"] = "bad_token";
   tokens["AccountId-foobar@gmail.com"] = "good_token";
 
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
   oauth2_service_delegate_->LoadAllCredentialsIntoMemory(tokens);
 
   EXPECT_EQ(1u, oauth2_service_delegate_->GetAccounts().size());
@@ -628,8 +628,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
 }
 
 TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, ShutdownService) {
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
   EXPECT_TRUE(oauth2_service_delegate_->GetAccounts().empty());
   oauth2_service_delegate_->UpdateCredentials("account_id1", "refresh_token1");
   oauth2_service_delegate_->UpdateCredentials("account_id2", "refresh_token2");
@@ -651,8 +651,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, GaiaIdMigration) {
     std::string email = "foo@gmail.com";
     std::string gaia_id = "foo's gaia id";
 
-    switches::EnableAccountConsistencyMirrorForTesting(
-        base::CommandLine::ForCurrentProcess());
+    ScopedAccountConsistency scoped_mirror(
+        switches::AccountConsistencyMethod::kMirror);
     pref_service_.SetInteger(prefs::kAccountIdMigrationState,
                              AccountTrackerService::MIGRATION_NOT_STARTED);
 
@@ -710,8 +710,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
     std::string email2 = "bar@gmail.com";
     std::string gaia_id2 = "bar's gaia id";
 
-    switches::EnableAccountConsistencyMirrorForTesting(
-        base::CommandLine::ForCurrentProcess());
+    ScopedAccountConsistency scoped_mirror(
+        switches::AccountConsistencyMethod::kMirror);
     pref_service_.SetInteger(prefs::kAccountIdMigrationState,
                              AccountTrackerService::MIGRATION_NOT_STARTED);
 
@@ -797,8 +797,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   ResetObserverCounts();
   AddAuthTokenManually("AccountId-" + primary_account, "refresh_token");
   AddAuthTokenManually("AccountId-" + secondary_account, "refresh_token");
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  ScopedAccountConsistency scoped_mirror(
+      switches::AccountConsistencyMethod::kMirror);
   oauth2_service_delegate_->LoadCredentials(primary_account);
   base::RunLoop().RunUntilIdle();
 
