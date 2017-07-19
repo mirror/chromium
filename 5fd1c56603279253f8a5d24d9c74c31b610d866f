@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afaa85f_00752ed9",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T18:29:28Z",
+      "side": 1,
+      "message": "PostTask from a child class (BookmarksExportFunction) won\u0027t let me BindOnce to this method even if I make it protected, hence public.",
+      "range": {
+        "startLine": 327,
+        "startChar": 7,
+        "endLine": 327,
+        "endChar": 27
+      },
+      "revId": "5fd1c56603279253f8a5d24d9c74c31b610d866f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

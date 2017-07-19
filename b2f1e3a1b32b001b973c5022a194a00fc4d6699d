@@ -16,6 +16,24 @@
       "revId": "b2f1e3a1b32b001b973c5022a194a00fc4d6699d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8561134f_a2e31473",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-19T18:29:28Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "303f0be4_9443fa48",
+      "revId": "b2f1e3a1b32b001b973c5022a194a00fc4d6699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
