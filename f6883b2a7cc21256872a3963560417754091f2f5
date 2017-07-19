@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99cb3bc6_7d03b3f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-19T15:33:42Z",
+      "side": 1,
+      "message": "I\u0027m going to move this into XML.",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c89d98_9f2080ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-19T15:33:42Z",
+      "side": 1,
+      "message": "I\u0027ll get rid of layers and make it into an anonymous array.",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178c8268_f35e9397",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-19T15:33:42Z",
+      "side": 1,
+      "message": "I\u0027ll rename this to \u0027enabled\u0027",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
