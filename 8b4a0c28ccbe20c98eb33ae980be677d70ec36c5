@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "064d8eaa_cef3f3a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T00:39:29Z",
+      "side": 1,
+      "message": "Can we just block sheet interaction based on this or does it get set later?",
+      "range": {
+        "startLine": 777,
+        "startChar": 54,
+        "endLine": 777,
+        "endChar": 93
+      },
+      "revId": "8b4a0c28ccbe20c98eb33ae980be677d70ec36c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
