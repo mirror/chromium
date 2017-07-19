@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "87bc986c_73f6854c",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T02:49:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4de941b_2e68ed37",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f27ab598_7ea54b48",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 11
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "3ad58b11_6163eb33",
+      "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d623986_416f86a4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T02:49:11Z",
+      "side": 1,
+      "message": "Looks like you missed this nit in latest patch.",
+      "parentUuid": "6b474464_06e21974",
       "revId": "227ac8120f8071e0c03cb986a44bc2cf1720fc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

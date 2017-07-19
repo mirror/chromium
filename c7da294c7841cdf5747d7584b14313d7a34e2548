@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "68661de6_a9d66153",
+        "filename": "components/exo/dnd_action.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-19T02:49:11Z",
+      "side": 1,
+      "message": "Ideally this would go into a exo/data_device_manager.h file but as we don\u0027t have that how about we just include it in data_device.h for now instead of adding a new file?",
+      "revId": "c7da294c7841cdf5747d7584b14313d7a34e2548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f65a7adb_da920f2b",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 12
