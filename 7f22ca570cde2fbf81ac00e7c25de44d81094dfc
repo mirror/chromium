@@ -137,6 +137,46 @@
       "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e19a595_f560b8e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T09:45:38Z",
+      "side": 1,
+      "message": "Are these methods on purpose package-private?",
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cd9b34_d6c32d70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-19T09:45:38Z",
+      "side": 1,
+      "message": "You can use Collections.emptyList() to get an immutable empty list.",
+      "range": {
+        "startLine": 85,
+        "startChar": 32,
+        "endLine": 85,
+        "endChar": 63
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
