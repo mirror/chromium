@@ -173,6 +173,7 @@ views::Widget* ShowWebModalDialogViews(
   // window.
   content::WebContents* web_contents =
       GetTopLevelWebContents(initiator_web_contents);
+  DCHECK(web_contents);
   views::Widget* widget = CreateWebModalDialogViews(dialog, web_contents);
   ShowModalDialog(widget->GetNativeWindow(), web_contents);
   return widget;
@@ -202,10 +203,13 @@ views::Widget* ShowWebModalDialogWithOverlayViews(
 views::Widget* CreateWebModalDialogViews(views::WidgetDelegate* dialog,
                                          content::WebContents* web_contents) {
   DCHECK_EQ(ui::MODAL_TYPE_CHILD, dialog->GetModalType());
+  const web_modal::WebContentsModalDialogManager* dialog_manager =
+      web_modal::WebContentsModalDialogManager::FromWebContents(web_contents);
+  DCHECK(dialog_manager);
+  DCHECK(dialog_manager->delegate());
   return views::DialogDelegate::CreateDialogWidget(
       dialog, nullptr,
-      web_modal::WebContentsModalDialogManager::FromWebContents(web_contents)
-          ->delegate()
+      dialog_manager->delegate()
           ->GetWebContentsModalDialogHost()
           ->GetHostView());
 }
