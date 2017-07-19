@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "879c4360_11e104e3",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-19T16:39:53Z",
+      "side": 1,
+      "message": "You can still BindInterface here and avoid cloning a Connector. Just take the result of PassInterface() (an InterfacePtrInfo) and instead of re-binding immediately with an invalid task runner, pass it to the other thread and bind it there. InterfacePtrInfo is safe to move across threads.",
+      "revId": "810a1171cca36f6d236301a43e59f66da744763e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
