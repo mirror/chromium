@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "023fac94_b407f70b",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-19T17:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b736f1_8af3560b",
+      "range": {
+        "startLine": 92,
+        "startChar": 60,
+        "endLine": 92,
+        "endChar": 62
+      },
+      "revId": "59de225742500e860a52a6286b7fd3f39e56391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ede1bc_558da1a5",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
         "patchSetId": 46
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cc84f47b_577ec77a",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-19T17:43:14Z",
+      "side": 1,
+      "message": "Got it, I\u0027ll be sure to follow these guidelines from here on.",
+      "parentUuid": "92ede1bc_558da1a5",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "59de225742500e860a52a6286b7fd3f39e56391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "276b54af_8536be51",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
         "patchSetId": 46
@@ -68,6 +116,30 @@
       "revId": "59de225742500e860a52a6286b7fd3f39e56391a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdfd4ca_da6fdd18",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-19T17:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "276b54af_8536be51",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 48
+      },
+      "revId": "59de225742500e860a52a6286b7fd3f39e56391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
