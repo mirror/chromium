@@ -723,14 +723,17 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       assert type(field_value) == bool
     elif field.type == field.TYPE_STRING:
       assert type(field_value) == str or type(field_value) == unicode
-    elif field.type == field.TYPE_INT64:
+    elif (field.type == field.TYPE_INT64 or
+         field.type == field.TYPE_INT32 or
+         field.type == field.TYPE_ENUM):
       assert type(field_value) == int
-    elif (field.type == field.TYPE_MESSAGE and
-          field.message_type.name == 'StringList'):
-      assert type(field_value) == list
-      entries = group_message.__getattribute__(field.name).entries
-      for list_item in field_value:
-        entries.append(list_item)
+    elif field.type == field.TYPE_MESSAGE:
+      sub_message = group_message.__getattribute__(field.name)
+      for sub_value in field_value:
+        for sub_field in sub_message.DESCRIPTOR.fields:
+          if sub_field.name in sub_value:
+            value = field_value[sub_field.name]
+            self.SetProtobufMessageField(sub_message, sub_field, value)
       return
     else:
       raise Exception('Unknown field type %s' % field.type)
