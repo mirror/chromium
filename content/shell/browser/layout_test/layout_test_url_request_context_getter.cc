@@ -26,6 +26,7 @@ LayoutTestURLRequestContextGetter::LayoutTestURLRequestContextGetter(
     URLRequestInterceptorScopedVector request_interceptors,
     net::NetLog* net_log)
     : ShellURLRequestContextGetter(ignore_certificate_errors,
+                                   false /* not incognito */,
                                    base_path,
                                    std::move(io_task_runner),
                                    protocol_handlers,
