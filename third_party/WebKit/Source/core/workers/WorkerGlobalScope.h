@@ -135,6 +135,8 @@ class CORE_EXPORT WorkerGlobalScope
   // EventTarget
   ExecutionContext* GetExecutionContext() const final;
 
+  WorkerGlobalScope* ToWorkerGlobalScope() override { return this; }
+
   // WorkerOrWorkletGlobalScope
   ScriptWrappable* GetScriptWrappable() const final {
     return const_cast<WorkerGlobalScope*>(this);

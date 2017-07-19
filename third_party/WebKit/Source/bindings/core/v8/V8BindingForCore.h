@@ -73,6 +73,7 @@ class Frame;
 class LocalDOMWindow;
 class LocalFrame;
 class NodeFilter;
+class WorkerGlobalScope;
 class XPathNSResolver;
 
 template <typename CallbackInfo>
@@ -460,6 +461,7 @@ CORE_EXPORT ExecutionContext* ToExecutionContext(v8::Local<v8::Context>);
 CORE_EXPORT void RegisterToExecutionContextForModules(ExecutionContext* (
     *to_execution_context_for_modules)(v8::Local<v8::Context>));
 CORE_EXPORT ExecutionContext* CurrentExecutionContext(v8::Isolate*);
+WorkerGlobalScope* ToWorkerGlobalScope(v8::Local<v8::Context>);
 
 // Returns a V8 context associated with a ExecutionContext and a
 // DOMWrapperWorld.  This method returns an empty context if there is no frame

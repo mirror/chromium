@@ -56,6 +56,7 @@ class LocalDOMWindow;
 class MessagePort;
 class Node;
 class ServiceWorker;
+class WorkerGlobalScope;
 
 struct FiringEventIterator {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
@@ -127,6 +128,7 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
   virtual LocalDOMWindow* ToLocalDOMWindow();
   virtual MessagePort* ToMessagePort();
   virtual ServiceWorker* ToServiceWorker();
+  virtual WorkerGlobalScope* ToWorkerGlobalScope();
 
   bool addEventListener(const AtomicString& event_type,
                         EventListener*,

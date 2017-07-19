@@ -8,6 +8,7 @@ callback PerformanceObserverCallback = void (PerformanceObserverEntryList entrie
 // https://w3c.github.io/performance-timeline/#the-performance-observer-interface
 [
     Constructor(PerformanceObserverCallback callback),
+    Exposed=(Window, Worker),
     ConstructorCallWith=ScriptState,
     RuntimeEnabled=PerformanceObserver
 ] interface PerformanceObserver {

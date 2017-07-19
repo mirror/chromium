@@ -205,7 +205,7 @@ void MessagePort::DispatchMessages() {
     // WorkerGlobalScope::close() in Worker onmessage handler should prevent
     // the next message from dispatching.
     if (GetExecutionContext()->IsWorkerGlobalScope() &&
-        ToWorkerGlobalScope(GetExecutionContext())->IsClosing()) {
+        ::blink::ToWorkerGlobalScope(GetExecutionContext())->IsClosing()) {
       break;
     }
 

@@ -191,6 +191,10 @@ ServiceWorker* EventTarget::ToServiceWorker() {
   return nullptr;
 }
 
+WorkerGlobalScope* EventTarget::ToWorkerGlobalScope() {
+  return nullptr;
+}
+
 inline LocalDOMWindow* EventTarget::ExecutingWindow() {
   if (ExecutionContext* context = GetExecutionContext())
     return context->ExecutingWindow();

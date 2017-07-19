@@ -744,6 +744,20 @@ ExecutionContext* CurrentExecutionContext(v8::Isolate* isolate) {
   return ToExecutionContext(isolate->GetCurrentContext());
 }
 
+WorkerGlobalScope* ToWorkerGlobalScope(v8::Local<v8::Context> context) {
+  if (context.IsEmpty())
+    return 0;
+  v8::Local<v8::Value> value = context->Global();
+  if (value.IsEmpty() || !value->IsObject())
+    return 0;
+
+  v8::Local<v8::Object> worker_wrapper = V8WorkerGlobalScope::findInstanceInPrototypeChain(
+      v8::Local<v8::Object>::Cast(value), context->GetIsolate());
+  if (worker_wrapper.IsEmpty())
+    return 0;
+  return V8WorkerGlobalScope::toImpl(worker_wrapper);
+}
+
 LocalFrame* ToLocalFrameIfNotDetached(v8::Local<v8::Context> context) {
   LocalDOMWindow* window = ToLocalDOMWindow(context);
   if (window && window->IsCurrentlyDisplayedInFrame())
