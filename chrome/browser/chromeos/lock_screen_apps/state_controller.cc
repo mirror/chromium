@@ -210,6 +210,9 @@ void StateController::InitializeWithCryptoKey(Profile* profile,
           profile, g_browser_process->local_state(), crypto_key,
           base_path.AppendASCII("lock_screen_app_data"));
 
+  chromeos::NoteTakingHelper::Get()->SetProfileWithEnabledLockScreenApps(
+      profile);
+
   // App manager might have been set previously by a test.
   if (!app_manager_)
     app_manager_ = base::MakeUnique<AppManagerImpl>();
