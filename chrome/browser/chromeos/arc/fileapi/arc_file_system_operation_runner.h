@@ -17,6 +17,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.h"
 #include "components/arc/arc_service.h"
 #include "components/arc/common/file_system.mojom.h"
 #include "components/arc/instance_holder.h"
@@ -58,8 +59,8 @@ class ArcBridgeService;
 //
 // All member functions must be called on the UI thread.
 class ArcFileSystemOperationRunner
-    : public KeyedService,
-      public mojom::FileSystemHost,
+    : public FileSystemHostImpl::Delegate,
+      public KeyedService,
       public ArcSessionManager::Observer,
       public InstanceHolder<mojom::FileSystemInstance>::Observer {
  public:
@@ -110,7 +111,8 @@ class ArcFileSystemOperationRunner
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Runs file system operations. See file_system.mojom for documentation.
+  // Runs FileSystemInstance operations. See file_system.mojom for
+  // documentation.
   void GetFileSize(const GURL& url, const GetFileSizeCallback& callback);
   void GetMimeType(const GURL& url, const GetMimeTypeCallback& callback);
   void OpenFileToRead(const GURL& url, const OpenFileToReadCallback& callback);
@@ -126,7 +128,7 @@ class ArcFileSystemOperationRunner
                   const AddWatcherCallback& callback);
   void RemoveWatcher(int64_t watcher_id, const RemoveWatcherCallback& callback);
 
-  // FileSystemHost overrides:
+  // FileSystemHostImpl::Delegate overrides:
   void OnDocumentChanged(int64_t watcher_id, ChangeType type) override;
 
   // ArcSessionManager::Observer overrides:
@@ -175,6 +177,8 @@ class ArcFileSystemOperationRunner
   std::map<int64_t, WatcherCallback> watcher_callbacks_;
 
   base::ObserverList<Observer> observer_list_;
+
+  FileSystemHostImpl host_;
 
   mojo::Binding<mojom::FileSystemHost> binding_;
 
