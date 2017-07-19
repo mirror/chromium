@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f461825_814785e0",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-19T15:31:05Z",
+      "side": 1,
+      "message": "dcheng@: Is this comment still accurate?\n\nI think that we reuse the LocalWindow when we navigate from an initial empty document to a document from the same origin.",
+      "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
