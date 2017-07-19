@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ed487b_d236a2c4",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T19:47:08Z",
+      "side": 1,
+      "message": "should use this constant",
+      "revId": "254130ff3330c9b24f2d1d7e41ab99755bfa0c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
