@@ -16,6 +16,24 @@
       "revId": "21f0a8aec0118781fe56ee2c11eefe7d12019995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8d4dde_f937f22b",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215309
+      },
+      "writtenOn": "2017-07-19T07:01:45Z",
+      "side": 1,
+      "message": "1) Keep gfx::Font::FontStyle with bit-shifted literals.\n2) Remove NUM_TEXT_STYLES.\n3) Please can you let me know why do we need to remove STRIKE font style ?\n\nPlease let me know if my above understanding is correct",
+      "parentUuid": "d1c3919f_b314af1d",
+      "revId": "21f0a8aec0118781fe56ee2c11eefe7d12019995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
