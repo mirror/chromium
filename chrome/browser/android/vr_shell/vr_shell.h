@@ -172,7 +172,10 @@ class VrShell : public device::GvrDelegate,
   void ForceExitVr();
   void ExitPresent();
   void ExitFullscreen();
-  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode);
+  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode,
+                                  bool show_exit_warning);
+  void OnUnsupportedMode(vr::UiUnsupportedMode mode);
+  void OnExitVrPromptResult(vr::UiUnsupportedMode reason, bool should_exit);
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 

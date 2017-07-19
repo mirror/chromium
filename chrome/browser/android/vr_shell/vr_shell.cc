@@ -582,7 +582,8 @@ void VrShell::ExitFullscreen() {
   }
 }
 
-void VrShell::ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode) {
+void VrShell::ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode,
+                                         bool show_exit_warning) {
   if (mode == vr::UiUnsupportedMode::kUnhandledPageInfo) {
     UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,
                               vr::UiUnsupportedMode::kCount);
@@ -590,13 +591,38 @@ void VrShell::ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode) {
     Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_.obj());
     return;
   }
-  ui_->SetIsExiting();
-  main_thread_task_runner_->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&VrShell::ForceExitVr, weak_ptr_factory_.GetWeakPtr()),
-      kExitVrDueToUnsupportedModeDelay);
+  if (show_exit_warning) {
+    ui_->SetIsExiting();
+    main_thread_task_runner_->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&VrShell::ForceExitVr, weak_ptr_factory_.GetWeakPtr()),
+        kExitVrDueToUnsupportedModeDelay);
+  } else {
+    ForceExitVr();
+  }
   UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,
                             vr::UiUnsupportedMode::kCount);
+}
+
+void VrShell::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
+  switch (mode) {
+    case vr::UiUnsupportedMode::kUnhandledPageInfo:
+      ui_->ShowExitVrPrompt(mode);
+      break;
+    default:
+      ExitVrDueToUnsupportedMode(mode, true);
+      break;
+  }
+}
+
+void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
+                                   bool should_exit) {
+  if (!should_exit) {
+    ui_->CloseExitVrPrompt();
+    return;
+  }
+
+  ExitVrDueToUnsupportedMode(reason, false);
 }
 
 void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,

@@ -143,8 +143,14 @@ void VrGLThread::OnGLInitialized() {
 
 void VrGLThread::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   main_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&VrShell::ExitVrDueToUnsupportedMode, weak_vr_shell_, mode));
+      FROM_HERE, base::Bind(&VrShell::OnUnsupportedMode, weak_vr_shell_, mode));
+}
+
+void VrGLThread::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
+                                      bool should_exit) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::OnExitVrPromptResult, weak_vr_shell_,
+                            reason, should_exit));
 }
 
 void VrGLThread::SetFullscreen(bool enabled) {
@@ -250,6 +256,20 @@ void VrGLThread::SetSplashScreenIcon(const SkBitmap& bitmap) {
 void VrGLThread::OnWebVrFrameAvailable() {
   DCHECK(task_runner()->BelongsToCurrentThread());
   scene_manager_->OnWebVrFrameAvailable();
+}
+
+void VrGLThread::ShowExitVrPrompt(vr::UiUnsupportedMode reason) {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(FROM_HERE,
+                          base::Bind(&vr::UiSceneManager::ShowExitVrPrompt,
+                                     weak_scene_manager_, reason));
+}
+
+void VrGLThread::CloseExitVrPrompt() {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::UiSceneManager::CloseExitVrPrompt, weak_scene_manager_));
 }
 
 void VrGLThread::CleanUp() {

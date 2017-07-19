@@ -402,7 +402,7 @@ void UiSceneManager::CreateCloseButton() {
 }
 
 void UiSceneManager::CreateExitPrompt() {
-  std::unique_ptr<UiElement> element = base::MakeUnique<ExitPrompt>(
+  std::unique_ptr<ExitPrompt> element = base::MakeUnique<ExitPrompt>(
       512,
       base::Bind(&UiSceneManager::OnExitPromptPrimaryButtonClicked,
                  base::Unretained(this)),
@@ -420,17 +420,18 @@ void UiSceneManager::CreateExitPrompt() {
 
   // Place an invisible but hittable plane behind the exit prompt, to keep the
   // reticle roughly planar with the content if near content.
-  element = base::MakeUnique<ExitPromptBackplane>(base::Bind(
+  auto backplane_element = base::MakeUnique<ExitPromptBackplane>(base::Bind(
       &UiSceneManager::OnExitPromptBackplaneClicked, base::Unretained(this)));
-  element->set_debug_id(kExitPromptBackplane);
-  element->set_id(AllocateId());
-  element->set_fill(vr::Fill::NONE);
-  element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
-  element->SetTranslate(0.0, 0.0, -kTextureOffset);
-  element->set_parent_id(exit_prompt_->id());
-  exit_prompt_backplane_ = element.get();
-  content_elements_.push_back(element.get());
-  scene_->AddUiElement(std::move(element));
+  backplane_element->set_debug_id(kExitPromptBackplane);
+  backplane_element->set_id(AllocateId());
+  backplane_element->set_fill(vr::Fill::NONE);
+  backplane_element->SetSize(kExitPromptBackplaneSize,
+                             kExitPromptBackplaneSize);
+  backplane_element->SetTranslate(0.0, 0.0, -kTextureOffset);
+  backplane_element->set_parent_id(exit_prompt_->id());
+  exit_prompt_backplane_ = backplane_element.get();
+  content_elements_.push_back(backplane_element.get());
+  scene_->AddUiElement(std::move(backplane_element));
 }
 
 void UiSceneManager::CreateToasts() {
@@ -631,6 +632,30 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
   ConfigureScene();
 }
 
+void UiSceneManager::ShowExitVrPrompt(UiUnsupportedMode reason) {
+  DCHECK(!scene_->is_prompting_to_exit());
+  int content_message_id = IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION;
+  switch (reason) {
+    case UiUnsupportedMode::kUnhandledPageInfo:
+      content_message_id = IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION_SITE_INFO;
+      break;
+    default:
+      content_message_id = IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION;
+      break;
+  }
+  exit_prompt_->SetContentMessageId(content_message_id);
+  exit_vr_prompt_reason_ = reason;
+  scene_->set_is_prompting_to_exit(true);
+  ConfigureScene();
+}
+
+void UiSceneManager::CloseExitVrPrompt() {
+  if (!scene_->is_prompting_to_exit())
+    return;
+  scene_->set_is_prompting_to_exit(false);
+  ConfigureScene();
+}
+
 void UiSceneManager::ConfigureSecurityWarnings() {
   bool enabled =
       web_vr_mode_ && !secure_origin_ && !waiting_for_first_web_vr_frame_;
@@ -711,30 +736,24 @@ void UiSceneManager::OnExitPromptPrimaryButtonClickedForTesting() {
   OnExitPromptPrimaryButtonClicked();
 }
 
+void UiSceneManager::OnExitPromptSecondaryButtonClickedForTesting() {
+  OnExitPromptSecondaryButtonClicked();
+}
+
 void UiSceneManager::OnSecurityIconClicked() {
-  if (scene_->is_prompting_to_exit())
-    return;
-  scene_->set_is_prompting_to_exit(true);
-  ConfigureScene();
+  browser_->OnUnsupportedMode(UiUnsupportedMode::kUnhandledPageInfo);
 }
 
 void UiSceneManager::OnExitPromptBackplaneClicked() {
-  CloseExitPrompt();
-}
-
-void UiSceneManager::CloseExitPrompt() {
-  if (!scene_->is_prompting_to_exit())
-    return;
-  scene_->set_is_prompting_to_exit(false);
-  ConfigureScene();
+  browser_->OnExitVrPromptResult(exit_vr_prompt_reason_, false);
 }
 
 void UiSceneManager::OnExitPromptPrimaryButtonClicked() {
-  CloseExitPrompt();
+  browser_->OnExitVrPromptResult(exit_vr_prompt_reason_, false);
 }
 
 void UiSceneManager::OnExitPromptSecondaryButtonClicked() {
-  OnUnsupportedMode(UiUnsupportedMode::kUnhandledPageInfo);
+  browser_->OnExitVrPromptResult(exit_vr_prompt_reason_, true);
 }
 
 void UiSceneManager::SetToolbarState(const ToolbarState& state) {
