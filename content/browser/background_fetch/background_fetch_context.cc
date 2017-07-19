@@ -145,7 +145,7 @@ void BackgroundFetchContext::CreateController(
 
   std::unique_ptr<BackgroundFetchJobController> controller =
       base::MakeUnique<BackgroundFetchJobController>(
-          registration_id, options, data_manager_.get(), browser_context_,
+          registration_id, options, data_manager_.get(), this, browser_context_,
           request_context_getter_,
           base::BindOnce(&BackgroundFetchContext::DidCompleteJob,
                          weak_factory_.GetWeakPtr()));

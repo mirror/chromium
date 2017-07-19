@@ -83,7 +83,7 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
 
     return base::MakeUnique<BackgroundFetchJobController>(
         registration_id, BackgroundFetchOptions(), &data_manager_,
-        browser_context(),
+        nullptr /* BackgroundFetchContext */, browser_context(),
         make_scoped_refptr(storage_partition->GetURLRequestContext()),
         base::BindOnce(&BackgroundFetchJobControllerTest::DidCompleteJob,
                        base::Unretained(this)));

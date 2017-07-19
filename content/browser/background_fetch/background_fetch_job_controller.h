@@ -42,6 +42,7 @@ class CONTENT_EXPORT BackgroundFetchJobController {
       const BackgroundFetchRegistrationId& registration_id,
       const BackgroundFetchOptions& options,
       BackgroundFetchDataManager* data_manager,
+      BackgroundFetchContext* context,
       BrowserContext* browser_context,
       scoped_refptr<net::URLRequestContextGetter> request_context,
       CompletedCallback completed_callback);
@@ -99,7 +100,7 @@ class CONTENT_EXPORT BackgroundFetchJobController {
 
   // Proxy for interacting with the BackgroundFetchDelegate across thread
   // boundaries.
-  BackgroundFetchDelegateProxy delegate_proxy_;
+  static BackgroundFetchDelegateProxy* delegate_proxy_;
 
   // Callback for when all fetches have been completed.
   CompletedCallback completed_callback_;

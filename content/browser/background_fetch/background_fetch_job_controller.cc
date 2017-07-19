@@ -11,20 +11,28 @@
 
 namespace content {
 
+BackgroundFetchDelegateProxy* BackgroundFetchJobController::delegate_proxy_ =
+    nullptr;
+
 BackgroundFetchJobController::BackgroundFetchJobController(
     const BackgroundFetchRegistrationId& registration_id,
     const BackgroundFetchOptions& options,
     BackgroundFetchDataManager* data_manager,
+    BackgroundFetchContext* context,
     BrowserContext* browser_context,
     scoped_refptr<net::URLRequestContextGetter> request_context,
     CompletedCallback completed_callback)
     : registration_id_(registration_id),
       options_(options),
       data_manager_(data_manager),
-      delegate_proxy_(this, registration_id, browser_context, request_context),
       completed_callback_(std::move(completed_callback)),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (!delegate_proxy_) {
+    delegate_proxy_ = new BackgroundFetchDelegateProxy(
+        context, registration_id, browser_context, request_context);
+  }
 }
 
 BackgroundFetchJobController::~BackgroundFetchJobController() {
@@ -59,7 +67,7 @@ void BackgroundFetchJobController::StartRequest(
     return;
   }
 
-  delegate_proxy_.StartRequest(request);
+  delegate_proxy_->StartRequest(registration_id_, request);
 }
 
 void BackgroundFetchJobController::DidStartRequest(
@@ -105,7 +113,7 @@ void BackgroundFetchJobController::DidMarkRequestCompleted(
 void BackgroundFetchJobController::UpdateUI(const std::string& title) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  delegate_proxy_.UpdateUI(title);
+  delegate_proxy_->UpdateUI(title);
 }
 
 void BackgroundFetchJobController::Abort() {
@@ -120,7 +128,7 @@ void BackgroundFetchJobController::Abort() {
       return;  // Ignore attempt to abort after completion/abort.
   }
 
-  delegate_proxy_.Abort();
+  delegate_proxy_->Abort();
 
   state_ = State::ABORTED;
   // Inform the owner of the controller about the job having aborted.
