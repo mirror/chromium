@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8bcdf2e_e3376cc0",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-19T14:09:42Z",
+      "side": 1,
+      "message": "Though static void vprintf_stderr_common() is already defined in Assertions.cpp, I define it ScopedLogger.cpp again. Because it looks like that\nvprintf_stderr_common() was originated to be only used inside of Assertions.cpp. However if there is better way to use it or this is wrong, please let me know.",
+      "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
