@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab4970e_55eac18d",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-19T15:33:56Z",
+      "side": 1,
+      "message": "Looks like this doesn\u0027t have to be in Jinja templates. Does it make sense to put this in V8BindingForCore.cpp or somewhere to avoid duplication?",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
