@@ -6,7 +6,7 @@
  * In the real (non-test) code, this data comes from the C++ handler.
  * Only used for tests.
  * @typedef {{defaults: Map<string, !DefaultContentSetting>,
- *            exceptions: !Map<string, !Array<!RawSiteException>>}}
+ *            exceptions: Map<string, !Array<!RawSiteException>>}}
  */
 var SiteSettingsPref;
 

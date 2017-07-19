@@ -57,88 +57,88 @@ suite('SiteDetails', function() {
       exceptions: {
         auto_downloads: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         background_sync: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         camera: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         geolocation: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         images: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'default',
           },
         ],
         javascript: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         mic: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
         ],
         notifications: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.BLOCK,
             source: 'policy',
           },
         ],
         plugins: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'extension',
           },
         ],
         popups: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.BLOCK,
             source: 'default',
           },
         ],
         unsandboxed_plugins: [
           {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
+            embeddingOrigin: 'https://foo-allow.com:443',
+            origin: 'https://foo-allow.com:443',
             setting: settings.ContentSetting.ALLOW,
             source: 'preference',
           },
@@ -171,7 +171,7 @@ suite('SiteDetails', function() {
     Polymer.dom(parent).appendChild(api);
 
     browserProxy.setPrefs(prefs);
-    testElement.origin = 'https://foo.com:443';
+    testElement.origin = 'https://foo-allow.com:443';
 
     Polymer.dom.flush();
 
@@ -181,7 +181,7 @@ suite('SiteDetails', function() {
 
   test('correct pref settings are shown', function() {
     browserProxy.setPrefs(prefs);
-    testElement.origin = 'https://foo.com:443';
+    testElement.origin = 'https://foo-allow.com:443';
 
     return browserProxy.whenCalled('getOriginPermissions').then(function() {
       testElement.root.querySelectorAll('site-details-permission')

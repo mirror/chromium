@@ -41,16 +41,21 @@ typedef std::map<std::pair<ContentSettingsPattern, std::string>,
                  OnePatternSettings>
     AllPatternsSettings;
 
-extern const char kSetting[];
-extern const char kOrigin[];
 extern const char kDisplayName[];
-extern const char kOriginForFavicon[];
-extern const char kExtensionProviderId[];
-extern const char kPolicyProviderId[];
-extern const char kSource[];
-extern const char kIncognito[];
 extern const char kEmbeddingOrigin[];
-extern const char kPreferencesSource[];
+extern const char kIncognito[];
+extern const char kOrigin[];
+extern const char kOriginForFavicon[];
+extern const char kSource[];
+extern const char kSetting[];
+
+enum class SiteSettingSource {
+  kDefault,
+  kExtension,
+  kPolicy,
+  kPreference,
+  kNumSources,
+};
 
 // Group types.
 extern const char kGroupTypeUsb[];
@@ -58,11 +63,12 @@ extern const char kGroupTypeUsb[];
 // Returns whether a group name has been registered for the given type.
 bool HasRegisteredGroupName(ContentSettingsType type);
 
-// Gets a content settings type from the group name identifier.
+// Converts a ContentSettingsType to/from its group name identifier.
 ContentSettingsType ContentSettingsTypeFromGroupName(const std::string& name);
-
-// Gets a string identifier for the group name.
 std::string ContentSettingsTypeToGroupName(ContentSettingsType type);
+
+// Converts a SiteSettingSource to its string identifier.
+std::string SiteSettingSourceToString(const SiteSettingSource source);
 
 // Helper function to construct a dictonary for an exception.
 std::unique_ptr<base::DictionaryValue> GetExceptionForPage(
@@ -96,6 +102,19 @@ void GetContentCategorySetting(
     const HostContentSettingsMap* map,
     ContentSettingsType content_type,
     base::DictionaryValue* object);
+
+// Retrieves the current setting for a given origin, category pair, the source
+// of that setting, and its display name, which will be different if it's an
+// extension. Note this is similar to GetContentCategorySetting() above but this
+// goes through the PermissionManager (preferred, see https://crbug.com/739241).
+ContentSetting GetContentSettingForOrigin(
+    Profile* profile,
+    const HostContentSettingsMap* map,
+    const GURL& origin,
+    ContentSettingsType content_type,
+    std::string* source_string,
+    const extensions::ExtensionRegistry* extension_registry,
+    std::string* display_name);
 
 // Returns exceptions constructed from the policy-set allowed URLs
 // for the content settings |type| mic or camera.
