@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Allow lists starting with a comma should be parsed correctly</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+  </head>
+  <body>
+  <script type="text/javascript">
+    var test = async_test(function() {
+      const client = new XMLHttpRequest();
+      let url = "resources/access-control-allow-lists.py?headers=,y-lol,x-print,%20,,,y-print&origin=http://127.0.0.1:8000";
+      client.open("GET", url, false);
+      client.setRequestHeader('x-print', 'unicorn')
+      client.setRequestHeader('y-print', 'narwhal')
+      // Sending GET request with custom headers
+      assert_equals(client.send(null), undefined);
+      const response = JSON.parse(client.response);
+      assert_equals(response['x-print'], "unicorn");
+      assert_equals(response['y-print'], "narwhal");
+
+      url = "resources/access-control-allow-lists.py?methods=,,PUT,GET&origin=http://127.0.0.1:8000";
+      client.open("PUT", url, false);
+      // Sending PUT request
+      assert_equals(client.send(null), undefined);
+      test.done();
+    }, "Allow lists starting with a comma should be parsed correctly");
+  </script>
+  </body>
+  </html>
+
