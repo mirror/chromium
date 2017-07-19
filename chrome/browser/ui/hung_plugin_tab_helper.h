@@ -8,7 +8,7 @@
 #include <map>
 
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -59,7 +59,7 @@ class HungPluginTabHelper
   friend class content::WebContentsUserData<HungPluginTabHelper>;
 
   struct PluginState;
-  typedef std::map<int, linked_ptr<PluginState> > PluginStateMap;
+  typedef std::map<int, std::unique_ptr<PluginState>> PluginStateMap;
 
   explicit HungPluginTabHelper(content::WebContents* contents);
 

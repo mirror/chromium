@@ -265,9 +265,9 @@ void HungPluginTabHelper::PluginHungStatusChanged(
       content::PluginService::GetInstance()->GetPluginDisplayNameByPath(
           plugin_path);
 
-  linked_ptr<PluginState> state(new PluginState(plugin_path, plugin_name));
-  hung_plugins_[plugin_child_id] = state;
-  ShowBar(plugin_child_id, state.get());
+  std::unique_ptr<PluginState> state(new PluginState(plugin_path, plugin_name));
+  hung_plugins_[plugin_child_id] = std::move(state);
+  ShowBar(plugin_child_id, hung_plugins_[plugin_child_id].get());
 }
 
 void HungPluginTabHelper::Observe(
