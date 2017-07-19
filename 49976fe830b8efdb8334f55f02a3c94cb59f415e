@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8953fcaf_72f929f4",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:35:33Z",
+      "side": 1,
+      "message": "Are things easier if instead of ASYNC_EVENT for each step we use TRACE_EVENT_ASYNC_STEP_INTO macros for each step?",
+      "parentUuid": "5a6e86c7_a0550037",
+      "revId": "49976fe830b8efdb8334f55f02a3c94cb59f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d7f92ef_e1df0444",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 5
