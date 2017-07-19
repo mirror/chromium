@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85826fec_7ebb5d17",
+        "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "Add boundary case:\nEXPECT_FALSE(IsMarked(0x7FFFFFFF);",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 2
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdb0d06_7b4642a5",
+        "filename": "chrome/installer/zucchini/label_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060e6a94_d1b9c157",
+        "filename": "chrome/installer/zucchini/label_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 8
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc17dfa_e017da98",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "This data structure warrants more detailed explanation. Proposing:\n\n// Zucchini matches reference targets (as offsets) between \"old\" and \"new\" images. To represent these, we:\n// (1) Define a Label as an {offset, index} pair, meaning that |index| is assigned to |offset|.\n// (2) Assign an index or to each target offset in \"old\".\n// (3) Do the same for \"new\".\n// (4) Represent matching \"old\" offset and \"new\" offsets as \"old\" Label and \"new\" Label that share a common index.\n// For example, suppose \"old\" Labels are:\n//   {0x1111, 0}, {0x3333, 4}, {0x5555, 1}, {0x7777, 3}\n// and \"new\" Labels are:\n//   {0x2222, 4}, {0x4444, 8}, {0x6666, 0}, {0x8888, 2}\n// Then the matched offsets between \"old\" and \"new\" are:\n//   0x1111 \u003c\u003d\u003e 0x6666,  0x333 \u003c\u003d\u003e 0x4444.\n\n// A LabelManager stores a list of Labels with distinct offsets and distinct indices for an image (\"old\" or \"new\"). It also provides functions to:",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f4169d_25bd7db1",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "// A LabelManager allows offsets to be represented as indexes. To enable mixed representation of targets as offsets or indexes, indexes are stored as \"marked\" values (implemented by setting the MSB), and offsets are \"unmarked\". So when working with stored targets:\n// - IsMarked() distinguishes offsets (false) from indexes (true).\n// - MarkIndex() is used to encode indexes to their stored value.\n// - UnmarkIndex() is used to decode indexes to their actual value.\n// - Target offsets are stored verbatim, but they must not be marked. This affects reference parsing, where we reject all references whose offsets happen to be marked.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc15033_28013491",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "offset_or_marked_index\n(Also update comment).",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30814f6_b0b0b28b",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "offset_or_marked_index",
+      "range": {
+        "startLine": 46,
+        "startChar": 47,
+        "endLine": 46,
+        "endChar": 62
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59afc12f_e53697ae",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "Seems redundant.",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7308cd7f_bf2ca06e",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "offset_or_marked_index",
+      "range": {
+        "startLine": 63,
+        "startChar": 42,
+        "endLine": 63,
+        "endChar": 57
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dac517d_871bff2e",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "offset_or_marked_index",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ea7b20_43602122",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "LabelManager",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e42ae8a_3ad8ff95",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "offset_or_marked_index",
+      "range": {
+        "startLine": 114,
+        "startChar": 9,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e2b3a1_2b315953",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "This should come first.",
+      "range": {
+        "startLine": 119,
+        "startChar": 29,
+        "endLine": 119,
+        "endChar": 70
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c69499e_cff72982",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-19T18:29:40Z",
+      "side": 1,
+      "message": "tries",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 49
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
