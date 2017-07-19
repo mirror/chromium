@@ -11,6 +11,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/common/content_switches.h"
 
 using std::string;
@@ -53,13 +54,15 @@ void AddFeatureToList(base::CommandLine& command_line,
 // static
 void CommandLineHelper::AddEnabledFeature(base::CommandLine& command_line,
                                           const string& feature_name) {
-  AddFeatureToList(command_line, feature_name, switches::kEnableFeatures,
-                   switches::kDisableFeatures);
+  AddFeatureToList(command_line, feature_name,
+                   variations::switches::kEnableFeatures,
+                   variations::switches::kDisableFeatures);
 }
 
 // static
 void CommandLineHelper::AddDisabledFeature(base::CommandLine& command_line,
                                            const string& feature_name) {
-  AddFeatureToList(command_line, feature_name, switches::kDisableFeatures,
-                   switches::kEnableFeatures);
+  AddFeatureToList(command_line, feature_name,
+                   variations::switches::kDisableFeatures,
+                   variations::switches::kEnableFeatures);
 }

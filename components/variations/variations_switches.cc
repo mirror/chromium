@@ -7,12 +7,18 @@
 namespace variations {
 namespace switches {
 
+// Comma-separated list of feature names to disable. See also kEnableFeatures.
+const char kDisableFeatures[] = "disable-features";
+
 // Disable field trial tests configured in fieldtrial_testing_config.json.
 const char kDisableFieldTrialTestingConfig[] = "disable-field-trial-config";
 
 // TODO(asvitkine): Consider removing or renaming this functionality.
 // Enables the benchmarking extensions.
 const char kEnableBenchmarking[] = "enable-benchmarking";
+
+// Comma-separated list of feature names to enable. See also kDisableFeatures.
+const char kEnableFeatures[] = "enable-features";
 
 // Fakes the channel of the browser for purposes of Variations filtering. This
 // is to be used for testing only. Possible values are "stable", "beta", "dev"

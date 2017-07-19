@@ -22,6 +22,7 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
+#include "components/variations/variations_switches.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/public/app/content_main.h"
@@ -246,11 +247,11 @@ void BrowserTestBase::SetUp() {
   }
 
   if (!enabled_features.empty()) {
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     enabled_features);
   }
   if (!disabled_features.empty()) {
-    command_line->AppendSwitchASCII(switches::kDisableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kDisableFeatures,
                                     disabled_features);
   }
 

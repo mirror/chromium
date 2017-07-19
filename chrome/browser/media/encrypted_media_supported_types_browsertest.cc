@@ -22,6 +22,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/test_launcher_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "media/base/media_switches.h"
@@ -297,7 +298,7 @@ class EncryptedMediaSupportedTypesExternalClearKeyTest
                       media::kClearKeyCdmAdapterFileName,
                       media::kClearKeyCdmDisplayName,
                       media::kClearKeyCdmPepperMimeType);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     media::kExternalClearKeyForTesting.name);
   }
 #endif  // BUILDFLAG(ENABLE_PEPPER_CDMS)
@@ -336,7 +337,7 @@ class EncryptedMediaSupportedTypesClearKeyCDMRegisteredWithWrongPathTest
                       "clearkeycdmadapterwrongname.dll",
                       media::kClearKeyCdmDisplayName,
                       media::kClearKeyCdmPepperMimeType, false);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+    command_line->AppendSwitchASCII(variations::switches::kEnableFeatures,
                                     media::kExternalClearKeyForTesting.name);
   }
 };
