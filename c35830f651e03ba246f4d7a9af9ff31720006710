@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71117cf9_e76e5803",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1232091
+      },
+      "writtenOn": "2017-07-19T03:46:17Z",
+      "side": 1,
+      "message": "Right. Fixed.",
+      "parentUuid": "fadf2c1b_6dd83cb7",
+      "revId": "c35830f651e03ba246f4d7a9af9ff31720006710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81c1477a_4af12856",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T15:38:39Z",
       "side": 1,
       "message": "Should we add a DCHECK(unpacker_io_task_runner_-\u003eRunsTasksInCurrentSequence()); here?",
+      "revId": "c35830f651e03ba246f4d7a9af9ff31720006710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3460ebd0_b9787bc3",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1232091
+      },
+      "writtenOn": "2017-07-19T03:46:17Z",
+      "side": 1,
+      "message": "Added.",
+      "parentUuid": "81c1477a_4af12856",
       "revId": "c35830f651e03ba246f4d7a9af9ff31720006710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
