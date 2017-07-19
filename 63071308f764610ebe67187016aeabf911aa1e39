@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d7fb46_43f2a57f",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T15:35:06Z",
+      "side": 1,
+      "message": "I think this |attachTabHelpers| method is called before BVC\u0027s |installDelegatesForTab|.  If that\u0027s true, then self.dispatcher is still nil at this point in the Tab\u0027s lifecycle.\n\nOne ugly solution is to create this object (and any other helper that directly takes an observer) in a helper method, and call that method from setDispatcher.\n\nOr, in Tab\u0027s setDispatcher, recursively call SetDispatcher() on each affected helper.",
+      "revId": "63071308f764610ebe67187016aeabf911aa1e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5b4b68_96dec30f",
+        "filename": "ios/chrome/browser/ui/activity_services/print_activity.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T15:35:06Z",
+      "side": 1,
+      "message": "Typo: that handles.",
+      "revId": "63071308f764610ebe67187016aeabf911aa1e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
