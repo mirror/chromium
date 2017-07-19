@@ -227,6 +227,36 @@
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_53" desc="Description of the default user icon with a picture of geometric figure 6">
         Geometric figure 6
       </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_54" desc="Description of the default user icon with a picture of a bird">
+        Bird
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_55" desc="Description of the default user icon with a picture of ramen">
+        Ramen
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_56" desc="Description of the default user icon with a picture of a tamagochi">
+        Tamagochi
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_57" desc="Description of the default user icon with a picture of a cheese">
+        Cheese
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_58" desc="Description of the default user icon with a picture of a football">
+        Football
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_59" desc="Description of the default user icon with a picture of a basketball">
+        Basketball
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_60" desc="Description of the default user icon with a picture of a vinyl">
+        Vinyl
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_61" desc="Description of the default user icon with a picture of sushi">
+        Sushi
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_62" desc="Description of the default user icon with a picture of a bike">
+        Bike
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_63" desc="Description of the default user icon with a picture of a pair of sunglasses">
+        Sunglasses
+      </message>
 
       <!-- Attribution strings for stock user images, not translateable. -->
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR">
@@ -352,6 +382,26 @@
       </message>
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_53">
       </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_54">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_55">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_56">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_57">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_58">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_59">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_60">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_61">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_62">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_63">
+      </message>
 
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE">
       </message>
@@ -474,6 +524,26 @@
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_52">
       </message>
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_53">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_54">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_55">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_56">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_57">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_58">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_59">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_60">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_61">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_62">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_63">
       </message>
 
       <!-- Input method strings. -->
