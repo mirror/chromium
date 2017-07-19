@@ -45,6 +45,23 @@
       "revId": "cac5f52b26bd448f59cd8d5c284d12f9003b2a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb6e4b5_7e2689ac",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-19T23:54:28Z",
+      "side": 1,
+      "message": "The size here should be physical size not DMM right? Since the distance is just 1m, we should just not make these DMM?",
+      "revId": "cac5f52b26bd448f59cd8d5c284d12f9003b2a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
