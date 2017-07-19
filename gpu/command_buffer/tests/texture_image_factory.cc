@@ -72,7 +72,7 @@ unsigned TextureImageFactory::RequiredTextureType() {
   return required_texture_type_;
 }
 
-bool TextureImageFactory::SupportsFormatRGB() {
+bool TextureImageFactory::SupportsFormatRGBRenderTarget() {
   return false;
 }
 

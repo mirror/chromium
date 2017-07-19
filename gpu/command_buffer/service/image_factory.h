@@ -43,7 +43,7 @@ class GPU_EXPORT ImageFactory {
   virtual unsigned RequiredTextureType();
 
   // Whether a created image can have format GL_RGB.
-  virtual bool SupportsFormatRGB();
+  virtual bool SupportsFormatRGBRenderTarget();
 
  protected:
   virtual ~ImageFactory();

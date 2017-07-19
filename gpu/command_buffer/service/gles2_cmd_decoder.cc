@@ -19549,7 +19549,7 @@ bool GLES2DecoderImpl::NeedsCopyTextureImageWorkaround(
 
 bool GLES2DecoderImpl::ChromiumImageNeedsRGBEmulation() {
   gpu::ImageFactory* factory = GetContextGroup()->image_factory();
-  return factory ? !factory->SupportsFormatRGB() : false;
+  return factory ? !factory->SupportsFormatRGBRenderTarget() : false;
 }
 
 void GLES2DecoderImpl::ClearScheduleCALayerState() {
