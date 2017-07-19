@@ -22,6 +22,30 @@
       "revId": "8ad443ca744c2a38b9276c869344431dca2936f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a95aa4e_61fe5ee1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialogTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T17:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a0ae4a_a04085f9",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "8ad443ca744c2a38b9276c869344431dca2936f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
