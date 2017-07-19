@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c0fdb1a_7902d130",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "The feature check here is redundant, you would not get a carousel at all otherwise.",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d8ee2a_c1098079",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "nit: suggestion",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90dce8f7_fe732d1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "Sadly we don\u0027t have android studio style automatic annotations. annotate the litteral parameters with a comment?",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c279b6a_ecabe973",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "annotate with @HorizontalDisplayStyle. These are ints only because using enums have more overhead than we would like in Java. the annotation allows switches, variable assignment etc to check that the values are consistent with the ones declared in the enum declaration. See https://developer.android.com/reference/android/support/annotation/IntDef.html",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5555ec7f_9bb9f0f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "nit: you can check whether the carousel is null here, that\u0027s faster as it doesn\u0027t involve JNI. assert for the state of the feature below then if you want.",
+      "range": {
+        "startLine": 210,
+        "startChar": 13,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c11c0e9_eba451f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T08:58:04Z",
+      "side": 1,
+      "message": "you don\u0027t have constraint about the URL not being empty anymore, right? so you can remove it.",
+      "range": {
+        "startLine": 219,
+        "startChar": 26,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "7f22ca570cde2fbf81ac00e7c25de44d81094dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
