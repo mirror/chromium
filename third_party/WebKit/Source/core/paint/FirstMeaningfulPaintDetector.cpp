@@ -90,7 +90,7 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
     return;
 
   // Skip document background-only paints.
-  if (paint_timing_->FirstPaint() == 0.0)
+  if (paint_timing_->FirstPaintRendered() == 0.0)
     return;
 
   provisional_first_meaningful_paint_ = MonotonicallyIncreasingTime();
@@ -120,7 +120,7 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
 // This is called only on FirstMeaningfulPaintDetector for main frame.
 void FirstMeaningfulPaintDetector::NotifyInputEvent() {
   // Ignore user inputs before first paint.
-  if (paint_timing_->FirstPaint() == 0.0)
+  if (paint_timing_->FirstPaintRendered() == 0.0)
     return;
   had_user_input_ = kHadUserInput;
 }
@@ -159,7 +159,7 @@ void FirstMeaningfulPaintDetector::SetNetworkQuietTimers(
 
 void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
   if (!GetDocument() || network0_quiet_reached_ || ActiveConnections() > 0 ||
-      !paint_timing_->FirstContentfulPaint())
+      !paint_timing_->FirstContentfulPaintRendered())
     return;
   network0_quiet_reached_ = true;
 
@@ -167,14 +167,14 @@ void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
     first_meaningful_paint0_quiet_ =
         std::max(provisional_first_meaningful_paint_,
-                 paint_timing_->FirstContentfulPaint());
+                 paint_timing_->FirstContentfulPaintRendered());
   }
   ReportHistograms();
 }
 
 void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
   if (!GetDocument() || network2_quiet_reached_ || ActiveConnections() > 2 ||
-      !paint_timing_->FirstContentfulPaint())
+      !paint_timing_->FirstContentfulPaintRendered())
     return;
   network2_quiet_reached_ = true;
 
@@ -186,10 +186,11 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
         provisional_first_meaningful_paint_);
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
     if (provisional_first_meaningful_paint_ <
-        paint_timing_->FirstContentfulPaint()) {
-      first_meaningful_paint2_quiet_ = paint_timing_->FirstContentfulPaint();
+        paint_timing_->FirstContentfulPaintRendered()) {
+      first_meaningful_paint2_quiet_ =
+          paint_timing_->FirstContentfulPaintRendered();
       first_meaningful_paint2_quiet_swap_ =
-          paint_timing_->FirstContentfulPaintSwap();
+          paint_timing_->FirstContentfulPaint();
     } else {
       first_meaningful_paint2_quiet_ = provisional_first_meaningful_paint_;
       first_meaningful_paint2_quiet_swap_ =
@@ -255,12 +256,15 @@ void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
 void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
                                                   bool did_swap,
                                                   double timestamp) {
-  // TODO(shaseley): Add UMAs here to see how often either of the following
-  // happen. In the first case, the FMP will be 0.0 if this is the provisional
-  // timestamp we end up using. In the second case, a swap timestamp of 0.0 is
-  // reported to PaintTiming because the |network2_quiet_timer_| already fired.
+  // If |did_swap| is false and FMP is set to the associated provisional
+  // timestamp, 0.0 will be reported to |paint_timing_| as the FMP swap
+  // timestamp.
+  paint_timing_->ReportDidSwapHistogram(did_swap);
   if (!did_swap)
     return;
+  // If |network2_quiet_reached_| is true, we did not have the swap timestamp
+  // before reporting the FMP to |paint_timing_| and 0.0 was reported.
+  ReportNetworkQuietBeforeSwapPromiseReported(network2_quiet_reached_);
   if (network2_quiet_reached_)
     return;
 
@@ -271,6 +275,15 @@ void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
     default:
       NOTREACHED();
   }
+}
+
+void FirstMeaningfulPaintDetector::ReportNetworkQuietBeforeSwapPromiseReported(
+    bool was_already_quiet) {
+  DEFINE_STATIC_LOCAL(
+      BooleanHistogram, network_quiet_before_swap_promise_histogram,
+      ("PageLoad.Internal.Renderer.FirstMeaningfulPaintDetector."
+       "NetworkQuietBeforeSwapPromiseReported"));
+  network_quiet_before_swap_promise_histogram.Count(was_already_quiet);
 }
 
 DEFINE_TRACE(FirstMeaningfulPaintDetector) {
