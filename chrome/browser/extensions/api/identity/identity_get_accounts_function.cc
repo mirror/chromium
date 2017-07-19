@@ -4,6 +4,11 @@
 
 #include "chrome/browser/extensions/api/identity/identity_get_accounts_function.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "chrome/browser/extensions/api/identity/identity_api.h"
 #include "chrome/browser/extensions/api/identity/identity_constants.h"
 #include "chrome/browser/profiles/profile.h"
@@ -25,7 +30,7 @@ ExtensionFunction::ResponseAction IdentityGetAccountsFunction::Run() {
 
   std::vector<std::string> gaia_ids =
       IdentityAPI::GetFactoryInstance()->Get(GetProfile())->GetAccounts();
-  DCHECK(gaia_ids.size() < 2 || switches::IsExtensionsMultiAccount());
+  DCHECK(gaia_ids.size() < 2 || signin::IsExtensionsMultiAccount());
 
   std::unique_ptr<base::ListValue> infos(new base::ListValue());
 

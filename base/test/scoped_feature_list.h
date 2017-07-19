@@ -6,10 +6,15 @@
 #define BASE_TEST_SCOPED_FEATURE_LIST_H_
 
 #include <initializer_list>
+#include <memory>
+#include <string>
 
 #include "base/feature_list.h"
 
 namespace base {
+
+class FieldTrial;
+
 namespace test {
 
 // ScopedFeatureList resets the global FeatureList instance to a new empty
@@ -59,16 +64,35 @@ class ScopedFeatureList final {
   // method. This is important for testing potentially unexpected feature
   // interactions.
   void InitWithFeatures(
-      const std::initializer_list<base::Feature>& enabled_features,
-      const std::initializer_list<base::Feature>& disabled_features);
+      const std::initializer_list<Feature>& enabled_features,
+      const std::initializer_list<Feature>& disabled_features);
 
   // Initializes and registers a FeatureList instance based on present
   // FeatureList and overridden with single enabled feature.
-  void InitAndEnableFeature(const base::Feature& feature);
+  void InitAndEnableFeature(const Feature& feature);
+
+  // Initializes and registers a FeatureList instance based on present
+  // FeatureList and overridden with single enabled feature and associated field
+  // trial override.
+  void InitAndEnableFeatureWithFieldTrialOverride(const Feature& feature,
+                                                  FieldTrial* trial);
 
   // Initializes and registers a FeatureList instance based on present
   // FeatureList and overridden with single disabled feature.
-  void InitAndDisableFeature(const base::Feature& feature);
+  void InitAndDisableFeature(const Feature& feature);
+
+  // Initializes and registers a FeatureList instance based on present
+  // FeatureList and overridden with the given enabled and disabled features.
+  // Any feature overrides already present in the global FeatureList will
+  // continue to apply, unless they conflict with the overrides passed into this
+  // method.
+  // Field trials will apply to the enabled features, in the same order. The
+  // number of trials must be less (or equal) than the number of enabled
+  // features.
+  void InitWithFeaturesAndFieldTrials(
+      const std::initializer_list<Feature>& enabled_features,
+      const std::initializer_list<FieldTrial*>& trials_for_enabled_features,
+      const std::initializer_list<Feature>& disabled_features);
 
  private:
   std::unique_ptr<FeatureList> original_feature_list_;
