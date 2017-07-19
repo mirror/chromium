@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06bf12a6_17531c33",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3991,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-19T02:06:24Z",
+      "side": 1,
+      "message": "nit: .get() is redundant",
+      "revId": "cab2262ca822113ee5c76b3b8247dc60e8b2057c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9b1c98_b622d2ff",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-19T02:06:24Z",
+      "side": 1,
+      "message": "nit: mention that if the request cannot be bound, |interface_pipe| remains valid upon return",
+      "revId": "cab2262ca822113ee5c76b3b8247dc60e8b2057c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
