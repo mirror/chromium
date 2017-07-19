@@ -362,7 +362,7 @@ class CORE_EXPORT Node : public EventTarget {
   ShadowRoot* YoungestShadowRoot() const;
 
   // Returns nullptr, a child of ShadowRoot, or a legacy shadow root.
-  Node* NonBoundaryShadowTreeRootNode();
+  Node* NonBoundaryShadowTreeRootNode() const;
 
   // Node's parent, shadow tree host.
   ContainerNode* ParentOrShadowHostNode() const;

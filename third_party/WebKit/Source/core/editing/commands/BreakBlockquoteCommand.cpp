@@ -173,7 +173,7 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
   }
 
   // startNode is the first node that we need to move to the new blockquote.
-  Node* start_node = pos.AnchorNode();
+  const Node* start_node = pos.AnchorNode();
   DCHECK(start_node);
 
   // Split at pos if in the middle of a text node.

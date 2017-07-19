@@ -48,10 +48,10 @@
 namespace blink {
 
 static Node* SelectionShadowAncestor(LocalFrame* frame) {
-  Node* node = frame->Selection()
-                   .ComputeVisibleSelectionInDOMTreeDeprecated()
-                   .Base()
-                   .AnchorNode();
+  const Node* node = frame->Selection()
+                         .ComputeVisibleSelectionInDOMTreeDeprecated()
+                         .Base()
+                         .AnchorNode();
   if (!node)
     return 0;
 

@@ -1756,7 +1756,7 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   Position end = visible_end.ToParentAnchoredPosition();
   TextAffinity end_affinity = visible_end.Affinity();
 
-  Node* anchor_node = start.AnchorNode();
+  Node* anchor_node = const_cast<Node*>(start.AnchorNode());
   DCHECK(anchor_node);
 
   AXLayoutObject* anchor_object = nullptr;
@@ -1774,7 +1774,7 @@ AXObject::AXRange AXLayoutObject::Selection() const {
       anchor_node = anchor_node->parentNode();
   }
 
-  Node* focus_node = end.AnchorNode();
+  const Node* focus_node = end.AnchorNode();
   DCHECK(focus_node);
 
   AXLayoutObject* focus_object = nullptr;
@@ -1899,7 +1899,7 @@ AXLayoutObject* AXLayoutObject::GetUnignoredObjectFromNode(Node& node) const {
   if (IsDetached())
     return nullptr;
 
-  AXObject* ax_object = AxObjectCache().GetOrCreate(&node);
+  AXObject* ax_object = AxObjectCache().GetOrCreate(const_cast<Node*>(&node));
   if (!ax_object)
     return nullptr;
 

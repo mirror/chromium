@@ -79,7 +79,10 @@ class CORE_TEMPLATE_CLASS_EXPORT SimplifiedBackwardsTextIteratorAlgorithm {
   bool IsInTextSecurityMode() const;
 
  private:
-  void Init(Node* start_node, Node* end_node, int start_offset, int end_offset);
+  void Init(const Node* start_node,
+            const Node* end_node,
+            int start_offset,
+            int end_offset);
   void ExitNode();
   bool HandleTextNode();
   LayoutText* HandleFirstLetter(int& start_offset, int& offset_in_node);

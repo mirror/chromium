@@ -446,7 +446,7 @@ ContainerNode* HighestEditableRoot(const PositionInFlatTree& position) {
 }
 
 bool IsEditablePosition(const Position& position) {
-  Node* node = position.ParentAnchoredEquivalent().AnchorNode();
+  const Node* node = position.ParentAnchoredEquivalent().AnchorNode();
   if (!node)
     return false;
   DCHECK(node->GetDocument().IsActive());
@@ -499,7 +499,7 @@ Element* RootEditableElementOf(const PositionInFlatTree& p) {
 
 // TODO(yosin) This does not handle [table, 0] correctly.
 Element* RootEditableElementOf(const VisiblePosition& visible_position) {
-  Node* anchor_node = visible_position.DeepEquivalent().AnchorNode();
+  const Node* anchor_node = visible_position.DeepEquivalent().AnchorNode();
   return anchor_node ? RootEditableElement(*anchor_node) : nullptr;
 }
 
@@ -1386,8 +1386,8 @@ Element* EnclosingAnchorElement(const Position& p) {
   if (p.IsNull())
     return 0;
 
-  for (Element* ancestor =
-           ElementTraversal::FirstAncestorOrSelf(*p.AnchorNode());
+  for (Element* ancestor = ElementTraversal::FirstAncestorOrSelf(
+           *const_cast<Node*>(p.AnchorNode()));
        ancestor; ancestor = ElementTraversal::FirstAncestor(*ancestor)) {
     if (ancestor->IsLink())
       return ancestor;
@@ -1395,7 +1395,7 @@ Element* EnclosingAnchorElement(const Position& p) {
   return 0;
 }
 
-HTMLElement* EnclosingList(Node* node) {
+HTMLElement* EnclosingList(const Node* node) {
   if (!node)
     return 0;
 
@@ -1411,7 +1411,7 @@ HTMLElement* EnclosingList(Node* node) {
   return 0;
 }
 
-Node* EnclosingListChild(Node* node) {
+Node* EnclosingListChild(const Node* node) {
   if (!node)
     return 0;
   // Check for a list item element, or for a node whose parent is a list
@@ -1709,7 +1709,7 @@ Position TrailingWhitespacePosition(const Position& position,
 
 unsigned NumEnclosingMailBlockquotes(const Position& p) {
   unsigned num = 0;
-  for (Node* n = p.AnchorNode(); n; n = n->parentNode()) {
+  for (const Node* n = p.AnchorNode(); n; n = n->parentNode()) {
     if (IsMailHTMLBlockquoteElement(n))
       num++;
   }
@@ -1810,7 +1810,7 @@ bool LineBreakExistsAtPosition(const Position& position) {
       !position.AnchorNode()->GetLayoutObject()->Style()->PreserveNewline())
     return false;
 
-  Text* text_node = ToText(position.AnchorNode());
+  const Text* text_node = ToText(position.AnchorNode());
   unsigned offset = position.OffsetInContainerNode();
   return offset < text_node->length() && text_node->data()[offset] == '\n';
 }

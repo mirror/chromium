@@ -172,7 +172,7 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
   EditingStyle(const Position&, PropertiesToInclude);
   explicit EditingStyle(const StylePropertySet*);
   EditingStyle(CSSPropertyID, const String& value);
-  void Init(Node*, PropertiesToInclude);
+  void Init(const Node*, PropertiesToInclude);
   void RemoveInheritedColorsIfNeeded(const ComputedStyle*);
   void ReplaceFontSizeByKeywordIfPossible(const ComputedStyle*,
                                           CSSComputedStyleDeclaration*);

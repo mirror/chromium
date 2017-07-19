@@ -68,7 +68,7 @@ const TreeScope* PositionTemplate<Strategy>::CommonAncestorTreeScope(
 
 template <typename Strategy>
 PositionTemplate<Strategy> PositionTemplate<Strategy>::EditingPositionOf(
-    Node* anchor_node,
+    const Node* anchor_node,
     int offset) {
   if (!anchor_node || anchor_node->IsTextNode())
     return PositionTemplate<Strategy>(anchor_node, offset);
@@ -87,15 +87,10 @@ PositionTemplate<Strategy> PositionTemplate<Strategy>::EditingPositionOf(
                                     PositionAnchorType::kAfterAnchor);
 }
 
-// TODO(editing-dev): Once we change type of |anchor_node_| to
-// |Member<const Node>|, we should get rid of |const_cast<Node*>()|.
-// See http://crbug.com/735327
 template <typename Strategy>
 PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
                                              PositionAnchorType anchor_type)
-    : anchor_node_(const_cast<Node*>(anchor_node)),
-      offset_(0),
-      anchor_type_(anchor_type) {
+    : anchor_node_(anchor_node), offset_(0), anchor_type_(anchor_type) {
   if (!anchor_node_) {
     anchor_type_ = PositionAnchorType::kOffsetInAnchor;
     return;
@@ -117,13 +112,10 @@ PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
   DCHECK_NE(anchor_type_, PositionAnchorType::kOffsetInAnchor);
 }
 
-// TODO(editing-dev): Once we change type of |anchor_node_| to
-// |Member<const Node>|, we should get rid of |const_cast<Node*>()|.
-// See http://crbug.com/735327
 template <typename Strategy>
 PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
                                              int offset)
-    : anchor_node_(const_cast<Node*>(anchor_node)),
+    : anchor_node_(anchor_node),
       offset_(offset),
       anchor_type_(PositionAnchorType::kOffsetInAnchor) {
   if (anchor_node_)

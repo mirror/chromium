@@ -355,9 +355,9 @@ CORE_EXPORT VisiblePosition VisiblePositionForIndex(int index,
 HTMLElement* CreateDefaultParagraphElement(Document&);
 HTMLElement* CreateHTMLElement(Document&, const QualifiedName&);
 
-HTMLElement* EnclosingList(Node*);
+HTMLElement* EnclosingList(const Node*);
 HTMLElement* OutermostEnclosingList(Node*, HTMLElement* root_list = nullptr);
-Node* EnclosingListChild(Node*);
+Node* EnclosingListChild(const Node*);
 
 // -------------------------------------------------------------------------
 // Element
