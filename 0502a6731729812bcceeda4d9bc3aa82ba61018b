@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05dd6e9d_a9b2e8c2",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T02:58:12Z",
+      "side": 1,
+      "message": "I have no problem with changing this, but the other instances of\nBooleanHistogram in blink pass a bool to Count(). (e.g. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp?sq\u003dpackage:chromium\u0026l\u003d356). Are we sure we want to deviate?",
+      "parentUuid": "3a7d21f1_bb367d42",
+      "range": {
+        "startLine": 285,
+        "startChar": 36,
+        "endLine": 285,
+        "endChar": 51
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cac92377_e1b00c26",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0bbeee7f_51c0c9cd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T02:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac92377_e1b00c26",
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a912315a_1aa4608c",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-19T00:54:44Z",
       "side": 1,
       "message": "Some of these methods can be deleted (if PerformanceTiming was the only consumer)?\nAlso other consumers should probably be updated to \"Swap\" methods eg.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSTiming.cpp?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d24",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a5126b_eaaa6087",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T02:58:12Z",
+      "side": 1,
+      "message": "Removed FirstTextPaint() and FirstImagePaint().\nChanged CSSTiming to use FirstContentfulPaintSwap().\n\nThe rest are only used in FirstMeaningfulPaintDetector internals and\ntests, which I\u0027m dubious about changing. Most (?) of the tests will\nprobably break because I don\u0027t think the swap time is available, and\nneed to think about the FMP internals. Maybe best for a follow-up CL\nfor this?",
+      "parentUuid": "a912315a_1aa4608c",
       "range": {
         "startLine": 63,
         "startChar": 1,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e9ecb262_ea63acdc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T02:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1186ac7_9be5da38",
+      "range": {
+        "startLine": 139,
+        "startChar": 30,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a85934d_697112a8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508068b9_27c5008f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51374,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-19T02:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a85934d_697112a8",
+      "range": {
+        "startLine": 51374,
+        "startChar": 61,
+        "endLine": 51374,
+        "endChar": 66
+      },
+      "revId": "0502a6731729812bcceeda4d9bc3aa82ba61018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
