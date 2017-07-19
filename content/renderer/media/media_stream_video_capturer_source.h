@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/video_capture.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/renderer/media/media_stream_video_source.h"
@@ -39,6 +40,11 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
       RenderFrame* render_frame);
   ~MediaStreamVideoCapturerSource() override;
 
+  void SetMediaStreamDispatcherHostForTesting(
+      mojom::MediaStreamDispatcherHost* dispatcher_host) {
+    dispatcher_host_for_testing_ = dispatcher_host;
+  }
+
  private:
   friend class CanvasCaptureHandlerTest;
   friend class MediaStreamVideoCapturerSourceTest;
@@ -58,6 +64,11 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
 
   // Method to bind as RunningCallback in VideoCapturerSource::StartCapture().
   void OnRunStateChanged(bool is_running);
+
+  mojom::MediaStreamDispatcherHost* GetMediaStreamDispatcherHost();
+
+  mojom::MediaStreamDispatcherHostAssociatedPtr dispatcher_host_;
+  mojom::MediaStreamDispatcherHost* dispatcher_host_for_testing_;
 
   // The source that provides video frames.
   const std::unique_ptr<media::VideoCapturerSource> source_;
