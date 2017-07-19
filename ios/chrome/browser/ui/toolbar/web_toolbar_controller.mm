@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #include <QuartzCore/QuartzCore.h>
 
 #include <stdint.h>
@@ -233,7 +234,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 @interface WebToolbarController ()<LocationBarDelegate,
                                    OmniboxPopupPositioner,
-                                   ToolbarFrameDelegate> {
+                                   ToolbarFrameDelegate,
+                                   UIDropInteractionDelegate> {
   // Top-level view for web content.
   UIView* _webToolbar;
   UIButton* _backButton;
@@ -399,6 +401,14 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                             font:[MDCTypography subheadFont]
                                        textColor:textColor
                                        tintColor:tintColor];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+  UIDropInteraction* dropInteraction =
+      [[UIDropInteraction alloc] initWithDelegate:self];
+  [_omniBox addInteraction:dropInteraction];
+#pragma clang diagnostic pop
+
   if (_incognito) {
     [_omniBox setIncognito:YES];
     [_omniBox
@@ -2414,6 +2424,39 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
   return text;
 }
+
+#pragma mark - UIDropInteractionDelegate
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
+- (void)dropInteraction:(UIDropInteraction*)interaction
+            performDrop:(id<UIDropSession>)session {
+  __weak WebToolbarController* weakSelf = self;
+  [session loadObjectsOfClass:[NSString class]
+                   completion:^(NSArray<NSString*>* objects) {
+                     WebToolbarController* strongSelf = weakSelf;
+                     NSString* s = [objects firstObject];
+                     [strongSelf loadURLForQuery:s];
+                   }];
+}
+
+- (BOOL)dropInteraction:(UIDropInteraction*)interaction
+       canHandleSession:(id<UIDropSession>)session {
+  NSArray* identifiers = [NSArray
+      arrayWithObjects:(NSString*)kUTTypeURL, (NSString*)kUTTypePlainText, nil];
+  return [session hasItemsConformingToTypeIdentifiers:identifiers] &&
+         session.items.count == 1;
+}
+
+- (UIDropProposal*)dropInteraction:(UIDropInteraction*)interaction
+                  sessionDidUpdate:(id<UIDropSession>)session {
+  UIDropProposal* dropProposal =
+      [[UIDropProposal alloc] initWithDropOperation:UIDropOperationCopy];
+  return dropProposal;
+}
+
+#pragma clang diagnostic pop
 
 @end
 
