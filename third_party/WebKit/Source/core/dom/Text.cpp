@@ -282,10 +282,6 @@ bool Text::TextLayoutObjectIsNeeded(const AttachContext& context,
   if (!ContainsOnlyWhitespace())
     return true;
 
-  if (style.Display() != EDisplay::kContents &&
-      !CanHaveWhitespaceChildren(parent))
-    return false;
-
   // pre-wrap in SVG never makes layoutObject.
   if (style.WhiteSpace() == EWhiteSpace::kPreWrap && parent.IsSVG())
     return false;
@@ -304,6 +300,9 @@ bool Text::TextLayoutObjectIsNeeded(const AttachContext& context,
     return !EndsWithWhitespace(
         ToLayoutText(context.previous_in_flow)->GetText());
   }
+
+  if (!CanHaveWhitespaceChildren(parent))
+    return false;
 
   return context.previous_in_flow->IsInline() &&
          !context.previous_in_flow->IsBR();
