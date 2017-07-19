@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee1618f_c08c1b85",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/skip-waiting-installed.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-19T07:05:17Z",
+      "side": 1,
+      "message": "\u0027Worker which calls skipWaiting should be active by controllerchange\u0027 would be clearer.",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "8d477e09e22742fee30abee882e5349ef539b5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
