@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd0b3af_b4a1a5c8",
+        "filename": "ios/web/app/web_main_loop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-19T17:56:40Z",
+      "side": 1,
+      "message": "Do you want to add a comment about the destroy order of these objects like you had before? Either here or in the constructor?",
+      "revId": "71115e87296aa77e82ceb60dea90065ac29a232b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8df415_714dcbe5",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-19T17:56:40Z",
+      "side": 1,
+      "message": "s/DestroyMessageLoop/DestroyNetworkChangeNotifier",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "71115e87296aa77e82ceb60dea90065ac29a232b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
