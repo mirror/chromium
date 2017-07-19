@@ -76,42 +76,16 @@ void LinkStyle::SetCSSStyleSheet(
 
   // See the comment in PendingScript.cpp about why this check is necessary
   // here, instead of in the resource fetcher. https://crbug.com/500701.
-  if (!cached_style_sheet->ErrorOccurred() &&
-      !owner_->FastGetAttribute(integrityAttr).IsEmpty() &&
-      !cached_style_sheet->IntegrityMetadata().IsEmpty()) {
-    ResourceIntegrityDisposition disposition =
-        cached_style_sheet->IntegrityDisposition();
-
-    if (disposition == ResourceIntegrityDisposition::kNotChecked &&
-        !cached_style_sheet->LoadFailedOrCanceled()) {
-      bool check_result;
-
-      // cachedStyleSheet->resourceBuffer() can be nullptr on load success.
-      // If response size == 0.
-      const char* data = nullptr;
-      size_t size = 0;
-      if (cached_style_sheet->ResourceBuffer()) {
-        data = cached_style_sheet->ResourceBuffer()->Data();
-        size = cached_style_sheet->ResourceBuffer()->size();
-      }
-      check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
-          owner_->FastGetAttribute(integrityAttr), GetDocument(), data, size,
-          KURL(base_url, href), *cached_style_sheet);
-      disposition = check_result ? ResourceIntegrityDisposition::kPassed
-                                 : ResourceIntegrityDisposition::kFailed;
-
-      // TODO(kouhei): Remove this const_cast crbug.com/653502
-      const_cast<CSSStyleSheetResource*>(cached_style_sheet)
-          ->SetIntegrityDisposition(disposition);
-    }
-
-    if (disposition == ResourceIntegrityDisposition::kFailed) {
-      loading_ = false;
-      RemovePendingSheet();
-      NotifyLoadedSheetAndAllCriticalSubresources(
-          Node::kErrorOccurredLoadingSubresource);
-      return;
-    }
+  // TODO(vogelheim): Remove this const_cast. Ref: crbug.com/653502
+  const_cast<CSSStyleSheetResource*>(cached_style_sheet)
+      ->CheckResourceIntegrity(GetDocument());
+  if (cached_style_sheet->IntegrityDisposition() ==
+      ResourceIntegrityDisposition::kFailed) {
+    loading_ = false;
+    RemovePendingSheet();
+    NotifyLoadedSheetAndAllCriticalSubresources(
+        Node::kErrorOccurredLoadingSubresource);
+    return;
   }
 
   CSSParserContext* parser_context = CSSParserContext::Create(

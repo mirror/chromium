@@ -49,9 +49,9 @@ CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
   params.SetRequestContext(WebURLRequest::kRequestContextStyle);
   CSSStyleSheetResource* resource = ToCSSStyleSheetResource(
       fetcher->RequestResource(params, CSSStyleSheetResourceFactory()));
-  // TODO(kouhei): Dedupe this logic w/ ScriptResource::fetch
-  if (resource && !params.IntegrityMetadata().IsEmpty())
-    resource->SetIntegrityMetadata(params.IntegrityMetadata());
+  // TODO(vogelheim): Maybe move into ResourceFetcher::RequestResource?
+  if (resource)
+    resource->SetIntegrityMetadataFrom(params);
   return resource;
 }
 
@@ -124,22 +124,19 @@ void CSSStyleSheetResource::DidAddClient(ResourceClient* c) {
 
 const String CSSStyleSheetResource::SheetText(
     MIMETypeCheck mime_type_check) const {
+  return const_cast<CSSStyleSheetResource*>(this)->SheetText(mime_type_check);
+}
+
+const String CSSStyleSheetResource::SheetText(MIMETypeCheck mime_type_check) {
   if (!CanUseSheet(mime_type_check))
-    return String();
+    return g_empty_string;
 
-  // Use cached decoded sheet text when available
-  if (!decoded_sheet_text_.IsNull()) {
-    // We should have the decoded sheet text cached when the resource is fully
-    // loaded.
-    DCHECK_EQ(GetStatus(), ResourceStatus::kCached);
+  if (!IsLoaded())
+    return DecodedText();
 
-    return decoded_sheet_text_;
-  }
-
-  if (!Data() || Data()->IsEmpty())
-    return String();
-
-  return DecodedText();
+  const String& tmp = SourceText();
+  UpdateDecodedSize();
+  return tmp;
 }
 
 void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
@@ -154,10 +151,6 @@ void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
 
 void CSSStyleSheetResource::CheckNotify() {
   TriggerNotificationForFinishObservers();
-
-  // Decode the data to find out the encoding and cache the decoded sheet text.
-  if (Data())
-    SetDecodedSheetText(DecodedText());
 
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
@@ -174,13 +167,6 @@ void CSSStyleSheetResource::CheckNotify() {
     c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
                         referrer_policy, Encoding(), this);
   }
-
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
@@ -191,7 +177,8 @@ void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataForFailedRevalidation() {
-  SetDecodedSheetText(String());
+  ClearSourceText();
+  UpdateDecodedSize();
   DestroyDecodedDataIfPossible();
 }
 
@@ -248,14 +235,8 @@ void CSSStyleSheetResource::SaveParsedStyleSheet(StyleSheetContents* sheet) {
   SetParsedStyleSheetCache(sheet);
 }
 
-void CSSStyleSheetResource::SetDecodedSheetText(
-    const String& decoded_sheet_text) {
-  decoded_sheet_text_ = decoded_sheet_text;
-  UpdateDecodedSize();
-}
-
 void CSSStyleSheetResource::UpdateDecodedSize() {
-  size_t decoded_size = decoded_sheet_text_.CharactersSizeInBytes();
+  size_t decoded_size = SourceTextSizeInBytes();
   if (parsed_style_sheet_cache_)
     decoded_size += parsed_style_sheet_cache_->EstimatedSizeInBytes();
   SetDecodedSize(decoded_size);

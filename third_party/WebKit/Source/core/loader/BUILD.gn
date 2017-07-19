@@ -114,6 +114,8 @@ blink_core_sources("loader") {
     "resource/ScriptResource.h",
     "resource/StyleSheetResource.h",
     "resource/StyleSheetResourceClient.h",
+    "resource/TextIntegrityResource.cpp",
+    "resource/TextIntegrityResource.h",
     "resource/TextResource.cpp",
     "resource/TextResource.h",
     "resource/XSLStyleSheetResource.cpp",

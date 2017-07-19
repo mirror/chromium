@@ -898,6 +898,22 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
 
   Resource* resource = it->value;
 
+  // A preload does not usually have integrity metadata. But if our current
+  // fetch does, and the preload doesn't, and we still have the original byte
+  // data, then we can simply make the preloaded resource "adopt" the fetch's
+  // integrity metadata. The actual integrity check will be performed as usual.
+  if (!params.IntegrityMetadata().IsEmpty() &&
+      resource->IntegrityMetadata().IsEmpty()) {
+    // Different resource types consume the resources at different points in
+    // time. We can be sure integrity hasn't yet checked if either we're still
+    // loading, or we have loaded but we still have all the bytes in the
+    // resource buffer.
+    if (!resource->IsLoaded() || (resource->ResourceBuffer() &&
+                                  !resource->ResourceBuffer()->IsEmpty())) {
+      resource->SetIntegrityMetadata(params.IntegrityMetadata());
+    }
+  }
+
   if (resource->MustRefetchDueToIntegrityMetadata(params))
     return nullptr;
 
