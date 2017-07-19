@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e3f31fe_1d73be7c",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "Comment that this is google_gray_400",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e277563_8f1659c7",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "For these colors, I\u0027d comment where this is from. Looks like this is google_blue_500",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935dee0b_9aed3b5b",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "no need to leave this as a comment. we can figure it out after if we don\u0027t know.",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aec9d81_c59bad16",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "Since there is no other thing including it, I recommend inlining the CSS.",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8504679_1a993396",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "maybe call this icon-container, since the fact that it\u0027s an svg should be an implementation detail and ids should be semantically useful",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8b4680_245e6532",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "Ah -- I assume this is the PDF icon from Max? I would suggest adding a:\n\u003c!-- Material Design PDF icon --\u003e comment since otherwise it\u0027d be hard to tell what this is.",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a44a6df_a1f1c1f2",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-19T21:06:17Z",
+      "side": 1,
+      "message": "I recommend restoring the original casing and using CSS to force it to uppercase. Screen readers interpret \"VIEW\" as an acronymn.",
+      "revId": "3d364b70d1dd63d17cd047dd6492cc40815f7972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
