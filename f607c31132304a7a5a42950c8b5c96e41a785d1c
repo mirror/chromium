@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0a665d_fa7705e1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8768,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-19T14:59:01Z",
+      "side": 1,
+      "message": "Missing semicolon?",
+      "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
