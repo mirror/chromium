@@ -27,6 +27,8 @@
 
 namespace blink {
 
+// test change
+
 DISABLE_CFI_PERF
 void BlockPainter::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) {
