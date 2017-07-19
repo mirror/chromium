@@ -101,8 +101,6 @@ base::FilePath GetPathWithAllPermissions(const base::FilePath& path) {
 
 }  // namespace
 
-const size_t NetExportFileWriter::kNoLimit = net::FileNetLogObserver::kNoLimit;
-
 NetExportFileWriter::NetExportFileWriter(ChromeNetLog* chrome_net_log)
     : state_(STATE_UNINITIALIZED),
       log_exists_(false),

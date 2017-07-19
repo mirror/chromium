@@ -17,6 +17,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
+#include "net/log/file_net_log_observer.h"
 #include "net/log/net_log_capture_mode.h"
 
 namespace base {
@@ -25,7 +26,6 @@ class SingleThreadTaskRunner;
 }  // namespace base
 
 namespace net {
-class FileNetLogObserver;
 class URLRequestContextGetter;
 }  // namespace net
 
@@ -56,7 +56,7 @@ class ChromeNetLog;
 class NetExportFileWriter {
  public:
   // Special value meaning "can use an unlimited number of bytes".
-  static const size_t kNoLimit;
+  static constexpr size_t kNoLimit = net::FileNetLogObserver::kNoLimit;
 
   // The observer interface to be implemented by code that wishes to be notified
   // of NetExportFileWriter's state changes.
@@ -246,4 +246,4 @@ class NetExportFileWriter {
 
 }  // namespace net_log
 
-#endif  // COMPONENTS_NET_LOG_NET_LOG_FILE_WRITER_H_
+#endif  // COMPONENTS_NET_LOG_NET_EXPORT_FILE_WRITER_H_
