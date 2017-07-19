@@ -22,6 +22,30 @@
       "revId": "6719a1ced5529c99b81ec9dd54e6128fdae7bd46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ed0f4e_3b683a72",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7412,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-19T19:13:28Z",
+      "side": 1,
+      "message": "Done. I renamed this\n\"Distance from your phone to unlock your Chromebook\"",
+      "parentUuid": "4b7140d0_db7c0fa3",
+      "range": {
+        "startLine": 7412,
+        "startChar": 10,
+        "endLine": 7412,
+        "endChar": 56
+      },
+      "revId": "6719a1ced5529c99b81ec9dd54e6128fdae7bd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
