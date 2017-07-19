@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b226f47_6832ec6b",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2863,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:46:46Z",
+      "side": 1,
+      "message": "The original code is https://codereview.chromium.org/2888203006/diff/100001/third_party/WebKit/Source/web/WebViewImpl.cpp -- which tries to extract the plugin container from the frame. However, it did not try to fall back to the focused element if the frame itself wasn\u0027t a plugin, while GetWebPluginContainer() does.",
+      "range": {
+        "startLine": 2858,
+        "startChar": 0,
+        "endLine": 2863,
+        "endChar": 5
+      },
+      "revId": "2621866c5e2ece0ac3b2cde6d12e12c17748a71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
