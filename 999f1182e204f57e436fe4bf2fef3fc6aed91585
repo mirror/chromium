@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c37a63f_ff6a4ec3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T07:16:30Z",
+      "side": 1,
+      "message": "I filed a bug and put some information there! Is it better the way it is now? Let me know!",
+      "parentUuid": "5e4bdc34_c4fec40f",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f5553e_804c90a3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a51a5eb_f54981c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T07:16:30Z",
+      "side": 1,
+      "message": "Done! See below.",
+      "parentUuid": "84f5553e_804c90a3",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c9f90667_d1286110",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T07:16:30Z",
+      "side": 1,
+      "message": "Done! Is the function call better in the new version?",
+      "parentUuid": "a0a5ec98_1311b5e6",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8925e3cb_38c78eb2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "938b870d_24b06109",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T07:16:30Z",
+      "side": 1,
+      "message": "Changed! Let me know if it looks all right!",
+      "parentUuid": "8925e3cb_38c78eb2",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eec0e60_9a240323",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8efa8e_6d0db929",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-19T07:16:30Z",
+      "side": 1,
+      "message": "Removed! Should I file a new bug for taking this line out of the LayoutTests?",
+      "parentUuid": "0eec0e60_9a240323",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
