@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f0f3e8_28400c43",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-19T23:09:17Z",
+      "side": 1,
+      "message": "kBitstreamBufferId",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 33
+      },
+      "revId": "5678e7fe88889a24a628b1489ec1f8a02deb23aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f59eccd_3d1c1cf7",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-19T23:09:17Z",
+      "side": 1,
+      "message": "Remove these parts.",
+      "range": {
+        "startLine": 243,
+        "startChar": 3,
+        "endLine": 243,
+        "endChar": 70
+      },
+      "revId": "5678e7fe88889a24a628b1489ec1f8a02deb23aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

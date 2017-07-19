@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4aa3c115_c0d9dd72",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-19T23:09:17Z",
+      "side": 1,
+      "message": "I think from a high-level perspective, it makes sense that Initialize() returns a value synchronously as it is doing now. Based on that, we can go to the fallback straight away and avoid sending frames for encode that would be lost. Also, if there is no fallback it can affect the codec choice. \n\nAFAIK it can be done in the mojo IDL via [Sync] although discouraged. We can do that within this CL. WDYT?\n\n[0] https://www.chromium.org/developers/design-documents/mojo/synchronous-calls",
+      "parentUuid": "ea7947b3_a8db827f",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 13
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fdefa8e_7a60bff6",
         "filename": "media/mojo/clients/mojo_video_encode_accelerator.h",
         "patchSetId": 8
