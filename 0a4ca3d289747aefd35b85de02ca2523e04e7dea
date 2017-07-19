@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d85c2653_51e1e2c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-19T17:35:50Z",
+      "side": 1,
+      "message": "This is a good point I didn\u0027t think of! I tried to do this by tracking: the number of \"active\" downloads through the mActiveNotifications list, mIsForegroundActive boolean, and mIsWaitingForForegroundActive boolean. I hope this covers most of the edge cases and I wrote these cases in tests to make sure this is enforced. Let me know if this is what you meant or if you could think of a simpler way to track all of this!",
+      "parentUuid": "2f1b0713_77fa57c3",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc9c1924_9c8df34b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a5d279_d3feb8be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-19T17:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0318943_65786a99",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
