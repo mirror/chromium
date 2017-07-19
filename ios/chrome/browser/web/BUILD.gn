@@ -94,7 +94,14 @@ js_compile_bundle("chrome_bundle") {
   ]
 
   deps = [
+    ":credential_manager",
     ":payment_request",
+  ]
+}
+
+js_compile_unchecked("credential_manager") {
+  sources = [
+    "resources/credential_manager.js",
   ]
 }
 
