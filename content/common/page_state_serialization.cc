@@ -197,12 +197,13 @@ struct SerializeObject {
 // 22: Add scroll restoration type.
 // 23: Remove frame sequence number, there are easier ways.
 // 24: Add did save scroll or scale state.
+// 25: Add scroll anchor selector string, offset, and simhash.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
 const int kMinVersion = 11;
-const int kCurrentVersion = 24;
+const int kCurrentVersion = 25;
 
 // A bunch of convenience functions to read/write to SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
@@ -242,6 +243,18 @@ void WriteInteger64(int64_t data, SerializeObject* obj) {
 int64_t ReadInteger64(SerializeObject* obj) {
   int64_t tmp = 0;
   if (obj->iter.ReadInt64(&tmp))
+    return tmp;
+  obj->parse_error = true;
+  return 0;
+}
+
+void WriteUnsignedInteger64(uint64_t data, SerializeObject* obj) {
+  obj->pickle.WriteUInt64(data);
+}
+
+uint64_t ReadUnsignedInteger64(SerializeObject* obj) {
+  uint64_t tmp = 0;
+  if (obj->iter.ReadUInt64(&tmp))
     return tmp;
   obj->parse_error = true;
   return 0;
@@ -543,6 +556,13 @@ void WriteFrameState(
   // is here instead of inside WriteHttpBody.
   WriteString(state.http_body.http_content_type, obj);
 
+  if (state.did_save_scroll_or_scale_state) {
+    WriteString(state.scroll_anchor_selector, obj);
+    WriteReal(state.scroll_anchor_offset.x(), obj);
+    WriteReal(state.scroll_anchor_offset.y(), obj);
+    WriteUnsignedInteger64(state.scroll_anchor_simhash, obj);
+  }
+
   // Subitems
   const std::vector<ExplodedFrameState>& children = state.children;
   WriteAndValidateVectorSize(children, obj);
@@ -654,6 +674,13 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
     }
   }
 #endif
+  if (obj->version >= 25) {
+    state->scroll_anchor_selector = ReadString(obj);
+    double x = ReadReal(obj);
+    double y = ReadReal(obj);
+    state->scroll_anchor_offset = gfx::PointF(x, y);
+    state->scroll_anchor_simhash = ReadUnsignedInteger64(obj);
+  }
 
   // Subitems
   size_t num_children =
@@ -743,6 +770,9 @@ void ExplodedFrameState::assign(const ExplodedFrameState& other) {
   page_scale_factor = other.page_scale_factor;
   referrer_policy = other.referrer_policy;
   http_body = other.http_body;
+  scroll_anchor_selector = other.scroll_anchor_selector;
+  scroll_anchor_offset = other.scroll_anchor_offset;
+  scroll_anchor_simhash = other.scroll_anchor_simhash;
   children = other.children;
 }
 

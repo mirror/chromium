@@ -63,6 +63,9 @@ void GenerateFrameStateFromItem(const WebHistoryItem& item,
     state->http_body.request_body = GetRequestBodyForWebHTTPBody(http_body);
     state->http_body.contains_passwords = http_body.ContainsPasswordData();
   }
+  state->scroll_anchor_selector =
+      WebString::ToNullableString16(item.ScrollAnchorSelector());
+  state->scroll_anchor_offset = item.ScrollAnchorOffset();
 }
 
 void RecursivelyGenerateFrameState(
@@ -120,6 +123,9 @@ void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
     item.SetHTTPBody(
         GetWebHTTPBodyForRequestBody(state.http_body.request_body));
   }
+  item.SetScrollAnchorSelector(
+      WebString::FromUTF16(state.scroll_anchor_selector));
+  item.SetScrollAnchorOffset(state.scroll_anchor_offset);
   node->set_item(item);
 
   for (size_t i = 0; i < state.children.size(); ++i)

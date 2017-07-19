@@ -332,6 +332,38 @@ void FrameLoader::SetDefersLoading(bool defers) {
     frame_->GetNavigationScheduler().StartTimer();
 }
 
+bool FrameLoader::ShouldSerializeScrollAnchor() {
+  return RuntimeEnabledFeatures::ScrollAnchorSerializationEnabled();
+}
+
+void FrameLoader::SaveScrollAnchor() {
+  if (!ShouldSerializeScrollAnchor())
+    return;
+
+  if (!document_loader_ || !document_loader_->GetHistoryItem() ||
+      !frame_->View())
+    return;
+
+  // Shouldn't clobber anything if we might still restore later.
+  if (NeedsHistoryItemRestore(document_loader_->LoadType()) &&
+      !document_loader_->GetInitialScrollState().was_scrolled_by_user)
+    return;
+
+  HistoryItem* history_item = document_loader_->GetHistoryItem();
+  if (ScrollableArea* layout_scrollable_area =
+          frame_->View()->LayoutViewportScrollableArea()) {
+    if (ScrollAnchor* scroll_anchor =
+            layout_scrollable_area->GetScrollAnchor()) {
+      ScrollAnchor::SerializedAnchor serialized_anchor =
+          scroll_anchor->SerializeAnchor();
+      if (serialized_anchor.IsValid()) {
+        history_item->SetScrollAnchorSelector(serialized_anchor.selector);
+        history_item->SetScrollAnchorOffset(serialized_anchor.relative_offset);
+      }
+    }
+  }
+}
+
 void FrameLoader::SaveScrollState() {
   if (!document_loader_ || !document_loader_->GetHistoryItem() ||
       !frame_->View())
@@ -362,6 +394,7 @@ void FrameLoader::DispatchUnloadEvent() {
   // protected. It will be detached soon.
   protect_provisional_loader_ = false;
   SaveScrollState();
+  SaveScrollAnchor();
 
   if (frame_->GetDocument() && !SVGImage::IsInSVGImage(frame_->GetDocument()))
     frame_->GetDocument()->DispatchUnloadEvents();
@@ -1155,8 +1188,15 @@ void FrameLoader::RestoreScrollPositionAndViewState(
     return;
 
   if (should_restore_scroll) {
-    view->LayoutViewportScrollableArea()->SetScrollOffset(
-        view_state->scroll_offset_, kProgrammaticScroll);
+    if (ShouldSerializeScrollAnchor() &&
+        view->RestoreScrollAnchor(ScrollAnchor::SerializedAnchor(
+            view_state->scroll_anchor_selector_,
+            view_state->scroll_anchor_offset_,
+            view_state->scroll_anchor_simhash_))) {
+    } else {
+      view->LayoutViewportScrollableArea()->SetScrollOffset(
+          view_state->scroll_offset_, kProgrammaticScroll);
+    }
   }
 
   // For main frame restore scale and visual viewport position
