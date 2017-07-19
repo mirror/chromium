@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "27971646_dbdca3df",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-19T22:07:43Z",
+      "side": 1,
+      "message": "Yeah I just meant it can/will run before the timer, so we might fail because it runs before waiting the set period of time.",
+      "parentUuid": "3543fb8b_ab49aacd",
+      "range": {
+        "startLine": 366,
+        "startChar": 19,
+        "endLine": 366,
+        "endChar": 64
+      },
+      "revId": "428e0b5e5c26209733d5d11212f505b5f5fd8c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97d8881e_3def122e",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
