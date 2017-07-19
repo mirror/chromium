@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f83d80_7013faa8",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:50:31Z",
+      "side": 1,
+      "message": "Ah this actually has the nice side-effect of making this cleaner.",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 49
+      },
+      "revId": "2b56e8ad363aebc7a1a063f5be673ba38f86e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f97fc2d_123a11f5",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:50:31Z",
+      "side": 1,
+      "message": "nit: have been shut down by this point",
+      "range": {
+        "startLine": 1115,
+        "startChar": 36,
+        "endLine": 1115,
+        "endChar": 53
+      },
+      "revId": "2b56e8ad363aebc7a1a063f5be673ba38f86e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
