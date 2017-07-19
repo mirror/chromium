@@ -16,6 +16,47 @@
       "revId": "59588f033746ef35be84984082f495372cd83bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7353287_dafdf64d",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-19T15:46:20Z",
+      "side": 1,
+      "message": "This function actually depends on {{v8_class}}, so we cannot move this out.",
+      "parentUuid": "aab4970e_55eac18d",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd398927_2c6ec418",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-19T15:46:20Z",
+      "side": 1,
+      "message": "We\u0027re unconditionally assuming that it\u0027s not [Custom] here.\n\nShould we call indexedPropertyGetter**Callback**?",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 23
+      },
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
