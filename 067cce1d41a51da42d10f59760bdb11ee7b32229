@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ef1261_d5485961",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:10:07Z",
+      "side": 1,
+      "message": "Isn\u0027t passing a wchar_t* (instead of a wstring\u0026) what forces you to add .c_str() at the callsites?  Maybe you could change to pass a string and eliminate these?",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f80eb22_2bca76f2",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:10:07Z",
+      "side": 1,
+      "message": "Nit: return path + L\",0\"; ?",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f44b1d9_856965ed",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:10:07Z",
+      "side": 1,
+      "message": "How come you need this here, but not in other tests?\n\nAlso do you really need to flush the main thread here too, or just the task scheduler?",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

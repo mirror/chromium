@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196eb074_8bc28a62",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:10:07Z",
+      "side": 0,
+      "message": "So this comment lied?",
+      "revId": "e42561bd89deda111978718c68746e1ee5bbf7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069948e1_bef72fec",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:10:07Z",
+      "side": 0,
+      "message": "Is this comment untrue now?",
+      "revId": "e42561bd89deda111978718c68746e1ee5bbf7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
