@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acbd010a_9907c8ce",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:43:22Z",
+      "side": 1,
+      "message": "Remove console.log.",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e86497_d57f71ec",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:43:22Z",
+      "side": 1,
+      "message": "|event| not used here, can we remove it from the param list? (same for onGoogleAssistantContextEnableChange_ and onGoogleAssistantSettingsTapped_).",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfba457_251196d5",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:43:22Z",
+      "side": 1,
+      "message": "This ID already exists above. Can\u0027t use the same ID twice, otherwise the wrong subpage will be highlighted when searchding.",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d39d361_1fd74ee7",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T18:43:22Z",
+      "side": 1,
+      "message": "Same comment here. Need to use a different id for this subpage.",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
