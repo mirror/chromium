@@ -166,6 +166,30 @@
       "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ec4fc5_35be3def",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-19T15:29:25Z",
+      "side": 1,
+      "message": "Changed initial focus to the details button instead.",
+      "parentUuid": "f97b656e_f57adcec",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "08471e40bd8ee52bbf0e0b5dc3983b4502079b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
