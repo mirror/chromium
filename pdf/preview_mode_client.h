@@ -33,6 +33,7 @@ class PreviewModeClient : public PDFEngine::Client {
   void ScrollToX(int position) override;
   void ScrollToY(int position) override;
   void ScrollToPage(int page) override;
+  void NavigateToPage(int page) override;
   void NavigateTo(const std::string& url,
                   WindowOpenDisposition disposition) override;
   void UpdateCursor(PP_CursorType_Dev cursor) override;
