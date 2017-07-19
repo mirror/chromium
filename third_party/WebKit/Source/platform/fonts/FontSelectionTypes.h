@@ -103,10 +103,6 @@ class FontSelectionValueStretch : public FontSelectionValue {
 class FontSelectionValueStyle : public FontSelectionValue {
   using FontSelectionValue::FontSelectionValue;
 };
-class FontSelectionValueWeight : public FontSelectionValue {
-  using FontSelectionValue::FontSelectionValue;
-};
-
 inline FontSelectionValue FontSelectionValue::operator+(
     const FontSelectionValue other) const {
   return FontSelectionValue(backing_ + other.backing_, RawTag::RawTag);
@@ -191,26 +187,26 @@ static inline FontSelectionValueStyle ItalicSlopeValue() {
   return italicValue;
 }
 
-static inline FontSelectionValueWeight BoldThreshold() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValueWeight, boldThreshold,
+static inline FontSelectionValue BoldThreshold() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValue, boldThreshold,
                                   (600));
   return boldThreshold;
 }
 
-static inline FontSelectionValueWeight BoldWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValueWeight, boldWeightValue,
+static inline FontSelectionValue BoldWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValue, boldWeightValue,
                                   (700));
   return boldWeightValue;
 }
 
-static inline FontSelectionValueWeight NormalWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValueWeight, normalWeightValue,
+static inline FontSelectionValue NormalWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValue, normalWeightValue,
                                   (400));
   return normalWeightValue;
 }
 
-static inline FontSelectionValueWeight LightWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValueWeight, lightWeightValue,
+static inline FontSelectionValue LightWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FontSelectionValue, lightWeightValue,
                                   (200));
   return lightWeightValue;
 }
