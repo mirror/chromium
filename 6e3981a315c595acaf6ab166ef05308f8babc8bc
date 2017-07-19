@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce0fcec0_d2889e53",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-19T22:29:45Z",
+      "side": 1,
+      "message": "That was what I originally did. But the formatting looks ugly. I like this way better because all the test cases are aligned beautifully. Let me know if you feel strong about this :)",
+      "parentUuid": "99a37189_f15ff9f4",
+      "range": {
+        "startLine": 92,
+        "startChar": 15,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "978d9ff9_ab77fa7b",
         "filename": "media/test/data/eme_player_js/player_utils.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T21:07:53Z",
       "side": 1,
       "message": "Makes me wonder if we should simply create a \"new\" test file for this, since you really don\u0027t need all the overhead of setting up a player, loading the media, etc. WDYT? encrypted_media_browsertest.cc already loads 3 different test files.",
+      "range": {
+        "startLine": 144,
+        "startChar": 35,
+        "endLine": 144,
+        "endChar": 46
+      },
+      "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bc20dc_4bc281cf",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-19T22:29:45Z",
+      "side": 1,
+      "message": "As discussed offline, I do need the infrastructure to get the \"access\" for different key systems to be able to createMediaKeys(). That will involve some refactoring which I would like to defer to a future CL.\n\nAdded TODO but keep the code as is.",
+      "parentUuid": "978d9ff9_ab77fa7b",
       "range": {
         "startLine": 144,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2371353a_647f747c",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-19T22:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b75f4745_02736f9a",
+      "range": {
+        "startLine": 148,
+        "startChar": 48,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025dfdb9_11b6c98c",
         "filename": "media/test/data/eme_player_js/player_utils.js",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-19T21:07:53Z",
       "side": 1,
       "message": "This is inside an event listener, so nothing needs to be returned. Not sure you necessarily need the timeLog() calls either, since I think setResultInTitle() displays the value provided.",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23afecac_14bd454c",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-19T22:29:45Z",
+      "side": 1,
+      "message": "Done.\n\nThe title will be UNIT_TEST_SUCCESS. I do like the log which is more relevant to this specific test case.",
+      "parentUuid": "025dfdb9_11b6c98c",
       "range": {
         "startLine": 151,
         "startChar": 12,
@@ -114,6 +210,30 @@
       "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a99a5e_04b99250",
+        "filename": "ppapi/proxy/ppapi_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-19T22:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0113163e_7b70be8f",
+      "range": {
+        "startLine": 111,
+        "startChar": 26,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "6e3981a315c595acaf6ab166ef05308f8babc8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
