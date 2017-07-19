@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7591e6e0_f7378c42",
+        "filename": "chrome/browser/autocomplete/contextual_suggestions_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "It\u0027s odd that in the original code we\u0027re using AutocompleteClient::GetRequestContext() and in this code we\u0027re using the profile::GetRequestContext.  Are they always identical?",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc2450a_a59ddfd4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "This seems to be in an odd order compared with lines 147-148.  If it\u0027s intentional, it deserves a comment.  If not, please fix.",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 23
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eed9ce_356e8ae1",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "nit: move this down to just before it\u0027s first used.",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb4d6f9_5e23a756",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "optional nit: Given the shared description and shared setting (both multi-line strings), it might be good to define those elsewhere to make it obvious that those strings are identical and make it easier to spot actual differences.",
+      "range": {
+        "startLine": 160,
+        "startChar": 27,
+        "endLine": 160,
+        "endChar": 34
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77fb195_e0abc4c7",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "I think you should do this unconditionally.  If you intentionally want to do it only for non-experimental fetchers, please comment and explain.",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1fb3d6_e2922744",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "This might as well happen unconditionally.  (I know there\u0027s an experimental parameter framework, but it cannot hurt to send the GWS experiment IDs to the experimental server, just like the regular server.  We may want this feature for some reason later, e.g., to run combined GWS and zero suggest experiments.)\n\n(When fixing this, make sure it doesn\u0027t overwrite the oath headers in your experimental arms.)",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 34
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348abf8b_b991a215",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T04:20:17Z",
+      "side": 1,
+      "message": "nit: do you need to assign it to something to get it deleted?  Can you simply do?\nstd::move(token_fetcher_);\n\nIn any case, comment, perhaps\n// Delete token_fetcher_.\n\nOr, after more thought, can\u0027t you simply do?  That seems most clear.\ntoken_fetcher_.reset();",
+      "range": {
+        "startLine": 240,
+        "startChar": 18,
+        "endLine": 240,
+        "endChar": 36
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
