@@ -55,10 +55,11 @@ void RunBenchmark(RasterSource* raster_source,
       bitmap.allocPixels(SkImageInfo::MakeN32Premul(content_rect.width(),
                                                     content_rect.height()));
       SkCanvas canvas(bitmap);
+      RasterSource::PlaybackSettings settings;
+      settings.use_image_hijack_canvas = false;
       raster_source->PlaybackToCanvas(
           &canvas, gfx::ColorSpace(), content_rect, content_rect,
-          gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
-          RasterSource::PlaybackSettings());
+          gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()), settings);
 
       timer.NextLap();
     } while (!timer.HasTimeLimitExpired());
