@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19439d7c_f11ff5ea",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-19T01:26:12Z",
+      "side": 1,
+      "message": "nit: We can drop content_filter_ prefixes.",
+      "range": {
+        "startLine": 22,
+        "startChar": 43,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "ec6b18e5a2f056f573601d2af82e3aa7aa94c2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
