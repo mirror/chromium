@@ -426,12 +426,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 1200,
+          "hard_timeout": 960,
           "output_links": [
             {
               "link": [
@@ -441,7 +441,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
@@ -6246,12 +6247,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 1200,
+          "hard_timeout": 960,
           "output_links": [
             {
               "link": [
@@ -6261,7 +6262,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
@@ -6290,12 +6292,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 1200,
+          "hard_timeout": 960,
           "output_links": [
             {
               "link": [
@@ -6305,7 +6307,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
