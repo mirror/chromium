@@ -2593,6 +2593,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/StreamUtil.java",
       "android/java/src/org/chromium/base/SysUtils.java",
       "android/java/src/org/chromium/base/SystemMessageHandler.java",
+      "android/java/src/org/chromium/base/TestTraceEvent.java",
       "android/java/src/org/chromium/base/ThreadUtils.java",
       "android/java/src/org/chromium/base/ThrowUncaughtException.java",
       "android/java/src/org/chromium/base/TimeUtils.java",
