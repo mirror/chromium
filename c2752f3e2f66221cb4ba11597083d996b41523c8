@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "a9a1baa6_69d41240",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-19T20:28:18Z",
+      "side": 1,
+      "message": "All tests for Settings UI reside under https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/.\n\nWhat you could test is that when the user does X the expected method is called on the browserProxy which will be a TestBrowserProxy in your test. A good minimal example to follow is https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/downloads_page_test.js.",
+      "parentUuid": "b9c7c1ce_8c289057",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e86497_d57f71ec",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 2
