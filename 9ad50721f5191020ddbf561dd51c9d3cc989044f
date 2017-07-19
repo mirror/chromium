@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a28ec09_e5ca2164",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T21:06:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we want VrShell to know how the question was asked (ie. buttons, backplane, etc).  I agree that it\u0027s possibly not good that VrShell needs to ask the UI to hide the prompt, as the UI\u0027s job was to determine whether we should exit (maybe it\u0027s not a prompt at all).\n\nSo, I could see:  Somebody wants to exit VR for a reason, and signals VrShell -\u003e VrShell asks the UI if it\u0027s okay to exit -\u003e UI shows a prompt, or something else, gets a result, hides the prompt, otherwise cleans up, and returns the \"yes/no\" to VrShell -\u003e VrShell exits VR if necessary.\n\nMy 2 cents anyway.",
+      "parentUuid": "2090e1ce_dc319a82",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 37
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5242ea6_f188b234",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 3
