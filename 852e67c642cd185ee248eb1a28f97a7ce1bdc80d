@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14774d6a_df48ef16",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-19T22:54:46Z",
+      "side": 1,
+      "message": "This code (code in c/b/ui) shouldn\u0027t refer to platform specific code (such as views::Widget). Additionally safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc doesn\u0027t depend upon c/b/ui/views, and really shouldn\u0027t. You\u0027ll need to restructure this code in a should away to avoid these deps.",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 23
+      },
+      "revId": "852e67c642cd185ee248eb1a28f97a7ce1bdc80d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
