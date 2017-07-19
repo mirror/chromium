@@ -84,8 +84,7 @@ cr.define('print_preview', function() {
      * @private
      */
     this.destinationStore_ = new print_preview.DestinationStore(
-        this.nativeLayer_, this.userInfo_, this.appState_,
-        this.listenerTracker);
+        this.userInfo_, this.appState_, this.listenerTracker);
 
     /**
      * Data store which holds printer sharing invitations.
@@ -253,8 +252,7 @@ cr.define('print_preview', function() {
      * @private
      */
     this.previewArea_ = new print_preview.PreviewArea(
-        this.destinationStore_, this.printTicketStore_, this.nativeLayer_,
-        this.documentInfo_);
+        this.destinationStore_, this.printTicketStore_, this.documentInfo_);
     this.addChild(this.previewArea_);
 
     /**
@@ -533,7 +531,7 @@ cr.define('print_preview', function() {
             this.uiState_ == PrintPreviewUiState_.OPENING_PDF_PREVIEW) {
           // Hide the dialog for now. The actual print command will be issued
           // when the preview generation is done.
-          this.nativeLayer_.startHideDialog();
+          this.nativeLayer_.hidePreview();
         }
       }
     },
@@ -561,12 +559,13 @@ cr.define('print_preview', function() {
           this.printTicketStore_.isTicketValid(),
           'Trying to print with invalid ticket');
       if (getIsVisible(this.moreSettings_.getElement())) {
-        new print_preview.PrintSettingsUiMetricsContext().record(
-            this.moreSettings_.isExpanded ?
-                print_preview.Metrics.PrintSettingsUiBucket
-                    .PRINT_WITH_SETTINGS_EXPANDED :
-                print_preview.Metrics.PrintSettingsUiBucket
-                    .PRINT_WITH_SETTINGS_COLLAPSED);
+        new print_preview.PrintSettingsUiMetricsContext(this.nativeLayer_)
+            .record(
+                this.moreSettings_.isExpanded ?
+                    print_preview.Metrics.PrintSettingsUiBucket
+                        .PRINT_WITH_SETTINGS_EXPANDED :
+                    print_preview.Metrics.PrintSettingsUiBucket
+                        .PRINT_WITH_SETTINGS_COLLAPSED);
       }
       var destination = assert(this.destinationStore_.selectedDestination);
       var whenPrintDone = this.nativeLayer_.print(
@@ -582,7 +581,7 @@ cr.define('print_preview', function() {
         // Local printers resolve when print is ready to start. Hide the
         // dialog. Mac "Open in Preview" is treated as a local printer.
         var boundHideDialog = function() {
-          this.nativeLayer_.startHideDialog();
+          this.nativeLayer_.hidePreview();
         }.bind(this);
         whenPrintDone.then(boundHideDialog, boundHideDialog);
       } else if (!destination.isLocal) {
@@ -620,7 +619,7 @@ cr.define('print_preview', function() {
     close_: function(isCancel) {
       this.exitDocument();
       this.uiState_ = PrintPreviewUiState_.CLOSING;
-      this.nativeLayer_.startCloseDialog(isCancel);
+      this.nativeLayer_.dialogClose(isCancel);
     },
 
     /**
@@ -640,7 +639,7 @@ cr.define('print_preview', function() {
       setIsVisible(getRequiredElement('system-dialog-throbber'), true);
       this.setIsEnabled_(false);
       this.uiState_ = PrintPreviewUiState_.OPENING_NATIVE_PRINT_DIALOG;
-      this.nativeLayer_.startShowSystemDialog();
+      this.nativeLayer_.showSystemDialog();
     },
 
     /**
@@ -822,7 +821,7 @@ cr.define('print_preview', function() {
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = true;
       if (this.isListeningForManipulateSettings_)
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       this.printIfReady_();
     },
 
@@ -834,7 +833,7 @@ cr.define('print_preview', function() {
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;
       if (this.uiState_ == PrintPreviewUiState_.PRINTING)
-        this.nativeLayer_.startCancelPendingPrint();
+        this.nativeLayer_.cancelPendingPrintRequest();
     },
 
     /**
@@ -882,7 +881,7 @@ cr.define('print_preview', function() {
      */
     onCloudPrintRegisterPromoClick_: function(e) {
       var devicesUrl = 'chrome://devices/register?id=' + e.destination.id;
-      this.nativeLayer_.startForceOpenNewTab(devicesUrl);
+      this.nativeLayer_.forceOpenNewTab(devicesUrl);
       this.destinationStore_.waitForRegister(e.destination.id);
     },
 
@@ -980,7 +979,7 @@ cr.define('print_preview', function() {
      * @private
      */
     onManageCloudDestinationsActivated_: function() {
-      this.nativeLayer_.startManageCloudDestinations(this.userInfo_.activeUser);
+      this.nativeLayer_.manageCloudPrinters(this.userInfo_.activeUser);
     },
 
     /**
@@ -989,7 +988,7 @@ cr.define('print_preview', function() {
      * @private
      */
     onManageLocalDestinationsActivated_: function() {
-      this.nativeLayer_.startManageLocalDestinations();
+      this.nativeLayer_.manageLocalPrinters();
     },
 
     /**
@@ -1099,7 +1098,7 @@ cr.define('print_preview', function() {
       if (this.destinationStore_.selectedDestination &&
           print_preview.Destination.GooglePromotedId.SAVE_AS_PDF ==
               this.destinationStore_.selectedDestination.id) {
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
         return;
       }
 
@@ -1116,7 +1115,7 @@ cr.define('print_preview', function() {
       if (pdfDestination)
         this.destinationStore_.selectDestination(pdfDestination);
       else
-        this.nativeLayer_.previewFailedForTest();
+        this.nativeLayer_.uiFailedLoadingForTest();
     },
 
     /**
@@ -1129,7 +1128,7 @@ cr.define('print_preview', function() {
     setLayoutSettingsForTest_: function(portrait) {
       var combobox = document.querySelector('.layout-settings-select');
       if (combobox.value == 'portrait') {
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       } else {
         combobox.value = 'landscape';
         this.layoutSettings_.onSelectChange_();
@@ -1146,7 +1145,7 @@ cr.define('print_preview', function() {
     setPageRangeForTest_: function(pageRange) {
       var textbox = document.querySelector('.page-settings-custom-input');
       if (textbox.value == pageRange) {
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       } else {
         textbox.value = pageRange;
         document.querySelector('.page-settings-custom-radio').click();
@@ -1163,7 +1162,7 @@ cr.define('print_preview', function() {
     setHeadersAndFootersForTest_: function(headersAndFooters) {
       var checkbox = document.querySelector('.header-footer-checkbox');
       if (headersAndFooters == checkbox.checked)
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       else
         checkbox.click();
     },
@@ -1178,7 +1177,7 @@ cr.define('print_preview', function() {
     setBackgroundColorsAndImagesForTest_: function(backgroundColorsAndImages) {
       var checkbox = document.querySelector('.css-background-checkbox');
       if (backgroundColorsAndImages == checkbox.checked)
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       else
         checkbox.click();
     },
@@ -1193,12 +1192,12 @@ cr.define('print_preview', function() {
     setMarginsForTest_: function(margins) {
       var combobox = document.querySelector('.margin-settings-select');
       if (margins == combobox.selectedIndex) {
-        this.nativeLayer_.previewReadyForTest();
+        this.nativeLayer_.uiLoadedForTest();
       } else if (margins >= 0 && margins < combobox.length) {
         combobox.selectedIndex = margins;
         this.marginSettings_.onSelectChange_();
       } else {
-        this.nativeLayer_.previewFailedForTest();
+        this.nativeLayer_.uiFailedLoadingForTest();
       }
     },
 
@@ -1255,8 +1254,8 @@ cr.define('print_preview', function() {
       setIsVisible(
           this.getChildElement('#no-destinations-promo'), isPromoVisible);
       if (isPromoVisible) {
-        new print_preview.GcpPromoMetricsContext().record(
-            print_preview.Metrics.GcpPromoBucket.PROMO_SHOWN);
+        new print_preview.GcpPromoMetricsContext(this.nativeLayer_)
+            .record(print_preview.Metrics.GcpPromoBucket.PROMO_SHOWN);
       }
     },
 
@@ -1266,8 +1265,8 @@ cr.define('print_preview', function() {
      * @private
      */
     onNoDestinationsPromoClose_: function() {
-      new print_preview.GcpPromoMetricsContext().record(
-          print_preview.Metrics.GcpPromoBucket.PROMO_CLOSED);
+      new print_preview.GcpPromoMetricsContext(this.nativeLayer_)
+          .record(print_preview.Metrics.GcpPromoBucket.PROMO_CLOSED);
       setIsVisible(this.getChildElement('#no-destinations-promo'), false);
       this.appState_.persistIsGcpPromoDismissed(true);
     },
@@ -1278,8 +1277,8 @@ cr.define('print_preview', function() {
      * @private
      */
     onNoDestinationsPromoClick_: function() {
-      new print_preview.GcpPromoMetricsContext().record(
-          print_preview.Metrics.GcpPromoBucket.PROMO_CLICKED);
+      new print_preview.GcpPromoMetricsContext(this.nativeLayer_)
+          .record(print_preview.Metrics.GcpPromoBucket.PROMO_CLICKED);
       this.appState_.persistIsGcpPromoDismissed(true);
       window.open(
           this.cloudPrintInterface_.baseUrl +
