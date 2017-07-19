@@ -16,6 +16,24 @@
       "revId": "2bfbd12252f875f20b2b5d62afffccf593d66228",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18aa291e_3e289bc7",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-19T11:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311c89cf_565aa3d7",
+      "revId": "2bfbd12252f875f20b2b5d62afffccf593d66228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
