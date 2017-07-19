@@ -22,6 +22,30 @@
       "revId": "d6d2ebe22c7d2b1661e7fc0bf9a14dbbfe6374c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e49808_44a049e4",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-19T09:55:32Z",
+      "side": 1,
+      "message": "I was trying to reverse-guess what was the purpose of the \"Length\" data. It seems to be no good to state how long the actual English text is, assuming that the translators see the English original. So I figured out that stating the available space might be the useful thing, and some existing records in the file support that. Since then I\u0027m trying to consistently apply that with every string change I make.",
+      "parentUuid": "de35acba_b261e02e",
+      "range": {
+        "startLine": 1155,
+        "startChar": 253,
+        "endLine": 1155,
+        "endChar": 261
+      },
+      "revId": "d6d2ebe22c7d2b1661e7fc0bf9a14dbbfe6374c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
