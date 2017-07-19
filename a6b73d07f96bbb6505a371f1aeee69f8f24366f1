@@ -70,6 +70,24 @@
       "revId": "a6b73d07f96bbb6505a371f1aeee69f8f24366f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662bbd28_cc2cd1f3",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-07-19T14:43:03Z",
+      "side": 1,
+      "message": "Hmm... Yeah, that\u0027s fair, that is broken right now afaict. In that case this is not the proper fix... And all this CanHaveWhitespaceChildren function would not be sound. I\u0027ll file.",
+      "parentUuid": "507a9ffa_6e66ab8e",
+      "revId": "a6b73d07f96bbb6505a371f1aeee69f8f24366f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
