@@ -168,7 +168,7 @@ void ChromeTracingDelegate::GenerateMetadataDict(
     base::DictionaryValue* metadata_dict) {
   DCHECK(metadata_dict);
   std::vector<std::string> variations;
-  variations::GetFieldTrialActiveGroupIdsAsStrings(&variations);
+  variations::GetFieldTrialActiveGroupIdsAsStrings("", &variations);
 
   std::unique_ptr<base::ListValue> variations_list(new base::ListValue());
   for (const auto& it : variations)

@@ -248,7 +248,7 @@ void MetricsLog::RecordGeneralMetrics(
 
 void MetricsLog::GetFieldTrialIds(
     std::vector<ActiveGroupId>* field_trial_ids) const {
-  variations::GetFieldTrialActiveGroupIds(field_trial_ids);
+  variations::GetFieldTrialActiveGroupIds("", field_trial_ids);
 }
 
 bool MetricsLog::HasEnvironment() const {
