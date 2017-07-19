@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0163d3c_ef6ae1ed",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-07-19T01:56:48Z",
+      "side": 1,
+      "message": "This logic block is duplicated multiple times in this file.  Can you move all/most of it into WidgetInputHandler instead (always providing the handler as a callback which might be synchronously called or not based on event traits -- or even better, always called asynchronously if that doesn\u0027t matter)",
+      "revId": "9f55b2f9b9001b4a77905c264985b431996f6530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f32d7bd_a5d157af",
         "filename": "content/browser/renderer_host/input/input_router_impl.h",
         "patchSetId": 2
