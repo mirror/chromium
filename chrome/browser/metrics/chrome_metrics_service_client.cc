@@ -152,6 +152,9 @@ const char kCrashpadHistogramAllocatorName[] = "CrashpadMetrics";
 // system profile proto.
 const uint32_t kSystemProfileMinidumpStreamType = 0x4B6B0003;
 
+// UKM suffix for field trial recording.
+const char kUKMFieldTrialSuffix[] = "UKM";
+
 // A serialized environment (SystemProfileProto) that was registered with the
 // crash reporter, or the empty string if no environment was registered yet.
 // Ownership must be maintained after registration as the crash reporter does
@@ -770,6 +773,11 @@ void ChromeMetricsServiceClient::RegisterUKMProviders() {
       base::MakeUnique<metrics::NetworkMetricsProvider>(
           base::MakeUnique<metrics::NetworkQualityEstimatorProviderImpl>(
               g_browser_process->io_thread())));
+
+  // TODO(rkaplow): Support synthetic trials for UKM.
+  ukm_service_->RegisterMetricsProvider(
+      base::MakeUnique<variations::FieldTrialsProvider>(nullptr,
+                                                        kUKMFieldTrialSuffix));
 }
 
 bool ChromeMetricsServiceClient::ShouldIncludeProfilerDataInLog() {
