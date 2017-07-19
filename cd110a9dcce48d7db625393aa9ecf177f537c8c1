@@ -16,6 +16,24 @@
       "revId": "cd110a9dcce48d7db625393aa9ecf177f537c8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8957ee87_3f82564c",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-07-19T14:23:07Z",
+      "side": 1,
+      "message": "I changed the downstream CL to only pass positional args here I\u0027m not sure if you saw that.\n\nShall I instead just hard code the paths as you suggested (felt weird to use constants.GetOutDirectory in a build script)?",
+      "parentUuid": "5c4cb2e3_a60d31a6",
+      "revId": "cd110a9dcce48d7db625393aa9ecf177f537c8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
