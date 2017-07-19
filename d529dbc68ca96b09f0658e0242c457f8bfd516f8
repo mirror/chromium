@@ -16,6 +16,24 @@
       "revId": "d529dbc68ca96b09f0658e0242c457f8bfd516f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d316c5a7_49cc8502",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-19T15:29:42Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll test this and fix if needed in a follow up.",
+      "parentUuid": "d7865a6b_edb7989b",
+      "revId": "d529dbc68ca96b09f0658e0242c457f8bfd516f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
