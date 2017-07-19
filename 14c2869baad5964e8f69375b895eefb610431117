@@ -70,6 +70,24 @@
       "revId": "14c2869baad5964e8f69375b895eefb610431117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fafccad_ee736b24",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-19T23:05:45Z",
+      "side": 1,
+      "message": "Generally I agree with you, but when we\u0027re talking about a protected getter (that need not have for_testing) it seems worth it.",
+      "parentUuid": "8181b4ee_55cf7452",
+      "revId": "14c2869baad5964e8f69375b895eefb610431117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
