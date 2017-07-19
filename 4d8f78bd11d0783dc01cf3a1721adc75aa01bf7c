@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c4da1bc_77d907ad",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-19T20:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b58390_4f9fceeb",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13244101_950c924e",
         "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52b5b307_3a8b92cc",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-19T20:23:51Z",
+      "side": 1,
+      "message": "Briefly noted that they\u0027re related to Google ads.",
+      "parentUuid": "13244101_950c924e",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49dc5804_0dbbc65c",
         "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f2f305_43358c81",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-19T20:23:51Z",
+      "side": 1,
+      "message": "Added a comment. I wonder if this is common when launching a param...because the feature is initially an experiment, but then becomes the default after launch. Not sure if there\u0027s a better pattern for this (in particular because we want to keep the feature around long-term for tuning).",
+      "parentUuid": "49dc5804_0dbbc65c",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 4
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
