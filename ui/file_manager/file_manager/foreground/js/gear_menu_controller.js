@@ -41,6 +41,9 @@ function GearMenuController(
    */
   this.commandHandler_ = commandHandler;
 
+  $('volume-space-info')
+      .addEventListener(
+          'mouseover', this.onMouseOverVolumeSpaceInfo_.bind(this));
   gearButton.addEventListener('menushow', this.onShowGearMenu_.bind(this));
   gearButton.addEventListener('menuhide', this.onHideGearMenu_.bind(this));
   directoryModel.addEventListener(
@@ -49,6 +52,15 @@ function GearMenuController(
       this.onPreferencesChanged_.bind(this));
   this.onPreferencesChanged_();
 }
+
+/**
+ * Handles mouseover event and prevents any further action to execute.
+ * @param {Event} e The mouseover event.
+ * @private
+ */
+GearMenuController.prototype.onMouseOverVolumeSpaceInfo_ = function(e) {
+  e.stopPropagation();
+};
 
 /**
  * @private
