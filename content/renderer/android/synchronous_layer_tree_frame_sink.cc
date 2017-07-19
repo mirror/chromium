@@ -26,7 +26,7 @@
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/common/android/sync_compositor_messages.h"
 #include "content/common/view_messages.h"
 #include "content/renderer/android/synchronous_compositor_filter.h"
@@ -126,7 +126,7 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
       sender_(RenderThreadImpl::current()->sync_compositor_message_filter()),
       memory_policy_(0u),
       frame_swap_message_queue_(frame_swap_message_queue),
-      frame_sink_manager_(new viz::FrameSinkManager),
+      frame_sink_manager_(new viz::FrameSinkManagerImpl),
       local_surface_id_allocator_(new viz::LocalSurfaceIdAllocator),
       begin_frame_source_(std::move(begin_frame_source)) {
   DCHECK(registry_);
