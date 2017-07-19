@@ -37,6 +37,7 @@
 #include "content/common/host_zoom.mojom.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
+#include "content/common/widget.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
@@ -1153,6 +1154,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void UpdatePeakMemoryStats();
   void ReportPeakMemoryStats();
+  void BindWidget(mojom::WidgetRequest request);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
