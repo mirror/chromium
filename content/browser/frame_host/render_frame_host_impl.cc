@@ -2975,11 +2975,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
-    GetInterfaceRegistry()->AddInterface(
-        base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
-                   device::mojom::kServiceName));
-  }
+  GetInterfaceRegistry()->AddInterface(
+      base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
+                 device::mojom::kServiceName));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
