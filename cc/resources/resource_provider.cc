@@ -12,6 +12,7 @@
 #include <unordered_map>
 
 #include "base/atomic_sequence_num.h"
+#include "base/bind.h"
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
 #include "base/numerics/safe_math.h"
@@ -667,7 +668,7 @@ ResourceId ResourceProvider::CreateBitmap(const gfx::Size& size,
 
 ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
     const viz::TextureMailbox& mailbox,
-    std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl,
+    SingleReleaseCallbackImpl release_callback_impl,
     bool read_lock_fences_enabled) {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Just store the information. Mailbox will be consumed in LockForRead().
@@ -693,9 +694,7 @@ ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
   resource->allocated = true;
   resource->SetMailbox(mailbox);
   resource->color_space = mailbox.color_space();
-  resource->release_callback_impl =
-      base::Bind(&SingleReleaseCallbackImpl::Run,
-                 base::Owned(release_callback_impl.release()));
+  resource->release_callback_impl = std::move(release_callback_impl);
   resource->read_lock_fences_enabled = read_lock_fences_enabled;
   resource->is_overlay_candidate = mailbox.is_overlay_candidate();
 #if defined(OS_ANDROID)
@@ -712,7 +711,7 @@ ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
 
 ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
     const viz::TextureMailbox& mailbox,
-    std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl) {
+    SingleReleaseCallbackImpl release_callback_impl) {
   return CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback_impl), false);
 }
@@ -813,8 +812,8 @@ void ResourceProvider::DeleteResourceInternal(ResourceMap::iterator it,
       resource->shared_bitmap = nullptr;
       resource->pixels = nullptr;
     }
-    resource->release_callback_impl.Run(sync_token, lost_resource,
-                                        blocking_main_thread_task_runner_);
+    std::move(resource->release_callback_impl)
+        .Run(sync_token, lost_resource, blocking_main_thread_task_runner_);
   }
   if (resource->gl_id) {
     GLES2Interface* gl = ContextGL();
