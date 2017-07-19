@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10030f35_7c93c1c5",
+        "filename": "ui/file_manager/file_manager/foreground/js/gear_menu_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-19T08:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136dd62f_109b813e",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "49ef2a3a4b5ed7f0894e0cfc244ff7f64afb7b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6113046e_3a447761",
         "filename": "ui/file_manager/file_manager/foreground/js/gear_menu_controller.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "49ef2a3a4b5ed7f0894e0cfc244ff7f64afb7b50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c093ced4_e2e695be",
+        "filename": "ui/file_manager/file_manager/foreground/js/gear_menu_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-19T08:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6113046e_3a447761",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "49ef2a3a4b5ed7f0894e0cfc244ff7f64afb7b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
