@@ -141,7 +141,7 @@ class PasswordManagerTest : public testing::Test {
         .WillRepeatedly(Return(false));
 
     ON_CALL(client_, GetMainFrameURL())
-        .WillByDefault(ReturnRef(GURL::EmptyGURL()));
+        .WillByDefault(Return(GURL("https://www.example.com")));
   }
 
   void TearDown() override {
