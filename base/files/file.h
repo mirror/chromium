@@ -30,6 +30,10 @@ typedef struct stat stat_wrapper_t;
 typedef struct stat64 stat_wrapper_t;
 #endif
 
+#if defined(OS_ANDROID)
+#define pwrite pwrite64
+#endif
+
 // Thin wrapper around an OS-level file.
 // Note that this class does not provide any support for asynchronous IO, other
 // than the ability to create asynchronous handles on Windows.
