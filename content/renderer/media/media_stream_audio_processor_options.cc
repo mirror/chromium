@@ -23,6 +23,7 @@
 #include "content/renderer/media/media_stream_constraints_util.h"
 #include "content/renderer/media/media_stream_source.h"
 #include "media/base/audio_parameters.h"
+#include "third_party/webrtc/modules/audio_processing/aec_dump/aec_dump_factory.h"
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
 #include "third_party/webrtc/modules/audio_processing/typing_detection.h"
 
@@ -468,7 +469,8 @@ void EnableTypingDetection(AudioProcessing* audio_processing,
 }
 
 void StartEchoCancellationDump(AudioProcessing* audio_processing,
-                               base::File aec_dump_file) {
+                               base::File aec_dump_file,
+                               rtc::TaskQueue* tc) {
   DCHECK(aec_dump_file.IsValid());
 
   FILE* stream = base::FileToFILE(std::move(aec_dump_file), "w");
@@ -477,8 +479,15 @@ void StartEchoCancellationDump(AudioProcessing* audio_processing,
     return;
   }
 
-  if (audio_processing->StartDebugRecording(stream))
-    DLOG(ERROR) << "Fail to start AEC debug recording";
+  auto aec_dump = webrtc::AecDumpFactory::Create(stream, -1, tc);
+  if (!aec_dump) {
+    LOG(ERROR) << "Failed to create AEC dump";
+    return;
+  }
+  audio_processing->AttachAecDump(std::move(aec_dump));
+
+  // if (audio_processing->StartDebugRecording(stream))
+  //   DLOG(ERROR) << "Fail to start AEC debug recording";
 }
 
 void StopEchoCancellationDump(AudioProcessing* audio_processing) {

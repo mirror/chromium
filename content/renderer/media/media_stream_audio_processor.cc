@@ -462,9 +462,13 @@ void MediaStreamAudioProcessor::OnAecDumpFile(
   base::File file = IPC::PlatformFileForTransitToFile(file_handle);
   DCHECK(file.IsValid());
 
-  if (audio_processing_)
-    StartEchoCancellationDump(audio_processing_.get(), std::move(file));
-  else
+  if (audio_processing_) {
+    if (!tq_)
+      tq_.reset(new rtc::TaskQueue("low-prio-worker-queue",
+                                   rtc::TaskQueue::Priority::LOW));
+    StartEchoCancellationDump(audio_processing_.get(), std::move(file),
+                              tq_.get());
+  } else
     file.Close();
 }
 

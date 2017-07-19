@@ -25,6 +25,7 @@
 #include "content/renderer/media/webrtc_audio_device_impl.h"
 #include "media/base/audio_converter.h"
 #include "third_party/webrtc/api/mediastreaminterface.h"
+#include "third_party/webrtc/base/task_queue.h"
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
 
 // The audio repetition detector is by default only used on non-official
@@ -237,6 +238,7 @@ class CONTENT_EXPORT MediaStreamAudioProcessor :
   // Object for logging UMA stats for echo information when the AEC is enabled.
   // Accessed on the main render thread.
   std::unique_ptr<EchoInformation> echo_information_;
+  std::unique_ptr<rtc::TaskQueue> tq_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamAudioProcessor);
 };
