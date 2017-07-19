@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbecf7c1_5ce9d3c1",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-19T13:18:35Z",
+      "side": 1,
+      "message": "It actually does matter quite a bit.  Since the WidgetInputHandler implementation resides on the renderer side this isn\u0027t synchronous from the browser\u0027s point of view (and making the mojo message a sync message isn\u0027t a smart approach). The WidgetInputHandler that appears in the browser process is all generated code and is a proxy object that turns calls on its virtual interface to calls on the remote interface.\n\nFor things like GestureScrollUpdates that are sent based off of the touch move acks coming back the entire latency is affected. ie. if the touch-move acks that aren\u0027t cancelable are round-tripped to the renderer the scroll update isn\u0027t fired right away and can miss frames. We\u0027ve had regressions in the past that have accidentally caused this to happen and you see it quite prominently in the UMA histograms.",
+      "parentUuid": "f0163d3c_ef6ae1ed",
+      "revId": "9f55b2f9b9001b4a77905c264985b431996f6530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f32d7bd_a5d157af",
         "filename": "content/browser/renderer_host/input/input_router_impl.h",
         "patchSetId": 2
