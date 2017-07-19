@@ -209,6 +209,24 @@
       "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a39151c_dba01fce",
+        "filename": "ios/chrome/browser/ui/promos/signin_promo_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T10:35:43Z",
+      "side": 1,
+      "message": "Now removed.",
+      "parentUuid": "6b0c2bbe_50ed1d7e",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
