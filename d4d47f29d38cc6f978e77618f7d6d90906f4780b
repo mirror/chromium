@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f60db7c9_6cd7bb2d",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:31:43Z",
+      "side": 1,
+      "message": "Fine with me",
+      "parentUuid": "94877432_93a219b0",
+      "range": {
+        "startLine": 580,
+        "startChar": 20,
+        "endLine": 580,
+        "endChar": 26
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43326ee_fd78533e",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 1
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "0b52a579_343973dd",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:31:43Z",
+      "side": 1,
+      "message": "Ok, seems good here",
+      "parentUuid": "3c329e9f_44ed8760",
+      "range": {
+        "startLine": 482,
+        "startChar": 17,
+        "endLine": 482,
+        "endChar": 36
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b553cb1_1ef273b9",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 1
@@ -234,6 +282,30 @@
       "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bbf2de_5edfea50",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:31:43Z",
+      "side": 1,
+      "message": "Up to you. I think it\u0027s better to write without blocking if not needed.",
+      "parentUuid": "4d0ec0dd_fd1bcfd4",
+      "range": {
+        "startLine": 485,
+        "startChar": 20,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "d4d47f29d38cc6f978e77618f7d6d90906f4780b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
