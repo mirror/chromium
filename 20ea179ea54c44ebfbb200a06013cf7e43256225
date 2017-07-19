@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "2405d498_10708f12",
+        "filename": "third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-19T19:32:23Z",
+      "side": 1,
+      "message": "Thanks.   \n\nIf we kept UTF-32 converter, we could use a UnicodeString ctor accepting a char encoding name ( e.g. http://icu-project.org/apiref/icu4c/classicu_1_1UnicodeString.html#a264120ca814c7288447bafbc2142edc9 ) and pass \u0027UTF-32BE\u0027 explicitly. \n\nWithout that, I guess a manual swapping is unavoidable.",
+      "parentUuid": "d33d4cf1_83247566",
+      "range": {
+        "startLine": 530,
+        "startChar": 16,
+        "endLine": 530,
+        "endChar": 46
+      },
+      "revId": "20ea179ea54c44ebfbb200a06013cf7e43256225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb0a2bc_28537daa",
         "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecICU.cpp",
         "patchSetId": 4
