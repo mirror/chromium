@@ -248,7 +248,8 @@ void MetricsLog::RecordGeneralMetrics(
 
 void MetricsLog::GetFieldTrialIds(
     std::vector<ActiveGroupId>* field_trial_ids) const {
-  variations::GetFieldTrialActiveGroupIds(field_trial_ids);
+  // We use the default field trial suffixing (no suffix).
+  variations::GetFieldTrialActiveGroupIds(std::string(), field_trial_ids);
 }
 
 bool MetricsLog::HasEnvironment() const {
