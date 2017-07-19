@@ -39,6 +39,30 @@
       "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e3c9b81_fbb30dd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/displaystyle/UiConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-19T14:04:39Z",
+      "side": 1,
+      "message": "I could be ok with UiConfig knowing about tiles and cards. It feels like a bit of a stretch though, are cards and tiles always used in the same way?\n\nThe feature and param checks seem even more of a stretch. We now have NTP and Chrome Home related checks in what used to be a very generic class.",
+      "parentUuid": "09b5e149_f2df3e5d",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
