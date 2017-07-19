@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "239266f9_cac36be8",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T09:11:02Z",
+      "side": 1,
+      "message": "nit: !image_data.empty()",
+      "range": {
+        "startLine": 50,
+        "startChar": 32,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9555c92_d6d85c15",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T09:11:02Z",
+      "side": 1,
+      "message": "This doesn\u0027t really need to be a member. It could be a MockCallback, defined in the individual tests that need it (and passed to FetchImage).",
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97896c24_975fe910",
+        "filename": "components/ntp_snippets/remote/cached_image_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T09:11:02Z",
+      "side": 1,
+      "message": "Times(1) is implicit, no need to specify",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "f2ba20f6a6f592c56b5dde9a97d17d2566901aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
