@@ -263,6 +263,8 @@ component("platform") {
     "Histogram.h",
     "InstanceCounters.cpp",
     "InstanceCounters.h",
+    "InstanceCountersMemoryDumpProvider.cpp",
+    "InstanceCountersMemoryDumpProvider.h",
     "KeyboardCodes.h",
     "KillRing.h",
     "KillRingNone.cpp",
