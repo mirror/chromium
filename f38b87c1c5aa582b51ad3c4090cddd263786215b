@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6898ceb0_8ee6e797",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-19T07:54:49Z",
+      "side": 1,
+      "message": "kNotificationWidth and kContentRowPadding are constants, and right_content_-\u003eGetPreferredSize().width() is actually constant for our case.\n(BTW, we should use a constant number for \"gfx::Size image_view_size(30, 30);\")\n\nHow about calculate the width here as a constant value and set it here so that CreateOrUpdateMessageView() does not depend on the call order with CreateOrUpdateXXX()",
+      "revId": "f38b87c1c5aa582b51ad3c4090cddd263786215b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
