@@ -425,6 +425,10 @@ TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeIntoArabicThaiHanLatin) {
   HarfBuzzShaper shaper(mixed_string, 8);
   RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
 
+  // .1 is heuristic, but can catch when width and bounds are too much
+  // different.
+  EXPECT_NEAR(result->Width(), result->Bounds().Width(), result->Width() * .1);
+
   RefPtr<ShapeResult> composite_result =
       ShapeResult::Create(&font, 0, direction);
   result->CopyRange(0, 4, composite_result.Get());
