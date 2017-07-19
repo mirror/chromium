@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "786e7c1f_214d1674",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "According to Eli comment in spec, this action should be recorded for the old promo as well.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9f62dc_15f7cc02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "I think it makes sense to keep the same order as in update() (setupSigninDisabled, setupSigninPromo, setupNotSignedIn, setupSignedIn).",
+      "range": {
+        "startLine": 110,
+        "startChar": 17,
+        "endLine": 110,
+        "endChar": 30
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abab1bad_d969e4b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "This is technically \"old promo\" mode. I think it makes sense to reflect this in the method name.",
+      "range": {
+        "startLine": 133,
+        "startChar": 17,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2179823_d14cfbe5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "\"impressions\" seems to be an ambiguous name for a shared preference. https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java?l\u003d25\u0026rcl\u003d352ac7aa0c0eebcce1ec493a6716f210a4f7d27b has a long list of preferences and can be used as an inspiration.",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 58
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da85cb4_b41364ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "Nit: I think it makes sense to move this interface to the top of the class.\nChromium Java style doesn\u0027t specify ordering for class contents, but https://google.github.io/styleguide/javaguide.html requires \"some logical order\". If current order is a logical one - I would be curious to understand the logic behind it.",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c6076d_6f751295",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "I think there\u0027s a typo here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 79,
+        "endLine": 66,
+        "endChar": 94
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0a1dd0_b34b42d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "In one of my previous CL Bernhard asked me to indent continuations of JavaDoc entries with 8 spaces: https://chromium-review.googlesource.com/c/558346/4/components%252Fsignin%252Fcore%252Fbrowser%252Fandroid%252Fjava%252Fsrc%252Forg%252Fchromium%252Fcomponents%252Fsignin%252FAccountManagerHelper.java. Maybe it makes sense to do the same here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6013964c_86886d96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "We shouldn\u0027t use AccountManagementFragment here - ProfileDataCache should be enough. Also, please note that getFullName can return null, so we need to use email as a fallback (example: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java?l\u003d393\u0026rcl\u003d073c7582e97cb97bea0356e4207d70dc341f8825).",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 21
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3046d20_75a6d3da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-19T15:58:13Z",
+      "side": 1,
+      "message": "Could you please rename this parameter to dimenResId and add https://developer.android.com/reference/android/support/annotation/DimenRes.html annotation?",
+      "range": {
+        "startLine": 169,
+        "startChar": 73,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "47f347ad447a86bcba78438ee596491eb0269885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
