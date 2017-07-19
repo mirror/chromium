@@ -16,6 +16,23 @@
       "revId": "6817f121c88e3ddb06606070f3742fb874216889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10294088_e212aa3f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T02:18:56Z",
+      "side": 1,
+      "message": "We\u0027re adding more string comparisons in this series of cleanups, which concerns me a bit.  Given that \"net\" domain is the majority case now should we consider skipping this comparison for the common case?",
+      "revId": "6817f121c88e3ddb06606070f3742fb874216889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
