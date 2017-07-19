@@ -22,6 +22,30 @@
       "revId": "8b4a0c28ccbe20c98eb33ae980be677d70ec36c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad5a8cc_4db4feff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T01:34:29Z",
+      "side": 1,
+      "message": "It gets set later, after we\u0027ve already started animating the sheet open due to URL focus.",
+      "parentUuid": "064d8eaa_cef3f3a0",
+      "range": {
+        "startLine": 777,
+        "startChar": 54,
+        "endLine": 777,
+        "endChar": 93
+      },
+      "revId": "8b4a0c28ccbe20c98eb33ae980be677d70ec36c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
