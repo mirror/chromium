@@ -76,6 +76,7 @@ source_set("common_source_set") {
     "//remoting/ios/mdc",
     "//remoting/ios/persistence",
     "//remoting/protocol",
+    "//remoting/resources:strings",
     "//ui/base",
     "//ui/gfx",
     "//ui/resources",
