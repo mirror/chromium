@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "b9c7c1ce_8c289057",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T20:01:53Z",
+      "side": 1,
+      "message": "Where do unittests for page classes live?  Also, the functionality here is pretty basic ..",
+      "parentUuid": "cf4b1b9d_e61e3745",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e86497_d57f71ec",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 2
