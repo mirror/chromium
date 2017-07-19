@@ -52,6 +52,24 @@
       "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5204b62_38e72fb6",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T15:32:24Z",
+      "side": 1,
+      "message": "The next call to Enumerate is not scheduled (with a PostDelayedTask) until the callback passed to the previous one is run. This patch updates g_open_devices before calling barrier.Run().",
+      "parentUuid": "62becc60_c8c5815d",
+      "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
