@@ -32,6 +32,7 @@ bool IsAnswerCardDarkRunEnabled() {
 }
 
 bool IsFullscreenAppListEnabled() {
+  return true;
   // Not using local static variable to allow tests to change this value.
   return switches::IsFullscreenAppListEnabled() ||
          base::FeatureList::IsEnabled(kEnableFullscreenAppList);

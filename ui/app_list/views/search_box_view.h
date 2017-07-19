@@ -124,6 +124,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
 
  private:
+  // Notifies the AppListView that the query has changed.
+  void OnQueryChanged();
+
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
 

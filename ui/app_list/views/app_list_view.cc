@@ -655,12 +655,14 @@ void AppListView::EndDrag(const gfx::Point& location) {
   }
 }
 
-void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
+void AppListView::SetStateFromSearchBoxView(const bool search_box_is_empty) {
   switch (app_list_state_) {
     case PEEKING:
       if (!search_box_is_empty)
         SetState(HALF);
+      // newcomer set peeking. why
       break;
+
     case HALF:
       if (search_box_is_empty)
         SetState(PEEKING);
@@ -904,6 +906,7 @@ void AppListView::SetState(AppListState new_state) {
           new_widget_bounds.set_y(peeking_app_list_y);
           app_list_main_view_->contents_view()->SetActiveState(
               AppListModel::STATE_START);
+          search_box_view()->ClearSearch();
           break;
         }
         case FULLSCREEN_SEARCH:

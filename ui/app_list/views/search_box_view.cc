@@ -508,6 +508,8 @@ void SearchBoxView::UpdateBackground(double progress,
   search_box_->SetBackgroundColor(color);
 }
 
+void SearchBoxView::OnQueryChanged() {}
+
 void SearchBoxView::UpdateModel() {
   // Temporarily remove from observer to ignore notifications caused by us.
   model_->search_box()->RemoveObserver(this);
@@ -527,9 +529,12 @@ void SearchBoxView::ContentsChanged(views::Textfield* sender,
   view_delegate_->AutoLaunchCanceled();
   NotifyQueryChanged();
   if (is_fullscreen_app_list_enabled_) {
-    if (is_search_box_active_ == search_box_->text().empty())
-      SetSearchBoxActive(!search_box_->text().empty());
-    app_list_view_->SetStateFromSearchBoxView(search_box_->text().empty());
+    const int query_length = search_box_->text().length();
+    SetSearchBoxActive(query_length > 0);
+    const int num_spaces =
+        std::count(search_box_->text().begin(), search_box_->text().end(), ' ');
+    // If the query is all spaces, stay in PEEKING/FULLSCREEN_ALL_APPS.
+    app_list_view_->SetStateFromSearchBoxView(num_spaces == query_length);
   }
 }
 
