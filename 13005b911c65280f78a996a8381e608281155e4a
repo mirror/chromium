@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3696772_6dbab220",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "How is this test verifying the change in this patch?  It seems to check if the commands are _effective_, but weren\u0027t they already?  Whereas what we really care about, which is that the visibility of the strip is affected, is not tested here.\n\n(Seems like you need a way of injecting some kind of mock clock for the animation in order to do that test.)",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f40ffb2_ae75caf4",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "Similarly, I\u0027d move all this code to browser_view_browsertest.cc.",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b403ff88_d7211bf1",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "Nit: Define this inside the function above its use",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca59aeab_901e22fe",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "Nit: Line unnecessary",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c318abdc_1c7d452e",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "I would maybe define this on BrowserView, as an implementation of an abstract method on BrowserWindow.  Then the code in this file can just call the BrowserWindow method.",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e17986c_b3009e80",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T05:19:39Z",
+      "side": 1,
+      "message": "What about revealing the tabstrip in functions like this one?  In general it seems like if we\u0027re going to reveal the strip for some commands that mess with the strip we should do it for all of them.",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
