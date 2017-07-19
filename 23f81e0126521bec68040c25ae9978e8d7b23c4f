@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ee9341_d9562c2d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-big-endian-bom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-19T23:56:46Z",
+      "side": 1,
+      "message": "Please remove a reference to testRunner.",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a103a606_ba94dca2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-big-endian-nobom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-19T23:56:46Z",
+      "side": 1,
+      "message": "Please remove a reference to testRunner.",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a86fa7_a0454fbc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-little-endian-bom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-19T23:56:46Z",
+      "side": 1,
+      "message": "Please remove a reference to testRunner.",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06386d0a_0abc3d25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-little-endian-nobom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-19T23:56:46Z",
+      "side": 1,
+      "message": "Please remove a reference to testRunner.",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
