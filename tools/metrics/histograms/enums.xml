@@ -3091,6 +3091,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="User did change scale"/>
 </enum>
 
+<enum name="BooleanDidSwap">
+  <int value="0" label="Did not swap"/>
+  <int value="1" label="Did swap"/>
+</enum>
+
 <enum name="BooleanDuplicate">
   <int value="0" label="Not Duplicate"/>
   <int value="1" label="Duplicate"/>
@@ -3369,6 +3374,11 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanNeedsClearing">
   <int value="0" label="Doesn't need clearing"/>
   <int value="1" label="Needs to be clearred"/>
+</enum>
+
+<enum name="BooleanNetworkQuietBeforeSwap">
+  <int value="0" label="FMP OK, network not yet quiet"/>
+  <int value="1" label="FMP not OK, network was already quiet"/>
 </enum>
 
 <enum name="BooleanNullStream">
