@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aacbd5c_37101bae",
+        "filename": "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-19T20:18:32Z",
+      "side": 1,
+      "message": "Reworded.",
+      "parentUuid": "cf93bd2a_6ca45096",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "212dad5a_2432e7c3",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70af6b12_be0fefb7",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-19T20:18:32Z",
+      "side": 1,
+      "message": "The call is in ReadyToCommitNavigation. The driver factory is the main ContentSubresourceFilterThrottleManager::Delegate.",
+      "parentUuid": "212dad5a_2432e7c3",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29d405e9_e4594426",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-19T20:18:32Z",
+      "side": 1,
+      "message": "It is just the base class, in case subclasses don\u0027t care to override.",
+      "parentUuid": "16ba827e_77804a82",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489b22fd_8b290d28",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed01af71_9e715090",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-19T20:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "489b22fd_8b290d28",
+      "revId": "783e1df197507c54cd9e81595295571b2a48bd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
