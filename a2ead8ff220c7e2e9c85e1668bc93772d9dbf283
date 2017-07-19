@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cfe4169_7c88138e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-19T01:46:23Z",
+      "side": 1,
+      "message": "You can use the bool operator on PaintImage.",
+      "range": {
+        "startLine": 362,
+        "startChar": 13,
+        "endLine": 362,
+        "endChar": 21
+      },
+      "revId": "a2ead8ff220c7e2e9c85e1668bc93772d9dbf283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb0dd70_bb0fa3c0",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImagePattern.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-19T01:46:23Z",
+      "side": 1,
+      "message": "This still won\u0027t address the animated image use-case where the PaintImage has a vector of SkImage frames. T_T\n\nCould we instead add the option to create a PaintImage backed by a PaintRecord instead? This would also eliminate multiple other uses of SkImage::MakeFromPicture where we are transforming records to pictures in blink.",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 54
+      },
+      "revId": "a2ead8ff220c7e2e9c85e1668bc93772d9dbf283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
