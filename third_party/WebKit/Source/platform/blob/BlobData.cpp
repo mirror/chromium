@@ -255,6 +255,22 @@ bool BlobData::CanConsolidateData(size_t length) {
   return true;
 }
 
+std::unique_ptr<CrossThreadBlobDataHandleData> BlobDataHandle::CopyData()
+    const {
+  std::unique_ptr<CrossThreadBlobDataHandleData> data =
+      WTF::MakeUnique<CrossThreadBlobDataHandleData>();
+  data->uuid = uuid_.IsolatedCopy();
+  data->type = type_.IsolatedCopy();
+  data->size = size_;
+  data->is_single_unknown_size_file = is_single_unknown_size_file_;
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    storage::mojom::blink::BlobPtr blob_clone;
+    blob_->Clone(MakeRequest(&blob_clone));
+    data->blob = blob_clone.PassInterface();
+  }
+  return data;
+}
+
 BlobDataHandle::BlobDataHandle()
     : uuid_(CreateCanonicalUUIDString()),
       size_(0),
@@ -396,6 +412,16 @@ BlobDataHandle::BlobDataHandle(const String& uuid,
   } else {
     BlobRegistry::AddBlobDataRef(uuid_);
   }
+}
+
+BlobDataHandle::BlobDataHandle(
+    std::unique_ptr<CrossThreadBlobDataHandleData> data)
+    : uuid_(data->uuid),
+      type_(data->type),
+      size_(data->size),
+      is_single_unknown_size_file_(data->is_single_unknown_size_file) {
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled())
+    blob_.Bind(std::move(data->blob));
 }
 
 BlobDataHandle::~BlobDataHandle() {
