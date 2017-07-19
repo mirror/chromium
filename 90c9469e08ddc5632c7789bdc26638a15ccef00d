@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "ac7e1bf3_7b51356b",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-19T22:02:26Z",
+      "side": 1,
+      "message": "Yeah we have the same issue with a lot of other required params (guid, DownloadClient, RequestParams::url, etc.).  This kinda ties into the system I was mentioning earlier, where we just need to validate the input and fail if any of those required fields aren\u0027t present in the DownloadParams (it should technically always be present in Entry if all Clients are forced to pass one in).\n\nEither way we could still probably have the same checks you had with std::unique_ptr\u003c\u003e and use base::Optional::has_value() when we had to pull it to send it to the driver.",
+      "parentUuid": "ab7accf3_55e57dcd",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3655dfad_25c106c1",
         "filename": "components/download/internal/entry_unittest.cc",
         "patchSetId": 12
