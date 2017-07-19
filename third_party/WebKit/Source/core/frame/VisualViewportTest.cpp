@@ -2115,8 +2115,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
   PaintLayerCompositor* compositor = document->GetLayoutView()->Compositor();
 
-  ASSERT_TRUE(compositor->NeedsFixedRootBackgroundLayer(
-      document->GetLayoutView()->Layer()));
+  ASSERT_TRUE(compositor->NeedsFixedRootBackgroundLayer());
   ASSERT_TRUE(compositor->FixedRootBackgroundLayer());
 
   ASSERT_EQ(page_width, compositor->FixedRootBackgroundLayer()->Size().Width());
@@ -2192,8 +2191,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
   PaintLayerCompositor* compositor = document->GetLayoutView()->Compositor();
 
-  ASSERT_FALSE(compositor->NeedsFixedRootBackgroundLayer(
-      document->GetLayoutView()->Layer()));
+  ASSERT_FALSE(compositor->NeedsFixedRootBackgroundLayer());
   ASSERT_FALSE(compositor->FixedRootBackgroundLayer());
 
   document->View()->SetTracksPaintInvalidations(true);
