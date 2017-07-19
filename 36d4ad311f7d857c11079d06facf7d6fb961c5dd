@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86c06180_1ce78ce4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-19T23:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c1fbf5_9fe7baef",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "138c2ee9_636eb805",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c3ed85f2_9bd40912",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-19T23:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "138c2ee9_636eb805",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b57bd3e_11f2625f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0909a92_0947a089",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-19T23:48:13Z",
+      "side": 1,
+      "message": "Since this is just currently used to pass information from one place to another, I didn\u0027t set any of the default values so that there would be no confusion. Might be something to consider for the future!",
+      "parentUuid": "1b57bd3e_11f2625f",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
