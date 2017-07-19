@@ -397,7 +397,7 @@ std::string NetErrorHelper::GetDomainString(blink::WebURLError::Domain domain) {
   using Domain = blink::WebURLError::Domain;
   switch (domain) {
     case Domain::kNet:
-      return net::kErrorDomain;
+      return error_page::kNetErrorDomain;
     case Domain::kHttp:
       return error_page::kHttpErrorDomain;
     case Domain::kDnsProbe:
