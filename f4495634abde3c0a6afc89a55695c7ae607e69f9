@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f9440f2_9494ef8c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "The constraint space created will have shrink_to_fit flag. It is set here\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/ng_constraint_space.cc?q\u003dCreateFromLayoutObject\u0026sq\u003dpackage:chromium\u0026l\u003d137",
+      "parentUuid": "0acff5ba_d195a1c1",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13871e3c_80811e69",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3581c289_5eb11153",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "It does. \n\nIf logical_height is auto, the logical_width determines the logical_height.\nIt is as if height was specified, and we are looking for an overconstrained solution.",
+      "parentUuid": "13871e3c_80811e69",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8d96449_b898cc9f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done. It was a leftover from LayoutSize.....",
+      "parentUuid": "5293a926_559ffbbb",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "210d39ca_2fcef6f8",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils_test.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23061bd_43a842b6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done. I did not know about WTF::nullopt, thanks for pointing it out.",
+      "parentUuid": "210d39ca_2fcef6f8",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e39c81cd_644b60f1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_layout_algorithm_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f20c417_23f589f8",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "226d35a8_a5a679bf",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab76cb6_08d0131d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226d35a8_a5a679bf",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "944e6574_f70bf222",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done. Love it.",
+      "parentUuid": "942c53d5_71c80b23",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b00cc95_b1d89adb",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c6f594_f789d6f5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b00cc95_b1d89adb",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "dc88089b_ffae3962",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "This comment led me to do some more testing. I\u0027ve discovered that computing replaced size is surprisingly complex, and that the rules are not in the spec, but in our code.\nTo encapsuate this complexity, I\u0027ve created NGReplacedSize. It implements legacy replaced size computation logic.\nAll the IntrinsicSize routine names have been replaced by ReplacedSize.",
+      "parentUuid": "8718ff5f_2ea2aae2",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04a8583_0c1ae61a",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
         "patchSetId": 5
@@ -175,6 +343,24 @@
       "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c272af5d_0f3f476b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-19T00:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04a8583_0c1ae61a",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
