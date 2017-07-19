@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "9b9eb4c3_c5e85e04",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T06:54:56Z",
+      "side": 1,
+      "message": "I think using two scopers for two members look fine, or could be possibly even more readable.",
+      "parentUuid": "135612be_a2a56d47",
+      "range": {
+        "startLine": 1941,
+        "startChar": 0,
+        "endLine": 1942,
+        "endChar": 45
+      },
+      "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8064976_6ee73e56",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T06:54:56Z",
+      "side": 1,
+      "message": "Do we want to make the RenderFrameImpl a template parameter as well?  ...hm, maybe not worth doing that at this point.",
+      "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75b1d01_bfb2af2a",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 1
@@ -42,6 +83,23 @@
         "endLine": 842,
         "endChar": 0
       },
+      "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520b70a4_4092d42c",
+        "filename": "content/test/data/detach_frame_in_copy.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-19T06:54:56Z",
+      "side": 1,
+      "message": "nit: link to the crbug?",
       "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
