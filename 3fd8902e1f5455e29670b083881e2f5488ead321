@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68ffbe26_8e190d70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-19T04:02:50Z",
+      "side": 1,
+      "message": "It appears this was added since subclasses can override createFullscreenManager() (although I am not sure what the advantage of having a bool instead of a null check is)\n\nAndroidOverlayModeManager only has a default constructor. I have move the initialization to be part of the member declaration directly.",
+      "parentUuid": "90d3fa86_55334fbb",
+      "revId": "3fd8902e1f5455e29670b083881e2f5488ead321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "903dc0a8_fde1c7de",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "af5360a8_fede3af2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-19T04:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903dc0a8_fde1c7de",
+      "revId": "3fd8902e1f5455e29670b083881e2f5488ead321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c8a759_e548c447",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-18T15:24:45Z",
       "side": 1,
       "message": "can DialogOverlayImplTest register as a listener to verify that it\u0027s being called?",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "3fd8902e1f5455e29670b083881e2f5488ead321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95556343_68cc1b48",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-19T04:02:50Z",
+      "side": 1,
+      "message": "DialogOverlayImplTest runs in content shell, and AOMM is only in ChromeActivity at the moment.\n\nDo you know what should be changed in ContentShell in order to properly set opacity?",
+      "parentUuid": "68c8a759_e548c447",
       "range": {
         "startLine": 36,
         "startChar": 16,
