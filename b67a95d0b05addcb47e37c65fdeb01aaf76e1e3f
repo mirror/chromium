@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b36e35f_500f9ff7",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T23:07:08Z",
+      "side": 1,
+      "message": "Yikes, good catch! Thanks!\nSeems I messed it up when doing a refactor.\n...I should probably add tests...",
+      "parentUuid": "745653a0_9f6ff918",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7ecd477_2c590861",
         "filename": "net/tools/stitch_net_log_files.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T22:19:53Z",
       "side": 1,
       "message": "nit: s/course/coarse",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fb1679_216a177d",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T23:07:08Z",
+      "side": 1,
+      "message": "Done (I changed the comment a bit).",
+      "parentUuid": "e7ecd477_2c590861",
       "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9e024180_4a4a322d",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T23:07:08Z",
+      "side": 1,
+      "message": "Done. Good idea.",
+      "parentUuid": "23585b2d_faac9225",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a308e38_80012252",
         "filename": "net/tools/stitch_net_log_files.py",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc784f1_82ae19f8",
+        "filename": "net/tools/stitch_net_log_files.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T23:07:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a308e38_80012252",
+      "revId": "b67a95d0b05addcb47e37c65fdeb01aaf76e1e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
