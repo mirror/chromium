@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd842bac_eaf1f7b5",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-19T18:50:34Z",
+      "side": 1,
+      "message": "Nit: Or even shorter,\n\n  return CreateViews(profile, parent, delegate);\n\nAlso, this way if at some point we needed to do more in the creation function, we wouldn\u0027t have to duplicate it two places.",
+      "revId": "08ee67d87926c904ad1aae3f5443110a5ec8e96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
