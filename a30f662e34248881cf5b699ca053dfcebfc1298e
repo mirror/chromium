@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab1985b_133308de",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16364,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-19T20:32:44Z",
+      "side": 1,
+      "message": "The wording hear reads to me like \"the user swiped the tray bubble, then at some point later they close the bubble\". My shallow reading of the code makes me think that it\u0027s more \"the user did a swipe action that caused the bubble to close\". Are either of these correct interpretations?",
+      "range": {
+        "startLine": 16363,
+        "startChar": 4,
+        "endLine": 16364,
+        "endChar": 21
+      },
+      "revId": "a30f662e34248881cf5b699ca053dfcebfc1298e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
