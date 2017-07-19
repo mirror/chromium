@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90c1a2f3_f59100a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T17:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8884ae30_b5ebf755",
+      "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09b5e149_f2df3e5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/displaystyle/UiConfig.java",
         "patchSetId": 1

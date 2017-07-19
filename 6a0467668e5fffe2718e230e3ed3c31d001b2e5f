@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc000f7f_b41fb3c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T17:23:28Z",
+      "side": 1,
+      "message": "mvanouwerkerk@: Shouldn\u0027t we use the tile style instead here? if we display them as modern tiles, do we use 5 too? basically swap it to `(!isSmall \u0026\u0026 tileStyle !\u003d CLASSIC) ? 5 : 4` ?",
+      "range": {
+        "startLine": 862,
+        "startChar": 39,
+        "endLine": 862,
+        "endChar": 40
+      },
+      "revId": "6a0467668e5fffe2718e230e3ed3c31d001b2e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
