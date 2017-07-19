@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d5561f_1a066d7e",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-19T22:22:50Z",
+      "side": 1,
+      "message": "suffix_?",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "3b294bb6c4341a1ff1bf3f82a7d880d3436dbe4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
