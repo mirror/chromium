@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf50108_cac7d35d",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-19T20:13:24Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 680,
+        "startChar": 11,
+        "endLine": 680,
+        "endChar": 18
+      },
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117615a7_2a404e4e",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-19T20:13:24Z",
+      "side": 1,
+      "message": "necessary? I\u0027d guess this check just hides bugs. Shouldn\u0027t allow activity to be null.",
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a54eb06_dcdd7437",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-19T20:13:24Z",
+      "side": 1,
+      "message": "Why is reflection necessary? (add comment or change to not using reflection)",
+      "range": {
+        "startLine": 685,
+        "startChar": 66,
+        "endLine": 685,
+        "endChar": 75
+      },
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
