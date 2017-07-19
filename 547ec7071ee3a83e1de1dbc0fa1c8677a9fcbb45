@@ -22,6 +22,30 @@
       "revId": "547ec7071ee3a83e1de1dbc0fa1c8677a9fcbb45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39962962_dbf42068",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-19T17:48:35Z",
+      "side": 1,
+      "message": "Thanks, good point! I uploaded https://chromium-review.googlesource.com/c/578068/ for that.",
+      "parentUuid": "bb468e24_06bed49d",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 40
+      },
+      "revId": "547ec7071ee3a83e1de1dbc0fa1c8677a9fcbb45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
