@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7211df96_14caeafb",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T19:39:57Z",
+      "side": 1,
+      "message": "I think extension is clear enough. mime_util.h calls it extension in arguments and function names.",
+      "parentUuid": "28e6824e_99bd4102",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f510e3_70caa454",
         "filename": "net/base/platform_mime_util_fuchsia.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T18:29:32Z",
       "side": 1,
       "message": "nit: Any reason for this particular set of MIME types? Are these all required by particular tests? If not then can we trim down to only those we actually need and add more later?",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78e2ccd_fc8d50c7",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T19:39:57Z",
+      "side": 1,
+      "message": "Copied these from the linux implementation of PlatformMimeUtil. I don\u0027t know that\u0027s the reasoning this list contains these types but not others. Also note that there are some mimetype-extensions mappings hardcoded in mime_util.cc .\n\nOn Linux PlatformMimeUtil also integrates with xdg-util, which we don\u0027t have on Fuchsia.",
+      "parentUuid": "c4f510e3_70caa454",
       "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5cb6ee7_7a720e52",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T19:39:57Z",
+      "side": 1,
+      "message": "We\u0027ve been marking fuchsia work items in the code with TODO(fuchsia). Before I close the tracking bug for src/net I\u0027ll make sure there are no TODO(fuchsia) in there or I open separate bugs for the issues that are left.",
+      "parentUuid": "2bbbc285_a8e32e8c",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6051d52_7258bad1",
         "filename": "net/base/platform_mime_util_fuchsia.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9137df65_f1909e12",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T19:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6051d52_7258bad1",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
