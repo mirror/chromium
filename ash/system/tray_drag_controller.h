@@ -29,6 +29,11 @@ class ASH_EXPORT TrayDragController {
                            TrayBackgroundView* tray_view);
 
  private:
+  // Recode user metrics action for swiping that happened on ImeMenuTray,
+  // SystemTray, PaletteTray, WebNotificationTray or their associated tray
+  // bubbles.
+  void RecordUserMetricsAction(bool hide_bubble);
+
   // Gesture related functions:
   bool StartGestureDrag(const ui::GestureEvent& gesture);
   void UpdateGestureDrag(const ui::GestureEvent& gesture);

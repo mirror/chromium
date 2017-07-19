@@ -32,6 +32,8 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
                                public keyboard::KeyboardControllerObserver,
                                public VirtualKeyboardObserver {
  public:
+  static const char kViewClassName[];
+
   explicit ImeMenuTray(Shelf* shelf);
   ~ImeMenuTray() override;
 
@@ -49,6 +51,7 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
   bool ShouldShowKeyboardToggle() const;
 
   // TrayBackgroundView:
+  const char* GetClassName() const override;
   base::string16 GetAccessibleNameForTray() override;
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;
   void ClickedOutsideBubble() override;

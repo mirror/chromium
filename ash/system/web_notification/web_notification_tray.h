@@ -49,6 +49,8 @@ class ASH_EXPORT WebNotificationTray
       public base::SupportsWeakPtr<WebNotificationTray>,
       public ui::SimpleMenuModel::Delegate {
  public:
+  static const char kViewClassName[];
+
   WebNotificationTray(Shelf* shelf,
                       aura::Window* status_area_window,
                       SystemTray* system_tray);
@@ -73,7 +75,8 @@ class ASH_EXPORT WebNotificationTray
   // Called when the login status is changed.
   void UpdateAfterLoginStatusChange(LoginStatus login_status);
 
-  // Overridden from TrayBackgroundView.
+  // TrayBackgroundView:
+  const char* GetClassName() const override;
   void UpdateAfterShelfAlignmentChange() override;
   void AnchorUpdated() override;
   base::string16 GetAccessibleNameForTray() override;
@@ -84,7 +87,7 @@ class ASH_EXPORT WebNotificationTray
   void ShowBubble() override;
   views::TrayBubbleView* GetBubbleView() override;
 
-  // Overridden from views::TrayBubbleView::Delegate.
+  // views::TrayBubbleView::Delegate:
   void BubbleViewDestroyed() override;
   void OnMouseEnteredView() override;
   void OnMouseExitedView() override;
@@ -96,7 +99,7 @@ class ASH_EXPORT WebNotificationTray
   bool ShouldEnableExtraKeyboardAccessibility() override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
 
-  // Overridden from MessageCenterTrayDelegate.
+  // MessageCenterTrayDelegate:
   void OnMessageCenterTrayChanged() override;
   bool ShowMessageCenter() override;
   void HideMessageCenter() override;
@@ -106,7 +109,7 @@ class ASH_EXPORT WebNotificationTray
   bool IsContextMenuEnabled() const override;
   message_center::MessageCenterTray* GetMessageCenterTray() override;
 
-  // Overridden from ui::SimpleMenuModel::Delegate.
+  // ui::SimpleMenuModel::Delegate:
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;

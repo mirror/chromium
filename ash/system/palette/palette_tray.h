@@ -40,6 +40,8 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
                                public PaletteToolManager::Delegate,
                                public ui::InputDeviceEventObserver {
  public:
+  static const char kViewClassName[];
+
   explicit PaletteTray(Shelf* shelf);
   ~PaletteTray() override;
 
@@ -50,6 +52,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void OnLockStateChanged(bool locked) override;
 
   // TrayBackgroundView:
+  const char* GetClassName() const override;
   void ClickedOutsideBubble() override;
   base::string16 GetAccessibleNameForTray() override;
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;

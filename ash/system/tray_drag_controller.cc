@@ -5,7 +5,11 @@
 #include "ash/system/tray_drag_controller.h"
 
 #include "ash/shell.h"
+#include "ash/system/ime_menu/ime_menu_tray.h"
+#include "ash/system/palette/palette_tray.h"
+#include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/tray_background_view.h"
+#include "ash/system/web_notification/web_notification_tray.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 
 namespace ash {
@@ -92,6 +96,87 @@ void TrayDragController::CompleteGestureDrag(const ui::GestureEvent& gesture) {
 
   tray_view_->AnimateToTargetBounds(target_bounds, hide_bubble);
   is_in_drag_ = false;
+
+  RecordUserMetricsAction(hide_bubble);
+}
+
+void TrayDragController::RecordUserMetricsAction(bool hide_bubble) {
+  const char* class_name = tray_view_->GetClassName();
+  UserMetricsRecorder* metrics = Shell::Get()->metrics();
+
+  if (class_name == SystemTray::kViewClassName) {
+    if (is_on_bubble_) {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_SYSTEM_TRAY_BUBBLE_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_SYSTEM_TRAY_BUBBLE_SWIPE_TO_OPEN);
+      }
+    } else {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_SYSTEM_TRAY_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_SYSTEM_TRAY_SWIPE_TO_OPEN);
+      }
+    }
+  } else if (class_name == ImeMenuTray::kViewClassName) {
+    if (is_on_bubble_) {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_IME_TRAY_BUBBLE_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_IME_TRAY_BUBBLE_SWIPE_TO_OPEN);
+      }
+    } else {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_IME_TRAY_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_IME_TRAY_SWIPE_TO_OPEN);
+      }
+    }
+  } else if (class_name == WebNotificationTray::kViewClassName) {
+    if (is_on_bubble_) {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_NOTIFICATION_TRAY_BUBBLE_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_NOTIFICATION_TRAY_BUBBLE_SWIPE_TO_OPEN);
+      }
+    } else {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_NOTIFICATION_TRAY_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_NOTIFICATION_TRAY_SWIPE_TO_OPEN);
+      }
+    }
+  } else if (class_name == PaletteTray::kViewClassName) {
+    if (is_on_bubble_) {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_PALETTE_TRAY_BUBBLE_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_PALETTE_TRAY_BUBBLE_SWIPE_TO_OPEN);
+      }
+    } else {
+      if (hide_bubble) {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_PALETTE_TRAY_SWIPE_TO_CLOSE);
+      } else {
+        metrics->RecordUserMetricsAction(
+            UMA_STATUS_AREA_PALETTE_TRAY_SWIPE_TO_OPEN);
+      }
+    }
+  }
 }
 
 void TrayDragController::UpdateBubbleBounds() {
