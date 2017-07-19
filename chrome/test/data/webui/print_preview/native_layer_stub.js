@@ -10,16 +10,19 @@ cr.define('print_preview', function() {
   */
   function NativeLayerStub() {
     TestBrowserProxy.call(this, [
-        'getInitialSettings',
-        'getPrinters',
-        'getExtensionPrinters',
-        'getPreview',
-        'getPrivetPrinters',
-        'getPrinterCapabilities',
-        'print',
-        'setupPrinter',
-        'startHideDialog'
-      ]);
+      'getInitialSettings',
+      'getPrinters',
+      'getExtensionPrinters',
+      'getPreview',
+      'getPrivetPrinters',
+      'getPrinterCapabilities',
+      'hidePreview',
+      'print',
+      'recordAction',
+      'recordInHistogram',
+      'saveAppState',
+      'setupPrinter',
+    ]);
 
     /**
      * @private {!print_preview.NativeInitialSettings} The initial settings
@@ -153,9 +156,18 @@ cr.define('print_preview', function() {
     },
 
     /** @override */
-    startHideDialog: function () {
-      this.methodCalled('startHideDialog');
+    hidePreview: function() {
+      this.methodCalled('hidePreview');
     },
+
+    /** @override */
+    record: function() {},
+
+    /** @override */
+    recordInHistogram: function() {},
+
+    /** @override */
+    saveAppState: function() {},
 
     /**
      * @param {!print_preview.NativeInitialSettings} settings The settings
