@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba950923_18134cd4",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af38f08f_4f7c78ea",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "This conditional is too long. Pull it into a helper method like ShouldStartAppListDrag().",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b31ac5_d78531c9",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "CompleteGestureDrag() is getting long. I would put this code in a utility method like CompleteAppListDrag(). This might also help with indenting and line wrapping.",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506d02c3_c6b4fdb5",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "nit: maximize mode -\u003e tablet mode",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ea6331_066618d1",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "nit: Is it possible to reset the values of show_count() and dismiss_count() so you can compare with 1u and 0u?",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af768f56_788c9053",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "Nice test. I like the comment/action/expectation rhythm.",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c95b2f_42090787",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "Add a comment about why this is needed. It\u0027s unusual.",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a1adef_4422d832",
+        "filename": "ui/app_list/presenter/app_list_presenter.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "I would just call this SetYPosition() or something similar. Otherwise I expect it to take full bounds.\n\nAlso, use int32, since monitors don\u0027t have more than 2B vertical pixels. :-)",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb04bd45_5f6680c0",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "Are you using this?",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d7478b_114c84d7",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T23:39:39Z",
+      "side": 1,
+      "message": "All these methods should take int32.",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
