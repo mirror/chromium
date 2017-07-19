@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0822c1d5_96074bc1",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-19T20:28:34Z",
+      "side": 1,
+      "message": "looking at the history of the file for linux I think this list came to exist after an initial list with some well known types (see https://codereview.chromium.org/2077006/diff/14001/net/base/platform_mime_util_linux.cc?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8) with few more one-off fixes afterwards, mainly for ChromeOS, which doesn\u0027t have system-wide MIME DB. The list is used mainly to determine file extension when downloading a file.\nCurrently we would need just video/mpeg and text/html to pass the tests, but keeping only these types would be strange. \n\nI\u0027m going to refactor how GetPreferredExtensionForMimeType() for all platforms such that we won\u0027t need this list hardcoded here or on linux.",
+      "parentUuid": "8625842b_d8ba9846",
+      "revId": "61d2161de91629bbfaa1fecb323c1a6628d34e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbbc285_a8e32e8c",
         "filename": "net/base/platform_mime_util_fuchsia.cc",
         "patchSetId": 1
