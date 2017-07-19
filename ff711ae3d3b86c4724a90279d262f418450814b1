@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72eab7d_c97b7abf",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Accidental comment?",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971f2259_6010f51f",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "I like the idea, but I\u0027m not a fan of defining this list in 3 places. That seems error prone.\n\nCan we use only one list? (Ideally from the routes object)",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1be04a5_418661e6",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "I like the idea, but I\u0027m not a fan of defining this list in 3 places. That seems error prone.\n\nCan we use only one list? (Ideally from the routes object)\n\nIf not, then consider adding the TEST_F in the same location as you define the test",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8ff3fc_34607f3c",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "This filter may not be working, see trybot errors.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 40
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cefab0f_0c56e186",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "String -\u003e string. For POD types, we use the lower case",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f44957_8c172bb6",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Is this for settings in the advanced section?\n\nIf so, we might be able to determine if a route needs expanding. This would let you remove |testsWithExpansion|",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05baf31_79dabff1",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Since this is for settings, consider renaming to:\ndefineSettingsAccessibilityTest(...)",
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4566bb53_17dc91ba",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "no need to do this, if not passed in, then it\u0027ll be undefined which evaluates to false. Or make it required",
+      "range": {
+        "startLine": 16,
+        "startChar": 53,
+        "endLine": 16,
+        "endChar": 59
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd367ad3_e49dc90d",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Avoid duplicate code by moving the IF to the return statement! :D\n\n    setup(function() {\n      // Reset the blank to be a blank page.\n      PolymerTest.clearBody();\n\n      // Set the URL of the page to render to load the correct view upon\n      // injecting settings-ui without attaching listeners.\n      window.history.pushState(\u0027object or string\u0027, \u0027Test\u0027, path);\n\n      var settingsUi \u003d document.createElement(\u0027settings-ui\u0027);\n      document.body.appendChild(settingsUi);\n\n      // Wait for section to expand.\n      if (isAdvancedSection) {\n        return new Promise(function(resolve, fail) {\n          settingsUi.addEventListener(\u0027settings-section-expanded\u0027, resolve);\n        });\n      }\n    });",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93062ec3_ecb7484d",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Why not just exclude these from |routeMap|?\nAlso, consider leaving passwords in so we have a full list.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d1d507_20fc9f65",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Maybe just comment out if it needs to be disabled.\n//\u0027SIGN_OUT\u0027, \u0027/signOut\u0027,  // TODO(quacht): enable this test.",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 25
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207b2e5a_f44d5037",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "NIT: no curlies for single line IF statments",
+      "range": {
+        "startLine": 118,
+        "startChar": 40,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608d3415_68762da3",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "NIT: indentation\n\nBut, better yet, remove the IF:\ndefineSuite(route, routeMap[route], testsWithExpansion.indexOf(route) \u003e -1);",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b88126_914bf1ca",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-19T01:07:42Z",
+      "side": 1,
+      "message": "Might be best to leave this in its own file and move/remove/update in a separate CL if we need to",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 3
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
