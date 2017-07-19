@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac5d02d5_ea551a2c",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleNestedPseudoSelector.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T04:29:37Z",
+      "side": 1,
+      "message": "Changed to \"Measures the performance of a solo pseudo selector applied on a grandchild of a div.\"",
+      "parentUuid": "6d61752a_56fc1521",
+      "revId": "059bb9d73efa649b01b924f630df83e054a896b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72287b15_36e9f2cf",
         "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "059bb9d73efa649b01b924f630df83e054a896b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61204df2_30c00077",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T04:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72287b15_36e9f2cf",
+      "revId": "059bb9d73efa649b01b924f630df83e054a896b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
