@@ -85,7 +85,7 @@ const base::Feature kSearchProviderContextAllowHttpsUrls{
     "OmniboixSearchProviderContextAllowHttpsUrls",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Feature used for the Zero Suggest Redirect to Chrome Field Trial.
+// Feature used for the Zero Suggest Redirect to Chrome Field Trial
 const base::Feature kZeroSuggestRedirectToChrome{
     "ZeroSuggestRedirectToChrome", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -707,25 +707,6 @@ int OmniboxFieldTrial::GetPhysicalWebAfterTypingBaseRelevance() {
   return 700;
 }
 
-// static
-bool OmniboxFieldTrial::InZeroSuggestRedirectToChromeFieldTrial() {
-  return base::FeatureList::IsEnabled(omnibox::kZeroSuggestRedirectToChrome);
-}
-
-// static
-std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeServerAddress() {
-  return base::GetFieldTrialParamValueByFeature(
-      omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeServerAddressParam);
-}
-
-// static
-std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeAdditionalFields() {
-  return base::GetFieldTrialParamValueByFeature(
-      omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeAdditionalFieldsParam);
-}
-
 const char OmniboxFieldTrial::kBundledExperimentFieldTrialName[] =
     "OmniboxBundledExperimentV1";
 const char OmniboxFieldTrial::kDisableProvidersRule[] = "DisableProviders";
@@ -808,12 +789,6 @@ const char OmniboxFieldTrial::kPhysicalWebZeroSuggestBaseRelevanceParam[] =
     "PhysicalWebZeroSuggestBaseRelevance";
 const char OmniboxFieldTrial::kPhysicalWebAfterTypingBaseRelevanceParam[] =
     "PhysicalWebAfterTypingBaseRelevanceParam";
-
-const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
-    "ZeroSuggestRedirectToChromeServerAddress";
-const char
-    OmniboxFieldTrial::kZeroSuggestRedirectToChromeAdditionalFieldsParam[] =
-        "ZeroSuggestRedirectToChromeAdditionalFields";
 
 const char OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam[] =
     "UIMaxAutocompleteMatches";
