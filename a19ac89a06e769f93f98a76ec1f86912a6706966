@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21fb9c4d_624613fd",
+        "filename": "chrome/browser/chromeos/system/device_disabling_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-19T17:02:20Z",
+      "side": 1,
+      "message": "Removed it from this CL.",
+      "parentUuid": "1437577c_cdda107c",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "a19ac89a06e769f93f98a76ec1f86912a6706966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a10596e_254e905e",
         "filename": "components/policy/proto/device_management_backend.proto",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a19ac89a06e769f93f98a76ec1f86912a6706966",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c1207b_89b3db62",
+        "filename": "components/policy/proto/device_management_backend.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-19T17:02:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a10596e_254e905e",
+      "range": {
+        "startLine": 438,
+        "startChar": 2,
+        "endLine": 438,
+        "endChar": 69
+      },
+      "revId": "a19ac89a06e769f93f98a76ec1f86912a6706966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
