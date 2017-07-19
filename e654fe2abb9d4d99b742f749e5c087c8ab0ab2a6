@@ -22,6 +22,30 @@
       "revId": "e654fe2abb9d4d99b742f749e5c087c8ab0ab2a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7263eb69_a7d98095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e773db9_9a995838",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "e654fe2abb9d4d99b742f749e5c087c8ab0ab2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

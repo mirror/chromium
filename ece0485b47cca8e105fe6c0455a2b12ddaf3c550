@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67220d9c_efbe3886",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031e11ac_675103bd",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efdc97ae_ccee5705",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90a0f5d_22393fc8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "Done. It is set manually, that\u0027s why this should work.",
+      "parentUuid": "efdc97ae_ccee5705",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b4d2c1db_a6d35d55",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b412a0ac_666561c4",
+      "range": {
+        "startLine": 160,
+        "startChar": 27,
+        "endLine": 160,
+        "endChar": 28
+      },
+      "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74de3e72_e0bbfc4f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-17T15:41:11Z",
       "side": 1,
       "message": "why the Math.min here?",
+      "range": {
+        "startLine": 161,
+        "startChar": 39,
+        "endLine": 161,
+        "endChar": 42
+      },
+      "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7188e6_98361cac",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "calculateNumColumns return an integer in [1, infinity), now we want to make sure it is not larger than |maxColumns|,\nhence we take the minimum (if calculatedNumColumns is bigger than maxColumns, we want maxColumns, otherwise we want the calculated number). Does this make sense?",
+      "parentUuid": "74de3e72_e0bbfc4f",
       "range": {
         "startLine": 161,
         "startChar": 39,

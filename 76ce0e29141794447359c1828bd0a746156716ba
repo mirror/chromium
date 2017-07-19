@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2b35e42f_5856a91a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-19T10:22:56Z",
+      "side": 1,
+      "message": "Wouldn\u0027t that mean converting both constants to fields of the layout? Which would imply that the calculateNumColumns() method would need to have access to an instance of the layout?\n\nI added a few constants that solve the calculation problem, but I don\u0027t think its the best way to solve it. I\u0027m not really sure where to go from here.",
+      "parentUuid": "e36f3309_653d172b",
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad05e0d_3f7e6970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 4
