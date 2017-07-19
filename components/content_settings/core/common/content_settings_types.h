@@ -75,6 +75,10 @@ enum ContentSettingsType {
   // sound. This will not block playback but instead the user will not hear it.
   CONTENT_SETTINGS_TYPE_SOUND,
 
+  // Website setting which stores the client hints that should be sent to the
+  // specific origin.
+  CONTENT_SETTINGS_TYPE_CLIENT_HINTS,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
