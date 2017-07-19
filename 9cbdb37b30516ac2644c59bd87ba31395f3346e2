@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7c7c9d_cdcebbaf",
+        "filename": "components/viz/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T23:00:14Z",
+      "side": 1,
+      "message": "Did you check if these 2 can go away?",
+      "revId": "9cbdb37b30516ac2644c59bd87ba31395f3346e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
