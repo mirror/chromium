@@ -7,6 +7,8 @@ import("//ios/web/js_compile.gni")
 source_set("passwords") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "credential_manager.h",
+    "credential_manager.mm",
     "ios_chrome_password_manager_client.h",
     "ios_chrome_password_manager_client.mm",
     "ios_chrome_password_manager_driver.h",
@@ -19,6 +21,8 @@ source_set("passwords") {
     "ios_chrome_save_password_infobar_delegate.mm",
     "ios_chrome_update_password_infobar_delegate.h",
     "ios_chrome_update_password_infobar_delegate.mm",
+    "js_credential_manager.h",
+    "js_credential_manager.mm",
     "js_password_manager.h",
     "js_password_manager.mm",
     "password_controller.h",
