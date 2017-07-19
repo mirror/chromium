@@ -52,11 +52,28 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
     EXPECT_TRUE(success);
     ProcessMemoryMetricsEmitter::ReceivedMemoryDump(success, dump_guid,
                                                     std::move(ptr));
+    finished_memory_dump_ = true;
+    QuitIfFinished();
+  }
+
+  void ReceivedProcessInfos(
+      std::vector<resource_coordinator::mojom::ProcessInfoPtr> process_infos)
+      override {
+    ProcessMemoryMetricsEmitter::ReceivedProcessInfos(std::move(process_infos));
+    finished_process_info_ = true;
+    QuitIfFinished();
+  }
+
+  void QuitIfFinished() {
+    if (!finished_memory_dump_ || !finished_process_info_)
+      return;
     if (run_loop_)
       run_loop_->Quit();
   }
 
   base::RunLoop* run_loop_;
+  bool finished_memory_dump_ = false;
+  bool finished_process_info_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitterFake);
 };
