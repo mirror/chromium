@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2241bb13_14450bfb",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-19T14:05:42Z",
+      "side": 1,
+      "message": "Hit this this morning, but when multiple devices are attached, gdb fails. You should forward on the device serial by passing --device\u003d$DEVICE.\n\nAlso make sense to pass --adb\u003d${adb_wrapper.AdbWrapper.GetAdbPath()}",
+      "range": {
+        "startLine": 327,
+        "startChar": 22,
+        "endLine": 327,
+        "endChar": 29
+      },
+      "revId": "9611f3b4887b25316223d9e92e30a8f77aeeb4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
