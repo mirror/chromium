@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "ab7accf3_55e57dcd",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-19T08:10:51Z",
+      "side": 1,
+      "message": "It seems to me that if it would be public and directly accessible, then one can create an Entry without annotation, and pass it for actual network request. When traffic_annotaiton_.value() (or similar) is used to get the annotation and DCHECKS are not on, no error is returned and just the default value for annotation is returned, and whatever it is (probably 0) would be considered as the annotation value and used without any error.\n\nSo I think we need the accessors to have a CHECK instead of DCHECK when value is missing.",
+      "parentUuid": "eabc43d9_52363a34",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "90c9469e08ddc5632c7789bdc26638a15ccef00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3655dfad_25c106c1",
         "filename": "components/download/internal/entry_unittest.cc",
         "patchSetId": 12
