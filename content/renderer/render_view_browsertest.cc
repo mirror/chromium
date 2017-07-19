@@ -1795,10 +1795,7 @@ class RendererErrorPageTest : public RenderViewImplTest {
         *error_html = "A suffusion of yellow.";
     }
 
-    bool HasErrorPage(int http_status_code,
-                      std::string* error_domain) override {
-      return true;
-    }
+    bool HasErrorPage(int http_status_code) override { return true; }
   };
 };
 
