@@ -15,6 +15,8 @@
 namespace net {
 namespace ntlm {
 
+using Buffer = std::basic_string<uint8_t>;
+
 // A security buffer is a structure within an NTLM message that indicates
 // the offset from the beginning of the message and the length of a payload
 // that occurs later in the message. Within the raw message there is also
