@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82df755d_c3d4dc4d",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-07-19T12:24:45Z",
+      "side": 1,
+      "message": "This needs to be up in the \"if (histogram)\" block or it could be called on a NULL pointer.",
+      "range": {
+        "startLine": 686,
+        "startChar": 2,
+        "endLine": 686,
+        "endChar": 11
+      },
+      "revId": "2c86e5b1523c1f200a6d8576a4ecb4c893f774ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
