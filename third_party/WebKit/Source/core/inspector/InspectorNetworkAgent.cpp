@@ -1440,6 +1440,13 @@ Response InspectorNetworkAgent::emulateNetworkConditions(
   return Response::OK();
 }
 
+Response InspectorNetworkAgent::clearBrowserCache() {
+  if (!IsMainThread())
+    return Response::Error("Not supported");
+  GetMemoryCache()->EvictResources();
+  return Response::OK();
+}
+
 Response InspectorNetworkAgent::setCacheDisabled(bool cache_disabled) {
   // TODO(ananta)
   // We should extract network cache state into a global entity which can be
