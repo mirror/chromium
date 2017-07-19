@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "90840f5f_cd1c7827",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-07-19T08:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64fc1c90_ae044e43",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 85
+      },
+      "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fda771b1_9e141d85",
         "filename": "components/policy/tools/generate_policy_source.py",
         "patchSetId": 6
@@ -93,6 +117,30 @@
       "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b324fede_e475a417",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-07-19T08:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda771b1_9e141d85",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
