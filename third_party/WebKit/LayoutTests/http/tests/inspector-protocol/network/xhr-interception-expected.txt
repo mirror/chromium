@@ -1,6 +1,4 @@
-CONSOLE MESSAGE: line 8: xhr.responseText = Payload for the Mock XHR response;
 Tests interception of an XHR request.
-
 Test started
 Network agent enabled
 Request interception enabled
