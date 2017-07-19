@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38fb31a9_71cc2d74",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-19T12:55:19Z",
+      "side": 1,
+      "message": "Don\u0027t think I understand. Are you saying:\n\n\"A B\" should be different than \"A\u003cspan style\u003d\"display:contents\"\u003e \u003c/span\u003eB\" inside a grid/flex container?\n\nThe \"parent\" argument here would be the same container in both cases, right?",
+      "revId": "a6b73d07f96bbb6505a371f1aeee69f8f24366f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
