@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd660af_0dd0f652",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:43:35Z",
+      "side": 1,
+      "message": "nit: no braces around a single-line if",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "28967300a1025a18c30f0bff72ed6700915ef17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28d13c0_8d84a599",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:43:35Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 30
+      },
+      "revId": "28967300a1025a18c30f0bff72ed6700915ef17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d16486_798aa0a4",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:43:35Z",
+      "side": 1,
+      "message": "base::Bind is unnecessary, you can just pass loop.QuitClosure().",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 73
+      },
+      "revId": "28967300a1025a18c30f0bff72ed6700915ef17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b292ac99_c39a6f8b",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:43:35Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 30
+      },
+      "revId": "28967300a1025a18c30f0bff72ed6700915ef17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992c33f1_25c6ccb9",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:43:35Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "28967300a1025a18c30f0bff72ed6700915ef17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
