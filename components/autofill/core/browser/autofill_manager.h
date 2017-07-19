@@ -150,6 +150,9 @@ class AutofillManager : public AutofillHandler,
 
   payments::FullCardRequest* GetOrCreateFullCardRequest();
 
+  payments::FullCardRequest* CreateFullCardRequest(
+      const base::TimeTicks& form_parsed_timestamp);
+
   base::WeakPtr<payments::FullCardRequest::UIDelegate>
   GetAsFullCardRequestUIDelegate() {
     return weak_ptr_factory_.GetWeakPtr();
@@ -297,8 +300,10 @@ class AutofillManager : public AutofillHandler,
       std::unique_ptr<base::DictionaryValue> legal_message) override;
 
   // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(const CreditCard& card,
-                                  const base::string16& cvc) override;
+  void OnFullCardRequestSucceeded(
+      const payments::FullCardRequest& full_card_request,
+      const CreditCard& card,
+      const base::string16& cvc) override;
   void OnFullCardRequestFailed() override;
 
   // payments::FullCardRequest::UIDelegate:
@@ -358,6 +363,15 @@ class AutofillManager : public AutofillHandler,
                                   const AutofillDataModel& data_model,
                                   bool is_credit_card,
                                   const base::string16& cvc);
+  void FillOrPreviewDataModelForm(AutofillDriver::RendererFormDataAction action,
+                                  int query_id,
+                                  const FormData& form,
+                                  const FormFieldData& field,
+                                  const AutofillDataModel& data_model,
+                                  bool is_credit_card,
+                                  const base::string16& cvc,
+                                  FormStructure* form_structure,
+                                  AutofillField* autofill_field);
 
   // Creates a FormStructure using the FormData received from the renderer. Will
   // return an empty scoped_ptr if the data should not be processed for upload
