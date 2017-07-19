@@ -74,9 +74,33 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
                 base::Bind(&WifiHotspotConnector::OnConnectionTimeout,
                            weak_ptr_factory_.GetWeakPtr()));
 
-  base::DictionaryValue properties =
-      CreateWifiPropertyDictionary(ssid, password);
-  network_connect_->CreateConfiguration(&properties, false /* shared */);
+  // If Wi-Fi is enabled, continue with creating the configuration of the
+  // hotspot. Otherwise, request that Wi-Fi be enabled and wait; see
+  // DeviceListChanged().
+  if (network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
+    // Ensure that a possible previous pending callback to DeviceListChanged()
+    // won't result in a second call to CreateWifiConfiguration().
+    is_waiting_for_wifi_to_enable_ = false;
+
+    CreateWifiConfiguration();
+  } else if (!is_waiting_for_wifi_to_enable_) {
+    is_waiting_for_wifi_to_enable_ = true;
+
+    // Once Wi-Fi is enabled, DeviceListChanged() will be called.
+    network_state_handler_->SetTechnologyEnabled(
+        NetworkTypePattern::WiFi(), true /*enabled */,
+        chromeos::network_handler::ErrorCallback());
+  }
+}
+
+void WifiHotspotConnector::DeviceListChanged() {
+  if (is_waiting_for_wifi_to_enable_ &&
+      network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
+    is_waiting_for_wifi_to_enable_ = false;
+
+    if (!ssid_.empty())
+      CreateWifiConfiguration();
+  }
 }
 
 void WifiHotspotConnector::NetworkPropertiesUpdated(
@@ -135,11 +159,21 @@ void WifiHotspotConnector::InvokeWifiConnectionCallback(
   password_.clear();
   wifi_network_guid_.clear();
   has_initiated_connection_to_current_network_ = false;
+  is_waiting_for_wifi_to_enable_ = false;
 
   timer_->Stop();
 
   callback_.Run(wifi_network_guid_copy);
   callback_.Reset();
+}
+
+void WifiHotspotConnector::CreateWifiConfiguration() {
+  base::DictionaryValue properties =
+      CreateWifiPropertyDictionary(ssid_, password_);
+
+  // This newly configured network will eventually be called as an argument to
+  // NetworkPropertiesUpdated().
+  network_connect_->CreateConfiguration(&properties, false /* shared */);
 }
 
 base::DictionaryValue WifiHotspotConnector::CreateWifiPropertyDictionary(
