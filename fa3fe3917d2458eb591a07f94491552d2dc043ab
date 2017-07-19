@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff36fb0_438f98ae",
+        "filename": "services/video_capture/public/uma/video_capture_service_event.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-19T18:37:20Z",
+      "side": 1,
+      "message": "As we discussed offline, we are hitting these numbers already as the experiment has been out for more than 7 days. I think it would be interesting to see what the actual max is. Let\u0027s up these :)",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "fa3fe3917d2458eb591a07f94491552d2dc043ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
