@@ -96,11 +96,6 @@ class UiElement : public cc::AnimationTarget {
   int id() const { return id_; }
   void set_id(int id) { id_ = id; }
 
-  // If a non-negative parent ID is specified, applicable transformations
-  // are applied relative to the parent, rather than absolutely.
-  int parent_id() const { return parent_id_; }
-  void set_parent_id(int id) { parent_id_ = id; }
-
   // If true, this object will be visible.
   bool visible() const { return visible_; }
   void set_visible(bool visible) { visible_ = visible; }
@@ -224,6 +219,13 @@ class UiElement : public cc::AnimationTarget {
     screen_space_transform_ = transform;
   }
 
+  // Transformations are applied relative to the parent element, rather than
+  // absolutely. You cannot currently unparent elements.
+  // TODO(vollick): elements should own their children. UiScene can turn into
+  // recursive operations on the UiElement tree.
+  void AddChild(UiElement* child);
+  UiElement* parent() { return parent_; }
+
   gfx::Point3F GetCenter() const;
   gfx::Vector3dF GetNormal() const;
 
@@ -251,16 +253,21 @@ class UiElement : public cc::AnimationTarget {
   void NotifyClientBoundsAnimated(const gfx::SizeF& size,
                                   cc::Animation* animation) override;
 
+  // Handles positioning adjustments for children. This will be overridden by
+  // UiElements providing custom layout modes. See the documentation of the
+  // override for their particular functionality. The base implementation
+  // applies anchoring. Positioning changes are applied to |transform| in local
+  // space.
+  virtual void LayoutChild(UiElement* element, gfx::Transform* transform);
+
  protected:
   virtual void OnSetMode();
+
+  std::vector<UiElement*>& children() { return children_; }
 
  private:
   // Valid IDs are non-negative.
   int id_ = -1;
-
-  // If a non-negative parent ID is specified, applicable transformations
-  // are applied relative to the parent, rather than absolutely.
-  int parent_id_ = -1;
 
   // If true, this object will be visible.
   bool visible_ = false;
@@ -332,6 +339,9 @@ class UiElement : public cc::AnimationTarget {
   gfx::Transform screen_space_transform_;
 
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
+
+  UiElement* parent_ = nullptr;
+  std::vector<UiElement*> children_;
 
   DISALLOW_COPY_AND_ASSIGN(UiElement);
 };

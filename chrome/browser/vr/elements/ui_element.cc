@@ -145,6 +145,11 @@ void UiElement::SetMode(ColorScheme::Mode mode) {
 
 void UiElement::OnSetMode() {}
 
+void UiElement::AddChild(UiElement* child) {
+  child->parent_ = this;
+  children_.push_back(child);
+}
+
 gfx::Point3F UiElement::GetCenter() const {
   gfx::Point3F center;
   screen_space_transform_.TransformPoint(&center);
@@ -199,6 +204,35 @@ void UiElement::NotifyClientTransformOperationsAnimated(
 void UiElement::NotifyClientBoundsAnimated(const gfx::SizeF& size,
                                            cc::Animation* animation) {
   size_ = size;
+}
+
+void UiElement::LayoutChild(UiElement* element, gfx::Transform* transform) {
+  // To anchor a child, use the parent's size to find its edge.
+  float x_offset;
+  switch (element->x_anchoring()) {
+    case XLEFT:
+      x_offset = -0.5f * size().width();
+      break;
+    case XRIGHT:
+      x_offset = 0.5f * size().width();
+      break;
+    case XNONE:
+      x_offset = 0.0f;
+      break;
+  }
+  float y_offset;
+  switch (element->y_anchoring()) {
+    case YTOP:
+      y_offset = 0.5f * size().height();
+      break;
+    case YBOTTOM:
+      y_offset = -0.5f * size().height();
+      break;
+    case YNONE:
+      y_offset = 0.0f;
+      break;
+  }
+  transform->matrix().postTranslate(x_offset, y_offset, 0);
 }
 
 }  // namespace vr
