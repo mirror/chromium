@@ -4038,6 +4038,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                viewController:self];
 }
 
+- (void)addToReadingList:(ReadingListAddCommand*)command {
+  [self addToReadingListURL:[command URL] title:[command title]];
+}
+
 #pragma mark - Command Handling
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -4146,12 +4150,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       DCHECK([sender isKindOfClass:[TabHistoryCell class]]);
       [self navigateToSelectedEntry:sender];
       break;
-    case IDC_ADD_READING_LIST: {
-      ReadingListAddCommand* command =
-          base::mac::ObjCCastStrict<ReadingListAddCommand>(sender);
-      [self addToReadingListURL:[command URL] title:[command title]];
-      break;
-    }
     case IDC_RATE_THIS_APP:
       [self showRateThisAppDialog];
       break;
