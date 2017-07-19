@@ -22,6 +22,30 @@
       "revId": "ec1790662dbd3cb93a057757fb5e6dd52d8cbb6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e55b2a6_00b696c2",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-19T08:32:01Z",
+      "side": 0,
+      "message": "Yeah, I\u0027m not sure why I put it here, as it does look quite wrong in retrospect. TBH, I don\u0027t really understand how RunLoop works or what exactly went on here. Like... I don\u0027t actually understand the mechanics: how this line resulted in the code on line 400 to run synchronously is a mystery to me. I\u0027m going to come back and investigate further when I\u0027m back at my workstation -- it only repros on Android and I don\u0027t have stuff set up to do android dev remotely.",
+      "parentUuid": "0e516d41_0456cc10",
+      "range": {
+        "startLine": 342,
+        "startChar": 31,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "ec1790662dbd3cb93a057757fb5e6dd52d8cbb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
