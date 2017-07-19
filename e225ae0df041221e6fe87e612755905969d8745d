@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d5f69e_4b2b54c8",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleAllDivChildElements.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T05:42:51Z",
+      "side": 1,
+      "message": "maybe do \"color: red\" here instead of content since we\u0027re not doing pseudoelements? Same for the others.",
+      "revId": "e225ae0df041221e6fe87e612755905969d8745d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c6c601_34e3a39c",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePartialAttributeMatching.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T05:42:51Z",
+      "side": 1,
+      "message": "i\u003di+2 -\u003e i+\u003d2?",
+      "revId": "e225ae0df041221e6fe87e612755905969d8745d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76511851_1d808c77",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleUniversalSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T05:42:51Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "e225ae0df041221e6fe87e612755905969d8745d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
