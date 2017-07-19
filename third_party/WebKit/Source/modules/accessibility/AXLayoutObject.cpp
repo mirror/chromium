@@ -1279,11 +1279,7 @@ void AXLayoutObject::AriaLabelledbyElements(AXObjectVector& labelledby) const {
 }
 
 bool AXLayoutObject::AriaHasPopup() const {
-  const AtomicString& has_popup =
-      GetAOMPropertyOrARIAAttribute(AOMStringProperty::kHasPopUp);
-
-  return !has_popup.IsNull() && !has_popup.IsEmpty() &&
-         !EqualIgnoringASCIICase(has_popup, "false");
+  return ElementAttributeValue(aria_haspopupAttr);
 }
 
 bool AXLayoutObject::AriaRoleHasPresentationalChildren() const {
