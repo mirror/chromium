@@ -22,6 +22,30 @@
       "revId": "12bbaee380666de3f075b4e32dccd1b7fbcf5419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deeac126_c7d35872",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-07-19T02:59:18Z",
+      "side": 0,
+      "message": "Evidently there are just 12 characters that are \"ideographic\" https://en.wikipedia.org/wiki/Ideographic_Description_Characters_(Unicode_block)",
+      "parentUuid": "37b00d07_7b23e08d",
+      "range": {
+        "startLine": 423,
+        "startChar": 29,
+        "endLine": 423,
+        "endChar": 42
+      },
+      "revId": "12bbaee380666de3f075b4e32dccd1b7fbcf5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
