@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "613d14b6_c171fd44",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T17:37:31Z",
+      "side": 1,
+      "message": "Should we put this in VrGLThread::SetIsExiting? I was wondering if you ever want to set exiting on the UI but not tell VrShellGl about it. There are a lot of calls to VrShellGl from VrShell even though VrGlThread owns VrShellGl. Not sure what the best architecture decision is. What do you think?",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb28fc5_bc3d8dbb",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T17:37:31Z",
+      "side": 1,
+      "message": "is_web_vr_rendering_enabled() instead to be in line with flag naming (not sure if we follow this)?",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b7f2f7_81ea8a30",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T17:37:31Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e01f783_bd0442e1",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T17:37:31Z",
+      "side": 1,
+      "message": "I think we don\u0027t need that anymore.",
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d090c6_a20dc184",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
