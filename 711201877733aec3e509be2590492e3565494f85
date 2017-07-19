@@ -16,6 +16,24 @@
       "revId": "711201877733aec3e509be2590492e3565494f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60c1892_aa84a4b9",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-19T14:19:35Z",
+      "side": 1,
+      "message": "To address the first point, if we have video tracks as part of the media stream, it is necessary to have a video_frame_provider_.  But it\u0027s not necessary to wait for frames for an audio element.  So, it\u0027s not to say that we don\u0027t care video in that case, we just want to start playing audio straight away without having to wait for the video frames (which makes sense for real time cases such as WebRTC).\n\nFor a \u003cvideo\u003e element, we have to wait before reporting that we\u0027re \u0027ready\u0027 since the dimensions of the frame will be useful to scripts.\n\nI\u0027m not following your last question - how can we get a video error for an audio-only element?\n(note that the tag itself, \u003caudio\u003e in this example, doesn\u0027t mean that video cannot be associated - it can, so \u0027audio-only\u0027 is a state for a particular instance, not a rule that applies to all instances of a tag).",
+      "parentUuid": "05c9a612_5b6f2eda",
+      "revId": "711201877733aec3e509be2590492e3565494f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
