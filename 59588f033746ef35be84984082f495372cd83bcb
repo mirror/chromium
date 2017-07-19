@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "391dc6bb_269d112a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-19T21:19:26Z",
+      "side": 1,
+      "message": "Since it has LegacyUnenumerableNamedProperties, enumerable should be false, right?\n\nI could not find a class with indexed and named property getters, no setters, without LegacyUnenumerableNamedProperties.",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1fc607_7e56bf0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-19T21:19:26Z",
+      "side": 1,
+      "message": "So, these arrays should be empty.",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d65fa5_89fb5f6c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-19T21:19:26Z",
+      "side": 1,
+      "message": "It might be nice to split this test into two.",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8341dc3_d50d7316",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-19T21:19:26Z",
+      "side": 1,
+      "message": "Nit: capital \"E\" in Element",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab4970e_55eac18d",
         "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
         "patchSetId": 2
