@@ -638,9 +638,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 if (getToolbarManager() == null) return;
                 getToolbarManager().updatePrimaryColor(color, true);
 
-                ControlContainer controlContainer =
-                        (ControlContainer) findViewById(R.id.control_container);
-                controlContainer.getToolbarResourceAdapter().invalidate(null);
+                invalidateToolbarResource();
             }
 
             @Override
@@ -1829,6 +1827,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         if ((level >= TRIM_MEMORY_RUNNING_LOW && level < TRIM_MEMORY_UI_HIDDEN)
                 || level >= TRIM_MEMORY_MODERATE) {
             mReferencePool.drain();
+            invalidateToolbarResource();
         }
     }
 
@@ -2266,5 +2265,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    private void invalidateToolbarResource() {
+        ControlContainer controlContainer = (ControlContainer) findViewById(R.id.control_container);
+        controlContainer.getToolbarResourceAdapter().invalidate(null);
     }
 }
