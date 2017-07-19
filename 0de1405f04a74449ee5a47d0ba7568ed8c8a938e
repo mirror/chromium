@@ -117,6 +117,30 @@
       "revId": "0de1405f04a74449ee5a47d0ba7568ed8c8a938e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26709ea1_f1d1f27f",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T22:56:36Z",
+      "side": 1,
+      "message": "Resolved! Using the official base::TrimWhitespace function.",
+      "parentUuid": "6014b180_651f04fc",
+      "range": {
+        "startLine": 534,
+        "startChar": 15,
+        "endLine": 534,
+        "endChar": 18
+      },
+      "revId": "0de1405f04a74449ee5a47d0ba7568ed8c8a938e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
