@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dec4927e_421cfe68",
+        "filename": "device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-19T19:04:06Z",
+      "side": 1,
+      "message": "yes! done.",
+      "parentUuid": "e9d6eb4b_ba589a49",
+      "revId": "e625b7301d37be5666717b3a5ef44c3c26c6ab3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cc6748_02fcdd05",
         "filename": "device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "e625b7301d37be5666717b3a5ef44c3c26c6ab3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7dcf50_3bbdebb3",
+        "filename": "device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-19T19:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cc6748_02fcdd05",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 500,
+        "endChar": 79
+      },
+      "revId": "e625b7301d37be5666717b3a5ef44c3c26c6ab3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
