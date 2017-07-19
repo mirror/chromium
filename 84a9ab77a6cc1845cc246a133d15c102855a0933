@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463d89d0_d0b014b8",
+        "filename": "build/toolchain/linux/unbundle/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-07-19T20:38:34Z",
+      "side": 1,
+      "message": "It might be worth adding a note here mentioning that a 32bit host toolchain is required when cross compiling for a 32bit target (IIRC since v8 snapshots are not 32/64-bitness independent).",
+      "revId": "84a9ab77a6cc1845cc246a133d15c102855a0933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
