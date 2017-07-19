@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35907abd_65753945",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-19T00:23:29Z",
+      "side": 0,
+      "message": "Consume4Values is still in the parser, so I would keep this comment, move it to above the 4Longhand function and remove the other 2 methods from the comment",
+      "revId": "9526fcc74b45eace38e9bacb147805f6196ab342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
