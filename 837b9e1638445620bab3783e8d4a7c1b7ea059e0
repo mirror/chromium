@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2cb0e7dc_7b6adcd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T17:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37b1ddef_d0944db5",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1124a5af_2f2f5c57",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11767ce2_7b0be8f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T17:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1124a5af_2f2f5c57",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4130be0a_6129d92c",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T17:50:10Z",
+      "side": 1,
+      "message": "I wanted to destroy the objects in the same order as the original code. While looking back at the code, I think my first patchset destroy them too early which could introduce other issues, so instead in patchset #3 I\u0027ve used ScopedClosureRunner to ensure objects are destroyed in reverse order of the declaration and get the same ordering as before your change.",
+      "parentUuid": "8f5d5cdd_d4ceda8c",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd39179_468422b1",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "82dc64eb_e2a6b7de",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T17:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd39179_468422b1",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8e4337_6a044141",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5621cf6a_43f6bb76",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-19T17:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8e4337_6a044141",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
