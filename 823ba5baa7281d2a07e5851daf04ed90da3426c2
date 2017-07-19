@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2806166f_1354397b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-19T22:45:23Z",
+      "side": 1,
+      "message": "nit: do we need to have it in public? I think we may move to private section.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4895f6e2_f0dba760",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-19T22:45:23Z",
+      "side": 1,
+      "message": "It looks like error. You may have 0 results and this pass this ASSERT.\nThen you access results[i] and this is crash.\n\nOr I missed something?\n\nas a nit please use ASSERT_GE",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
