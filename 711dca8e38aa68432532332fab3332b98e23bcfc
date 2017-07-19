@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce695b9_35abb5f4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "I assume there\u0027s no path where the ScheduledResourceRequest is deleted synchronously after this call.",
+      "range": {
+        "startLine": 423,
+        "startChar": 40,
+        "endLine": 423,
+        "endChar": 59
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ebc496_4edaf039",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "We never set start times for requests that aren\u0027t started immediately?  Seems like this should be in StartRequest.  Yes, this code doesn\u0027t care about other requests, but code may expect the field to be what it claims to be.",
+      "range": {
+        "startLine": 424,
+        "startChar": 36,
+        "endLine": 424,
+        "endChar": 45
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840bec47_a127e171",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "It\u0027s generally better to set fields like this before starting the request.",
+      "range": {
+        "startLine": 425,
+        "startChar": 15,
+        "endLine": 425,
+        "endChar": 38
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1f2897_f5c0ec23",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "const ScheduledResourceRequest*",
+      "range": {
+        "startLine": 434,
+        "startChar": 13,
+        "endLine": 434,
+        "endChar": 37
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0013a8_c6e441bb",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "What are we trying to learn here?  If a page has, say 1000 delayable requests, and the first however-many complete quickly because they were cached, and because of them, none of the other (slower) delayable requests get to start synchronously, but they still start before some non-delayable requests, this will record nothing, even if there are another 1000 non-delayable requests that start loading after the delayable ones.",
+      "range": {
+        "startLine": 444,
+        "startChar": 58,
+        "endLine": 444,
+        "endChar": 0
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21e21da_80a40441",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-19T21:27:30Z",
+      "side": 1,
+      "message": "I thought you just wanted the most recent delayable request still in flight, rather than all of them?",
+      "range": {
+        "startLine": 445,
+        "startChar": 37,
+        "endLine": 445,
+        "endChar": 38
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
