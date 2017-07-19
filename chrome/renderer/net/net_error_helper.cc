@@ -219,9 +219,8 @@ void NetErrorHelper::GenerateLocalizedErrorPage(
   } else {
     base::DictionaryValue error_strings;
     LocalizedError::GetStrings(
-        error.reason, error.domain.Utf8(), error.unreachable_url,
-        is_failed_post, error.stale_copy_in_cache,
-        can_show_network_diagnostics_dialog,
+        error.reason, error.domain, error.unreachable_url, is_failed_post,
+        error.stale_copy_in_cache, can_show_network_diagnostics_dialog,
         ChromeRenderThreadObserver::is_incognito_process(),
         RenderThread::Get()->GetLocale(), std::move(params), &error_strings);
     *reload_button_shown = error_strings.Get("reloadButton", nullptr);
@@ -252,7 +251,7 @@ void NetErrorHelper::UpdateErrorPage(const blink::WebURLError& error,
                                      bool can_show_network_diagnostics_dialog) {
   base::DictionaryValue error_strings;
   LocalizedError::GetStrings(
-      error.reason, error.domain.Utf8(), error.unreachable_url, is_failed_post,
+      error.reason, error.domain, error.unreachable_url, is_failed_post,
       error.stale_copy_in_cache, can_show_network_diagnostics_dialog,
       ChromeRenderThreadObserver::is_incognito_process(),
       RenderThread::Get()->GetLocale(), std::unique_ptr<ErrorPageParams>(),
