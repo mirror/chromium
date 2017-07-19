@@ -42,6 +42,10 @@ class SubresourceFilterClient {
   virtual void WhitelistInCurrentWebContents(const GURL& url) = 0;
 
   virtual VerifiedRulesetDealer::Handle* GetRulesetDealer() = 0;
+
+  // Returns whether this navigation should be forced to be activated. This is
+  // currently only used for devtools.
+  virtual bool ForceActivationInCurrentWebContents() = 0;
 };
 
 }  // namespace subresource_filter

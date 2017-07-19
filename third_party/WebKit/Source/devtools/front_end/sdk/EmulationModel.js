@@ -19,8 +19,15 @@ SDK.EmulationModel = class extends SDK.SDKModel {
     var disableJavascriptSetting = Common.settings.moduleSetting('javaScriptDisabled');
     disableJavascriptSetting.addChangeListener(
         () => this._emulationAgent.setScriptExecutionDisabled(disableJavascriptSetting.get()));
+
     if (disableJavascriptSetting.get())
       this._emulationAgent.setScriptExecutionDisabled(true);
+
+    // TODO(csharrison): Is this the best place to put this?
+    var adBlockingEnabledSetting = Common.settings.moduleSetting('adBlockingEnabled');
+    adBlockingEnabledSetting.addChangeListener(() => this._pageAgent.enableAdBlocking(adBlockingEnabledSetting.get()));
+    if (adBlockingEnabledSetting.get())
+      this._pageAgent.enableAdBlocking(true);
 
     var mediaSetting = Common.moduleSetting('emulatedCSSMedia');
     mediaSetting.addChangeListener(() => this._emulateCSSMedia(mediaSetting.get()));
