@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3c5268ac_d05fb2ea",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T18:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9276067_731ab606",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b87e3819_b77555bf",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 7
@@ -245,6 +263,24 @@
       "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bc9079_e6801d71",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-19T18:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8aea411_977e0706",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
