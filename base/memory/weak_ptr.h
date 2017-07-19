@@ -129,11 +129,7 @@ class BASE_EXPORT WeakReference {
     ~Flag();
 
     uintptr_t is_valid_;
-#if DCHECK_IS_ON()
-    // Even if SequenceChecker is an empty class in non-dcheck builds, it still
-    // takes up space in the class.
-    SequenceChecker sequence_checker_;
-#endif
+    SEQUENCE_CHECKER(sequence_checker_);
   };
 
   WeakReference();
