@@ -41,7 +41,9 @@
 #include "platform/wtf/WTF.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
+#include "public/web/WebKit.h"
 #include "v8/include/v8.h"
+#include "web/WebFactoryImpl.h"
 
 namespace blink {
 
@@ -64,6 +66,12 @@ static ModulesInitializer& GetModulesInitializer() {
   DEFINE_STATIC_LOCAL(std::unique_ptr<ModulesInitializer>, initializer,
                       (WTF::WrapUnique(new ModulesInitializer)));
   return *initializer;
+}
+
+void Initialize(Platform* platform) {
+  InitializeBlink(platform);
+
+  WebFactoryImpl::Initialize();
 }
 
 void InitializeBlink(Platform* platform) {

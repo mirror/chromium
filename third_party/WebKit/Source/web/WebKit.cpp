@@ -47,15 +47,8 @@
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/TextEncoding.h"
-#include "web/WebFactoryImpl.h"
 
 namespace blink {
-
-void Initialize(Platform* platform) {
-  InitializeBlink(platform);
-
-  WebFactoryImpl::Initialize();
-}
 
 v8::Isolate* MainThreadIsolate() {
   return V8PerIsolateData::MainThreadIsolate();
