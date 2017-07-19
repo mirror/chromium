@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8f1f05b_a70b3246",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T07:54:10Z",
+      "side": 1,
+      "message": "Spec-wise, \"import\" (as a noun) is an HTML import, which is a document imported by\nanother Document. Probably this name still is confusing for someone who is not\nfamiliar with HTML Imports spec. I\u0027ll rename to IsHTMLImport().",
+      "parentUuid": "28a20fb0_5ae17e81",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf95fa87_b2a79c8e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "35d95e93_21c548c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T07:54:10Z",
+      "side": 1,
+      "message": "To be honest I don\u0027t understand what this means here, and I tried to keep the equivalence.\nSo at my best I could comment\n// Get master document if |node| is in an HTML import, otherwise return owner document.\nwhich does not give more info than the code itself.",
+      "parentUuid": "cf95fa87_b2a79c8e",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ef1e02_b37da47f",
         "filename": "third_party/WebKit/Source/core/css/MediaValuesCached.cpp",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-18T04:50:21Z",
       "side": 1,
       "message": "I\u0027m not sure if this logic is correct. I feel like this should be ContextDocument()-\u003eGetFrame()",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74d00c5_00282aae",
+        "filename": "third_party/WebKit/Source/core/css/MediaValuesCached.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T07:54:10Z",
+      "side": 1,
+      "message": "In this CL I just converted the original logic, so this should work identically\nas before - though I agree this is suspicious.\nI\u0027ll file a separate issue for auditing usages of GetFrame().",
+      "parentUuid": "63ef1e02_b37da47f",
       "range": {
         "startLine": 39,
         "startChar": 2,
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "340bf17d_475fdc4e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T07:54:10Z",
+      "side": 1,
+      "message": "Looks nicer, thanks.",
+      "parentUuid": "347614e1_c6558a08",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d36896e_2d2f5922",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 4
@@ -122,6 +200,24 @@
       "side": 1,
       "message": "Looking at the places where we refer this GetEffectiveFrame(), I feel like they should refer to contextDocument()-\u003eGetFrame().\nWould you check spec text for each callsites if this change is actually correct?\nAt least for loading related refs, the \"settings object\" which we\u0027d want to refer from the frame is very likely contextDocument().",
       "parentUuid": "6d36896e_2d2f5922",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00555c8_e1b88731",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T07:54:10Z",
+      "side": 1,
+      "message": "Do you mean usage of GetFrame(), rather than what I changed to GetEffectiveFrame() in this\nCL (MediaValues class and its subclasses)?",
+      "parentUuid": "ef2f37e9_d8a3222b",
       "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
