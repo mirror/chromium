@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85d2d3f2_f1d0fbf5",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Yes, I added a comment in the next patch.",
+      "parentUuid": "25de233d_2c0e751e",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44d0592a_0fa8a4fb",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c727bd_69b3031b",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44d0592a_0fa8a4fb",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a38f0ef4_16687f0a",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d396027_a04c4caf",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "461c105d_5d96bb08",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-14T16:07:08Z",
       "side": 1,
       "message": "How are you gonna use this thing?\nSo far we only write into it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4231f51_dcdfd13c",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Removed for now (in patch set 4).",
+      "parentUuid": "461c105d_5d96bb08",
       "range": {
         "startLine": 26,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bb5fa0d6_a5eb20eb",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "From now ChromeWebClient is responsible for injecting the JS before the page starts loading. Deleted this code (patch set 4).",
+      "parentUuid": "3b53d640_03175c6d",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "042566e5_e91d6e4d",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-14T16:07:08Z",
       "side": 1,
       "message": "Why won\u0027t you inline this method?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be899468_6f3edb13",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Deleted for now because I didn\u0027t have any usage for it (patch set 4).",
+      "parentUuid": "042566e5_e91d6e4d",
       "range": {
         "startLine": 78,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7e6f12ea_e28bd4c3",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "862f5168_2f1b6a07",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b758baf_1cbabac3",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-14T16:07:08Z",
       "side": 1,
       "message": "Can you make sure we don\u0027t inject on non secure pages",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c00bf6_a13596b8",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Not with the way that early page script is injected. The script is added to WKWebViewConfiguration, which is created only when new WKWebView is initialized. I couldn\u0027t find any way in WKWebView documentation to modify the configuration afterwards. eugenebut@ also wrote me that WKWebView does not allow to perform a check before injecting JavaScript.",
+      "parentUuid": "3b758baf_1cbabac3",
       "range": {
         "startLine": 96,
         "startChar": 12,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "1be7a5e7_ad079081",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "Moved injection into ChromeWebClient (patch set 4).",
+      "parentUuid": "fe83f84c_26852883",
+      "range": {
+        "startLine": 99,
+        "startChar": 3,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a52ee2e5_a26c22fd",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 2
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "6fa6775e_553757ff",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "It is responsible only for communication browser -\u003e web site. Messages from web site will be handled by CRWWebController message handlers which will call proper CredentialManager methods. Those will call JSCredentialManager methods responsible for resolving or rejecting a promise. I have made the comments more precise in next patch set.",
+      "parentUuid": "a52ee2e5_a26c22fd",
+      "range": {
+        "startLine": 12,
+        "startChar": 35,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3855fbe4_fb591505",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
         "patchSetId": 2
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-14T16:07:08Z",
       "side": 1,
       "message": "Are you sure we need it later?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c5f30e_6dcb0e2a",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-19T15:08:21Z",
+      "side": 1,
+      "message": "No, deleted in patch set 4. I will need to inject JavaScript in order to resolve/reject promises, but there was no reason to assume the type of completionHandler that I\u0027ll need.",
+      "parentUuid": "3855fbe4_fb591505",
       "range": {
         "startLine": 14,
         "startChar": 4,
