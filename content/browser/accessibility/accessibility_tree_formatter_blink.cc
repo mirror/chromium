@@ -58,8 +58,28 @@ std::string AccessibilityTreeFormatterBlink::IntAttrToString(
     return target ? ui::ToString(target->GetData().role) : std::string("null");
   }
 
-  if (attr == ui::AX_ATTR_RESTRICTION)
-    return ui::ToString(static_cast<ui::AXRestriction>(value));
+  switch (attr) {
+    case ui::AX_ATTR_RESTRICTION:
+      return ui::ToString(static_cast<ui::AXRestriction>(value));
+    case ui::AX_ATTR_ARIA_CURRENT_STATE:
+      return ui::ToString(static_cast<ui::AXAriaCurrentState>(value));
+    case ui::AX_ATTR_CHECKED_STATE:
+      return ui::ToString(static_cast<ui::AXCheckedState>(value));
+    case ui::AX_ATTR_DEFAULT_ACTION_VERB:
+      return ui::ToString(static_cast<ui::AXDefaultActionVerb>(value));
+    case ui::AX_ATTR_DESCRIPTION_FROM:
+      return ui::ToString(static_cast<ui::AXDescriptionFrom>(value));
+    case ui::AX_ATTR_INVALID_STATE:
+      return ui::ToString(static_cast<ui::AXInvalidState>(value));
+    case ui::AX_ATTR_NAME_FROM:
+      return ui::ToString(static_cast<ui::AXNameFrom>(value));
+    case ui::AX_ATTR_SORT_DIRECTION:
+      return ui::ToString(static_cast<ui::AXSortDirection>(value));
+    case ui::AX_ATTR_TEXT_DIRECTION:
+      return ui::ToString(static_cast<ui::AXTextDirection>(value));
+    default:
+      break;
+  }
 
   // Just return the number
   return std::to_string(value);
