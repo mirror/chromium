@@ -28,6 +28,9 @@ struct AggregatedHitTestRegion {
   // are routed to this surface.
   FrameSinkId frame_sink_id;
 
+  // Window's server ID.
+  uint32_t window_id;
+
   // Flags to indicate the type of region as defined for
   // mojom::HitTestRegion
   uint32_t flags;
