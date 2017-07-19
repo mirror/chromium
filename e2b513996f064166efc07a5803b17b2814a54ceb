@@ -52,6 +52,24 @@
       "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440b6d14_56898120",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-19T21:13:08Z",
+      "side": 1,
+      "message": "Ok, removed the code from HandleAudioDeviceChange. Would it be ok to write unit tests tomorrow/Friday? The test file looks quite complicated, so it would take some time for me to orient myself in it, and I\u0027d really like this code in before the M61 cut.",
+      "parentUuid": "8d1763d9_9f8304eb",
+      "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
