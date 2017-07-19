@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "792198c8_377025b7",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-19T23:11:51Z",
+      "side": 1,
+      "message": "I see you have made it synchronous in the following patchsets. You can ignore these.",
+      "parentUuid": "4aa3c115_c0d9dd72",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 13
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fdefa8e_7a60bff6",
         "filename": "media/mojo/clients/mojo_video_encode_accelerator.h",
         "patchSetId": 8
