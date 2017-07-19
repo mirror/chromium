@@ -157,6 +157,24 @@
       "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f57e349_fdb35b2b",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-19T23:06:53Z",
+      "side": 1,
+      "message": "Based on discussions offline, this was changed to used GetControlHeightForFont.",
+      "parentUuid": "9d21b703_abec14d8",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
