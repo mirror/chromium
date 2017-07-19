@@ -1,0 +1,58 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.h"
+
+#include <memory>
+#include <utility>
+
+#include "base/macros.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/service_manager/public/cpp/service_context_ref.h"
+
+namespace resource_coordinator {
+
+CoordinationUnitIntrospectorImpl::CoordinationUnitIntrospectorImpl() {}
+
+CoordinationUnitIntrospectorImpl::~CoordinationUnitIntrospectorImpl() = default;
+
+void CoordinationUnitIntrospectorImpl::GetProcessToURLMap(
+    const GetProcessToURLMapCallback& callback) {
+  std::vector<resource_coordinator::mojom::ProcessInfoPtr> process_infos;
+  std::vector<CoordinationUnitImpl*> process_cus =
+      CoordinationUnitImpl::GetCoordinationUnitsOfType(
+          CoordinationUnitType::kProcess);
+  for (CoordinationUnitImpl* process_cu : process_cus) {
+    mojom::ProcessInfoPtr process_info(mojom::ProcessInfo::New());
+
+    // The implicit contract for process CUs is that the |id| is the |pid|.
+    process_info->pid = process_cu->id().id;
+
+    std::vector<std::string> urls;
+    std::set<CoordinationUnitImpl*> frame_cus =
+        process_cu->GetAssociatedCoordinationUnitsOfType(
+            CoordinationUnitType::kFrame);
+    for (CoordinationUnitImpl* frame_cu : frame_cus) {
+      base::Value url_value = frame_cu->GetProperty(
+          resource_coordinator::mojom::PropertyType::kFrameURL);
+      if (url_value.is_string()) {
+        urls.push_back(url_value.GetString());
+      }
+    }
+    process_info->urls = std::move(urls);
+    process_infos.push_back(std::move(process_info));
+  }
+  callback.Run(std::move(process_infos));
+}
+
+void CoordinationUnitIntrospectorImpl::BindToInterface(
+    const service_manager::BindSourceInfo& source_info,
+    resource_coordinator::mojom::CoordinationUnitIntrospectorRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+}  // namespace resource_coordinator

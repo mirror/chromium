@@ -24,6 +24,7 @@ bool FrameResourceCoordinator::IsEnabled() {
 // static
 FrameResourceCoordinator* FrameResourceCoordinator::Create(
     service_manager::InterfaceProvider* interface_provider) {
+  LOG(ERROR) << "FrameResourceCoordinator::Create " << getpid();
   return new FrameResourceCoordinator(interface_provider);
 }
 

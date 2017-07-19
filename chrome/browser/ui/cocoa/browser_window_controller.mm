@@ -112,6 +112,7 @@
 #import "ui/gfx/mac/coordinate_conversion.h"
 #include "ui/gfx/mac/scoped_cocoa_disable_screen_updates.h"
 
+#include "chrome/browser/metrics/process_memory_metrics_emitter.h"
 using bookmarks::BookmarkModel;
 using bookmarks::BookmarkNode;
 
@@ -443,6 +444,9 @@ bool IsTabDetachingInFullscreenEnabled() {
     // We are done initializing now.
     initializing_ = NO;
   }
+  scoped_refptr<ProcessMemoryMetricsEmitter> emitter(
+      new ProcessMemoryMetricsEmitter());
+  emitter->FetchAndEmitProcessMemoryMetrics();
   return self;
 }
 

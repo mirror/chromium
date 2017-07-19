@@ -6,7 +6,9 @@
 #define CHROME_BROWSER_METRICS_PROCESS_MEMORY_METRICS_EMITTER_H_
 
 #include "base/memory/ref_counted.h"
+#include "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
+#include "url/gurl.h"
 
 namespace ukm {
 class UkmEntryBuilder;
@@ -39,10 +41,22 @@ class ProcessMemoryMetricsEmitter
  private:
   friend class base::RefCountedThreadSafe<ProcessMemoryMetricsEmitter>;
 
-  std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmBuilder(
-      const char* event_name);
+  virtual void ReceivedProcessInfos(
+      std::vector<resource_coordinator::mojom::ProcessInfoPtr> process_infos);
+
+  std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmBuilder(const char* event_name,
+                                                         const GURL& url);
 
   memory_instrumentation::mojom::CoordinatorPtr coordinator_;
+  resource_coordinator::mojom::CoordinationUnitIntrospectorPtr introspector_;
+
+  // This class sends two asynchronous service requests, whose results need to
+  // be collated.
+  void CollateResults();
+  bool memory_dump_in_process_ = false;
+  memory_instrumentation::mojom::GlobalMemoryDumpPtr global_dump_;
+  bool get_process_urls_in_progress_ = false;
+  std::vector<resource_coordinator::mojom::ProcessInfoPtr> process_infos_;
 
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitter);
 };

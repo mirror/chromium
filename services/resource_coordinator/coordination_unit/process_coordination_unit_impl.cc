@@ -31,6 +31,7 @@ ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
     : CoordinationUnitImpl(id, std::move(service_ref)) {
   // ProcessCoordinationUnit ids should correspond to its pid
   base::ProcessId pid = id.id;
+  LOG(ERROR) << "ProcessCoordinationUnitImpl: " << getpid() << " " << pid;
 #if defined(OS_WIN)
   base::Process process =
       base::Process::OpenWithAccess(pid, PROCESS_QUERY_INFORMATION);

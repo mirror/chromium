@@ -121,6 +121,7 @@
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -1301,6 +1302,17 @@ void RenderFrameHostImpl::OnCreateChildFrame(
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   last_committed_origin_ = origin;
   CSPContext::SetSelf(origin);
+}
+
+void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
+  last_committed_url_ = url;
+  // base::debug::StackTrace().Print();
+  LOG(ERROR) << "SetLastCommittedUrl";
+  if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
+    GetFrameResourceCoordinator()->SetProperty(
+        resource_coordinator::mojom::PropertyType::kFrameURL,
+        base::MakeUnique<base::Value>(last_committed_url_.spec()));
+  }
 }
 
 void RenderFrameHostImpl::OnDetach() {
