@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b7140d0_db7c0fa3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7412,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-19T16:51:14Z",
+      "side": 1,
+      "message": "We should change this string to something that localizes better. I\u0027m ok with stevenjb@ suggestion: \"Phone distance to unlock this Chromebook\" or \"Phone distance required to unlock this Chromebook\".",
+      "range": {
+        "startLine": 7412,
+        "startChar": 10,
+        "endLine": 7412,
+        "endChar": 56
+      },
+      "revId": "6719a1ced5529c99b81ec9dd54e6128fdae7bd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
