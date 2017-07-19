@@ -35,11 +35,9 @@ bool SimpleIndexFile::TraverseCacheDirectory(
     PLOG(ERROR) << "opendir " << cache_path.value();
     return false;
   }
-  dirent entry, *result;
-  while (readdir_r(dir.get(), &entry, &result) == 0) {
-    if (!result)
-      return true;  // The traversal completed successfully.
-    const std::string file_name(result->d_name);
+  dirent* entry;
+  while ((entry = readdir(dir.get())) != nullptr) {
+    const std::string file_name(entry->d_name);
     if (file_name == "." || file_name == "..")
       continue;
     const base::FilePath file_path = cache_path.Append(
@@ -53,8 +51,7 @@ bool SimpleIndexFile::TraverseCacheDirectory(
     entry_file_callback.Run(file_path, file_info.last_accessed,
                             file_info.last_modified, file_info.size);
   }
-  PLOG(ERROR) << "readdir_r " << cache_path.value();
-  return false;
+  return true;
 }
 
 }  // namespace disk_cache
