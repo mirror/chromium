@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f5d65ca_24755758",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-19T17:08:18Z",
+      "side": 1,
+      "message": "Went with the helper method.",
+      "parentUuid": "80d7fb46_43f2a57f",
+      "revId": "63071308f764610ebe67187016aeabf911aa1e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5b4b68_96dec30f",
         "filename": "ios/chrome/browser/ui/activity_services/print_activity.h",
         "patchSetId": 3
