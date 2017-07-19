@@ -28,14 +28,17 @@ bool TestVerifyCertificate(TestStepResult expected_result,
                            net::TrustStore* cast_trust_store) {
   std::unique_ptr<CertVerificationContext> context;
   CastDeviceCertPolicy policy;
-  int result = VerifyDeviceCertUsingCustomTrustStore(
+  CastCertError error;
+  bool result = VerifyDeviceCertUsingCustomTrustStore(
       certificate_chain, time, &context, &policy, nullptr,
-      CRLPolicy::CRL_OPTIONAL, cast_trust_store);
+      CRLPolicy::CRL_OPTIONAL, cast_trust_store, &error);
   if (expected_result != RESULT_SUCCESS) {
     EXPECT_FALSE(result);
+    EXPECT_NE(error, CastCertError::OK);
     return !result;
   }
   EXPECT_TRUE(result);
+  EXPECT_EQ(error, CastCertError::OK);
   return result;
 }
 
@@ -63,6 +66,7 @@ bool TestVerifyCRL(TestStepResult expected_result,
 // If |crl_required| is set, then a valid Cast CRL must be provided.
 // Otherwise, a missing CRL is be ignored.
 bool TestVerifyRevocation(TestStepResult expected_result,
+                          CastCertError expected_error,
                           const std::vector<std::string>& certificate_chain,
                           const std::string& crl_bundle,
                           const base::Time& crl_time,
@@ -82,9 +86,11 @@ bool TestVerifyRevocation(TestStepResult expected_result,
   CRLPolicy crl_policy = CRLPolicy::CRL_REQUIRED;
   if (!crl_required)
     crl_policy = CRLPolicy::CRL_OPTIONAL;
-  int result = VerifyDeviceCertUsingCustomTrustStore(
+  CastCertError error;
+  bool result = VerifyDeviceCertUsingCustomTrustStore(
       certificate_chain, cert_time, &context, &policy, crl.get(), crl_policy,
-      cast_trust_store);
+      cast_trust_store, &error);
+  EXPECT_EQ(expected_error, error);
   if (expected_result != RESULT_SUCCESS) {
     EXPECT_FALSE(result);
     return !result;
@@ -136,10 +142,10 @@ bool RunTest(const DeviceCertTest& test_case) {
                                    cast_trust_store.get()) &&
              TestVerifyCRL(RESULT_FAIL, crl_bundle, crl_verification_time,
                            crl_trust_store.get()) &&
-             TestVerifyRevocation(RESULT_FAIL, certificate_chain, crl_bundle,
-                                  crl_verification_time, cert_verification_time,
-                                  true, cast_trust_store.get(),
-                                  crl_trust_store.get());
+             TestVerifyRevocation(
+                 RESULT_FAIL, CastCertError::ERR_CRL_INVALID, certificate_chain,
+                 crl_bundle, crl_verification_time, cert_verification_time,
+                 true, cast_trust_store.get(), crl_trust_store.get());
     case CRL_EXPIRED_AFTER_INITIAL_VERIFICATION:
     // Fall-through intended.
     case REVOCATION_CHECK_FAILED:
@@ -148,7 +154,8 @@ bool RunTest(const DeviceCertTest& test_case) {
                                    cast_trust_store.get()) &&
              TestVerifyCRL(RESULT_SUCCESS, crl_bundle, crl_verification_time,
                            crl_trust_store.get()) &&
-             TestVerifyRevocation(RESULT_FAIL, certificate_chain, crl_bundle,
+             TestVerifyRevocation(RESULT_FAIL, CastCertError::ERR_CERTS_REVOKED,
+                                  certificate_chain, crl_bundle,
                                   crl_verification_time, cert_verification_time,
                                   false, cast_trust_store.get(),
                                   crl_trust_store.get());
@@ -159,7 +166,8 @@ bool RunTest(const DeviceCertTest& test_case) {
              TestVerifyCertificate(RESULT_SUCCESS, certificate_chain,
                                    cert_verification_time,
                                    cast_trust_store.get()) &&
-             TestVerifyRevocation(RESULT_SUCCESS, certificate_chain, crl_bundle,
+             TestVerifyRevocation(RESULT_SUCCESS, CastCertError::OK,
+                                  certificate_chain, crl_bundle,
                                   crl_verification_time, cert_verification_time,
                                   !crl_bundle.empty(), cast_trust_store.get(),
                                   crl_trust_store.get());

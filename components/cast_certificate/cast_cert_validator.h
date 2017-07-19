@@ -38,6 +38,19 @@ enum class CRLPolicy {
   CRL_REQUIRED,
 };
 
+enum class CastCertError {
+  OK,
+  ERR_CERTS_MISSING,
+  ERR_CERTS_PARSE,
+  ERR_CERTS_UNTRUSTED,
+  ERR_CERTS_RESTRICTIONS,
+  ERR_CERTS_DATE_INVALID,
+  ERR_CERTS_VERIFY_GENERIC,
+  ERR_CRL_INVALID,
+  ERR_CERTS_REVOKED,
+  ERR_UNEXPECTED,
+};
+
 // An object of this type is returned by the VerifyDeviceCert function, and can
 // be used for additional certificate-related operations, using the verified
 // certificate.
@@ -92,12 +105,15 @@ class CertVerificationContext {
 //     properties from the device certificate (Common Name).
 //   * |policy| is filled with an indication of the device certificate's policy
 //     (i.e. is it for audio-only devices or is it unrestricted?)
+//   * |result| is filled with the the CastCertError. If verification
+//     is successful, the result is CastCertError::OK.
 bool VerifyDeviceCert(const std::vector<std::string>& certs,
                       const base::Time& time,
                       std::unique_ptr<CertVerificationContext>* context,
                       CastDeviceCertPolicy* policy,
                       const CastCRL* crl,
-                      CRLPolicy crl_policy) WARN_UNUSED_RESULT;
+                      CRLPolicy crl_policy,
+                      CastCertError* result) WARN_UNUSED_RESULT;
 
 // This is an overloaded version of VerifyDeviceCert that allows
 // the input of a custom TrustStore.
@@ -111,7 +127,8 @@ bool VerifyDeviceCertUsingCustomTrustStore(
     CastDeviceCertPolicy* policy,
     const CastCRL* crl,
     CRLPolicy crl_policy,
-    net::TrustStore* trust_store) WARN_UNUSED_RESULT;
+    net::TrustStore* trust_store,
+    CastCertError* result) WARN_UNUSED_RESULT;
 
 // Exposed only for unit-tests, not for use in production code.
 // Production code would get a context from VerifyDeviceCert().

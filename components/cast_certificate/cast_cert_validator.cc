@@ -25,6 +25,7 @@
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store_in_memory.h"
+#include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/internal/verify_signed_data.h"
 #include "net/cert/x509_util.h"
 #include "net/der/encode_values.h"
@@ -241,9 +242,11 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
                       std::unique_ptr<CertVerificationContext>* context,
                       CastDeviceCertPolicy* policy,
                       const CastCRL* crl,
-                      CRLPolicy crl_policy) {
-  return VerifyDeviceCertUsingCustomTrustStore(
-      certs, time, context, policy, crl, crl_policy, &CastTrustStore::Get());
+                      CRLPolicy crl_policy,
+                      CastCertError* errors) {
+  return VerifyDeviceCertUsingCustomTrustStore(certs, time, context, policy,
+                                               crl, crl_policy,
+                                               &CastTrustStore::Get(), errors);
 }
 
 bool VerifyDeviceCertUsingCustomTrustStore(
@@ -253,12 +256,22 @@ bool VerifyDeviceCertUsingCustomTrustStore(
     CastDeviceCertPolicy* policy,
     const CastCRL* crl,
     CRLPolicy crl_policy,
-    net::TrustStore* trust_store) {
+    net::TrustStore* trust_store,
+    CastCertError* cast_error) {
   if (!trust_store)
-    return VerifyDeviceCert(certs, time, context, policy, crl, crl_policy);
+    return VerifyDeviceCert(certs, time, context, policy, crl, crl_policy,
+                            cast_error);
 
-  if (certs.empty())
+  if (certs.empty()) {
+    *cast_error = CastCertError::ERR_CERTS_MISSING;
     return false;
+  }
+
+  // Fail early if CRL is required but not provided.
+  if (!crl && crl_policy == CRLPolicy::CRL_REQUIRED) {
+    *cast_error = CastCertError::ERR_CRL_INVALID;
+    return false;
+  }
 
   net::CertErrors errors;
   scoped_refptr<net::ParsedCertificate> target_cert;
@@ -268,8 +281,10 @@ bool VerifyDeviceCertUsingCustomTrustStore(
         net::x509_util::CreateCryptoBuffer(certs[i]), GetCertParsingOptions(),
         &errors));
     // TODO(eroman): Propagate/log these parsing errors.
-    if (!cert)
+    if (!cert) {
+      *cast_error = CastCertError::ERR_CERTS_PARSE;
       return false;
+    }
 
     if (i == 0)
       target_cert = std::move(cert);
@@ -283,8 +298,10 @@ bool VerifyDeviceCertUsingCustomTrustStore(
   // Do path building and RFC 5280 compatible certificate verification using the
   // two Cast trust anchors and Cast signature policy.
   net::der::GeneralizedTime verification_time;
-  if (!net::der::EncodeTimeAsGeneralizedTime(time, &verification_time))
+  if (!net::der::EncodeTimeAsGeneralizedTime(time, &verification_time)) {
+    *cast_error = CastCertError::ERR_UNEXPECTED;
     return false;
+  }
   net::CertPathBuilder::Result result;
   net::CertPathBuilder path_builder(
       target_cert.get(), trust_store, signature_policy.get(), verification_time,
@@ -294,7 +311,22 @@ bool VerifyDeviceCertUsingCustomTrustStore(
   path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
   path_builder.Run();
   if (!result.HasValidPath()) {
-    // TODO(crbug.com/634443): Log error information.
+    if (result.paths.empty()) {
+      *cast_error = CastCertError::ERR_CERTS_UNTRUSTED;
+      return false;
+    }
+    const net::CertPathErrors& path_errors =
+        result.paths.at(result.best_result_index)->errors;
+    if (path_errors.ContainsError(net::kValidityFailedNotAfter) ||
+        path_errors.ContainsError(net::kValidityFailedNotBefore)) {
+      *cast_error = CastCertError::ERR_CERTS_DATE_INVALID;
+      return false;
+    }
+    if (path_errors.ContainsError(net::kCertIsDistrusted)) {
+      *cast_error = CastCertError::ERR_CERTS_UNTRUSTED;
+      return false;
+    }
+    *cast_error = CastCertError::ERR_CERTS_VERIFY_GENERIC;
     return false;
   }
 
@@ -304,19 +336,18 @@ bool VerifyDeviceCertUsingCustomTrustStore(
   // Check properties of the leaf certificate not already verified by path
   // building (key usage), and construct a CertVerificationContext that uses
   // its public key.
-  if (!CheckTargetCertificate(target_cert.get(), context))
+  if (!CheckTargetCertificate(target_cert.get(), context)) {
+    *cast_error = CastCertError::ERR_CERTS_RESTRICTIONS;
     return false;
-
-  // Check if a CRL is available.
-  if (!crl) {
-    if (crl_policy == CRLPolicy::CRL_REQUIRED) {
-      return false;
-    }
-  } else {
-    if (!crl->CheckRevocation(result.GetBestValidPath()->path, time)) {
-      return false;
-    }
   }
+
+  // Check for revocation.
+  if (crl && !crl->CheckRevocation(result.GetBestValidPath()->path, time)) {
+    *cast_error = CastCertError::ERR_CERTS_REVOKED;
+    return false;
+  }
+
+  *cast_error = CastCertError::OK;
   return true;
 }
 
