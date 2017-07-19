@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2956236_6b9cccf9",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "nit: rename this and update the comment to note the no-location-bar (app window) case too?",
+      "range": {
+        "startLine": 16,
+        "startChar": 20,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bb633b_4cb186e1",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "Hmm, we should just anchor off of the fullscreen bubble as needed (like ChooserBubbleUi::GetAnchorView)... but I guess we can punt that fix for now.",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f548e8_46bc8da7",
+        "filename": "chrome/browser/ui/cocoa/bubble_anchor_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "nit: maybe cite http://crbug.com/740827 here?",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a896d56_2f3a50b6",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "DCHECK that there is no visible location bar",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdb4fa5_cf8aa007",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "nit: \"RTL UI\" or \"RTL display\" to avoid confusion with display devices (monitors)",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b353754_1923828c",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "nit: it may also not be 0,0 if the browser is simply a non-maximized/fullscreen app window shown without a location bar on a single display (right?), so maybe simplify (or expand) the comment?",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45302f75_e623f14c",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "Should we use a rect with the full width of the browser window and center the bubble horizontally below that rect? (I guess that would require anchoring off of the fullscreen bubble as needed, so maybe that\u0027s not easy to fix now?)",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8d9486bf_81bd70d2",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "FYI: The page info bubble definitely flips up on Windows canary, please ensure that doesn\u0027t regress.",
+      "parentUuid": "53475ea7_6c0ed536",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "131733ea_c0b671a0",
         "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
         "patchSetId": 8
@@ -116,6 +140,24 @@
       "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e850bdb2_e81b0689",
+        "filename": "chrome/browser/ui/cocoa/bubble_anchor_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5f55e59_12ffe2d8",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +254,24 @@
       "side": 1,
       "message": "No, it will get an arrow - that was an intentional change in favour of consistency with the current behaviour for permissions prompts. It\u0027s also part of the fix for http://crbug.com/745291 (the Mac code would never return an anchor in the middle of the screen, so it would anchor offscreen with the code that was in chooser_bubble_ui_views_mac.mm). \n\nWe can split this out again, but the arrow won\u0027t last long since --secondary-ui-md will remove it always, from all bubbles.\n\nApp Windows use a modal dialog for the device chooser rather than a bubble.",
       "parentUuid": "49b98ef0_e48c5729",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09b5165_3d82d601",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-19T19:02:58Z",
+      "side": 1,
+      "message": "I\u0027m slightly inclined to keep no-arrow in that case, towards the eventual never-use-arrows MD goal, but I\u0027m not super concerned if this makes it consistent with permission prompts, and I\u0027m definitely happy to keep the code simpler.",
+      "parentUuid": "e94075d6_f0e8eb99",
       "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
