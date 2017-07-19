@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b97041_654956bb",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T18:25:40Z",
+      "side": 1,
+      "message": "nit: URLs",
+      "range": {
+        "startLine": 274,
+        "startChar": 42,
+        "endLine": 274,
+        "endChar": 46
+      },
+      "revId": "f78e04534304391cd3adc2421ef80a663ef80995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
