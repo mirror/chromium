@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a48fdc8b_11e4305b",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleMultipleClassSelector.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T07:02:42Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "c31a76e242a351c61205cf3a8b8072edd3ca4af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b792ec77_df7bc718",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T07:02:42Z",
+      "side": 1,
+      "message": "Rebase conflict upcoming. :)",
+      "revId": "c31a76e242a351c61205cf3a8b8072edd3ca4af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
