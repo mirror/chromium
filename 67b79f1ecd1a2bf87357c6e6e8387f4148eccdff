@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e485a3_bafb3d86",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T16:38:00Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "67b79f1ecd1a2bf87357c6e6e8387f4148eccdff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077e72fc_07306e7c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T16:38:00Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "67b79f1ecd1a2bf87357c6e6e8387f4148eccdff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec32222_52bff725",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T16:38:00Z",
+      "side": 1,
+      "message": "Nit: Not used.",
+      "revId": "67b79f1ecd1a2bf87357c6e6e8387f4148eccdff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d35eb6_b5bf94fb",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 9812,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-19T16:38:00Z",
+      "side": 1,
+      "message": "Nit: s/accounts/users/",
+      "revId": "67b79f1ecd1a2bf87357c6e6e8387f4148eccdff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
