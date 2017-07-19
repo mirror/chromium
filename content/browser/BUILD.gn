@@ -138,6 +138,7 @@ source_set("browser") {
     "//sql",
     "//storage/browser",
     "//storage/common",
+    "//third_party/WebKit/common:blink_common",
     "//third_party/WebKit/public:blink_headers",
     "//third_party/WebKit/public:features",
     "//third_party/WebKit/public:image_resources",
