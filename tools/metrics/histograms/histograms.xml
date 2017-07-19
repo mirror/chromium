@@ -63692,6 +63692,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="ResourceScheduler.InterarrivalTime.ImmediateDelayableToNonDelayableStart">
+  <owner>devdeepray@chromium.org</owner>
+  <summary>
+    The time between the start of a non-delayable resource request and the start
+    of delayable requests which were started immediately on schedule and were
+    in-flight when the non-delayable request was started.
+  </summary>
+</histogram>
+
 <histogram name="ResourceScheduler.NumSkippedScans.ScheduleStart"
     units="requests">
   <owner>csharrison@chromium.org</owner>
