@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0a2a7ad_3aed7095",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T04:59:34Z",
+      "side": 1,
+      "message": "It\u0027s defined there, but it\u0027s only called as blink::Initialize.",
+      "parentUuid": "426b9a87_9fac296d",
+      "revId": "bd9d5ae752949043bbace9780e2c9f8985f7e58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ec8d416_cb6a8701",
         "filename": "third_party/WebKit/Source/controller/OWNERS",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "bd9d5ae752949043bbace9780e2c9f8985f7e58d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db20a0c_d747ac76",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T04:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec8d416_cb6a8701",
+      "revId": "bd9d5ae752949043bbace9780e2c9f8985f7e58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
