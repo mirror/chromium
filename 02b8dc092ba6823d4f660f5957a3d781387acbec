@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d360df2e_b20723df",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T19:17:57Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 150,
+        "startChar": 13,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "02b8dc092ba6823d4f660f5957a3d781387acbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e967200_dfe2b6b1",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-19T19:17:57Z",
+      "side": 1,
+      "message": "don\u0027t mind if you do in subsequent work, but i think worth testing more complicated cases such as multiple profiles, guest profile, etc. Maybe add TODO",
+      "revId": "02b8dc092ba6823d4f660f5957a3d781387acbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
