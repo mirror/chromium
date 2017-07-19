@@ -118,18 +118,16 @@ class DragTestView : public views::View {
 
 class CompletableLinearAnimation : public gfx::LinearAnimation {
  public:
-  CompletableLinearAnimation(int duration,
+  CompletableLinearAnimation(base::TimeDelta duration,
                              int frame_rate,
                              gfx::AnimationDelegate* delegate)
       : gfx::LinearAnimation(duration, frame_rate, delegate),
         duration_(duration) {}
 
-  void Complete() {
-    Step(start_time() + base::TimeDelta::FromMilliseconds(duration_));
-  }
+  void Complete() { Step(start_time() + duration_); }
 
  private:
-  int duration_;
+  base::TimeDelta duration_;
 };
 
 class TestDragDropController : public DragDropController {
@@ -173,14 +171,14 @@ class TestDragDropController : public DragDropController {
   }
 
   gfx::LinearAnimation* CreateCancelAnimation(
-      int duration,
+      base::TimeDelta duration,
       int frame_rate,
       gfx::AnimationDelegate* delegate) override {
     return new CompletableLinearAnimation(duration, frame_rate, delegate);
   }
 
-  void DoDragCancel(int animation_duration_ms) override {
-    DragDropController::DoDragCancel(animation_duration_ms);
+  void DoDragCancel(base::TimeDelta animation_duration) override {
+    DragDropController::DoDragCancel(animation_duration);
     drag_canceled_ = true;
   }
 
