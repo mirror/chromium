@@ -50,8 +50,10 @@ void EventPageRequestManager::OnMojoConnectionsReady() {
   }
 
   mojo_connections_ready_ = true;
-  for (auto& next_request : pending_requests_)
+  for (auto& next_request : pending_requests_) {
+    DCHECK(mojo_connections_ready_);
     std::move(next_request).Run();
+  }
   pending_requests_.clear();
   wakeup_attempt_count_ = 0;
 }
