@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/QualifiedName.h"
+#include "core/events/EventTarget.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
@@ -103,9 +104,7 @@ class CORE_EXPORT AOMPropertyClient {
 // Accessibility Object Model node
 // Explainer: https://github.com/WICG/aom/blob/master/explainer.md
 // Spec: https://wicg.github.io/aom/spec/
-class CORE_EXPORT AccessibleNode
-    : public GarbageCollectedFinalized<AccessibleNode>,
-      public ScriptWrappable {
+class CORE_EXPORT AccessibleNode : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -317,6 +316,12 @@ class CORE_EXPORT AccessibleNode
 
   AtomicString valueText() const;
   void setValueText(const AtomicString&);
+
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
+
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(defaultaction);
 
   DECLARE_VIRTUAL_TRACE();
 

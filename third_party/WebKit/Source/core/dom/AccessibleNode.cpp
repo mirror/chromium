@@ -956,6 +956,14 @@ void AccessibleNode::setValueText(const AtomicString& value_text) {
   NotifyAttributeChanged(aria_valuetextAttr);
 }
 
+const AtomicString& AccessibleNode::InterfaceName() const {
+  return EventTargetNames::AccessibleNode;
+}
+
+ExecutionContext* AccessibleNode::GetExecutionContext() const {
+  return element_->GetExecutionContext();
+}
+
 void AccessibleNode::SetStringProperty(AOMStringProperty property,
                                        const AtomicString& value) {
   for (auto& item : string_properties_) {
