@@ -16,6 +16,24 @@
       "revId": "35cc2ea55f1abafc0ea7477a73de36179fbbeeb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351a2381_2db3daf5",
+        "filename": "components/precache/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-19T17:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4221ff06_db82e359",
+      "revId": "35cc2ea55f1abafc0ea7477a73de36179fbbeeb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
