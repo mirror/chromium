@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9889306d_55276cae",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-19T05:54:33Z",
+      "side": 1,
+      "message": "Can we inline InitializeBlink here?",
+      "revId": "b7178a1149f862c6449755945982440861f08f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c249a552_10d84ede",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-19T05:54:33Z",
+      "side": 1,
+      "message": "Make this change in a separate CL ccing other owners.",
+      "revId": "b7178a1149f862c6449755945982440861f08f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
