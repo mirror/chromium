@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc5c3a02_f1960b7c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer for the test to be a friend of this class instead of making this public.\n\nIf you absolutely must move this to public, also move the comment and the other override (void Stop()).",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa8327b_af036325",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "nit: \u003d default; same below.",
+      "range": {
+        "startLine": 24,
+        "startChar": 35,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066942d0_438851b5",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you\u0027d return the search provider instead of holding it as a member.",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79b633f_b5ffa37c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "It\u0027s probably better if you return a std::vector\u003cstd::string\u003e. EXPECT_EQ uses \u003d\u003d, so it would call std::vector\u003cT\u003e::operator\u003d\u003d, which should work.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d259f5a3_225aaaa5",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "If you still need this function, please make it a standalone function in the anonymous namespace, and pass in the ArcPlayStoreSearchProvider*",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf65b952_5754b2a3",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "this is unused.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b99f51_5f6bdfc9",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "nit:\n\n constexpr int kMaxResults \u003d 3;",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 28
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4132ad0_5939de2d",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "nit:\n\n constexpr char kQuery[] \u003d \"Play App\";",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccf321c_6d40f1be",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "Consider using base::StringPrintf instead of concatenating stuff.",
+      "range": {
+        "startLine": 93,
+        "startChar": 14,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12034bc_aeee0f1c",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-19T15:40:59Z",
+      "side": 1,
+      "message": "This requires some comments.",
+      "range": {
+        "startLine": 293,
+        "startChar": 55,
+        "endLine": 294,
+        "endChar": 40
+      },
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
