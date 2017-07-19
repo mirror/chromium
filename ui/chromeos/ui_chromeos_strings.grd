@@ -257,6 +257,30 @@
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_63" desc="Description of the default user icon with a picture of a pair of sunglasses">
         Sunglasses
       </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_64" desc="Description of the default user icon with a picture of a pizza">
+        Pizza
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_65" desc="Description of the default user icon with a picture of a sandwich">
+        Sandwich
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_66" desc="Description of the default user icon with a picture of a cappocino">
+        Cappocino
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_67" desc="Description of the default user icon with a picture of an ice water">
+        Ice water
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_68" desc="Description of the default user icon with a picture of an ice cream">
+        Ice cream
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_69" desc="Description of the default user icon with a picture of onigiri">
+        Onigiri
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_70" desc="Description of the default user icon with a picture of a melon">
+        Melon
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_71" desc="Description of the default user icon with a picture of an avocado">
+        Avocado
+      </message>
 
       <!-- Attribution strings for stock user images, not translateable. -->
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR">
@@ -402,6 +426,22 @@
       </message>
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_63">
       </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_64">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_65">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_66">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_67">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_68">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_69">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_70">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR_71">
+      </message>
 
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE">
       </message>
@@ -544,6 +584,22 @@
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_62">
       </message>
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_63">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_64">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_65">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_66">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_67">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_68">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_69">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_70">
+      </message>
+      <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_WEBSITE_71">
       </message>
 
       <!-- Input method strings. -->
