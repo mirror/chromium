@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "ios/web/public/app/task_scheduler_init_params_callback.h"
@@ -68,8 +69,10 @@ class WebMainLoop {
   bool created_threads_;
 
   // Members initialized in |MainMessageLoopStart()| ---------------------------
+  base::ScopedClosureRunner message_loop_destroy_;
   std::unique_ptr<base::SystemMonitor> system_monitor_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
+  base::ScopedClosureRunner network_change_destroy_;
 
   // Destroy parts_ before main_message_loop_ (required) and before other
   // classes constructed in web (but after main_thread_).
