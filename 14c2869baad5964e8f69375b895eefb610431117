@@ -52,6 +52,24 @@
       "revId": "14c2869baad5964e8f69375b895eefb610431117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8181b4ee_55cf7452",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-19T21:20:01Z",
+      "side": 1,
+      "message": "Yea, sometimes it\u0027s unavoidable but this doesn\u0027t seem like one of those times. We sometimes write functions called XXXForTesting to discourage usage in production, but if we can find a way to avoid adding that function completely I think that\u0027s preferable.",
+      "parentUuid": "401b32b4_0ad5debf",
+      "revId": "14c2869baad5964e8f69375b895eefb610431117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
