@@ -47,7 +47,8 @@ enum KeyboardMode {
 
 // Represents the current state of the keyboard managed by the controller.
 // Don't change the numeric value of the members because they are used in UMA
-// VirtualKeyboard.ControllerStateTransition.
+// - VirtualKeyboard.ControllerStateTransition.
+// - VirtualKeyboard.LingeringIntermediateState
 enum class KeyboardControllerState {
   UNKNOWN = 0,
   // Keyboard has never been shown.
@@ -66,6 +67,7 @@ enum class KeyboardControllerState {
   HIDING = 6,
   // Keyboard is hidden, but has shown at least once.
   HIDDEN = 7,
+  COUNT,
 };
 
 // Provides control of the virtual keyboard, including providing a container
@@ -145,8 +147,6 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Returns true if keyboard is SHOWN or SHOWING state.
   bool keyboard_visible();
 
-  bool show_on_resize() const { return show_on_resize_; }
-
   // Returns true if keyboard window has been created.
   bool IsKeyboardWindowCreated();
 
@@ -164,6 +164,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // For access to SetContainerBounds.
   friend class KeyboardLayoutManager;
+
+  bool show_on_resize() const { return show_on_resize_; }
 
   // aura::WindowObserver overrides
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
@@ -200,6 +202,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void ShowAnimationFinished();
   void HideAnimationFinished();
 
+  void NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea();
+
   // Called when the keyboard mode is set or the keyboard is moved to another
   // display.
   void AdjustKeyboardBounds();
@@ -207,8 +211,12 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Validates the state transition. Called from ChangeState.
   void CheckStateTransition(KeyboardControllerState prev,
                             KeyboardControllerState next);
+
   // Changes the current state with validating the transition.
   void ChangeState(KeyboardControllerState state);
+
+  // Reports error histogram in case lingering in an intermediate state.
+  void ReportLingeringState();
 
   std::unique_ptr<KeyboardUI> ui_;
   KeyboardLayoutDelegate* layout_delegate_;
@@ -235,7 +243,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   static KeyboardController* instance_;
 
-  base::WeakPtrFactory<KeyboardController> weak_factory_;
+  base::WeakPtrFactory<KeyboardController> weak_factory_report_lingering_state_;
+  base::WeakPtrFactory<KeyboardController> weak_factory_will_hide_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardController);
 };
