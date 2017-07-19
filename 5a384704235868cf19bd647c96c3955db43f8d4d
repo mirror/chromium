@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2096e2d0_f6781091",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T16:42:13Z",
+      "side": 0,
+      "message": "Is this the API you want? Or do you want something like\n\n    std::string Pass() {\n      return std::move(buffer_); // can\u0027t use buffer_ anymore.\n    }\n\nUnless there\u0027s a move method, any calling code will need to eventually make a copy unless the NtlmBufferWriter itself outlives _all_ uses of the buffer.",
+      "revId": "5a384704235868cf19bd647c96c3955db43f8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

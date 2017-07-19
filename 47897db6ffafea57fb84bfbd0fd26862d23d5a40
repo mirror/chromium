@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4de146e_3b718df7",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-19T16:42:13Z",
+      "side": 1,
+      "message": "Another option is to use:\n\n    using Buffer \u003d std::basic_string\u003cuint8_t\u003e;\n\n    ...\n\n    Buffer buffer_;\n\nThis eliminates the need for casting.\n\nIf going this route, make sure you explicitly instantiate the Buffer class in the .cc file. I.e. somewhere in the .cc file, do:\n\n    template class std::basic_string\u003cuint8_t\u003e;",
+      "revId": "47897db6ffafea57fb84bfbd0fd26862d23d5a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
