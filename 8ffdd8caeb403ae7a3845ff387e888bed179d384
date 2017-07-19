@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc8fb84f_39e75e2a",
+        "filename": "ash/shelf/shelf_window_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-19T07:46:47Z",
+      "side": 1,
+      "message": "I think it\u0027d be fine to override it here, but it\u0027s not clear to me if the impl could be simpler/different. For example, could this just \u0027return true;\u0027? Why would that not work?",
+      "parentUuid": "4234f28a_1a750c31",
+      "revId": "8ffdd8caeb403ae7a3845ff387e888bed179d384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a72dc5_83ed9a87",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 5
