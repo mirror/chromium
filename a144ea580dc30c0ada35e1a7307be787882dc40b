@@ -34,6 +34,24 @@
       "revId": "a144ea580dc30c0ada35e1a7307be787882dc40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260705a8_89a5fae6",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-19T17:53:23Z",
+      "side": 1,
+      "message": "Got it, I was making this study the same as the Finch study. Changed to list only one experiment.",
+      "parentUuid": "23123b74_eb26d765",
+      "revId": "a144ea580dc30c0ada35e1a7307be787882dc40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
