@@ -16,6 +16,24 @@
       "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3de1411_ccd252fd",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-19T20:18:05Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO. I have no idea what it would mean to request that a window be unfocused though :P What would the platform do? Focus some other window?\n\nAnyways, that\u0027s a problem for some other time.",
+      "parentUuid": "00040647_1fe8d053",
+      "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
