@@ -31,4 +31,38 @@ TEST(FontSelectionTypesTest, HashCollisions) {
   ASSERT_EQ(hashes.size(), weights.size() * slopes.size() * widths.size());
 }
 
+TEST(FontSelectionTypesTest, CheckedOverFlowMax) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MaximumValue() + 1),
+               "Check failed.*IsValid");
+}
+
+TEST(FontSelectionTypesTest, CheckedOverFlowMin) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MinimumValue() - 1),
+               "Check failed.*IsValid");
+}
+
+TEST(FontSelectionTypesTest, CheckedOverFlowAdd) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MaximumValue()) +
+                   FontSelectionValue(1),
+               "Check failed.*IsValid");
+}
+
+TEST(FontSelectionTypesTest, CheckedOverFlowSub) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MinimumValue()) -
+                   FontSelectionValue(1),
+               "Check failed.*IsValid");
+}
+
+TEST(FontSelectionTypesTest, CheckedOverFlowMul) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MaximumValue()) *
+                   FontSelectionValue(2),
+               "Check failed.*IsValid");
+}
+
+TEST(FontSelectionTypesTest, CheckedOverFlowDiv) {
+  ASSERT_DEATH(FontSelectionValue(FontSelectionValue::MaximumValue()) /
+                   FontSelectionValue(0.5f),
+               "Check failed.*IsValid");
+}
+
 }  // namespace blink
