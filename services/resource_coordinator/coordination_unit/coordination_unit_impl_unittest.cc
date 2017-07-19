@@ -8,6 +8,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/values.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
@@ -136,6 +137,40 @@ TEST_F(CoordinationUnitImplTest, AddChild) {
     parent_callback.Run();
     child_callback.Run();
   }
+}
+
+TEST_F(CoordinationUnitImplTest, AddChildWithoutCyclicReference) {
+  CoordinationUnitID tab_cu_id(CoordinationUnitType::kFrame, std::string());
+  CoordinationUnitID frame1_cu_id(CoordinationUnitType::kFrame, std::string());
+  CoordinationUnitID frame2_cu_id(CoordinationUnitType::kFrame, std::string());
+  CoordinationUnitID frame3_cu_id(CoordinationUnitType::kFrame, std::string());
+
+  std::unique_ptr<CoordinationUnitImpl> tab_cu =
+      coordination_unit_factory::CreateCoordinationUnit(
+          tab_cu_id, service_context_ref_factory()->CreateRef());
+  std::unique_ptr<CoordinationUnitImpl> frame1_cu =
+      coordination_unit_factory::CreateCoordinationUnit(
+          frame1_cu_id, service_context_ref_factory()->CreateRef());
+  std::unique_ptr<CoordinationUnitImpl> frame2_cu =
+      coordination_unit_factory::CreateCoordinationUnit(
+          frame2_cu_id, service_context_ref_factory()->CreateRef());
+  std::unique_ptr<CoordinationUnitImpl> frame3_cu =
+      coordination_unit_factory::CreateCoordinationUnit(
+          frame3_cu_id, service_context_ref_factory()->CreateRef());
+
+  frame1_cu->AddChild(frame2_cu->id());
+  frame2_cu->AddChild(frame3_cu->id());
+  frame3_cu->AddChild(frame1_cu->id());
+  EXPECT_EQ(1u, frame1_cu->children().count(frame2_cu.get()));
+  EXPECT_EQ(1u, frame2_cu->children().count(frame3_cu.get()));
+  // |frame1_cu| was not added because |frame1_cu| is one of the ancestors of
+  // |frame3_cu|.
+  EXPECT_EQ(0u, frame3_cu->children().count(frame1_cu.get()));
+
+  tab_cu->AddChild(frame1_cu->id());
+  tab_cu->AddChild(frame2_cu->id());
+  tab_cu->AddChild(frame3_cu->id());
+  EXPECT_EQ(3u, tab_cu->children().size());
 }
 
 TEST_F(CoordinationUnitImplTest, RemoveChild) {

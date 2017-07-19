@@ -147,10 +147,15 @@ void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
   auto child_iter = g_cu_map().find(child_id);
   if (child_iter != g_cu_map().end()) {
     CoordinationUnitImpl* child = child_iter->second;
-    if (HasParent(child) || HasChild(child)) {
+    // In order to avoid cyclic reference inside the coordination unit graph. If
+    // |child| is one of the ancestors of |this| coordination unit, then |child|
+    // should not be added, abort this operation. If |this| coordination unit is
+    // one of the descendants of child coordination unit, then abort this
+    // operation.
+    if (IsAncestor(child) || child->IsDescendant(this))
       return;
-    }
 
+    DCHECK_EQ(0u, children_.count(child));
     DCHECK(child->id_ == child_id);
     DCHECK(child != this);
 
@@ -181,10 +186,8 @@ void CoordinationUnitImpl::RemoveChild(const CoordinationUnitID& child_id) {
   }
 
   CoordinationUnitImpl* child = child_iter->second;
-  if (!HasChild(child)) {
-    return;
-  }
 
+  DCHECK_EQ(1u, children_.count(child));
   DCHECK(child->id_ == child_id);
   DCHECK(child != this);
 
@@ -224,9 +227,9 @@ void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
   RecalcCoordinationPolicy();
 }
 
-bool CoordinationUnitImpl::HasParent(CoordinationUnitImpl* unit) {
+bool CoordinationUnitImpl::IsAncestor(CoordinationUnitImpl* unit) {
   for (CoordinationUnitImpl* parent : parents_) {
-    if (parent == unit || parent->HasParent(unit)) {
+    if (parent == unit || parent->IsAncestor(unit)) {
       return true;
     }
   }
@@ -234,9 +237,9 @@ bool CoordinationUnitImpl::HasParent(CoordinationUnitImpl* unit) {
   return false;
 }
 
-bool CoordinationUnitImpl::HasChild(CoordinationUnitImpl* unit) {
+bool CoordinationUnitImpl::IsDescendant(CoordinationUnitImpl* unit) {
   for (CoordinationUnitImpl* child : children_) {
-    if (child == unit || child->HasChild(unit)) {
+    if (child == unit || child->IsDescendant(unit)) {
       return true;
     }
   }
