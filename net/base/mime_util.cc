@@ -38,6 +38,10 @@ class MimeUtil : public PlatformMimeUtil {
   bool GetWellKnownMimeTypeFromExtension(const base::FilePath::StringType& ext,
                                          std::string* mime_type) const;
 
+  bool GetPreferredExtensionForMimeType(
+      const std::string& mime_type,
+      base::FilePath::StringType* extension) const;
+
   bool MatchesMimeType(const std::string &mime_type_pattern,
                        const std::string &mime_type) const;
 
@@ -61,59 +65,87 @@ class MimeUtil : public PlatformMimeUtil {
 static base::LazyInstance<MimeUtil>::Leaky g_mime_util =
     LAZY_INSTANCE_INITIALIZER;
 
-static const MimeInfo kPrimaryMappings[] = {
-    {"text/html", "html,htm,shtml,shtm"},
-    {"text/css", "css"},
-    {"text/xml", "xml"},
-    {"image/gif", "gif"},
-    {"image/jpeg", "jpeg,jpg"},
-    {"image/webp", "webp"},
-    {"image/png", "png"},
-    {"video/mp4", "mp4,m4v"},
-    {"audio/x-m4a", "m4a"},
-    {"audio/mp3", "mp3"},
-    {"video/ogg", "ogv,ogm"},
-    {"audio/ogg", "ogg,oga,opus"},
-    {"video/webm", "webm"},
-    {"audio/webm", "webm"},
-    {"audio/wav", "wav"},
-    {"audio/flac", "flac"},
-    {"application/xhtml+xml", "xhtml,xht,xhtm"},
-    {"application/x-chrome-extension", "crx"},
-    {"multipart/related", "mhtml,mht"}};
+struct MimeInfo {
+  const char* const mime_type;
 
-static const MimeInfo kSecondaryMappings[] = {
-    {"application/octet-stream", "exe,com,bin"},
-    {"application/gzip", "gz,tgz"},
-    {"application/x-gzip", "gz,tgz"},
-    {"application/pdf", "pdf"},
-    {"application/postscript", "ps,eps,ai"},
-    {"application/javascript", "js"},
-    {"application/font-woff", "woff"},
-    {"image/bmp", "bmp"},
-    {"image/x-icon", "ico"},
-    {"image/vnd.microsoft.icon", "ico"},
-    {"image/jpeg", "jfif,pjpeg,pjp"},
-    {"image/tiff", "tiff,tif"},
-    {"image/x-xbitmap", "xbm"},
-    {"image/svg+xml", "svg,svgz"},
-    {"image/x-png", "png"},
-    {"message/rfc822", "eml"},
-    {"text/plain", "txt,text"},
-    {"text/html", "ehtml"},
-    {"application/rss+xml", "rss"},
-    {"application/rdf+xml", "rdf"},
-    {"text/xml", "xsl,xbl,xslt"},
-    {"application/vnd.mozilla.xul+xml", "xul"},
-    {"application/x-shockwave-flash", "swf,swl"},
-    {"application/pkcs7-mime", "p7m,p7c,p7z"},
-    {"application/pkcs7-signature", "p7s"},
-    {"application/x-mpegurl", "m3u8"},
+  // May be set to nullptr, e.g. as for application/octet-stream.
+  const char* const preferred_extension;
+
+  // Comma-separated list of possible extesnions for the type.
+  const char* const extensions;
 };
 
-const char* FindMimeType(const MimeInfo* mappings,
-                         size_t mappings_len,
-                         const std::string& ext) {
+// Order of entries in the following mapping lists matters only when the same
+// extension is shared between multiple MIME types.
+static const MimeInfo kPrimaryMappings[] = {
+    // Must precede audio/webm .
+    {"video/webm", "webm", "webm"},
+
+    // Following entries are sorted alphabetically.
+    {"application/x-chrome-extension", "crx", "crx"},
+    {"application/xhtml+xml", "xhtml", "xhtml,xht,xhtm"},
+    {"audio/flac", "flac", "flac"},
+    {"audio/mp3", "mp3", "mp3"},
+    {"audio/ogg", "ogg", "ogg,oga,opus"},
+    {"audio/wav", "wav", "wav"},
+    {"audio/webm", "webm", "webm"},
+    {"audio/x-m4a", "m4a", "m4a"},
+    {"image/gif", "gif", "gif"},
+    {"image/jpeg", "jpeg", "jpeg,jpg"},
+    {"image/png", "png", "png"},
+    {"image/webp", "webp", "webp"},
+    {"multipart/related", "mht", "mhtml,mht"},
+    {"text/css", "css", "css"},
+    {"text/html", "html", "html,htm,shtml,shtm"},
+    {"text/xml", "xml", "xml"},
+    {"video/mp4", "mp4", "mp4,m4v"},
+    {"video/ogg", "ogv", "ogv,ogm"},
+};
+
+static const MimeInfo kSecondaryMappings[] = {
+    // Must precede image/vnd.microsoft.icon .
+    {"image/x-icon", "ico", "ico"},
+
+    // Following entries are sorted alphabetically.
+    {"application/epub+zip", "epub", "epub"},
+    {"application/font-woff", "woff", "woff"},
+    {"application/gzip", "gz", "gz,tgz"},
+    {"application/javascript", "js", "js"},
+    {"application/octet-stream", nullptr, "bin,exe,com"},
+    {"application/pdf", "pdf", "pdf"},
+    {"application/pkcs7-mime", "p7m", "p7m,p7c,p7z"},
+    {"application/pkcs7-signature", "p7s", "p7s"},
+    {"application/postscript", "ps", "ps,eps,ai"},
+    {"application/rdf+xml", "rdf", "rdf"},
+    {"application/rss+xml", "rss", "rss"},
+    {"application/vnd.android.package-archive", "apk", "apk"},
+    {"application/vnd.mozilla.xul+xml", "xul", "xul"},
+    {"application/x-gzip", "gz", "gz,tgz"},
+    {"application/x-mpegurl", "m3u8", "m3u8"},
+    {"application/x-shockwave-flash", "swf", "swf,swl"},
+    {"application/x-tar", "tar", "tar"},
+    {"application/zip", "zip", "zip"},
+    {"audio/mpeg", "mp3", "mp3"},
+    {"image/bmp", "bmp", "bmp"},
+    {"image/jpeg", nullptr, "jfif,pjpeg,pjp"},
+    {"image/svg+xml", "svg", "svg,svgz"},
+    {"image/tiff", "tiff,tif", "tiff,tif"},
+    {"image/vnd.microsoft.icon", "ico", "ico"},
+    {"image/x-png", "png", "png"},
+    {"image/x-xbitmap", "xbm", "xbm"},
+    {"message/rfc822", "eml", "eml"},
+    {"text/calendar", "ics", "ics"},
+    {"text/html", nullptr, "ehtml"},
+    {"text/plain", "txt", "txt,text"},
+    {"text/x-sh", "sh", "sh"},
+    {"text/xml", nullptr, "xsl,xbl,xslt"},
+    {"video/mpeg", "mpeg", "mpeg,mpg"},
+};
+
+// Finds mime type of |ext| from |mappings|.
+static const char* FindMimeType(const MimeInfo* mappings,
+                                size_t mappings_len,
+                                const std::string& ext) {
   for (size_t i = 0; i < mappings_len; ++i) {
     const char* extensions = mappings[i].extensions;
     for (;;) {
@@ -122,8 +154,9 @@ const char* FindMimeType(const MimeInfo* mappings,
       // including uninitialized memory if ext is longer than extensions.
       if (end_pos == ext.size() &&
           base::EqualsCaseInsensitiveASCII(
-              base::StringPiece(extensions, ext.size()), ext))
+              base::StringPiece(extensions, ext.size()), ext)) {
         return mappings[i].mime_type;
+      }
       extensions += end_pos;
       if (!*extensions)
         break;
@@ -131,6 +164,32 @@ const char* FindMimeType(const MimeInfo* mappings,
     }
   }
   return NULL;
+}
+
+static base::FilePath::StringType StringToFilePathStringType(
+    const base::StringPiece& string_piece) {
+#if defined(OS_WIN)
+  return base::UTF8ToUTF16(string_piece);
+#else
+  return string_piece.as_string();
+#endif
+}
+
+// Helper used in MimeUtil::GetPreferredExtensionForMimeType() to search
+// preferred extension in MimeInfo arrays.
+static bool FindPreferredExtesion(const MimeInfo* mappings,
+                                  size_t mappings_len,
+                                  const std::string& mime_type,
+                                  base::FilePath::StringType* extension) {
+  for (size_t i = 0; i < mappings_len; ++i) {
+    if (mappings[i].mime_type == mime_type) {
+      if (!mappings[i].preferred_extension)
+        return false;
+      *extension = StringToFilePathStringType(mappings[i].preferred_extension);
+      return true;
+    }
+  }
+  return false;
 }
 
 bool MimeUtil::GetMimeTypeFromExtension(const base::FilePath::StringType& ext,
@@ -142,6 +201,19 @@ bool MimeUtil::GetWellKnownMimeTypeFromExtension(
     const base::FilePath::StringType& ext,
     string* result) const {
   return GetMimeTypeFromExtensionHelper(ext, false, result);
+}
+
+bool MimeUtil::GetPreferredExtensionForMimeType(
+    const std::string& mime_type,
+    base::FilePath::StringType* extension) const {
+  // Search the MIME type in the platform DB first, then in kPrimaryMappings and
+  // kSecondaryMappings.
+  return GetPlatformPreferredExtensionForMimeType(mime_type, extension) ||
+         FindPreferredExtesion(kPrimaryMappings, arraysize(kPrimaryMappings),
+                               mime_type, extension) ||
+         FindPreferredExtesion(kSecondaryMappings,
+                               arraysize(kSecondaryMappings), mime_type,
+                               extension);
 }
 
 bool MimeUtil::GetMimeTypeFromFile(const base::FilePath& file_path,
@@ -195,8 +267,7 @@ bool MimeUtil::GetMimeTypeFromExtensionHelper(
   return false;
 }
 
-MimeUtil::MimeUtil() {
-}
+MimeUtil::MimeUtil() {}
 
 // Tests for MIME parameter equality. Each parameter in the |mime_type_pattern|
 // must be matched by a parameter in the |mime_type|. If there are no
@@ -484,11 +555,7 @@ void GetExtensionsFromHardCodedMappings(
       for (const base::StringPiece& this_extension : base::SplitStringPiece(
                mapping.extensions, ",", base::TRIM_WHITESPACE,
                base::SPLIT_WANT_ALL)) {
-#if defined(OS_WIN)
-        extensions->insert(base::UTF8ToUTF16(this_extension));
-#else
-        extensions->insert(this_extension.as_string());
-#endif
+        extensions->insert(StringToFilePathStringType(this_extension));
       }
     }
   }
