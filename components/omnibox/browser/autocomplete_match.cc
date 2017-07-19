@@ -618,6 +618,36 @@ void AutocompleteMatch::PossiblySwapContentsAndDescriptionForDisplay() {
   }
 }
 
+void AutocompleteMatch::InlineTailPrefix(const base::string16& common_prefix) {
+  if (type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+    contents = common_prefix + contents;
+    // Shift existing styles.
+    for (ACMatchClassification& classification : contents_class)
+      classification.offset += common_prefix.size();
+    // Prefix with dim text.
+    contents_class.insert(contents_class.begin(),
+                          ACMatchClassification(0, ACMatchClassification::DIM));
+  } else if (base::StartsWith(contents, common_prefix,
+                              base::CompareCase::SENSITIVE)) {
+    // Prefix with dim text.
+    contents_class.insert(contents_class.begin(),
+                          ACMatchClassification(0, ACMatchClassification::DIM));
+    // Find last one that overlaps or starts at common prefix.
+    size_t i = 1;
+    for (; i < contents_class.size() &&
+           contents_class[i].offset <= common_prefix.size();
+         ++i) {
+    }
+    if (i > 1) {
+      // Erase any in-between.
+      contents_class.erase(contents_class.begin() + 1,
+                           contents_class.begin() + i - 1);
+      // Make this classification start after common prefix.
+      contents_class[i - 1].offset = common_prefix.size();
+    }
+  }
+}
+
 #ifndef NDEBUG
 void AutocompleteMatch::Validate() const {
   ValidateClassifications(contents, contents_class);

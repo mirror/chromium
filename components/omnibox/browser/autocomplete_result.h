@@ -137,6 +137,8 @@ class AutocompleteResult {
       metrics::OmniboxEventProto::PageClassification page_classification,
       ACMatches* matches);
 
+  void InlineTailPrefixes();
+
  private:
   friend class AutocompleteProviderTest;
 

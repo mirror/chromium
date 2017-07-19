@@ -135,6 +135,8 @@ class AutocompleteController : public AutocompleteProviderListener {
     return last_time_default_match_changed_;
   }
 
+  void InlineTailPrefixes();
+
  private:
   friend class AutocompleteProviderTest;
   FRIEND_TEST_ALL_PREFIXES(AutocompleteProviderTest,
