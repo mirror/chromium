@@ -1160,14 +1160,14 @@ cr.define('login', function() {
      */
     get statsMapElements() {
       return {
-          'BrowsingHistory':
-              this.querySelector('.action-box-remove-user-warning-history'),
-          'Passwords':
-              this.querySelector('.action-box-remove-user-warning-passwords'),
-          'Bookmarks':
-              this.querySelector('.action-box-remove-user-warning-bookmarks'),
-          'Autofill':
-              this.querySelector('.action-box-remove-user-warning-autofill')
+        'BrowsingHistory':
+            this.querySelector('.action-box-remove-user-warning-history'),
+            'Passwords':
+                this.querySelector('.action-box-remove-user-warning-passwords'),
+            'Bookmarks':
+                this.querySelector('.action-box-remove-user-warning-bookmarks'),
+            'Autofill':
+                this.querySelector('.action-box-remove-user-warning-autofill')
       }
     },
 
@@ -1243,11 +1243,8 @@ cr.define('login', function() {
         this.passwordLabelElement.textContent = this.authValue;
 
       this.updateActionBoxArea();
-
-      this.passwordElement.setAttribute('aria-label', loadTimeData.getStringF(
-        'passwordFieldAccessibleName', this.user_.emailAddress));
-
       this.customizeUserPodPerUserType();
+      this.updateAriaLabels_();
     },
 
     updateActionBoxArea: function() {
@@ -1258,12 +1255,6 @@ cr.define('login', function() {
 
       this.actionBoxMenuRemoveElement.hidden = !this.user_.canRemove;
 
-      this.actionBoxAreaElement.setAttribute(
-          'aria-label', loadTimeData.getStringF(
-              'podMenuButtonAccessibleName', this.user_.emailAddress));
-      this.actionBoxMenuRemoveElement.setAttribute(
-          'aria-label', loadTimeData.getString(
-               'podMenuRemoveItemAccessibleName'));
       this.actionBoxMenuTitleNameElement.textContent = this.user_.isOwner ?
           loadTimeData.getStringF('ownerUserPattern', this.user_.displayName) :
           this.user_.displayName;
@@ -1297,6 +1288,40 @@ cr.define('login', function() {
       } else if (this.user_.isApp) {
         this.setUserPodIconType('app');
       }
+    },
+
+    /**
+     * Updates ARIA labels and sets hidden states. All updates related to ARIA
+     * should go here.
+     * @private
+     */
+    updateAriaLabels_: function() {
+      this.setAttribute('aria-label', this.user_.displayName);
+      this.querySelector('.password-container')
+          .setAttribute(
+              'aria-label',
+              loadTimeData.getStringF(
+                  'passwordFieldAccessibleName', this.user_.emailAddress));
+      this.actionBoxAreaElement.setAttribute(
+          'aria-label',
+          loadTimeData.getStringF(
+              'podMenuButtonAccessibleName', this.user_.emailAddress));
+      this.actionBoxMenuRemoveElement.setAttribute(
+          'aria-label',
+          loadTimeData.getString('podMenuRemoveItemAccessibleName'));
+
+      // Make the screen reader skip the generic verbalization of "Image".
+      this.imageElement.setAttribute('aria-hidden', 'true');
+      this.smallPodImageElement.setAttribute('aria-hidden', 'true');
+      // Make the screen reader skip the name elements to avoid repetition
+      // because the entire pod has the user name as the ARIA label.
+      this.nameElement.setAttribute('aria-hidden', 'true');
+      this.smallPodNameElement.setAttribute('aria-hidden', 'true');
+      // Prevent the password field from being focused multiple times.
+      // See crbug.com/746568.
+      this.passwordElement.setAttribute('aria-hidden', 'true');
+      this.querySelector('.action-box-button')
+          .setAttribute('aria-hidden', 'true');
     },
 
     isPinReady: function() {
