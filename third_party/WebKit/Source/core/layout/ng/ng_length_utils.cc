@@ -186,6 +186,33 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
   }
 }
 
+LayoutUnit ResolveWidth(const Length& width,
+                        const NGConstraintSpace& space,
+                        const ComputedStyle& style,
+                        const Optional<MinMaxContentSize>& child_minmax,
+                        LengthResolveType resolve_type) {
+  if (space.WritingMode() == kHorizontalTopBottom)
+    return ResolveInlineLength(space, style, child_minmax, width, resolve_type);
+  LayoutUnit computed_width =
+      child_minmax.has_value() ? child_minmax->max_content : LayoutUnit();
+  return ResolveBlockLength(space, style, style.Width(), computed_width,
+                            resolve_type);
+}
+
+LayoutUnit ResolveHeight(const Length& height,
+                         const NGConstraintSpace& space,
+                         const ComputedStyle& style,
+                         const Optional<MinMaxContentSize>& child_minmax,
+                         LengthResolveType resolve_type) {
+  if (space.WritingMode() != kHorizontalTopBottom)
+    return ResolveInlineLength(space, style, child_minmax, height,
+                               resolve_type);
+  LayoutUnit computed_height =
+      child_minmax.has_value() ? child_minmax->max_content : LayoutUnit();
+  return ResolveBlockLength(space, style, height, computed_height,
+                            resolve_type);
+}
+
 MinMaxContentSize ComputeMinAndMaxContentContribution(
     const ComputedStyle& style,
     const WTF::Optional<MinMaxContentSize>& min_and_max) {

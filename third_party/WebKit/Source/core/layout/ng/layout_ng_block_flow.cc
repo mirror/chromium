@@ -21,8 +21,36 @@ bool LayoutNGBlockFlow::IsOfType(LayoutObjectType type) const {
 void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
   LayoutAnalyzer::BlockScope analyzer(*this);
 
+  Optional<LayoutUnit> override_logical_width;
+  Optional<LayoutUnit> override_logical_height;
+
+  if (IsOutOfFlowPositioned()) {
+    // LegacyLayout and LayoutNG use different strategies to set size of
+    // an OOF positioned child. In Legacy lets child computes the size,
+    // in NG size is "forced" from parent to child.
+    // This is a compat layer that "forces" size computed by Legacy
+    // on an NG child.
+    LogicalExtentComputedValues computed_values;
+    const ComputedStyle* style = Style();
+    bool logical_width_is_shrink_to_fit =
+        style->LogicalWidth().IsAuto() &&
+        (style->LogicalLeft().IsAuto() || style->LogicalRight().IsAuto());
+    if (!logical_width_is_shrink_to_fit) {
+      ComputeLogicalWidth(computed_values);
+      override_logical_width =
+          computed_values.extent_ - BorderAndPaddingLogicalWidth();
+    }
+    if (!StyleRef().LogicalHeight().IsAuto()) {
+      ComputeLogicalHeight(computed_values);
+      override_logical_height =
+          computed_values.extent_ - BorderAndPaddingLogicalHeight();
+    }
+  }
+
   RefPtr<NGConstraintSpace> constraint_space =
-      NGConstraintSpace::CreateFromLayoutObject(*this);
+      NGConstraintSpace::CreateFromLayoutObject(*this, override_logical_width,
+                                                override_logical_height);
+
   RefPtr<NGLayoutResult> result =
       NGBlockNode(this).Layout(constraint_space.Get());
 
