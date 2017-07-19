@@ -16,6 +16,24 @@
       "revId": "3014829cd98d5d98835444294e0c6da88bd94157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49194de8_70514cdd",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e55920_6669d7ef",
+      "revId": "3014829cd98d5d98835444294e0c6da88bd94157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
