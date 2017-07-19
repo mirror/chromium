@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf59f78_2d6a908b",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T02:54:58Z",
+      "side": 1,
+      "message": "Would this be right?\n\n// The following code may show/update the touch bar by eventually calling into |makeTouchBar|.",
+      "range": {
+        "startLine": 302,
+        "startChar": 5,
+        "endLine": 302,
+        "endChar": 26
+      },
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0177da64_21a6fb82",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T02:54:58Z",
+      "side": 1,
+      "message": "nit: Pretty sure this ifdef is unnecessary?",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c9ccd7_8be37d61",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T02:54:58Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8a9b09_30f11c80",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T02:54:58Z",
+      "side": 1,
+      "message": "Is it possible to select an item (say |suggestion_| is a meaningful credit card suggestion) and expect that some metrics were logged with base::HistogramTester?",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7172fc5a_463d3526",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T02:54:58Z",
+      "side": 1,
+      "message": "Should credit card autofill be a case here? I\u0027m not following entirely.",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
