@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "6100d717_5f841b45",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T01:35:21Z",
+      "side": 1,
+      "message": "nit: GetRoutingID for consistency with other functions named \"GetRoutingID\"",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f5e6457_cc7faaec",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 10
@@ -139,6 +156,40 @@
       "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12d4dd8c_9402c2cd",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T01:35:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this sentence, it\u0027s basically just repeating the return type.",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcab3cb_22073ece",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T01:35:21Z",
+      "side": 1,
+      "message": "Since returning 0 would break the contract (it\u0027s not a unique ID), I think this should just be a pure virtual function: \nvirtual int GetRoutingID() \u003d 0;",
+      "revId": "38c7fa05f01bf20f0fbe5c69c472387c73005128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

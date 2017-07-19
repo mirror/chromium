@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d41520_0c20378f",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T01:35:21Z",
+      "side": 1,
+      "message": "You could combine these two sentences by adding \"to be used by shared workers\" to the end of the first one.",
+      "revId": "79fd0f4202d6cfe98aec901e7bcbf8fcf2c85480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
