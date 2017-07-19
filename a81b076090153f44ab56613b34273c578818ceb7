@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f589131_78ce43ee",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-19T00:43:19Z",
+      "side": 1,
+      "message": "RGB FBO doens\u0027t work in i915. Daniele, does it work on Rockchip? If so, I\u0027ll change here\n#if defined(ARCH_CPU_X86_FAMILY)\nreturn false;\n#else\nreturn true;\n#endif\n\nor delegate this to feature_info to check it out in runtime.",
+      "revId": "a81b076090153f44ab56613b34273c578818ceb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
