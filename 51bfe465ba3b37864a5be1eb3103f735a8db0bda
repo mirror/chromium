@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462975c4_f65f6825",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "What guarantees that |remaining_| is a multiple of the data pipe size? What is teh data pipe size? https://cs.chromium.org/chromium/src/mojo/public/c/system/data_pipe.h?l\u003d145\u0026rcl\u003da71c6a5a069b18405dbffd86fffb01733bd59556",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee72f56_35fa37ae",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "unneeded return",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf0f169_b3ba14b9",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "Start sending meta data (V8 code cache data).",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0df731b_dd58f1ae",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "Is this needed? GetCharset just returns !charset-\u003eempty()\n\ncharset.clear() may be a better way to clear the string without constructing a new string for \"\".",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742c3f28_86e723db",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "add \u0027.\u0027 at end",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864f03e8_aeee6dcd",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "\"OnResponseDataWritten\" or else \"bytes_read\"?",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac486825_d3039337",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "nit: status !\u003d kSuccess may be a bit safer in case we add enum values later",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0819b5cf_316eea5f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "\u0027.\u0027 at end of comments in lines 238 241 245",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07329be4_d00ef9e8",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "will be \u003d\u003e are",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e497d35b_fa5fcde6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "++current_streaming_script_;\n\nmaybe it should be called \"imported_script_iter_\" instread?",
+      "range": {
+        "startLine": 352,
+        "startChar": 4,
+        "endLine": 352,
+        "endChar": 29
+      },
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d653d58_9d2cf93a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "could it make sense to put the START and END in the ctor and dtor instead? That helps guarantee the events are balanced.",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11066167_20cb43ee",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "a little vague... maybe imported_script_urls_ or just imported_scripts_. The latter would be consistent with |current_streaming_script| too",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183b26f7_4ae34806",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "this class seems to have several words for sending a script: \"Send\", \"Transfer\", \"Stream\", \"Push\". Can you unify them so it\u0027s just one word? Since the class name is \"Sender\", maybe they should all be about \"Sending\"?",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2756de_e8a832ba",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "\"This is null when no meta data is available.\"",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617cce7b_ac07153d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "what is Loader? :)\n\nDoes this conflict with another patch?",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560abc7d_ed96f69b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "didn\u0027t another patch do all this?",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c55c14_adb21782",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T05:22:18Z",
+      "side": 1,
+      "message": "i liked just \"blocks\"",
+      "revId": "51bfe465ba3b37864a5be1eb3103f735a8db0bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
