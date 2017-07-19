@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "aadaeedf_c6c99c50",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-19T09:02:06Z",
+      "side": 1,
+      "message": "Thanks for sharing the ideas.\n\nI\u0027m not a big fan of IsRunningOnChromeOS() as it can easily be abused (although in this case the usage seems legitimate), so I\u0027d vote to (3).",
+      "parentUuid": "fa93013c_f92f0c39",
+      "range": {
+        "startLine": 188,
+        "startChar": 25,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "18691fec34bb213cec158fb632a440427ad59c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c33b4e5f_0b863d83",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
