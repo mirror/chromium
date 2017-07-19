@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65057e1c_bcce783d",
+        "filename": "device/serial/serial_device_enumerator_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-19T20:53:03Z",
+      "side": 1,
+      "message": "The modern style for calling New() on a Mojo struct type, to avoid listing the full type name twice on a single line, is:\n\nauto callout_info \u003d mojom::SerialDeviceInfo::New();\n\nIf you want to update this here and elsewhere in your patch you can.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 76
+      },
+      "revId": "ceded525d4ffb8a80604b07376415387fd05e7c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
