@@ -16,6 +16,24 @@
       "revId": "e9be3dee3b85f9b55030c1f9764c2f82e055dbc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18f95a0_b6d35840",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-19T09:11:06Z",
+      "side": 1,
+      "message": "Will be fun the time I forget to remove it. :-) But yes, it\u0027s just for testing the patch in a jumbo configuration. It\u0027s removed now.",
+      "parentUuid": "ab3b6601_01ef1d3c",
+      "revId": "e9be3dee3b85f9b55030c1f9764c2f82e055dbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
