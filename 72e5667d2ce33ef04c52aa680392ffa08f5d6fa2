@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3017ea0a_64000235",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T21:22:53Z",
+      "side": 1,
+      "message": "\u003e Not sure how to make this clearer (C++ syntax is horrible here). Willing to take suggestions.\n\nI just meantn the type name should be WebUIFactoryFunctionPointer",
+      "parentUuid": "db2967f1_409279b7",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 47
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0dd8fca_264ea1b1",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I actually needed it (specifically because it\u0027s in the ternary). Otherwise I get this error:\n\n../../android_webview/browser/aw_web_ui_controller_factory.cc:52:19: error: incompatible operand types (\u0027(anonymous namespace)::WebUIFactoryFunction\u0027 (aka \u0027content::WebUIController *(*)(content::WebUI *, const GURL \u0026)\u0027) and \u0027content::WebUI::TypeID\u0027 (aka \u0027void *\u0027))\n  return function ? (function) : WebUI::kNoWebUI;",
       "parentUuid": "eef20a3f_99cdbd32",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5409f40_144ec3c7",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T21:22:53Z",
+      "side": 1,
+      "message": "\u003e I actually needed it (specifically because it\u0027s in the ternary). Otherwise I get this error:\n\u003e \n\u003e ../../android_webview/browser/aw_web_ui_controller_factory.cc:52:19: error: incompatible operand types (\u0027(anonymous namespace)::WebUIFactoryFunction\u0027 (aka \u0027content::WebUIController *(*)(content::WebUI *, const GURL \u0026)\u0027) and \u0027content::WebUI::TypeID\u0027 (aka \u0027void *\u0027))\n\u003e   return function ? (function) : WebUI::kNoWebUI;\n\nwhat if you declare and assign to a variable first, or not use the ternary operator?\n\nAnd if not, reinterpret_cast is wrong because it\u0027s just reinterpreting bits. It should be static_cast instead, although that\u0027s a bit frowned upon as well.",
+      "parentUuid": "39724807_eb7bd739",
       "range": {
         "startLine": 43,
         "startChar": 20,
