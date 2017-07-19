@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3c4f90_9c90f7c0",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T23:34:25Z",
+      "side": 1,
+      "message": "Let\u0027s discuss exposing this from the FeatureEngagementTracker instead. Maybe just reply to this comment with the bug you were planning on filing?",
+      "revId": "b15ca9767c453c2a2924dfaf999e0649641718b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
