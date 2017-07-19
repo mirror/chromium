@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a267b458_3161abd5",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-19T15:13:10Z",
+      "side": 1,
+      "message": "Why not use gn args? We do not use environment variables unless strictly necessary. Environment variables are not discoverable and eventually build up to a maintenance nightmare.",
+      "revId": "08d38b45638d504b959d6219e857eab6fca72b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a8ecf1_39f7dd8b",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-19T15:13:10Z",
+      "side": 1,
+      "message": "+ John since it\u0027s about more android tests.",
+      "revId": "08d38b45638d504b959d6219e857eab6fca72b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
