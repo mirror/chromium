@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "456f6042_cbf80bfd",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:50:38Z",
+      "side": 1,
+      "message": "Gotcha. That reasoning belongs in a comment then. Also rename the AddressLess and AddressEqual to AddressPartialLess and AddressParialEqual or something that will care people off from blindly using them.",
+      "parentUuid": "26d99e55_56e13203",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b62cae50_70a72e3a",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -858,6 +882,24 @@
     },
     {
       "key": {
+        "uuid": "2545b275_2ee4de7d",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:50:38Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "e000f9e7_3f007e6e",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "366d4dbd_824fbfe3",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 4
@@ -893,6 +935,30 @@
       "side": 1,
       "message": "Because the loop changes the values.",
       "parentUuid": "366d4dbd_824fbfe3",
+      "range": {
+        "startLine": 212,
+        "startChar": 18,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b134e0d2_eca05710",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:50:38Z",
+      "side": 1,
+      "message": "oh. duh. thanks.",
+      "parentUuid": "60f6a0cb_35fb6df7",
       "range": {
         "startLine": 212,
         "startChar": 18,
