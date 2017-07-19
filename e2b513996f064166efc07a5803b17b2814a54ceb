@@ -34,6 +34,24 @@
       "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1763d9_9f8304eb",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-19T20:56:42Z",
+      "side": 1,
+      "message": "In such case, you may remove the code from CrasAudioHandler::HandleAudioDeviceChange() because it will go through this code path too. I suggest to write some unit tests to verify that under different use case the SystemMonitor will be notified for the device change.",
+      "parentUuid": "cf03f23c_5c9174a4",
+      "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
