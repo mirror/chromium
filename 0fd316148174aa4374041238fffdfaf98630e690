@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b8d95d1_f5318684",
+        "filename": "content/public/test/test_renderer_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-19T07:50:05Z",
+      "side": 1,
+      "message": "maybe make this private and the AudiorRendererHostTest a friend of RenderViewHostTestHarness?",
+      "revId": "0fd316148174aa4374041238fffdfaf98630e690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
