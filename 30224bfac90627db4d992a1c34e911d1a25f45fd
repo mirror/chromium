@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a79d5250_2d0e61ee",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc09b08_ab92b2b0",
+      "range": {
+        "startLine": 936,
+        "startChar": 3,
+        "endLine": 936,
+        "endChar": 35
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9b33e8_3d29c511",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa79cf09_a49a0390",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c9b33e8_3d29c511",
+      "range": {
+        "startLine": 1027,
+        "startChar": 0,
+        "endLine": 1028,
+        "endChar": 50
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b6b738c_ed4948c5",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dca95776_d27aa1c0",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 31
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25de079_1e3c3bea",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79448fce_9e2d4c48",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a25de079_1e3c3bea",
+      "range": {
+        "startLine": 1051,
+        "startChar": 0,
+        "endLine": 1053,
+        "endChar": 57
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d23a0f99_78de32e0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b6816e_72227b10",
+      "range": {
+        "startLine": 1058,
+        "startChar": 4,
+        "endLine": 1058,
+        "endChar": 45
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74b5eaf3_1367afde",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1c0085cf_4e004df0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b5eaf3_1367afde",
+      "range": {
+        "startLine": 1227,
+        "startChar": 5,
+        "endLine": 1227,
+        "endChar": 18
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7c3bcdb_c793d4c5",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4296ca92_31e0b42a",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T13:11:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7c3bcdb_c793d4c5",
+      "range": {
+        "startLine": 1233,
+        "startChar": 21,
+        "endLine": 1233,
+        "endChar": 37
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
