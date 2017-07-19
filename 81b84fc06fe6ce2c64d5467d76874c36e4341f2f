@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "36f3239d_2f2b3310",
+        "filename": "components/metrics/field_trials_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-19T01:17:01Z",
+      "side": 1,
+      "message": "Huh, I hadn\u0027t realized that\u0027s how C++ inheritance worked.  Fascinating!  Thanks for the explanation \u003d)",
+      "parentUuid": "e7ddfc42_bff49de9",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "81b84fc06fe6ce2c64d5467d76874c36e4341f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af7966d4_33a91a91",
         "filename": "components/metrics/field_trials_provider.h",
         "patchSetId": 1
