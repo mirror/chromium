@@ -34,6 +34,11 @@ class ASH_EXPORT TrayDragController {
   void UpdateGestureDrag(const ui::GestureEvent& gesture);
   void CompleteGestureDrag(const ui::GestureEvent& gesture);
 
+  // Recode user metrics action for swiping that happened on ImeMenuTray,
+  // SystemTray, PaletteTray, WebNotificationTray or their associated tray
+  // bubbles.
+  void RecordUserMetricsAction(bool hide_bubble);
+
   // Update the bounds of the tray bubble according to
   // |gesture_drag_amount_|.
   void UpdateBubbleBounds();

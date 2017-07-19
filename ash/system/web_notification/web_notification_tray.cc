@@ -271,6 +271,11 @@ class WebNotificationLabel : public WebNotificationItem {
   DISALLOW_COPY_AND_ASSIGN(WebNotificationLabel);
 };
 
+// WebNotificationTray
+
+// static
+const char WebNotificationTray::kViewClassName[] = "WebNotificationTray";
+
 WebNotificationTray::WebNotificationTray(Shelf* shelf,
                                          aura::Window* status_area_window,
                                          SystemTray* system_tray)
@@ -406,6 +411,10 @@ void WebNotificationTray::UpdateAfterLoginStatusChange(
     LoginStatus login_status) {
   message_center()->SetLockedState(login_status == LoginStatus::LOCKED);
   OnMessageCenterTrayChanged();
+}
+
+const char* WebNotificationTray::GetClassName() const {
+  return kViewClassName;
 }
 
 void WebNotificationTray::UpdateAfterShelfAlignmentChange() {

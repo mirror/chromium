@@ -46,6 +46,7 @@ enum BubbleCreationType {
 
 class ASH_EXPORT SystemTray : public TrayBackgroundView {
  public:
+  static const char kViewClassName[];
 
   explicit SystemTray(Shelf* shelf);
   ~SystemTray() override;
@@ -124,6 +125,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   TrayAudio* GetTrayAudio() const;
 
   // TrayBackgroundView:
+  const char* GetClassName() const override;
   void UpdateAfterShelfAlignmentChange() override;
   void AnchorUpdated() override;
   base::string16 GetAccessibleNameForTray() override;

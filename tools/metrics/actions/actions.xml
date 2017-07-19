@@ -16357,6 +16357,38 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="StatusArea_IMETrayBubble_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the IME tray bubble and then ultimately
+    close the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_IMETrayBubble_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the IME tray bubble and then ultimately keep
+    the bubble opened.
+  </description>
+</action>
+
+<action name="StatusArea_IMETray_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the IME tray and then ultimately close the
+    bubble.
+  </description>
+</action>
+
+<action name="StatusArea_IMETray_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the IME tray and then ultimately open the
+    bubble.
+  </description>
+</action>
+
 <action name="StatusArea_IME_Detailed">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -16447,12 +16479,76 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="StatusArea_NotificationTrayBubble_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the web notification tray bubble and then
+    ultimately close the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_NotificationTrayBubble_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the web notification tray bubble and then
+    ultimately keep the bubble opened.
+  </description>
+</action>
+
+<action name="StatusArea_NotificationTray_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the web notification tray and then
+    ultimately close the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_NotificationTray_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the web notification tray and then
+    ultimately open the bubble.
+  </description>
+</action>
+
 <action name="StatusArea_OS_Update_Default_Selected">
   <owner>bruthig@chromium.org</owner>
   <owner>tbuckley@chromium.org</owner>
   <description>
     Counts the number of times the user selects the update row in the system
     menu.
+  </description>
+</action>
+
+<action name="StatusArea_PaletteTrayBubble_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the palette tray bubble and then ultimately
+    close the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_PaletteTrayBubble_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the palette tray bubble and then ultimately
+    keep the bubble opened.
+  </description>
+</action>
+
+<action name="StatusArea_PaletteTray_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the palette tray and then ultimately close
+    the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_PaletteTray_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the palette tray and then ultimately open
+    the bubble.
   </description>
 </action>
 
@@ -16526,6 +16622,38 @@ should be able to be added at any place in this file.
 <action name="StatusArea_StickyKeysEnabled">
   <owner>minch@chromium.org</owner>
   <description>Ash system menu: Accessibility: Enable sticky keys</description>
+</action>
+
+<action name="StatusArea_SystemTrayBubble_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the system tray bubble and then ultimately
+    close the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_SystemTrayBubble_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the system tray bubble and then ultimately
+    keep the bubble opened.
+  </description>
+</action>
+
+<action name="StatusArea_SystemTray_SwipeToClose">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the system tray and then ultimately close
+    the bubble.
+  </description>
+</action>
+
+<action name="StatusArea_SystemTray_SwipeToOpen">
+  <owner>minch@chromium.org</owner>
+  <description>
+    Records when the user swipes on the system tray and then ultimately open the
+    bubble.
+  </description>
 </action>
 
 <action name="StatusArea_TapDraggingDisabled">

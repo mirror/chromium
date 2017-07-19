@@ -292,6 +292,11 @@ class ImeMenuListView : public ImeListView {
 
 }  // namespace
 
+// ImeMenuTray
+
+// static
+const char ImeMenuTray::kViewClassName[] = "ImeMenuTray";
+
 ImeMenuTray::ImeMenuTray(Shelf* shelf)
     : TrayBackgroundView(shelf),
       ime_controller_(Shell::Get()->ime_controller()),
@@ -432,6 +437,10 @@ bool ImeMenuTray::ShouldShowBottomButtons() {
 bool ImeMenuTray::ShouldShowKeyboardToggle() const {
   return keyboard_suppressed_ &&
          !Shell::Get()->accessibility_delegate()->IsVirtualKeyboardEnabled();
+}
+
+const char* ImeMenuTray::GetClassName() const {
+  return kViewClassName;
 }
 
 base::string16 ImeMenuTray::GetAccessibleNameForTray() {

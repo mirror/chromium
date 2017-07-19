@@ -422,6 +422,62 @@ void UserMetricsRecorder::RecordUserMetricsAction(UserMetricsAction action) {
     case UMA_STATUS_AREA_SMS_NOTIFICATION_DISMISS_MSG:
       RecordAction(UserMetricsAction("StatusArea_SMS_Notification_DismissMsg"));
       break;
+    case UMA_STATUS_AREA_IME_TRAY_BUBBLE_SWIPE_TO_CLOSE:
+      RecordAction(UserMetricsAction("StatusArea_IMETrayBubble_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_IME_TRAY_BUBBLE_SWIPE_TO_OPEN:
+      RecordAction(UserMetricsAction("StatusArea_IMETrayBubble_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_IME_TRAY_SWIPE_TO_CLOSE:
+      RecordAction(UserMetricsAction("StatusArea_IMETray_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_IME_TRAY_SWIPE_TO_OPEN:
+      RecordAction(UserMetricsAction("StatusArea_IMETray_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_NOTIFICATION_TRAY_BUBBLE_SWIPE_TO_CLOSE:
+      RecordAction(
+          UserMetricsAction("StatusArea_NotificationTrayBubble_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_NOTIFICATION_TRAY_BUBBLE_SWIPE_TO_OPEN:
+      RecordAction(
+          UserMetricsAction("StatusArea_NotificationTrayBubble_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_NOTIFICATION_TRAY_SWIPE_TO_CLOSE:
+      RecordAction(
+          UserMetricsAction("StatusArea_NotificationTray_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_NOTIFICATION_TRAY_SWIPE_TO_OPEN:
+      RecordAction(
+          UserMetricsAction("StatusArea_NotificationTray_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_PALETTE_TRAY_BUBBLE_SWIPE_TO_CLOSE:
+      RecordAction(
+          UserMetricsAction("StatusArea_PaletteTrayBubble_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_PALETTE_TRAY_BUBBLE_SWIPE_TO_OPEN:
+      RecordAction(
+          UserMetricsAction("StatusArea_PaletteTrayBubble_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_PALETTE_TRAY_SWIPE_TO_CLOSE:
+      RecordAction(UserMetricsAction("StatusArea_PaletteTray_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_PALETTE_TRAY_SWIPE_TO_OPEN:
+      RecordAction(UserMetricsAction("StatusArea_PaletteTray_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_SYSTEM_TRAY_BUBBLE_SWIPE_TO_CLOSE:
+      RecordAction(
+          UserMetricsAction("StatusArea_SystemTrayBubble_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_SYSTEM_TRAY_BUBBLE_SWIPE_TO_OPEN:
+      RecordAction(
+          UserMetricsAction("StatusArea_SystemTrayBubble_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_SYSTEM_TRAY_SWIPE_TO_CLOSE:
+      RecordAction(UserMetricsAction("StatusArea_SystemTray_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_SYSTEM_TRAY_SWIPE_TO_OPEN:
+      RecordAction(UserMetricsAction("StatusArea_SystemTray_SwipeToOpen"));
+      break;
     case UMA_STATUS_AREA_TRACING_DEFAULT_SELECTED:
       RecordAction(UserMetricsAction("StatusArea_Tracing_Default_Selected"));
       break;

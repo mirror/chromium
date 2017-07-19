@@ -197,6 +197,9 @@ class SystemTray::ActivationObserver : public ::wm::ActivationChangeObserver {
 
 // SystemTray
 
+// static
+const char SystemTray::kViewClassName[] = "SystemTray";
+
 SystemTray::SystemTray(Shelf* shelf) : TrayBackgroundView(shelf) {
   SetInkDropMode(InkDropMode::ON);
 
@@ -524,6 +527,10 @@ base::string16 SystemTray::GetAccessibleTimeString(
       Shell::Get()->system_tray_controller()->hour_clock_type();
   return base::TimeFormatTimeOfDayWithHourClockType(now, hour_type,
                                                     base::kKeepAmPm);
+}
+
+const char* SystemTray::GetClassName() const {
+  return kViewClassName;
 }
 
 void SystemTray::UpdateAfterShelfAlignmentChange() {
