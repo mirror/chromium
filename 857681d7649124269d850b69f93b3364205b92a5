@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a432c554_0fd96a09",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-19T10:09:25Z",
+      "side": 1,
+      "message": "Yes, exactly!",
+      "parentUuid": "a673a51b_c3ce306d",
+      "revId": "857681d7649124269d850b69f93b3364205b92a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8799b0c_2e847b3b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 19
