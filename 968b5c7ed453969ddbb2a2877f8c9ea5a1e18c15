@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f96a8118_f6b67284",
+        "filename": "components/browsing_data/core/counters/sync_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-19T08:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492d4de6_00129728",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e2ea37_56864392",
         "filename": "components/browsing_data/core/counters/sync_tracker.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "09016484_8c6f8444",
+        "filename": "components/browsing_data/core/counters/sync_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-19T08:23:15Z",
+      "side": 1,
+      "message": "I think there wouldn\u0027t be a copy in line 22 because the function is already called with an Rvalue of SyncPredicate?\nBut I guess I mixed it up with OnceCallback, the move is not really required, so I removed it.",
+      "parentUuid": "58e2ea37_56864392",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a01ee551_128b5775",
         "filename": "components/browsing_data/core/counters/sync_tracker.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5350c4eb_7b3a2044",
+        "filename": "components/browsing_data/core/counters/sync_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-19T08:23:15Z",
+      "side": 1,
+      "message": "I used composition because this makes it more flexible if we want to extract another common behavior that is independent from sync.",
+      "parentUuid": "a01ee551_128b5775",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "968b5c7ed453969ddbb2a2877f8c9ea5a1e18c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
