@@ -54,7 +54,6 @@
 #include "jni/VrShellImpl_jni.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
-#include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/display/display.h"
@@ -66,7 +65,6 @@
 #include "url/gurl.h"
 
 using base::android::JavaParamRef;
-using base::android::JavaRef;
 
 namespace vr_shell {
 
@@ -95,7 +93,7 @@ void SetIsInVR(content::WebContents* contents, bool is_in_vr) {
 }  // namespace
 
 VrShell::VrShell(JNIEnv* env,
-                 jobject obj,
+                 const JavaParamRef<jobject>& obj,
                  ui::WindowAndroid* window,
                  bool for_web_vr,
                  bool web_vr_autopresentation_expected,
@@ -138,29 +136,30 @@ void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
-void VrShell::SwapContents(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& web_contents,
-    const JavaParamRef<jobject>& touch_event_synthesizer) {
+void VrShell::SwapContents(JNIEnv* env,
+                           const JavaParamRef<jobject>& obj,
+                           const JavaParamRef<jobject>& web_contents,
+                           const JavaParamRef<jobject>& view_delegate,
+                           const jboolean is_actual_web_contents) {
   content::WebContents* contents =
       content::WebContents::FromJavaWebContents(web_contents);
-  if (contents == web_contents_ &&
-      touch_event_synthesizer.obj() == j_motion_event_synthesizer_.obj())
+  if (contents == web_contents_)
     return;
 
   SetIsInVR(web_contents_, false);
-  j_motion_event_synthesizer_.Reset(env, touch_event_synthesizer);
   web_contents_ = contents;
   compositor_->SetLayer(web_contents_);
   SetIsInVR(web_contents_, true);
   ContentFrameWasResized(false /* unused */);
   SetUiState();
 
-  if (!web_contents_) {
+  if (!is_actual_web_contents) {
+    ui::ViewAndroid view_android;
+    view_android.SetDelegate(view_delegate);
     android_ui_gesture_target_ = base::MakeUnique<AndroidUiGestureTarget>(
-        j_motion_event_synthesizer_.obj(),
+        web_contents_, &view_android,
         Java_VrShellImpl_getNativePageScrollRatio(env, j_vr_shell_.obj()));
+
     input_manager_ = nullptr;
     vr_web_contents_observer_ = nullptr;
     metrics_helper_ = nullptr;
