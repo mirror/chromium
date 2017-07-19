@@ -224,8 +224,8 @@ SkBitmap ImageFrameGenerator::TryToResumeDecode(
   DCHECK(!resume_decoding || decoder);
 
   SkBitmap full_size_image;
-  bool complete = Decode(data, all_data_received, index, &decoder,
-                         &full_size_image, allocator, alpha_option);
+  ImageFrame* current_frame = Decode(data, all_data_received, index, &decoder,
+                                     &full_size_image, allocator, alpha_option);
 
   if (!decoder)
     return SkBitmap();
@@ -246,19 +246,20 @@ SkBitmap ImageFrameGenerator::TryToResumeDecode(
     return SkBitmap();
   }
 
+  // Free as much memory as possible.  For single-frame images, we can
+  // just delete the decoder entirely if they use the exeternal allocator.
+  // For multi-frame images, we keep the decoder around in order to preserve
+  // decoded information such as the required previous frame indexes, but if
+  // we've reached the las frame we can at least delete all the cached frames.
+  // (If we were to do this before reaching the last frame, any subsequent
+  // requested frames which relied on the current frame would trigger extra
+  // re-decoding of all frames in the dependency chain.
   bool remove_decoder = false;
-  if (complete) {
-    // Free as much memory as possible.  For single-frame images, we can
-    // just delete the decoder entirely.  For multi-frame images, we keep
-    // the decoder around in order to preserve decoded information such as
-    // the required previous frame indexes, but if we've reached the last
-    // frame we can at least delete all the cached frames.  (If we were to
-    // do this before reaching the last frame, any subsequent requested
-    // frames which relied on the current frame would trigger extra
-    // re-decoding of all frames in the dependency chain.)
-    if (!is_multi_frame_)
+  if (current_frame) {
+    if (current_frame->GetAllocator() == allocator)
       remove_decoder = true;
-    else if (index == frame_count_ - 1)
+    else if (is_multi_frame_ &&
+             current_frame->GetStatus() == ImageFrame::kFrameComplete)
       decoder->ClearCacheExceptFrame(kNotFound);
   }
 
@@ -285,13 +286,14 @@ void ImageFrameGenerator::SetHasAlpha(size_t index, bool has_alpha) {
   has_alpha_[index] = has_alpha;
 }
 
-bool ImageFrameGenerator::Decode(SegmentReader* data,
-                                 bool all_data_received,
-                                 size_t index,
-                                 ImageDecoder** decoder,
-                                 SkBitmap* bitmap,
-                                 SkBitmap::Allocator* allocator,
-                                 ImageDecoder::AlphaOption alpha_option) {
+ImageFrame* ImageFrameGenerator::Decode(
+    SegmentReader* data,
+    bool all_data_received,
+    size_t index,
+    ImageDecoder** decoder,
+    SkBitmap* bitmap,
+    SkBitmap::Allocator* allocator,
+    ImageDecoder::AlphaOption alpha_option) {
 #if DCHECK_IS_ON()
   DCHECK(decode_mutex_.Locked());
 #endif
@@ -316,31 +318,36 @@ bool ImageFrameGenerator::Decode(SegmentReader* data,
     }
 
     if (!*decoder)
-      return false;
+      return nullptr;
   }
 
   if (should_call_set_data)
     (*decoder)->SetData(data, all_data_received);
 
-  bool using_external_allocator = false;
-
   // For multi-frame image decoders, we need to know how many frames are
   // in that image in order to release the decoder when all frames are
   // decoded. frameCount() is reliable only if all data is received and set in
   // decoder, particularly with GIF.
-  if (all_data_received) {
+  if (all_data_received)
     frame_count_ = (*decoder)->FrameCount();
-    // TODO (scroggo): If !m_isMultiFrame && newDecoder && allDataReceived, it
-    // should always be the case that 1u == m_frameCount. But it looks like it
-    // is currently possible for m_frameCount to be another value.
-    if (!is_multi_frame_ && new_decoder && 1u == frame_count_) {
-      // If we're using an external memory allocator that means we're decoding
-      // directly into the output memory and we can save one memcpy.
-      DCHECK(allocator);
-      (*decoder)->SetMemoryAllocator(allocator);
-      using_external_allocator = true;
-    }
+
+  bool using_external_allocator = false;
+
+  if (allocator && Platform::Current()->IsLowEndDevice())
+    using_external_allocator = true;
+
+  // TODO (scroggo): If !is_multi_frame_ && new_decoder && frame_count_, it
+  // should always be the case that 1u == frame_count_. But it looks like it
+  // is currently possible for frame_count_ to be another value.
+  if (allocator && all_data_received && !is_multi_frame_ && new_decoder &&
+      1u == frame_count_) {
+    // If we're using an external memory allocator that means we're decoding
+    // directly into the output memory and we can save one memcpy.
+    using_external_allocator = true;
   }
+
+  if (using_external_allocator)
+    (*decoder)->SetMemoryAllocator(allocator);
 
   ImageFrame* frame = (*decoder)->FrameBufferAtIndex(index);
 
@@ -353,13 +360,7 @@ bool ImageFrameGenerator::Decode(SegmentReader* data,
   (*decoder)->ClearCacheExceptFrame(index);
 
   if (!frame || frame->GetStatus() == ImageFrame::kFrameEmpty)
-    return false;
-
-  // A cache object is considered complete if we can decode a complete frame.
-  // Or we have received all data. The image might not be fully decoded in
-  // the latter case.
-  const bool is_decode_complete =
-      frame->GetStatus() == ImageFrame::kFrameComplete || all_data_received;
+    return nullptr;
 
   SkBitmap full_size_bitmap = frame->Bitmap();
   if (!full_size_bitmap.isNull()) {
@@ -369,7 +370,7 @@ bool ImageFrameGenerator::Decode(SegmentReader* data,
   }
 
   *bitmap = full_size_bitmap;
-  return is_decode_complete;
+  return frame;
 }
 
 bool ImageFrameGenerator::HasAlpha(size_t index) {
