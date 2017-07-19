@@ -1,0 +1,474 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8178079_add276da",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same ifdef as above?",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a34dda6_7660d51d",
+        "filename": "chrome/profiling/allocation_event.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "These look vestigial. Remove?",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2cb9efc_ea98d021",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Comment explaining what this key is meant to be used for?\n\nIs it an a fingerprint (aka. assumed to be unique) for the backtrace? For the event? what?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acc7410_8e8062fa",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "I didn\u0027t think you had to inherit from binary function to make this work... This should also allow you to remove the include of \u003cfunctional\u003e.\n\nSame with the AddressLess above.\n\nAlso...when do you use AddressEqual... and why do it via a struct instead of a binary operator?",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732158a8_76251423",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "This is sorta odd to have an incomplete equality.  This makes me think the AllocationEventSet should actually be an AllocationEventMap with the address as the key.  That\u0027s what you had originally...\n\nCombining the two makes this more confusing.",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62cae50_70a72e3a",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "and in _this_ case you use the unary comparator form for stl comparison...\n\n\nPlease unify on one method for doing the \u003c and \u003d\u003d for our structs.\n\nI think operator overloading is the right thing here.",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2596b8_bd9327b4",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "This comment means almost nothing to me... can rewrite it? and maybe include a why?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b994678b_ededa797",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "This comment also doesn\u0027t make sense. What is \"maps\"?\n\nI think you are describing the general format?\n\nIf so, I think this should be a file level comment. Maybe even in the header. And it should start with a snippet showing a sample JSON.",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e88b350_8cd2d106",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Explain why this is okay.",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcaa237_66244ce9",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Explain what this is? And why it\u0027s HeapsV2 instead of V1?\n\nTarget audience: person 2 years from now that looks at this code after we\u0027ve all quit and moved on to new projects.",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd821b5_cd88fa3d",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c1283_6be570b5",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "\"of the one to reference\" doesn\u0027t make sense to me... rephrase?",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcd0e70_699cc474",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "const Address\u0026 addr?\n\nauto here makes it less clear.",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60919d94_011136f8",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "For each of these \"Write*\" functions, a little comment blob showing a sample of the output would be useful.  Thinking something like:\n\n// \"strings\" [\n//   { \"id\": 1234\n//     \"string\": dontknowwhatgoes here}\n// }",
+      "range": {
+        "startLine": 98,
+        "startChar": 18,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381c39ac_551ee684",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "normally I expect this to be in the {} for the if checking the variable.\n\nThis works logically, but it seems a bit silly to keep storing false in the variable for no reason?",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf723e14_90418b3e",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Move into the if statement?",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0cb5e5_4b629ebf",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Move into the if statement?",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b73f11_fea2676c",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Move into the if statement?",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bf4170_32a80461",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Can we name this something other than set?  That\u0027s clashes visually too much with std::set",
+      "range": {
+        "startLine": 182,
+        "startChar": 62,
+        "endLine": 182,
+        "endChar": 65
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dc72e7_77b77e22",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "This made me look closer at BacktraceStorage and I think the current implementation of BacktraceStorage::Key being the iterator into the std::unordered_set\u003c\u003e doesn\u0027t work out right.\n\nSee https://stackoverflow.com/questions/16781886/can-we-store-unordered-maptiterator.  The iterators will invalidate when enough elements are inserted to force a table growth + rehash.",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366d4dbd_824fbfe3",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "why not const?",
+      "range": {
+        "startLine": 212,
+        "startChar": 18,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f335123_a141c9ff",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T21:03:27Z",
+      "side": 1,
+      "message": "Can we pull the UniqueAlloc into a local?  This is hard to read.",
+      "revId": "8025eb67c06c6eda0a2a2af7a5e6ddcc299c6f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
