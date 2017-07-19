@@ -37,6 +37,64 @@
     },
     {
       "key": {
+        "uuid": "f19836bc_b3f8e7eb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "It looks like \"and Google Assistant\" should be cros only and this should just be \"Search engine\" as before?\n\nAlso please check the case with UX, I think it should be \"Search engine and Google Assistant\" (\"Google Assistant\" is a product name, but \"Search engine\" is not).",
+      "parentUuid": "672e64ba_bf81f8bd",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d890e73a_c1e6e858",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only for these?",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a270c3ad_38be8011",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only?",
+      "range": {
+        "startLine": 1991,
+        "startChar": 11,
+        "endLine": 1991,
+        "endChar": 12
+      },
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acbd010a_9907c8ce",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
         "patchSetId": 2
@@ -244,6 +302,74 @@
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2096ac5_96ecea19",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1676,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c479f621_a5a0682b",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8781ac2_0f80ac57",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa1bc1f_6faf15ee",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T19:24:31Z",
+      "side": 1,
+      "message": "cros only",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
