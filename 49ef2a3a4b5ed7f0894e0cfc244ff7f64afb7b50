@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136dd62f_109b813e",
+        "filename": "ui/file_manager/file_manager/foreground/js/gear_menu_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-19T07:20:35Z",
+      "side": 1,
+      "message": "In ui/file_manager, we don\u0027t use $() function to get element.\nInstead, we usually use querySelector. (In this case, gearMenu.querySelector(\u0027#volume-space-info\u0027) should work.\nCould you use querySelector for consistency?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "49ef2a3a4b5ed7f0894e0cfc244ff7f64afb7b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6113046e_3a447761",
+        "filename": "ui/file_manager/file_manager/foreground/js/gear_menu_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-19T07:20:35Z",
+      "side": 1,
+      "message": "We usually use |event| for a parameter name of Event object. Could you rename e to event?",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "49ef2a3a4b5ed7f0894e0cfc244ff7f64afb7b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
