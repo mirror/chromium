@@ -6,10 +6,10 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "cc/output/begin_frame_args.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "components/viz/common/begin_frame_args.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 
 namespace viz {
@@ -19,7 +19,7 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
     scoped_refptr<ContextProvider> worker_context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     SharedBitmapManager* shared_bitmap_manager,
-    std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source,
+    std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source,
     cc::mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
     cc::mojom::CompositorFrameSinkClientRequest client_request,
     std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
@@ -40,7 +40,7 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
 
 ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
     scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider,
-    std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source,
+    std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source,
     cc::mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
     cc::mojom::CompositorFrameSinkClientRequest client_request,
     std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
@@ -78,7 +78,7 @@ bool ClientLayerTreeFrameSink::BindToClient(
   if (synthetic_begin_frame_source_) {
     client->SetBeginFrameSource(synthetic_begin_frame_source_.get());
   } else {
-    begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
+    begin_frame_source_ = base::MakeUnique<ExternalBeginFrameSource>(this);
     client->SetBeginFrameSource(begin_frame_source_.get());
   }
 
@@ -107,7 +107,7 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
     cc::CompositorFrame frame) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(frame.metadata.begin_frame_ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
   if (!enable_surface_synchronization_) {
@@ -119,10 +119,9 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
                                                 std::move(frame));
 }
 
-void ClientLayerTreeFrameSink::DidNotProduceFrame(
-    const cc::BeginFrameAck& ack) {
+void ClientLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   compositor_frame_sink_->DidNotProduceFrame(ack);
 }
 
@@ -134,7 +133,7 @@ void ClientLayerTreeFrameSink::DidReceiveCompositorFrameAck(
 }
 
 void ClientLayerTreeFrameSink::OnBeginFrame(
-    const cc::BeginFrameArgs& begin_frame_args) {
+    const BeginFrameArgs& begin_frame_args) {
   if (begin_frame_source_)
     begin_frame_source_->OnBeginFrame(begin_frame_args);
 }

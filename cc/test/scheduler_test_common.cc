@@ -20,22 +20,6 @@ void FakeDelayBasedTimeSourceClient::OnTimerTick() {
 
 base::TimeTicks FakeDelayBasedTimeSource::Now() const { return now_; }
 
-TestDelayBasedTimeSource::TestDelayBasedTimeSource(
-    base::SimpleTestTickClock* now_src,
-    OrderedSimpleTaskRunner* task_runner)
-    : DelayBasedTimeSource(task_runner), now_src_(now_src) {}
-
-base::TimeTicks TestDelayBasedTimeSource::Now() const {
-  return now_src_->NowTicks();
-}
-
-std::string TestDelayBasedTimeSource::TypeString() const {
-  return "TestDelayBasedTimeSource";
-}
-
-TestDelayBasedTimeSource::~TestDelayBasedTimeSource() {
-}
-
 std::unique_ptr<FakeCompositorTimingHistory>
 FakeCompositorTimingHistory::Create(
     bool using_synchronous_renderer_compositor) {

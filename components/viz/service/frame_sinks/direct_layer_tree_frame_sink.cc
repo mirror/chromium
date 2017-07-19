@@ -77,7 +77,7 @@ bool DirectLayerTreeFrameSink::BindToClient(
   support_ = support_manager_->CreateCompositorFrameSinkSupport(
       this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
       capabilities_.delegated_sync_points_required);
-  begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
+  begin_frame_source_ = base::MakeUnique<ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());
 
   // Avoid initializing GL context here, as this should be sharing the
@@ -100,7 +100,7 @@ void DirectLayerTreeFrameSink::DetachFromClient() {
 void DirectLayerTreeFrameSink::SubmitCompositorFrame(
     cc::CompositorFrame frame) {
   DCHECK(frame.metadata.begin_frame_ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
   gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
@@ -117,10 +117,9 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(
   DCHECK(result);
 }
 
-void DirectLayerTreeFrameSink::DidNotProduceFrame(
-    const cc::BeginFrameAck& ack) {
+void DirectLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   support_->DidNotProduceFrame(ack);
 }
 
@@ -147,7 +146,7 @@ void DirectLayerTreeFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
-void DirectLayerTreeFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
+void DirectLayerTreeFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
   begin_frame_source_->OnBeginFrame(args);
 }
 

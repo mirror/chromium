@@ -1234,7 +1234,7 @@ void RenderWidgetHostViewAndroid::SubmitCompositorFrame(
 
   ack_callbacks_.push(ack_callback);
 
-  cc::BeginFrameAck ack = frame.metadata.begin_frame_ack;
+  viz::BeginFrameAck ack = frame.metadata.begin_frame_ack;
   if (!has_content) {
     DestroyDelegatedContent();
 
@@ -1272,7 +1272,7 @@ void RenderWidgetHostViewAndroid::DestroyDelegatedContent() {
 }
 
 void RenderWidgetHostViewAndroid::OnDidNotProduceFrame(
-    const cc::BeginFrameAck& ack) {
+    const viz::BeginFrameAck& ack) {
   if (!delegated_frame_host_) {
     // We are not using the browser compositor and there's no DisplayScheduler
     // that needs to be notified about the BeginFrameAck, so we can drop it.
@@ -1285,7 +1285,7 @@ void RenderWidgetHostViewAndroid::OnDidNotProduceFrame(
 }
 
 void RenderWidgetHostViewAndroid::AcknowledgeBeginFrame(
-    const cc::BeginFrameAck& ack) {
+    const viz::BeginFrameAck& ack) {
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
 }
@@ -1591,7 +1591,7 @@ void RenderWidgetHostViewAndroid::HideInternal() {
 }
 
 void RenderWidgetHostViewAndroid::SetBeginFrameSource(
-    cc::BeginFrameSource* begin_frame_source) {
+    viz::BeginFrameSource* begin_frame_source) {
   if (begin_frame_source_ == begin_frame_source)
     return;
 
@@ -1610,7 +1610,7 @@ void RenderWidgetHostViewAndroid::AddBeginFrameRequest(
   // Note that if we don't currently have a BeginFrameSource, outstanding begin
   // frame requests will be pushed if/when we get one during
   // |StartObservingRootWindow()| or when the DelegatedFrameHostAndroid sets it.
-  cc::BeginFrameSource* source = begin_frame_source_;
+  viz::BeginFrameSource* source = begin_frame_source_;
   if (source && outstanding_begin_frame_requests_ && !prior_requests)
     source->AddObserver(this);
 }
@@ -1620,7 +1620,7 @@ void RenderWidgetHostViewAndroid::ClearBeginFrameRequest(
   uint32_t prior_requests = outstanding_begin_frame_requests_;
   outstanding_begin_frame_requests_ = prior_requests & ~request;
 
-  cc::BeginFrameSource* source = begin_frame_source_;
+  viz::BeginFrameSource* source = begin_frame_source_;
   if (source && !outstanding_begin_frame_requests_ && prior_requests)
     source->RemoveObserver(this);
 }
@@ -1672,7 +1672,7 @@ void RenderWidgetHostViewAndroid::StopObservingRootWindow() {
   DCHECK(!begin_frame_source_);
 }
 
-void RenderWidgetHostViewAndroid::SendBeginFrame(cc::BeginFrameArgs args) {
+void RenderWidgetHostViewAndroid::SendBeginFrame(viz::BeginFrameArgs args) {
   TRACE_EVENT2("cc", "RenderWidgetHostViewAndroid::SendBeginFrame",
                "frame_number", args.sequence_number, "frame_time_us",
                args.frame_time.ToInternalValue());
@@ -2208,20 +2208,21 @@ void RenderWidgetHostViewAndroid::OnDetachCompositor() {
   delegated_frame_host_->DetachFromCompositor();
 }
 
-void RenderWidgetHostViewAndroid::OnBeginFrame(const cc::BeginFrameArgs& args) {
+void RenderWidgetHostViewAndroid::OnBeginFrame(
+    const viz::BeginFrameArgs& args) {
   TRACE_EVENT0("cc,benchmark", "RenderWidgetHostViewAndroid::OnBeginFrame");
   if (!host_) {
     OnDidNotProduceFrame(
-        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
+        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
     return;
   }
 
   // In sync mode, we disregard missed frame args to ensure that
   // SynchronousCompositorBrowserFilter::SyncStateAfterVSync will be called
   // during WindowAndroid::WindowBeginFrameSource::OnVSync() observer iteration.
-  if (sync_compositor_ && args.type == cc::BeginFrameArgs::MISSED) {
+  if (sync_compositor_ && args.type == viz::BeginFrameArgs::MISSED) {
     OnDidNotProduceFrame(
-        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
+        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
     return;
   }
 
@@ -2236,11 +2237,11 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(const cc::BeginFrameArgs& args) {
     SendBeginFrame(args);
   } else {
     OnDidNotProduceFrame(
-        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
+        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
   }
 }
 
-const cc::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
+const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
     const {
   return last_begin_frame_args_;
 }

@@ -33,12 +33,12 @@ class WindowAndroidCompositor;
 
 class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
     : public viz::CompositorFrameSinkSupportClient,
-      public cc::ExternalBeginFrameSourceClient {
+      public viz::ExternalBeginFrameSourceClient {
  public:
   class Client {
    public:
     virtual void SetBeginFrameSource(
-        cc::BeginFrameSource* begin_frame_source) = 0;
+        viz::BeginFrameSource* begin_frame_source) = 0;
     virtual void DidReceiveCompositorFrameAck() = 0;
     virtual void ReclaimResources(const std::vector<cc::ReturnedResource>&) = 0;
   };
@@ -53,7 +53,7 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
 
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame);
-  void DidNotProduceFrame(const cc::BeginFrameAck& ack);
+  void DidNotProduceFrame(const viz::BeginFrameAck& ack);
 
   void DestroyDelegatedContent();
 
@@ -81,13 +81,13 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   // viz::CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void OnBeginFrame(const viz::BeginFrameArgs& args) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const viz::LocalSurfaceId& local_surface_id,
                        const gfx::Rect& damage_rect) override;
 
-  // cc::ExternalBeginFrameSourceClient implementation.
+  // viz::ExternalBeginFrameSourceClient implementation.
   void OnNeedsBeginFrames(bool needs_begin_frames) override;
 
   void CreateNewCompositorFrameSinkSupport();
@@ -102,7 +102,7 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   Client* client_;
 
   std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
-  cc::ExternalBeginFrameSource begin_frame_source_;
+  viz::ExternalBeginFrameSource begin_frame_source_;
 
   viz::SurfaceInfo surface_info_;
   bool has_transparent_background_ = false;

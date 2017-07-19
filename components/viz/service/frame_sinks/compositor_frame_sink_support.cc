@@ -8,9 +8,9 @@
 #include <utility>
 
 #include "cc/output/compositor_frame.h"
-#include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_reference.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
@@ -38,8 +38,8 @@ CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
   if (!destruction_callback_.is_null())
     std::move(destruction_callback_).Run();
 
-  // Unregister |this| as a cc::BeginFrameObserver so that the
-  // cc::BeginFrameSource does not call into |this| after it's deleted.
+  // Unregister |this| as a BeginFrameObserver so that the
+  // BeginFrameSource does not call into |this| after it's deleted.
   SetNeedsBeginFrame(false);
 
   // For display root surfaces the surface is no longer going to be visible.
@@ -114,7 +114,7 @@ void CompositorFrameSinkSupport::ReceiveFromChild(
 }
 
 void CompositorFrameSinkSupport::SetBeginFrameSource(
-    cc::BeginFrameSource* begin_frame_source) {
+    BeginFrameSource* begin_frame_source) {
   if (begin_frame_source_ && added_frame_observer_) {
     begin_frame_source_->RemoveObserver(this);
     added_frame_observer_ = false;
@@ -136,12 +136,11 @@ void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
   UpdateNeedsBeginFramesInternal();
 }
 
-void CompositorFrameSinkSupport::DidNotProduceFrame(
-    const cc::BeginFrameAck& ack) {
+void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
   TRACE_EVENT2("cc", "CompositorFrameSinkSupport::DidNotProduceFrame",
                "ack.source_id", ack.source_id, "ack.sequence_number",
                ack.sequence_number);
-  DCHECK_GE(ack.sequence_number, cc::BeginFrameArgs::kStartingFrameNumber);
+  DCHECK_GE(ack.sequence_number, BeginFrameArgs::kStartingFrameNumber);
 
   // |has_damage| is not transmitted, but false by default.
   DCHECK(!ack.has_damage);
@@ -164,8 +163,8 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
 
   // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
-  cc::BeginFrameAck ack = frame.metadata.begin_frame_ack;
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
+  BeginFrameAck ack = frame.metadata.begin_frame_ack;
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
 
   if (!ui::LatencyInfo::Verify(frame.metadata.latency_info,
                                "RenderWidgetHostImpl::OnSwapCompositorFrame")) {
@@ -323,7 +322,7 @@ void CompositorFrameSinkSupport::Init(
   frame_sink_manager_->RegisterFrameSinkManagerClient(frame_sink_id_, this);
 }
 
-void CompositorFrameSinkSupport::OnBeginFrame(const cc::BeginFrameArgs& args) {
+void CompositorFrameSinkSupport::OnBeginFrame(const BeginFrameArgs& args) {
   UpdateNeedsBeginFramesInternal();
   if (current_surface_id_.is_valid()) {
     surface_manager_->SurfaceDamageExpected(current_surface_id_, args);
@@ -333,7 +332,7 @@ void CompositorFrameSinkSupport::OnBeginFrame(const cc::BeginFrameArgs& args) {
     client_->OnBeginFrame(args);
 }
 
-const cc::BeginFrameArgs& CompositorFrameSinkSupport::LastUsedBeginFrameArgs()
+const BeginFrameArgs& CompositorFrameSinkSupport::LastUsedBeginFrameArgs()
     const {
   return last_begin_frame_args_;
 }
@@ -369,7 +368,7 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
   cc::Surface* current_surface =
       surface_manager_->GetSurfaceForId(current_surface_id_);
   current_surface->RequestCopyOfOutput(std::move(copy_request));
-  cc::BeginFrameAck ack;
+  BeginFrameAck ack;
   ack.has_damage = true;
   if (current_surface->HasActiveFrame())
     surface_manager_->SurfaceModified(current_surface->surface_id(), ack);

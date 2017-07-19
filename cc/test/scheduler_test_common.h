@@ -22,7 +22,7 @@ namespace cc {
 
 class RenderingStatsInstrumentation;
 
-class FakeDelayBasedTimeSourceClient : public DelayBasedTimeSourceClient {
+class FakeDelayBasedTimeSourceClient : public viz::DelayBasedTimeSourceClient {
  public:
   FakeDelayBasedTimeSourceClient() : tick_called_(false) {}
   void Reset() { tick_called_ = false; }
@@ -38,7 +38,7 @@ class FakeDelayBasedTimeSourceClient : public DelayBasedTimeSourceClient {
   DISALLOW_COPY_AND_ASSIGN(FakeDelayBasedTimeSourceClient);
 };
 
-class FakeDelayBasedTimeSource : public DelayBasedTimeSource {
+class FakeDelayBasedTimeSource : public viz::DelayBasedTimeSource {
  public:
   explicit FakeDelayBasedTimeSource(base::SingleThreadTaskRunner* task_runner)
       : DelayBasedTimeSource(task_runner) {}
@@ -52,24 +52,6 @@ class FakeDelayBasedTimeSource : public DelayBasedTimeSource {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeDelayBasedTimeSource);
-};
-
-class TestDelayBasedTimeSource : public DelayBasedTimeSource {
- public:
-  TestDelayBasedTimeSource(base::SimpleTestTickClock* now_src,
-                           OrderedSimpleTaskRunner* task_runner);
-  ~TestDelayBasedTimeSource() override;
-
- protected:
-  // Overridden from DelayBasedTimeSource
-  base::TimeTicks Now() const override;
-  std::string TypeString() const override;
-
-  // Not owned.
-  base::SimpleTestTickClock* now_src_;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TestDelayBasedTimeSource);
 };
 
 class FakeCompositorTimingHistory : public CompositorTimingHistory {
@@ -134,7 +116,7 @@ class TestScheduler : public Scheduler {
     return state_machine_.needs_begin_main_frame();
   }
 
-  BeginFrameSource& frame_source() { return *begin_frame_source_; }
+  viz::BeginFrameSource& frame_source() { return *begin_frame_source_; }
 
   bool MainThreadMissedLastDeadline() const {
     return state_machine_.main_thread_missed_last_deadline();

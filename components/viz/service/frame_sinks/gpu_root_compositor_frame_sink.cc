@@ -17,7 +17,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     FrameSinkManagerImpl* frame_sink_manager,
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<Display> display,
-    std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
+    std::unique_ptr<BeginFrameSource> begin_frame_source,
     cc::mojom::CompositorFrameSinkAssociatedRequest request,
     cc::mojom::CompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
@@ -96,7 +96,7 @@ void GpuRootCompositorFrameSink::SubmitCompositorFrame(
 }
 
 void GpuRootCompositorFrameSink::DidNotProduceFrame(
-    const cc::BeginFrameAck& begin_frame_ack) {
+    const BeginFrameAck& begin_frame_ack) {
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
@@ -129,7 +129,7 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
     client_->DidReceiveCompositorFrameAck(resources);
 }
 
-void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
+void GpuRootCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
   hit_test_aggregator_.Swap();
   if (client_)
     client_->OnBeginFrame(args);
