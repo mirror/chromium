@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d06620_736b6283",
+        "filename": "chrome/renderer/safe_browsing/threat_dom_details_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-19T21:25:56Z",
+      "side": 1,
+      "message": "Is it possible to explicitly disable this feature for this test?",
+      "range": {
+        "startLine": 284,
+        "startChar": 29,
+        "endLine": 284,
+        "endChar": 58
+      },
+      "revId": "b79c14260dad9b4cba846b903caf30241696c8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
