@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "9a0d65ac_a6fbf940",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26967,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T23:20:43Z",
+      "side": 1,
+      "message": "Are you referring to creating 7-, 14-, and 28- day aggregates on the dashboard? If so, though that would create roughly the same thing as this CL, I believe that it\u0027s not as accurate. \n\nFor instance, if a user uses this feature every day for 28 days, then this CL would only capture that user once under its 28DA histogram, whereas an 28-day aggregate of simply emitting when the user is active would capture that user 28 times. If we want to know how many users have used our feature in the past 28 days (not how many times the feature has been used), then the metric that our CL provides will be more accurate.\n\nIf you\u0027re referring to something else besides the dashboard aggregation, please let me know!",
+      "parentUuid": "534c51ba_bdaa78fb",
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0186796f_efcd57c4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26968,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T23:20:43Z",
+      "side": 1,
+      "message": "Robert, can you comment on whether using BooleanActive as the enum here instead of my custom one would be a better idea?",
+      "range": {
+        "startLine": 26968,
+        "startChar": 10,
+        "endLine": 26968,
+        "endChar": 37
+      },
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c802f9_eaead10a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -42,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "4ade52db_cccdff6d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26971,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T23:20:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "18c802f9_eaead10a",
+      "range": {
+        "startLine": 26971,
+        "startChar": 37,
+        "endLine": 26971,
+        "endChar": 38
+      },
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7215f977_88a9687e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -56,6 +121,24 @@
       "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa3fba5_bd69d8e0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27104,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T23:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7215f977_88a9687e",
+      "revId": "3b06ae9608bfda422a41d9cea8e8bf3fcb2c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
