@@ -20,6 +20,7 @@ struct MediaSink {
     CAST_AUDIO_GROUP,
     MEETING,
     HANGOUT,
+    EDUCATION,
     GENERIC
   };
 
