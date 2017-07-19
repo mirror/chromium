@@ -28,11 +28,11 @@
 
 namespace chrome {
 
-void ShowChromeCleanerPrompt(
+views::Widget* ShowChromeCleanerPrompt(
     Browser* browser,
     safe_browsing::ChromeCleanerDialogController* controller) {
   ChromeCleanerDialog* dialog = new ChromeCleanerDialog(controller);
-  dialog->Show(browser);
+  return dialog->Show(browser);
 }
 
 }  // namespace chrome
@@ -72,16 +72,17 @@ ChromeCleanerDialog::~ChromeCleanerDialog() {
     controller_->Cancel();
 }
 
-void ChromeCleanerDialog::Show(Browser* browser) {
+views::Widget* ChromeCleanerDialog::Show(Browser* browser) {
   DCHECK(browser);
   DCHECK(!browser_);
   DCHECK(controller_);
 
   browser_ = browser;
-  constrained_window::CreateBrowserModalDialogViews(
-      this, browser_->window()->GetNativeWindow())
-      ->Show();
+  views::Widget* widget = constrained_window::CreateBrowserModalDialogViews(
+      this, browser_->window()->GetNativeWindow());
+  widget->Show();
   controller_->DialogShown();
+  return widget;
 }
 
 // WidgetDelegate overrides.
