@@ -16,6 +16,24 @@
       "revId": "47897db6ffafea57fb84bfbd0fd26862d23d5a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec19bf47_0fdc61fe",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-07-19T16:54:17Z",
+      "side": 1,
+      "message": "I prefer this - but this value propagates to most files. eg the auth handler in GetNextToken, it\u0027s input to several of the crypto functions in ntlm.*, the constructor of NtlmBufferReader, the return and input types in NtlmClient.*.\n\nSo this would be a type in the net:ntlm namespace (probably defined in ntlm_constants.h) not just confined to this class. Are you ok with that?",
+      "parentUuid": "c4de146e_3b718df7",
+      "revId": "47897db6ffafea57fb84bfbd0fd26862d23d5a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

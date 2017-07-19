@@ -16,6 +16,24 @@
       "revId": "5a384704235868cf19bd647c96c3955db43f8d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e83fbc6_e3556f4a",
+        "filename": "net/ntlm/ntlm_buffer_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-07-19T16:54:17Z",
+      "side": 0,
+      "message": "There are currently some places where it is just read. I could try and see if I can eliminate them all, but maybe just add this method too.",
+      "parentUuid": "2096e2d0_f6781091",
+      "revId": "5a384704235868cf19bd647c96c3955db43f8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
