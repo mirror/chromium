@@ -1305,6 +1305,7 @@ test("browser_tests") {
       "../browser/media/encrypted_media_supported_types_browsertest.cc",
       "../browser/media/media_browsertest.cc",
       "../browser/media/media_browsertest.h",
+      "../browser/media/media_engagement_browsertest.cc",
       "../browser/media/test_license_server.cc",
       "../browser/media/test_license_server.h",
       "../browser/media/test_license_server_config.h",
@@ -3563,9 +3564,7 @@ test("unit_tests") {
       "../browser/offline_pages/test_request_coordinator_builder.h",
     ]
     if (is_android) {
-      sources += [
-        "../browser/offline_pages/android/prerendering_offliner_unittest.cc",
-      ]
+      sources += [ "../browser/offline_pages/android/prerendering_offliner_unittest.cc" ]
     }
     deps += [
       "//components/offline_pages/content/background_loader:test_support",
