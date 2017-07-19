@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dcc4313_10629323",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-19T05:00:54Z",
+      "side": 1,
+      "message": "Generally speaking, having too many #ifdef\u0027s makes maintaining the code hard.\nAlso, bypassing EXPECT_* on non-Androids makes these tests somewhat meaningless.\n\nI\u0027d suggest centralize the ifdef into only one place, e.g.\n\nconst int default_text_input_flags \u003d kWebTextInputFlagAutocapitalizeSentences;\n#if defined(OS_ANDROID)\nconst int flags_having_next_focusable_element \u003d default_text_input_flags |\n    kWebTextInputFlagHaveNextFocusableElement;\nconst int flags_having_previous_focusable_element \u003d default_text_input_flags |\n    kWebTextInputFlagHavePreviousFocusableElement;\nconst int flags_having_next_previous_focusable_element \u003d default_text_input_flags |\n    kWebTextInputFlagHaveNextFocusableElement |\n    kWebTextInputFlagHavePreviousFocusableElement;\n#else\nconst int flags_having_next_focusable_element \u003d default_text_input_flags;\nconst int flags_having_previous_focusable_element \u003d default_text_input_flags;\nconst int flags_having_next_previous_focusable_element \u003d default_text_input_flags;\n#endif\n\n(flag naming is just an example, do not have to use them as is) and use these\nflags for each element\u0027s default flags.  Then you do not need to enclose each test\nby ifdef.",
+      "revId": "bc0d7e1e09d7d4bac05d126bc6536bc58def9ef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
