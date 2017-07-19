@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "527d5c04_1a52cf99",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T18:54:17Z",
+      "side": 1,
+      "message": "Hmm, I disagree that it is possible. If IsTechnologyEnabled() returns true, then NetworkStateHandler would already have called DeviceListChanged() on its observers, and the variable would have already been set to false.\n\nSince this code is all run on the I/O thread, there is no chance of multiple threads hitting this at the same time.\n\nstevenjb@, can you verify that this makes sense?",
+      "parentUuid": "989a95ad_fd5070f1",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 78
+      },
+      "revId": "1b64a77cdd3371951c03804f8ce47e4cff09d339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0200e6_505b324b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 4
