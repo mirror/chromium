@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e516d41_0456cc10",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-19T01:21:57Z",
+      "side": 0,
+      "message": "In hindsight this does look out of place. Was there a particular reason we wanted to run it before the response?",
+      "range": {
+        "startLine": 342,
+        "startChar": 31,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "ec1790662dbd3cb93a057757fb5e6dd52d8cbb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
