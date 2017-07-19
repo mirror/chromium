@@ -120,6 +120,10 @@ const base::Feature kGuestViewCrossProcessFrames{
 const base::Feature kHeapCompaction{"HeapCompaction",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables hiding incorrectly-sized frames while in fullscreen.
+const base::Feature kHideIncorrectlySizedFullscreenFrames{
+    "HideIncorrectlySizedFullscreenFrames", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables Blink's idle time spell checker.
 // Design: https://goo.gl/zONC3v
 // Note: The feature is implemented in Blink, and is independent to the
