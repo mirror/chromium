@@ -628,7 +628,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/vertical-move-relayout.html 
 crbug.com/635619 virtual/layout_ng/fast/block/float/width-update-after-clear.html [ Failure ]
 
 ### virtual/layout_ng/fast/block/margin-collapse
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/025.html [ Failure ]
+# crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/025.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/032.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/033.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/043.html [ Failure ]

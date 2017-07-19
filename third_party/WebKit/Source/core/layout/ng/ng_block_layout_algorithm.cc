@@ -403,6 +403,7 @@ void NGBlockLayoutAlgorithm::HandleOutOfFlowPositioned(
 
   // We only include the margin strut in the OOF static-position if we know we
   // aren't going to be a zero-block-size fragment.
+  // TODO(ikilpatrick): Is this right?
   if (container_builder_.BfcOffset())
     offset.block_offset += previous_inflow_position.margin_strut.Sum();
 
@@ -445,7 +446,7 @@ void NGBlockLayoutAlgorithm::HandleFloat(
 }
 
 WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
-    const NGPreviousInflowPosition& previous_inflow_position,
+    NGPreviousInflowPosition& previous_inflow_position,
     NGLayoutInputNode child,
     NGBreakToken* child_break_token) {
   DCHECK(child);
@@ -453,7 +454,7 @@ WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
   DCHECK(!child.IsOutOfFlowPositioned());
 
   bool should_position_pending_floats =
-      !child.CreatesNewFormattingContext() &&
+      !child.CreatesNewFormattingContext() && child.IsBlock() &&
       ClearanceMayAffectLayout(ConstraintSpace(), unpositioned_floats_,
                                child.Style());
 
@@ -473,6 +474,9 @@ WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
     // MaybeUpdateFragmentBfcOffset might have changed it due to clearance.
     PositionPendingFloats(origin_point_block_offset, &container_builder_,
                           &unpositioned_floats_, MutableConstraintSpace());
+    if (updated)
+      previous_inflow_position.bfc_block_offset =
+          container_builder_.BfcOffset()->block_offset;
   }
 
   // Perform layout on the child.
@@ -482,6 +486,33 @@ WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
       CreateConstraintSpaceForChild(child, child_data);
   RefPtr<NGLayoutResult> layout_result =
       child.Layout(child_space.Get(), child_break_token);
+
+  // Empty block children have bizarre behaviour when it comes to margin
+  // collapsing and clearance.
+  //
+  // If an empty child is affected by clearance, *and* we don't know our BFC
+  // offset yet, we always position it at the clearance line, regardless of its
+  // top margin. E.g. <body>
+  //   <style>
+  //     #float { float: left; height: 20px; }
+  //     #zero { clear: left; margin-top: 100px; }
+  //   </style>
+  //   <div id="float"></div>
+  //   <div id="zero"></div>
+  // </body>
+  // Normally the <body> would be positioned at 100px from the top of the page,
+  // but as the empty block clears a float, its positioned at 8px.
+  //
+  // #zero instead of being placed at 100px is positioned at ...
+  //
+  // The position of the margin strut now becomes disjoint from the empty
+  // block. Instead of being placed with the empty block it is placed at where
+  // the empty block would have been.
+  //
+  // This behaviour isn't known to be in any CSS specification.
+  bool empty_block_affected_by_clearance =
+      false;  // should_position_pending_floats && IsEmptyBlock(child,
+              // *layout_result);
 
   // If we don't know our BFC offset yet, we need to copy the list of
   // unpositioned floats from the child's layout result.
@@ -532,10 +563,9 @@ WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
                                &child_bfc_offset))
       return WTF::nullopt;
   } else if (container_builder_.BfcOffset()) {
-    DCHECK(IsEmptyBlock(child, *layout_result));
-
     child_bfc_offset =
-        PositionWithParentBfc(*child_space, child_data, *layout_result);
+        PositionWithParentBfc(child, *child_space, child_data, *layout_result,
+                              &empty_block_affected_by_clearance);
   } else
     DCHECK(IsEmptyBlock(child, *layout_result));
 
@@ -581,7 +611,7 @@ WTF::Optional<NGPreviousInflowPosition> NGBlockLayoutAlgorithm::HandleInflow(
 
   return ComputeInflowPosition(previous_inflow_position, child, child_data,
                                child_bfc_offset, logical_offset, *layout_result,
-                               fragment);
+                               fragment, empty_block_affected_by_clearance);
 }
 
 NGInflowChildData NGBlockLayoutAlgorithm::ComputeChildData(
@@ -614,7 +644,8 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
     const WTF::Optional<NGLogicalOffset>& child_bfc_offset,
     const NGLogicalOffset& logical_offset,
     const NGLayoutResult& layout_result,
-    const NGFragment& fragment) {
+    const NGFragment& fragment,
+    bool empty_block_affected_by_clearance) {
   // Determine the child's end BFC block offset and logical offset, for the
   // next child to use.
   LayoutUnit child_end_bfc_block_offset;
@@ -623,6 +654,14 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
   if (IsEmptyBlock(child, layout_result)) {
     child_end_bfc_block_offset = previous_inflow_position.bfc_block_offset;
     logical_block_offset = previous_inflow_position.logical_block_offset;
+
+    // TODO comment.
+    if (empty_block_affected_by_clearance) {
+      child_end_bfc_block_offset = child_bfc_offset.value().block_offset -
+                                   layout_result.EndMarginStrut().Sum();
+      logical_block_offset =
+          logical_offset.block_offset - layout_result.EndMarginStrut().Sum();
+    }
 
     if (!container_builder_.BfcOffset()) {
       DCHECK_EQ(child_end_bfc_block_offset,
@@ -731,9 +770,13 @@ bool NGBlockLayoutAlgorithm::PositionWithBfcOffset(
 }
 
 NGLogicalOffset NGBlockLayoutAlgorithm::PositionWithParentBfc(
+    const NGLayoutInputNode& child,
     const NGConstraintSpace& space,
     const NGInflowChildData& child_data,
-    const NGLayoutResult& layout_result) {
+    const NGLayoutResult& layout_result,
+    bool* empty_block_affected_by_clearance) {
+  DCHECK(IsEmptyBlock(child, layout_result));
+
   // The child must be an in-flow zero-block-size fragment, use its end margin
   // strut for positioning.
   NGLogicalOffset child_bfc_offset = {
@@ -743,7 +786,12 @@ NGLogicalOffset NGBlockLayoutAlgorithm::PositionWithParentBfc(
       child_data.bfc_offset_estimate.block_offset +
           layout_result.EndMarginStrut().Sum()};
 
-  AdjustToClearance(space.ClearanceOffset(), &child_bfc_offset);
+  bool affected_by_clearance =
+      AdjustToClearance(space.ClearanceOffset(), &child_bfc_offset);
+
+  if (IsEmptyBlock(child, layout_result))
+    *empty_block_affected_by_clearance = affected_by_clearance;
+
   return child_bfc_offset;
 }
 
