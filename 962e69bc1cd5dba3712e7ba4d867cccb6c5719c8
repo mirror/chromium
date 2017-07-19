@@ -63,6 +63,30 @@
       "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "841e02a8_a737c3ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/displaystyle/UiConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T14:10:35Z",
+      "side": 1,
+      "message": "Hum right I forgot this filed moved out of ntp/suggestion land... Otherwise it would have made sense to have things related to the configuration of the UI be all in one place, and let the NTP or Bottom sheet just read the value. One advantage being that it would be easy to mock these values for tests.\n\nBut yeah out of the suggestions packages this all feel wrong.",
+      "parentUuid": "1e3c9b81_fbb30dd8",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "962e69bc1cd5dba3712e7ba4d867cccb6c5719c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
