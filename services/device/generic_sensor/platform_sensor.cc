@@ -6,9 +6,11 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "services/device/generic_sensor/platform_sensor_provider.h"
 #include "services/device/public/cpp/generic_sensor/platform_sensor_configuration.h"
+#include "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.h"
 
 namespace device {
 
@@ -19,7 +21,12 @@ PlatformSensor::PlatformSensor(mojom::SensorType type,
       shared_buffer_mapping_(std::move(mapping)),
       type_(type),
       provider_(provider),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  const auto* buffer = static_cast<const device::SensorReadingSharedBuffer*>(
+      shared_buffer_mapping_.get());
+  shared_buffer_reader_ =
+      base::MakeUnique<SensorReadingSharedBufferReader>(buffer);
+}
 
 PlatformSensor::~PlatformSensor() {
   provider_->RemoveSensor(GetType());
@@ -88,6 +95,10 @@ void PlatformSensor::RemoveClient(Client* client) {
     config_map_.erase(client_entry);
     UpdateSensorInternal(config_map_);
   }
+}
+
+bool PlatformSensor::GetLatestReading(SensorReading* result) {
+  return shared_buffer_reader_->GetReading(result);
 }
 
 void PlatformSensor::UpdateSensorReading(const SensorReading& reading,
