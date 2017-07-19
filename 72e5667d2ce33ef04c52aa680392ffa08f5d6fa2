@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db2967f1_409279b7",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Not sure how to make this clearer (C++ syntax is horrible here). Willing to take suggestions.",
+      "parentUuid": "ac326bd2_1c4cbab4",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 47
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0dd8fca_264ea1b1",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d062c7d6_411b367c",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0dd8fca_264ea1b1",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "39724807_eb7bd739",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "I actually needed it (specifically because it\u0027s in the ternary). Otherwise I get this error:\n\n../../android_webview/browser/aw_web_ui_controller_factory.cc:52:19: error: incompatible operand types (\u0027(anonymous namespace)::WebUIFactoryFunction\u0027 (aka \u0027content::WebUIController *(*)(content::WebUI *, const GURL \u0026)\u0027) and \u0027content::WebUI::TypeID\u0027 (aka \u0027void *\u0027))\n  return function ? (function) : WebUI::kNoWebUI;",
+      "parentUuid": "eef20a3f_99cdbd32",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2bb864_c2e4bebb",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a81515_7d926a34",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2bb864_c2e4bebb",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8fabae6e_282fac07",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f189699_0635a146",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0fabfdb_cc2270a8",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0eb1748_7d8efd55",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0fabfdb_cc2270a8",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "731e26c2_aa7edbf0",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9500db0f_def5763e",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "759630df_1978471a",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 3
@@ -177,6 +345,24 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e57dcfd_d2eee22b",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759630df_1978471a",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "00a2930e_e7fc43b8",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c39217_27dfd2b0",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f79f81_750e301c",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.h",
         "patchSetId": 3
@@ -211,6 +415,24 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480f9ee8_11711b0a",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f79f81_750e301c",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "784942e0_9f824ec8",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc97a76_74bfecf2",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf5b0a0_f4501793",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 3
@@ -245,6 +485,24 @@
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992af7ee_210b9a55",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf5b0a0_f4501793",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "befb611a_dad41329",
+        "filename": "android_webview/test/shell/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e56947_52d3560b",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad88d83_f2b24798",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 3
@@ -276,6 +552,24 @@
       "writtenOn": "2017-07-19T17:53:05Z",
       "side": 1,
       "message": "this probably needs a comment, although I don\u0027t remember how it should go exactly..\n\nalso you can compile out this call if DCHECKs are nto compiled in either. I guess wrap this whole block with #if DCHECK_IS_ON() is the easiest option",
+      "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e04760_6bed87c9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6480,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-19T21:10:03Z",
+      "side": 1,
+      "message": "DCHECK_IS_ON is done. Yeah, I\u0027m not sure what comment to put. I\u0027ll try to reason it through and think of something.",
+      "parentUuid": "9ad88d83_f2b24798",
       "revId": "72e5667d2ce33ef04c52aa680392ffa08f5d6fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
