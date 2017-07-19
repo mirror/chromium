@@ -47,7 +47,7 @@ MULTIPROCESS_TEST_MAIN(V2ProfileProcess) {
       "(allow file-write* (path (param temp-file)))\n"
       "(allow ipc-posix-shm-read-data (ipc-posix-name "
       "\"apple.shm.notification_center\"))\n"
-      "(allow mach-lookup (global-name \"com.apple.logd\"))\n"
+      "(allow mach-lookup (global-name \"com.apple.system.logger\"))\n"
       "(if (string=? (param is-pre-10_10) \"TRUE\") (allow sysctl-read))\n"
       "(if (string=? (param is-pre-10_10) \"FALSE\") (allow sysctl-read "
       "(sysctl-name \"hw.activecpu\")))\n";
@@ -69,12 +69,12 @@ MULTIPROCESS_TEST_MAIN(V2ProfileProcess) {
   CHECK(file.IsValid());
 
   char buf[4096];
-  EXPECT_EQ(static_cast<int>(sizeof(buf)),
-            file.Read(/*offset=*/0, buf, sizeof(buf)));
+  CHECK_EQ(static_cast<int>(sizeof(buf)),
+           file.Read(/*offset=*/0, buf, sizeof(buf)));
   file.Close();  // Protect again other checks accidentally using this file.
 
   struct stat sb;
-  EXPECT_EQ(0, stat("/Applications/TextEdit.app", &sb));
+  CHECK_EQ(0, stat("/Applications/TextEdit.app", &sb));
 
   base::FilePath zone_path("/usr/share/zoneinfo/zone.tab");
   base::File zone_file(zone_path,
@@ -82,15 +82,15 @@ MULTIPROCESS_TEST_MAIN(V2ProfileProcess) {
   CHECK(zone_file.IsValid());
 
   char zone_buf[2];
-  EXPECT_EQ(static_cast<int>(sizeof(zone_buf)),
-            zone_file.Read(/*offset=*/0, zone_buf, sizeof(zone_buf)));
+  CHECK_EQ(static_cast<int>(sizeof(zone_buf)),
+           zone_file.Read(/*offset=*/0, zone_buf, sizeof(zone_buf)));
   zone_file.Close();
 
   // Make sure we cannot read any files in zoneinfo.
   base::FilePath zone_dir_path("/usr/share/zoneinfo");
   base::File zoneinfo(zone_dir_path,
                       base::File::FLAG_OPEN | base::File::FLAG_READ);
-  EXPECT_FALSE(zoneinfo.IsValid());
+  CHECK(!zoneinfo.IsValid());
 
   base::FilePath temp_path(temp_file_path);
   base::File temp_file(temp_path,
@@ -98,29 +98,34 @@ MULTIPROCESS_TEST_MAIN(V2ProfileProcess) {
   CHECK(temp_file.IsValid());
 
   const char msg[] = "I can write this file.";
-  EXPECT_EQ(static_cast<int>(sizeof(msg)),
-            temp_file.WriteAtCurrentPos(msg, sizeof(msg)));
+  CHECK_EQ(static_cast<int>(sizeof(msg)),
+           temp_file.WriteAtCurrentPos(msg, sizeof(msg)));
   temp_file.Close();
 
   int shm_fd = shm_open("apple.shm.notification_center", O_RDONLY, 0644);
-  EXPECT_GE(shm_fd, 0);
+  CHECK_GE(shm_fd, 0);
 
   NSPort* mach = [[NSMachBootstrapServer sharedInstance]
-      servicePortWithName:@"com.apple.logd"];
-  EXPECT_NE(nil, mach);
+      portForName:@"com.apple.system.logger"
+             host:nil];
+  CHECK_NE(nil, mach);
 
-  NSPort* forbidden_mach = [[NSMachBootstrapServer sharedInstance]
-      servicePortWithName:@"com.apple.fonts."];
-  EXPECT_EQ(nil, forbidden_mach);
+  NSPort* forbidden_mach =
+      [[NSMachBootstrapServer sharedInstance] portForName:@"com.apple.lsd.mapdb"
+                                                     host:nil];
+  CHECK_EQ(nil, forbidden_mach);
 
   size_t oldp_len;
-  EXPECT_EQ(0, sysctlbyname("hw.activecpu", NULL, &oldp_len, NULL, 0));
+  CHECK_EQ(0, sysctlbyname("hw.activecpu", NULL, &oldp_len, NULL, 0));
 
   char oldp[oldp_len];
-  EXPECT_EQ(0, sysctlbyname("hw.activecpu", oldp, &oldp_len, NULL, 0));
+  CHECK_EQ(0, sysctlbyname("hw.activecpu", oldp, &oldp_len, NULL, 0));
 
-  size_t ncpu_len;
-  EXPECT_NE(0, sysctlbyname("hw.ncpu", NULL, &ncpu_len, NULL, 0));
+  // sysctl filtering only exists on macOS 10.10+.
+  if (base::mac::IsAtLeastOS10_10()) {
+    size_t ncpu_len;
+    CHECK_NE(0, sysctlbyname("hw.ncpu", NULL, &ncpu_len, NULL, 0));
+  }
 
   return 0;
 }
