@@ -120,34 +120,4 @@ AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {
   return kNotSharableCrossOrigin;
 }
 
-void ScriptResource::CheckResourceIntegrity(Document& document) {
-  // Already checked? Retain existing result.
-  //
-  // TODO(vogelheim): If IntegrityDisposition() is kFailed, this should
-  // probably also generate a console message identical to the one produced
-  // by the CheckSubresourceIntegrity call below. See crbug.com/585267.
-  if (IntegrityDisposition() != ResourceIntegrityDisposition::kNotChecked)
-    return;
-
-  // Loading error occurred? Then result is uncheckable.
-  if (ErrorOccurred())
-    return;
-
-  // No integrity attributes to check? Then we're passing.
-  if (IntegrityMetadata().IsEmpty()) {
-    SetIntegrityDisposition(ResourceIntegrityDisposition::kPassed);
-    return;
-  }
-
-  CHECK(!!ResourceBuffer());
-  SubresourceIntegrity::ReportInfo report_info;
-  bool passed = SubresourceIntegrity::CheckSubresourceIntegrity(
-      IntegrityMetadata(), ResourceBuffer()->Data(), ResourceBuffer()->size(),
-      Url(), *this, report_info);
-  SubresourceIntegrityHelper::DoReport(document, report_info);
-  SetIntegrityDisposition(passed ? ResourceIntegrityDisposition::kPassed
-                                 : ResourceIntegrityDisposition::kFailed);
-  DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
-}
-
 }  // namespace blink
