@@ -88,8 +88,8 @@ def _LogTestEndpoints(device, test_name):
         ['log', '-p', 'i', '-t', _TAG, 'END %s' % test_name],
         check_return=True)
 
-# TODO(jbudorick): Make this private once the instrumentation test_runner is
-# deprecated.
+# TODO(jbudorick): Make this private once the instrumentation test_runner
+# is deprecated.
 def DidPackageCrashOnDevice(package_name, device):
   # Dismiss any error dialogs. Limit the number in case we have an error
   # loop or we are failing to dismiss.
@@ -306,7 +306,8 @@ class LocalDeviceInstrumentationTestRun(
 
   #override
   def _GetTests(self):
-    tests = self._test_instance.GetTests()
+    device = self._env.devices[0]
+    tests = self._test_instance.GetTests(device)
     tests = self._ApplyExternalSharding(
         tests, self._test_instance.external_shard_index,
         self._test_instance.total_external_shards)
@@ -371,10 +372,11 @@ class LocalDeviceInstrumentationTestRun(
       if test['is_junit4']:
         target = '%s/%s' % (
             self._test_instance.test_package,
-            self._test_instance.test_runner_junit4)
+            self._test_instance.junit4_runner_class)
       else:
         target = '%s/%s' % (
-            self._test_instance.test_package, self._test_instance.test_runner)
+            self._test_instance.test_package,
+            self._test_instance.junit3_runner_class)
       extras['class'] = test_name
       if 'flags' in test and test['flags']:
         flags_to_add.extend(test['flags'])
