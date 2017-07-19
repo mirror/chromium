@@ -282,6 +282,7 @@
 #if defined(OS_WIN) || defined(OS_MACOSX) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
+#include "chrome/browser/metrics/tab_stats_tracker.h"
 #endif
 
 using content::BrowserThread;
@@ -767,6 +768,7 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
 #if defined(OS_WIN) || defined(OS_MACOSX) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
   metrics::DesktopSessionDurationTracker::Initialize();
+  metrics::TabStatsTracker::Initialize();
 #endif
   metrics::RendererUptimeTracker::Initialize();
 }
