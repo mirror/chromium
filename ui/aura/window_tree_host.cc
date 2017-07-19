@@ -41,6 +41,7 @@ const char kWindowTreeHostForAcceleratedWidget[] =
 // WindowTreeHost, public:
 
 WindowTreeHost::~WindowTreeHost() {
+  display::Screen::GetScreen()->RemoveObserver(this);
   DCHECK(!compositor_) << "compositor must be destroyed before root window";
   if (owned_input_method_) {
     delete input_method_;
@@ -223,16 +224,14 @@ void WindowTreeHost::Hide() {
 ////////////////////////////////////////////////////////////////////////////////
 // WindowTreeHost, protected:
 
-WindowTreeHost::WindowTreeHost() : WindowTreeHost(nullptr) {
-  display::Screen::GetScreen()->AddObserver(this);
-}
+WindowTreeHost::WindowTreeHost() : WindowTreeHost(nullptr) {}
 
 WindowTreeHost::WindowTreeHost(std::unique_ptr<WindowPort> window_port)
     : window_(new Window(nullptr, std::move(window_port))),
       last_cursor_(ui::CursorType::kNull),
       input_method_(nullptr),
       owned_input_method_(false) {
-  display::Screen::GetScreen()->RemoveObserver(this);
+  display::Screen::GetScreen()->AddObserver(this);
 }
 
 void WindowTreeHost::DestroyCompositor() {
@@ -350,13 +349,12 @@ void WindowTreeHost::OnDisplayRemoved(const display::Display& old_display) {}
 
 void WindowTreeHost::OnDisplayMetricsChanged(const display::Display& display,
                                              uint32_t metrics) {
-  display::Screen* screen = display::Screen::GetScreen();
-  if (display.id() != screen->GetDisplayNearestView(window()).id())
-    return;
-
   if (metrics & DisplayObserver::DISPLAY_METRIC_COLOR_SPACE) {
-    if (compositor_)
+    display::Screen* screen = display::Screen::GetScreen();
+    if (compositor_ &&
+        display.id() == screen->GetDisplayNearestView(window()).id()) {
       compositor_->SetDisplayColorSpace(display.color_space());
+    }
   }
 }
 
