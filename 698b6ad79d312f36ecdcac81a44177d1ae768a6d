@@ -16,6 +16,24 @@
       "revId": "698b6ad79d312f36ecdcac81a44177d1ae768a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4e6988_9ca018cd",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-19T00:56:21Z",
+      "side": 1,
+      "message": "Oops, sorry, that was my mistake - was searching for ContentSettingToString instead of FromString() in CodeSearch. Fixed now.",
+      "parentUuid": "3a3a3d1d_d5882900",
+      "revId": "698b6ad79d312f36ecdcac81a44177d1ae768a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
