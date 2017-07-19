@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68cbb3d0_ce37236c",
+        "filename": "chrome/browser/chromeos/note_taking_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T17:35:49Z",
+      "side": 1,
+      "message": "s/Lokc/Lock/\n\nAlso see below.",
+      "revId": "d59e7985406be0f89a855e45eda8ea5283cc2d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06685ba9_3f8d926e",
+        "filename": "chrome/browser/chromeos/note_taking_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T17:35:49Z",
+      "side": 1,
+      "message": "nit: I think this would be more clear if this were just a set\u003cstring\u003e instead of an owned pointer. An empty set would be equivalent to a nullptr. It also allows us to return/pass a const\u0026 instead of a const* which I think is a bit more clear.",
+      "revId": "d59e7985406be0f89a855e45eda8ea5283cc2d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
