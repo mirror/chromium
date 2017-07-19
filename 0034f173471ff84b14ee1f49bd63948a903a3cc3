@@ -158,6 +158,24 @@
       "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60101f8e_84a5d070",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T21:12:48Z",
+      "side": 1,
+      "message": "Yeah, list them for now please. The code that uses them should be in the host embedder really but you don\u0027t need to do that now.",
+      "parentUuid": "9ccf185a_aee6bb66",
+      "revId": "0034f173471ff84b14ee1f49bd63948a903a3cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
