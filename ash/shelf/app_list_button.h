@@ -66,6 +66,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void OnAppListVisibilityChanged(bool shown,
                                   aura::Window* root_window) override;
   void OnVoiceInteractionStatusChanged(bool running) override;
+  void OnShellInitialized() override;
 
   void StartVoiceInteractionAnimation();
 
@@ -80,7 +81,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   ShelfView* shelf_view_;
   Shelf* shelf_;
 
-  VoiceInteractionOverlay* voice_interaction_overlay_;
+  VoiceInteractionOverlay* voice_interaction_overlay_ = nullptr;
   std::unique_ptr<base::OneShotTimer> voice_interaction_animation_delay_timer_;
   std::unique_ptr<base::OneShotTimer>
       voice_interaction_animation_hide_delay_timer_;

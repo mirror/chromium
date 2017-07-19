@@ -72,17 +72,6 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   SetSize(gfx::Size(kShelfSize, kShelfSize));
   SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
   set_notify_action(CustomButton::NOTIFY_ON_PRESS);
-
-  if (chromeos::switches::IsVoiceInteractionEnabled()) {
-    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
-    AddChildView(voice_interaction_overlay_);
-    voice_interaction_overlay_->SetVisible(false);
-    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
-    voice_interaction_animation_hide_delay_timer_.reset(
-        new base::OneShotTimer());
-  } else {
-    voice_interaction_overlay_ = nullptr;
-  }
 }
 
 AppListButton::~AppListButton() {
@@ -331,6 +320,19 @@ void AppListButton::OnVoiceInteractionStatusChanged(bool running) {
             kVoiceInteractionAnimationHideDelayMs),
         base::Bind(&VoiceInteractionOverlay::HideAnimation,
                    base::Unretained(voice_interaction_overlay_)));
+  }
+}
+
+void AppListButton::OnShellInitialized() {
+  if (chromeos::switches::IsVoiceInteractionEnabled()) {
+    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
+    AddChildView(voice_interaction_overlay_);
+    voice_interaction_overlay_->SetVisible(false);
+    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
+    voice_interaction_animation_hide_delay_timer_.reset(
+        new base::OneShotTimer());
+  } else {
+    voice_interaction_overlay_ = nullptr;
   }
 }
 
