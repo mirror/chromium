@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "components/content_settings/core/browser/content_settings_observable_provider.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
+#include "components/content_settings/core/browser/user_modifiable_provider.h"
 #include "components/prefs/pref_change_registrar.h"
 
 class PrefService;
@@ -32,7 +33,7 @@ class ContentSettingsPref;
 
 // Content settings provider that provides content settings from the user
 // preference.
-class PrefProvider : public ObservableProvider {
+class PrefProvider : public UserModifiableProvider {
  public:
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
@@ -51,16 +52,16 @@ class PrefProvider : public ObservableProvider {
                          const ResourceIdentifier& resource_identifier,
                          base::Value* value) override;
 
-  // Returns the |last_modified| date of a setting.
+  void ClearAllContentSettingsRules(ContentSettingsType content_type) override;
+
+  void ShutdownOnUIThread() override;
+
+  // UserModifiableProvider implementation.
   base::Time GetWebsiteSettingLastModified(
       const ContentSettingsPattern& primary_pattern,
       const ContentSettingsPattern& secondary_pattern,
       ContentSettingsType content_type,
-      const ResourceIdentifier& resource_identifier);
-
-  void ClearAllContentSettingsRules(ContentSettingsType content_type) override;
-
-  void ShutdownOnUIThread() override;
+      const ResourceIdentifier& resource_identifier) override;
 
   void ClearPrefs();
 
