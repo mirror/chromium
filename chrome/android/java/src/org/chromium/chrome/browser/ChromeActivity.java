@@ -1975,17 +1975,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             Intent launchIntent = WebApkNavigationClient.createLaunchWebApkIntent(
                     packageName, currentTab.getUrl(), false);
             boolean launchFailed = false;
-            if (launchIntent != null) {
-                try {
-                    context.startActivity(launchIntent);
-                    RecordUserAction.record("MobileMenuOpenWebApk");
-                    WebApkUma.recordWebApkOpenAttempt(WebApkUma.WEBAPK_OPEN_LAUNCH_SUCCESS);
-                } catch (ActivityNotFoundException e) {
-                    WebApkUma.recordWebApkOpenAttempt(WebApkUma.WEBAPK_OPEN_ACTIVITY_NOT_FOUND);
-                    launchFailed = true;
-                }
-            } else {
-                WebApkUma.recordWebApkOpenAttempt(WebApkUma.WEBAPK_OPEN_NO_LAUNCH_INTENT);
+            try {
+                context.startActivity(launchIntent);
+                RecordUserAction.record("MobileMenuOpenWebApk");
+                WebApkUma.recordWebApkOpenAttempt(WebApkUma.WEBAPK_OPEN_LAUNCH_SUCCESS);
+            } catch (ActivityNotFoundException e) {
+                WebApkUma.recordWebApkOpenAttempt(WebApkUma.WEBAPK_OPEN_ACTIVITY_NOT_FOUND);
                 launchFailed = true;
             }
             if (launchFailed) {
