@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9cbdbbd_e12a204b",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b933be1_8e91373f",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5cacce_f6755150",
         "filename": "components/cast_channel/cast_socket.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d8cb2e_c008fe6d",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c5cacce_f6755150",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ead9cedf_23f5652b",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "213f280f_9909a02b",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9caf2cff_68e7aa6d",
         "filename": "components/cast_channel/cast_socket.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79197797_02cfead4",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9caf2cff_68e7aa6d",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ce8563dd_ec4ca238",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3481862_a18a233d",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "633fab09_3f192c94",
         "filename": "components/cast_channel/cast_socket.h",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "946f4b12_95174f34",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633fab09_3f192c94",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb11e117_1bd7bd79",
         "filename": "components/cast_channel/cast_socket.h",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a451990_7c4e92ab",
+        "filename": "components/cast_channel/cast_socket.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-19T03:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb11e117_1bd7bd79",
+      "revId": "2da9ac36174fcdc104d17c6a0554cd216c8c2917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
