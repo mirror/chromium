@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04376fa0_086ba33c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network-data-length.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-07-19T19:02:37Z",
+      "side": 1,
+      "message": "this is funny :)",
+      "revId": "3c8256f36671063f2b9418a70da5b146ab7f4bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
