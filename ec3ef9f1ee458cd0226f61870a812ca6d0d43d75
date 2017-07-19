@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "49dff661_31efb623",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-19T22:28:23Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we can test that the histogram was logged using base::HistrogramTester. See https://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_metrics_unittest.cc?q\u003dautofill_metrics.cc\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d467 for examples of how this tester can be used.",
+      "parentUuid": "808e4707_76cadb07",
+      "revId": "ec3ef9f1ee458cd0226f61870a812ca6d0d43d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7172fc5a_463d3526",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
         "patchSetId": 8
