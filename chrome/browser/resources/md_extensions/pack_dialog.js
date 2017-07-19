@@ -38,7 +38,10 @@ cr.define('extensions', function() {
       delegate: Object,
 
       /** @private */
-      packDirectory_: String,
+      packDirectory_: {
+        type: String,
+        value: null,
+      },
 
       /** @private */
       keyFile_: String,
