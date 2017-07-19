@@ -113,6 +113,15 @@ class URLLoaderImplTest : public testing::Test {
     CHECK_EQ(data, file_contents);
   }
 
+  std::string LoadAndReturnMimeType(bool sniff, const std::string& path) {
+    TestURLLoaderClient client;
+    GURL url = test_server()->GetURL(path);
+    int32_t options =
+        sniff ? mojom::kURLLoadOptionSniffMimeType : mojom::kURLLoadOptionNone;
+    Load(url, &client, options);
+    return client.response_head().mime_type;
+  }
+
   net::EmbeddedTestServer* test_server() { return &test_server_; }
   NetworkContext* context() { return context_.get(); }
   void DestroyContext() { context_.reset(); }
@@ -189,6 +198,16 @@ TEST_F(URLLoaderImplTest, DestroyContextWithLiveRequest) {
   client.RunUntilConnectionError();
   EXPECT_FALSE(client.has_received_completion());
   EXPECT_EQ(0u, client.download_data_length());
+}
+
+TEST_F(URLLoaderImplTest, MimeSniffNotSpecified) {
+  std::string mime_type = LoadAndReturnMimeType(false, "/nocontent_type.html");
+  ASSERT_TRUE(mime_type.empty());
+}
+
+TEST_F(URLLoaderImplTest, MimeSniffSpecified) {
+  std::string mime_type = LoadAndReturnMimeType(true, "/nocontent_type.html");
+  ASSERT_EQ(std::string("text/html"), mime_type);
 }
 
 }  // namespace content
