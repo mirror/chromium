@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df25677c_93f5fd20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T23:40:58Z",
+      "side": 1,
+      "message": "Please adjust your description to be your old description. Your old CL was completely reverted, so when you submit this new one, all of the functionality from your old CL as well as the ASH_EXPORT stuff will be submitted. Your CL description should mention your original CL\u0027s contents.\n\nSee https://chromium-review.googlesource.com/c/577762/ for an example of an earlier CL that I submitted after it had gotten rolled back.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "58029ff9c2c0a6272d5ef371212217d1f9862ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19ec6ee_b6729b0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T23:40:58Z",
+      "side": 1,
+      "message": "Add your bugs back.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "58029ff9c2c0a6272d5ef371212217d1f9862ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052c6593_ae29e7cd",
+        "filename": "ash/system/tray/tray_info_label.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-19T23:40:58Z",
+      "side": 1,
+      "message": "You need to #include ash_export.h.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "58029ff9c2c0a6272d5ef371212217d1f9862ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
