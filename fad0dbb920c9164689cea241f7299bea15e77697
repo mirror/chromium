@@ -190,6 +190,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcdf066_a39d7ad9",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-19T14:21:42Z",
+      "side": 1,
+      "message": "So to update you on this: I really like this refinement since it removes some artificial and very awkward memory management my sketch had (though at cost of potentially invoking callbacks at funny times); but in testing it seems like I need to better understand the requirements at CacheStorageCache level.\n\nOne issue that may be relevant here, too: is a cache backend ever re-created for the same path without doing the DeleteAndRestart dance? That likely needs the same sort of sequencing.  (The CL currently does that automatically, but the approach it has may be too dangerous for clients that aren\u0027t as disciplined at closing everything out).",
+      "parentUuid": "0f59d28e_5e65a651",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
