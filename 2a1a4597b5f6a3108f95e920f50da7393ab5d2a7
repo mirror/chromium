@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dee797be_8d077b88",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-19T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ebc9832_521515f0",
+      "range": {
+        "startLine": 480,
+        "startChar": 5,
+        "endLine": 480,
+        "endChar": 28
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0849a288_46bb07be",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c1856f_7092c6dd",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-19T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0849a288_46bb07be",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4895ea0e_8d0bcb50",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-19T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae553426_e35c2d9e",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff709dd_d91aee87",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f01aac37_07aa3ea8",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-19T22:29:27Z",
+      "side": 1,
+      "message": "Chatted offline.",
+      "parentUuid": "0ff709dd_d91aee87",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 19
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b850d57_2fade66f",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-18T00:41:41Z",
       "side": 1,
       "message": "Can you reuse a buffer instead of creating a new one everytime?",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 14
+      },
+      "revId": "2a1a4597b5f6a3108f95e920f50da7393ab5d2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bd4a77_3db8cba3",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-19T22:29:27Z",
+      "side": 1,
+      "message": "Chatted offline and determined there is insufficient reason to change this.",
+      "parentUuid": "2b850d57_2fade66f",
       "range": {
         "startLine": 158,
         "startChar": 10,
