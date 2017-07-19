@@ -195,6 +195,12 @@ public class ToolbarSwipeLayout extends Layout implements Animatable<ToolbarSwip
     private void prepareLayoutTabForSwipe(LayoutTab layoutTab, boolean anonymizeToolbar) {
         assert layoutTab != null;
         if (layoutTab.shouldStall()) layoutTab.setSaturation(0.0f);
+        float heightDp = layoutTab.getOriginalContentHeight();
+        if (getFullScreenManager().areBrowserControlsAtBottom()) {
+            float density = Resources.getSystem().getDisplayMetrics().density;
+            heightDp = heightDp - getFullScreenManager().getBottomControlsHeight() / density;
+        }
+        layoutTab.setClipSize(layoutTab.getOriginalContentWidth(), heightDp);
         layoutTab.setScale(1.f);
         layoutTab.setBorderScale(1.f);
         layoutTab.setDecorationAlpha(0.f);

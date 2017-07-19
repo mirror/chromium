@@ -1089,4 +1089,8 @@ public abstract class Layout implements TabContentManager.ThumbnailChangeListene
     public void finishAnimationsForTests() {
         if (mLayoutAnimations != null) mLayoutAnimations.updateAndFinish();
     }
+
+    public ChromeFullscreenManager getFullScreenManager() {
+        return mTabModelSelector.getCurrentTab().getActivity().getFullscreenManager();
+    }
 }
