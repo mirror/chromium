@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "37067821_dd21ee33",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "again, make sure this is removed",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8bdcbf2_75f78dae",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 14
@@ -88,6 +105,142 @@
         "endLine": 84,
         "endChar": 77
       },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904e5a01_051f11c8",
+        "filename": "content/browser/android/synthetic_gesture_target_helper.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "this isn\u0027t really fixing the dependency rule though, should just whatever method is needed to RenderWidgetHostDelegate",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e6e7ab_7d5f085e",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b60cb4_6e19d6b1",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "this may be null, need to check this appropriately",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a6f603_fea67f61",
+        "filename": "content/browser/web_contents/web_contents_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "that\u0027s a problem.. this means WebContentsImpl (the java one) is not allowed to hold strongly to container view either. Which kinda makes sense.. web contents generally shouldn\u0027t be dealing with container view.\n\nNot sure what the right solution is though. We don\u0027t have a place (except CVC right now) to park these kind of java objects. hmm... perhaps we should make this one a weakref first..",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f93b0e_711be328",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "actually.. instead of component, maybe this should live somewhere under ui? I dunno which makes more sense, but either one is definitely better than internal content.",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ceb247_ea32ee0f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SyntheticGestureTarget.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "webview contents needs to create a new one if this ever happens.\n\nalso thinking more, what if more than one client request this object for the same webcontents?",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551698bb_2e7b9154",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "s/create/get/ everywhere",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd59312_6098d471",
+        "filename": "content/public/browser/android/motion_event_action.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T23:25:56Z",
+      "side": 1,
+      "message": "enums should be all caps, and start with the type, so this should be\nMOTION_EVENT_ACTION_INVALID\n\n(rule from https://www.chromium.org/developers/content-module/content-api)",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
