@@ -224,7 +224,6 @@ void WindowTreeHost::Hide() {
 // WindowTreeHost, protected:
 
 WindowTreeHost::WindowTreeHost() : WindowTreeHost(nullptr) {
-  display::Screen::GetScreen()->AddObserver(this);
 }
 
 WindowTreeHost::WindowTreeHost(std::unique_ptr<WindowPort> window_port)
@@ -232,10 +231,10 @@ WindowTreeHost::WindowTreeHost(std::unique_ptr<WindowPort> window_port)
       last_cursor_(ui::CursorType::kNull),
       input_method_(nullptr),
       owned_input_method_(false) {
-  display::Screen::GetScreen()->RemoveObserver(this);
 }
 
 void WindowTreeHost::DestroyCompositor() {
+  display::Screen::GetScreen()->RemoveObserver(this);
   compositor_.reset();
 }
 
@@ -276,6 +275,7 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id) {
     window()->SetName("RootWindow");
     dispatcher_.reset(new WindowEventDispatcher(this));
   }
+  display::Screen::GetScreen()->AddObserver(this);
 }
 
 void WindowTreeHost::InitCompositor() {
@@ -350,13 +350,12 @@ void WindowTreeHost::OnDisplayRemoved(const display::Display& old_display) {}
 
 void WindowTreeHost::OnDisplayMetricsChanged(const display::Display& display,
                                              uint32_t metrics) {
-  display::Screen* screen = display::Screen::GetScreen();
-  if (display.id() != screen->GetDisplayNearestView(window()).id())
-    return;
-
   if (metrics & DisplayObserver::DISPLAY_METRIC_COLOR_SPACE) {
-    if (compositor_)
+    display::Screen* screen = display::Screen::GetScreen();
+    if (compositor_ &&
+        display.id() != screen->GetDisplayNearestView(window()).id()) {
       compositor_->SetDisplayColorSpace(display.color_space());
+    }
   }
 }
 
