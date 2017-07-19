@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b11c833_9f5c4dcc",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-19T15:09:44Z",
+      "side": 1,
+      "message": "nit: For ESL reader it could be unclear that flattened, assembled and stitched mean the same thing. Maybe stick to \u0027stitch\u0027 as it is referenced further down in source code and is used for script name?",
+      "range": {
+        "startLine": 550,
+        "startChar": 25,
+        "endLine": 550,
+        "endChar": 34
+      },
+      "revId": "4989616a00098c9d05e99f9322de9a42a1243bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
