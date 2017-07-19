@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b8fe1a_7da8cce3",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "Why is it called kExpectedPassword?",
+      "range": {
+        "startLine": 353,
+        "startChar": 27,
+        "endLine": 353,
+        "endChar": 44
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28acb7b_1197dca7",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "Move the expectation down to the place that triggers them (OnSaveClicked)",
+      "range": {
+        "startLine": 358,
+        "startChar": 6,
+        "endLine": 358,
+        "endChar": 17
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e039df5_21b70676",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "What are the expectations you clear here?",
+      "range": {
+        "startLine": 368,
+        "startChar": 33,
+        "endLine": 368,
+        "endChar": 59
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eba8ab_44ffb226",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "DetailedUserAction helps readability",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdf71b0_d80ca075",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this value?",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 12
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2060d75c_2586a211",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T12:19:08Z",
+      "side": 1,
+      "message": "What is the reason for the magic value?",
+      "range": {
+        "startLine": 217,
+        "startChar": 30,
+        "endLine": 217,
+        "endChar": 33
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
