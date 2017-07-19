@@ -275,7 +275,7 @@ void EasyUnlockServiceRegular::SetPermitAccess(
   DictionaryPrefUpdate pairing_update(profile()->GetPrefs(),
                                       prefs::kEasyUnlockPairing);
   pairing_update->SetWithoutPathExpansion(
-      kKeyPermitAccess, base::MakeUnique<base::Value>(permit));
+      kKeyPermitAccess, base::MakeUnique<base::Value>(permit.Clone()));
 }
 
 void EasyUnlockServiceRegular::ClearPermitAccess() {
@@ -306,7 +306,7 @@ void EasyUnlockServiceRegular::SetRemoteDevices(
     pairing_update->RemoveWithoutPathExpansion(kKeyDevices, NULL);
   else
     pairing_update->SetWithoutPathExpansion(
-        kKeyDevices, base::MakeUnique<base::Value>(devices));
+        kKeyDevices, base::MakeUnique<base::Value>(devices.Clone()));
 
 #if defined(OS_CHROMEOS)
   // TODO(tengs): Investigate if we can determine if the remote devices were set

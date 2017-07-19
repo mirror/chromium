@@ -113,7 +113,7 @@ class ShillProfileTestClient {
     profile_entries_.GetDictionaryWithoutPathExpansion(profile_path, &entries);
     ASSERT_TRUE(entries);
 
-    auto new_entry = base::MakeUnique<base::DictionaryValue>(entry);
+    auto new_entry = base::MakeUnique<base::DictionaryValue>(entry.Clone());
     new_entry->SetStringWithoutPathExpansion(shill::kProfileProperty,
                                              profile_path);
     entries->SetWithoutPathExpansion(entry_path, std::move(new_entry));
