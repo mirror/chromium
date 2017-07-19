@@ -16,6 +16,24 @@
       "revId": "03b63f2329c2654c38ac56fb15cfa46b08109834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3538989e_95ab18f2",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-07-19T15:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdbe020_70c8f29d",
+      "revId": "03b63f2329c2654c38ac56fb15cfa46b08109834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
