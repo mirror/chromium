@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b58390_4f9fceeb",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-07-19T19:59:54Z",
+      "side": 1,
+      "message": "(nit: if you\u0027re accessing the ptr unconditionally right away, the DCHECK doesn\u0027t add any value IMHO)",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13244101_950c924e",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-07-19T19:59:54Z",
+      "side": 1,
+      "message": "Would it be useful to add a comment as to why these are the defaults?",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dc5804_0dbbc65c",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-07-19T19:59:54Z",
+      "side": 1,
+      "message": "nit: Add a comment saying that this feature _overrides_ the default values iff it\u0027s enabled (It\u0027s not really named that way -- it sorta sounds like if you disable the feature you disable the code altogether).  Or maybe that comments should go on the definition of the feature.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 4
+      },
+      "revId": "4d8f78bd11d0783dc01cf3a1721adc75aa01bf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
