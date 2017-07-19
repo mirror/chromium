@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa870e1e_24e98e9e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_response_info.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-19T08:30:22Z",
+      "side": 1,
+      "message": "Ah, I should change this link to:\nhttps://fetch.spec.whatwg.org/#concept-response-type",
+      "revId": "dd9e4ffb6e2c951ce9df772df5c1861ffbef341b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
