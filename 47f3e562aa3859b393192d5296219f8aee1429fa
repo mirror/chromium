@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d090c6_a20dc184",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-19T14:19:30Z",
+      "side": 1,
+      "message": "Yash, there\u0027s one flag now for \"splash screen\".  Do you prefer this, or showing_webvr_splash_screen_?",
+      "range": {
+        "startLine": 487,
+        "startChar": 40,
+        "endLine": 487,
+        "endChar": 71
+      },
+      "revId": "47f3e562aa3859b393192d5296219f8aee1429fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
