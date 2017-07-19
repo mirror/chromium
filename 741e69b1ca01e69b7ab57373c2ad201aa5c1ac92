@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0597b07d_2ef44dea",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-19T16:42:06Z",
+      "side": 1,
+      "message": "Must not be committed to master. Only for testing!!!",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "741e69b1ca01e69b7ab57373c2ad201aa5c1ac92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
