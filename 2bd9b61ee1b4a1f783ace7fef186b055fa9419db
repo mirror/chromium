@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a132dba2_bbc43b81",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "allowexternalscripts huh?",
+      "range": {
+        "startLine": 411,
+        "startChar": 141,
+        "endLine": 411,
+        "endChar": 148
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b53cc42_7adce686",
+        "filename": "chrome/browser/resources/memory_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "inline style. ur killing me. ;)",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2445fac_13c765ee",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": ":-/  The OCD in me wants to throw this all into a module by wrapping it all in....\n\n(function() {\n})();",
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c91824_64e83c6b",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "`const proclistElement`?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9739754c_84a865f9",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "Since we\u0027re in ES6 land with use-strict, can we do for-of loops with let statements?\n\nfor (let proc of processList) {",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864fddba_f613de5b",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "use const wherever possible.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578ba36d_de6060d1",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "createElement(\u0027button\u0027)\n\nMight as well use the right semantics?",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ea817_5c1d3324",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "const...",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d101851e_412dcaea",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "Just assign the onclick property of the button?\n\nbutton.onclick \u003d () \u003d\u003e dumpProcess(prod_id);",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a692844_610d20b8",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-19T23:38:16Z",
+      "side": 1,
+      "message": "Add comment explaining lifetime and why the Unretained() is safe?",
+      "range": {
+        "startLine": 60,
+        "startChar": 23,
+        "endLine": 60,
+        "endChar": 33
+      },
+      "revId": "2bd9b61ee1b4a1f783ace7fef186b055fa9419db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
