@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d10da7d_fb156173",
+        "filename": "components/omnibox/bug-triage.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-19T19:56:37Z",
+      "side": 1,
+      "message": "Super nitpicky: language here feels slightly awkward. Alternative proposals:\n\n[...] preventing other Chrome shortcuts from working when focus is in the omnibox.\n\nAssuming that\u0027s accurate (is there some case where we don\u0027t have focus but somehow steal a keypress?). Or:\n\n[...] capturing shortcuts that should be handled by other UI components.",
+      "revId": "f706680ed37cfd35b0cad8cfe0fc75064db833ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
