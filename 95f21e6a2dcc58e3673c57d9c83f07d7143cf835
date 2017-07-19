@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a415e2d0_4cec61af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:16:19Z",
+      "side": 1,
+      "message": "PMMR isn\u0027t something I understand without further reading",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "95f21e6a2dcc58e3673c57d9c83f07d7143cf835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93aec56e_956e81e1",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-19T19:16:19Z",
+      "side": 1,
+      "message": "I won\u0027t pretend that I understand the CL. What I imagine so far:\n- ukm::UkmRecorder* is a singleton for the whole browser.\n- it may have different SourceIds\nHow is it possible that the SourceId we bound in ChromePasswordManagerClient::GetUkmSourceId to the main frame URL was purged?",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "95f21e6a2dcc58e3673c57d9c83f07d7143cf835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
