@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9c9ba8f4_ff454519",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Yeah, that makes sense. What do you think of having\na parameter of enum Choice {NONE /* e.g. backplane clicked */, EXIT, STAY } instead of should_exit? And we could rename SetExitVrPromptEnabled to SetExitVrRequestEnabled (or something like that) to not imply the UI that is used to make the request.",
+      "parentUuid": "2a28ec09_e5ca2164",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 37
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5242ea6_f188b234",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad36b6cf_9dc4aae3",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "SGTM. Done.",
+      "parentUuid": "c5242ea6_f188b234",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f86ac4c5_a40f8cb1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12f78c22_9b0a7923",
+      "range": {
+        "startLine": 585,
+        "startChar": 14,
+        "endLine": 585,
+        "endChar": 40
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49902c78_71d0cb1a",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 3
@@ -106,6 +178,30 @@
       "writtenOn": "2017-07-19T20:24:34Z",
       "side": 1,
       "message": "Another thought, since we\u0027re always going to close the prompt when \"should_exit\", maybe we should only show the result when there\u0027s something actionable. The ui_scene_manager can decide to just hide the prompt and that would save us a thread hop.\n\nthoughts?",
+      "range": {
+        "startLine": 618,
+        "startChar": 14,
+        "endLine": 618,
+        "endChar": 34
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db771bed_bb97f7ee",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "The thinking is that UiSceneManager is only responsible for applying a UI state correctly. It should not make decisions on state changes. I agree that the thread hop is a bit unnecessary. However, this will likely change in the future when we re-architect the browser and pull out the core VR browser code from VrShell.",
+      "parentUuid": "49902c78_71d0cb1a",
       "range": {
         "startLine": 618,
         "startChar": 14,
@@ -135,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "ac693b14_044cbab2",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6131cf_73f7f40e",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff54d20a_25361b94",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -149,6 +263,24 @@
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95bcb2c_aa1ffe3a",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff54d20a_25361b94",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9a58_1d2165e3",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "So, the rest of the code assumes that UiBrowserInterface::OnExitVrPromptResult is called in response to showing the exit prompt. We could call UiBrowserInterface::OnExitVrPromptResult if you hide the exit prompt. But then UiBrowserInterface::OnExitVrPromptResult would be called twice in most cases (once for clicking on it and once for hiding it after). I thought we can just prevent this case until we actually want to show the exit prompt for a different reason when it is already showing.\n\nAfter ymalik@\u0027s review it may make sense to have a parameter of enum Choice {NONE /* backplane clicked */, EXIT, OK /* or stay */ } instead of should_exit for OnExitVrPromptResult. So, we could return NONE in case we override an already showing exit prompt. What do you think?",
+      "parentUuid": "59b3a370_4daa2a87",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e23b854_b45ec5d4",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -183,6 +333,24 @@
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05daa2_1d19f6c2",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Made ternary if.",
+      "parentUuid": "5e23b854_b45ec5d4",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "76da0b0c_dfb9fa17",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Gone due to ternary if.",
+      "parentUuid": "b99d52c5_eeb4e053",
+      "range": {
+        "startLine": 646,
+        "startChar": 36,
+        "endLine": 646,
+        "endChar": 54
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe378a91_b9320bf7",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -220,6 +412,24 @@
       "writtenOn": "2017-07-19T19:34:51Z",
       "side": 1,
       "message": "This will likely rebase away.",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3061b6_24628ecc",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Yep, will rebase once your change lands.",
+      "parentUuid": "fe378a91_b9320bf7",
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -243,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "9ce91f9b_65428277",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08f91e30_cbdf2f3d",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc70164_828f0705",
         "filename": "chrome/browser/vr/ui_scene_manager.h",
         "patchSetId": 3
@@ -254,6 +482,30 @@
       "writtenOn": "2017-07-19T19:34:51Z",
       "side": 1,
       "message": "Can this be -1?  Will the type allow it?  It\u0027s not great to set it to a valid failure mode, IMO.",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 44
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585313ff_69b07f45",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t like -1. Set it to UiUnsupportedMode::kCount. What do you think about that?",
+      "parentUuid": "ebc70164_828f0705",
       "range": {
         "startLine": 144,
         "startChar": 6,
@@ -286,6 +538,30 @@
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1fa3f1_8c2b8bde",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-19T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4baaedef_998116a6",
+      "range": {
+        "startLine": 363,
+        "startChar": 7,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
