@@ -16,6 +16,24 @@
       "revId": "8dbc2286a282432472add1a0ad491925dbf6f1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffe012b_0fa5f06e",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3641,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T17:11:37Z",
+      "side": 0,
+      "message": "Good point.  Rewrote to not check the default, instead forcing the feature on and off and making sure the behavior is right in each case.\n\nThanks for catching my sloppiness.",
+      "parentUuid": "f1b914d3_e1fbf947",
+      "revId": "8dbc2286a282432472add1a0ad491925dbf6f1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
