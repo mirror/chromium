@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a4d7632e_33b7e744",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T11:06:19Z",
+      "side": 1,
+      "message": "If it\u0027s the same and never changes, then that\u0027s fine. I see we have a test to catch it, that will do for now, thanks! :)",
+      "parentUuid": "2b35e42f_5856a91a",
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad05e0d_3f7e6970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 4

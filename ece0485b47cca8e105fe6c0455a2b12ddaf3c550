@@ -187,6 +187,30 @@
       "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d182000d_af94286a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T11:06:19Z",
+      "side": 1,
+      "message": "Sure, it\u0027s just dubious to have too many calculations in the test code, but in that case I guess that\u0027s justified. Thanks",
+      "parentUuid": "9b7188e6_98361cac",
+      "range": {
+        "startLine": 161,
+        "startChar": 39,
+        "endLine": 161,
+        "endChar": 42
+      },
+      "revId": "ece0485b47cca8e105fe6c0455a2b12ddaf3c550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

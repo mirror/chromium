@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e02ad6f_5a54266a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T11:06:19Z",
+      "side": 1,
+      "message": "mark it public? also static constants should be in the style PADDING_START_PX",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "ae3dbcb6e52f9c157955db3bdbbc2293f692dc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7226fd8_ab103f73",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 7
@@ -42,6 +65,53 @@
         "startChar": 21,
         "endLine": 26,
         "endChar": 32
+      },
+      "revId": "ae3dbcb6e52f9c157955db3bdbbc2293f692dc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af6631_dbe46747",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T11:06:19Z",
+      "side": 1,
+      "message": "Then put that in the name :) or at the very least in the documentation, especially for public members.",
+      "parentUuid": "f86a2633_cacdeffa",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "ae3dbcb6e52f9c157955db3bdbbc2293f692dc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8095be94_8c88f2ca",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T11:06:19Z",
+      "side": 1,
+      "message": "There is no AboveTheFoldView when ChromeHome is enabled, so the test will fail. Doesn\u0027t it work to just call findViewById from the recyclerview? then both cases would be handled.",
+      "range": {
+        "startLine": 203,
+        "startChar": 55,
+        "endLine": 203,
+        "endChar": 74
       },
       "revId": "ae3dbcb6e52f9c157955db3bdbbc2293f692dc1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
