@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a015bc94_6903dc9a",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T07:44:23Z",
+      "side": 1,
+      "message": "I wanted to scope this to just RenderFrameImpl for now. Perhaps if it\u0027s useful in the future we can look at making this more general.",
+      "parentUuid": "e8064976_6ee73e56",
+      "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75b1d01_bfb2af2a",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 1
@@ -100,6 +118,24 @@
       "writtenOn": "2017-07-19T06:54:56Z",
       "side": 1,
       "message": "nit: link to the crbug?",
+      "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c6cc2e_9f1afa94",
+        "filename": "content/test/data/detach_frame_in_copy.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T07:44:23Z",
+      "side": 1,
+      "message": "Already added in PS2 \u003d)",
+      "parentUuid": "520b70a4_4092d42c",
       "revId": "d7ff202e2fb5932082fdc256ff2769ede7d47e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
