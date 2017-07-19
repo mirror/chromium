@@ -67,8 +67,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
       const gfx::Rect& rect) const;
 
   views::ImageButton* back_button();
+  views::ImageButton* close_button();
   views::Textfield* search_box() { return search_box_; }
-  bool IsCloseButtonVisible() const;
 
   void set_contents_view(views::View* contents_view) {
     contents_view_ = contents_view;
@@ -123,6 +123,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
 
+  // Overridden from views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
@@ -143,9 +146,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   bool HandleGestureEvent(views::Textfield* sender,
                           const ui::GestureEvent& gesture_event) override;
-
-  // Overridden from views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
   // Overridden from SearchBoxModelObserver:
   void SpeechRecognitionButtonPropChanged() override;
