@@ -51,8 +51,6 @@ struct WebURLError {
     // net/base/net_error_list_.h
     kNet,
 
-    kBlinkInternal,
-
     // |reason| is an HTTP status code
     kHttp,
 
