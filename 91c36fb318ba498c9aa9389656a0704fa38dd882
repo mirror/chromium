@@ -186,6 +186,57 @@
     },
     {
       "key": {
+        "uuid": "d301e3dc_412bdec2",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:33:18Z",
+      "side": 1,
+      "message": "EXPECT is redundant because this is checked at L92.\nSo, you don\u0027t need construction of the result string in RunQuery().\nSo, it\u0027s one liner of Start() and it can be called here inline.",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ade779_6d880770",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:33:18Z",
+      "side": 1,
+      "message": "Could you add ASSERT for the length of results() to avoid out-of-range access?",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84437af7_d4410dcf",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T17:33:18Z",
+      "side": 1,
+      "message": "(Optional) I\u0027d recommend to use ScopedTrace https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#adding-traces-to-assertions\n\nso that in case of failure, array index gets more clearer.\nJust inlining all three patterns is also a commonly used pattern, AFAIK.",
+      "revId": "91c36fb318ba498c9aa9389656a0704fa38dd882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ccf321c_6d40f1be",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
