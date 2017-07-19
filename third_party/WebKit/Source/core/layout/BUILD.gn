@@ -326,6 +326,7 @@ blink_core_sources("layout") {
     "ng/geometry/ng_box_strut.cc",
     "ng/geometry/ng_box_strut.h",
     "ng/geometry/ng_edge.h",
+    "ng/geometry/ng_intrinsic_size.h",
     "ng/geometry/ng_logical_offset.cc",
     "ng/geometry/ng_logical_offset.h",
     "ng/geometry/ng_logical_rect.cc",

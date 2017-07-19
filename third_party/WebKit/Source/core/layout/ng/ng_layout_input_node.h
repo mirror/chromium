@@ -17,6 +17,7 @@ class NGBreakToken;
 class NGConstraintSpace;
 class NGLayoutResult;
 struct MinMaxContentSize;
+struct NGIntrinsicSize;
 
 // Represents the input to a layout algorithm for a given node. The layout
 // engine should use the style, node type to determine which type of layout
@@ -37,6 +38,7 @@ class CORE_EXPORT NGLayoutInputNode {
   bool IsBlock() const;
   bool IsFloating() const;
   bool IsOutOfFlowPositioned() const;
+  bool IsReplaced() const;
 
   bool CreatesNewFormattingContext() const;
 
@@ -44,6 +46,10 @@ class CORE_EXPORT NGLayoutInputNode {
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*);
 
   MinMaxContentSize ComputeMinMaxContentSize();
+
+  // Returns intrinsic sizing information for replaced elements.
+  // ComputeReplacedSize can use it to compute actual replaced size.
+  NGIntrinsicSize IntrinsicSize() const;
 
   // Returns the next sibling.
   NGLayoutInputNode NextSibling();

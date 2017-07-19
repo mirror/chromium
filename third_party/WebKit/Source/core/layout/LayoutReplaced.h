@@ -94,13 +94,14 @@ class CORE_EXPORT LayoutReplaced : public LayoutBox {
     void Transpose();
   };
 
+  virtual void ComputeIntrinsicSizingInfo(IntrinsicSizingInfo&) const;
+
  protected:
   void WillBeDestroyed() override;
 
   void UpdateLayout() override;
 
   LayoutSize IntrinsicSize() const final { return intrinsic_size_; }
-  virtual void ComputeIntrinsicSizingInfo(IntrinsicSizingInfo&) const;
 
   void ComputePositionedLogicalWidth(
       LogicalExtentComputedValues&) const override;
@@ -158,6 +159,8 @@ class CORE_EXPORT LayoutReplaced : public LayoutBox {
 
   mutable LayoutSize intrinsic_size_;
 };
+
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutReplaced, IsLayoutReplaced());
 
 }  // namespace blink
 
