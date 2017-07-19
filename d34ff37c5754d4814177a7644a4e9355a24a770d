@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d21338_ec729800",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1140228
+      },
+      "writtenOn": "2017-07-19T17:54:08Z",
+      "side": 1,
+      "message": "This now suppresses an error if the output channel throws when closing - that used to fail the request, now it\u0027ll proceed. I suspect that\u0027s not something we want.",
+      "range": {
+        "startLine": 452,
+        "startChar": 12,
+        "endLine": 452,
+        "endChar": 30
+      },
+      "revId": "d34ff37c5754d4814177a7644a4e9355a24a770d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
