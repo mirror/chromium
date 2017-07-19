@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36d4b0fb_d8225582",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-19T20:35:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "daf50108_cac7d35d",
+      "range": {
+        "startLine": 680,
+        "startChar": 11,
+        "endLine": 680,
+        "endChar": 18
+      },
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "117615a7_2a404e4e",
         "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "313903378035ef3e146b759a58ec7820e82e4769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ae6b89_bd19c2aa",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-19T20:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "117615a7_2a404e4e",
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,30 @@
       "writtenOn": "2017-07-19T20:35:12Z",
       "side": 1,
       "message": "We used reflection before the N SDK was upstreamed during initial multiwindow feature development, so it\u0027s definitely not needed anymore.",
+      "parentUuid": "9a54eb06_dcdd7437",
+      "range": {
+        "startLine": 685,
+        "startChar": 66,
+        "endLine": 685,
+        "endChar": 75
+      },
+      "revId": "313903378035ef3e146b759a58ec7820e82e4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b8c4eb_ff6b29b4",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-19T20:35:48Z",
+      "side": 1,
+      "message": "I looked into it, I think the original method was written before we started building Chrome targeting the N API. I don\u0027t think it\u0027s necessary anymore, so I\u0027ve gotten rid of the reflection and exception handling logic.",
       "parentUuid": "9a54eb06_dcdd7437",
       "range": {
         "startLine": 685,
