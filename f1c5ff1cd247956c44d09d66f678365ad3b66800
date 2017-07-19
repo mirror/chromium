@@ -271,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "99f9f46c_8b00ad2a",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000107
+      },
+      "writtenOn": "2017-07-19T15:24:25Z",
+      "side": 1,
+      "message": "Hi.  We (and most Linux distributions) backport patches from newer versions of the kernel all the time.  Sometimes this is to fix bugs.  Sometimes this is to get new features.  Sometimes this is just to make some future patch easier to apply.  In general keying off a kernel version isn\u0027t the best thing to do--it\u0027s better to just see if the new file exists.  If it does, use the new file.\n\nIn the case of zRAM we\u0027ve been doing active development in 3.18 and 4.4 trying to make zRAM work better.  We wanted some of the upstream fixes and performance improvements and it was easier to get those fixes by first picking the patch which removes the old (deprecated) sysfs interface.  I changed the one place that I was aware of that depended on this, but clearly I wasn\u0027t aware of all the places.  Sorry!  :(\n\n...if nothing else, though, we we would have discovered this problem next time we did a kernel uprev.  Getting the backport just gives us a head start on it.",
+      "parentUuid": "5288b6d8_b814ecb2",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3e7f9aa_b403f3e8",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 5
