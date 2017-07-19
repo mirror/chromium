@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53475ea7_6c0ed536",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "Yep, standardizing the API in bubble_anchor_util.h to be based on Rect does make sense. Done. Although none of the page info bubbles have a way to make use of it right now.\n\n(In a way that\u0027s a bug, but not a regression as far as the current Mac behaviour is concerned. -- On Mac/Harmony we haven\u0027t talked about what bubbles should do when they want to pop offscreen, and the adjust-if-offscreen stuff is nerfed in BubbleDialogDelegateView::CreateBubble() - same as for Linux - so there\u0027s no weird anchoring \"above\" that would overlap the omnibox for now, since it uses a point instead of a rect)",
+      "parentUuid": "8921a59a_252fd6db",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "131733ea_c0b671a0",
         "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1b17b05f_7ec4948d",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "Yep! I started pulling that thread, but it touches lots of files, since there\u0027s lots of unnecessary plumbing once this takes a Browser*. WIP is here: https://chromium-review.googlesource.com/c/575795/ .",
+      "parentUuid": "131733ea_c0b671a0",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70889e13_b734b29b",
         "filename": "chrome/browser/ui/cocoa/bubble_anchor_helper.h",
         "patchSetId": 8
@@ -53,6 +95,41 @@
       "writtenOn": "2017-07-18T19:20:44Z",
       "side": 1,
       "message": "Can you address this now? Why not have the impl call HasVisibleLocationBarForBrowser internally?",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f55e59_12ffe2d8",
+        "filename": "chrome/browser/ui/cocoa/bubble_anchor_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "Sadly, it\u0027s not that simple. I\u0027ve noted the troublesome spot below. The test actually swaps out the definition of the ObjectiveC method for [PermissionBubbleController hasVisibleLocationBarForBrowser:browser] using the ObjC runtime so that it can pass the value here. To remove this function and use HasVisibleLocationBarForBrowser always, we\u0027d need to give the test a way to return a hardcoded value for HasVisibleLocationBarForBrowser() -- swapping on C++ functions isn\u0027t so easy.\n\nMy solution to this is actually just to delete the Cocoa permission bubbles entirely, and \"soon\"  (they have elusive lifetime issues causing crashes) -- I\u0027ve made a launch bug for this -- http://crbug.com/740827  and have CLs ready to purge them).",
+      "parentUuid": "70889e13_b734b29b",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c819453_bb42fd58",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "this :|",
       "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "56e23693_849c3ebe",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment to bubble_anchor_util.h to prefer GetPageInfoAnchorView(), since I agree it could be hard to miss that there is a second platform-specific function.\n\nNote there are times apart from fullscreen when there is no location bar. E.g. https://permission.site -\u003e AppMenu -\u003e MoreTools -\u003e Add to Desktop. Launching that gives you a Browser* that has no location bar until you navigate away from the origin. (the anchoring in this case on Canary is currently a little odd - GetPageInfoAnchorView() above should probably check for location bar *visibility* as well as \"support\" -- the Mac code would already do this, but I didn\u0027t change the BrowserView implementation).\n\nYou get a similar thing if you go to chrome://apps and set Sheets/Docs to `Open as Window` in Right-Click -\u003e Open As Window.\n\nI think you *used* to get it for javascript popups / window.open(..) as well, but I think we now put a readonly location bar in those all the time.",
+      "parentUuid": "51fd6a35_6b1792d3",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b98ef0_e48c5729",
         "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
         "patchSetId": 8
@@ -93,6 +194,24 @@
       "writtenOn": "2017-07-18T19:20:44Z",
       "side": 1,
       "message": "Will this still use no arrow if there\u0027s no page info icon eg. in fullscreen (and maybe app windows?)?",
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94075d6_f0e8eb99",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-19T12:51:47Z",
+      "side": 1,
+      "message": "No, it will get an arrow - that was an intentional change in favour of consistency with the current behaviour for permissions prompts. It\u0027s also part of the fix for http://crbug.com/745291 (the Mac code would never return an anchor in the middle of the screen, so it would anchor offscreen with the code that was in chooser_bubble_ui_views_mac.mm). \n\nWe can split this out again, but the arrow won\u0027t last long since --secondary-ui-md will remove it always, from all bubbles.\n\nApp Windows use a modal dialog for the device chooser rather than a bubble.",
+      "parentUuid": "49b98ef0_e48c5729",
       "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
