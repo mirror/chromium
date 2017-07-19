@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44d752b9_559da08f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-19T23:44:27Z",
+      "side": 1,
+      "message": "I combined the methods, and therefore now we block on SWs. SW was never discussed explicitly, therefore we err on the side of safety here.",
+      "parentUuid": "56ef307e_991d4bcd",
+      "revId": "e9cace902bdd05be5c9e02890be528480b9f10ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f1b61ec_dd39ef81",
         "filename": "content/public/browser/render_process_host.h",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-19T21:11:43Z",
       "side": 1,
       "message": "please document what |count| is and its purpose",
+      "range": {
+        "startLine": 215,
+        "startChar": 64,
+        "endLine": 215,
+        "endChar": 65
+      },
+      "revId": "e9cace902bdd05be5c9e02890be528480b9f10ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51ffb6b_dbc5026b",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-19T23:44:27Z",
+      "side": 1,
+      "message": "Method deleted, but documented in the new spot.",
+      "parentUuid": "3f1b61ec_dd39ef81",
       "range": {
         "startLine": 215,
         "startChar": 64,
