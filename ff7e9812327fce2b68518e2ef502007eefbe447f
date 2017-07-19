@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b921835_c8310a58",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T23:02:57Z",
+      "side": 1,
+      "message": "Comments would be helpful in these cases to explain intent of the code.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67aa268b_74bf2971",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T23:02:57Z",
+      "side": 1,
+      "message": "This should be declared here using extern (with no anonymous namespace), and defined in the impl file.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26232e4a_00190f28",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T23:02:57Z",
+      "side": 1,
+      "message": "Cannot use using to import whole namespace. Have to import each name individually:\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Namespaces\n\nAlso, if you only use the name once, you might consider not including a using directive and just including the namespace at its use.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf5fde8_be889244",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-19T23:02:57Z",
+      "side": 1,
+      "message": "The spacing of this line seems off. I would expect |CGRectGetMaxY...| to align with the parentheses or be indented by 4. Is that the result of git cl format?",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
