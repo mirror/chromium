@@ -7,6 +7,7 @@
 
 #include "core/workers/Worklet.h"
 #include "modules/ModulesExport.h"
+#include "modules/csspaint/DocumentPaintDefinition.h"
 #include "modules/csspaint/PaintWorkletGlobalScopeProxy.h"
 #include "modules/csspaint/PaintWorkletPendingGeneratorRegistry.h"
 #include "platform/heap/Handle.h"
@@ -27,7 +28,16 @@ class MODULES_EXPORT PaintWorklet final : public Worklet {
 
   CSSPaintDefinition* FindDefinition(const String& name);
   void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
+  RefPtr<Image> Paint(const String& name,
+                      const ImageResourceObserver&,
+                      const IntSize&,
+                      const CSSStyleValueVector*);
 
+  typedef HeapHashMap<String, TraceWrapperMember<DocumentPaintDefinition>>
+      DocumentDefinitionMap;
+  DocumentDefinitionMap& GetDocumentDefinitionMap() {
+    return document_definition_map_;
+  }
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -40,10 +50,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet {
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
 
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
-
-  // TODO(style-dev): Implement the "document paint definition" concept:
-  // https://drafts.css-houdini.org/css-paint-api/#document-paint-definition
-  // (https://crbug.com/578252)
+  DocumentDefinitionMap document_definition_map_;
 };
 
 }  // namespace blink
