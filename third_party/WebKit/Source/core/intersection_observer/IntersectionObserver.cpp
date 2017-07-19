@@ -36,14 +36,13 @@ class IntersectionObserverCallbackImpl final
   WTF_MAKE_NONCOPYABLE(IntersectionObserverCallbackImpl);
 
  public:
-  IntersectionObserverCallbackImpl(
-      ExecutionContext* context,
-      std::unique_ptr<IntersectionObserver::EventCallback> callback)
+  IntersectionObserverCallbackImpl(ExecutionContext* context,
+                                   IntersectionObserver::EventCallback callback)
       : context_(context), callback_(std::move(callback)) {}
 
   void HandleEvent(const HeapVector<Member<IntersectionObserverEntry>>& entries,
                    IntersectionObserver&) override {
-    (*callback_.get())(entries);
+    callback_(entries);
   }
 
   ExecutionContext* GetExecutionContext() const override { return context_; }
@@ -55,7 +54,7 @@ class IntersectionObserverCallbackImpl final
 
  private:
   WeakMember<ExecutionContext> context_;
-  std::unique_ptr<IntersectionObserver::EventCallback> callback_;
+  IntersectionObserver::EventCallback callback_;
 };
 
 void ParseRootMargin(String root_margin_parameter,
@@ -153,7 +152,7 @@ IntersectionObserver* IntersectionObserver::Create(
     const Vector<Length>& root_margin,
     const Vector<float>& thresholds,
     Document* document,
-    std::unique_ptr<EventCallback> callback,
+    EventCallback callback,
     ExceptionState& exception_state) {
   IntersectionObserverCallbackImpl* intersection_observer_callback =
       new IntersectionObserverCallbackImpl(document, std::move(callback));

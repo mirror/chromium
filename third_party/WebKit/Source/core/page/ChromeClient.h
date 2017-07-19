@@ -362,11 +362,10 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     return nullptr;
   }
 
-  virtual void RequestDecode(
-      LocalFrame*,
-      const PaintImage& image,
-      std::unique_ptr<WTF::Function<void(bool)>> callback) {
-    (*callback)(false);
+  virtual void RequestDecode(LocalFrame*,
+                             const PaintImage& image,
+                             WTF::Function<void(bool)> callback) {
+    callback(false);
   }
 
   DECLARE_TRACE();

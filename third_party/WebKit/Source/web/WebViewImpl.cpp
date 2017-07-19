@@ -3479,9 +3479,8 @@ WebInputMethodController* WebViewImpl::GetActiveWebInputMethodController()
   return local_frame ? local_frame->GetInputMethodController() : nullptr;
 }
 
-void WebViewImpl::RequestDecode(
-    const PaintImage& image,
-    std::unique_ptr<WTF::Function<void(bool)>> callback) {
+void WebViewImpl::RequestDecode(const PaintImage& image,
+                                WTF::Function<void(bool)> callback) {
   layer_tree_view_->RequestDecode(image,
                                   ConvertToBaseCallback(std::move(callback)));
 }
