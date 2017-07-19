@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9c8c59_b93f7b4a",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-19T05:20:27Z",
+      "side": 1,
+      "message": "I recommend you refactoring extracted code later.\nLet me center reviewing \"whether this is just moving?\".",
+      "revId": "990e0fcb20ad1c68faee272b57bd788bb80cda13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
