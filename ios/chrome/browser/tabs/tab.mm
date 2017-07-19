@@ -479,7 +479,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
-  _printObserver = base::MakeUnique<PrintObserver>(self.webState);
 
   id<PasswordsUiDelegate> passwordsUiDelegate =
       [[PasswordsUiDelegateImpl alloc] init];
@@ -508,6 +507,13 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
         [[ReaderModeController alloc] initWithWebState:self.webState
                                               delegate:self];
   }
+}
+
+// Attach any tab helpers which are dependent on the dispatcher having beeen
+// set on the tab.
+- (void)attachDispatcherDependentTabHelpers {
+  _printObserver =
+      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
 }
 
 - (NSArray*)accessoryViewProviders {
@@ -789,6 +795,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [_overscrollActionsController
       setDelegate:overscrollActionsControllerDelegate];
   overscrollActionsControllerDelegate_ = overscrollActionsControllerDelegate;
+}
+
+- (void)setDispatcher:(id<ApplicationCommands, BrowserCommands>)dispatcher {
+  _dispatcher = dispatcher;
+  [self attachDispatcherDependentTabHelpers];
 }
 
 - (void)saveTitleToHistoryDB {
