@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67d68fc1_45eb40e3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "The non-CrOS string should just be \"Search Engine\", because the assistant integration is CrOS-only.  Updated the non-CrOS string to reflect.",
+      "parentUuid": "672e64ba_bf81f8bd",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acbd010a_9907c8ce",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2bbb21a0_709864fa",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "Done, thanks",
+      "parentUuid": "acbd010a_9907c8ce",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65467e77_d0b9872e",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T18:49:50Z",
       "side": 1,
       "message": "Are you planning to add tests for this page in a follow up CL?",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4b1b9d_e61e3745",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "I\u0027ll look at adding tests to this CL.",
+      "parentUuid": "65467e77_d0b9872e",
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bba77a89_afd2d9e5",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e86497_d57f71ec",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dfba457_251196d5",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f8c786_98599e93",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "4dfba457_251196d5",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "96366d58_50768a85",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "Good catch.  Updated to assistant-specific string.",
+      "parentUuid": "8f04d517_1975cf1c",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d39d361_1fd74ee7",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bc94c1_8557ef3e",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-07-19T19:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d39d361_1fd74ee7",
+      "revId": "c2752f3e2f66221cb4ba11597083d996b41523c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
