@@ -3106,3 +3106,6 @@ crbug.com/626703 [ Win7 ] external/wpt/html/syntax/parsing/html5lib_tests16.html
 crbug.com/746128 [ Win7 ] media/controls/video-enter-exit-fullscreen-without-hovering-doesnt-show-controls.html [ Failure ]
 
 crbug.com/626703 [ Win7 ] external/wpt/image-decodes/image-decode-path-changes.html [ Pass Crash ]
+
+# Geolocation tests
+crbug.com/745079 external/wpt/geolocation-API/PositionOptions.https.html [ Failure ]
