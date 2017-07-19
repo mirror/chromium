@@ -41,6 +41,7 @@
 #include "third_party/harfbuzz-ng/src/hb.h"
 #include "third_party/ots/include/ots-memory-stream.h"
 #include "third_party/skia/include/core/SkStream.h"
+#include "third_party/skia/include/ports/SkFontMgr_empty.h"
 
 #include <stdarg.h>
 
@@ -207,20 +208,24 @@ sk_sp<SkTypeface> WebFontDecoder::Decode(SharedBuffer* buffer) {
 
   if (!ok) {
     SetErrorString(ots_context.GetErrorString());
-    return nullptr;
+    // return nullptr;
   }
 
   const size_t decoded_length = output.Tell();
   RecordDecodeSpeedHistogram(data, buffer->size(), CurrentTime() - start,
                              decoded_length);
 
-  sk_sp<SkData> sk_data = SkData::MakeWithCopy(output.get(), decoded_length);
+  // sk_sp<SkData> sk_data = SkData::MakeWithCopy(output.get(), decoded_length);
+  sk_sp<SkData> sk_data = SkData::MakeWithCopy(buffer->Data(), buffer->size());
   SkMemoryStream* stream = new SkMemoryStream(sk_data);
 #if defined(OS_WIN)
   sk_sp<SkTypeface> typeface(
       FontCache::GetFontCache()->FontManager()->createFromStream(stream));
 #else
-  sk_sp<SkTypeface> typeface = SkTypeface::MakeFromStream(stream);
+  sk_sp<SkFontMgr> fm(SkFontMgr_New_Custom_Empty());
+  sk_sp<SkTypeface> typeface(
+      fm->createFromStream(stream));
+  // sk_sp<SkTypeface> typeface = SkTypeface::MakeFromStream(stream);
 #endif
   if (!typeface) {
     SetErrorString("Not a valid font data");
