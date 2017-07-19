@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "base/android/jni_android.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/passwords/manage_passwords_state.h"
@@ -52,8 +51,5 @@ class AutoSigninFirstRunDialogAndroid : public content::WebContentsObserver {
 
   DISALLOW_COPY_AND_ASSIGN(AutoSigninFirstRunDialogAndroid);
 };
-
-// Native JNI methods
-bool RegisterAutoSigninFirstRunDialogAndroid(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_PASSWORD_MANAGER_AUTO_SIGNIN_FIRST_RUN_DIALOG_ANDROID_H_

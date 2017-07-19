@@ -9,7 +9,6 @@
 
 #include <vector>
 
-#include "base/android/jni_android.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/passwords/manage_passwords_state.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -68,8 +67,5 @@ class AccountChooserDialogAndroid : public content::WebContentsObserver {
 
   DISALLOW_COPY_AND_ASSIGN(AccountChooserDialogAndroid);
 };
-
-// Native JNI methods
-bool RegisterAccountChooserDialogAndroid(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_PASSWORD_MANAGER_ACCOUNT_CHOOSER_DIALOG_ANDROID_H_
