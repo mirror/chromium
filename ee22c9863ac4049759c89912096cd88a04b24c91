@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe53cf7_93c32f94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T14:58:41Z",
+      "side": 1,
+      "message": "nit: doc please.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 35,
+        "endLine": 1093,
+        "endChar": 55
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41acccf5_8fff6f3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T14:58:41Z",
+      "side": 1,
+      "message": "Do we know for sure that all of these will be non-null?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 15,
+        "endLine": 1094,
+        "endChar": 62
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075cddaa_00706348",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T14:58:41Z",
+      "side": 1,
+      "message": "Might be worth mentioning why this is necessary.",
+      "range": {
+        "startLine": 199,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d0c67b_dd27a079",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/ToolbarSwipeLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T14:58:41Z",
+      "side": 1,
+      "message": "Maybe make mDpToPx Layout protected.",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 25
+      },
+      "revId": "ee22c9863ac4049759c89912096cd88a04b24c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
