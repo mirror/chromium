@@ -87,6 +87,20 @@ TEST_F(ChromeWebClientTest, WKWebViewEarlyPageScriptPrint) {
               web::ExecuteJavaScript(web_view, @"typeof __gCrWeb.print"));
 }
 
+// Tests that ChromeWebClient provides credential manager script for WKWebView.
+TEST_F(ChromeWebClientTest, WKWebViewEarlyPageScriptCredentialManager) {
+  // Chrome scripts rely on __gCrWeb object presence.
+  web::TestBrowserState browser_state;
+  WKWebView* web_view = web::BuildWKWebView(CGRectZero, &browser_state);
+  web::ExecuteJavaScript(web_view, @"__gCrWeb = {};");
+
+  web::ScopedTestingWebClient web_client(base::MakeUnique<ChromeWebClient>());
+  NSString* script = web_client.Get()->GetEarlyPageScript(&browser_state);
+  web::ExecuteJavaScript(web_view, script);
+  EXPECT_NSEQ(@"object", web::ExecuteJavaScript(
+                             web_view, @"typeof __gCrWeb.credentialManager"));
+}
+
 // Tests that ChromeWebClient does not provide payment request script for
 // WKWebView unless the feature is enabled.
 TEST_F(ChromeWebClientTest, WKWebViewEarlyPageScriptPaymentRequest) {
