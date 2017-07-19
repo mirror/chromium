@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06308844_8c3f2a3c",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-19T18:34:56Z",
+      "side": 1,
+      "message": "The above code is called at CrasAudioHandler::HandleAudioDeviceChange(), which should handle the device hotplug and unplug cases, is there a bug that the SystemMoninor is not notified with the existing code?",
+      "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
