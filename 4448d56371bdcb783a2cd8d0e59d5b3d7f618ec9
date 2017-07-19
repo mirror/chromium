@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "051e8472_be183588",
+        "filename": "net/spdy/chromium/spdy_test_util_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-19T14:39:44Z",
+      "side": 1,
+      "message": "Done.  Also moved to spdy_test_util_common.h, so that it would not need to be defined again in buffered_spdy_framer_unittest.cc.",
+      "parentUuid": "16514c46_ab11c6b8",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "4448d56371bdcb783a2cd8d0e59d5b3d7f618ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e59d7c_de3264af",
         "filename": "net/spdy/core/spdy_protocol.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-18T17:26:34Z",
       "side": 1,
       "message": "Do this changed need to be merged back, or did they come as part of a merge already?",
+      "range": {
+        "startLine": 296,
+        "startChar": 49,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "4448d56371bdcb783a2cd8d0e59d5b3d7f618ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb6194e_f5337f38",
+        "filename": "net/spdy/core/spdy_protocol.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-19T14:39:44Z",
+      "side": 1,
+      "message": "A change will land soon that refactors these methods, making SPDY_EXPORT_PRIVATE unnecessary.  I will rebase and land this CL afterwards.",
+      "parentUuid": "b4e59d7c_de3264af",
       "range": {
         "startLine": 296,
         "startChar": 49,
