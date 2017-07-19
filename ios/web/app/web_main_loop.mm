@@ -49,6 +49,12 @@ WebMainLoop::WebMainLoop() : result_code_(0), created_threads_(false) {
 WebMainLoop::~WebMainLoop() {
   DCHECK_EQ(this, g_current_web_main_loop);
   g_current_web_main_loop = nullptr;
+
+  // The network change notifier needs to be destroyed before the message loop
+  // as it creates an object that checks the destruction happens on the correct
+  // thread which require the UI message loop to still exist.
+  ios_global_state::DestroyNetworkChangeNotifier();
+  ios_global_state::DestroyMessageLoop();
 }
 
 void WebMainLoop::Init() {
