@@ -105,6 +105,64 @@
     },
     {
       "key": {
+        "uuid": "ac6a1458_3fb92e5d",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T08:41:06Z",
+      "side": 1,
+      "message": "I *think* that is fine? We don\u0027t really care if some memory is leaked during shutdown. Or am I missing something?",
+      "parentUuid": "ec092053_48ef53a1",
+      "range": {
+        "startLine": 590,
+        "startChar": 37,
+        "endLine": 590,
+        "endChar": 48
+      },
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1620a5d_4b3b234d",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T08:41:06Z",
+      "side": 1,
+      "message": "nit: empty line before",
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2525480a_92a52f4d",
+        "filename": "chrome/browser/search/local_ntp_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-19T08:41:06Z",
+      "side": 1,
+      "message": "Actually, it seems to hold *all* the data, IO-thread-affine or not. That seems wrong.",
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0114eff_e8067a17",
         "filename": "chrome/browser/search/local_ntp_source.h",
         "patchSetId": 2
