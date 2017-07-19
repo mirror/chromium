@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be67da21_9b6fea03",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "ouch... Renamed to kExpectedUsername. I considered kUsername but that\u0027s already taken.",
+      "parentUuid": "c3b8fe1a_7da8cce3",
+      "range": {
+        "startLine": 353,
+        "startChar": 27,
+        "endLine": 353,
+        "endChar": 44
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b28acb7b_1197dca7",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9a84b886_b6bfd6ff",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28acb7b_1197dca7",
+      "range": {
+        "startLine": 358,
+        "startChar": 6,
+        "endLine": 358,
+        "endChar": 17
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e039df5_21b70676",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-19T12:19:08Z",
       "side": 1,
       "message": "What are the expectations you clear here?",
+      "range": {
+        "startLine": 368,
+        "startChar": 33,
+        "endLine": 368,
+        "endChar": 59
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebb053c_349e010c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "SavePassword (see line 358)",
+      "parentUuid": "9e039df5_21b70676",
       "range": {
         "startLine": 368,
         "startChar": 33,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d1db3ef6_afddb9ea",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86eba8ab_44ffb226",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fdf71b0_d80ca075",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 5
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0fa2ba31_a7ea0dba",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "It\u0027s typically good to have a 0 as unknown in protobufs (during the analysis) to deal with unset values. See go/kaktz",
+      "parentUuid": "6fdf71b0_d80ca075",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 12
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2060d75c_2586a211",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-19T12:19:08Z",
       "side": 1,
       "message": "What is the reason for the magic value?",
+      "range": {
+        "startLine": 217,
+        "startChar": 30,
+        "endLine": 217,
+        "endChar": 33
+      },
+      "revId": "b40236f9a581d9cb5cbe672089853e7d552ce577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4b3b84_6861bcd8",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-19T12:44:28Z",
+      "side": 1,
+      "message": "I will add many more items and \"edited username in bubble\" will certainly not belong to the beginning from a logical perspective. I want to reserve some space for interactions with the form.",
+      "parentUuid": "2060d75c_2586a211",
       "range": {
         "startLine": 217,
         "startChar": 30,
