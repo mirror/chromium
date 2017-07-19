@@ -1174,6 +1174,13 @@ bool TabsUpdateFunction::RunAsync() {
 
   // Navigate the tab to a new location if the url is different.
   bool is_async = false;
+  if (params->update_properties.url.get())
+    if (browser->profile()->GetProfileType() == Profile::INCOGNITO_PROFILE) {
+      error_ =
+          ErrorUtils::FormatErrorMessage(keys::kURLsNotAllowedInIncognitoError,
+                                         *params->update_properties.url);
+      return false;
+    }
   if (params->update_properties.url.get() &&
       !UpdateURL(*params->update_properties.url, tab_id, &is_async)) {
     return false;
