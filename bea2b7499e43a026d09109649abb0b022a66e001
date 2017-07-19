@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a5f057_dd6e3849",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-19T21:10:15Z",
+      "side": 1,
+      "message": "no need for extra line",
+      "revId": "bea2b7499e43a026d09109649abb0b022a66e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111d3c67_eb2841e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-19T21:10:15Z",
+      "side": 1,
+      "message": "please annotate the map",
+      "revId": "bea2b7499e43a026d09109649abb0b022a66e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2591e411_704c274c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-19T21:10:15Z",
+      "side": 1,
+      "message": "nit: Looks like the item class is not used outside the ReportSelector besides this place. You can move the item creation into prepend to make it fully internal to ReportSelector.",
+      "revId": "bea2b7499e43a026d09109649abb0b022a66e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ac4d3c_11e24494",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-19T21:10:15Z",
+      "side": 1,
+      "message": "nit: no need for var",
+      "revId": "bea2b7499e43a026d09109649abb0b022a66e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
