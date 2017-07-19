@@ -607,6 +607,11 @@ bool GpuCommandBufferStub::Initialize(
   // only a single context. See crbug.com/510243 for details.
   use_virtualized_gl_context_ |= manager->mailbox_manager()->UsesSync();
 
+#if defined(OS_MACOSX)
+  // Force virtualized contexts off for ANGLE pass-through command buffer.
+  use_virtualized_gl_context_ = false;
+#endif
+
   bool offscreen = (surface_handle_ == kNullSurfaceHandle);
   gl::GLSurface* default_surface = manager->GetDefaultOffscreenSurface();
   if (!default_surface) {

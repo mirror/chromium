@@ -52,6 +52,7 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     case gl::kGLImplementationDesktopGL:
     case gl::kGLImplementationDesktopGLCoreProfile:
     case gl::kGLImplementationAppleGL:
+    case gl::kGLImplementationEGLGLES2:
       return make_scoped_refptr<gl::GLSurface>(
           new ImageTransportSurfaceOverlayMac(delegate));
     case gl::kGLImplementationMockGL:

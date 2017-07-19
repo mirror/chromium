@@ -295,6 +295,10 @@ bool GLES2DecoderPassthroughImpl::Initialize(
     bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units, 0);
   }
 
+  if (feature_info_->feature_flags().arb_texture_rectangle) {
+    bound_textures_[GL_TEXTURE_RECTANGLE_ARB].resize(num_texture_units, 0);
+  }
+
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
       feature_info_->feature_flags().khr_debug) {
     InitializeGLDebugLogging();

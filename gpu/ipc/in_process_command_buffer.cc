@@ -344,6 +344,11 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
                                                   ->workarounds()
                                                   .use_virtualized_gl_contexts;
 
+#if defined(OS_MACOSX)
+  // Force virtualized contexts off for ANGLE pass-through command buffer.
+  use_virtualized_gl_context_ = false;
+#endif
+
   // TODO(sunnyps): Should this use ScopedCrashKey instead?
   base::debug::SetCrashKeyValue(crash_keys::kGPUGLContextIsVirtual,
                                 use_virtualized_gl_context_ ? "1" : "0");

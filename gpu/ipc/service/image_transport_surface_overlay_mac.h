@@ -14,7 +14,7 @@
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "gpu/ipc/service/image_transport_surface.h"
 #include "ui/base/cocoa/remote_layer_api.h"
-#include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_surface_egl.h"
 #include "ui/gl/gpu_switching_observer.h"
 #include "ui/latency/latency_info.h"
 
@@ -32,7 +32,7 @@ class GLFence;
 
 namespace gpu {
 
-class ImageTransportSurfaceOverlayMac : public gl::GLSurface,
+class ImageTransportSurfaceOverlayMac : public gl::SurfacelessEGL,
                                         public ui::GpuSwitchingObserver {
  public:
   explicit ImageTransportSurfaceOverlayMac(

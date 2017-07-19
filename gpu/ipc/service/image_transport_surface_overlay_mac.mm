@@ -61,7 +61,8 @@ namespace gpu {
 
 ImageTransportSurfaceOverlayMac::ImageTransportSurfaceOverlayMac(
     base::WeakPtr<ImageTransportSurfaceDelegate> delegate)
-    : delegate_(delegate),
+    : SurfacelessEGL(gfx::Size(1, 1)),
+      delegate_(delegate),
       use_remote_layer_api_(ui::RemoteLayerAPISupported()),
       scale_factor_(1),
       gl_renderer_id_(0) {
