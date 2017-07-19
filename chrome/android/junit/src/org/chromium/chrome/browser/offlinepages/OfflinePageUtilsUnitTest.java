@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.offlinepages;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -14,6 +15,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Environment;
 
 import org.junit.Before;
@@ -54,6 +58,8 @@ public class OfflinePageUtilsUnitTest {
     private OfflinePageBridge mOfflinePageBridge;
     @Mock
     private OfflinePageUtils.Internal mOfflinePageUtils;
+    @Mock
+    private Context mContext;
 
     @Before
     public void setUp() throws Exception {
@@ -203,6 +209,17 @@ public class OfflinePageUtilsUnitTest {
                 OfflinePageUtils.rewriteOfflineFileName(directoryPath + "cs.chromium!.org#.mhtml"));
         // If there is no dot other than file extension, nothing changes.
         assertEquals("chromium.mhtml", OfflinePageUtils.rewriteOfflineFileName("chromium.mhtml"));
+    }
+
+    @Test
+    public void testGetAppSignaturesFor() throws NameNotFoundException {
+        String appName = "someAppName";
+        Signature[] list = new Signature[] {new Signature("1234567890abcdef")};
+        doReturn(list).when(mOfflinePageUtils).getSignatures(any(Context.class), eq(appName));
+
+        String[] sigHash =
+                new String[] {"b09dc9a32de2d32bc21052a2f185044607d11cc58966ba7d7b299fabb7dcbd12"};
+        assertArrayEquals(sigHash, OfflinePageUtils.getAppSignaturesFor(mContext, appName));
     }
 
     /** A shadow/wrapper of android.os.Environment that allows injecting a test directory. */
