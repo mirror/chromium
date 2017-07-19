@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86fb59a_7802f7db",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T16:58:42Z",
+      "side": 1,
+      "message": "Some of the toolbar child views overdraw the parent container, but I don\u0027t think any other child views of BottomSheet are overdrawing. What happens if you remove this line?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "806c97ea229f12422a4871e6cf779752c7c7fe9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5428e550_4434f87f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T16:58:42Z",
+      "side": 1,
+      "message": "Can we do some sort of early return if the new tab isn\u0027t shown (e.g. hide logo view and reset toolbar translation then return).\n\nI think we should also be dropping out early if mSearchProviderHasLogo is false.",
+      "range": {
+        "startLine": 165,
+        "startChar": 20,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "806c97ea229f12422a4871e6cf779752c7c7fe9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93686e35_4a755478",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-19T16:58:42Z",
+      "side": 1,
+      "message": "I think using the toolbar_holder is going to offset the history/downloads/bookmarks toolbars as well. What happens when you switch to one of those views?",
+      "range": {
+        "startLine": 183,
+        "startChar": 62,
+        "endLine": 183,
+        "endChar": 76
+      },
+      "revId": "806c97ea229f12422a4871e6cf779752c7c7fe9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
