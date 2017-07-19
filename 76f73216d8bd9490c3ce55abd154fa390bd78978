@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fc7e1b4_55262b03",
+        "filename": "ios/web/navigation/legacy_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-19T21:50:52Z",
+      "side": 1,
+      "message": "No. Deleted.",
+      "parentUuid": "3bde75d5_b81099ff",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "76f73216d8bd9490c3ce55abd154fa390bd78978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "102255b8_61659647",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "76f73216d8bd9490c3ce55abd154fa390bd78978",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9982cd53_9a7def58",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-19T21:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102255b8_61659647",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "76f73216d8bd9490c3ce55abd154fa390bd78978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
