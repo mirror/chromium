@@ -99,7 +99,8 @@ static void RecordLaunch(JNIEnv* env,
       break;
   }
 
-  UMA_HISTOGRAM_ENUMERATION("Launch.HomeScreenSource", histogram_source,
+  UMA_HISTOGRAM_ENUMERATION("Launch.HomeScreenSource",
+                            static_cast<ShortcutInfo::Source>(histogram_source),
                             ShortcutInfo::SOURCE_COUNT);
 
   rappor::SampleDomainAndRegistryFromGURL(g_browser_process->rappor_service(),
