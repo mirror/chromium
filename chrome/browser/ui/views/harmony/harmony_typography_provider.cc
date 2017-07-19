@@ -180,8 +180,8 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
 #elif defined(OS_WIN)
   constexpr int kHeadlinePlatformHeight = 28;
   constexpr int kTitlePlatformHeight = 20;
-  constexpr int kBodyTextLargePlatformHeight = 17;
-  constexpr int kBodyTextSmallPlatformHeight = 15;
+  constexpr int kBodyTextLargePlatformHeight = 18;
+  constexpr int kBodyTextSmallPlatformHeight = 16;
 #else
   constexpr int kHeadlinePlatformHeight = 24;
   constexpr int kTitlePlatformHeight = 18;
@@ -215,6 +215,7 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
     case views::style::CONTEXT_DIALOG_TITLE:
       return title_height;
     case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_TABLE_ROW:
       return body_large_height;
     case CONTEXT_HEADLINE:
       return headline_height;
