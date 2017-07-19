@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c361778c_a00dd113",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-19T21:52:24Z",
+      "side": 1,
+      "message": "super-nit: Maybe say something here about a race with ShelfWindowWatcher, since that was the source of the problem.",
+      "revId": "a13789da6f556c357fdce38499eef42e3e58f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
