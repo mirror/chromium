@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "e7716199_3f406406",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "IIUC, Launched Sign-On, but I agreed to get rid of acronym. Let\u0027s work on another CL.",
+      "parentUuid": "757f63ff_79251f0d",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "598ae6fb_bb607545",
         "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
         "patchSetId": 4
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "b011c7fa_5815649e",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Thanks, could you update the arg name, member name, too?",
+      "parentUuid": "cfdc24ec_30676199",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29dc95a2_f8ed4ed9",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
         "patchSetId": 4
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "They could, but I feel like it\u0027s cleaner this way. It destroys the symmetry to the other Show* calls and makes the implementation in ArcSupportHost messy.",
       "parentUuid": "29dc95a2_f8ed4ed9",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42d2323_bc9bb2c1",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "If it is conceptually a part of AD page, then it should be a part of its param, IMO.\nThe implementation is the details. Maybe you can introduce optional param there.",
+      "parentUuid": "ee52bcb8_120c0db9",
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -492,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "e2e27ee2_a59b195d",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Got it. Thank you for explanation.",
+      "parentUuid": "5e6aef29_054d42fc",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce5e09f2_2e864428",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 4
@@ -521,6 +593,24 @@
       "side": 1,
       "message": "I\u0027m afraid it might spin forever, e.g. if OnAuthSucceeded shows the ad auth page again for some reason. I can\u0027t think of a reliable way to break this loop other than crashing.",
       "parentUuid": "ce5e09f2_2e864428",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a0f9e5_400d9b08",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Then you can quit the message loop, I think?",
+      "parentUuid": "79f6cfba_09ab16dc",
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -731,6 +821,24 @@
       "side": 1,
       "message": "Seems more confusing than helpful to understand the code. Also, startTermsViewLoading_, showPage, showErrorPage and setWindowBounds would have to be changed as well.",
       "parentUuid": "651e3581_7b71b455",
+      "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bfe4ea_2106c885",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Oh, good point. Then that\u0027s fine.",
+      "parentUuid": "ced1e7d2_cfc6e4fc",
       "revId": "fcc16e61348d02b36aa93ece3802ec487967a65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

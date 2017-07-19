@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4de61716_5e3f599d",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e77ddde_0b9e0893",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "nit: s/{}/\u003d 0;/ as this is not intended to have a default implementation?",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f94868_5415cc4a",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Maybe:\n\nprotected:\n  ~FakeArcSupportObserverBase() override \u003d default;",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87e3819_b77555bf",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "You can remove OnEnrollmentTokenFetched by lambda, as mentioned in the last iteration.\ntoken_fetcher_-\u003eFetch(\n  base::Bind([](RunLoop* run_loop, Status* out_fetch_status,\n                ... out params ..., Status fetch_status,\n                const std::string\u0026 enrollment_token, ...) {\n    ... inline OnEnrollmentTokenFetched lines ...\n    },\n    \u0026run_loop, out_fetch_status, ...));",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e8daef_87799a96",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Unused this.",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02077dde_9349c938",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Better to avoid CHECK, because it blocks other test runs.\nASSERT_NE is the one which should be used here.\nThen, you should wrap callers by ASSERT_NO_FATAL_FAILURE() (optional, if it is the last expectation, but probably better to have it for consistency, IMHO).",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db60333f_f0f91c3e",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Often, observer don\u0027t take the registered instance in ARC.\nCan this be moved to subclasses?",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba73238a_765c226b",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Could you use base::ObserverList for consistency?",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6e7b52_3444c2c9",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-19T12:02:26Z",
+      "side": 1,
+      "message": "Could you make these as methods?",
+      "revId": "6bc0327733d8044faaebaf7a04bb803b7cff0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
