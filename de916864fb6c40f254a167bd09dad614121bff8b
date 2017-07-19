@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9056e69b_33a63c1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-19T15:07:36Z",
+      "side": 1,
+      "message": "nit: setSheetState(PEEK, false) unless we are intentionally avoiding it (it\u0027s extra logic but makes debugging a lot easier).",
+      "range": {
+        "startLine": 778,
+        "startChar": 24,
+        "endLine": 778,
+        "endChar": 56
+      },
+      "revId": "de916864fb6c40f254a167bd09dad614121bff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
