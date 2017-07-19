@@ -269,6 +269,9 @@ const char kEnableExperimentalAccessibilityFeatures[] =
 // Enables sharing assets for installed default apps.
 const char kEnableExtensionAssetsSharing[] = "enable-extension-assets-sharing";
 
+// Disables touchscreen-specific interactions of the Files app.
+const char kDisableFileManagerTouchMode[] = "disable-file-manager-touch-mode";
+
 // Enables animated transitions during first-run tutorial.
 const char kEnableFirstRunUITransitions[] = "enable-first-run-ui-transitions";
 
