@@ -115,7 +115,7 @@ unsigned GpuMemoryBufferFactoryIOSurface::RequiredTextureType() {
   return GL_TEXTURE_RECTANGLE_ARB;
 }
 
-bool GpuMemoryBufferFactoryIOSurface::SupportsFormatRGB() {
+bool GpuMemoryBufferFactoryIOSurface::SupportsFormatRGBRenderTarget() {
   return false;
 }
 

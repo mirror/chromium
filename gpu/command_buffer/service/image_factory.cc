@@ -27,7 +27,7 @@ unsigned ImageFactory::RequiredTextureType() {
   return 0;
 }
 
-bool ImageFactory::SupportsFormatRGB() {
+bool ImageFactory::SupportsFormatRGBRenderTarget() {
   return true;
 }
 

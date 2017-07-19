@@ -22,7 +22,7 @@ class TextureImageFactory : public gpu::ImageFactory {
       gfx::BufferFormat format,
       unsigned internalformat) override;
   unsigned RequiredTextureType() override;
-  bool SupportsFormatRGB() override;
+  bool SupportsFormatRGBRenderTarget() override;
 
   void SetRequiredTextureType(unsigned type);
 

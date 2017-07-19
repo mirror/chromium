@@ -160,4 +160,8 @@ unsigned GpuMemoryBufferFactoryNativePixmap::RequiredTextureType() {
   return GL_TEXTURE_2D;
 }
 
+bool GpuMemoryBufferFactoryNativePixmap::SupportsFormatRGBRenderTarget() {
+  return false;
+}
+
 }  // namespace gpu
