@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a5b052_40b2a449",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePairOfNthChildSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T03:19:24Z",
+      "side": 1,
+      "message": "Should this be in the utils.js?",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80147134_631ec819",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePairOfNthChildSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T03:19:24Z",
+      "side": 1,
+      "message": "Can we shorten this to \u0027Measures performance of pair of nth-child selectors\u0027?",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c97462_08368608",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T03:19:24Z",
+      "side": 1,
+      "message": "Hmm, perhaps we should think about making this a helper function? I think the paint perf tests do this: https://cs.chromium.org/chromium/src/third_party/WebKit/PerformanceTests/Paint/resources/paint.js",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
