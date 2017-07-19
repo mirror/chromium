@@ -34,6 +34,29 @@
       "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf39412_998d45c7",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8788,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-19T15:19:33Z",
+      "side": 1,
+      "message": "s/they are/they\u0027re/\n?",
+      "range": {
+        "startLine": 8788,
+        "startChar": 64,
+        "endLine": 8788,
+        "endChar": 70
+      },
+      "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
