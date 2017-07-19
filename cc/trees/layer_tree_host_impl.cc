@@ -1106,8 +1106,11 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
 
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_memory = 0;
-    for (const PictureLayerImpl* layer : active_tree()->picture_layers())
+    size_t total_gpu_memory_for_tilings_in_kb = 0;
+    for (const PictureLayerImpl* layer : active_tree()->picture_layers()) {
       total_memory += layer->GetRasterSource()->GetMemoryUsage();
+      total_gpu_memory_for_tilings_in_kb += layer->GPUMemoryUsageInBytes();
+    }
     if (total_memory != 0) {
       // GetClientNameForMetrics only returns one non-null value over the
       // lifetime of the process, so this histogram name is runtime constant.
@@ -1121,6 +1124,13 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
     UMA_HISTOGRAM_CUSTOM_COUNTS(
         base::StringPrintf("Compositing.%s.NumActiveLayers", client_name),
         base::saturated_cast<int>(active_tree_->NumLayers()), 1, 400, 20);
+
+    if (total_gpu_memory_for_tilings_in_kb > 0) {
+      UMA_HISTOGRAM_COUNTS(
+          base::StringPrintf("Compositing.%s.GPUMemoryForTilingsInKB",
+                             client_name),
+          base::saturated_cast<int>(total_gpu_memory_for_tilings_in_kb / 1024));
+    }
   }
 
   bool ok = active_tree_->UpdateDrawProperties();

@@ -8566,6 +8566,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Compositing.Browser.GPUMemoryForTilingsInKB" units="KB">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    Record the GPU memory we allocate for tilings when compositing a layer (in a
+    browser process).
+
+    Team: threaded-rendering@chromium.org.
+  </summary>
+</histogram>
+
 <histogram base="true" name="Compositing.Browser.LayersUpdateTime"
     units="microseconds">
   <owner>threaded-rendering@chromium.org</owner>
@@ -8880,6 +8890,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time spent updating (i.e. recording) a display list, in microseconds.
     Recorded when display list is updated (in a renderer process).
+  </summary>
+</histogram>
+
+<histogram name="Compositing.Renderer.GPUMemoryForTilingsInKB" units="KB">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    Record the GPU memory we allocate for tilings when compositing a layer (in a
+    renderer process).
+
+    Team: threaded-rendering@chromium.org.
   </summary>
 </histogram>
 
