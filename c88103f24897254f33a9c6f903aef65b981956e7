@@ -16,6 +16,24 @@
       "revId": "c88103f24897254f33a9c6f903aef65b981956e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9dffaa_905b870c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-19T12:36:55Z",
+      "side": 1,
+      "message": "Done.\n\nI did that on purpose, because I saw that some code would set source_text_ to an empty string. (ScriptResource::DestroyDecodedDataForFailedRevalidation)\n\nI now tried with IsNull() and indeed no test breaks. Looking back, apparently nobody calls CheckResourceIntegrity after DestoryDecodedDataForFailedRevalidation. That makes perfect sense given the names of those two functions, so I fixed it. :-)",
+      "parentUuid": "cae7e0ac_71995fc2",
+      "revId": "c88103f24897254f33a9c6f903aef65b981956e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
