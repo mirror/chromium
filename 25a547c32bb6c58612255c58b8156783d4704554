@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6928b00d_ab9496ad",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePairOfNthChildSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T04:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a5b052_40b2a449",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80147134_631ec819",
         "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePairOfNthChildSelector.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cb69504c_4bbbe0a9",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStylePairOfNthChildSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T04:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80147134_631ec819",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c97462_08368608",
         "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-19T03:19:24Z",
       "side": 1,
       "message": "Hmm, perhaps we should think about making this a helper function? I think the paint perf tests do this: https://cs.chromium.org/chromium/src/third_party/WebKit/PerformanceTests/Paint/resources/paint.js",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862cbe8e_c7e2b46d",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-19T04:10:32Z",
+      "side": 1,
+      "message": "I think its crossing the line of too much obfuscation. Are you ok with me leaving it as is?",
+      "parentUuid": "76c97462_08368608",
       "revId": "25a547c32bb6c58612255c58b8156783d4704554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
