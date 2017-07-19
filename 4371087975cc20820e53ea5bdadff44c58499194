@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22a0915_08f9fa41",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "nit: We can just reuse IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT for this; there is precedent and the context is similar enough I can\u0027t imagine there to be l10n issues.",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e8f424_8ea233fa",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "I don\u0027t see any use of action-link here or in the JS, can we remove these from here and from the style include?",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d7ebad_24bb73c6",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "nit: a slightly cleaner (imho) way to do this is:\n\n\u003cstyle...\u003e\n  settings-toggle-button[hilight\u003d\u0027on\u0027] {\n    color: blue;\n    ...\n   }\n  settings-toggle-button[hilight\u003d\u0027off\u0027] {\n    color: grey;\n    ...\n   }\n\u003c/style\u003e\n\n...\n\u003csettings-toggle-button class\u003d\"start\" hilight$\u003d[[getHilight_(prefs...)]] ... \u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 81,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866c974d_d6944f51",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "\u003cif expr\u003d\"chromeos\"\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 85,
+        "endLine": 12,
+        "endChar": 86
+      },
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a6c5d3_b687050f",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "This id doesn\u0027t appear to be used? Until/unless we need it for testing we try to avoid defining unused ids.",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f26416_4de67ca9",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-19T20:46:26Z",
+      "side": 1,
+      "message": "Fix indentation for IDS_ lines (see below)",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
