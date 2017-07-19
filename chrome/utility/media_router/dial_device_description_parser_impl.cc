@@ -16,22 +16,6 @@
 
 namespace {
 
-enum ErrorType {
-  NONE,
-  MISSING_UNIQUE_ID,
-  MISSING_FRIENDLY_NAME,
-};
-
-ErrorType Validate(const chrome::mojom::DialDeviceDescription& description) {
-  if (description.unique_id.empty()) {
-    return ErrorType::MISSING_UNIQUE_ID;
-  }
-  if (description.friendly_name.empty()) {
-    return ErrorType::MISSING_FRIENDLY_NAME;
-  }
-  return ErrorType::NONE;
-}
-
 // If friendly name does not exist, fall back to use model name + last 4
 // digits of UUID as friendly name.
 std::string ComputeFriendlyName(const std::string& unique_id,
@@ -86,27 +70,21 @@ chrome::mojom::DialDeviceDescriptionPtr DialDeviceDescriptionParserImpl::Parse(
 
     if (node_name == "UDN") {
       if (!xml_reader.ReadElementContent(&out->unique_id))
-        return nullptr;
+        break;
     } else if (node_name == "friendlyName") {
       if (!xml_reader.ReadElementContent(&out->friendly_name))
-        return nullptr;
+        break;
     } else if (node_name == "modelName") {
       if (!xml_reader.ReadElementContent(&out->model_name))
-        return nullptr;
+        break;
     } else if (node_name == "deviceType") {
       if (!xml_reader.ReadElementContent(&out->device_type))
-        return nullptr;
+        break;
     }
   }
 
   if (out->friendly_name.empty())
     out->friendly_name = ComputeFriendlyName(out->unique_id, out->model_name);
-
-  ErrorType error = Validate(*out);
-  if (error != ErrorType::NONE) {
-    DLOG(WARNING) << "Device description failed to validate: " << error;
-    return nullptr;
-  }
 
   return out;
 }
