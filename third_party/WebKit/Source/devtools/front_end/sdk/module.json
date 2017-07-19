@@ -228,6 +228,25 @@
                     "title": "Disable request blocking"
                 }
             ]
+        },
+        {
+            "type": "setting",
+            "category": "Network",
+            "title": "Enable ad blocking",
+            "settingName": "adBlockingEnabled",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false,
+            "options": [
+                {
+                    "value": true,
+                    "title": "Enable ad blocking"
+                },
+                {
+                    "value": false,
+                    "title": "Disable ad blocking"
+                }
+            ]
         }
     ],
     "scripts": [

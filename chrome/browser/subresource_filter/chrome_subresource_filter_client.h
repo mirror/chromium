@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/subresource_filter/content/browser/subresource_filter_client.h"
+#include "content/public/browser/devtools_agent_host_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 class GURL;
@@ -85,6 +86,7 @@ enum SubresourceFilterAction {
 // manager directly.
 class ChromeSubresourceFilterClient
     : public content::WebContentsUserData<ChromeSubresourceFilterClient>,
+      public content::DevToolsAgentHostObserver,
       public subresource_filter::SubresourceFilterClient {
  public:
   explicit ChromeSubresourceFilterClient(content::WebContents* web_contents);
@@ -103,6 +105,9 @@ class ChromeSubresourceFilterClient
   void WhitelistInCurrentWebContents(const GURL& url) override;
   subresource_filter::VerifiedRulesetDealer::Handle* GetRulesetDealer()
       override;
+  bool ForceActivationInCurrentWebContents() override;
+
+  void ToggleForceActivationInCurrentWebContents(bool force_activation);
 
   bool did_show_ui_for_navigation() const {
     return did_show_ui_for_navigation_;
@@ -111,6 +116,12 @@ class ChromeSubresourceFilterClient
   static void LogAction(SubresourceFilterAction action);
 
  private:
+  // content::DevToolsAgentHostObserver:
+  void DevToolsAgentHostAttached(
+      content::DevToolsAgentHost* agent_host) override;
+  void DevToolsAgentHostDetached(
+      content::DevToolsAgentHost* agent_host) override;
+
   void WhitelistByContentSettings(const GURL& url);
   std::set<std::string> whitelisted_hosts_;
 
@@ -118,7 +129,13 @@ class ChromeSubresourceFilterClient
   SubresourceFilterContentSettingsManager* settings_manager_;
 
   content::WebContents* web_contents_;
-  bool did_show_ui_for_navigation_;
+  bool did_show_ui_for_navigation_ = false;
+
+  // Corresponds to a devtools command which triggers filtering on all page
+  // loads. Callers must be careful to ensure this boolean does not persist
+  // after the devtools window is closed!
+  bool forcing_activation_ = false;
+  bool devtools_agent_attached_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeSubresourceFilterClient);
 };
