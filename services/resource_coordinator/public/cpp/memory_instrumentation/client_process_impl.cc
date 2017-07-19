@@ -111,7 +111,7 @@ ClientProcessImpl::ClientProcessImpl(const Config& config)
                                           config.service_name);
   } else {
     config.coordinator_for_testing->BindCoordinatorRequest(
-        service_manager::BindSourceInfo(), mojo::MakeRequest(&coordinator_));
+        mojo::MakeRequest(&coordinator_));
   }
 
   task_runner_ = base::ThreadTaskRunnerHandle::Get();
