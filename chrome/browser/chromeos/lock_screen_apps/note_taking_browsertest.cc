@@ -10,6 +10,7 @@
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/prefs/pref_service.h"
+#include "components/prefs/scoped_user_pref_update.h"
 #include "components/session_manager/core/session_manager.h"
 #include "extensions/common/api/app_runtime.h"
 #include "extensions/common/switches.h"
@@ -35,8 +36,9 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
 
   bool EnableLockScreenAppLaunch(const std::string& app_id) {
     chromeos::NoteTakingHelper::Get()->SetPreferredApp(profile(), app_id);
-    profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                      true);
+    chromeos::NoteTakingHelper::Get()->SetAppEnabledOnLockScreen(profile(),
+                                                                 app_id, true);
+
     session_manager::SessionManager::Get()->SetSessionState(
         session_manager::SessionState::LOCKED);
 
