@@ -5,8 +5,6 @@
 #ifndef CHROME_BROWSER_NET_SPDYPROXY_DATA_REDUCTION_PROXY_SETTINGS_ANDROID_H_
 #define CHROME_BROWSER_NET_SPDYPROXY_DATA_REDUCTION_PROXY_SETTINGS_ANDROID_H_
 
-#include <jni.h>
-
 #include <memory>
 #include <vector>
 
@@ -122,9 +120,6 @@ class DataReductionProxySettingsAndroid {
   void OnQueryDataUsageComplete(
       std::unique_ptr<std::vector<data_reduction_proxy::DataUsageBucket>>
           data_usage);
-
-  // Registers the native methods to be call from Java.
-  static bool Register(JNIEnv* env);
 
   JavaObjectWeakGlobalRef j_settings_obj_;
   base::android::ScopedJavaGlobalRef<jobject> j_query_result_obj_;
