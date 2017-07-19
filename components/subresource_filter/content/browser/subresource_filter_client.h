@@ -42,6 +42,8 @@ class SubresourceFilterClient {
   virtual void WhitelistInCurrentWebContents(const GURL& url) = 0;
 
   virtual VerifiedRulesetDealer::Handle* GetRulesetDealer() = 0;
+
+  virtual bool ForceActivationInCurrentWebContents() = 0;
 };
 
 }  // namespace subresource_filter

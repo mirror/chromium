@@ -61,6 +61,12 @@
             "actionId": "emulation.capture-full-height-screenshot"
         },
         {
+            "type": "context-menu-item",
+            "location": "deviceModeMenu/tools",
+            "order": 14,
+            "actionId": "emulation.capture-full-height-screenshot"
+        },
+        {
             "type": "setting",
             "category": "Mobile",
             "settingName": "showMediaQueryInspector",

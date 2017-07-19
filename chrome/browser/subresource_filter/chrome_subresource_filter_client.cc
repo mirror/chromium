@@ -29,6 +29,7 @@
 #include "components/subresource_filter/core/common/activation_scope.h"
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/navigation_handle.h"
 
 #if defined(OS_ANDROID)
@@ -54,7 +55,7 @@ scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> GetDatabaseManager() {
 
 ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
     content::WebContents* web_contents)
-    : web_contents_(web_contents), did_show_ui_for_navigation_(false) {
+    : web_contents_(web_contents) {
   DCHECK(web_contents);
   SubresourceFilterProfileContext* context =
       SubresourceFilterProfileContextFactory::GetForProfile(
@@ -62,6 +63,7 @@ ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
   settings_manager_ = context->settings_manager();
   subresource_filter::ContentSubresourceFilterDriverFactory::
       CreateForWebContents(web_contents, this);
+  content::DevToolsAgentHost::AddObserver(this);
 }
 
 ChromeSubresourceFilterClient::~ChromeSubresourceFilterClient() {}
@@ -156,10 +158,19 @@ void ChromeSubresourceFilterClient::WhitelistByContentSettings(
   settings_manager_->WhitelistSite(top_level_url);
 }
 
+bool ChromeSubresourceFilterClient::ForceActivationInCurrentWebContents() {
+  return devtools_agent_attached_ && forcing_activation_;
+}
+
 void ChromeSubresourceFilterClient::WhitelistInCurrentWebContents(
     const GURL& url) {
   if (url.SchemeIsHTTPOrHTTPS())
     whitelisted_hosts_.insert(url.host());
+}
+
+void ChromeSubresourceFilterClient::ToggleForceActivationInCurrentWebContents(
+    bool force_activation) {
+  forcing_activation_ = devtools_agent_attached_ && force_activation;
 }
 
 // static
@@ -173,4 +184,18 @@ ChromeSubresourceFilterClient::GetRulesetDealer() {
   subresource_filter::ContentRulesetService* ruleset_service =
       g_browser_process->subresource_filter_ruleset_service();
   return ruleset_service ? ruleset_service->ruleset_dealer() : nullptr;
+}
+
+void ChromeSubresourceFilterClient::DevToolsAgentHostAttached(
+    content::DevToolsAgentHost* agent_host) {
+  if (agent_host->GetWebContents() == web_contents_)
+    devtools_agent_attached_ = true;
+}
+
+void ChromeSubresourceFilterClient::DevToolsAgentHostDetached(
+    content::DevToolsAgentHost* agent_host) {
+  if (agent_host->GetWebContents() == web_contents_) {
+    devtools_agent_attached_ = false;
+    forcing_activation_ = false;
+  }
 }
