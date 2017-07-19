@@ -22,6 +22,30 @@
       "revId": "4989616a00098c9d05e99f9322de9a42a1243bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f676da4f_2fab5964",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-19T17:52:32Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! I have updated the language to use \"stitch\" throughout, and reworded things a bit to try and be clearer.",
+      "parentUuid": "7b11c833_9f5c4dcc",
+      "range": {
+        "startLine": 550,
+        "startChar": 25,
+        "endLine": 550,
+        "endChar": 34
+      },
+      "revId": "4989616a00098c9d05e99f9322de9a42a1243bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
