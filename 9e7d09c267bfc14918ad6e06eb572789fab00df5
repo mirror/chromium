@@ -16,6 +16,24 @@
       "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19de8130_aa27f6ff",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-19T01:24:13Z",
+      "side": 1,
+      "message": "No. We don\u0027t need to have it.\nIn Flat Tree, there is no concept about shadow boundaries since we have\nonly one root in flat tree and all shadow trees are in that tree.\n\nAdjust selection to avoid crossing shadow boundaries for flat tree is\navoiding crossing some shadow hosts, e.g. INPUT, TEXTAREA, etc.\n\nFor example, we can\u0027t create following VSinFlatTree:\n\n\u003cinput\u003e\n  \u003cdiv contenteditable\u003e^abc\u003c/div\u003e\n\u003c/input\u003e\ndef|",
+      "parentUuid": "fc01655a_bdadfa08",
+      "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
