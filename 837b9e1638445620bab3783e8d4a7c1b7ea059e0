@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "37b1ddef_d0944db5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-19T17:26:38Z",
+      "side": 1,
+      "message": "s/check/checks",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1124a5af_2f2f5c57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-19T17:26:38Z",
+      "side": 1,
+      "message": "remove \u0027\u003d\u0027 or make is a comma?",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5d5cdd_d4ceda8c",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-19T17:26:38Z",
+      "side": 1,
+      "message": "If these always have to be called in this order, should they be merged into a shared Destroy method so this comment can me moved into it\u0027s implementation rather than the caller need to worry about it?",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "837b9e1638445620bab3783e8d4a7c1b7ea059e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dd39179_468422b1",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 1
