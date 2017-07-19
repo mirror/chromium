@@ -68,7 +68,6 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/graphics/Canvas2DImageBufferSurface.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
 #include "platform/graphics/ImageBuffer.h"
@@ -932,7 +931,7 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(OpacityMode opacity_mode,
   if (context_provider->IsSoftwareRendering())
     return nullptr;  // Don't use accelerated canvas with swiftshader.
 
-  auto surface = WTF::MakeUnique<Canvas2DImageBufferSurface>(
+  auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
       std::move(context_provider), Size(), *msaa_sample_count, opacity_mode,
       Canvas2DLayerBridge::kEnableAcceleration, GetCanvasColorParams());
   if (!surface->IsValid()) {
