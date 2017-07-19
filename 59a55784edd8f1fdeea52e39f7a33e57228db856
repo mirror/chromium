@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db13ba3e_5e2f8642",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "This comment is related to my comment about keeping code in omnibox_field_trial.cc.  Resolving so we only have one comment related to that topic.",
+      "parentUuid": "325bdfdf_e6552ef5",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668efd70_2dc3867d",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bbf082_9168118e",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "This comment is related to my comment about keeping code in omnibox_field_trial.cc.  Resolving so we only have one comment related to that topic.",
+      "parentUuid": "c4bff073_04616555",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "3658dcbf_17863d4c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "Right you are.",
+      "parentUuid": "b3dbf5c2_68f286be",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1641c247_159e3bd5",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 1
@@ -187,6 +259,30 @@
       "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5572ab5_df4f905d",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "This comment is related to my comment about keeping code in omnibox_field_trial.cc.  Resolving so we only have one comment related to that topic.",
+      "parentUuid": "7f5ef1fe_408fc24a",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "f356e756_a75a271b",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "This comment is related to my comment about keeping code in omnibox_field_trial.cc.  Resolving so we only have one comment related to that topic.\n\n(I think the parameter system should live in omnibox_field_trial.  It looks like Gheorghe tried to change the experimentation system at the same time as moving the code here.  If you want you can add special-purpose experiment IDs rather than general params (which could include IDs) sent to the experiment server, you can.  But I don\u0027t see the point, and I also would rather even if you did, the code was in omnibox_field_trial.cc.",
+      "parentUuid": "7dac7beb_93cd239f",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eae1926_a79ec233",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 1
@@ -281,6 +401,30 @@
       "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25211270_58a4b5e9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "\u003e It came originally from the extension and it got stuck when we were creating the OnePlatform endpoint. It is a major pain to change this now, and that\u0027s why we\u0027ve kept this name.\n\u003e \n\u003e I inlined in the initializer list that defines the scopes. Please have another look.\n\nLooks fine.  Thanks for the explanation.",
+      "parentUuid": "c640503f_8eed5fb2",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "59a55784edd8f1fdeea52e39f7a33e57228db856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

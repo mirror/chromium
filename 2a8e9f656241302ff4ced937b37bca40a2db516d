@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3cc514cc_f0905b0c",
+        "filename": "chrome/browser/autocomplete/contextual_suggestions_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "\u003e I\u0027m unaware of deeper implications, but from what I can tell, ChromeAutocompleteProviderClient simply forwards the call to its underlying Profile:\n\u003e \n\u003e https://cs.chromium.org/chromium/src/chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc?l\u003d84\n\u003e \n\u003e I _believe_ it doesn\u0027t make any difference, but you know the codebase better than me.\n\nThanks for checking.  I think you\u0027re probably right.  We could pass in a AutocompleteProviderClient to this class, but that seems strange for a call that should (as we think) be identical.",
+      "parentUuid": "227dd959_9dda5ec4",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dc2450a_a59ddfd4",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -187,6 +211,30 @@
       "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdde4da_a7caf0e6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "\u003e I agree but I\u0027m not sure what kind of solution would be good here. The biggest problem is that net::DefineNetworkTrafficeAnnotation() accepts only const char arrays: https://cs.chromium.org/chromium/src/net/traffic_annotation/network_traffic_annotation.h?type\u003dcs\u0026q\u003dDefineNetworkTrafficAnnotation\u0026sq\u003dpackage:chromium\u0026l\u003d75\nOh, that\u0027s a big constraint.\n\u003e \n\u003e This prevents us from using base::StringPrintf which returns a string on the heap. We could construct a const char array with something like \"char* my_array \u003d new char[some_size_here];\" + \"delete[] my_array;\" but I personally think that\u0027s terrible for performance, for readability and for safety.\nI agree.\n\u003e \n\u003e We could probably do some constexpr/template fiddling to construct these strings at compilation time, but it\u0027s annoying that we can\u0027t do:\n\u003e \n\u003e static const char kMyDescription[] \u003d \"blah blah blah\";\n\u003e \n\u003e \"hello\" + kMyDescription\n\u003e \n\u003e Also std::string::operator+() is not constexpr, so we can\u0027t do this either:\n\u003e \n\u003e constexpr std::string kMyAnnotation \u003d some_string + \"some_literal\";\n\u003e \n\u003e nor this:\n\u003e \n\u003e constexpr const char[] kMyAnnotation() { // construct the array with + }\n\u003e \n\u003e nor this\n\u003e \n\u003e constexpr const char kMyAnnotation[] \u003d [] { // construct the array with + }();\n\u003e \n\u003e \n\u003e \n\u003e Do you have an alternative simple solution?\nNope; thanks for looking into this.\n\u003e \n\u003e \n\u003e I think the best would be to have an overload or alternate DefineNetworkTrafficAnnotation() that would accept a NetworkTrafficAnnotation protobuf object. We could then do:\n\u003e \n\u003e const char kMyDescription[] \u003d \"...\";\n\u003e const char kMySettiing[] \u003d \"...\";\n\u003e const NetworkTrafficAnnotation* const kMyAnnotation \u003d [] {\n\u003e   auto* annotation \u003d new NetworkTrafficAnnotation;\n\u003e   CHECK(annotation-\u003eParseFromString(\n\u003e             base::StringPrintf(R\"(...)\"R,\n\u003e                                kMyDescription,\n\u003e                                kMySetting)));\n\u003e   return annotation;\n\u003e };\n\u003e \n\u003e DefineNetworkTrafficAnnotation(\"omnibox_zerosuggest\", *kMyAnnotation);\n\u003e \n\u003e \n\u003e Maybe I\u0027m missing something utterly obvious, but I think it\u0027s better to leave it like this.\n\nYes, I see that sending a structured input to NetworkTrafficAnnotation would be better.  But let\u0027s leave that outside this changelist.  This isn\u0027t a big enough deal to go messing with that code and needing those approvers.\n\nLet\u0027s leave it as-is.",
+      "parentUuid": "1e1972b9_201d520a",
+      "range": {
+        "startLine": 160,
+        "startChar": 27,
+        "endLine": 160,
+        "endChar": 34
+      },
+      "revId": "2a8e9f656241302ff4ced937b37bca40a2db516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

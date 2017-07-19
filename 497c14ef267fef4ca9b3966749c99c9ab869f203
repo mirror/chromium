@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f949a77_63542d66",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "nit: comment might not add anything?\n(Sorry if you got the impression that I wanted the comment.  I suggested having the comment if you kept one of the less-straightforward way of deleting the fetcher.)",
+      "range": {
+        "startLine": 245,
+        "startChar": 30,
+        "endLine": 245,
+        "endChar": 36
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6798cc5a_e4ce1103",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "nit: period.",
+      "range": {
+        "startLine": 20,
+        "startChar": 65,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288e7fff_a4015375",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "nit: prefer variable names in comments in |bars|\n(three more examples in this comment)",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53088182_b6fed42f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "nit: omit \"it\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 67,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae671b2_ee080c58",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "Consider adding:\nIt\u0027s possible the non-experimental service may decide to offer general-purpose suggestions.\n(that\u0027s one justification of why this may be useful)",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4384e1_19a0983c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "nit: omit the word \"Otherwise\" and fix wrapping",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57850e80_c708bbb9",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "\u003e Similar to the above comment. I\u0027m mostly just stating which service is called and what the returned |fetcher| is for. Let me know if you want to rephrase it.\n\nAlmost perfect. :-)  How about replacing \"It\" with \"When the fetcher is ready, the contextual suggestion service\"",
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

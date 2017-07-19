@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "38cf3e32_d93839e4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "I think this current first sentence is good.  Smart cutting of the incorrect text. :-)",
+      "parentUuid": "9c93c284_4510a7a9",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "636b7a84_a3b7360f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -436,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "b5a31772_ca7cbebc",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "Seems fine, with additional comments above.",
+      "parentUuid": "164796ea_045cb7bb",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d11a374_6682968f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4
@@ -500,6 +536,24 @@
       "side": 1,
       "message": "I totally agree, but I\u0027m unsure what the original intent that Gheorghe had in mind was when he came up with this condition. I _believe_ I\u0027m fine either way, so I can remove it if you think it\u0027s alright.",
       "parentUuid": "b7fbddd5_97082642",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ff19c8_71d7b9c5",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "I\u0027d prefer you refactor this to remove this weirdness.\n\nGheorghe took this function from zero_suggest_provider.cc (look at the base of that) and then added this current_url test to the top of it.  I don\u0027t think it conceptually fits within it.  Please do the test outside of UseExperimentalZeroSuggestSuggestions.  Or leave it there.  Regardless, where-ever it remains, it should be justified.\n\nOn second thought, it looks like the re-ordering of\n  if (current_url.empty())\n    is_experimental \u003d false;\nin CreateRequest()\nmeans this current_url test doesn\u0027t need to be here at all, right?  Please check this.\n\nYou can justify two code lines above with a comment like this (feel free to rewrite):\n// Query the standard service if |current_url| is empty.  The experimental service will not provide contextual suggestions in this case.  The standard service will not either, but queries it causes the standard servers to load per-user models into the server\u0027s memory.  Having a per-user model in memory allows the standard server to respond more quickly with personalized suggestions as the user types.\n// TODO(mpearson): remove when warm-up psuggest launches fully.",
+      "parentUuid": "d7e8d1ae_fca56a39",
       "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -741,6 +795,30 @@
     },
     {
       "key": {
+        "uuid": "37c49973_6dfcda6d",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "\u003e Following the stack of calls, it is always non-null. I could add a comment to AutocompleteProviderClient::GetContextualSuggestionsServer() to say that it\u0027s always non-null, but it would break the style in that file as all the other Get*() methods do not have accompanying comments and they seem to be used assuming that the returned pointer is always non-null. What do you think?\n\nNo comment necessary.  I just wanted you to check that this was indeed always safe.",
+      "parentUuid": "9f44307c_41bb5877",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd764418_cf373dff",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -917,6 +995,30 @@
       "side": 1,
       "message": "I don\u0027t know if we should explain the whole process here. I basically removed \"during Run()\". Please let me know if you have another recommendation for the comment.",
       "parentUuid": "2ff4c2a6_cedf5362",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f344e88_d2d203fd",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 1,
+      "message": "This is fine, thanks.",
+      "parentUuid": "7b91c12d_f3d8695a",
       "range": {
         "startLine": 112,
         "startChar": 46,

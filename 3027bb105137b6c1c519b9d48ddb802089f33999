@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3d1409df_6abd537f",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-19T22:20:10Z",
+      "side": 0,
+      "message": "Can you keep using these functions?  It looks like Gheorghe moved them (renaming them in the process) to the contextual suggestion files.\n\nIf you don\u0027t want to use these functions, them move the functions from the contextual search files that are limited to looking at field trial / feature / experiment parameters and building a URL back to here.  We try to keep all experimental configs for the omnibox in one place so they don\u0027t get lost, are easy to clean up, etc.",
+      "parentUuid": "049c4a68_4fb0af93",
+      "range": {
+        "startLine": 430,
+        "startChar": 45,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "3027bb105137b6c1c519b9d48ddb802089f33999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3688cf0f_5da8a730",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
