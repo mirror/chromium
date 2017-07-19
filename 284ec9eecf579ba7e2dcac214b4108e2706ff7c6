@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1364bade_c6417d08",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Typo: sign in or signin",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f44033_347f869a",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Why the behavior change here, to reuse the existing settings controller instead of dropping the request?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72d60dd_9fc1320f",
+        "filename": "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Does this class ever use its dispatcher anywhere?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf3fe98_f8d4bc52",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Typo: endpoint.",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1272a737_c0d14e61",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Is applicationCommandEndpoint allowed to be nil?  During testing?\n\nWhat happens if you start dispatching to nil?  The CommandDispatcher doesn\u0027t disallow that?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e28ce83_c404347d",
+        "filename": "ios/chrome/browser/ui/promos/signin_promo_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-19T09:18:23Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "284ec9eecf579ba7e2dcac214b4108e2706ff7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
