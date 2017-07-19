@@ -80,11 +80,13 @@ const char kJSPageHeight[] = "height";
 // Document load progress arguments (Plugin -> Page)
 const char kJSLoadProgressType[] = "loadProgress";
 const char kJSProgressPercentage[] = "progress";
+// Document print preview loaded (Plugin -> Page)
+const char kJSPreviewLoadedType[] = "printPreviewLoaded";
 // Metadata
 const char kJSMetadataType[] = "metadata";
 const char kJSBookmarks[] = "bookmarks";
 const char kJSTitle[] = "title";
-// Get password arguments (Plugin -> Page)
+// Get password (Plugin -> Page)
 const char kJSGetPasswordType[] = "getPassword";
 // Get password complete arguments (Page -> Plugin)
 const char kJSGetPasswordCompleteType[] = "getPasswordComplete";
@@ -295,6 +297,7 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       told_browser_about_unsupported_feature_(false),
       font_substitution_reported_(false),
       print_preview_page_count_(0),
+      print_preview_loaded_page_count_(0),
       last_progress_sent_(0),
       recently_sent_find_update_(false),
       received_viewport_message_(false),
@@ -536,6 +539,7 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
     }
 
     print_preview_page_count_ = print_preview_page_count;
+    print_preview_loaded_page_count_ = 0;
     url_ = dict.Get(pp::Var(kJSPrintPreviewUrl)).AsString();
     // For security reasons we crash if the URL that is trying to be loaded here
     // isn't a print preview one.
@@ -1326,6 +1330,8 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   // Note: If we are in print preview mode the scroll location is retained
   // across document loads so we don't want to scroll again and override it.
   if (IsPrintPreview()) {
+    DCHECK_EQ(0, print_preview_loaded_page_count_);
+    print_preview_loaded_page_count_ = 1;
     AppendBlankPrintPreviewPages();
     OnGeometryChanged(0, 0);
   }
@@ -1573,6 +1579,7 @@ void OutOfProcessInstance::SetZoom(double scale) {
 void OutOfProcessInstance::AppendBlankPrintPreviewPages() {
   if (print_preview_page_count_ == 0)
     return;
+
   engine_->AppendBlankPages(print_preview_page_count_);
   if (!preview_pages_info_.empty())
     LoadAvailablePreviewPage();
@@ -1633,8 +1640,18 @@ void OutOfProcessInstance::LoadNextPreviewPage() {
   DCHECK(!preview_pages_info_.empty());
   preview_pages_info_.pop();
 
-  if (!preview_pages_info_.empty())
+  ++print_preview_loaded_page_count_;
+
+  if (!preview_pages_info_.empty()) {
+    DCHECK_LT(print_preview_loaded_page_count_, print_preview_page_count_);
     LoadAvailablePreviewPage();
+    return;
+  }
+  if (print_preview_loaded_page_count_ == print_preview_page_count_) {
+    pp::VarDictionary loaded_message;
+    loaded_message.Set(pp::Var(kType), pp::Var(kJSPreviewLoadedType));
+    PostMessage(loaded_message);
+  }
 }
 
 void OutOfProcessInstance::UserMetricsRecordAction(const std::string& action) {
