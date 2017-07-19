@@ -77,7 +77,7 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
     return *document_;
   }
 
-  Node* AncestorInThisScope(Node*) const;
+  Node* AncestorInThisScope(const Node*) const;
 
   void AddImageMap(HTMLMapElement*);
   void RemoveImageMap(HTMLMapElement*);

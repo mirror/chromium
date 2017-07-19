@@ -633,7 +633,7 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
   DCHECK(visible_position.IsValid()) << visible_position;
 
   Position p = visible_position.DeepEquivalent();
-  Node* node = p.AnchorNode();
+  const Node* node = p.AnchorNode();
 
   if (!node)
     return VisiblePosition();
@@ -694,7 +694,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
   DCHECK(visible_position.IsValid()) << visible_position;
 
   Position p = visible_position.DeepEquivalent();
-  Node* node = p.AnchorNode();
+  const Node* node = p.AnchorNode();
 
   if (!node)
     return VisiblePosition();

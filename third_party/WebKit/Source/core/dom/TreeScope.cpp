@@ -153,10 +153,10 @@ void TreeScope::RemoveElementById(const AtomicString& element_id,
   id_target_observer_registry_->NotifyObservers(element_id);
 }
 
-Node* TreeScope::AncestorInThisScope(Node* node) const {
+Node* TreeScope::AncestorInThisScope(const Node* node) const {
   while (node) {
     if (node->GetTreeScope() == this)
-      return node;
+      return const_cast<Node*>(node);
     if (!node->IsInShadowTree())
       return nullptr;
 

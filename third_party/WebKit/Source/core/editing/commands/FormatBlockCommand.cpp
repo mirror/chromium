@@ -38,7 +38,7 @@ namespace blink {
 
 using namespace HTMLNames;
 
-static Node* EnclosingBlockToSplitTreeTo(Node* start_node);
+static Node* EnclosingBlockToSplitTreeTo(const Node* start_node);
 static bool IsElementForFormatBlock(const QualifiedName& tag_name);
 static inline bool IsElementForFormatBlock(Node* node) {
   return node->IsElementNode() &&
@@ -80,7 +80,7 @@ void FormatBlockCommand::FormatRange(const Position& start,
     return;
 
   Node* node_to_split_to = EnclosingBlockToSplitTreeTo(start.AnchorNode());
-  Node* outer_block =
+  const Node* outer_block =
       (start.AnchorNode() == node_to_split_to)
           ? start.AnchorNode()
           : SplitTreeToNode(start.AnchorNode(), node_to_split_to);
@@ -171,9 +171,9 @@ bool IsElementForFormatBlock(const QualifiedName& tag_name) {
   return block_tags.Contains(tag_name);
 }
 
-Node* EnclosingBlockToSplitTreeTo(Node* start_node) {
+Node* EnclosingBlockToSplitTreeTo(const Node* start_node) {
   DCHECK(start_node);
-  Node* last_block = start_node;
+  Node* last_block = const_cast<Node*>(start_node);
   for (Node& runner : NodeTraversal::InclusiveAncestorsOf(*start_node)) {
     if (!HasEditableStyle(runner))
       return last_block;

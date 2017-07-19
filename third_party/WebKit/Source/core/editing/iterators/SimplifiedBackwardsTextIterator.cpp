@@ -89,7 +89,7 @@ SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::
   Node* start_node = start.AnchorNode();
   if (!start_node)
     return;
-  Node* end_node = end.AnchorNode();
+  const Node* end_node = end.AnchorNode();
   int start_offset = start.ComputeEditingOffset();
   int end_offset = end.ComputeEditingOffset();
 
@@ -97,10 +97,11 @@ SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::
 }
 
 template <typename Strategy>
-void SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::Init(Node* start_node,
-                                                              Node* end_node,
-                                                              int start_offset,
-                                                              int end_offset) {
+void SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::Init(
+    const Node* start_node,
+    const Node* end_node,
+    int start_offset,
+    int end_offset) {
   if (!start_node->IsCharacterDataNode() && start_offset >= 0) {
     // |Strategy::childAt()| will return 0 if the offset is out of range. We
     // rely on this behavior instead of calling |countChildren()| to avoid

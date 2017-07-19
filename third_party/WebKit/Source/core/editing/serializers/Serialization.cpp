@@ -510,7 +510,7 @@ static bool ShouldPreserveNewline(const EphemeralRange& range) {
       return layout_object->Style()->PreserveNewline();
   }
 
-  if (Node* node = range.StartPosition().AnchorNode()) {
+  if (const Node* node = range.StartPosition().AnchorNode()) {
     if (LayoutObject* layout_object = node->GetLayoutObject())
       return layout_object->Style()->PreserveNewline();
   }

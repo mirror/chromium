@@ -58,7 +58,7 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
   static const TreeScope* CommonAncestorTreeScope(
       const PositionTemplate<Strategy>&,
       const PositionTemplate<Strategy>& b);
-  static PositionTemplate<Strategy> EditingPositionOf(Node* anchor_node,
+  static PositionTemplate<Strategy> EditingPositionOf(const Node* anchor_node,
                                                       int offset);
 
   // For creating before/after positions:
@@ -149,7 +149,7 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
 
   Node* CommonAncestorContainer(const PositionTemplate<Strategy>&) const;
 
-  Node* AnchorNode() const { return anchor_node_.Get(); }
+  const Node* AnchorNode() const { return anchor_node_.Get(); }
 
   Document* GetDocument() const {
     return anchor_node_ ? &anchor_node_->GetDocument() : 0;
@@ -209,9 +209,7 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
     return IsAfterAnchor() || IsAfterChildren();
   }
 
-  // TODO(editing-dev): Since we should consider |Position| is constant in
-  // tree, we should use |Member<const Node>|. see http://crbug.com/735327
-  Member<Node> anchor_node_;
+  Member<const Node> anchor_node_;
   // m_offset can be the offset inside m_anchorNode, or if
   // editingIgnoresContent(m_anchorNode) returns true, then other places in
   // editing will treat m_offset == 0 as "before the anchor" and m_offset > 0 as

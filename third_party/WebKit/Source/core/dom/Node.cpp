@@ -1157,9 +1157,9 @@ ShadowRoot* Node::ContainingShadowRoot() const {
   return root.IsShadowRoot() ? ToShadowRoot(&root) : nullptr;
 }
 
-Node* Node::NonBoundaryShadowTreeRootNode() {
+Node* Node::NonBoundaryShadowTreeRootNode() const {
   DCHECK(!IsShadowRoot());
-  Node* root = this;
+  Node* root = const_cast<Node*>(this);
   while (root) {
     if (root->IsShadowRoot())
       return root;

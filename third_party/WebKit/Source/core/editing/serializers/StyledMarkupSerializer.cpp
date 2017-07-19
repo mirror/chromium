@@ -186,7 +186,7 @@ String StyledMarkupSerializer<Strategy>::CreateMarkup() {
 
   Node* past_end = end_.NodeAsRangePastLastNode();
 
-  Node* first_node = start_.NodeAsRangeFirstNode();
+  const Node* first_node = start_.NodeAsRangeFirstNode();
   const VisiblePositionTemplate<Strategy> visible_start =
       CreateVisiblePosition(start_);
   const VisiblePositionTemplate<Strategy> visible_end =

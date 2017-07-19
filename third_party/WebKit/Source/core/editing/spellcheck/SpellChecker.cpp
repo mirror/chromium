@@ -510,11 +510,11 @@ bool SpellChecker::IsSpellCheckingEnabledInFocusedNode() const {
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame().GetDocument()->Lifecycle());
 
-  Node* focused_node = GetFrame()
-                           .Selection()
-                           .GetSelectionInDOMTree()
-                           .ComputeStartPosition()
-                           .AnchorNode();
+  const Node* focused_node = GetFrame()
+                                 .Selection()
+                                 .GetSelectionInDOMTree()
+                                 .ComputeStartPosition()
+                                 .AnchorNode();
   if (!focused_node)
     return false;
   const Element* focused_element = focused_node->IsElementNode()
@@ -1080,12 +1080,13 @@ void SpellChecker::SpellCheckOldSelection(
   MarkMisspellingsInternal(old_adjacent_words);
 }
 
-static Node* FindFirstMarkable(Node* node) {
+static Node* FindFirstMarkable(const Node* passed_node) {
+  const Node* node = const_cast<Node*>(passed_node);
   while (node) {
     if (!node->GetLayoutObject())
       return 0;
     if (node->GetLayoutObject()->IsText())
-      return node;
+      return const_cast<Node*>(node);
     if (node->GetLayoutObject()->IsTextControl())
       node = ToLayoutTextControl(node->GetLayoutObject())
                  ->GetTextControlElement()
@@ -1303,7 +1304,7 @@ bool SpellChecker::IsSpellCheckingEnabledAt(const Position& position) {
         return false;
     }
   }
-  HTMLElement* element =
+  const HTMLElement* element =
       Traversal<HTMLElement>::FirstAncestorOrSelf(*position.AnchorNode());
   return element && element->IsSpellCheckingEnabled();
 }

@@ -47,7 +47,7 @@ template <typename Strategy>
 PositionTemplate<Strategy> StartOfParagraphAlgorithm(
     const PositionTemplate<Strategy>& position,
     EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
 
   if (!start_node)
     return PositionTemplate<Strategy>();
@@ -155,7 +155,7 @@ template <typename Strategy>
 PositionTemplate<Strategy> EndOfParagraphAlgorithm(
     const PositionTemplate<Strategy>& position,
     EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
 
   if (!start_node)
     return PositionTemplate<Strategy>();

@@ -319,7 +319,7 @@ void CompositeEditCommand::InsertNodeAt(Node* insert_child,
   // For editing positions like [table, 0], insert before the table,
   // likewise for replaced elements, brs, etc.
   Position p = editing_position.ParentAnchoredEquivalent();
-  Node* ref_child = p.AnchorNode();
+  const Node* ref_child = p.AnchorNode();
   int offset = p.OffsetInContainerNode();
 
   if (CanHaveChildrenForEditing(ref_child)) {
@@ -734,7 +734,7 @@ void CompositeEditCommand::PrepareWhitespaceAtPositionForSplit(
     Position& position) {
   if (!IsRichlyEditablePosition(position))
     return;
-  Node* node = position.AnchorNode();
+  const Node* node = position.AnchorNode();
   if (!node || !node->IsTextNode())
     return;
   Text* text_node = ToText(node);
@@ -1215,7 +1215,7 @@ void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state,
     // Note: We want the rightmost candidate.
     Position position =
         MostForwardCaretPosition(caret_after_delete.DeepEquivalent());
-    Node* node = position.AnchorNode();
+    const Node* node = position.AnchorNode();
 
     // Bail if we'd remove an ancestor of our destination.
     if (destination_node && destination_node->IsDescendantOf(node))
@@ -1763,7 +1763,7 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
       return false;
   } else if (caret_pos.AnchorNode()->IsTextNode()) {
     DCHECK_EQ(caret_pos.ComputeOffsetInContainerNode(), 0);
-    Text* text_node = ToText(caret_pos.AnchorNode());
+    const Text* text_node = ToText(caret_pos.AnchorNode());
     ContainerNode* parent_node = text_node->parentNode();
     // The preserved newline must be the first thing in the node, since
     // otherwise the previous paragraph would be quoted, and we verified that it

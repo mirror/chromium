@@ -39,7 +39,7 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionWithAffinityTemplate {
   bool IsOrphan() const { return position_.IsOrphan(); }
   bool IsConnected() const { return position_.IsConnected(); }
 
-  Node* AnchorNode() const { return position_.AnchorNode(); }
+  const Node* AnchorNode() const { return position_.AnchorNode(); }
   Document* GetDocument() const { return position_.GetDocument(); }
 
   DECLARE_TRACE();

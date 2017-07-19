@@ -456,14 +456,15 @@ static int TextAlignResolvingStartAndEnd(T* style) {
       GetIdentifierValue(style, CSSPropertyDirection));
 }
 
-void EditingStyle::Init(Node* node, PropertiesToInclude properties_to_include) {
+void EditingStyle::Init(const Node* node,
+                        PropertiesToInclude properties_to_include) {
   if (IsTabHTMLSpanElementTextNode(node))
     node = TabSpanElement(node)->parentNode();
   else if (IsTabHTMLSpanElement(node))
     node = node->parentNode();
 
   CSSComputedStyleDeclaration* computed_style_at_position =
-      CSSComputedStyleDeclaration::Create(node);
+      CSSComputedStyleDeclaration::Create(const_cast<Node*>(node));
   mutable_style_ =
       properties_to_include == kAllProperties && computed_style_at_position
           ? computed_style_at_position->CopyProperties()
@@ -478,8 +479,9 @@ void EditingStyle::Init(Node* node, PropertiesToInclude properties_to_include) {
       mutable_style_->SetProperty(CSSPropertyTextDecoration, value->CssText());
   }
 
-  if (node && node->EnsureComputedStyle()) {
-    const ComputedStyle* computed_style = node->EnsureComputedStyle();
+  if (node && const_cast<Node*>(node)->EnsureComputedStyle()) {
+    const ComputedStyle* computed_style =
+        const_cast<Node*>(node)->EnsureComputedStyle();
     RemoveInheritedColorsIfNeeded(computed_style);
     ReplaceFontSizeByKeywordIfPossible(computed_style,
                                        computed_style_at_position);
