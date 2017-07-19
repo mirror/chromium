@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09f242ce_88b03cd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0158f9_5f877c0f",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c19a4f3_52b03ee9",
         "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd53533c_3d49a85c",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Good eye! Done.",
+      "parentUuid": "8c19a4f3_52b03ee9",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8030edc_bcbfeddc",
+        "filename": "third_party/.chroot_lock",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3df7109_117f87bb",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae064e3c_d963f2d7",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-18T22:39:20Z",
       "side": 1,
       "message": "nit: We usually name these variables kFooDurationMs or kFooDurationInMillis. It\u0027s shorter.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b33c96f_13c530a5",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Thanks! Renamed to kAppListAnimationDurationMs",
+      "parentUuid": "ae064e3c_d963f2d7",
       "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ce2f5c6c_6beb5132",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d5d621_7c59a91a",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3814d01_420e320c",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-18T22:39:20Z",
       "side": 1,
       "message": "optional: You seem to call GetScreen()-\u003eGetDisplayNearestView() a lot in this file. Maybe add a utility method like GetDisplay() or similar?",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea3a2f1_b520f350",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3814d01_420e320c",
       "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1510b85b_a9067e6d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "The default works here.",
+      "parentUuid": "f67cdbef_d84b1945",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa6f7685_501ae660",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-18T22:39:20Z",
       "side": 1,
       "message": "I\u0027m not super-familiar with layer animations anymore. Are there other examples where a ScopedLayerAnimationSettings is being used to smoothly animate a widget this way?\n\nI\u0027m guessing it works, but not sure.",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c9b90e_d2cd22f6",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Talked to reveman@ about this and I refactored it to use LayerAnimator.",
+      "parentUuid": "aa6f7685_501ae660",
       "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "10ba9572_64271f28",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "Done, thank you.",
+      "parentUuid": "e98aa55c_c56c3d33",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "074d4922_fb3563b8",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 9
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-18T22:39:20Z",
       "side": 1,
       "message": "nit: I think oshima is renaming MaximizeMode to TabletMode, you might want to use the new name",
+      "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548001bd_2b1b544a",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-19T20:45:48Z",
+      "side": 1,
+      "message": "I created a bug to rename all maximizemode symbols because I can do it easier in a new CL. crbug.com/746547",
+      "parentUuid": "074d4922_fb3563b8",
       "revId": "28cfafae1461f123cda4a5667e733639a6de0458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
