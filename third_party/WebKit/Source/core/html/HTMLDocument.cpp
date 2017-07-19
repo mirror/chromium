@@ -140,7 +140,7 @@ void HTMLDocument::setVlinkColor(const AtomicString& value) {
 }
 
 Document* HTMLDocument::CloneDocumentWithoutChildren() {
-  return Create(DocumentInit::FromContext(ContextDocument(), Url())
+  return Create(DocumentInit::Create(nullptr, ContextDocument(), Url(), nullptr)
                     .WithRegistrationContext(RegistrationContext()));
 }
 
