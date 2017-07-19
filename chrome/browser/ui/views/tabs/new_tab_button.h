@@ -39,7 +39,10 @@ class NewTabButton : public views::ImageButton,
   static int GetTopOffset();
 
   // Shows the NewTabPromo when the NewTabFeatureEngagementTracker calls for it.
-  void ShowPromo();
+  void ShowPromo(const std::string& promo_string_specifier);
+
+  // Returns the NewTabPromo associated with this NewTabButton.
+  NewTabPromo* new_tab_promo() { return new_tab_promo_; }
 
  private:
 // views::ImageButton:
@@ -80,6 +83,10 @@ class NewTabButton : public views::ImageButton,
 
   // Tab strip that contains this button.
   TabStrip* tab_strip_;
+
+  // Promotional UI that appears new to the NewTabButton, which encourages
+  // users to use it. Owned by it's native widget.
+  NewTabPromo* new_tab_promo_;
 
   // The offset used to paint the background image.
   gfx::Point background_offset_;
