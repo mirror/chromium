@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "202d62ba_4507e808",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-19T22:09:33Z",
+      "side": 1,
+      "message": "This block may not be needed",
+      "revId": "4dbc204e213dc95c9158316320a1915adb91d7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
