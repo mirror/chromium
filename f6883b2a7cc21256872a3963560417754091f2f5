@@ -177,6 +177,29 @@
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55cb255_7b3dd0a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-19T16:15:22Z",
+      "side": 1,
+      "message": "Should the last argument be y rather than 0?",
+      "range": {
+        "startLine": 82,
+        "startChar": 47,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
