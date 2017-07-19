@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00040647_1fe8d053",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-19T20:10:19Z",
+      "side": 1,
+      "message": "I guess the TODO comment applies here as well now..",
+      "revId": "df8b39b3bd7d0122664a24429d5bee07fe8a460f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
