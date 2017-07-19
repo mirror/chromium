@@ -107,7 +107,7 @@ class AnnotationInstance : public InstanceBase {
   enum class AnnotationType {
     ANNOTATION_COMPLETE,
     ANNOTATION_PARTIAL,
-    ANNOTATION_COMPLETENG,
+    ANNOTATION_COMPLETING,
     ANNOTATION_BRANCHED_COMPLETING
   };
 
@@ -222,6 +222,10 @@ class TrafficAnnotationAuditor {
 
   // Checks if a call instance can stay not annotated.
   bool CheckIfCallCanBeUnannotated(const CallInstance& call);
+
+  // Checks if all possible combinations of partial annotations have all
+  // required fields.
+  bool CheckPartialAnnotationsSemantics();
 
   // Preforms all checks on extracted annotations and calls, and adds the
   // results to |errors_|.

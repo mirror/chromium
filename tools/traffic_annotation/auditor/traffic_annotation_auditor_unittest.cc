@@ -10,6 +10,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -206,7 +207,7 @@ TEST_F(TrafficAnnotationAuditorTest, AnnotationDeserialization) {
        AuditorResult::ResultType::RESULT_OK,
        AnnotationInstance::AnnotationType::ANNOTATION_BRANCHED_COMPLETING},
       {"good_completing_annotation.txt", AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETENG},
+       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETING},
       {"good_partial_annotation.txt", AuditorResult::ResultType::RESULT_OK,
        AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL},
       {"good_test_annotation.txt", AuditorResult::ResultType::RESULT_IGNORE},
@@ -354,6 +355,8 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     EXPECT_EQ(error.type(),
               AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
   }
+
+  // TODO: Check Combination's errors and safe cases.
 }
 
 // Tests if TrafficAnnotationAuditor::CheckUniqueIDsFormat results are as
@@ -391,6 +394,8 @@ TEST_F(TrafficAnnotationAuditorTest, CheckUniqueIDsFormat) {
   auditor.ClearErrorsForTest();
   auditor.CheckUniqueIDsFormat();
   EXPECT_EQ(auditor.errors().size(), false_samples_count);
+
+  // TODO: Check for extra ids.
 }
 
 // Tests if TrafficAnnotationAuditor::CheckAllRequiredFunctionsAreAnnotated
@@ -400,7 +405,7 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
   std::string file_paths[] = {"net/url_request/url_fetcher.cc",
                               "net/url_request/url_request_context.cc",
                               "net/url_request/other_file.cc",
-                              "somewhere_else.cc"};
+                              "somewhere_else.cc", "something_unittest.cc"};
   std::string function_names[] = {"net::URLFetcher::Create",
                                   "net::URLRequestContext::CreateRequest",
                                   "SSLClientSocket", "Something else", ""};
@@ -413,6 +418,9 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
     for (const std::string& function_name : function_names) {
       for (int annotated = 0; annotated < 2; annotated++) {
         for (int dependent = 0; dependent < 2; dependent++) {
+          SCOPED_TRACE(
+              base::StringPrintf("Testing (%s, %s, %i, %i).", file_path.c_str(),
+                                 function_name.c_str(), annotated, dependent));
           call.file_path = file_path;
           call.function_name = function_name;
           call.is_annotated = annotated;
@@ -424,19 +432,24 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
           auditor.SetExtractedCallsForTest(calls);
           auditor.ClearCheckedDependenciesForTest();
           auditor.CheckAllRequiredFunctionsAreAnnotated();
-          // Error should be issued if a function is not annotated,
-          // chrome::chrome depends on it, the filepath is not whitelisted, and
-          // function name is either of the two specified ones.
-          EXPECT_EQ(
-              auditor.errors().size() == 1,
-              !annotated && dependent &&
-                  file_path != "net/url_request/url_fetcher.cc" &&
-                  file_path != "net/url_request/url_request_context.cc" &&
-                  (function_name == "net::URLFetcher::Create" ||
-                   function_name == "net::URLRequestContext::CreateRequest"))
-              << "The conditions for generating an error for missing "
-                 "annotation do not match the returned number of errors by "
-                 "auditor.";
+          // Error should be issued if a function is not annotated, it's a
+          // unittest or chrome::chrome depends on it, the filepath is not
+          // whitelisted, and function name is either of the two specified ones.
+          bool is_unittest = file_path.find("unittest") != std::string::npos;
+          bool is_whitelist =
+              file_path == "net/url_request/url_fetcher.cc" ||
+              file_path == "net/url_request/url_request_context.cc";
+          bool monitored_function =
+              function_name == "net::URLFetcher::Create" ||
+              function_name == "net::URLRequestContext::CreateRequest";
+          EXPECT_EQ(auditor.errors().size() == 1,
+                    !annotated && (dependent || is_unittest) && !is_whitelist &&
+                        monitored_function)
+              << base::StringPrintf(
+                     "Annotated:%i, Depending:%i, IsUnitTest:%i, "
+                     "IsWhitelisted:%i, MonitoredFunction:%i",
+                     annotated, dependent, is_unittest, is_whitelist,
+                     monitored_function);
         }
       }
     }

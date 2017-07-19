@@ -91,9 +91,7 @@ AuditorResult::AuditorResult(ResultType type,
   DCHECK(!message.empty() || type == AuditorResult::ResultType::RESULT_OK ||
          type == AuditorResult::ResultType::RESULT_IGNORE ||
          type == AuditorResult::ResultType::ERROR_MISSING ||
-         type == AuditorResult::ResultType::ERROR_NO_ANNOTATION ||
-         type ==
-             AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
+         type == AuditorResult::ResultType::ERROR_NO_ANNOTATION);
   if (!message.empty())
     details_.push_back(message);
 };
@@ -214,7 +212,7 @@ AuditorResult AnnotationInstance::Deserialize(
   } else if (function_type == "Partial") {
     annotation_type = AnnotationType::ANNOTATION_PARTIAL;
   } else if (function_type == "Completing") {
-    annotation_type = AnnotationType::ANNOTATION_COMPLETENG;
+    annotation_type = AnnotationType::ANNOTATION_COMPLETING;
   } else if (function_type == "BranchedCompleting") {
     annotation_type = AnnotationType::ANNOTATION_BRANCHED_COMPLETING;
   } else {
@@ -526,41 +524,96 @@ TrafficAnnotationAuditor::GetReservedUniqueIDs() {
 void TrafficAnnotationAuditor::CheckDuplicateHashes() {
   const std::map<int, std::string> reserved_ids = GetReservedUniqueIDs();
 
-  std::map<int, std::vector<unsigned int>> unique_ids;
-  for (unsigned int index = 0; index < extracted_annotations_.size(); index++) {
-    AnnotationInstance& instance = extracted_annotations_[index];
+  struct AnnotationID {
+    // To ids are valid to be similar in the following cases:
+    // 1- One is extra id of a partial annotation, and the other is unique id
+    //    of a completing annotation or extra id of a branched completing
+    //    annotation.
+    // 2- Both are extra ids of branched completing annotations.
+    // The following ItemType value facilitate these checks.
+    enum Type { kPatrialExtra, kCompletingMain, kBranchedExtra, kOther } type;
+    std::string text;
+    int hash;
+    AnnotationInstance* instance;
+  };
+  std::map<int, std::vector<AnnotationID>> collisions;
 
-    // If unique id's hash code is similar to a reserved id, add an error.
-    if (base::ContainsKey(reserved_ids, instance.unique_id_hash_code)) {
-      errors_.push_back(AuditorResult(
-          AuditorResult::ResultType::ERROR_RESERVED_UNIQUE_ID_HASH_CODE,
-          instance.proto.unique_id(), instance.proto.source().file(),
-          instance.proto.source().line()));
-      continue;
-    }
-
-    // Find unique ids with similar hash codes.
-    if (!base::ContainsKey(unique_ids, instance.unique_id_hash_code)) {
-      std::vector<unsigned> empty_list;
-      unique_ids.insert(
-          std::make_pair(instance.unique_id_hash_code, empty_list));
-    }
-    unique_ids[instance.unique_id_hash_code].push_back(index);
-  }
-
-  // Add error for unique ids with similar hash codes.
-  for (const auto& item : unique_ids) {
-    if (item.second.size() > 1) {
-      AuditorResult error(
-          AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
-      for (unsigned int index : item.second) {
-        error.AddDetail(base::StringPrintf(
-            "%s in '%s:%i'",
-            extracted_annotations_[index].proto.unique_id().c_str(),
-            extracted_annotations_[index].proto.source().file().c_str(),
-            extracted_annotations_[index].proto.source().line()));
+  for (AnnotationInstance& instance : extracted_annotations_) {
+    AnnotationID current;
+    current.instance = &instance;
+    for (int id = 0; id < 2; id++) {
+      if (id) {
+        if (instance.extra_id.empty()) {
+          continue;
+        } else {
+          current.text = instance.extra_id;
+          current.hash = instance.extra_id_hash_code;
+          if (instance.annotation_type ==
+              AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL) {
+            current.type = AnnotationID::Type::kPatrialExtra;
+          } else if (instance.annotation_type ==
+                     AnnotationInstance::AnnotationType::
+                         ANNOTATION_BRANCHED_COMPLETING) {
+            current.type = AnnotationID::Type::kBranchedExtra;
+          } else {
+            current.type = AnnotationID::Type::kOther;
+          }
+        }
+      } else {
+        current.text = instance.proto.unique_id();
+        current.hash = instance.unique_id_hash_code;
+        current.type =
+            instance.annotation_type ==
+                    AnnotationInstance::AnnotationType::ANNOTATION_COMPLETING
+                ? AnnotationID::Type::kCompletingMain
+                : AnnotationID::Type::kOther;
       }
-      errors_.push_back(error);
+
+      // If the id's hash code is similar to a reserved id, add an error.
+      if (base::ContainsKey(reserved_ids, current.hash)) {
+        errors_.push_back(AuditorResult(
+            AuditorResult::ResultType::ERROR_RESERVED_UNIQUE_ID_HASH_CODE,
+            current.text, instance.proto.source().file(),
+            instance.proto.source().line()));
+        continue;
+      }
+
+      // Check for collisions.
+      if (!base::ContainsKey(collisions, current.hash)) {
+        collisions[current.hash] = std::vector<AnnotationID>();
+      } else {
+        // Add error for ids with similar hash codes. If the texts are really
+        // different, there is a hash collision and should be corrected in any
+        // case. Otherwise, it's an error if it doesn't match the criteria
+        // spcified in definition of AnnotationID struct.
+        for (const auto& other : collisions[current.hash]) {
+          if (current.text == other.text &&
+              ((current.type == AnnotationID::Type::kPatrialExtra &&
+                (other.type == AnnotationID::Type::kCompletingMain ||
+                 other.type == AnnotationID::Type::kBranchedExtra)) ||
+               (other.type == AnnotationID::Type::kPatrialExtra &&
+                (current.type == AnnotationID::Type::kCompletingMain ||
+                 current.type == AnnotationID::Type::kBranchedExtra)) ||
+               (current.type == AnnotationID::Type::kBranchedExtra &&
+                other.type == AnnotationID::Type::kBranchedExtra))) {
+            continue;
+          }
+
+          AuditorResult error(
+              AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE,
+              base::StringPrintf(
+                  "%s in '%s:%i'", current.text.c_str(),
+                  current.instance->proto.source().file().c_str(),
+                  current.instance->proto.source().line()));
+          error.AddDetail(
+              base::StringPrintf("%s in '%s:%i'", other.text.c_str(),
+                                 other.instance->proto.source().file().c_str(),
+                                 other.instance->proto.source().line()));
+
+          errors_.push_back(error);
+        }
+      }
+      collisions[current.hash].push_back(current);
     }
   }
 }
@@ -572,6 +625,14 @@ void TrafficAnnotationAuditor::CheckUniqueIDsFormat() {
       errors_.push_back(AuditorResult(
           AuditorResult::ResultType::ERROR_UNIQUE_ID_INVALID_CHARACTER,
           instance.proto.unique_id(), instance.proto.source().file(),
+          instance.proto.source().line()));
+    }
+    if (!instance.extra_id.empty() &&
+        !base::ContainsOnlyChars(base::ToLowerASCII(instance.extra_id),
+                                 "0123456789_abcdefghijklmnopqrstuvwxyz")) {
+      errors_.push_back(AuditorResult(
+          AuditorResult::ResultType::ERROR_UNIQUE_ID_INVALID_CHARACTER,
+          instance.extra_id, instance.proto.source().file(),
           instance.proto.source().line()));
     }
   }
@@ -600,6 +661,13 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
   // Is in whitelist?
   if (IsWhitelisted(call.file_path, AuditorException::ExceptionType::MISSING))
     return true;
+
+  // Unittests should be all annotated. Although this can be detected using gn
+  // checking, doing that would be very slow. The alternative solution would be
+  // to bypass every file including test or unittest, but in this case other
+  // there might be some ambiguety in what should be annotated and what not.
+  if (call.file_path.find("unittest") != std::string::npos)
+    return false;
 
   // Already checked?
   if (base::ContainsKey(checked_dependencies_, call.file_path))
@@ -641,8 +709,45 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
   return checked_dependencies_[call.file_path];
 }
 
+bool TrafficAnnotationAuditor::CheckPartialAnnotationsSemantics() {
+  std::vector<AnnotationInstance*> partials;
+  std::vector<AnnotationInstance*> completings;
+  // Find and separate all none-complete annotations.
+  for (AnnotationInstance& instance : extracted_annotations_) {
+    if (instance.annotation_type ==
+        AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL) {
+      partials.push_back(&instance);
+    } else if (instance.annotation_type !=
+               AnnotationInstance::AnnotationType::ANNOTATION_COMPLETE) {
+      completings.push_back(&instance);
+    }
+  }
+  std::set<AnnotationInstance*> used_completing;
+
+  for (AnnotationInstance* partial : partials) {
+    std::string completing_id = partial->extra_id;
+
+    for (AnnotationInstance* completing : completings) {
+      if ((completing->annotation_type ==
+               AnnotationInstance::AnnotationType::ANNOTATION_COMPLETING &&
+           completing->proto.unique_id() == partial->extra_id) ||
+          (completing->annotation_type == AnnotationInstance::AnnotationType::
+                                              ANNOTATION_BRANCHED_COMPLETING &&
+           completing->extra_id == partial->extra_id)) {
+        LOG(ERROR) << "FOUND A PAIR: " << partial->proto.unique_id() << " AND "
+                   << completing->proto.unique_id();
+        // TODO: Check if they are combinable and completing.
+      }
+    }
+  }
+  // TODO: Test combinable function.
+  // TODO: Test completing function.
+  return true;
+}
+
 void TrafficAnnotationAuditor::RunAllChecks() {
   CheckDuplicateHashes();
   CheckUniqueIDsFormat();
   CheckAllRequiredFunctionsAreAnnotated();
+  CheckPartialAnnotationsSemantics();
 }
