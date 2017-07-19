@@ -38,9 +38,9 @@ LauncherSearchResult::LauncherSearchResult(
   DCHECK_LE(discrete_value_relevance,
             chromeos::launcher_search_provider::kMaxSearchResultScore);
 
-  icon_image_loader_.reset(new LauncherSearchIconImageLoaderImpl(
+  icon_image_loader_ = base::MakeUnique<LauncherSearchIconImageLoaderImpl>(
       icon_url, profile, extension, GetPreferredIconDimension(),
-      std::move(error_reporter)));
+      std::move(error_reporter));
   icon_image_loader_->LoadResources();
 
   Initialize();
@@ -83,12 +83,12 @@ LauncherSearchResult::LauncherSearchResult(
     const int discrete_value_relevance,
     Profile* profile,
     const extensions::Extension* extension,
-    const linked_ptr<LauncherSearchIconImageLoader>& icon_image_loader)
+    std::unique_ptr<LauncherSearchIconImageLoader> icon_image_loader)
     : item_id_(item_id),
       discrete_value_relevance_(discrete_value_relevance),
       profile_(profile),
       extension_(extension),
-      icon_image_loader_(icon_image_loader) {
+      icon_image_loader_(std::move(icon_image_loader)) {
   DCHECK(icon_image_loader_ != nullptr);
   Initialize();
 }
