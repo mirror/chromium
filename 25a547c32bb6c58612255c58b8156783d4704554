@@ -104,6 +104,24 @@
       "revId": "25a547c32bb6c58612255c58b8156783d4704554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56829cc_6315f4d3",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleSinglePseudoSelector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-19T04:20:53Z",
+      "side": 1,
+      "message": "fair enough, I\u0027m ok with leaving it as is.",
+      "parentUuid": "862cbe8e_c7e2b46d",
+      "revId": "25a547c32bb6c58612255c58b8156783d4704554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
