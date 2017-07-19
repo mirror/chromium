@@ -1,0 +1,54 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="chrome://resources/html/action_link.html">
+<link rel="import" href="chrome://resources/html/action_link_css.html">
+<link rel="import" href="chrome://resources/html/assert.html">
+<link rel="import" href="chrome://resources/html/cr.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="google_assistant_browser_proxy.html">
+<link rel="import" href="../settings_shared_css.html">
+
+<dom-module id="settings-google-assistant-page">
+  <template>
+    <style include="settings-shared md-select action-link">
+      .highlighted-on {
+        color: var(--google-blue-500);
+        font-weight: 900
+      }
+      .highlighted-off {
+        color: var(--google-grey-900);
+        font-weight: 900
+      }
+    </style>
+    <div class="settings-box first">
+      <settings-toggle-button id="googleAssistantEnable"
+          class$="start
+              [[getAssistantOnOffClass_(prefs.settings.voice_interaction.enabled.value)]]"
+          pref="{{prefs.settings.voice_interaction.enabled}}"
+          label="[[getAssistantOnOffLabel_(
+              prefs.settings.voice_interaction.enabled.value)]]"
+          on-change="onGoogleAssistantEnableChange_">
+      </settings-toggle-button>
+    </div>
+    <template is="dom-if"
+        if="{{prefs.settings.voice_interaction.enabled.value}}">
+      <div class="settings-box continuation indented">
+        <settings-toggle-button id="googleAssistantContextEnable" class="start"
+            pref="{{prefs.settings.voice_interaction.context.enabled}}"
+            label="$i18n{googleAssistantEnableContext}"
+            sub-label="$i18n{googleAssistantEnableContextDescription}"
+            on-change="onGoogleAssistantContextEnableChange_">
+        </settings-toggle-button>
+      </div>
+      <div class="settings-box"
+          on-tap="onGoogleAssistantSettingsTapped_" actionable>
+        <div class="start">
+          $i18n{googleAssistantSettings}
+        </div>
+        <button class="icon-external" is="paper-icon-button-light">
+        </button>
+      </div>
+    </template>
+  </template>
+  <script src="google_assistant_page.js"></script>
+</dom-module>
