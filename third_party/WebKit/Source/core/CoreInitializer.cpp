@@ -144,4 +144,82 @@ void CoreInitializer::Initialize() {
   ScriptStreamerThread::Init();
 }
 
+CoreInitializer::LocalFrameCallback
+    CoreInitializer::local_frame_initialization_callback_ = nullptr;
+
+void CoreInitializer::RegisterLocalFrameInitCallback(
+    LocalFrameCallback callback) {
+  local_frame_initialization_callback_ = callback;
+}
+
+CoreInitializer::LocalFrameCallback
+CoreInitializer::GetLocalFrameInitCallback() {
+  return local_frame_initialization_callback_;
+}
+
+CoreInitializer::LocalFrameCallback
+    CoreInitializer::chrome_client_supplement_install_callback_ = nullptr;
+
+void CoreInitializer::RegisterChromeClientSupplementInstallCallback(
+    LocalFrameCallback callback) {
+  chrome_client_supplement_install_callback_ = callback;
+}
+
+CoreInitializer::LocalFrameCallback
+CoreInitializer::GetChromeClientSupplementInstallCallback() {
+  return chrome_client_supplement_install_callback_;
+}
+
+CoreInitializer::WorkerClientsCallback
+    CoreInitializer::worker_clients_local_file_system_callback_ = nullptr;
+
+void CoreInitializer::RegisterWorkerClientsLocalFileSystemCallback(
+    WorkerClientsCallback callback) {
+  worker_clients_local_file_system_callback_ = callback;
+}
+
+CoreInitializer::WorkerClientsCallback
+CoreInitializer::GetWorkerClientsLocalFileSystemCallback() {
+  return worker_clients_local_file_system_callback_;
+}
+
+CoreInitializer::WorkerClientsCallback
+    CoreInitializer::worker_clients_indexed_db_callback_ = nullptr;
+
+void CoreInitializer::RegisterWorkerClientsIndexedDBCallback(
+    WorkerClientsCallback callback) {
+  worker_clients_indexed_db_callback_ = callback;
+}
+
+CoreInitializer::WorkerClientsCallback
+CoreInitializer::GetWorkerClientsIndexedDBCallback() {
+  return worker_clients_indexed_db_callback_;
+}
+
+CoreInitializer::MediaControlsFactory CoreInitializer::media_controls_factory_ =
+    nullptr;
+
+void CoreInitializer::RegisterMediaControlsFactory(
+    MediaControlsFactory factory) {
+  media_controls_factory_ = factory;
+}
+
+CoreInitializer::MediaControlsFactory
+CoreInitializer::GetMediaControlsFactory() {
+  return media_controls_factory_;
+}
+
+CoreInitializer::InspectorAgentSessionInitCallback
+    CoreInitializer::inspector_agent_session_init_callback_ = nullptr;
+
+void CoreInitializer::RegisterInspectorAgentSessionInitCallback(
+    InspectorAgentSessionInitCallback callback) {
+  inspector_agent_session_init_callback_ = callback;
+}
+
+CoreInitializer::InspectorAgentSessionInitCallback
+CoreInitializer::GetInspectorAgentSessionInitCallback() {
+  return inspector_agent_session_init_callback_;
+}
+
 }  // namespace blink

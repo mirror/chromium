@@ -62,12 +62,6 @@ class CORE_EXPORT InspectorAgent
                     protocol::DictionaryValue*) = 0;
   virtual void Dispose() = 0;
 
-  using SessionInitCallback = void (*)(InspectorSession*,
-                                       bool,
-                                       InspectorDOMAgent*,
-                                       InspectedFrames*,
-                                       Page*);
-  static void RegisterSessionInitCallback(SessionInitCallback);
   static void CallSessionInitCallbacks(InspectorSession*,
                                        bool,
                                        InspectorDOMAgent*,
