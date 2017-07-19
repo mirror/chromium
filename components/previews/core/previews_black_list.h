@@ -51,6 +51,9 @@ enum class PreviewsEligibilityReason {
   NETWORK_NOT_SLOW = 7,
   // If the page was reloaded, the user should not be shown a stale preview.
   RELOAD_DISALLOWED = 8,
+  // The host is explicitly blacklisted by a field trial parameter, so the user
+  // was not shown a preview.
+  HOST_BLACKLISTED_VIA_FIELD_TRIAL = 9,
   LAST = 9,
 };
 

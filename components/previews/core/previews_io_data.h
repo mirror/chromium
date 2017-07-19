@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
@@ -64,7 +65,8 @@ class PreviewsIOData : public PreviewsDecider {
   bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
       PreviewsType type,
-      net::EffectiveConnectionType effective_connection_type_threshold)
+      net::EffectiveConnectionType effective_connection_type_threshold,
+      base::StringPiece comma_delimited_host_blacklist_from_server)
       const override;
 
  protected:

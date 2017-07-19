@@ -173,6 +173,11 @@ net::EffectiveConnectionType EffectiveConnectionTypeThresholdForClientLoFi() {
                             net::EFFECTIVE_CONNECTION_TYPE_2G);
 }
 
+std::string GetBlackListedHostsForClientLoFiFieldTrial() {
+  return base::GetFieldTrialParamValue(kClientLoFiExperimentName,
+                                       "short_host_blacklist");
+}
+
 }  // namespace params
 
 std::string GetStringNameForType(PreviewsType type) {

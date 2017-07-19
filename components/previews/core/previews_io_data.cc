@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/sequenced_task_runner.h"
+#include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/default_clock.h"
 #include "components/previews/core/previews_black_list.h"
@@ -52,6 +53,18 @@ bool AllowedOnReload(PreviewsType type) {
       break;
   }
   NOTREACHED();
+  return false;
+}
+
+bool DoesServerProvidedBlackListContainHost(
+    base::StringPiece comma_delimited_hosts,
+    base::StringPiece host) {
+  for (const auto& blacklisted_host :
+       base::SplitStringPiece(comma_delimited_hosts, ",", base::TRIM_WHITESPACE,
+                              base::SPLIT_WANT_NONEMPTY)) {
+    if (host == blacklisted_host)
+      return true;
+  }
   return false;
 }
 
@@ -108,13 +121,15 @@ void PreviewsIOData::ClearBlackList(base::Time begin_time,
 bool PreviewsIOData::ShouldAllowPreview(const net::URLRequest& request,
                                         PreviewsType type) const {
   return ShouldAllowPreviewAtECT(
-      request, type, params::DefaultEffectiveConnectionTypeThreshold());
+      request, type, params::DefaultEffectiveConnectionTypeThreshold(),
+      base::StringPiece());
 }
 
 bool PreviewsIOData::ShouldAllowPreviewAtECT(
     const net::URLRequest& request,
     PreviewsType type,
-    net::EffectiveConnectionType effective_connection_type_threshold) const {
+    net::EffectiveConnectionType effective_connection_type_threshold,
+    base::StringPiece comma_delimited_host_blacklist_from_server) const {
   if (is_enabled_callback_.is_null() || !previews_black_list_) {
     LogPreviewsEligibilityReason(
         PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE, type);
@@ -131,6 +146,15 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     LogPreviewsEligibilityReason(status, type);
     return false;
   }
+
+  if (DoesServerProvidedBlackListContainHost(
+          comma_delimited_host_blacklist_from_server,
+          request.url().host_piece())) {
+    LogPreviewsEligibilityReason(
+        PreviewsEligibilityReason::HOST_BLACKLISTED_VIA_FIELD_TRIAL, type);
+    return false;
+  }
+
   net::NetworkQualityEstimator* network_quality_estimator =
       request.context()->network_quality_estimator();
   if (!network_quality_estimator ||
