@@ -25,4 +25,8 @@ inline int lockf(int fd, int cmd, off_t ignored_len) {
   return flock(fd, cmd);
 }
 
+// In case __USE_FILE_OFFSET64 is not used, we need to call pwrite64() instead
+// of pwrite()
+#define pwrite(val1, val2, val3, val4) pwrite64(val1, val2, val3, val4)
+
 #endif  // BASE_OS_COMPAT_ANDROID_H_
