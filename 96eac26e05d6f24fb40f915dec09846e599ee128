@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d982c3_037de9a4",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-19T16:43:13Z",
+      "side": 1,
+      "message": "I think we should scope this workaround only for iOS 11 and above. Use the base::ios::IsRunningOnIOS11OrLater() method for that.\n\nNote that this would match the workaround that was done in https://chromium-review.googlesource.com/c/566183/4/ios/web/web_state/ui/crw_web_controller.mm",
+      "range": {
+        "startLine": 401,
+        "startChar": 22,
+        "endLine": 401,
+        "endChar": 23
+      },
+      "revId": "96eac26e05d6f24fb40f915dec09846e599ee128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
