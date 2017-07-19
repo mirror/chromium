@@ -16,6 +16,24 @@
       "revId": "e90b55505fe8c4174f46f8f00c9fb4214bde1980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69855ea3_f79b5078",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-07-19T15:44:27Z",
+      "side": 1,
+      "message": "Yup, I realised about that and I was working on a fix + test-case. My fix checked the result of CanHaveWhitespaceChildren before returning true, and style.PreserveNewline under the IsText() block, but your solution seems more elegant to me.",
+      "parentUuid": "c6824217_a98ce5f1",
+      "revId": "e90b55505fe8c4174f46f8f00c9fb4214bde1980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
