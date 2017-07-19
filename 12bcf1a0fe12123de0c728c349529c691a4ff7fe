@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6ad9ba55_78937c85",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T01:13:45Z",
+      "side": 1,
+      "message": "Yeah, unfortunately we are inconsistent.  We *should* use camelCase (thanks lazyboy@ for catching this!)",
+      "parentUuid": "ee27ad7c_8773102b",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "12bcf1a0fe12123de0c728c349529c691a4ff7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a96697bd_e3e0e743",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 1
