@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "77762926_65928691",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-19T19:28:23Z",
+      "side": 1,
+      "message": "Please deinit after using (make debugging easier etc.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "b2e7406ec7ad51144b7c68b73f32defeeab39004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e64cd8_f94ebfe1",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-19T19:28:23Z",
+      "side": 1,
+      "message": "Check that it\u0027s initialized. Just in case.",
+      "range": {
+        "startLine": 63,
+        "startChar": 47,
+        "endLine": 63,
+        "endChar": 64
+      },
+      "revId": "b2e7406ec7ad51144b7c68b73f32defeeab39004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa4ac48_7e82c39f",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-19T19:28:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be max_results_+1, as we have 7 different outcomes from 0 to 6?",
+      "range": {
+        "startLine": 65,
+        "startChar": 63,
+        "endLine": 65,
+        "endChar": 75
+      },
+      "revId": "b2e7406ec7ad51144b7c68b73f32defeeab39004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fad65fd2_4cf6450c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
