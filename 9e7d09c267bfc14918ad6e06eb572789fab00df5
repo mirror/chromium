@@ -52,6 +52,24 @@
       "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d310bc_dc4f8beb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-19T02:15:59Z",
+      "side": 1,
+      "message": "It is hard to share since we use shadow_host_start and shadow_host_end\nafter if-return and EnclosingShadowHostFor{Start,End}() aren\u0027t cheap\nfunctions.\n\nFor start: shadow_host \u003d shadow_host_end ? shadow_host_end : shadow_host_start;\nFor end: shadow_host \u003d shadow_host_start ? shadow_host_start : shadow_host_end;",
+      "parentUuid": "9658329c_56216648",
+      "revId": "9e7d09c267bfc14918ad6e06eb572789fab00df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
