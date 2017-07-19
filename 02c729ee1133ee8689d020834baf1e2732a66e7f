@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72950120_b7e9bed5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T22:59:17Z",
+      "side": 1,
+      "message": "Nit: Could this be static now?",
+      "revId": "02c729ee1133ee8689d020834baf1e2732a66e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9253e6b2_e14dfdcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T22:59:17Z",
+      "side": 1,
+      "message": "Nit: Unnecessary final",
+      "range": {
+        "startLine": 1815,
+        "startChar": 8,
+        "endLine": 1815,
+        "endChar": 14
+      },
+      "revId": "02c729ee1133ee8689d020834baf1e2732a66e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694cb7cb_2089e78c",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestCommon.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T22:59:17Z",
+      "side": 1,
+      "message": "Nit: \"URL\" throughout",
+      "range": {
+        "startLine": 312,
+        "startChar": 14,
+        "endLine": 312,
+        "endChar": 17
+      },
+      "revId": "02c729ee1133ee8689d020834baf1e2732a66e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e87089_0edc150d",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T22:59:17Z",
+      "side": 1,
+      "message": "Nit: {@link ActivityTestRule} etc., for classes in this comment block.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "02c729ee1133ee8689d020834baf1e2732a66e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab6b411_4cea2773",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-19T22:59:17Z",
+      "side": 1,
+      "message": "Nit: URL throughout",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 17
+      },
+      "revId": "02c729ee1133ee8689d020834baf1e2732a66e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
