@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e4b861a_284f8371",
+        "filename": "ash/resources/vector_icons/palette_tray_icon_laser_pointer.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-19T17:33:15Z",
+      "side": 1,
+      "message": "Seems like 42-46 draws a 32 by 32 rect with the default color white which would also explain why the white box shows up, but it wouldn\u0027t explain why the white box shows up for the metalayer icon. It might be some invisible layer or something left behind by the designer when creating the SVG (and shows up since Skiafy doesn\u0027t handle color). So, it might be better to just remove those lines, but up to you and the owner.",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "79f4d6ca91663cb285c87c4518f7605c5be7f1ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
