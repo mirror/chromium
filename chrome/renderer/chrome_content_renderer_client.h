@@ -281,7 +281,7 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
   // Observes module load and unload events and notifies the ModuleDatabase in
   // the browser process.
   std::unique_ptr<ModuleWatcher> module_watcher_;
-  mojom::ModuleEventSinkPtr module_event_sink_;
+  mojo::InterfacePtr<mojom::ModuleEventSink> module_event_sink_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeContentRendererClient);
