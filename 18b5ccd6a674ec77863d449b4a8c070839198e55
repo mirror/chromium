@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be56b62_8743a716",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T07:27:56Z",
+      "side": 1,
+      "message": "The test doesn\u0027t run because you pass the description as the first argument.",
+      "revId": "18b5ccd6a674ec77863d449b4a8c070839198e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0387026c_87878754",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T07:27:56Z",
+      "side": 1,
+      "message": "Please call test.done in the function (This test ends synchronously). the test object is passed to the function as the first argument.\n\nasync_test((t) \u003d\u003e {\n  ...\n  t.done();\n});\n\nAlternatively, you can use test instead of async_test.",
+      "revId": "18b5ccd6a674ec77863d449b4a8c070839198e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

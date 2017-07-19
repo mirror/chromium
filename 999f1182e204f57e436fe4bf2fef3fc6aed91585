@@ -174,6 +174,24 @@
       "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a847d0a_2b103bf2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-19T07:27:56Z",
+      "side": 1,
+      "message": "You don\u0027t need to file a new bug but having a separate gerrit issue is good, I think.",
+      "parentUuid": "6c8efa8e_6d0db929",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
