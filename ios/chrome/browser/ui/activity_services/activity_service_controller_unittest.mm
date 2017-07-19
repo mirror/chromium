@@ -220,6 +220,7 @@ TEST_F(ActivityServiceControllerTest, PresentAndDismissController) {
   [activityController shareWithData:shareData_
                          controller:parentController
                        browserState:nullptr
+                         dispatcher:nil
                     shareToDelegate:GetShareToDelegate()
                            fromRect:AnchorRect()
                              inView:AnchorView()];
