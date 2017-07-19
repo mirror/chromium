@@ -28,7 +28,7 @@ static bool IsCharacterAllowedInBase(UChar c, int base) {
 template <typename IntegralType, typename CharType>
 static inline IntegralType ToIntegralType(const CharType* data,
                                           size_t length,
-                                          bool* ok,
+                                          NumberParsingState* parsing_state,
                                           int base) {
   static_assert(std::is_integral<IntegralType>::value,
                 "IntegralType must be an integral type.");
@@ -40,7 +40,7 @@ static inline IntegralType ToIntegralType(const CharType* data,
       std::numeric_limits<IntegralType>::is_signed;
 
   IntegralType value = 0;
-  bool is_ok = false;
+  NumberParsingState state = NumberParsingState::kError;
   bool is_negative = false;
 
   if (!data)
@@ -75,23 +75,26 @@ static inline IntegralType ToIntegralType(const CharType* data,
     else
       digit_value = c - 'A' + 10;
 
-    bool overflow;
     if (is_negative) {
       // Overflow condition:
-      //       value * base - digitValue < integralMin
-      //   <=> value < (integralMin + digitValue) / base
+      //       value * base - digit_value < kIntegralMin
+      //   <=> value < (kIntegralMin + digit_value) / base
       // We must be careful of rounding errors here, but the default rounding
       // mode (round to zero) works well, so we can use this formula as-is.
-      overflow = value < (kIntegralMin + digit_value) / base;
+      if (value < (kIntegralMin + digit_value) / base) {
+        state = NumberParsingState::kOverflowMin;
+        goto bye;
+      }
     } else {
       // Overflow condition:
-      //       value * base + digitValue > integralMax
-      //   <=> value > (integralMax + digitValue) / base
+      //       value * base + digit_value > kIntegralMax
+      //   <=> value > (kIntegralMax + digit_value) / base
       // Ditto regarding rounding errors.
-      overflow = value > (kIntegralMax - digit_value) / base;
+      if (value > (kIntegralMax - digit_value) / base) {
+        state = NumberParsingState::kOverflowMax;
+        goto bye;
+      }
     }
-    if (overflow)
-      goto bye;
 
     if (is_negative)
       value = base * value - digit_value;
@@ -107,11 +110,23 @@ static inline IntegralType ToIntegralType(const CharType* data,
   }
 
   if (!length)
-    is_ok = true;
+    state = NumberParsingState::kSuccess;
 bye:
+  *parsing_state = state;
+  return state == NumberParsingState::kSuccess ? value : 0;
+}
+
+template <typename IntegralType, typename CharType>
+static inline IntegralType ToIntegralType(const CharType* data,
+                                          size_t length,
+                                          bool* ok,
+                                          int base) {
+  NumberParsingState state;
+  IntegralType value =
+      ToIntegralType<IntegralType, CharType>(data, length, &state, base);
   if (ok)
-    *ok = is_ok;
-  return is_ok ? value : 0;
+    *ok = state == NumberParsingState::kSuccess;
+  return value;
 }
 
 template <typename CharType>
@@ -136,6 +151,22 @@ static unsigned LengthOfCharactersAsInteger(const CharType* data,
   }
 
   return i;
+}
+
+NumberParsingState CharactersToUIntStrict(const LChar* data,
+                                          size_t length,
+                                          unsigned* value) {
+  NumberParsingState state;
+  *value = ToIntegralType<unsigned, LChar>(data, length, &state, 10);
+  return state;
+}
+
+NumberParsingState CharactersToUIntStrict(const UChar* data,
+                                          size_t length,
+                                          unsigned* value) {
+  NumberParsingState state;
+  *value = ToIntegralType<unsigned, UChar>(data, length, &state, 10);
+  return state;
 }
 
 int CharactersToIntStrict(const LChar* data,

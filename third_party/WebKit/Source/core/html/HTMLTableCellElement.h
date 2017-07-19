@@ -50,12 +50,15 @@ class CORE_EXPORT HTMLTableCellElement final : public HTMLTablePartElement {
   const AtomicString& Headers() const;
   void setRowSpan(unsigned);
 
-  // Public so that HTMLTableColElement can use MaxColSpan. MaxRowSpan is only
+  // Public so that HTMLTableColElement can use kFooColSpan. kMaxRowSpan is only
   // used by this class but keeping them together seems desirable.
   // https://html.spec.whatwg.org/#dom-tdth-colspan
-  static unsigned MaxColSpan() { return 1000u; }
+  static constexpr unsigned kDefaultColSpan = 1u;
+  static constexpr unsigned kMinColSpan = 1u;
+  static constexpr unsigned kMaxColSpan = 1000u;
+
   // https://html.spec.whatwg.org/#dom-tdth-rowspan
-  static unsigned MaxRowSpan() { return 65534u; }
+  static constexpr unsigned kMaxRowSpan = 65534u;
 
  private:
   HTMLTableCellElement(const QualifiedName&, Document&);
