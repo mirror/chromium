@@ -1958,9 +1958,14 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       callback.Run(nullptr);
       return;
     }
+    scoped_refptr<viz::ContextProvider> context_provider = gpu_->CreateContextProvider(std::move(channel));
+    if (!context_provider) {
+      LOG(ERROR)<<"JR No context provider for RenderThread\n";
+      return;
+    }
     RendererWindowTreeClient::Get(routing_id)
         ->RequestLayerTreeFrameSink(
-            gpu_->CreateContextProvider(std::move(channel)),
+            std::move(context_provider),
             GetGpuMemoryBufferManager(), callback);
     return;
   }
@@ -2059,6 +2064,10 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
           gpu::kNullSurfaceHandle, url, automatic_flushes, support_locking,
           limits, attributes, share_context,
           ui::command_buffer_metrics::RENDER_COMPOSITOR_CONTEXT));
+  if (!context_provider->BindToCurrentThread()) {
+    LOG(ERROR)<<"JR compositor context provider failed to bind\n";
+    return;
+  }
 
   if (layout_test_deps_) {
     callback.Run(layout_test_deps_->CreateLayerTreeFrameSink(

@@ -174,7 +174,7 @@ class GLES2_IMPL_EXPORT GLES2Implementation
       unsigned int starting_transfer_buffer_size,
       unsigned int min_transfer_buffer_size,
       unsigned int max_transfer_buffer_size,
-      unsigned int mapped_memory_limit);
+      unsigned int mapped_memory_limit, bool debug=false);
 
   // The GLES2CmdHelper being used by this GLES2Implementation. You can use
   // this to issue cmds at a lower level for certain kinds of optimization.

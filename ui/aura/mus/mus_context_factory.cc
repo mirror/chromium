@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "cc/base/switches.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "services/ui/public/cpp/gpu/gpu.h"
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/window_tree_host.h"
@@ -53,9 +54,15 @@ void MusContextFactory::OnEstablishedGpuChannel(
       WindowTreeHost::GetForAcceleratedWidget(compositor->widget());
   WindowPortMus* window_port = WindowPortMus::Get(host->window());
   DCHECK(window_port);
+
+  scoped_refptr<viz::ContextProvider> context_provider = gpu_->CreateContextProvider(std::move(gpu_channel));
+  if (!context_provider) {
+    LOG(ERROR)<<"JR no context provider\n";
+    return;
+  }
   std::unique_ptr<cc::LayerTreeFrameSink> layer_tree_frame_sink =
       window_port->RequestLayerTreeFrameSink(
-          gpu_->CreateContextProvider(std::move(gpu_channel)),
+          std::move(context_provider),
           gpu_->gpu_memory_buffer_manager());
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
 }
@@ -74,8 +81,10 @@ MusContextFactory::SharedMainThreadContextProvider() {
         gpu_->EstablishGpuChannelSync();
     shared_main_thread_context_provider_ =
         gpu_->CreateContextProvider(std::move(gpu_channel));
-    if (!shared_main_thread_context_provider_->BindToCurrentThread())
-      shared_main_thread_context_provider_ = nullptr;
+    if (!shared_main_thread_context_provider_){
+     LOG(ERROR)<<"JR failed to make shared provider\n";
+      //shared_main_thread_context_provider_ = nullptr;
+    }
   }
   return shared_main_thread_context_provider_;
 }

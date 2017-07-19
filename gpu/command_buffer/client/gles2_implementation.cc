@@ -196,7 +196,7 @@ bool GLES2Implementation::Initialize(
     unsigned int starting_transfer_buffer_size,
     unsigned int min_transfer_buffer_size,
     unsigned int max_transfer_buffer_size,
-    unsigned int mapped_memory_limit) {
+    unsigned int mapped_memory_limit, bool debug) {
   TRACE_EVENT0("gpu", "GLES2Implementation::Initialize");
   DCHECK_GE(starting_transfer_buffer_size, min_transfer_buffer_size);
   DCHECK_LE(starting_transfer_buffer_size, max_transfer_buffer_size);
@@ -211,6 +211,8 @@ bool GLES2Implementation::Initialize(
       max_transfer_buffer_size,
       kAlignment,
       kSizeToFlush)) {
+    if (debug)
+      LOG(ERROR)<<"JR transfer_buffer_ failed to init\n";
     return false;
   }
 
@@ -265,6 +267,8 @@ bool GLES2Implementation::Initialize(
     SetGLError(GL_INVALID_OPERATION,
                "Initialize",
                "Service bind_generates_resource mismatch.");
+    if (debug)
+      LOG(ERROR)<<"JR GL Bind isnt matching between client and service\n";
     return false;
   }
 

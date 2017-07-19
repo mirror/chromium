@@ -461,8 +461,11 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
         // On Mac, GpuCommandBufferMsg_SwapBuffersCompleted must be handled in
         // a nested run loop during resize.
         context_provider->SetDefaultTaskRunner(resize_task_runner_);
-        if (!context_provider->BindToCurrentThread())
+        LOG(ERROR)<<"JR ContextProvider BindToCurrentThread\n";
+        if (!context_provider->BindToCurrentThread()) {
+          LOG(ERROR)<<"\tJR failed\n";
           context_provider = nullptr;
+        }
       }
     }
 
