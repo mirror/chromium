@@ -181,6 +181,24 @@
       "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57c2584_a8c02f46",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:54:04Z",
+      "side": 1,
+      "message": "OK. Thanks for digging this out!",
+      "parentUuid": "529176a2_a48d4299",
+      "revId": "4353d1d2e5eed2b5d87f3d005a6579cf8ce805b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

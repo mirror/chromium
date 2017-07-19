@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6be05a2_0daf783d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:54:04Z",
+      "side": 1,
+      "message": "I would call it StartGatherCycleIfNeeded because the enable check is moved into it.",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b36b86_901984ab",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:54:04Z",
+      "side": 1,
+      "message": "Is this because of the dependency on the enable CL?",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa83f186_16af6004",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:54:04Z",
+      "side": 1,
+      "message": "This virtual is not needed and this should be moved out of protected.",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1b138b_0a0e4107",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-19T17:54:04Z",
+      "side": 1,
+      "message": "These accessors are not needed as you are using AllRenderProcessMeasurementsAreCurrentForTesting now.",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
