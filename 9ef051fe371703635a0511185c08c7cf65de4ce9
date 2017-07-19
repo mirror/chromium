@@ -302,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "cefa83a3_2934f93d",
+        "filename": "content/public/renderer/render_frame_observer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-19T08:42:00Z",
+      "side": 1,
+      "message": "Sorry, I missed your reply earlier. I think it\u0027s OK to bias towards forward declares. However, ones that specify the width of the enum (especially from generated code) are a little dangerous, due to the loose coupling. I think it\u0027s probably safer to just #include; that way, the code doesn\u0027t suddenly explode if Mojo optimizes enum packing and decides to use a 16-bit width for the enum.",
+      "parentUuid": "bcea309b_1233c62d",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "519d9e43_53c1c880",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 13
