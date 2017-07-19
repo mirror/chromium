@@ -103,12 +103,11 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void Reload();
 
   // Hides virtual keyboard and notifies observer bounds change.
-  // This method hides the keyboard with a delay to avoid layout flicker
-  // when the focus of input field quickly change.
+  // This method immediately starts hiding animation.
   void HideKeyboard(HideReason reason);
 
-  // Notifies the keyboard observer for keyboard bounds changed.
-  void NotifyKeyboardBoundsChanging(const gfx::Rect& new_bounds);
+  // Notifies the observer for contents bounds changed.
+  void NotifyContentsBoundsChanging(const gfx::Rect& new_bounds);
 
   // Management of the observer list.
   void AddObserver(KeyboardControllerObserver* observer);
@@ -145,10 +144,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Retrieve the active keyboard controller.
   static KeyboardController* GetInstance();
 
-  // Returns true if keyboard is currently visible.
-  bool keyboard_visible() const { return keyboard_visible_; }
-
-  bool show_on_resize() const { return show_on_resize_; }
+  // Returns true if keyboard is SHOWN or SHOWING state.
+  bool keyboard_visible();
 
   // Returns true if keyboard window has been created.
   bool IsKeyboardWindowCreated();
@@ -165,8 +162,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;
 
-  // For access to NotifyKeyboardLoadingComplete.
+  // For access to SetContainerBounds.
   friend class KeyboardLayoutManager;
+
+  bool show_on_resize() const { return show_on_resize_; }
 
   // aura::WindowObserver overrides
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
@@ -185,8 +184,11 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void OnTextInputStateChanged(const ui::TextInputClient* client) override;
   void OnShowImeIfNeeded() override;
 
-  // Notifies that the extension has completed loading
-  void NotifyKeyboardLoadingComplete();
+  // Sets the bounds of the container window. Shows the keyboard if contents
+  // is first loaded and show_on_resize() is true. Called by
+  // KayboardLayoutManager.
+  void SetContainerBounds(const gfx::Rect& new_bounds,
+                          const bool contents_loaded);
 
   // Show virtual keyboard immediately with animation.
   void ShowKeyboardInternal(int64_t display_id);
@@ -199,6 +201,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // is aborted, it won't be called.
   void ShowAnimationFinished();
   void HideAnimationFinished();
+
+  void NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea();
 
   // Called when the keyboard mode is set or the keyboard is moved to another
   // display.
@@ -231,6 +235,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   base::ObserverList<KeyboardControllerObserver> observer_list_;
 
   // The currently used keyboard position.
+  // If the contents window is visible, this should be the same size as the
+  // contents window. If not, this should be empty.
   gfx::Rect current_keyboard_bounds_;
 
   KeyboardControllerState state_;
