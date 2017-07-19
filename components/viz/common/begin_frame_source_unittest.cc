@@ -2,21 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 
 #include <stdint.h>
 
 #include "base/memory/ptr_util.h"
 #include "base/test/test_simple_task_runner.h"
-#include "cc/test/begin_frame_args_test.h"
-#include "cc/test/begin_frame_source_test.h"
-#include "cc/test/scheduler_test_common.h"
+#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/begin_frame_args_test.h"
+#include "components/viz/test/begin_frame_source_test.h"
+#include "components/viz/test/test_delay_based_time_source.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using testing::NiceMock;
 
-namespace cc {
+namespace viz {
 namespace {
 
 // BeginFrameSource testing ----------------------------------------------------
@@ -38,8 +39,8 @@ class BackToBackBeginFrameSourceTest : public ::testing::Test {
   void SetUp() override {
     now_src_.reset(new base::SimpleTestTickClock());
     now_src_->Advance(base::TimeDelta::FromMicroseconds(1000));
-    task_runner_ =
-        make_scoped_refptr(new OrderedSimpleTaskRunner(now_src_.get(), false));
+    task_runner_ = make_scoped_refptr(
+        new cc::OrderedSimpleTaskRunner(now_src_.get(), false));
     std::unique_ptr<TestDelayBasedTimeSource> time_source(
         new TestDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
     delay_based_time_source_ = time_source.get();
@@ -50,7 +51,7 @@ class BackToBackBeginFrameSourceTest : public ::testing::Test {
   void TearDown() override { obs_.reset(); }
 
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
-  scoped_refptr<OrderedSimpleTaskRunner> task_runner_;
+  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
   std::unique_ptr<BackToBackBeginFrameSource> source_;
   std::unique_ptr<MockBeginFrameObserver> obs_;
   TestDelayBasedTimeSource* delay_based_time_source_;  // Owned by |now_src_|.
@@ -327,15 +328,15 @@ TEST_F(BackToBackBeginFrameSourceTest, MultipleObserversAtOnce) {
 class DelayBasedBeginFrameSourceTest : public ::testing::Test {
  public:
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
-  scoped_refptr<OrderedSimpleTaskRunner> task_runner_;
+  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
   std::unique_ptr<DelayBasedBeginFrameSource> source_;
   std::unique_ptr<MockBeginFrameObserver> obs_;
 
   void SetUp() override {
     now_src_.reset(new base::SimpleTestTickClock());
     now_src_->Advance(base::TimeDelta::FromMicroseconds(1000));
-    task_runner_ =
-        make_scoped_refptr(new OrderedSimpleTaskRunner(now_src_.get(), false));
+    task_runner_ = make_scoped_refptr(
+        new cc::OrderedSimpleTaskRunner(now_src_.get(), false));
     std::unique_ptr<DelayBasedTimeSource> time_source(
         new TestDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
     time_source->SetTimebaseAndInterval(
@@ -574,4 +575,4 @@ TEST_F(ExternalBeginFrameSourceTest, OnBeginFrameChecksBeginFrameContinuity) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace viz

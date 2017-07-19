@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "cc/ipc/compositor_frame_sink.mojom.h"
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
@@ -48,7 +48,7 @@ class FrameGenerator : public cc::mojom::CompositorFrameSinkClient {
   // cc::mojom::CompositorFrameSinkClient implementation:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void OnBeginFrame(const viz::BeginFrameArgs& args) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
 
@@ -65,8 +65,8 @@ class FrameGenerator : public cc::mojom::CompositorFrameSinkClient {
   gfx::Size pixel_size_;
 
   std::unique_ptr<cc::mojom::CompositorFrameSink> compositor_frame_sink_;
-  cc::BeginFrameArgs last_begin_frame_args_;
-  cc::BeginFrameAck current_begin_frame_ack_;
+  viz::BeginFrameArgs last_begin_frame_args_;
+  viz::BeginFrameAck current_begin_frame_ack_;
   bool high_contrast_mode_enabled_ = false;
   gfx::Size last_submitted_frame_size_;
   viz::LocalSurfaceId local_surface_id_;

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/scheduler/delay_based_time_source.h"
+#include "components/viz/common/delay_based_time_source.h"
 
 #include <algorithm>
 #include <cmath>
@@ -14,9 +14,9 @@
 #include "base/single_thread_task_runner.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/output/begin_frame_args.h"
+#include "components/viz/common/begin_frame_args.h"
 
-namespace cc {
+namespace viz {
 
 // The following methods correspond to the DelayBasedTimeSource that uses
 // the base::TimeTicks::Now as the timebase.
@@ -54,7 +54,9 @@ base::TimeDelta DelayBasedTimeSource::Interval() const {
   return interval_;
 }
 
-bool DelayBasedTimeSource::Active() const { return active_; }
+bool DelayBasedTimeSource::Active() const {
+  return active_;
+}
 
 base::TimeTicks DelayBasedTimeSource::LastTickTime() const {
   return last_tick_time_;
@@ -173,4 +175,4 @@ void DelayBasedTimeSource::AsValueInto(
   state->SetBoolean("active", active_);
 }
 
-}  // namespace cc
+}  // namespace viz

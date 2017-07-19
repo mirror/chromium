@@ -36,7 +36,7 @@ bool LayerTreeFrameSinkLocal::BindToClient(
       this, frame_sink_id_, false /* is_root */,
       true /* handles_frame_sink_id_invalidation */,
       true /* needs_sync_points */);
-  begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
+  begin_frame_source_ = base::MakeUnique<viz::ExternalBeginFrameSource>(this);
   client->SetBeginFrameSource(begin_frame_source_.get());
   return true;
 }
@@ -62,7 +62,7 @@ void LayerTreeFrameSinkLocal::SubmitCompositorFrame(cc::CompositorFrame frame) {
   DCHECK(thread_checker_);
   DCHECK(thread_checker_->CalledOnValidThread());
   DCHECK(frame.metadata.begin_frame_ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
   viz::LocalSurfaceId old_local_surface_id = local_surface_id_;
@@ -84,11 +84,12 @@ void LayerTreeFrameSinkLocal::SubmitCompositorFrame(cc::CompositorFrame frame) {
   }
 }
 
-void LayerTreeFrameSinkLocal::DidNotProduceFrame(const cc::BeginFrameAck& ack) {
+void LayerTreeFrameSinkLocal::DidNotProduceFrame(
+    const viz::BeginFrameAck& ack) {
   DCHECK(thread_checker_);
   DCHECK(thread_checker_->CalledOnValidThread());
   DCHECK(!ack.has_damage);
-  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
+  DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   support_->DidNotProduceFrame(ack);
 }
 
@@ -103,7 +104,7 @@ void LayerTreeFrameSinkLocal::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
-void LayerTreeFrameSinkLocal::OnBeginFrame(const cc::BeginFrameArgs& args) {
+void LayerTreeFrameSinkLocal::OnBeginFrame(const viz::BeginFrameArgs& args) {
   DCHECK(thread_checker_);
   DCHECK(thread_checker_->CalledOnValidThread());
   begin_frame_source_->OnBeginFrame(args);
