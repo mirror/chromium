@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e686326_c28834a9",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T07:34:09Z",
+      "side": 1,
+      "message": "Instead of having to do GetXXXCallback()(args), we could have functions like\nCallXXXCallback(args) { return cb_(args); }\n\nI\u0027ll leave that for others to discuss.",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "f777e7e538bfa4ba09fbdf383ba2803de5e8469d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c54e12_5feac377",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-19T07:34:09Z",
+      "side": 1,
+      "message": "This function should be deleted too.",
+      "range": {
+        "startLine": 65,
+        "startChar": 14,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "f777e7e538bfa4ba09fbdf383ba2803de5e8469d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
