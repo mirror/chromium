@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdb66d16_e4eb995f",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "I\u0027m worried IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT might change to \"Manage Assistant Settings\" or something like that and that\u0027ll inadvertently change the page title.  I\u0027ll keep as-is if you don\u0027t feel very strongly about it.",
+      "parentUuid": "e22a0915_08f9fa41",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7e8f424_8ea233fa",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "864bb00d_5ce95b59",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "Done.  Any chance there\u0027s a tool to help with this?",
+      "parentUuid": "a7e8f424_8ea233fa",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65d7ebad_24bb73c6",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-19T20:46:26Z",
       "side": 1,
       "message": "nit: a slightly cleaner (imho) way to do this is:\n\n\u003cstyle...\u003e\n  settings-toggle-button[hilight\u003d\u0027on\u0027] {\n    color: blue;\n    ...\n   }\n  settings-toggle-button[hilight\u003d\u0027off\u0027] {\n    color: grey;\n    ...\n   }\n\u003c/style\u003e\n\n...\n\u003csettings-toggle-button class\u003d\"start\" hilight$\u003d[[getHilight_(prefs...)]] ... \u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 81,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bef380_d3b788cf",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "Beautiful, thanks!",
+      "parentUuid": "65d7ebad_24bb73c6",
       "range": {
         "startLine": 26,
         "startChar": 81,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "091eba75_30c794b7",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "right..",
+      "parentUuid": "866c974d_d6944f51",
+      "range": {
+        "startLine": 12,
+        "startChar": 85,
+        "endLine": 12,
+        "endChar": 86
+      },
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a6c5d3_b687050f",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 4
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d29c7e63_89b234e8",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53a6c5d3_b687050f",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49f26416_4de67ca9",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "4371087975cc20820e53ea5bdadff44c58499194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5df654_8faf0ff2",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-19T21:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f26416_4de67ca9",
+      "revId": "4371087975cc20820e53ea5bdadff44c58499194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
