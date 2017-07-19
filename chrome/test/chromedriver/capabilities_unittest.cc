@@ -140,7 +140,8 @@ TEST(ParseCapabilities, Args) {
   args.AppendString("arg1");
   args.AppendString("arg2=val");
   base::DictionaryValue caps;
-  caps.Set("goog:chromeOptions.args", base::MakeUnique<base::Value>(args));
+  caps.Set("goog:chromeOptions.args",
+           base::MakeUnique<base::Value>(args.Clone()));
 
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
@@ -158,7 +159,8 @@ TEST(ParseCapabilities, Prefs) {
   prefs.SetString("key1", "value1");
   prefs.SetString("key2.k", "value2");
   base::DictionaryValue caps;
-  caps.Set("goog:chromeOptions.prefs", base::MakeUnique<base::Value>(prefs));
+  caps.Set("goog:chromeOptions.prefs",
+           base::MakeUnique<base::Value>(prefs.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_TRUE(capabilities.prefs->Equals(&prefs));
@@ -171,7 +173,7 @@ TEST(ParseCapabilities, LocalState) {
   local_state.SetString("s2.s", "v2");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.localState",
-           base::MakeUnique<base::Value>(local_state));
+           base::MakeUnique<base::Value>(local_state.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_TRUE(capabilities.local_state->Equals(&local_state));
@@ -184,7 +186,7 @@ TEST(ParseCapabilities, Extensions) {
   extensions.AppendString("ext2");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.extensions",
-           base::MakeUnique<base::Value>(extensions));
+           base::MakeUnique<base::Value>(extensions.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(2u, capabilities.extensions.size());
@@ -197,7 +199,7 @@ TEST(ParseCapabilities, UnrecognizedProxyType) {
   base::DictionaryValue proxy;
   proxy.SetString("proxyType", "unknown proxy type");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -207,7 +209,7 @@ TEST(ParseCapabilities, IllegalProxyType) {
   base::DictionaryValue proxy;
   proxy.SetInteger("proxyType", 123);
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -217,7 +219,7 @@ TEST(ParseCapabilities, DirectProxy) {
   base::DictionaryValue proxy;
   proxy.SetString("proxyType", "DIRECT");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(1u, capabilities.switches.GetSize());
@@ -229,7 +231,7 @@ TEST(ParseCapabilities, SystemProxy) {
   base::DictionaryValue proxy;
   proxy.SetString("proxyType", "system");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(0u, capabilities.switches.GetSize());
@@ -241,7 +243,7 @@ TEST(ParseCapabilities, PacProxy) {
   proxy.SetString("proxyType", "PAC");
   proxy.SetString("proxyAutoconfigUrl", "test.wpad");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(1u, capabilities.switches.GetSize());
@@ -254,7 +256,7 @@ TEST(ParseCapabilities, MissingProxyAutoconfigUrl) {
   proxy.SetString("proxyType", "PAC");
   proxy.SetString("httpProxy", "http://localhost:8001");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -264,7 +266,7 @@ TEST(ParseCapabilities, AutodetectProxy) {
   base::DictionaryValue proxy;
   proxy.SetString("proxyType", "autodetect");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(1u, capabilities.switches.GetSize());
@@ -280,7 +282,7 @@ TEST(ParseCapabilities, ManualProxy) {
   proxy.SetString("sslProxy", "localhost:10001");
   proxy.SetString("noProxy", "google.com, youtube.com");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(2u, capabilities.switches.GetSize());
@@ -297,7 +299,7 @@ TEST(ParseCapabilities, MissingSettingForManualProxy) {
   base::DictionaryValue proxy;
   proxy.SetString("proxyType", "manual");
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -310,7 +312,7 @@ TEST(ParseCapabilities, IgnoreNullValueForManualProxy) {
   proxy.Set("sslProxy", base::MakeUnique<base::Value>());
   proxy.Set("noProxy", base::MakeUnique<base::Value>());
   base::DictionaryValue caps;
-  caps.Set("proxy", base::MakeUnique<base::Value>(proxy));
+  caps.Set("proxy", base::MakeUnique<base::Value>(proxy.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(1u, capabilities.switches.GetSize());
@@ -325,7 +327,8 @@ TEST(ParseCapabilities, LoggingPrefsOk) {
   base::DictionaryValue logging_prefs;
   logging_prefs.SetString("Network", "INFO");
   base::DictionaryValue caps;
-  caps.Set("loggingPrefs", base::MakeUnique<base::Value>(logging_prefs));
+  caps.Set("loggingPrefs",
+           base::MakeUnique<base::Value>(logging_prefs.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(1u, capabilities.logging_prefs.size());
@@ -347,7 +350,7 @@ TEST(ParseCapabilities, PerfLoggingPrefsInspectorDomainStatus) {
   logging_prefs.SetString(WebDriverLog::kPerformanceType, "INFO");
   base::DictionaryValue desired_caps;
   desired_caps.Set("loggingPrefs",
-                   base::MakeUnique<base::Value>(logging_prefs));
+                   base::MakeUnique<base::Value>(logging_prefs.Clone()));
   ASSERT_EQ(PerfLoggingPrefs::InspectorDomainStatus::kDefaultEnabled,
             capabilities.perf_logging_prefs.network);
   ASSERT_EQ(PerfLoggingPrefs::InspectorDomainStatus::kDefaultEnabled,
@@ -358,7 +361,7 @@ TEST(ParseCapabilities, PerfLoggingPrefsInspectorDomainStatus) {
   perf_logging_prefs.SetBoolean("enableNetwork", true);
   perf_logging_prefs.SetBoolean("enablePage", false);
   desired_caps.Set("goog:chromeOptions.perfLoggingPrefs",
-                   base::MakeUnique<base::Value>(perf_logging_prefs));
+                   base::MakeUnique<base::Value>(perf_logging_prefs.Clone()));
   Status status = capabilities.Parse(desired_caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(PerfLoggingPrefs::InspectorDomainStatus::kExplicitlyEnabled,
@@ -376,13 +379,13 @@ TEST(ParseCapabilities, PerfLoggingPrefsTracing) {
   logging_prefs.SetString(WebDriverLog::kPerformanceType, "INFO");
   base::DictionaryValue desired_caps;
   desired_caps.Set("loggingPrefs",
-                   base::MakeUnique<base::Value>(logging_prefs));
+                   base::MakeUnique<base::Value>(logging_prefs.Clone()));
   ASSERT_EQ("", capabilities.perf_logging_prefs.trace_categories);
   base::DictionaryValue perf_logging_prefs;
   perf_logging_prefs.SetString("traceCategories", "benchmark,blink.console");
   perf_logging_prefs.SetInteger("bufferUsageReportingInterval", 1234);
   desired_caps.Set("goog:chromeOptions.perfLoggingPrefs",
-                   base::MakeUnique<base::Value>(perf_logging_prefs));
+                   base::MakeUnique<base::Value>(perf_logging_prefs.Clone()));
   Status status = capabilities.Parse(desired_caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ("benchmark,blink.console",
@@ -398,12 +401,12 @@ TEST(ParseCapabilities, PerfLoggingPrefsInvalidInterval) {
   logging_prefs.SetString(WebDriverLog::kPerformanceType, "INFO");
   base::DictionaryValue desired_caps;
   desired_caps.Set("loggingPrefs",
-                   base::MakeUnique<base::Value>(logging_prefs));
+                   base::MakeUnique<base::Value>(logging_prefs.Clone()));
   base::DictionaryValue perf_logging_prefs;
   // A bufferUsageReportingInterval interval <= 0 will cause DevTools errors.
   perf_logging_prefs.SetInteger("bufferUsageReportingInterval", 0);
   desired_caps.Set("goog:chromeOptions.perfLoggingPrefs",
-                   base::MakeUnique<base::Value>(perf_logging_prefs));
+                   base::MakeUnique<base::Value>(perf_logging_prefs.Clone()));
   Status status = capabilities.Parse(desired_caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -415,7 +418,7 @@ TEST(ParseCapabilities, PerfLoggingPrefsNotDict) {
   logging_prefs.SetString(WebDriverLog::kPerformanceType, "INFO");
   base::DictionaryValue desired_caps;
   desired_caps.Set("loggingPrefs",
-                   base::MakeUnique<base::Value>(logging_prefs));
+                   base::MakeUnique<base::Value>(logging_prefs.Clone()));
   desired_caps.SetString("goog:chromeOptions.perfLoggingPrefs",
                          "traceCategories");
   Status status = capabilities.Parse(desired_caps);
@@ -428,7 +431,7 @@ TEST(ParseCapabilities, PerfLoggingPrefsNoPerfLogLevel) {
   base::DictionaryValue perf_logging_prefs;
   perf_logging_prefs.SetBoolean("enableNetwork", true);
   desired_caps.Set("goog:chromeOptions.perfLoggingPrefs",
-                   base::MakeUnique<base::Value>(perf_logging_prefs));
+                   base::MakeUnique<base::Value>(perf_logging_prefs.Clone()));
   // Should fail because perf log must be enabled if perf log prefs specified.
   Status status = capabilities.Parse(desired_caps);
   ASSERT_FALSE(status.IsOk());
@@ -441,11 +444,11 @@ TEST(ParseCapabilities, PerfLoggingPrefsPerfLogOff) {
   logging_prefs.SetString(WebDriverLog::kPerformanceType, "OFF");
   base::DictionaryValue desired_caps;
   desired_caps.Set("loggingPrefs",
-                   base::MakeUnique<base::Value>(logging_prefs));
+                   base::MakeUnique<base::Value>(logging_prefs.Clone()));
   base::DictionaryValue perf_logging_prefs;
   perf_logging_prefs.SetBoolean("enableNetwork", true);
   desired_caps.Set("goog:chromeOptions.perfLoggingPrefs",
-                   base::MakeUnique<base::Value>(perf_logging_prefs));
+                   base::MakeUnique<base::Value>(perf_logging_prefs.Clone()));
   // Should fail because perf log must be enabled if perf log prefs specified.
   Status status = capabilities.Parse(desired_caps);
   ASSERT_FALSE(status.IsOk());
@@ -458,7 +461,7 @@ TEST(ParseCapabilities, ExcludeSwitches) {
   exclude_switches.AppendString("switch2");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.excludeSwitches",
-           base::MakeUnique<base::Value>(exclude_switches));
+           base::MakeUnique<base::Value>(exclude_switches.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
   ASSERT_EQ(2u, capabilities.exclude_switches.size());
@@ -484,7 +487,7 @@ TEST(ParseCapabilities, MobileEmulationUserAgent) {
   mobile_emulation.SetString("userAgent", "Agent Smith");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
 
@@ -501,7 +504,7 @@ TEST(ParseCapabilities, MobileEmulationDeviceMetrics) {
   mobile_emulation.SetDouble("deviceMetrics.pixelRatio", 3.0);
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
 
@@ -516,7 +519,7 @@ TEST(ParseCapabilities, MobileEmulationDeviceName) {
   mobile_emulation.SetString("deviceName", "Nexus 5");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_TRUE(status.IsOk());
 
@@ -547,7 +550,7 @@ TEST(ParseCapabilities, MobileEmulationDeviceMetricsNotDict) {
   mobile_emulation.SetInteger("deviceMetrics", 360);
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -560,7 +563,7 @@ TEST(ParseCapabilities, MobileEmulationDeviceMetricsNotNumbers) {
   mobile_emulation.SetString("deviceMetrics.pixelRatio", "3.0");
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
@@ -574,7 +577,7 @@ TEST(ParseCapabilities, MobileEmulationBadDict) {
   mobile_emulation.SetDouble("deviceMetrics.pixelRatio", 3.0);
   base::DictionaryValue caps;
   caps.Set("goog:chromeOptions.mobileEmulation",
-           base::MakeUnique<base::Value>(mobile_emulation));
+           base::MakeUnique<base::Value>(mobile_emulation.Clone()));
   Status status = capabilities.Parse(caps);
   ASSERT_FALSE(status.IsOk());
 }
