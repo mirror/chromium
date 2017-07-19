@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a08b891_53ea0253",
+        "filename": "chrome/browser/media/webrtc/webrtc_browsertest_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a5b301_d55ffabf",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c5f7d4e_d0cb1b0e",
         "filename": "chrome/browser/media/webrtc/webrtc_rtp_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b976f916_f742453f",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c5f7d4e_d0cb1b0e",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2d7848e_fadfd947",
         "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-18T21:49:25Z",
       "side": 1,
       "message": "Thanks for adding comments like this; they help a lot.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c1408e8_855f79fb",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2d7848e_fadfd947",
       "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "def38a43_6eba758e",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Yes. It uses a proxy, all |native_peer_connection_| method calls are synchronous on the signaling thread. Similarly, senders and receivers are wrapped in proxies. (IMO the webrtc codebase uses way too many synchronous thread hops.)",
+      "parentUuid": "89b0c718_d7678e51",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5f59c68_416bec9b",
         "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9033cb87_ea6d794e",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f59c68_416bec9b",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b143b00c_5f37d05d",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-18T21:49:25Z",
       "side": 1,
       "message": "So the RTCRtpReceiver has a 1:1 relationship with a webrtc::RtpReceiverInterface, each of which have a 1:M relationship with WebRTCRtpReceivers? Just making sure I understand.",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfc61b95_45b2df4f",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Yes.\n\nThe WebRTCRtpReceiver is a thin wrapper, multiple wrappers could wrap the same webrtc-layer receiver, for equality we test the Id() to achieve that 1:1 relationship between blink-layer receivers and webrtc-layer receivers.\n\nThis is because we don\u0027t have any scoped_refptr that works across both blink and content layers, so the content layer is returning receivers with std::unique_ptr. Thin wrappers avoids custom reference counting and it\u0027s okay for a JavaScript receiver to be referenced even if it has been removed from the (content layer) peer connection.\n\nIf receivers are to keep track of associated streams though we might want WebRTCRtpReceiver objects to persist in a map in the content layer as to not forget which streams they belong to (if the webrtc layer doesn\u0027t tell us outside of events). Still have to clone them before returning to blink due to std::unique_ptr though.",
+      "parentUuid": "b143b00c_5f37d05d",
       "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cb2a7472_b992d8b8",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57209ddf_b9007d82",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee3ec56c_0753d74b",
         "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868e8d1_60368666",
+        "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-19T16:51:31Z",
+      "side": 1,
+      "message": "That\u0027s correct. Unlike local stuff, the remote tracks/receivers have not yet been completely decoupled from remote streams (and rely on the existence of a remote stream vector to keep track of existing tracks).\n\nI plan to make a series of separate CLs to fix this, first creating a map of tracks/receivers independent of the stream vector, and secondly replacing the DidAddRemoteStream with DidAddRemoteTrack. This is complicated enough to do separately.\n\nI have TODOs in a few places, addded one here as well.",
+      "parentUuid": "ee3ec56c_0753d74b",
+      "revId": "00ceaff35fcafc185c28c99efd2b84b53f014cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
