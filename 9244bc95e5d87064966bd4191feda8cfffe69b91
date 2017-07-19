@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35d6b609_155748ab",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fb6651_4c03611a",
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a99d04f_615ba210",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e621adc5_0fe4cf93",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a99d04f_615ba210",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 8
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e1cf9213_6e03a0d8",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8db0ce_a209aa30",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f34d626d_e9db09e0",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c0278496_abf86603",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done, and did the same when this method is called in the unittest.",
+      "parentUuid": "f34d626d_e9db09e0",
+      "range": {
+        "startLine": 85,
+        "startChar": 36,
+        "endLine": 85,
+        "endChar": 40
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa8607d_272bc41f",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6cae0d_dd696d45",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa8607d_272bc41f",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 3
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "b42e4fb1_0aefaa37",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Resolved; see changes.",
+      "parentUuid": "0333b033_e0c6fb80",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fcd8373_6b820d8f",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 3
@@ -178,6 +316,30 @@
       "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d07bec_cfae76e3",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fcd8373_6b820d8f",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 36
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "a095e192_127fddce",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done, see TestConnect_WifiDisabled_Success_OtherDeviceStatesChange, TestConnect_WifiDisabled_AttemptTimesOut, and TestConnect_WifiDisabled_SecondConnectionWhileWaitingForWifiEnabled.",
+      "parentUuid": "70fba084_77628637",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c34cd7_f2001b2f",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 3
@@ -215,6 +401,30 @@
       "writtenOn": "2017-07-19T00:27:43Z",
       "side": 1,
       "message": "Instead, let\u0027s move this comment to below where the FinishCreateConfiguration() call occurs.\n\nYou can replace this comment with something like \"Only configure the service if the RunLoop is on another thread.\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 71
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c53a86d_6f65367b",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "I disagree -- this comment is directly relevant to the if() check and should remain where it is.\n\nI added another comment to the direct call to this method.",
+      "parentUuid": "a7c34cd7_f2001b2f",
       "range": {
         "startLine": 95,
         "startChar": 0,
@@ -250,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "f40a2146_1eb7c062",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd248fc7_e93560e1",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b679ced_8c3c2873",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 3
@@ -270,6 +504,30 @@
       "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309a9587_efc084c0",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-19T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b679ced_8c3c2873",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 1
+      },
+      "revId": "9244bc95e5d87064966bd4191feda8cfffe69b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
