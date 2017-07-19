@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3dceda07_ab668123",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-19T15:22:32Z",
+      "side": 1,
+      "message": "This might actually already be broken (and have been for years since the partial switch to BlockingPool), it appears the sequencing of file operations after creating the directory is done by \n\n  // Block the FILE thread until directory is created on I/O task runner to make\n  // sure that we don\u0027t attempt any operation until that part completes.\n  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,\n                          base::BindOnce(\u0026BlockFileThreadOnDirectoryCreate,\n                                         base::Owned(done_creating)));\n\nbut this only works if all file I/O in the profile directory is done on the FILE thread which is already not the case with the BlockingPool (and even less so with TaskScheduler)...\n\nAs for this specific callsite, this CL results in creating a new sequence inline for a single call which is equivalent to posting an unsequenced (parallel) task which has virtually no ordering guarantees.",
+      "parentUuid": "904e414a_fadf7733",
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27c03fbd_400d3ccd",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 1
