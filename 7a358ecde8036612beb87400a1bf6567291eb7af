@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc5689b3_a9f0eae5",
+        "filename": "components/ntp_tiles/section_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-19T16:04:23Z",
+      "side": 1,
+      "message": "We don\u0027t have a tile-specific package in java, so the name here will be confusing between that and the KnownCategories for content suggestions. Maybe something like TileSection[Type|Id]? just TileSection? You can make it java-specific if you want with something like\n\n// GENERATED_JAVA_CLASS_NAME_OVERRIDE: OverrideName",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "7a358ecde8036612beb87400a1bf6567291eb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
