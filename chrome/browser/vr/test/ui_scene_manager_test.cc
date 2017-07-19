@@ -58,4 +58,17 @@ bool UiSceneManagerTest::VerifyVisibility(
   return true;
 }
 
+void UiSceneManagerTest::Animate(base::TimeDelta delta) {
+  base::TimeTicks target_time = current_time_ + delta;
+  base::TimeDelta frame_time =
+      base::TimeDelta::FromMillisecondsD(1000.0 / 60.0);
+  for (; current_time_ < target_time; current_time_ += frame_time) {
+    scene_->OnBeginFrame(current_time_);
+  }
+  if (current_time_ != target_time) {
+    current_time_ = target_time;
+    scene_->OnBeginFrame(current_time_);
+  }
+}
+
 }  // namespace vr

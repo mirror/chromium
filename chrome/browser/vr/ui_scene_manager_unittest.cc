@@ -9,11 +9,14 @@
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
+#include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/mock_browser_interface.h"
 #include "chrome/browser/vr/test/ui_scene_manager_test.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using cc::TargetProperty::TRANSFORM;
 
 namespace vr {
 
@@ -266,6 +269,8 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   // Hold onto the background color to make sure it changes.
   SkColor initial_background = scene_->GetWorldBackgroundColor();
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
+  gfx::SizeF initial_content_size = content_quad->size();
 
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
@@ -275,6 +280,14 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
     SCOPED_TRACE("Entered Fullsceen");
     // Make sure background has changed for fullscreen.
     EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
+    // Should have started transition.
+    EXPECT_TRUE(
+        content_quad->animation_player().IsAnimatingProperty(TRANSFORM));
+    // Finish the transition
+    Animate(MsToDelta(1000));
+    EXPECT_FALSE(
+        content_quad->animation_player().IsAnimatingProperty(TRANSFORM));
+    EXPECT_NE(initial_content_size, content_quad->size());
   }
 
   // Everything should return to original state after leaving fullscreen.
@@ -283,6 +296,14 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   {
     SCOPED_TRACE("Exited Fullsceen");
     EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
+    // Should have started transition.
+    EXPECT_TRUE(
+        content_quad->animation_player().IsAnimatingProperty(TRANSFORM));
+    // Finish the transition
+    Animate(MsToDelta(1000));
+    EXPECT_FALSE(
+        content_quad->animation_player().IsAnimatingProperty(TRANSFORM));
+    EXPECT_EQ(initial_content_size, content_quad->size());
   }
 }
 
