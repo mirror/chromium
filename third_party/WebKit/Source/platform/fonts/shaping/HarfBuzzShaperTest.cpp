@@ -279,6 +279,34 @@ TEST_F(HarfBuzzShaperTest, DISABLED_ShapeArabicWithContext) {
   ASSERT_NEAR(combined->Width(), first->Width() + second->Width(), 0.1);
 }
 
+TEST_F(HarfBuzzShaperTest, ShapeVerticalUpright) {
+  font_description.SetOrientation(FontOrientation::kVerticalUpright);
+  font = Font(font_description);
+  font.Update(nullptr);
+
+  String string(u"\u65E5\u65E5\u65E5Hello");
+  TextDirection direction = TextDirection::kLtr;
+  HarfBuzzShaper shaper(string.Characters16(), string.length());
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  // Check width and bounds are not too much different. ".1" is heuristic.
+  EXPECT_NEAR(result->Width(), result->Bounds().Height(), result->Width() * .1);
+}
+
+TEST_F(HarfBuzzShaperTest, ShapeVerticalMixed) {
+  font_description.SetOrientation(FontOrientation::kVerticalMixed);
+  font = Font(font_description);
+  font.Update(nullptr);
+
+  String string(u"\u65E5\u65E5\u65E5Hello");
+  TextDirection direction = TextDirection::kLtr;
+  HarfBuzzShaper shaper(string.Characters16(), string.length());
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  // Check width and bounds are not too much different. ".1" is heuristic.
+  EXPECT_NEAR(result->Width(), result->Bounds().Height(), result->Width() * .1);
+}
+
 TEST_F(HarfBuzzShaperTest, PositionForOffsetLatin) {
   String string = To16Bit("Hello World!", 12);
   TextDirection direction = TextDirection::kLtr;
@@ -425,6 +453,9 @@ TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeIntoArabicThaiHanLatin) {
   HarfBuzzShaper shaper(mixed_string, 8);
   RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
 
+  // Check width and bounds are not too much different. ".1" is heuristic.
+  EXPECT_NEAR(result->Width(), result->Bounds().Width(), result->Width() * .1);
+
   RefPtr<ShapeResult> composite_result =
       ShapeResult::Create(&font, 0, direction);
   result->CopyRange(0, 4, composite_result.Get());
@@ -464,6 +495,9 @@ TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeAcrossRuns) {
   HarfBuzzShaper shaper(mixed_string.Characters16(), mixed_string.length());
   RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
 
+  // Check width and bounds are not too much different. ".1" is heuristic.
+  EXPECT_NEAR(result->Width(), result->Bounds().Width(), result->Width() * .1);
+
   // CopyRange(5, 7) should copy 1 character from [1] and 1 from [2].
   RefPtr<ShapeResult> target = ShapeResult::Create(&font, 0, direction);
   result->CopyRange(5, 7, target.Get());
@@ -485,6 +519,33 @@ TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeSegmentGlyphBoundingBox) {
   result2->CopyRange(6, string.length(), composite_result.Get());
 
   RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+  EXPECT_EQ(result->Bounds(), composite_result->Bounds());
+}
+
+TEST_F(HarfBuzzShaperTest,
+       ShapeResultCopyRangeSegmentGlyphBoundingBoxVertical) {
+  font_description.SetOrientation(FontOrientation::kVerticalMixed);
+  font = Font(font_description);
+  font.Update(nullptr);
+
+  String string(u"\u65E5Hello\u65E5\u65E5");
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(string.Characters16(), string.length());
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  // Check width and bounds are not too much different. ".1" is heuristic.
+  EXPECT_NEAR(result->Width(), result->Bounds().Height(), result->Width() * .1);
+
+  RefPtr<ShapeResult> result1 = shaper.Shape(&font, direction, 0, 3);
+  RefPtr<ShapeResult> result2 =
+      shaper.Shape(&font, direction, 3, string.length());
+
+  RefPtr<ShapeResult> composite_result =
+      ShapeResult::Create(&font, 0, direction);
+  result1->CopyRange(0, 3, composite_result.Get());
+  result2->CopyRange(3, string.length(), composite_result.Get());
+
   EXPECT_EQ(result->Bounds(), composite_result->Bounds());
 }
 
