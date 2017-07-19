@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17403d24_f1e09cab",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-19T01:31:59Z",
+      "side": 1,
+      "message": "We actually need to call EXTENSION_FUNCTION_VALIDATE in this case instead of DCHECK because it\u0027s a runtime check.\n\nbenwells: the behavior shouldn\u0027t have changed here. The only difference is that ContentSettingFromString used to fail for a string of \"default\" but now it succeeds. We want to ensure that the extensions API behaves the same way as before so that means we need to add an additional check here to ensure that \"default\" is never passed in. Does that make sense?",
+      "parentUuid": "4a248160_1306f3f0",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f251c6ad_c8039849",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 10
