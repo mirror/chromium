@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "31358c38_0dd4c3dc",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-19T15:40:35Z",
+      "side": 1,
+      "message": "note: there is no need to post the wait to the IO task runner, since it is sequenced. I think this can probably be removed entirely.",
+      "parentUuid": "c0ffb3c5_34dcf3ff",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 70
+      },
+      "revId": "5fdeb42022c465e7d8bd0e0f3951be6089d48a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a88bfa4e_c9a57f8d",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 1
