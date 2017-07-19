@@ -76,6 +76,7 @@
 #include "platform/wtf/StringExtras.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/Vector.h"
+#include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/UTF8.h"
 
 namespace blink {
@@ -684,11 +685,33 @@ static void ErrorFunc(void*, const char*, ...) {
   // FIXME: It would be nice to display error messages somewhere.
 }
 
+static void XMLPartitionFree(void* mem) {
+  WTF::Partitions::FastFree(mem);
+}
+
+static void* XMLPartitionAlloc(size_t size) {
+  return WTF::Partitions::FastMalloc(size, "XMLDocumentParser::libxml2");
+}
+
+static void* XMLPartitionRealloc(void* mem, size_t size) {
+  return WTF::Partitions::FastRealloc(mem, size, "XMLDocumentParser::libxml2");
+}
+
+static char* XMLPartitionStrdup(const char* str) {
+  size_t buffer_size = ::strlen(str) + 1;
+  char* ret = static_cast<char*>(WTF::Partitions::FastMalloc(
+      buffer_size, "XMLDocumentParser::libxml2::xmlStrdup"));
+  ::memcpy(ret, str, buffer_size);
+  return ret;
+}
+
 static void InitializeLibXMLIfNecessary() {
   static bool did_init = false;
   if (did_init)
     return;
 
+  xmlMemSetup(XMLPartitionFree, XMLPartitionAlloc, XMLPartitionRealloc,
+              XMLPartitionStrdup);
   xmlInitParser();
   xmlRegisterInputCallbacks(MatchFunc, OpenFunc, ReadFunc, CloseFunc);
   xmlRegisterOutputCallbacks(MatchFunc, OpenFunc, WriteFunc, CloseFunc);
