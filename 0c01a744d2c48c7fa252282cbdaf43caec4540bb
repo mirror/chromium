@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db6faff3_240ab95b",
+        "filename": "net/ntlm/ntlm_buffer_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-07-19T19:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de64fde_1ea11b86",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "0c01a744d2c48c7fa252282cbdaf43caec4540bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6abefc7a_a4965d73",
         "filename": "net/ntlm/ntlm_constants.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "0c01a744d2c48c7fa252282cbdaf43caec4540bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bc4a71_efd807bb",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-07-19T19:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6abefc7a_a4965d73",
+      "revId": "0c01a744d2c48c7fa252282cbdaf43caec4540bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
