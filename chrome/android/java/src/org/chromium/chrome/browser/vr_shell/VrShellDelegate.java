@@ -92,7 +92,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     @IntDef({VR_NOT_AVAILABLE, VR_CARDBOARD, VR_DAYDREAM})
     private @interface VrSupportLevel {}
 
-    private static final String DAYDREAM_VR_EXTRA = "android.intent.extra.VR_LAUNCH";
+    @VisibleForTesting
+    public static final String DAYDREAM_VR_EXTRA = "android.intent.extra.VR_LAUNCH";
     private static final String DAYDREAM_HOME_PACKAGE = "com.google.android.vr.home";
     static final String VR_FRE_INTENT_EXTRA = "org.chromium.chrome.browser.vr_shell.VR_FRE";
 
@@ -170,6 +171,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     // party app has asked us to autopresent WebVr content and we're waiting for the WebVr
     // content to call requestPresent.
     private boolean mAutopresentWebVr;
+    private boolean mTrustedIntentCheckEnabled = true;
 
     // Set to true if performed VR browsing at least once. That is, this was not simply a WebVr
     // presentation experience.
@@ -840,8 +842,12 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     }
 
     private static boolean isTrustedDaydreamIntent(Intent intent) {
-        return isVrIntent(intent)
+        boolean isTrusted = isVrIntent(intent)
                 && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
+        if (sInstance != null) {
+            isTrusted = isTrusted || !sInstance.mTrustedIntentCheckEnabled;
+        }
+        return isTrusted;
     }
 
     private void onAutopresentIntent() {
@@ -1530,6 +1536,14 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     @VisibleForTesting
     public void setFeedbackFrequencyForTesting(int frequency) {
         mFeedbackFrequency = frequency;
+    }
+
+    /**
+     * @param enabled Sets whether incoming autopresent intents are checked as trusted
+     */
+    @VisibleForTesting
+    public void setTrustedIntentCheckEnabled(boolean enabled) {
+        mTrustedIntentCheckEnabled = enabled;
     }
 
     /**
