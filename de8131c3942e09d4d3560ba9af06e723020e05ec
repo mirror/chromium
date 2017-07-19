@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "579769af_d21cb606",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T14:57:45Z",
+      "side": 1,
+      "message": "I think a reference would be even better, as const TouchActionRegion\u0026\n\nThe function is returning a const\u0026, and move() on a const thing resolves to a no-op. Either way if you\u0027re storing a non-ref here, from a const ref, you have to make a copy of it. (And beware, if the function returned a non-const ref, you\u0027d be doing a move assignment from the member of the layer, losing the data from the layer).",
+      "parentUuid": "e5b1a398_8db0950d",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e498a889_b096d524",
         "filename": "cc/trees/debug_rect_history.cc",
         "patchSetId": 6
@@ -346,6 +364,24 @@
       "side": 1,
       "message": "I added the first check. While the second one is highly unlikely, it is still possible, so I chose to not do the second test.",
       "parentUuid": "36807acb_c8a601b2",
+      "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3c2c292_47837878",
+        "filename": "cc/trees/debug_rect_history.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T14:57:45Z",
+      "side": 1,
+      "message": "Thanks, sgtm",
+      "parentUuid": "d64ec40e_949e1ede",
       "revId": "de8131c3942e09d4d3560ba9af06e723020e05ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

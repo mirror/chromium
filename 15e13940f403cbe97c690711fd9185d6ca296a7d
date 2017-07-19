@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad46086_f8722b98",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T14:57:45Z",
+      "side": 1,
+      "message": "sorry to be confusing, in this case you can construct it like std::string(foo) instead of static cast. Specifically: \"Do not use cast formats like int y \u003d (int)x or int y \u003d int(x) (but the latter is okay when invoking a constructor of a class type).\"\n\nfwiw string\u0027s operator+ creates/destroys a bunch of temporary strings, so I think it\u0027s usually something to avoid, and you could use append instead. this isn\u0027t exactly perf critical code, but something to think about anyway.",
+      "revId": "15e13940f403cbe97c690711fd9185d6ca296a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6ec582_57e7d206",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-19T14:57:45Z",
+      "side": 1,
+      "message": "you can remove the DebugRect() part with emplace_back. Think of emplace as the constructor, it takes the constructor arguments and forwards them along. If you build a DebugRect, then you call the copy/move constructor, which is the same as what push_back did. Instead you can call the constructing(?) constructor, by just passing the arguments it would receive.",
+      "revId": "15e13940f403cbe97c690711fd9185d6ca296a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
