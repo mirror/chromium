@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e445ec05_f5aa6a2e",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-19T17:10:12Z",
+      "side": 1,
+      "message": "I originally used an environment variable since it already existed and got the desired results (the existing enable_vr gn arg would be pretty useless for this purpose since it\u0027s enabled by default on Android). Adding a new gn arg just for this seemed a bit wasteful, but if that\u0027s the preferred approach, I\u0027ll go ahead and swap to that.",
+      "parentUuid": "5f86ee47_6329215d",
+      "revId": "08d38b45638d504b959d6219e857eab6fca72b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98a8ecf1_39f7dd8b",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
