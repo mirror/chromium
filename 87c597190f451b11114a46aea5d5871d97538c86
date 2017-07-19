@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434b7997_b4478f5a",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T15:03:13Z",
+      "side": 1,
+      "message": "I know this isn\u0027t new code, but... this is a bit silly.\n\nIf the type is SELECT_OPEN_FILE, default path is guaranteed to be empty, right?  So we *definitely* don\u0027t need to post a task to a blocking thread, and can instead just use base::FilePath() wherever the result would be used (i.e., just call ShowSelectFileDialog directly.\n\nAnd, even in the case where type \u003d\u003d ui::SelectFileDialog::SELECT_SAVEAS_FILE, we only use GetDefaultPathForBookmarkExport().  Looking at this function, it does some l10n and string cleanup, and uses PathService::Get().  AFAIK, none of those require (or are canonically used on) blocking threads.\n\nSo, can we just get rid of this post task entirely, get rid of GetDefaultPath() entirely, pass base::FilePath() to ShowSelectFileDialog from the import function, and call GetDefaultFilepathForBookmarkExport() from the export function to pass into ShowSelectFileDialog?",
+      "revId": "87c597190f451b11114a46aea5d5871d97538c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e630f7_5c218254",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-19T15:03:13Z",
+      "side": 1,
+      "message": "Might be moot in this CL with the above, but I\u0027m not sure USER_VISIBLE is correct here.  In particular, we don\u0027t know why the extension is using the import/export function, so it may or may not be immediately user-visible.  From talking with the task gurus, they recommended just not including a priority here - this will allow the priority to be inherited (I don\u0027t know the details of inheritance, though).  At minimum, that also guarantees that we don\u0027t think we know the priority when we aren\u0027t certain (since this is a result of third-party code).\n\nBut, maybe this is exceptional since there are fewer non-user-visible use cases for using bookmarks import/export?",
+      "revId": "87c597190f451b11114a46aea5d5871d97538c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
