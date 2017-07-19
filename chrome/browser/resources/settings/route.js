@@ -224,6 +224,9 @@ cr.define('settings', function() {
 
     r.SEARCH = r.BASIC.createSection('/search', 'search');
     r.SEARCH_ENGINES = r.SEARCH.createChild('/searchEngines');
+    // <if expr="chromeos">
+    r.GOOGLE_ASSISTANT = r.SEARCH.createChild('/googleAssistant');
+    // </if>
 
     // <if expr="chromeos">
     r.ANDROID_APPS = r.BASIC.createSection('/androidApps', 'androidApps');
