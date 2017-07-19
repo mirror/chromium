@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "80175ddf_0aee60cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-19T00:11:47Z",
+      "side": 1,
+      "message": "The user just need to select it explicitly. I think it is similar like above for shipping address, so we might want to record it. Note that a lot of cards from autofill might have unknown type.",
+      "parentUuid": "3a551637_b21bcf85",
+      "range": {
+        "startLine": 1577,
+        "startChar": 44,
+        "endLine": 1577,
+        "endChar": 53
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ff21e37_d06c7050",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
         "patchSetId": 7
@@ -281,6 +305,30 @@
       "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5f21f2_fa865e6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/ContactDetailsSection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-19T00:11:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b28880e3_0b2dd7de",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "bc214d491b046e80cd866b380b8ccd8e2556b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

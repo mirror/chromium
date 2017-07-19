@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca06c1c9_20fc9f4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-19T00:11:47Z",
+      "side": 1,
+      "message": "nit: // Log...addresses and whether at least one of them is complete.",
+      "range": {
+        "startLine": 605,
+        "startChar": 48,
+        "endLine": 605,
+        "endChar": 57
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf51944f_38db75cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-19T00:11:47Z",
+      "side": 1,
+      "message": "nit: move this above \u0027int firstCompleteAddressIndex \u003d SectionInformation.NO_SELECTION;\u0027 and reuse it in \u0027if (mUiShippingOptions.getSelectedItem() !\u003d null \u0026\u0026 !addresses.isEmpty()\n                \u0026\u0026 addresses.get(0).isComplete())\u0027",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 99
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce64ade3_e279d85e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-19T00:11:47Z",
+      "side": 1,
+      "message": "shall we record it even if edit is failed or cancelled? That also reflects user action",
+      "range": {
+        "startLine": 1098,
+        "startChar": 27,
+        "endLine": 1098,
+        "endChar": 52
+      },
+      "revId": "244588709dafbc2644c252bdbcbd4dd7bd30a121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
