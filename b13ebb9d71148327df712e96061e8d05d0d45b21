@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3571b643_1ed60b24",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-20T20:19:00Z",
+      "side": 1,
+      "message": "Optional nit: It seems a bit silly to have \"Metric\" in the metric name -- every metric could do that, but it would feel pretty redundant.  If you think you need a word here, perhaps \"Status\" would fit nicely?",
+      "range": {
+        "startLine": 519,
+        "startChar": 67,
+        "endLine": 519,
+        "endChar": 73
+      },
+      "revId": "b13ebb9d71148327df712e96061e8d05d0d45b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
