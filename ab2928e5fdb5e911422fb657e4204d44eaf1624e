@@ -34,6 +34,24 @@
       "revId": "ab2928e5fdb5e911422fb657e4204d44eaf1624e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcf7c4d_911608cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-07-20T03:36:48Z",
+      "side": 1,
+      "message": "There are two different alphas:\n\n1. the alpha channel of the webgl surface which is being rendered to. If the app asks for it, you certainly do need an alpha channel, since the webgl app can make use of the alpha channel.\n\n2. the alpha channel of the overlay used for display. As you say in our case there should be no alpha for display. However it doesn\u0027t mean that the canvas shouldn\u0027t have an alpha channel, just that the display can ignore it. That\u0027s what is done in the GbmBuffer constructor, which has an addfb2 for opaque formats.",
+      "parentUuid": "235a7f3c_cf1f977f",
+      "revId": "ab2928e5fdb5e911422fb657e4204d44eaf1624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
