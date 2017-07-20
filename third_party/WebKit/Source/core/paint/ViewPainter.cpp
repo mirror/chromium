@@ -139,6 +139,14 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
     LayoutPoint offset;
     root_layer.ConvertToLayerCoords(nullptr, offset);
     transform.Translate(offset.X(), offset.Y());
+
+    if (BoxModelObjectPainter::
+            IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
+                &layout_view_, paint_info)) {
+      transform.Translate(layout_view_.ScrolledContentOffset().Width(),
+                          layout_view_.ScrolledContentOffset().Height());
+    }
+
     transform.Multiply(
         root_layer.RenderableTransform(paint_info.GetGlobalPaintFlags()));
 
