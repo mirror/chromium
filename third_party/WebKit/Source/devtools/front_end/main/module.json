@@ -211,7 +211,7 @@
         },
         {
             "type": "@UI.ToolbarItem.Provider",
-            "className": "Main.Main.WarningErrorCounter",
+            "className": "Main.Main.ConsoleWarningErrorCounter",
             "order": 1,
             "location": "main-toolbar-right"
         },
