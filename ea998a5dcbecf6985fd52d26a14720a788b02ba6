@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418f15af_e7ca5d90",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-20T18:58:45Z",
+      "side": 1,
+      "message": "nit: we typically use !!sk_image_ to force a bool in these situations, but up to you.",
+      "revId": "ea998a5dcbecf6985fd52d26a14720a788b02ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
