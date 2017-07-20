@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "782280c7_1dc9652d",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this field -- what if we just say the \"preferred extension\" is the very first one in the list of extensions?\n\nThat should work with everything -- would just need to special case \"application/octet-stream\" (or leave it as .bin, will it matter?)",
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8786607_016bb170",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "extensions",
+      "range": {
+        "startLine": 74,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf40e226_b4554619",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "Can we do something more consistent regarding ordering? I would say either:\n * Don\u0027t bother mentioning that it is alphabetical - the underlying implementation doesn\u0027t take advantage of sortedness, and ordering matters for mapping extensions back to mime-type.\n * Keep it sorted lexicographically on mime_type (implementation could then binary search). We could accomodate the extension priority by splitting across more mappings objects (each of which is sorted).\n\nGiven it isn\u0027t already relying on alphabetical, I would just avoid mentioning that and say ordering matters for finding matches.",
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3628fd73_d545b367",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "See comment above removing preferred_extension field. The nullptr on secondary mappings probably don\u0027t matter since will have already matched .jpeg on primary_mappings right?",
+      "range": {
+        "startLine": 130,
+        "startChar": 19,
+        "endLine": 130,
+        "endChar": 26
+      },
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63381e18_36c90f22",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "I suggest templetizing this if it will only be used for static arrays:\n\ntemplate \u003csize_t N\u003e\nstatic bool FindPreferredExtension(const MimeInfo(\u0026mappings)[N], const std::string\u0026 mime_type, ...) {\n}\n\nThen you don\u0027t have to use arraysize in order to call it.",
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb09afd_9da0e8a9",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "Extension",
+      "range": {
+        "startLine": 212,
+        "startChar": 22,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1da5ef1_bef8f91d",
+        "filename": "net/base/platform_mime_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:38:46Z",
+      "side": 1,
+      "message": "nit: Gets",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "be174b4efb376020d838d50ca113abc842fe1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
