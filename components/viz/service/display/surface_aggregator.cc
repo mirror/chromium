@@ -768,7 +768,10 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
     }
   }
 
-  referenced_surfaces_.erase(referenced_surfaces_.find(surface->surface_id()));
+  CHECK(surface->surface_id() == surface_id);
+  auto it = referenced_surfaces_.find(surface_id);
+  CHECK(referenced_surfaces_.end() != it);
+  referenced_surfaces_.erase(it);
   if (!damage_rect.IsEmpty() && frame.metadata.may_contain_video)
     result->may_contain_video = true;
   return damage_rect;
