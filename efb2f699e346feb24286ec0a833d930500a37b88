@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351e8e2c_161f0e0e",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T16:33:31Z",
+      "side": 1,
+      "message": "Are you thinking you want to be able to distinguish between field trial blacklist and cacao blacklist later (so we would ass HOST_BLACKLISTED_FROM_SERVER or such later)?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff62fcc_7efffc1e",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T16:33:31Z",
+      "side": 1,
+      "message": "Why make caller pass this in. This object holds the local blacklist so can it also access the finch blacklist as well?",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 64
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dee716_f86b02d6",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T16:33:31Z",
+      "side": 1,
+      "message": "Consider doing ECT check before this one that does a bit more work?\n[I guess I also wonder about ECT check before local blacklist check as well.]",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba895674_80a640ae",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30439,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T16:33:31Z",
+      "side": 1,
+      "message": "This description is more general than the enum name (...BY_FIELD_TRIAL)",
+      "range": {
+        "startLine": 30439,
+        "startChar": 41,
+        "endLine": 30439,
+        "endChar": 56
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
