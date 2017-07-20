@@ -16,9 +16,14 @@ namespace blink {
 // static
 bool MediaControlElementsHelper::IsUserInteractionEvent(Event* event) {
   const AtomicString& type = event->type();
-  return type == EventTypeNames::mousedown || type == EventTypeNames::mouseup ||
-         type == EventTypeNames::click || type == EventTypeNames::dblclick ||
-         event->IsKeyboardEvent() || event->IsTouchEvent();
+  // DOM shouldn't get mouse event when over media control element
+  if (event->IsMouseEvent())
+    return true;
+
+  return type == EventTypeNames::pointerdown ||
+         type == EventTypeNames::pointerup || type == EventTypeNames::click ||
+         type == EventTypeNames::dblclick || event->IsKeyboardEvent() ||
+         event->IsTouchEvent();
 }
 
 // static
@@ -42,10 +47,7 @@ bool MediaControlElementsHelper::IsUserInteractionEventForSlider(
     return false;
 
   const AtomicString& type = event->type();
-  return type == EventTypeNames::mouseover ||
-         type == EventTypeNames::mouseout ||
-         type == EventTypeNames::mousemove ||
-         type == EventTypeNames::pointerover ||
+  return type == EventTypeNames::pointerover ||
          type == EventTypeNames::pointerout ||
          type == EventTypeNames::pointermove;
 }
