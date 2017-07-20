@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d483675_c55da9da",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6e1516_495628f3",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457ef8a2_583ccf19",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9bec07_4e367eb5",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "The comment looks correct. \nAdded, thanks.",
+      "parentUuid": "457ef8a2_583ccf19",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4585d673_ead501a0",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s good point. Currently the error is just dropped. Changed to do nothing instead of calling OnFinishedSendingScript() for now.\n\nConsidering how to pass the error to the renderer, we can separate the Status into two types like before/after calling mojom::ServiceWorkerInstalledScriptsManager::TransferInstalledScript.\nIf it\u0027s before calling TransferInstalledScript, we can notify the error to the renderer just by resetting |manager_|. Scripts will be fetched from the ResourceLoader path after disconnection (but only for main script, the fallback doesn\u0027t work).\nIf an error happens after calling TransferInstalledScript (the only case is failure on reading disk cache), the situation might be difficult. We might have to implement something similar to ServiceWorkerDataPipeReader...\nAh! It can be implemented by telling the total size of body/meta data with TransferInstalledScript and receiver can understand the error if pipes are closed before getting all of data. That seems the easiest way.\n\nAnyway, we should have these logic before flipping the flag. Thanks for the heads-up.",
+      "parentUuid": "d8100b5b_8848863d",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f77df0_f2a78e2f",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8439000f_74a698aa",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f77df0_f2a78e2f",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6b103b87_a19cbd50",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Oops, thanks. Removed.",
+      "parentUuid": "539ae1cf_a8119ab6",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd559c2e_1cf10dbd",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
         "patchSetId": 19
@@ -101,6 +191,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079509b6_a6f85ae6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd559c2e_1cf10dbd",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "73df79a7_1d89543b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a2057e_5b0269bd",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "502921e1_6c8f6a6a",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
         "patchSetId": 19
@@ -135,6 +261,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b055f9_691c906a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502921e1_6c8f6a6a",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ef6dd4fe_daa50e84",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bde50e3_62e6c77a",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee86baec_40a6a5b0",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
         "patchSetId": 19
@@ -169,6 +331,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7735935a_563b5c1b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee86baec_40a6a5b0",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "50c1853c_b503e50b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16689f0_2cbde88d",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311deeb2_16c76f4a",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 19
@@ -203,6 +401,24 @@
       "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2400534f_1bfe2e1e",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T05:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311deeb2_16c76f4a",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
