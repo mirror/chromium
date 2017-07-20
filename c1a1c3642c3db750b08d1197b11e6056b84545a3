@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bff19896_ff2f544d",
+        "filename": "content/browser/media/session/pepper_player_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1232886
+      },
+      "writtenOn": "2017-07-20T19:31:46Z",
+      "side": 1,
+      "message": "As far as I\u0027m aware, there\u0027s no reason this can\u0027t get called (though it may be unlikely), but there\u0027s just no meaningful action we can take here if it is.\n\nMaybe one of the more knowledgeable media reviewers could correct me if I\u0027m wrong here though.",
+      "parentUuid": "22a2aa84_595a28e8",
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6e41552_48dc9e58",
         "filename": "content/public/browser/media_session.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a20609ec_7b3f78d5",
+        "filename": "content/public/browser/media_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1232886
+      },
+      "writtenOn": "2017-07-20T19:31:46Z",
+      "side": 1,
+      "message": "Yep, that\u0027s correct. I\u0027ll update the CL description - sorry about that.",
+      "parentUuid": "d6e41552_48dc9e58",
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e5a09f_160da1c7",
         "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-20T16:51:55Z",
       "side": 1,
       "message": "nit: No need for {} on one line if statements. Also will be consistent with other code in this file.",
+      "range": {
+        "startLine": 289,
+        "startChar": 16,
+        "endLine": 289,
+        "endChar": 17
+      },
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d4335d_36564137",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1232886
+      },
+      "writtenOn": "2017-07-20T19:31:46Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll fix that.",
+      "parentUuid": "b2e5a09f_160da1c7",
       "range": {
         "startLine": 289,
         "startChar": 16,
