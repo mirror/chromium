@@ -312,8 +312,6 @@ source_set("chromeos") {
     "arc/auth/arc_background_auth_code_fetcher.cc",
     "arc/auth/arc_background_auth_code_fetcher.h",
     "arc/auth/arc_fetcher_base.h",
-    "arc/auth/arc_manual_auth_code_fetcher.cc",
-    "arc/auth/arc_manual_auth_code_fetcher.h",
     "arc/auth/arc_robot_auth_code_fetcher.cc",
     "arc/auth/arc_robot_auth_code_fetcher.h",
     "arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
