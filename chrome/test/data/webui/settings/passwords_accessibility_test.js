@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/** @fileoverview Suite of accessibility tests for the passwords page. */
+/**
+ * @fileoverview Suite of additional accessibility tests for Manage Passwords
+ * page.
+ */
 
-suite('SettingsPasswordsAccessibility', function() {
+suite('MANAGE_PASSWORDS', function() {
   var passwordsSection = null;
   var passwordManager = null;
 
@@ -43,11 +46,6 @@ suite('SettingsPasswordsAccessibility', function() {
 
       document.body.appendChild(settingsUi);
     });
-  });
-
-  test('Accessible with 0 passwords', function() {
-    assertEquals(passwordsSection.savedPasswords.length, 0);
-    return SettingsAccessibilityTest.runAudit(auditOptions);
   });
 
   test('Accessible with 100 passwords', function() {
