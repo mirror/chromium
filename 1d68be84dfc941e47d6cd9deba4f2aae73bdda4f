@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c9a2910_d096b627",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T15:18:13Z",
+      "side": 1,
+      "message": "Do we ever? I was looking for evidence that we update those after the targeter is created but could not see any.",
+      "parentUuid": "3ac392d8_73f88540",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6d6cc15_1e81dfc4",
         "filename": "ui/aura/window_targeter.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T02:35:35Z",
       "side": 1,
       "message": "Can this be false by default?",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995f1023_24abc23f",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T15:18:13Z",
+      "side": 1,
+      "message": "I thought making it use the mouse / touch extend fields by default is the right thing to do. This allows just setting the insets in the clients / subclasses to be effective rather than needing to override the ShouldUseExtendedBounds. Is this not simpler this way?",
+      "parentUuid": "d6d6cc15_1e81dfc4",
       "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "514e8e4d_9ec31c5d",
+        "filename": "ui/views/bubble/bubble_window_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T15:18:13Z",
+      "side": 1,
+      "message": "Same here - was looking for examples of bubbles that change the margins. Can you think of any?",
+      "parentUuid": "5d281173_2d68594b",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d041205a_eac98c92",
         "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dd37a44e_7a7cb5e4",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T15:18:13Z",
+      "side": 1,
+      "message": "Done (superclass does the right thing so removed the override).",
+      "parentUuid": "d041205a_eac98c92",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "767a0ff7_f3c0796e",
         "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928de7e1_07e40f4b",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T15:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "767a0ff7_f3c0796e",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
