@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bef6295c_5f7d5eee",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-20T21:02:46Z",
+      "side": 1,
+      "message": "I mean --enable-webgl-image-chromium\nReplaced it to \"hardware overlay\"",
+      "parentUuid": "374613f4_43d3d99a",
+      "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db2efccf_27a7d8a8",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Dongseong probably means that it exposes glTexStorage2D.\n\nCould we say \"In WebGL contexts, ... WebGL 2.0 exposes glTexStorage2D. WebGL never uses...\"",
       "parentUuid": "db2efccf_27a7d8a8",
+      "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c46a75_83f8f49e",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-20T21:02:46Z",
+      "side": 1,
+      "message": "Yes, because WebGL2 API has texStorage2D().\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.idl?q\u003dwebgl2render\u0026sq\u003dpackage:chromium\u0026l\u003d311",
+      "parentUuid": "f89f4cee_d865dc87",
       "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
