@@ -80,7 +80,7 @@ TEST(PasswordFormMetricsRecorder, Generation) {
                  << ", has_generated_password=" << test.has_generated_password
                  << ", submission=" << test.submission);
 
-    ukm::TestUkmRecorder test_ukm_recorder;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
 
@@ -242,7 +242,7 @@ TEST(PasswordFormMetricsRecorder, Actions) {
 
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
-    ukm::TestUkmRecorder test_ukm_recorder;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
 
     // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
     // on destruction.
@@ -307,7 +307,7 @@ TEST(PasswordFormMetricsRecorder, Actions) {
 // Test that in the case of a sequence of user actions, only the last one is
 // recorded in ActionsV3 but all are recorded as UMA user actions.
 TEST(PasswordFormMetricsRecorder, ActionSequence) {
-  ukm::TestUkmRecorder test_ukm_recorder;
+  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
   base::HistogramTester histogram_tester;
   base::UserActionTester user_action_tester;
 
@@ -354,7 +354,7 @@ TEST(PasswordFormMetricsRecorder, SubmittedFormType) {
                  << "is_main_frame_secure=" << test.is_main_frame_secure
                  << ", form_type=" << test.form_type);
 
-    ukm::TestUkmRecorder test_ukm_recorder;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
     base::HistogramTester histogram_tester;
 
     // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
@@ -445,7 +445,7 @@ TEST(PasswordFormMetricsRecorder, RecordPasswordBubbleShown) {
                  << "credential_source_type = "
                  << static_cast<int64_t>(test.credential_source_type)
                  << ", display_disposition = " << test.display_disposition);
-    ukm::TestUkmRecorder test_ukm_recorder;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
     {
       auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
           true /*is_main_frame_secure*/,
@@ -503,7 +503,7 @@ TEST(PasswordFormMetricsRecorder, RecordUIDismissalReason) {
     SCOPED_TRACE(testing::Message()
                  << "display_disposition = " << test.display_disposition
                  << ", dismissal_reason = " << test.dismissal_reason);
-    ukm::TestUkmRecorder test_ukm_recorder;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
     {
       auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
           true /*is_main_frame_secure*/,
@@ -528,7 +528,7 @@ TEST(PasswordFormMetricsRecorder, SequencesOfBubbles) {
   using BubbleDismissalReason =
       PasswordFormMetricsRecorder::BubbleDismissalReason;
   using BubbleTrigger = PasswordFormMetricsRecorder::BubbleTrigger;
-  ukm::TestUkmRecorder test_ukm_recorder;
+  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
   {
     auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
         true /*is_main_frame_secure*/,
@@ -572,7 +572,7 @@ TEST(PasswordFormMetricsRecorder, RecordDetailedUserAction) {
   const DetailedUserAction kOneTimeAction =
       DetailedUserAction::kEditedUsernameInBubble;
   const DetailedUserAction kRepeatedAction = DetailedUserAction::kUnknown;
-  ukm::TestUkmRecorder test_ukm_recorder;
+  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
   {
     auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
         true /*is_main_frame_secure*/,
