@@ -22,6 +22,30 @@
       "revId": "7b785fd89d3938342a58a4bd0f6880e22271a5b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c4b787_80d0be3e",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T03:48:08Z",
+      "side": 1,
+      "message": "Done, thank you for the suggestion. Filed CSSWG issue too to see if we want to define this more clearly.",
+      "parentUuid": "4513cde7_342eab97",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "7b785fd89d3938342a58a4bd0f6880e22271a5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
