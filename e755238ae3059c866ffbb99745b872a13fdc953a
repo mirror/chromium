@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3be086_c3cc4f71",
+        "filename": "components/ntp_snippets/remote/contextual_json_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-07-20T10:56:29Z",
+      "side": 1,
+      "message": "I think the general consensus is not to add such kind of marker comments.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 80
+      },
+      "revId": "e755238ae3059c866ffbb99745b872a13fdc953a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcfca52_ecb9e633",
+        "filename": "components/ntp_snippets/remote/contextual_json_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-07-20T10:56:29Z",
+      "side": 1,
+      "message": "This comment is a bit confusing. Why would we not sent the request?\n\nCould you clarify the comment or remove it :-)",
+      "revId": "e755238ae3059c866ffbb99745b872a13fdc953a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f48e2f1_546bb88a",
+        "filename": "components/ntp_snippets/remote/contextual_json_request_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-07-20T10:56:29Z",
+      "side": 1,
+      "message": "Maybe call it CreateDefaultBuilder instead of MinimalBuilder?\n\nI actually think you can inline it.",
+      "revId": "e755238ae3059c866ffbb99745b872a13fdc953a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
