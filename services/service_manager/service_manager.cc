@@ -644,7 +644,7 @@ class ServiceManager::Instance
     }
     if (control_request.is_pending())
       control_binding_.Bind(std::move(control_request));
-    service_manager_->NotifyServiceStarted(identity_, pid_);
+    service_manager_->NotifyServiceStarted(identity_);
   }
 
   // mojom::ServiceControl:
@@ -1024,12 +1024,10 @@ void ServiceManager::EraseInstanceIdentity(Instance* instance) {
   }
 }
 
-void ServiceManager::NotifyServiceStarted(const Identity& identity,
-                                          base::ProcessId pid) {
-  listeners_.ForAllPtrs(
-      [&identity, pid](mojom::ServiceManagerListener* listener) {
-        listener->OnServiceStarted(identity, pid);
-      });
+void ServiceManager::NotifyServiceStarted(const Identity& identity) {
+  listeners_.ForAllPtrs([&identity](mojom::ServiceManagerListener* listener) {
+    listener->OnServiceStarted(identity);
+  });
 }
 
 void ServiceManager::NotifyServiceFailedToStart(const Identity& identity) {
