@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2fa9b854_cd32f54a",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-20T17:25:05Z",
+      "side": 1,
+      "message": "What processes send and receive this message?\n\nCan you use url::Origin or url::GURL instead of string? A string could be anything, and there\u0027s no explicit mention of normalization or validation.",
+      "revId": "35cc536900bd33f317449ad396eda1e74ab6dcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc1cfa31_c3766c4a",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
