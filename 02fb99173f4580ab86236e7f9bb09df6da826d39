@@ -87,6 +87,24 @@
       "revId": "02fb99173f4580ab86236e7f9bb09df6da826d39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c7e458_47e1956f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-20T21:22:50Z",
+      "side": 1,
+      "message": "I think it\u0027s better to keep the current check. Ideally we need to keep a low footprint on low-mem devices and if we\u0027re getting memory pressure it\u0027s already somewhat late.",
+      "parentUuid": "42a1c1ab_6ae93aef",
+      "revId": "02fb99173f4580ab86236e7f9bb09df6da826d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
