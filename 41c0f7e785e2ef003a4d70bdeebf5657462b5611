@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "ba254488_fba909f0",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T23:07:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47f0f402_904d3447",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 8
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bfda46c_06b2c345",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -799,6 +823,30 @@
       "side": 1,
       "message": "I\u0027m not sure I understand the concern here: version 24 is fixed and can\u0027t ever change (as far as we\u0027re concerned), so this should be safe?",
       "parentUuid": "c14674ff_36e23b41",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ed45f1_0b6007ac",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T23:07:07Z",
+      "side": 1,
+      "message": "But what if version 26 requires changes to the serialization code?  Then the highlighted statement above will 1) say version\u003d24 in the header but 2) serialize using version-26-serialization-code, right?\n\nOTOH, I think we can maybe deal with that at that future point?",
+      "parentUuid": "597335a1_342a644d",
       "range": {
         "startLine": 156,
         "startChar": 2,
