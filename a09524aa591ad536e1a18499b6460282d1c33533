@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a792bc_60b3bce9",
+        "filename": "chrome/browser/chromeos/login/reauth_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T14:28:49Z",
+      "side": 1,
+      "message": "Nit: {}\u0027s",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 68
+      },
+      "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
