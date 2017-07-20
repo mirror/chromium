@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d87eb49_a3547a49",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-20T18:21:56Z",
+      "side": 1,
+      "message": "What values are permitted here, and how are the validated?",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fbeece_d909685d",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-20T18:21:56Z",
+      "side": 1,
+      "message": "wouldn\u0027t the browser already know this?  At the least, does the browser validate that the origin is permitted for the given renderer?",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5ceed9_1253870e",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-20T18:21:56Z",
+      "side": 1,
+      "message": "Great explanation, thanks immensely.",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
