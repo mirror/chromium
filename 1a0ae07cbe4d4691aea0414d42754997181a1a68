@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b7a7ef_2ecd0685",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-20T14:36:13Z",
+      "side": 1,
+      "message": "s/enterpriseDisplayDomain/enterpriseEnrollmentDomain/!",
+      "range": {
+        "startLine": 314,
+        "startChar": 15,
+        "endLine": 314,
+        "endChar": 38
+      },
+      "revId": "1a0ae07cbe4d4691aea0414d42754997181a1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
