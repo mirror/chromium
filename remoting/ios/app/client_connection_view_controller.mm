@@ -24,7 +24,9 @@
 #import "remoting/ios/session/remoting_client.h"
 
 #include "base/strings/sys_string_conversions.h"
+#include "remoting/base/string_resources.h"
 #include "remoting/protocol/client_authentication_config.h"
+#include "ui/base/l10n/l10n_util.h"
 
 static const CGFloat kIconRadius = 30.f;
 static const CGFloat kActivityIndicatorStrokeWidth = 3.f;
@@ -78,7 +80,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
     // TODO(yuweih): This logic may be reused by other views.
     UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+    [cancelButton setTitle:l10n_util::GetNSString(IDS_CANCEL).uppercaseString
+                  forState:UIControlStateNormal];
     [cancelButton
         setImage:[RemotingTheme
                          .backIcon imageFlippedForRightToLeftLayoutDirection]
