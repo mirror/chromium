@@ -85,6 +85,8 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
+#include "device/bluetooth/bluetooth_adapter.h"
+#include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "media/audio/sounds/sounds_manager.h"
 #include "services/ui/public/cpp/property_type_converters.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
@@ -387,6 +389,10 @@ LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
 
   ui::DeviceDataManager::GetInstance()->AddObserver(this);
 
+  device::BluetoothAdapterFactory::GetAdapter(
+      base::Bind(&LoginDisplayHostImpl::OnBluetoothAdapterReady,
+                 animation_weak_ptr_factory_.GetWeakPtr()));
+
   // We need to listen to CLOSE_ALL_BROWSERS_REQUEST but not APP_TERMINATING
   // because/ APP_TERMINATING will never be fired as long as this keeps
   // ref-count. CLOSE_ALL_BROWSERS_REQUEST is safe here because there will be no
@@ -497,6 +503,9 @@ LoginDisplayHostImpl::~LoginDisplayHostImpl() {
   CrasAudioHandler::Get()->RemoveAudioObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
   ui::DeviceDataManager::GetInstance()->RemoveObserver(this);
+  if (bluetooth_adapter_) {
+    bluetooth_adapter_->RemoveObserver(this);
+  }
 
   if (login_view_ && login_window_)
     login_window_->RemoveRemovalsObserver(this);
@@ -1288,6 +1297,39 @@ void LoginDisplayHostImpl::StartVoiceInteractionOobe() {
   is_voice_interaction_oobe_ = true;
   finalize_animation_type_ = ANIMATION_NONE;
   StartWizard(chromeos::OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP);
+}
+
+static void InitializeBluetoothAdapter(PrefService* prefs,
+                                       device::BluetoothAdapter* adapter) {
+  const PrefService::Preference* bluetooth_pref =
+      prefs->FindPreference(prefs::kBluetoothAdapterEnabled);
+  if (!bluetooth_pref) {
+    return;
+  }
+  if (bluetooth_pref->IsDefaultValue()) {
+    prefs->SetBoolean(prefs::kBluetoothAdapterEnabled, adapter->IsPowered());
+  } else {
+    adapter->SetPowered(prefs->GetBoolean(prefs::kBluetoothAdapterEnabled),
+                        base::Bind(&base::DoNothing),
+                        base::Bind(&base::DoNothing));
+  }
+}
+
+void LoginDisplayHostImpl::OnBluetoothAdapterReady(
+    scoped_refptr<device::BluetoothAdapter> adapter) {
+  bluetooth_adapter_ = adapter;
+  adapter->AddObserver(this);
+  if (adapter->IsPresent()) {
+    InitializeBluetoothAdapter(g_browser_process->local_state(), adapter.get());
+  }
+}
+
+void LoginDisplayHostImpl::AdapterPresentChanged(
+    device::BluetoothAdapter* adapter,
+    bool present) {
+  if (present) {
+    InitializeBluetoothAdapter(g_browser_process->local_state(), adapter);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -48,6 +48,8 @@
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "device/bluetooth/bluetooth_adapter.h"
+#include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "third_party/cros_system_api/dbus/update_engine/dbus-constants.h"
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
@@ -121,6 +123,7 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
       enterprise_management::SystemTimezoneProto::USERS_DECIDE);
+  registry->RegisterBooleanPref(prefs::kBluetoothAdapterEnabled, false);
 }
 
 // static
@@ -373,6 +376,8 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kEolNotificationDismissed, false);
   registry->RegisterIntegerPref(prefs::kEolStatus,
                                 update_engine::EndOfLifeStatus::kSupported);
+
+  registry->RegisterBooleanPref(prefs::kBluetoothAdapterEnabled, false);
 }
 
 void Preferences::InitUserPrefs(sync_preferences::PrefServiceSyncable* prefs) {
@@ -497,6 +502,23 @@ void Preferences::SetInputMethodListForTesting() {
 
 void Preferences::OnPreferenceChanged(const std::string& pref_name) {
   ApplyPreferences(REASON_PREF_CHANGED, pref_name);
+}
+
+static void InitializeBluetoothOnAdapterReady(
+    PrefService* prefs,
+    scoped_refptr<device::BluetoothAdapter> adapter) {
+  const PrefService::Preference* bluetooth_pref =
+      prefs->FindPreference(prefs::kBluetoothAdapterEnabled);
+  bool bluetooth_enabled = prefs->GetBoolean(prefs::kBluetoothAdapterEnabled);
+  if (bluetooth_pref->IsDefaultValue()) {
+    bluetooth_enabled = adapter->IsPowered();
+    if (user_manager::UserManager::Get()->IsCurrentUserNew()) {
+      bluetooth_enabled = true;
+    }
+    prefs->SetBoolean(prefs::kBluetoothAdapterEnabled, bluetooth_enabled);
+  }
+  adapter->SetPowered(bluetooth_enabled, base::Bind(&base::DoNothing),
+                      base::Bind(&base::DoNothing));
 }
 
 void Preferences::ApplyPreferences(ApplyReason reason,
@@ -741,6 +763,12 @@ void Preferences::ApplyPreferences(ApplyReason reason,
     const bool value = prefs_->GetBoolean(prefs::kUse24HourClock);
     user_manager::known_user::SetBooleanPref(user_->GetAccountId(),
                                              prefs::kUse24HourClock, value);
+  }
+
+  if (reason == REASON_INITIALIZATION && user_is_primary_ &&
+      user_->HasGaiaAccount()) {
+    device::BluetoothAdapterFactory::GetAdapter(
+        base::Bind(&InitializeBluetoothOnAdapterReady, prefs_));
   }
 
   for (auto* remap_pref : kLanguageRemapPrefs) {
