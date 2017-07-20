@@ -35,6 +35,7 @@
 #include "services/device/public/interfaces/wake_lock_provider.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/libyuv/include/libyuv/scale_argb.h"
+#include "third_party/webrtc/modules/desktop_capture/cropped_desktop_frame.h"
 #include "third_party/webrtc/modules/desktop_capture/cropping_window_capturer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_and_cursor_composer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_options.h"
@@ -254,6 +255,16 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
     UMA_HISTOGRAM_TIMES(kUmaScreenCaptureTime, capture_time);
   } else {
     UMA_HISTOGRAM_TIMES(kUmaWindowCaptureTime, capture_time);
+  }
+
+  // Make width/height of the captured frame even. Odd width/height will cause
+  // blurring in the following scaling process. See https://crbug.com/737278.
+  const int32_t frame_width = frame->size().width();
+  const int32_t frame_height = frame->size().height();
+  if (frame_width & 1 || frame_height & 1) {
+    frame = webrtc::CreateCroppedDesktopFrame(
+        std::move(frame),
+        webrtc::DesktopRect::MakeWH(frame_width & ~1, frame_height & ~1));
   }
 
   // If the frame size has changed, drop the output frame (if any), and
