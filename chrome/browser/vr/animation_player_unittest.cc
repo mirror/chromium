@@ -9,6 +9,7 @@
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/transition.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/test/gfx_util.h"
 
 namespace vr {
@@ -17,6 +18,7 @@ class TestAnimationTarget : public cc::AnimationTarget {
  public:
   TestAnimationTarget() {
     operations_.AppendTranslate(0, 0, 0);
+    operations_.AppendTranslate(0, 0, 0);
     operations_.AppendRotate(1, 0, 0, 0);
     operations_.AppendScale(1, 1, 1);
   }
@@ -24,6 +26,7 @@ class TestAnimationTarget : public cc::AnimationTarget {
   const gfx::SizeF& size() const { return size_; }
   const cc::TransformOperations& operations() const { return operations_; }
   float opacity() const { return opacity_; }
+  SkColor background_color() const { return background_color_; }
 
   void NotifyClientBoundsAnimated(const gfx::SizeF& size,
                                   cc::Animation* animation) override {
@@ -41,10 +44,22 @@ class TestAnimationTarget : public cc::AnimationTarget {
     opacity_ = opacity;
   }
 
+  void NotifyClientBackgroundColorAnimated(SkColor color,
+                                           cc::Animation* animation) override {
+    background_color_ = color;
+  }
+
+  void NotifyClientVisibilityAnimated(bool visibility,
+                                      cc::Animation* animation) override {
+    visibility_ = visibility;
+  }
+
  private:
   cc::TransformOperations operations_;
   gfx::SizeF size_ = {10.0f, 10.0f};
   float opacity_ = 1.0f;
+  SkColor background_color_ = SK_ColorBLACK;
+  bool visibility_ = true;
 };
 
 TEST(AnimationPlayerTest, AddRemoveAnimations) {
@@ -361,6 +376,74 @@ TEST(AnimationPlayerTest, ReversedBoundsTransitions) {
 
   player.Tick(start_time + UsToDelta(2000));
   EXPECT_FLOAT_SIZE_EQ(from, target.size());
+}
+
+TEST(AnimationPlayerTest, BackgroundColorTransitions) {
+  TestAnimationTarget target;
+  AnimationPlayer player;
+  player.set_target(&target);
+  Transition transition;
+  transition.target_properties[cc::TargetProperty::BACKGROUND_COLOR] = true;
+  transition.duration = UsToDelta(10000);
+  player.set_transition(transition);
+  base::TimeTicks start_time = UsToTicks(1000000);
+  player.Tick(start_time);
+
+  SkColor from = SK_ColorRED;
+  SkColor to = SK_ColorGREEN;
+
+  player.TransitionBackgroundColorTo(start_time, from, to);
+
+  EXPECT_EQ(from, target.background_color());
+  player.Tick(start_time);
+
+  player.Tick(start_time + UsToDelta(5000));
+  EXPECT_GT(SkColorGetR(from), SkColorGetR(target.background_color()));
+  EXPECT_LT(SkColorGetR(to), SkColorGetR(target.background_color()));
+  EXPECT_LT(SkColorGetG(from), SkColorGetG(target.background_color()));
+  EXPECT_GT(SkColorGetG(to), SkColorGetG(target.background_color()));
+  EXPECT_EQ(0u, SkColorGetB(target.background_color()));
+  EXPECT_EQ(255u, SkColorGetA(target.background_color()));
+
+  player.Tick(start_time + UsToDelta(10000));
+  EXPECT_EQ(to, target.background_color());
+}
+
+TEST(AnimationPlayerTest, ReversedBackgroundColorTransitions) {
+  TestAnimationTarget target;
+  AnimationPlayer player;
+  player.set_target(&target);
+  Transition transition;
+  transition.target_properties[cc::TargetProperty::BACKGROUND_COLOR] = true;
+  transition.duration = UsToDelta(10000);
+  player.set_transition(transition);
+  base::TimeTicks start_time = UsToTicks(1000000);
+  player.Tick(start_time);
+
+  SkColor from = SK_ColorRED;
+  SkColor to = SK_ColorGREEN;
+
+  player.TransitionBackgroundColorTo(start_time, from, to);
+
+  EXPECT_EQ(from, target.background_color());
+  player.Tick(start_time);
+
+  player.Tick(start_time + UsToDelta(1000));
+  SkColor value_before_reversing = target.background_color();
+  EXPECT_GT(SkColorGetR(from), SkColorGetR(target.background_color()));
+  EXPECT_LT(SkColorGetR(to), SkColorGetR(target.background_color()));
+  EXPECT_LT(SkColorGetG(from), SkColorGetG(target.background_color()));
+  EXPECT_GT(SkColorGetG(to), SkColorGetG(target.background_color()));
+  EXPECT_EQ(0u, SkColorGetB(target.background_color()));
+  EXPECT_EQ(255u, SkColorGetA(target.background_color()));
+
+  player.TransitionBackgroundColorTo(start_time + UsToDelta(1000),
+                                     target.background_color(), from);
+  player.Tick(start_time + UsToDelta(1000));
+  EXPECT_EQ(value_before_reversing, target.background_color());
+
+  player.Tick(start_time + UsToDelta(2000));
+  EXPECT_EQ(from, target.background_color());
 }
 
 TEST(AnimationPlayerTest, DoubleReversedTransitions) {
