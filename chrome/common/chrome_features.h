@@ -223,6 +223,8 @@ extern const base::Feature kCrosCompUpdates;
 extern const base::Feature kCrOSComponent;
 
 extern const base::Feature kInstantTethering;
+
+extern const base::Feature kTPMFirmwareUpdate;
 #endif  // defined(OS_CHROMEOS)
 
 bool PrefServiceEnabled();

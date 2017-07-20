@@ -435,6 +435,10 @@ const base::Feature kCrOSComponent{"CrOSComponent",
 // Enables or disables Instant Tethering on Chrome OS.
 const base::Feature kInstantTethering{"InstantTethering",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables TPM firmware update capability on Chrome OS.
+const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace features
