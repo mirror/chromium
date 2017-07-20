@@ -67,9 +67,9 @@ class DrawingBufferSoftwareRenderingTest : public Test {
 
 TEST_F(DrawingBufferSoftwareRenderingTest, BitmapRecycling) {
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback1;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback2;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback3;
+  cc::SingleReleaseCallback release_callback1;
+  cc::SingleReleaseCallback release_callback2;
+  cc::SingleReleaseCallback release_callback3;
   IntSize initial_size(kInitialWidth, kInitialHeight);
   IntSize alternate_size(kInitialWidth, kAlternateHeight);
 
@@ -78,17 +78,17 @@ TEST_F(DrawingBufferSoftwareRenderingTest, BitmapRecycling) {
   drawing_buffer_->PrepareTextureMailbox(
       &texture_mailbox, &release_callback1);  // create a bitmap.
   EXPECT_EQ(0, drawing_buffer_->RecycledBitmapCount());
-  release_callback1->Run(
-      gpu::SyncToken(),
-      false /* lostResource */);  // release bitmap to the recycling queue
+  std::move(release_callback1)
+      .Run(gpu::SyncToken(),
+           false /* lostResource */);  // release bitmap to the recycling queue
   EXPECT_EQ(1, drawing_buffer_->RecycledBitmapCount());
   drawing_buffer_->MarkContentsChanged();
   drawing_buffer_->PrepareTextureMailbox(
       &texture_mailbox, &release_callback2);  // recycle a bitmap.
   EXPECT_EQ(0, drawing_buffer_->RecycledBitmapCount());
-  release_callback2->Run(
-      gpu::SyncToken(),
-      false /* lostResource */);  // release bitmap to the recycling queue
+  std::move(release_callback2)
+      .Run(gpu::SyncToken(),
+           false /* lostResource */);  // release bitmap to the recycling queue
   EXPECT_EQ(1, drawing_buffer_->RecycledBitmapCount());
   drawing_buffer_->Resize(alternate_size);
   drawing_buffer_->MarkContentsChanged();
@@ -97,7 +97,7 @@ TEST_F(DrawingBufferSoftwareRenderingTest, BitmapRecycling) {
       &texture_mailbox,
       &release_callback3);  // cause recycling queue to be purged due to resize
   EXPECT_EQ(0, drawing_buffer_->RecycledBitmapCount());
-  release_callback3->Run(gpu::SyncToken(), false /* lostResource */);
+  std::move(release_callback3).Run(gpu::SyncToken(), false /* lostResource */);
   EXPECT_EQ(1, drawing_buffer_->RecycledBitmapCount());
 
   drawing_buffer_->BeginDestruction();
@@ -106,7 +106,7 @@ TEST_F(DrawingBufferSoftwareRenderingTest, BitmapRecycling) {
 TEST_F(DrawingBufferSoftwareRenderingTest, FramebufferBinding) {
   GLES2InterfaceForTests* gl_ = drawing_buffer_->ContextGLForTests();
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   IntSize initial_size(kInitialWidth, kInitialHeight);
   GLint drawBinding = 0, readBinding = 0;
 
@@ -122,7 +122,7 @@ TEST_F(DrawingBufferSoftwareRenderingTest, FramebufferBinding) {
   gl_->GetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readBinding);
   EXPECT_EQ(static_cast<GLint>(draw_framebuffer_binding), drawBinding);
   EXPECT_EQ(static_cast<GLint>(read_framebuffer_binding), readBinding);
-  release_callback->Run(gpu::SyncToken(), false /* lostResource */);
+  std::move(release_callback).Run(gpu::SyncToken(), false /* lostResource */);
 
   drawing_buffer_->BeginDestruction();
 }

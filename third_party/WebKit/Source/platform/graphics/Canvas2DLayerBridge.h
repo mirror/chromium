@@ -99,9 +99,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   ~Canvas2DLayerBridge() override;
 
   // cc::TextureLayerClient implementation.
-  bool PrepareTextureMailbox(viz::TextureMailbox* out_mailbox,
-                             std::unique_ptr<cc::SingleReleaseCallback>*
-                                 out_release_callback) override;
+  bool PrepareTextureMailbox(
+      viz::TextureMailbox* out_mailbox,
+      cc::SingleReleaseCallback* out_release_callback) override;
 
   // ImageBufferSurface implementation
   void FinalizeFrame();

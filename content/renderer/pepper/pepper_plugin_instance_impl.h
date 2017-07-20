@@ -552,7 +552,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // cc::TextureLayerClient implementation.
   bool PrepareTextureMailbox(
       viz::TextureMailbox* mailbox,
-      std::unique_ptr<cc::SingleReleaseCallback>* release_callback) override;
+      cc::SingleReleaseCallback* release_callback) override;
 
   // RenderFrameObserver
   void AccessibilityModeChanged() override;

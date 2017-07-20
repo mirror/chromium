@@ -291,7 +291,7 @@ void ReleaseGLHelper() {
 
 void CopyFromCompositingSurfaceFinished(
     const ReadbackRequestCallback& callback,
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+    cc::SingleReleaseCallback release_callback,
     std::unique_ptr<SkBitmap> bitmap,
     const base::TimeTicks& start_time,
     scoped_refptr<PendingReadbackLock> readback_lock,
@@ -311,7 +311,7 @@ void CopyFromCompositingSurfaceFinished(
                           base::Bind(&ReleaseGLHelper));
 
   const bool lost_resource = !sync_token.HasData();
-  release_callback->Run(sync_token, lost_resource);
+  std::move(release_callback).Run(sync_token, lost_resource);
   UMA_HISTOGRAM_TIMES(kAsyncReadBackString,
                       base::TimeTicks::Now() - start_time);
   ReadbackResponse response = result ? READBACK_SUCCESS : READBACK_FAILED;
@@ -364,7 +364,7 @@ void PrepareTextureCopyOutputResult(
   if (!result->HasTexture() || result->IsEmpty() || result->size().IsEmpty())
     return;
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
   if (!texture_mailbox.IsTexture())

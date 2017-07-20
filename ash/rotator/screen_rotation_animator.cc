@@ -328,7 +328,7 @@ void ScreenRotationAnimator::CreateOldLayerTreeForSlowAnimation() {
 std::unique_ptr<ui::LayerTreeOwner> ScreenRotationAnimator::CopyLayerTree(
     std::unique_ptr<cc::CopyOutputResult> result) {
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
   const gfx::Rect rect(

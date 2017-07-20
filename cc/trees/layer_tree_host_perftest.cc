@@ -315,10 +315,9 @@ class BrowserCompositorInvalidateLayerTreePerfTest
     name_stream << "name" << next_fence_sync_;
     gpu_mailbox.SetName(
         reinterpret_cast<const int8_t*>(name_stream.str().c_str()));
-    std::unique_ptr<SingleReleaseCallback> callback =
-        SingleReleaseCallback::Create(base::Bind(
-            &BrowserCompositorInvalidateLayerTreePerfTest::ReleaseMailbox,
-            base::Unretained(this)));
+    SingleReleaseCallback callback = base::BindOnce(
+        &BrowserCompositorInvalidateLayerTreePerfTest::ReleaseMailbox,
+        base::Unretained(this));
 
     gpu::SyncToken next_sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                                    gpu::CommandBufferId::FromUnsafeValue(1),
@@ -348,7 +347,8 @@ class BrowserCompositorInvalidateLayerTreePerfTest
   }
 
   void CleanUpAndEndTestOnMainThread() {
-    tab_contents_->SetTextureMailbox(viz::TextureMailbox(), nullptr);
+    tab_contents_->SetTextureMailbox(viz::TextureMailbox(),
+                                     SingleReleaseCallback());
     // ReleaseMailbox will end the test when we get the last mailbox back.
   }
 
