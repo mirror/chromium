@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "99b1da4e_6c89e68d",
+        "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448a4ce3_db962af5",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 2
+      },
+      "revId": "a80c523eebea1d5c6fe21804401ad39bb9081e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bdb0d06_7b4642a5",
         "filename": "chrome/installer/zucchini/label_manager.cc",
         "patchSetId": 3

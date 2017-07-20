@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7eeed0_edf40632",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "// Helper functions to make an offset_t, so we can distinguish file offsets from Label indexes. Implementation: Marking is flagged by the most significant bit (MSB).",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 1
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa76644_182fdfc9",
+        "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "0xFFFFFFFF is also a boundary case? Or is that avoided purposefully?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9cbe41_f64b62aa",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "Oops, offset -\u003e offsets, and Label -\u003e Labels?",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beade975_b23618ab",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "Not sure what\u0027s the preferred style on where to place destructor when copy constructor is present. But keep it consistent? Also in .cc files.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c336a80_5d298699",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "Copy constructors don\u0027t need \"explicit\"?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 10
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689bb404_f14ab37b",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T18:41:31Z",
+      "side": 1,
+      "message": "Can forward-declare\n  ReferenceGroup\n  Disassembler\n\nthen we can move #include \"disassembler.h\" into the .cc file.",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 61
+      },
+      "revId": "2b1fbea379b3ce4a489e24062d88b68d74cb42be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
