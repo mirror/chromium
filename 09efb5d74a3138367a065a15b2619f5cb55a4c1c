@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "39aff854_3adc6e6a",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T23:30:32Z",
+      "side": 1,
+      "message": "nit: Actually, EXPECT_EQ(FOCUS_SEARCH_BOX, search_box_view-\u003eget_focused_view_for_test())",
+      "parentUuid": "a94b22a7_7866bee5",
+      "range": {
+        "startLine": 493,
+        "startChar": 0,
+        "endLine": 493,
+        "endChar": 80
+      },
+      "revId": "09efb5d74a3138367a065a15b2619f5cb55a4c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6defb106_71cae116",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 2
