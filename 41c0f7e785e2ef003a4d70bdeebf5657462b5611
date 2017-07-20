@@ -25,6 +25,81 @@
     },
     {
       "key": {
+        "uuid": "f43fb189_454b30bb",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "I agree with the spirit of the rule, at least, and hopefully we can get the presubmit check to work.  Perhaps we should have a EncodePageStateInternal here shared between EncodePageState and EncodePageStateForTesting.",
+      "parentUuid": "afeb90da_14e7c228",
+      "range": {
+        "startLine": 787,
+        "startChar": 2,
+        "endLine": 787,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4ef1608_1cb3411a",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Hmm.  It would be nice to avoid having to do all the work of CalculateLegacyName on a huge |name| if we know it\u0027s going to be over the limit to begin with, since that mostly unnecessary memory and CPU churn.  I\u0027m guessing that would cause problems because we expect the hash to be computed from the legacy name, and it might affect the legacy conversions?\n\nI guess we can keep it this way.  If the CalculateLegacyName calls is required for correct behavior, can you add a comment saying something to that effect?",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4902dc43_fb4bf12e",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "nit: Add blank line before the \"do\", since it looks like an \"else\" on the previous conditional.  And/or put a comment like \"Repeatedly hash the long name until it\u0027s unique.\"",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c907dfe1_81f61180",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "nit: End with ellipsis (or period).  Same on line 226.",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37e53b84_98a559de",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -71,6 +146,23 @@
     },
     {
       "key": {
+        "uuid": "5bfda46c_06b2c345",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Maybe this should be at the top of the class?\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "174db0f0_8c55e80f",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -88,6 +180,171 @@
         "endLine": 157,
         "endChar": 56
       },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ebcf0d_faaa8642",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "This comment is a bit confusing, since it\u0027s above the Replacement struct instead of the AdjustLegacyNameForMaxSize function.  The struct should probably be declared at the top of the class near FrameAdapter, with its own short comment about being used by AdjustLegacyNameForMaxSize.",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57ac629_e27d9986",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Maybe clarify that these last two are out parameters.",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8109e52a_5850f83e",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "\"Replacement\" is a bit vague (and reminds me of the always-hard-to-use GURL::Replacements).  If this is just about path, can we rename it to PathReplacement or something more specific?",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ea8b86_ca5b6224",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "nit: ForTesting seems to be much more common than ForTest in content (544 results vs 121 results).",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be03f438_f1b27469",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "nit: TestFrameAdapter",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94c29f1_e71af510",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Looks like we should document that index_in_parent is \"virtual\" / doesn\u0027t need to be accurate for these tests (which might explain some of my confusion below).",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93274335_1d240d0d",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "This won\u0027t count any of the later siblings.  Is that intentional, as opposed to returning parent_-\u003echildren_.size() - 1?  Let\u0027s document if so.",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b90f73d_0e0a4581",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Can we just use FAIL()?",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed2f22_a2fccedd",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "Can you elaborate in the comment?  It\u0027s not clear what virtual index means, and why it would differ from the actual one.",
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +391,23 @@
         "endLine": 156,
         "endChar": 24
       },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f0af84_f5b3c85d",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:07:21Z",
+      "side": 1,
+      "message": "nit: Update comment.",
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
