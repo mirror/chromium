@@ -29,6 +29,15 @@ static_assert(static_cast<int>(cc::Animation::LAST_RUN_STATE) + 1 ==
               "RunStateEnumSize should equal the number of elements in "
               "s_runStateNames");
 
+static const char* const s_curveTypeNames[] = {
+    "COLOR",         "FLOAT", "TRANSFORM", "FILTER",
+    "SCROLL_OFFSET", "SIZE",  "BOOLEAN"};
+
+static_assert(static_cast<int>(cc::AnimationCurve::LAST_CURVE_TYPE) + 1 ==
+                  arraysize(s_curveTypeNames),
+              "CurveType enum should equal the number of elements in "
+              "s_runStateNames");
+
 }  // namespace
 
 namespace cc {
@@ -37,7 +46,7 @@ std::unique_ptr<Animation> Animation::Create(
     std::unique_ptr<AnimationCurve> curve,
     int animation_id,
     int group_id,
-    TargetProperty::Type target_property) {
+    int target_property) {
   return base::WrapUnique(
       new Animation(std::move(curve), animation_id, group_id, target_property));
 }
@@ -45,7 +54,7 @@ std::unique_ptr<Animation> Animation::Create(
 Animation::Animation(std::unique_ptr<AnimationCurve> curve,
                      int animation_id,
                      int group_id,
-                     TargetProperty::Type target_property)
+                     int target_property)
     : curve_(std::move(curve)),
       id_(animation_id),
       group_(group_id),
@@ -75,8 +84,8 @@ void Animation::SetRunState(RunState run_state,
     return;
 
   char name_buffer[256];
-  base::snprintf(name_buffer, sizeof(name_buffer), "%s-%d",
-                 TargetProperty::GetName(target_property_), group_);
+  base::snprintf(name_buffer, sizeof(name_buffer), "%s-%d-%d",
+                 s_curveTypeNames[curve_->Type()], target_property_, group_);
 
   bool is_waiting_to_start =
       run_state_ == WAITING_FOR_TARGET_AVAILABILITY || run_state_ == STARTING;

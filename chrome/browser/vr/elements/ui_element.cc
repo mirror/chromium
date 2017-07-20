@@ -10,6 +10,7 @@
 #include "base/time/time.h"
 #include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
+#include "chrome/browser/vr/target_property.h"
 
 namespace vr {
 
@@ -80,14 +81,14 @@ void UiElement::SetEnabled(bool enabled) {
 }
 
 void UiElement::SetSize(float width, float height) {
-  animation_player_.TransitionBoundsTo(last_frame_time_, size_,
-                                       gfx::SizeF(width, height));
+  animation_player_.TransitionSizeTo(last_frame_time_, TargetProperty::BOUNDS,
+                                     size_, gfx::SizeF(width, height));
 }
 
 void UiElement::SetTransformOperations(
     const UiElementTransformOperations& ui_element_transform_operations) {
   animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, transform_operations_,
+      last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
       ui_element_transform_operations.operations());
 }
 
@@ -97,7 +98,8 @@ void UiElement::SetLayoutOffset(float x, float y) {
   op.translate = {x, y, 0};
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, transform_operations_, operations);
+      last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
+      operations);
 }
 
 void UiElement::SetTranslate(float x, float y, float z) {
@@ -106,7 +108,8 @@ void UiElement::SetTranslate(float x, float y, float z) {
   op.translate = {x, y, z};
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, transform_operations_, operations);
+      last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
+      operations);
 }
 
 void UiElement::SetRotate(float x, float y, float z, float radians) {
@@ -116,7 +119,8 @@ void UiElement::SetRotate(float x, float y, float z, float radians) {
   op.rotate.angle = cc::MathUtil::Rad2Deg(radians);
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, transform_operations_, operations);
+      last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
+      operations);
 }
 
 void UiElement::SetScale(float x, float y, float z) {
@@ -125,11 +129,13 @@ void UiElement::SetScale(float x, float y, float z) {
   op.scale = {x, y, z};
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, transform_operations_, operations);
+      last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
+      operations);
 }
 
 void UiElement::SetOpacity(float opacity) {
-  animation_player_.TransitionOpacityTo(last_frame_time_, opacity_, opacity);
+  animation_player_.TransitionFloatTo(last_frame_time_, TargetProperty::OPACITY,
+                                      opacity_, opacity);
 }
 
 bool UiElement::HitTest(const gfx::PointF& point) const {
@@ -191,8 +197,8 @@ bool UiElement::GetRayDistance(const gfx::Point3F& ray_origin,
                              distance);
 }
 
-void UiElement::NotifyClientOpacityAnimated(float opacity,
-                                            cc::Animation* animation) {
+void UiElement::NotifyClientFloatAnimated(float opacity,
+                                          cc::Animation* animation) {
   opacity_ = opacity;
 }
 
@@ -202,8 +208,8 @@ void UiElement::NotifyClientTransformOperationsAnimated(
   transform_operations_ = operations;
 }
 
-void UiElement::NotifyClientBoundsAnimated(const gfx::SizeF& size,
-                                           cc::Animation* animation) {
+void UiElement::NotifyClientSizeAnimated(const gfx::SizeF& size,
+                                         cc::Animation* animation) {
   size_ = size;
 }
 
