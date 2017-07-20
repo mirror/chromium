@@ -1215,7 +1215,8 @@ void WebLocalFrameImpl::SelectRange(
                              .SetIsHandleVisible(show_handles)
                              .SetIsDirectional(false)
                              .Build(),
-                         kNotUserTriggered);
+                         static_cast<FrameSelection::SetSelectionOptions>(
+                             SetSelectionBy::kSystem));
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {
