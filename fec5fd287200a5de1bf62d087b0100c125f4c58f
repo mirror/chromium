@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077bcf42_43cabd74",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Note to self: I need to run for a bit, but I will implement this before landing.",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

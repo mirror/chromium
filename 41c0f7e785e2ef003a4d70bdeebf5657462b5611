@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "a34e6fac_8f8ad01c",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f43fb189_454b30bb",
+      "range": {
+        "startLine": 787,
+        "startChar": 2,
+        "endLine": 787,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f84abdfc_6a059546",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "It is caught--but it\u0027s advisory so it doesn\u0027t block the CQ. \u003d)",
+      "parentUuid": "afeb90da_14e7c228",
+      "range": {
+        "startLine": 787,
+        "startChar": 2,
+        "endLine": 787,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4ef1608_1cb3411a",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -60,6 +108,24 @@
       "writtenOn": "2017-07-20T22:07:21Z",
       "side": 1,
       "message": "Hmm.  It would be nice to avoid having to do all the work of CalculateLegacyName on a huge |name| if we know it\u0027s going to be over the limit to begin with, since that mostly unnecessary memory and CPU churn.  I\u0027m guessing that would cause problems because we expect the hash to be computed from the legacy name, and it might affect the legacy conversions?\n\nI guess we can keep it this way.  If the CalculateLegacyName calls is required for correct behavior, can you add a comment saying something to that effect?",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41a871e_694a795b",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Well, the problem is we often don\u0027t know if we\u0027re going to exceed the limit. We also don\u0027t know if the name is going to collide (and fallback to a frame path) without doing all this work. I\u0027m not really sure how to encode that in a meaningful comment that just describes the what, rather than the why. I\u0027m open to suggestions.",
+      "parentUuid": "f4ef1608_1cb3411a",
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "3bdde5b0_68580919",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "This logic changed, so I think this isn\u0027t necessary anymore.",
+      "parentUuid": "4902dc43_fb4bf12e",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c907dfe1_81f61180",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -100,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "b2fead93_53865dce",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c907dfe1_81f61180",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e53b84_98a559de",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -111,6 +213,30 @@
       "writtenOn": "2017-07-20T16:52:30Z",
       "side": 1,
       "message": "If the function returns true, then I feel that *both* the out parameters should be assigned to - otherwise we have to (awkardly IMO) ask the caller to always zero-out |new_replacement| before calling AdjustLegacyNameForMaxSize.",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 17
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f4b654_66482f04",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Well, it works naturally in the case of ReadFrameState()--each stack frame creates a new Optional.\n\nThe reason I do this is to save copying potentially long strings--we could simply populate new_replacement with the current replacement, but then we\u0027d be copying a bunch of times unnecessarily. Trying to be more clever about ownership ends up making things even more complicated.",
+      "parentUuid": "37e53b84_98a559de",
       "range": {
         "startLine": 240,
         "startChar": 8,
@@ -146,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "47f0f402_904d3447",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "I was testing locally and had to make fixes in basically all the branches, if that counts \u003d)\n\nI did think of one other interesting test case to add this morning and have added that as well.",
+      "parentUuid": "c576e782_6e4142f5",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 8
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfda46c_06b2c345",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -160,6 +310,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52671649_018c25e0",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bfda46c_06b2c345",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,54 @@
     },
     {
       "key": {
+        "uuid": "24572c35_e7625fff",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00ebcf0d_faaa8642",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dfd9b77_f7f2246c",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "174db0f0_8c55e80f",
+      "range": {
+        "startLine": 157,
+        "startChar": 44,
+        "endLine": 157,
+        "endChar": 56
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57ac629_e27d9986",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -223,6 +439,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d16704c_39d8aa46",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57ac629_e27d9986",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +477,24 @@
     },
     {
       "key": {
+        "uuid": "f71a38ca_269cdd24",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "I\u0027ve renamed it to NameUpdateState. It\u0027s really internal state that shouldn\u0027t be mucked with, so I made everything private and just friended the class.",
+      "parentUuid": "8109e52a_5850f83e",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ea8b86_ca5b6224",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -257,6 +509,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e868413_c93fd476",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done, though ForTest is shorter \u003d)",
+      "parentUuid": "d3ea8b86_ca5b6224",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "3f6251a6_e820b67b",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be03f438_f1b27469",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94c29f1_e71af510",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 2
@@ -300,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "4eb7cbb7_01aa9989",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "I mentioned it in the documentation for the member, but I guess that may have been too far away. I\u0027ve renamed the variables involved, and moved the comment here.",
+      "parentUuid": "d94c29f1_e71af510",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93274335_1d240d0d",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 2
@@ -311,6 +623,24 @@
       "writtenOn": "2017-07-20T22:07:21Z",
       "side": 1,
       "message": "This won\u0027t count any of the later siblings.  Is that intentional, as opposed to returning parent_-\u003echildren_.size() - 1?  Let\u0027s document if so.",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9873cfe0_ad2cfc1f",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "This is kind of an interface problem. I have some interface updates planned in a followup, and I\u0027d prefer to do that there (given the size of this CL). I added a TODO in the header for this.",
+      "parentUuid": "93274335_1d240d0d",
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -334,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "cb83eecd_7ce55c73",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b90f73d_0e0a4581",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ed2f22_a2fccedd",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 2
@@ -348,6 +696,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd26b2d_e26bb876",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done, though I moved this to the ctor.",
+      "parentUuid": "c6ed2f22_a2fccedd",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +740,30 @@
     },
     {
       "key": {
+        "uuid": "b626ac92_6e7124b0",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5377f7_0a4652c4",
+      "range": {
+        "startLine": 150,
+        "startChar": 5,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c14674ff_36e23b41",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 2
@@ -385,6 +775,30 @@
       "writtenOn": "2017-07-20T16:52:30Z",
       "side": 1,
       "message": "FWIW, this looks good to me - I like the test coverage very much and dealing with format drift can be done later (i.e. once the tests break because just overriding/stamping version to 24 is not sufficient for simulating version 24).\n\nOTOH, maybe a comment warning about the future breakage might be helpful here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597335a1_342a644d",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the concern here: version 24 is fixed and can\u0027t ever change (as far as we\u0027re concerned), so this should be safe?",
+      "parentUuid": "c14674ff_36e23b41",
       "range": {
         "startLine": 156,
         "startChar": 2,
@@ -411,6 +825,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ec2d96_5046d288",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T22:46:36Z",
+      "side": 1,
+      "message": "I have no idea what I was trying to say here, and the test case doesn\u0027t seem valuable, so I deleted it.",
+      "parentUuid": "d6f0af84_f5b3c85d",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
