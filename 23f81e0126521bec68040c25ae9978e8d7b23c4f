@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a17b493c_5ce50cea",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-big-endian-bom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T18:53:28Z",
+      "side": 1,
+      "message": "Done. I simplified all of these test files (and added a few more cases) since they really just need to be content.",
+      "parentUuid": "f6ee9341_d9562c2d",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a103a606_ba94dca2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-big-endian-nobom.xml",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e85e6ef_103a811e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-big-endian-nobom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T18:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a103a606_ba94dca2",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "533f43bf_9a4f8b31",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-little-endian-bom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T18:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a86fa7_a0454fbc",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06386d0a_0abc3d25",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-little-endian-nobom.xml",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc93eb24_9cb2dc2d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/resources/utf-32-little-endian-nobom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T18:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06386d0a_0abc3d25",
+      "revId": "23f81e0126521bec68040c25ae9978e8d7b23c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
