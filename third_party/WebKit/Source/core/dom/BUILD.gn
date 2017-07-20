@@ -225,6 +225,7 @@ blink_core_sources("dom") {
     "Range.h",
     "RangeBoundaryPoint.h",
     "RawDataDocumentParser.h",
+    "ReachedUrlSet.h",
     "RemoteSecurityContext.cpp",
     "RemoteSecurityContext.h",
     "ResizeObservation.cpp",
