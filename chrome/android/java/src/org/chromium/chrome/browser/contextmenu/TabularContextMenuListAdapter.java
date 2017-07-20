@@ -79,6 +79,10 @@ class TabularContextMenuListAdapter extends BaseAdapter {
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
+        if (viewHolder.mText == null || viewHolder.mIcon == null || viewHolder.mShareIcon == null
+                || viewHolder.mRightPadding == null) {
+            return null;
+        }
         viewHolder.mText.setText(menuItem.getTitle(mActivity));
         Drawable icon = menuItem.getDrawable(mActivity);
         viewHolder.mIcon.setImageDrawable(icon);
