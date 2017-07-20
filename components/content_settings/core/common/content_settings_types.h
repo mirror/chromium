@@ -75,6 +75,15 @@ enum ContentSettingsType {
   // sound. This will not block playback but instead the user will not hear it.
   CONTENT_SETTINGS_TYPE_SOUND,
 
+  // Website setting which stores the list of client hints (and the preference
+  // expiration time for each of the client hint) that the origin requested
+  // the browser to remember. Link to the spec:
+  // http://httpwg.org/http-extensions/client-hints.html#accept-ch-lifetime.
+  // The setting is stored as an ordered list of integers where i'th entry
+  // in the list corresponds to the expiration time (seconds since epoch) of the
+  // corresponding client hint.
+  CONTENT_SETTINGS_TYPE_CLIENT_HINTS,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
