@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fc848e_3e557422",
+        "filename": "media/filters/h264_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-20T20:32:11Z",
+      "side": 1,
+      "message": "bytes_left - 2.",
+      "range": {
+        "startLine": 292,
+        "startChar": 61,
+        "endLine": 292,
+        "endChar": 71
+      },
+      "revId": "c8a1cc34e5d84762cb92ca19d9289417a4bf0643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
