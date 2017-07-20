@@ -22,6 +22,30 @@
       "revId": "a83caefa0085523eedaf86aef4d9776f879a49a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f643ed68_37d6799b",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-20T10:30:30Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "8a33cf3d_6c53187e",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 22
+      },
+      "revId": "a83caefa0085523eedaf86aef4d9776f879a49a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
