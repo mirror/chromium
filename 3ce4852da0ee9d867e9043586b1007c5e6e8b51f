@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9ee2b4a_537d0d8f",
+        "filename": "base/values.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9001c68e_6ba5619b",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff9ab4c_25d91a4f",
         "filename": "base/values.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47f7f67_941ae856",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Yeah, my bad. This really shouldn\u0027t be possible.",
+      "parentUuid": "0ff9ab4c_25d91a4f",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b8729ced_a5b8e1b8",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73430f9a_aa5d0c79",
+      "range": {
+        "startLine": 1370,
+        "startChar": 20,
+        "endLine": 1370,
+        "endChar": 23
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc52f1aa_af4e1419",
         "filename": "chrome/browser/devtools/devtools_targets_ui.cc",
         "patchSetId": 8
@@ -79,6 +139,30 @@
       "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683b6416_1ada9238",
+        "filename": "chrome/browser/devtools/devtools_targets_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "I agree, but this probably should be done in a follow up CL.",
+      "parentUuid": "bc52f1aa_af4e1419",
+      "range": {
+        "startLine": 245,
+        "startChar": 66,
+        "endLine": 245,
+        "endChar": 75
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "5da76a24_1986870f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "|Set| treats periods special and indexes sub directories. |SetKey| does not do this, since we expect this special treatment to be almost never desired, see the Proposal Doc for further details.\n\nSince |property| might contain a period, changing |Set| to |SetKey| might change existing behavior. This is why I left it here.",
+      "parentUuid": "4f83e4fa_e26c1599",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ccf0c8_abb61d1b",
         "filename": "chrome/browser/supervised_user/supervised_user_pref_store_unittest.cc",
         "patchSetId": 8
@@ -119,6 +227,24 @@
       "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22cc78d8_d7f6702a",
+        "filename": "chrome/browser/supervised_user/supervised_user_pref_store_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Same here.",
+      "parentUuid": "75ccf0c8_abb61d1b",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "ce7fe51d_f115331a",
+        "filename": "chrome/browser/supervised_user/supervised_user_settings_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "And here, and below.",
+      "parentUuid": "978ba0b7_9b43df8b",
+      "range": {
+        "startLine": 478,
+        "startChar": 14,
+        "endLine": 478,
+        "endChar": 17
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0441dc40_417915ca",
         "filename": "chrome/common/extensions/api/storage/storage_schema_manifest_handler_unittest.cc",
         "patchSetId": 8
@@ -165,6 +315,30 @@
       "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece9cd91_64d7d870",
+        "filename": "chrome/common/extensions/api/storage/storage_schema_manifest_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Done. Note this is safe because we know there is no period in \"permissions\".",
+      "parentUuid": "0441dc40_417915ca",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "33ef8e47_d4cdc359",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Here a dot is present, so |SetKey| would change behavior. The capabilities code expects a dictionary at \"goog:chromeOptions\": https://cs.chromium.org/chromium/src/chrome/test/chromedriver/capabilities.cc?l\u003d647\n\nIt might be worthwhile to introduce base::Value::SetExpandedKey and base::Value::FindExpandedKey for these usecases.",
+      "parentUuid": "e3bab08e_39d32bea",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 10
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e40f657d_54f4278f",
         "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
         "patchSetId": 8
@@ -205,6 +403,24 @@
       "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b3f8bb_e205feda",
+        "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T12:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e40f657d_54f4278f",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
