@@ -561,7 +561,8 @@ SkRegion* NativeAppWindowCocoa::GetDraggableRegion() {
 void NativeAppWindowCocoa::HandleKeyboardEvent(
     const content::NativeWebKeyboardEvent& event) {
   if (event.skip_in_browser ||
-      event.GetType() == content::NativeWebKeyboardEvent::kChar) {
+      event.GetType() == content::NativeWebKeyboardEvent::kChar ||
+      !event.os_event) {
     return;
   }
   [window() redispatchKeyEvent:event.os_event];

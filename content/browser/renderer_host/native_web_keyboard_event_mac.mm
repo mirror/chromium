@@ -26,6 +26,10 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
       os_event(NULL),
       skip_in_browser(false) {}
 
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(
+    const blink::WebKeyboardEvent& web_event)
+    : WebKeyboardEvent(web_event), os_event(nullptr), skip_in_browser(false) {}
+
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(gfx::NativeEvent native_event)
     : WebKeyboardEvent(WebKeyboardEventBuilder::Build(native_event)),
       os_event([native_event retain]),
