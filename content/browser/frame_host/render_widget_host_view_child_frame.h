@@ -17,7 +17,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "cc/resources/returned_resource.h"
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/common/surfaces/surface_sequence.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
@@ -119,7 +119,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void OnDidNotProduceFrame(const cc::BeginFrameAck& ack) override;
+  void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void OnSurfaceChanged(const viz::SurfaceInfo& surface_info) override;
   // Since the URL of content rendered by this class is not displayed in
   // the URL bar, this method does not need an implementation.
@@ -174,7 +174,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // viz::CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void OnBeginFrame(const viz::BeginFrameArgs& args) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const viz::LocalSurfaceId& id,

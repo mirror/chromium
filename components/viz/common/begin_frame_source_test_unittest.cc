@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/test/begin_frame_source_test.h"
+#include "components/viz/test/begin_frame_source_test.h"
 
-#include "cc/test/begin_frame_args_test.h"
-#include "cc/test/mock_helper.h"
+#include "components/viz/test/begin_frame_args_test.h"
+#include "components/viz/test/mock_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cc {
+namespace viz {
 namespace {
 TEST(MockBeginFrameObserverTest, FailOnMissingCalls) {
   EXPECT_MOCK_FAILURE({
@@ -121,4 +121,4 @@ TEST(MockBeginFrameObserverTest, ExpectOnBeginFrameStatus) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace viz

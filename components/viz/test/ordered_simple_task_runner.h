@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_
-#define CC_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_
+#ifndef COMPONENTS_VIZ_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_
+#define COMPONENTS_VIZ_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_
 
 #include <stddef.h>
 
@@ -21,7 +21,7 @@
 #include "base/threading/thread_checker.h"
 #include "base/trace_event/trace_event.h"
 
-namespace cc {
+namespace viz {
 
 // Subclass of TestPendingTask which has a unique ID for every task, supports
 // being used inside a std::set and has debug tracing support.
@@ -164,6 +164,6 @@ class OrderedSimpleTaskRunner : public base::SingleThreadTaskRunner {
   DISALLOW_COPY_AND_ASSIGN(OrderedSimpleTaskRunner);
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_
+#endif  // COMPONENTS_VIZ_TEST_ORDERED_SIMPLE_TASK_RUNNER_H_

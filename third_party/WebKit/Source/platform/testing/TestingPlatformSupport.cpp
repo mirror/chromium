@@ -39,7 +39,7 @@
 #include "base/test/icu_test_util.h"
 #include "base/test/test_discardable_memory_allocator.h"
 #include "cc/blink/web_compositor_support_impl.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/HTTPNames.h"
@@ -222,7 +222,7 @@ TestingPlatformSupportWithMockScheduler::
     TestingPlatformSupportWithMockScheduler(const Config& config)
     : TestingPlatformSupport(config),
       clock_(new base::SimpleTestTickClock()),
-      mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), true)),
+      mock_task_runner_(new viz::OrderedSimpleTaskRunner(clock_.get(), true)),
       scheduler_(new scheduler::RendererSchedulerImpl(
           scheduler::SchedulerTqmDelegateForTest::Create(
               mock_task_runner_,
