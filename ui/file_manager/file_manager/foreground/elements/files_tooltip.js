@@ -103,6 +103,13 @@ var FilesTooltip = Polymer({
    * @private
    */
   initShowingTooltip_: function(target) {
+    if (target.className === 'keyboard-focus') {
+      target.removeAttribute('class');
+      target.removeAttribute('focused');
+      target.blur();
+      return;
+    }
+
     // Some tooltip is already visible.
     if (this.visibleTooltipTarget_) {
       if (this.hideTooltipTimerId_) {
