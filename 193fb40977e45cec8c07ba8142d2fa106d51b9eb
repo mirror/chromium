@@ -46,6 +46,30 @@
       "revId": "193fb40977e45cec8c07ba8142d2fa106d51b9eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8338cf41_c2324aff",
+        "filename": "chrome/browser/android/vr_shell/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T18:15:04Z",
+      "side": 1,
+      "message": "I agree on topic guidance but in the future.  Our reviewer list isn\u0027t that crazy.",
+      "parentUuid": "1ad04088_9e61f0c6",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "193fb40977e45cec8c07ba8142d2fa106d51b9eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
