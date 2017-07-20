@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9f061d5_d397b687",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T10:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed283a23_a15b6487",
+      "range": {
+        "startLine": 161,
+        "startChar": 23,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32288ec4_13fc3509",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManagerTest.java",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee82337_51b7728f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T10:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32288ec4_13fc3509",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cc2a80f9_2663a3f2",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T10:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea39e22_9769fcd3",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3e1cf2_ac317e3c",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
         "patchSetId": 14
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-20T06:05:28Z",
       "side": 1,
       "message": "Could you document this? When is this set? Is the value ever changed after that? What is this used for?",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f34194d_496250b8",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T10:41:25Z",
+      "side": 1,
+      "message": "Done. (And renamed to initialized_cached_channels_ for clarity).",
+      "parentUuid": "9a3e1cf2_ac317e3c",
       "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0ae870_c7a3bc56",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T10:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dfd921d_e7db8377",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
