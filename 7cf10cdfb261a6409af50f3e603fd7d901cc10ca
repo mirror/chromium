@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5a7f97_5a32930c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-20T08:21:30Z",
+      "side": 1,
+      "message": "Nit: Please use imperative in the subject line (i.e. \"Delete\" instead of \"Deleted\")\n\nhttps://chris.beams.io/posts/git-commit/",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "7cf10cdfb261a6409af50f3e603fd7d901cc10ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
