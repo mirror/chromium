@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e54a3e_cae98dd2",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-20T09:04:54Z",
+      "side": 1,
+      "message": "You should keep it focusable.\nFor accessibility, these buttons should be focused by TAB key.",
+      "range": {
+        "startLine": 23,
+        "startChar": 156,
+        "endLine": 23,
+        "endChar": 169
+      },
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60fbb15_60433a0d",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-20T09:04:54Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 26,
+        "startChar": 199,
+        "endLine": 26,
+        "endChar": 201
+      },
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ed61e0_97f32716",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-20T09:04:54Z",
+      "side": 1,
+      "message": "I could not understand what problem is fixed by this code block.\nCould you add some explanation?",
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8835f22_ea16c594",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-20T09:04:54Z",
+      "side": 1,
+      "message": "I\u0027d like to avoid listening key events in document level.\n\nCould you investigate why the keyevent (on files-metadata-box) is not dispatched to quickView?",
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
