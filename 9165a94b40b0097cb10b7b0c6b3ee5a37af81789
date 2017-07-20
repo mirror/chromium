@@ -16,6 +16,24 @@
       "revId": "9165a94b40b0097cb10b7b0c6b3ee5a37af81789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e05d55_a337edbe",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T23:44:09Z",
+      "side": 1,
+      "message": "Do you mean a //media/gpu/android/BUILD.gn? Possibly,\nI\u0027d rather leave this CL as simple as possible...",
+      "parentUuid": "7068df1b_b7cdc056",
+      "revId": "9165a94b40b0097cb10b7b0c6b3ee5a37af81789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
