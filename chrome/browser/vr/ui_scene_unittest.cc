@@ -76,6 +76,7 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   element->SetSize(1000, 1000);
 
   cc::TransformOperations operations;
+  operations.AppendTranslate(0, 0, 0);
   operations.AppendTranslate(6, 1, 0);
   operations.AppendRotate(0, 0, 1, 180 / 2);
   operations.AppendScale(3, 3, 1);
@@ -85,8 +86,9 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   // Add a child to the parent, with different transformations.
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
-  element->set_parent_id(0);
+  scene.GetUiElementById(0)->AddChild(element.get());
   cc::TransformOperations child_operations;
+  child_operations.AppendTranslate(0, 0, 0);
   child_operations.AppendTranslate(3, 0, 0);
   child_operations.AppendRotate(0, 0, 1, 180 / 2);
   child_operations.AppendScale(2, 2, 1);
@@ -114,7 +116,7 @@ TEST(UiScene, Opacity) {
 
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
-  element->set_parent_id(0);
+  scene.GetUiElementById(0)->AddChild(element.get());
   element->SetOpacity(0.5);
   scene.AddUiElement(std::move(element));
 
@@ -133,7 +135,7 @@ TEST(UiScene, LockToFov) {
 
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
-  element->set_parent_id(0);
+  scene.GetUiElementById(0)->AddChild(element.get());
   element->set_lock_to_fov(false);
   scene.AddUiElement(std::move(element));
 
@@ -164,7 +166,7 @@ TEST_P(AnchoringTest, VerifyCorrectPosition) {
   // Add a child to the parent, with anchoring.
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
-  element->set_parent_id(0);
+  scene.GetUiElementById(0)->AddChild(element.get());
   element->set_x_anchoring(GetParam().x_anchoring);
   element->set_y_anchoring(GetParam().y_anchoring);
   scene.AddUiElement(std::move(element));

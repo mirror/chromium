@@ -12,6 +12,7 @@
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
 #include "chrome/browser/vr/elements/exit_prompt.h"
 #include "chrome/browser/vr/elements/exit_prompt_backplane.h"
+#include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/loading_indicator.h"
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
@@ -244,18 +245,28 @@ void UiSceneManager::CreateSystemIndicators() {
        vector_icons::kLocationOnIcon, 0},
   };
 
+  std::unique_ptr<LinearLayout> indicator_layout =
+      base::MakeUnique<LinearLayout>(LinearLayout::kHorizontal);
+  indicator_layout->set_id(AllocateId());
+  indicator_layout->set_y_anchoring(YAnchoring::YTOP);
+  indicator_layout->SetTranslate(0, kIndicatorVerticalOffset,
+                                 kIndicatorDistanceOffset);
+  indicator_layout->set_margin(kIndicatorGap);
+  main_content_->AddChild(indicator_layout.get());
+
   for (const auto& indicator : indicators) {
     element = base::MakeUnique<SystemIndicator>(
         512, kIndicatorHeight, indicator.icon, indicator.resource_string);
     element->set_debug_id(indicator.debug_id);
     element->set_id(AllocateId());
-    element->set_parent_id(main_content_->id());
-    element->set_y_anchoring(YAnchoring::YTOP);
+    indicator_layout->AddChild(element.get());
     element->set_visible(false);
     *(indicator.element) = element.get();
     system_indicators_.push_back(element.get());
     scene_->AddUiElement(std::move(element));
   }
+
+  scene_->AddUiElement(std::move(indicator_layout));
 
   ConfigureIndicators();
 }
@@ -283,7 +294,7 @@ void UiSceneManager::CreateContentQuad() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kBackplaneSize, kBackplaneSize);
   element->SetTranslate(0, 0, -kTextureOffset);
-  element->set_parent_id(main_content_->id());
+  main_content_->AddChild(element.get());
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
@@ -363,7 +374,7 @@ void UiSceneManager::CreateUrlBar() {
   indicator->SetTranslate(0, kLoadingIndicatorVerticalOffset,
                           kLoadingIndicatorDepthOffset);
   indicator->SetSize(kLoadingIndicatorWidth, kLoadingIndicatorHeight);
-  indicator->set_parent_id(url_bar_->id());
+  url_bar_->AddChild(indicator.get());
   indicator->set_y_anchoring(YAnchoring::YTOP);
   loading_indicator_ = indicator.get();
   control_elements_.push_back(indicator.get());
@@ -413,7 +424,7 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kExitPromptWidth, kExitPromptHeight);
   element->SetTranslate(0.0, kExitPromptVerticalOffset, kTextureOffset);
-  element->set_parent_id(main_content_->id());
+  main_content_->AddChild(element.get());
   element->set_visible(false);
   exit_prompt_ = element.get();
   scene_->AddUiElement(std::move(element));
@@ -427,7 +438,7 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_fill(vr::Fill::NONE);
   element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
   element->SetTranslate(0.0, 0.0, -kTextureOffset);
-  element->set_parent_id(exit_prompt_->id());
+  exit_prompt_->AddChild(element.get());
   exit_prompt_backplane_ = element.get();
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
@@ -645,29 +656,6 @@ void UiSceneManager::ConfigureIndicators() {
   screen_capture_indicator_->set_visible(allowed && screen_capturing_);
   location_access_indicator_->set_visible(allowed && location_access_);
   bluetooth_connected_indicator_->set_visible(allowed && bluetooth_connected_);
-
-  if (!allowed)
-    return;
-
-  // Position elements dynamically relative to each other, based on which
-  // indicators are showing, and how big each one is.
-  float total_width = 0;
-  for (const UiElement* indicator : system_indicators_) {
-    if (indicator->visible()) {
-      if (total_width > 0)
-        total_width += kIndicatorGap;
-      total_width += indicator->size().width();
-    }
-  }
-  float x_position = -total_width / 2;
-  for (UiElement* indicator : system_indicators_) {
-    if (!indicator->visible())
-      continue;
-    float width = indicator->size().width();
-    indicator->SetTranslate(x_position + width / 2, kIndicatorVerticalOffset,
-                            kIndicatorDistanceOffset);
-    x_position += width + kIndicatorGap;
-  }
 }
 
 void UiSceneManager::ConfigureExclusiveScreenToast() {
@@ -678,6 +666,7 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
     // Do not set size again. The size might have been changed by the backing
     // texture size in UpdateElementSize.
     cc::TransformOperations operations;
+    operations.AppendTranslate(0, 0, 0);
     operations.AppendTranslate(
         0,
         kFullscreenVerticalOffset + kFullscreenHeight / 2 +
@@ -690,6 +679,7 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
     exclusive_screen_toast_->set_lock_to_fov(false);
   } else if (web_vr_mode_ && web_vr_show_toast_) {
     cc::TransformOperations operations;
+    operations.AppendTranslate(0, 0, 0);
     operations.AppendTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
                                -kWebVrToastDistance * cos(kWebVrAngleRadians));
     operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWebVrAngleRadians));
