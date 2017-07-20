@@ -1,0 +1,492 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a79822_93818e06",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "base::TimeBase::kMicrosecondsPerSecond",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ede6164_0484c3c6",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Do you also need minimum number of \"data\" sample queued? e.g. if we only have one sample, the estimation will not be accurate.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ef6f7a_ca049820",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "InSecondsF() will return seconds in double, will that work for you? Then you don\u0027t need kMicrosecondsPerSecond.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50d7fab_2b3bba4c",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b501fa18_fc58e3ae",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f3092b_004c6e04",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Make it clear this is wall clock time, not media time.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cbadc2_893b602f",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "It\u0027s odd that GetBitrate() call ends the estimation...\n\nFor example, a caller may call GetBitrate() but it returned 0. Then the caller should be able to wait for a few more seconds and call GetBitrate() again.\n\nHow about GetBitrate() can be called at any time. Estimation will end when |this| is destructed?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dea9a5e_a25f8010",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "nit: Bitrate has a special meaning in the industry. To avoid confusion, maybe we should name this ReadRateEstimator. WDYT?\n\nThen we can just return bytes/second in the Get*Rate() call, and avoid byte-\u003ebit conversion.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7697a1e6_5a8192d8",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "This class is a generic helper class. You don\u0027t need \"frame\" anywhere in this class.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34fa532_9b759650",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "What does returning 0.0 mean?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8707438b_302bf80a",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "nit: total_bytes_?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1df285_1d11a1e3",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Will this happen in real world?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d239470f_fac0f9f6",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "You can put all these init code in the constructor. Then you don\u0027t need Start().",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e296728_4b55b3b9",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "This is not necessary as the estimation will start after the estimator is constructed.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0af65b6_515229b6",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "You probably don\u0027t need the message_loop_ and RunUntilIdle()?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8cbdf6_43806645",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Test the case where estimation duration is too short.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf8c9cf_c7cfcb98",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Demuxer knows nothing about renderer... So how about \"how many bits have been read per second...\"",
+      "range": {
+        "startLine": 156,
+        "startChar": 63,
+        "endLine": 156,
+        "endChar": 71
+      },
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1c8041_bc72a0aa",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "There should be at most one enabled video stream at any time.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e6c151_ea0a4149",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "do you mean when AbortPendingRead() or Seek() is called?",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fa9a95_59ecd478",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "ditto: No need to mention \"Renderer\" in this file.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a770cab7_c760f707",
+        "filename": "media/base/media_url_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "How does the caller differentiate between \"not supported\" and \"not enough data\"? For the latter, the caller may wait and try again. For the former, the caller should just give up.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93eb44a6_d9c21411",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "You only need this line in this function.\n\nhttps://cs.chromium.org/chromium/src/media/blink/webmediaplayer_impl.cc?rcl\u003d2f243a6243b8f899103ee5d90b97a0abb3a35211\u0026l\u003d2006",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe67dbd_36595bed",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359bd203_2cc7126c",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "During Shutdown, you should just call bitrate_estimator_.reset()",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445b1df8_d79f74db",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "Why Reset() on EOS?",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa596a6_be8e9f26",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "We should find the enabled video stream and use it for estimation. For now, the enabled stream is always the first one, but that can change at any time.",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5053e5d3_7b0735ea",
+        "filename": "media/filters/chunk_demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "ditto, no need to mention \"renderer\"",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34924ad7_3cb80392",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-20T05:37:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
