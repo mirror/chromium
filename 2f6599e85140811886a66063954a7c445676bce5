@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d8d0d19_ebcc2629",
+        "filename": "third_party/WebKit/LayoutTests/inspector/components/color-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-20T02:59:44Z",
+      "side": 1,
+      "message": "Seems color.html test, lines 17-22, prints the hsv() and hsva() lines.  For the hsv() case, the alpha channel hsva[3] is omitted.\n\n/inspector/components/color.html@17-22\n\n        var hsv \u003d color.hsva();\n        var hsvString \u003d String.sprintf(\"hsv(%d, %d%, %d%)\", Math.round(hsv[0] * 360), Math.round(hsv[1] * 100), Math.round(hsv[2] * 100));\n        InspectorTest.addResult(\" - \" + hsvString);\n        var hsva \u003d color.hsva();\n        var hsvaString \u003d String.sprintf(\"hsva(%d, %d%, %d%, %f)\", Math.round(hsva[0] * 360), Math.round(hsva[1] * 100), Math.round(hsva[2] * 100), hsva[3]);\n        InspectorTest.addResult(\" - \" + hsvaString);",
+      "parentUuid": "560d7a79_b884e206",
+      "revId": "2f6599e85140811886a66063954a7c445676bce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77fc349_0af0c15f",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 9
