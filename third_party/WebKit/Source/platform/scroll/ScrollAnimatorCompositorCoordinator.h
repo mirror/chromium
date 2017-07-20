@@ -25,6 +25,10 @@ class CompositorAnimation;
 class CompositorAnimationPlayer;
 class CompositorAnimationTimeline;
 
+// ScrollAnimatorCompositorCoordinator is the common base class of user scroll
+// animators and programmatic scroll animators, and holds logic related to
+// scheduling and updating scroll animations running on the compositor.
+
 class PLATFORM_EXPORT ScrollAnimatorCompositorCoordinator
     : public GarbageCollectedFinalized<ScrollAnimatorCompositorCoordinator>,
       private CompositorAnimationPlayerClient,

@@ -46,6 +46,36 @@ namespace blink {
 
 class Scrollbar;
 
+// ScrollAnimatorMac implements user-input triggered scroll-offset animations,
+// scrollbar painting, and scrollbar opacity animations by delegating to native
+// Cocoa APIs.
+//
+// Scroll offset animations are implemented by NSScrollAnimationHelper which
+// invokes a BlinkScrollAnimationHelperDelegate to service an animation frame
+// by performing an immediate scroll to the requested offset (via
+// NotifyOffsetChanged).
+//
+// The "scrollbar painter controller" is an NSScrollerImpPair object, which
+// calls back into Blink via BlinkScrollbarPainterControllerDelegate.
+//
+// The "scrollbar painter" is an NSScrollerImp object, which calls back into
+// Blink via BlinkScrollbarPainterDelegate.  The scrollbar painter is registered
+// with ScrollbarThemeMac, so that the ScrollbarTheme painting APIs can call
+// into it.
+//
+// The scrollbar painter initiates an overlay scrollbar fade-out animation by
+// calling animateKnobAlphaTo on the delegate.  This starts a timer inside the
+// BlinkScrollbarPartAnimationTimer.  Each tick evaluates a cubic bezier
+// function to obtain the current opacity, which is stored in the scrollbar
+// painter with setKnobAlpha.
+//
+// If the scroller is composited, the opacity value stored on the scrollbar
+// painter is subsequently read out through ScrollbarThemeMac::ThumbOpacity and
+// plumbed into PaintedScrollbarLayerImpl::thumb_opacity_.
+//
+// There are also other things happening in this class which are not fully
+// understood.
+
 class PLATFORM_EXPORT ScrollAnimatorMac : public ScrollAnimatorBase {
   USING_PRE_FINALIZER(ScrollAnimatorMac, Dispose);
 
