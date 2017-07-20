@@ -50,7 +50,7 @@ PPP_TextInput_Proxy::PPP_TextInput_Proxy(Dispatcher* dispatcher)
       ppp_text_input_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_text_input_impl_ = static_cast<const PPP_TextInput_Dev*>(
-        dispatcher->local_get_interface()(PPP_TEXTINPUT_DEV_INTERFACE));
+        dispatcher->local_get_interface(PPP_TEXTINPUT_DEV_INTERFACE));
   }
 }
 

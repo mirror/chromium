@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "ppapi/shared_impl/ppapi_shared_export.h"
@@ -114,6 +115,7 @@ class ProxyAutoUnlock {
 //                               instance,
 //                               resource->pp_resource());
 template <class ReturnType>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)()) {
   ProxyAutoUnlock unlock;
   return function();
@@ -123,11 +125,13 @@ ReturnType CallWhileUnlocked(ReturnType (*function)()) {
 // A1. This allows callers to avoid having to do things like
 // const_cast to add const.
 template <class ReturnType, class A1, class P1>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)(A1), const P1& p1) {
   ProxyAutoUnlock unlock;
   return function(p1);
 }
 template <class ReturnType, class A1, class A2, class P1, class P2>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2),
                              const P1& p1,
                              const P2& p2) {
@@ -136,6 +140,7 @@ ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2),
 }
 template <class ReturnType, class A1, class A2, class A3, class P1, class P2,
           class P3>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2, A3),
                              const P1& p1,
                              const P2& p2,
@@ -145,6 +150,7 @@ ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2, A3),
 }
 template <class ReturnType, class A1, class A2, class A3, class A4, class P1,
           class P2, class P3, class P4>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2, A3, A4),
                              const P1& p1,
                              const P2& p2,
@@ -155,6 +161,7 @@ ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2, A3, A4),
 }
 template <class ReturnType, class A1, class A2, class A3, class A4, class A5,
           class P1, class P2, class P3, class P4, class P5>
+NO_SANITIZE("cfi-icall")
 ReturnType CallWhileUnlocked(ReturnType (*function)(A1, A2, A3, A4, A5),
                              const P1& p1,
                              const P2& p2,

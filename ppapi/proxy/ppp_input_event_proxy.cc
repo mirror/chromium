@@ -62,7 +62,7 @@ PPP_InputEvent_Proxy::PPP_InputEvent_Proxy(Dispatcher* dispatcher)
       ppp_input_event_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_input_event_impl_ = static_cast<const PPP_InputEvent*>(
-        dispatcher->local_get_interface()(PPP_INPUT_EVENT_INTERFACE));
+        dispatcher->local_get_interface(PPP_INPUT_EVENT_INTERFACE));
   }
 }
 

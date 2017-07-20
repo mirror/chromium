@@ -2782,6 +2782,7 @@ void DriverEGL::InitializeExtensionBindings() {
     return_type = func['return_type']
     arguments = func['arguments']
     file.write('\n')
+    file.write('__attribute__((no_sanitize("cfi-icall")))\n')
     file.write('%s %sApiBase::%sFn(%s) {\n' %
         (return_type, set_name.upper(), function_name, arguments))
     argument_names = MakeArgNames(arguments)

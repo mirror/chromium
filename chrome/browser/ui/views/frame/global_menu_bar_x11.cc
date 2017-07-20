@@ -356,6 +356,7 @@ std::string GlobalMenuBarX11::GetPathForWindow(unsigned long xid) {
   return base::StringPrintf("/com/canonical/menu/%lX", xid);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 DbusmenuMenuitem* GlobalMenuBarX11::BuildSeparator() {
   DbusmenuMenuitem* item = menuitem_new();
   menuitem_property_set(item, kPropertyType, kTypeSeparator);
@@ -363,6 +364,7 @@ DbusmenuMenuitem* GlobalMenuBarX11::BuildSeparator() {
   return item;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 DbusmenuMenuitem* GlobalMenuBarX11::BuildMenuItem(
     const std::string& label,
     int tag_id) {
@@ -376,6 +378,7 @@ DbusmenuMenuitem* GlobalMenuBarX11::BuildMenuItem(
   return item;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::InitServer(unsigned long xid) {
   std::string path = GetPathForWindow(xid);
   {
@@ -454,6 +457,7 @@ void GlobalMenuBarX11::Disable() {
   pref_change_registrar_.RemoveAll();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 DbusmenuMenuitem* GlobalMenuBarX11::BuildStaticMenu(
     DbusmenuMenuitem* parent,
     int menu_str_id,
@@ -499,6 +503,7 @@ DbusmenuMenuitem* GlobalMenuBarX11::BuildStaticMenu(
   return top;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::RegisterAccelerator(DbusmenuMenuitem* item,
                                            const ui::Accelerator& accelerator) {
   // A translation of libdbusmenu-gtk's menuitem_property_set_shortcut()
@@ -541,6 +546,7 @@ GlobalMenuBarX11::HistoryItem* GlobalMenuBarX11::HistoryItemForTab(
   return item;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::AddHistoryItemToMenu(HistoryItem* item,
                                             DbusmenuMenuitem* menu,
                                             int tag,
@@ -593,6 +599,7 @@ void GlobalMenuBarX11::OnTopSitesReceived(
   }
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::OnBookmarkBarVisibilityChanged() {
   CommandIDMenuItemMap::iterator it =
       id_to_menu_item_.find(IDC_SHOW_BOOKMARK_BAR);
@@ -607,6 +614,7 @@ void GlobalMenuBarX11::OnBookmarkBarVisibilityChanged() {
   }
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::RebuildProfilesMenu() {
   ClearMenuSection(profiles_menu_, TAG_PROFILES);
 
@@ -664,6 +672,7 @@ void GlobalMenuBarX11::RebuildProfilesMenu() {
   g_object_unref(create_profile_item);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 int GlobalMenuBarX11::GetIndexOfMenuItemWithTag(DbusmenuMenuitem* menu,
                                                 int tag_id) {
   GList* childs = menuitem_get_children(menu);
@@ -679,6 +688,7 @@ int GlobalMenuBarX11::GetIndexOfMenuItemWithTag(DbusmenuMenuitem* menu,
   return -1;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::ClearMenuSection(DbusmenuMenuitem* menu, int tag_id) {
   std::vector<DbusmenuMenuitem*> menuitems_to_delete;
 
@@ -719,6 +729,7 @@ void GlobalMenuBarX11::OnBrowserSetLastActive(Browser* browser) {
   RebuildProfilesMenu();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::EnabledStateChangedForCommand(int id, bool enabled) {
   CommandIDMenuItemMap::iterator it = id_to_menu_item_.find(id);
   if (it != id_to_menu_item_.end())
@@ -733,6 +744,7 @@ void GlobalMenuBarX11::TopSitesChanged(history::TopSites* top_sites,
     GetTopSitesData();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void GlobalMenuBarX11::TabRestoreServiceChanged(
     sessions::TabRestoreService* service) {
   const sessions::TabRestoreService::Entries& entries = service->entries();

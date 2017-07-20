@@ -288,7 +288,7 @@ PPB_Var_Deprecated_Proxy::PPB_Var_Deprecated_Proxy(
       task_factory_(this) {
   if (!dispatcher->IsPlugin()) {
     ppb_var_impl_ = static_cast<const PPB_Var_Deprecated*>(
-        dispatcher->local_get_interface()(PPB_VAR_DEPRECATED_INTERFACE));
+        dispatcher->local_get_interface(PPB_VAR_DEPRECATED_INTERFACE));
   }
 }
 

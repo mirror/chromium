@@ -61,7 +61,13 @@ class %(class_name)s {
 """
 
 
-HEADER_MEMBER_TEMPLATE = """  decltype(&::%(function_name)s) %(function_name)s;
+HEADER_MEMBER_TEMPLATE = """  decltype(&::%(function_name)s) %(function_name)s_fptr;
+
+template <typename... Args>
+__attribute__((no_sanitize("cfi-icall")))
+auto %(function_name)s(Args&&... args) -> decltype(%(function_name)s_fptr(args...)) {
+  return %(function_name)s_fptr(args...);
+}
 """
 
 
@@ -118,20 +124,20 @@ void %(class_name)s::CleanUp(bool unload) {
 
 IMPL_MEMBER_INIT_TEMPLATE = """
 #if defined(%(unique_prefix)s_DLOPEN)
-  %(function_name)s =
-      reinterpret_cast<decltype(this->%(function_name)s)>(
+  %(function_name)s_fptr =
+      reinterpret_cast<decltype(this->%(function_name)s_fptr)>(
           dlsym(library_, "%(function_name)s"));
 #endif
 #if defined(%(unique_prefix)s_DT_NEEDED)
   %(function_name)s = &::%(function_name)s;
 #endif
-  if (!%(function_name)s) {
+  if (!%(function_name)s_fptr) {
     CleanUp(true);
     return false;
   }
 """
 
-IMPL_MEMBER_CLEANUP_TEMPLATE = """  %(function_name)s = NULL;
+IMPL_MEMBER_CLEANUP_TEMPLATE = """  %(function_name)s_fptr = NULL;
 """
 
 def main():

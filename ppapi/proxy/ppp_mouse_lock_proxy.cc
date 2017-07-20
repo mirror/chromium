@@ -43,7 +43,7 @@ PPP_MouseLock_Proxy::PPP_MouseLock_Proxy(Dispatcher* dispatcher)
       ppp_mouse_lock_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_mouse_lock_impl_ = static_cast<const PPP_MouseLock*>(
-        dispatcher->local_get_interface()(PPP_MOUSELOCK_INTERFACE));
+        dispatcher->local_get_interface(PPP_MOUSELOCK_INTERFACE));
   }
 }
 

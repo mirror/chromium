@@ -122,96 +122,116 @@ void DriverWGL::ClearBindings() {
   memset(this, 0, sizeof(*this));
 }
 
-BOOL WGLApiBase::wglChoosePixelFormatARBFn(HDC dc,
-                                           const int* int_attrib_list,
-                                           const float* float_attrib_list,
-                                           UINT max_formats,
-                                           int* formats,
-                                           UINT* num_formats) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglChoosePixelFormatARBFn(HDC dc,
+                                      const int* int_attrib_list,
+                                      const float* float_attrib_list,
+                                      UINT max_formats,
+                                      int* formats,
+                                      UINT* num_formats) {
   return driver_->fn.wglChoosePixelFormatARBFn(dc, int_attrib_list,
                                                float_attrib_list, max_formats,
                                                formats, num_formats);
 }
 
-BOOL WGLApiBase::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
   return driver_->fn.wglCopyContextFn(hglrcSrc, hglrcDst, mask);
 }
 
-HGLRC WGLApiBase::wglCreateContextFn(HDC hdc) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC WGLApiBase::wglCreateContextFn(
+    HDC hdc) {
   return driver_->fn.wglCreateContextFn(hdc);
 }
 
-HGLRC WGLApiBase::wglCreateContextAttribsARBFn(HDC hDC,
-                                               HGLRC hShareContext,
-                                               const int* attribList) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglCreateContextAttribsARBFn(HDC hDC,
+                                         HGLRC hShareContext,
+                                         const int* attribList) {
   return driver_->fn.wglCreateContextAttribsARBFn(hDC, hShareContext,
                                                   attribList);
 }
 
-HGLRC WGLApiBase::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
   return driver_->fn.wglCreateLayerContextFn(hdc, iLayerPlane);
 }
 
-HPBUFFERARB WGLApiBase::wglCreatePbufferARBFn(HDC hDC,
-                                              int iPixelFormat,
-                                              int iWidth,
-                                              int iHeight,
-                                              const int* piAttribList) {
+__attribute__((no_sanitize("cfi-icall"))) HPBUFFERARB
+WGLApiBase::wglCreatePbufferARBFn(HDC hDC,
+                                  int iPixelFormat,
+                                  int iWidth,
+                                  int iHeight,
+                                  const int* piAttribList) {
   return driver_->fn.wglCreatePbufferARBFn(hDC, iPixelFormat, iWidth, iHeight,
                                            piAttribList);
 }
 
-BOOL WGLApiBase::wglDeleteContextFn(HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglDeleteContextFn(
+    HGLRC hglrc) {
   return driver_->fn.wglDeleteContextFn(hglrc);
 }
 
-BOOL WGLApiBase::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
   return driver_->fn.wglDestroyPbufferARBFn(hPbuffer);
 }
 
-HGLRC WGLApiBase::wglGetCurrentContextFn() {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglGetCurrentContextFn() {
   return driver_->fn.wglGetCurrentContextFn();
 }
 
-HDC WGLApiBase::wglGetCurrentDCFn() {
+__attribute__((no_sanitize("cfi-icall"))) HDC WGLApiBase::wglGetCurrentDCFn() {
   return driver_->fn.wglGetCurrentDCFn();
 }
 
-const char* WGLApiBase::wglGetExtensionsStringARBFn(HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+WGLApiBase::wglGetExtensionsStringARBFn(HDC hDC) {
   return driver_->fn.wglGetExtensionsStringARBFn(hDC);
 }
 
-const char* WGLApiBase::wglGetExtensionsStringEXTFn() {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+WGLApiBase::wglGetExtensionsStringEXTFn() {
   return driver_->fn.wglGetExtensionsStringEXTFn();
 }
 
-HDC WGLApiBase::wglGetPbufferDCARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) HDC WGLApiBase::wglGetPbufferDCARBFn(
+    HPBUFFERARB hPbuffer) {
   return driver_->fn.wglGetPbufferDCARBFn(hPbuffer);
 }
 
-BOOL WGLApiBase::wglMakeCurrentFn(HDC hdc, HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglMakeCurrentFn(
+    HDC hdc,
+    HGLRC hglrc) {
   return driver_->fn.wglMakeCurrentFn(hdc, hglrc);
 }
 
-BOOL WGLApiBase::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
-                                      int iAttribute,
-                                      int* piValue) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglQueryPbufferARBFn(
+    HPBUFFERARB hPbuffer,
+    int iAttribute,
+    int* piValue) {
   return driver_->fn.wglQueryPbufferARBFn(hPbuffer, iAttribute, piValue);
 }
 
-int WGLApiBase::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) int
+WGLApiBase::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
   return driver_->fn.wglReleasePbufferDCARBFn(hPbuffer, hDC);
 }
 
-BOOL WGLApiBase::wglShareListsFn(HGLRC hglrc1, HGLRC hglrc2) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglShareListsFn(
+    HGLRC hglrc1,
+    HGLRC hglrc2) {
   return driver_->fn.wglShareListsFn(hglrc1, hglrc2);
 }
 
-BOOL WGLApiBase::wglSwapIntervalEXTFn(int interval) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglSwapIntervalEXTFn(
+    int interval) {
   return driver_->fn.wglSwapIntervalEXTFn(interval);
 }
 
-BOOL WGLApiBase::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
   return driver_->fn.wglSwapLayerBuffersFn(hdc, fuPlanes);
 }
 

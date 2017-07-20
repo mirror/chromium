@@ -1,0 +1,12 @@
+diff --git a/third_party/lcms2-2.6/src/cmsxform.c b/third_party/lcms2-2.6/src/cmsxform.c
+index dffe6b2fb..c71ad97f7 100644
+--- a/third_party/lcms2-2.6/src/cmsxform.c
++++ b/third_party/lcms2-2.6/src/cmsxform.c
+@@ -803,6 +803,7 @@ void SetWhitePoint(cmsCIEXYZ* wtPt, const cmsCIEXYZ* src)
+ }
+ 
+ // New to lcms 2.0 -- have all parameters available.
++__attribute__((no_sanitize("cfi-icall")))
+ cmsHTRANSFORM CMSEXPORT cmsCreateExtendedTransform(cmsContext ContextID,
+                                                    cmsUInt32Number nProfiles, cmsHPROFILE hProfiles[],
+                                                    cmsBool  BPC[],

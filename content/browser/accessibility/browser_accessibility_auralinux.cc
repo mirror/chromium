@@ -548,6 +548,7 @@ static AtkRole browser_accessibility_get_role(AtkObject* atk_object) {
   return obj->atk_role();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static AtkStateSet* browser_accessibility_ref_state_set(AtkObject* atk_object) {
   BrowserAccessibilityAuraLinux* obj =
       ToBrowserAccessibilityAuraLinux(atk_object);
@@ -567,6 +568,7 @@ static AtkStateSet* browser_accessibility_ref_state_set(AtkObject* atk_object) {
   return state_set;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static AtkRelationSet* browser_accessibility_ref_relation_set(
     AtkObject* atk_object) {
   AtkRelationSet* relation_set =
@@ -580,6 +582,7 @@ static AtkRelationSet* browser_accessibility_ref_relation_set(
 // of the Atk* interfaces.
 //
 
+__attribute__((no_sanitize("cfi-icall")))
 static void browser_accessibility_init(AtkObject* atk_object, gpointer data) {
   if (ATK_OBJECT_CLASS(browser_accessibility_parent_class)->initialize) {
     ATK_OBJECT_CLASS(browser_accessibility_parent_class)
@@ -590,6 +593,7 @@ static void browser_accessibility_init(AtkObject* atk_object, gpointer data) {
       reinterpret_cast<BrowserAccessibilityAuraLinux*>(data);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static void browser_accessibility_finalize(GObject* atk_object) {
   G_OBJECT_CLASS(browser_accessibility_parent_class)->finalize(atk_object);
 }

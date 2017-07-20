@@ -57,66 +57,76 @@ void DriverOSMESA::ClearBindings() {
   memset(this, 0, sizeof(*this));
 }
 
-void OSMESAApiBase::OSMesaColorClampFn(GLboolean enable) {
+__attribute__((no_sanitize("cfi-icall"))) void
+OSMESAApiBase::OSMesaColorClampFn(GLboolean enable) {
   driver_->fn.OSMesaColorClampFn(enable);
 }
 
-OSMesaContext OSMESAApiBase::OSMesaCreateContextFn(GLenum format,
-                                                   OSMesaContext sharelist) {
+__attribute__((no_sanitize("cfi-icall"))) OSMesaContext
+OSMESAApiBase::OSMesaCreateContextFn(GLenum format, OSMesaContext sharelist) {
   return driver_->fn.OSMesaCreateContextFn(format, sharelist);
 }
 
-OSMesaContext OSMESAApiBase::OSMesaCreateContextExtFn(GLenum format,
-                                                      GLint depthBits,
-                                                      GLint stencilBits,
-                                                      GLint accumBits,
-                                                      OSMesaContext sharelist) {
+__attribute__((no_sanitize("cfi-icall"))) OSMesaContext
+OSMESAApiBase::OSMesaCreateContextExtFn(GLenum format,
+                                        GLint depthBits,
+                                        GLint stencilBits,
+                                        GLint accumBits,
+                                        OSMesaContext sharelist) {
   return driver_->fn.OSMesaCreateContextExtFn(format, depthBits, stencilBits,
                                               accumBits, sharelist);
 }
 
-void OSMESAApiBase::OSMesaDestroyContextFn(OSMesaContext ctx) {
+__attribute__((no_sanitize("cfi-icall"))) void
+OSMESAApiBase::OSMesaDestroyContextFn(OSMesaContext ctx) {
   driver_->fn.OSMesaDestroyContextFn(ctx);
 }
 
-GLboolean OSMESAApiBase::OSMesaGetColorBufferFn(OSMesaContext c,
-                                                GLint* width,
-                                                GLint* height,
-                                                GLint* format,
-                                                void** buffer) {
+__attribute__((no_sanitize("cfi-icall"))) GLboolean
+OSMESAApiBase::OSMesaGetColorBufferFn(OSMesaContext c,
+                                      GLint* width,
+                                      GLint* height,
+                                      GLint* format,
+                                      void** buffer) {
   return driver_->fn.OSMesaGetColorBufferFn(c, width, height, format, buffer);
 }
 
-OSMesaContext OSMESAApiBase::OSMesaGetCurrentContextFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) OSMesaContext
+OSMESAApiBase::OSMesaGetCurrentContextFn(void) {
   return driver_->fn.OSMesaGetCurrentContextFn();
 }
 
-GLboolean OSMESAApiBase::OSMesaGetDepthBufferFn(OSMesaContext c,
-                                                GLint* width,
-                                                GLint* height,
-                                                GLint* bytesPerValue,
-                                                void** buffer) {
+__attribute__((no_sanitize("cfi-icall"))) GLboolean
+OSMESAApiBase::OSMesaGetDepthBufferFn(OSMesaContext c,
+                                      GLint* width,
+                                      GLint* height,
+                                      GLint* bytesPerValue,
+                                      void** buffer) {
   return driver_->fn.OSMesaGetDepthBufferFn(c, width, height, bytesPerValue,
                                             buffer);
 }
 
-void OSMESAApiBase::OSMesaGetIntegervFn(GLint pname, GLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) void
+OSMESAApiBase::OSMesaGetIntegervFn(GLint pname, GLint* value) {
   driver_->fn.OSMesaGetIntegervFn(pname, value);
 }
 
-OSMESAproc OSMESAApiBase::OSMesaGetProcAddressFn(const char* funcName) {
+__attribute__((no_sanitize("cfi-icall"))) OSMESAproc
+OSMESAApiBase::OSMesaGetProcAddressFn(const char* funcName) {
   return driver_->fn.OSMesaGetProcAddressFn(funcName);
 }
 
-GLboolean OSMESAApiBase::OSMesaMakeCurrentFn(OSMesaContext ctx,
-                                             void* buffer,
-                                             GLenum type,
-                                             GLsizei width,
-                                             GLsizei height) {
+__attribute__((no_sanitize("cfi-icall"))) GLboolean
+OSMESAApiBase::OSMesaMakeCurrentFn(OSMesaContext ctx,
+                                   void* buffer,
+                                   GLenum type,
+                                   GLsizei width,
+                                   GLsizei height) {
   return driver_->fn.OSMesaMakeCurrentFn(ctx, buffer, type, width, height);
 }
 
-void OSMESAApiBase::OSMesaPixelStoreFn(GLint pname, GLint value) {
+__attribute__((no_sanitize("cfi-icall"))) void
+OSMESAApiBase::OSMesaPixelStoreFn(GLint pname, GLint value) {
   driver_->fn.OSMesaPixelStoreFn(pname, value);
 }
 

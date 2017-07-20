@@ -229,7 +229,7 @@ void PPB_Audio_Proxy::OnMsgCreate(PP_Instance instance_id,
 
   // Clean up the temporary audio config resource we made.
   const PPB_Core* core = static_cast<const PPB_Core*>(
-      dispatcher()->local_get_interface()(PPB_CORE_INTERFACE));
+      dispatcher()->local_get_interface(PPB_CORE_INTERFACE));
   core->ReleaseResource(audio_config_res);
 }
 

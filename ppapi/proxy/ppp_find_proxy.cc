@@ -56,7 +56,7 @@ PPP_Find_Proxy::PPP_Find_Proxy(Dispatcher* dispatcher)
       ppp_find_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_find_ = static_cast<const PPP_Find_Private*>(
-        dispatcher->local_get_interface()(PPP_FIND_PRIVATE_INTERFACE));
+        dispatcher->local_get_interface(PPP_FIND_PRIVATE_INTERFACE));
   }
 }
 

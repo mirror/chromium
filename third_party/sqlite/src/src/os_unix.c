@@ -340,6 +340,20 @@ static int posixOpen(const char *zFile, int flags, int mode){
   return open(zFile, flags, mode);
 }
 
+/*
+** Similarly, some Unix systems declare stat, fstat and lstat with an implicit
+** type mismatch.
+*/
+static int posixStat(const char *path, struct stat *buf) {
+  return stat(path, buf);
+}
+static int posixFstat(int fd, struct stat *buf) {
+  return fstat(fd, buf);
+}
+static int posixLstat(const char *path, struct stat *buf) {
+  return lstat(path, buf);
+}
+
 /* Forward reference */
 static int openDirectory(const char*, int*);
 static int unixGetpagesize(void);
@@ -367,7 +381,7 @@ static struct unix_syscall {
   { "getcwd",       (sqlite3_syscall_ptr)getcwd,     0  },
 #define osGetcwd    ((char*(*)(char*,size_t))aSyscall[3].pCurrent)
 
-  { "stat",         (sqlite3_syscall_ptr)stat,       0  },
+  { "stat",         (sqlite3_syscall_ptr)posixStat,  0  },
 #define osStat      ((int(*)(const char*,struct stat*))aSyscall[4].pCurrent)
 
 /*
@@ -380,7 +394,7 @@ static struct unix_syscall {
   { "fstat",        0,                 0  },
 #define osFstat(a,b,c)    0
 #else     
-  { "fstat",        (sqlite3_syscall_ptr)fstat,      0  },
+  { "fstat",        (sqlite3_syscall_ptr)posixFstat, 0  },
 #define osFstat     ((int(*)(int,struct stat*))aSyscall[5].pCurrent)
 #endif
 
@@ -470,7 +484,7 @@ static struct unix_syscall {
 #else
   { "munmap",       (sqlite3_syscall_ptr)0,               0 },
 #endif
-#define osMunmap ((void*(*)(void*,size_t))aSyscall[23].pCurrent)
+#define osMunmap ((int(*)(void*,size_t))aSyscall[23].pCurrent)
 
 #if HAVE_MREMAP && (!defined(SQLITE_OMIT_WAL) || SQLITE_MAX_MMAP_SIZE>0)
   { "mremap",       (sqlite3_syscall_ptr)mremap,          0 },
@@ -494,7 +508,7 @@ static struct unix_syscall {
 #define osReadlink ((ssize_t(*)(const char*,char*,size_t))aSyscall[26].pCurrent)
 
 #if defined(HAVE_LSTAT)
-  { "lstat",         (sqlite3_syscall_ptr)lstat,          0 },
+  { "lstat",         (sqlite3_syscall_ptr)posixLstat,     0 },
 #else
   { "lstat",         (sqlite3_syscall_ptr)0,              0 },
 #endif

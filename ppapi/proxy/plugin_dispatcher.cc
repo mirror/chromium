@@ -151,7 +151,7 @@ const void* PluginDispatcher::GetPluginInterface(
     const std::string& interface_name) {
   InterfaceMap::iterator found = plugin_interfaces_.find(interface_name);
   if (found == plugin_interfaces_.end()) {
-    const void* ret = local_get_interface()(interface_name.c_str());
+    const void* ret = local_get_interface(interface_name.c_str());
     plugin_interfaces_.insert(std::make_pair(interface_name, ret));
     return ret;
   }

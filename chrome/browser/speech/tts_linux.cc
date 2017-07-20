@@ -117,7 +117,7 @@ void TtsPlatformImplLinux::Initialize() {
     // http://crbug.com/317360
     ANNOTATE_SCOPED_MEMORY_LEAK;
     conn_ = libspeechd_loader_.spd_open(
-        "chrome", "extension_api", NULL, SPD_MODE_THREADED);
+        "chrome", "extension_api", nullptr, SPD_MODE_THREADED);
   }
   if (!conn_)
     return;
@@ -152,7 +152,7 @@ void TtsPlatformImplLinux::Reset() {
   if (conn_)
     libspeechd_loader_.spd_close(conn_);
   conn_ = libspeechd_loader_.spd_open(
-      "chrome", "extension_api", NULL, SPD_MODE_THREADED);
+      "chrome", "extension_api", nullptr, SPD_MODE_THREADED);
 }
 
 bool TtsPlatformImplLinux::PlatformImplAvailable() {

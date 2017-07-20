@@ -99,7 +99,7 @@ PPB_Core_Proxy::PPB_Core_Proxy(Dispatcher* dispatcher)
       ppb_core_impl_(NULL) {
   if (!dispatcher->IsPlugin()) {
     ppb_core_impl_ = static_cast<const PPB_Core*>(
-        dispatcher->local_get_interface()(PPB_CORE_INTERFACE));
+        dispatcher->local_get_interface(PPB_CORE_INTERFACE));
   }
 }
 

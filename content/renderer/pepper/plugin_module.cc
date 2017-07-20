@@ -514,6 +514,7 @@ PluginModule::PluginModule(const std::string& name,
   GetLivePluginSet()->insert(this);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 PluginModule::~PluginModule() {
   // In the past there have been crashes reentering the plugin module
   // destructor. Catch if that happens again earlier.
@@ -656,6 +657,7 @@ PepperPluginInstanceImpl* PluginModule::GetSomeInstance() const {
   return *instances_.begin();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 const void* PluginModule::GetPluginInterface(const char* name) const {
   if (host_dispatcher_wrapper_)
     return host_dispatcher_wrapper_->GetProxiedInterface(name);
@@ -746,6 +748,7 @@ void PluginModule::ResetHostGlobalsForTest() {
   host_globals = NULL;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 bool PluginModule::InitializeModule(
     const PepperPluginInfo::EntryPoints& entry_points) {
   DCHECK(!host_dispatcher_wrapper_.get()) << "Don't call for proxied modules.";

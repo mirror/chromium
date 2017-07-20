@@ -75,6 +75,7 @@ void GetPermissionSettingsCallback(
 
 }  // namespace
 
+__attribute__((no_sanitize("cfi-icall")))
 BrokerProcessDispatcher::BrokerProcessDispatcher(
     PP_GetInterface_Func get_plugin_interface,
     PP_ConnectInstance_Func connect_instance,

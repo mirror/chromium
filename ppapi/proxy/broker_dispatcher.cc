@@ -42,6 +42,7 @@ bool BrokerDispatcher::OnMessageReceived(const IPC::Message& msg) {
 }
 
 // Transfers ownership of the handle to the broker module.
+__attribute__((no_sanitize("cfi-icall")))
 void BrokerDispatcher::OnMsgConnectToPlugin(
     PP_Instance instance,
     IPC::PlatformFileForTransit handle,

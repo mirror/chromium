@@ -120,8 +120,11 @@ PPP_Instance_Proxy::PPP_Instance_Proxy(Dispatcher* dispatcher)
     // the interface, we want to say it supports the 1.1 version since we'll
     // convert it here. This magic conversion code is hardcoded into
     // PluginDispatcher::OnMsgSupportsInterface.
-    combined_interface_.reset(PPP_Instance_Combined::Create(
-        base::Bind(dispatcher->local_get_interface())));
+    combined_interface_.reset(PPP_Instance_Combined::Create(base::Bind(
+        [](Dispatcher* dispatcher, const char* interface_name) {
+          return dispatcher->local_get_interface(interface_name);
+        },
+        dispatcher)));
   }
 }
 

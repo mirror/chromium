@@ -152,6 +152,7 @@ PpapiThread::PpapiThread(const base::CommandLine& command_line, bool is_broker)
 PpapiThread::~PpapiThread() {
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void PpapiThread::Shutdown() {
   ChildThreadImpl::Shutdown();
 
@@ -271,6 +272,7 @@ void PpapiThread::Unregister(uint32_t plugin_dispatcher_id) {
   plugin_dispatchers_.erase(plugin_dispatcher_id);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void PpapiThread::OnLoadPlugin(const base::FilePath& path,
                                const ppapi::PpapiPermissions& permissions) {
   // In case of crashes, the crash dump doesn't indicate which plugin
@@ -516,6 +518,7 @@ void PpapiThread::OnCreateChannel(base::ProcessId renderer_pid,
   Send(new PpapiHostMsg_ChannelCreated(channel_handle));
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 void PpapiThread::OnSetNetworkState(bool online) {
   // Note the browser-process side shouldn't send us these messages in the
   // first unless the plugin has dev permissions, so we don't need to check
