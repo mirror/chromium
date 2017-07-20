@@ -83,8 +83,8 @@ cr.define('bookmarks', function() {
        */
       this.menuSource_ = MenuSource.NONE;
 
-      /** @private {Object<Command, cr.ui.KeyboardShortcutList>} */
-      this.shortcuts_ = {};
+      /** @private {!Map<Command, cr.ui.KeyboardShortcutList>} */
+      this.shortcuts_ = new Map();
 
       this.addShortcut_(Command.EDIT, 'F2', 'Enter');
       this.addShortcut_(Command.DELETE, 'Delete', 'Delete Backspace');
@@ -351,6 +351,9 @@ cr.define('bookmarks', function() {
         default:
           assert(false);
       }
+
+      bookmarks.util.recordEnumHistogram(
+          'BookmarkManager.CommandExecuted', command, Command.MAX_VALUE);
     },
 
     /**
@@ -360,11 +363,13 @@ cr.define('bookmarks', function() {
      *     shortcut.
      */
     handleKeyEvent: function(e, itemIds) {
-      for (var commandName in this.shortcuts_) {
-        var shortcut = this.shortcuts_[commandName];
-        if (shortcut.matchesEvent(e) && this.canExecute(commandName, itemIds)) {
-          this.handle(commandName, itemIds);
+      for (var [command, shortcut] of this.shortcuts_) {
+        if (shortcut.matchesEvent(e) && this.canExecute(command, itemIds)) {
+          this.handle(command, itemIds);
 
+          bookmarks.util.recordEnumHistogram(
+              'BookmarkManager.CommandExecutedFromKeyboard', command,
+              Command.MAX_VALUE);
           e.stopPropagation();
           e.preventDefault();
           return true;
@@ -387,7 +392,7 @@ cr.define('bookmarks', function() {
      */
     addShortcut_: function(command, shortcut, macShortcut) {
       var shortcut = (cr.isMac && macShortcut) ? macShortcut : shortcut;
-      this.shortcuts_[command] = new cr.ui.KeyboardShortcutList(shortcut);
+      this.shortcuts_.set(command, new cr.ui.KeyboardShortcutList(shortcut));
     },
 
     /**
@@ -638,7 +643,8 @@ cr.define('bookmarks', function() {
      */
     onCommandClick_: function(e) {
       this.handle(
-          e.currentTarget.getAttribute('command'), assert(this.menuIds_));
+          Number(e.currentTarget.getAttribute('command')),
+          assert(this.menuIds_));
       this.closeCommandMenu();
     },
 
