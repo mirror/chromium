@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec005612_a26a7963",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-20T18:34:30Z",
+      "side": 1,
+      "message": "nit: can you indicate the units in the variable name? Ie, kGPUMemoryLargestBucketKB",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7eee8a_1a337bae",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-20T18:34:30Z",
+      "side": 1,
+      "message": "nit: while here, can you also rename total_memory to total_memory_in_bytes",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e45d8a_47ff64c4",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-20T18:34:30Z",
+      "side": 1,
+      "message": "nit: this initially looks incorrect, since you\u0027re accumulating bytes into kb variable. Can you rename the variable to be \"_in_bytes\"?",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4d6f308_653ead88",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 5
@@ -13,6 +64,23 @@
       "writtenOn": "2017-07-20T17:40:01Z",
       "side": 1,
       "message": "Do you know why we skip recording 0? Do we get 0 sometimes? Is that representative of some invalid state? Maybe the check should be if there are picture layers in the active tree or something like that instead? For example, I could imagine if we had a tree of entirely solid color layers we might use no GPU memory and should record that we are using none.",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bd4d36_bbd74b6b",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-20T18:34:30Z",
+      "side": 1,
+      "message": "nit: the name is a bit inconsistent in KB/Kb capitalization with the other histogram. I\u0027m not sure which one is preferred, but maybe keep this as Kb?",
       "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
