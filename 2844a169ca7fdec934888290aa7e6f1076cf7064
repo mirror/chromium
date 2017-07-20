@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9fba957_8c5e7a84",
+        "filename": "cc/animation/animation_target.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-20T15:33:20Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s worth mentioning this change in the description.",
+      "revId": "2844a169ca7fdec934888290aa7e6f1076cf7064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504399b1_d7b91902",
+        "filename": "cc/animation/keyframed_animation_curve_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-20T15:33:20Z",
+      "side": 1,
+      "message": "\"boolean\"\n\nSame comment about the comments below :)",
+      "range": {
+        "startLine": 1079,
+        "startChar": 16,
+        "endLine": 1079,
+        "endChar": 20
+      },
+      "revId": "2844a169ca7fdec934888290aa7e6f1076cf7064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
