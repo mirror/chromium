@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33056958_a6f25da9",
+        "filename": "ios/chrome/browser/ui/webui/suggestions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:58:19Z",
+      "side": 1,
+      "message": "browser_state_ doesn\u0027t seem to be required",
+      "revId": "a0500baa1f2bb13517d63a4becb631070d4660f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2675455_1f1bd0b9",
+        "filename": "ios/chrome/browser/ui/webui/suggestions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:58:19Z",
+      "side": 1,
+      "message": "optional: As in the other CL, maybe pass in SuggestionsService directly?",
+      "revId": "a0500baa1f2bb13517d63a4becb631070d4660f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
