@@ -20,6 +20,20 @@ bool TouchSelectionControllerTestApi::GetEndVisible() const {
   return controller_->GetEndVisible();
 }
 
+int TouchSelectionControllerTestApi::GetStartAlpha() const {
+  if (controller_->active_status_ == TouchSelectionController::SELECTION_ACTIVE)
+    return controller_->start_selection_handle_->alpha();
+
+  return 0;
+}
+
+int TouchSelectionControllerTestApi::GetEndAlpha() const {
+  if (controller_->active_status_ == TouchSelectionController::SELECTION_ACTIVE)
+    return controller_->end_selection_handle_->alpha();
+
+  return 0;
+}
+
 TouchHandleOrientation
 TouchSelectionControllerTestApi::GetStartHandleOrientation() const {
   if (controller_->active_status_ != TouchSelectionController::SELECTION_ACTIVE)

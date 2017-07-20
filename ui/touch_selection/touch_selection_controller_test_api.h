@@ -20,6 +20,8 @@ class TouchSelectionControllerTestApi {
 
   bool GetStartVisible() const;
   bool GetEndVisible() const;
+  int GetStartAlpha() const;
+  int GetEndAlpha() const;
   TouchHandleOrientation GetStartHandleOrientation() const;
   TouchHandleOrientation GetEndHandleOrientation() const;
 
