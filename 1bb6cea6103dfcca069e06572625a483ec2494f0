@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a706e017_343ca4d5",
+        "filename": "ios/web/web_state/web_state_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T15:40:56Z",
+      "side": 1,
+      "message": "This like of code makes test sleep for 1 second. Can we try 200ms or 300ms first?",
+      "range": {
+        "startLine": 130,
+        "startChar": 60,
+        "endLine": 130,
+        "endChar": 72
+      },
+      "revId": "1bb6cea6103dfcca069e06572625a483ec2494f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
