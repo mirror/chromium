@@ -179,7 +179,7 @@ void DeriveCommandLine(const GURL& start_url,
 #endif
     app_list::switches::kDisableSyncAppList,
     app_list::switches::kEnableSyncAppList,
-    ash::switches::kAshEnableTouchView,
+    ash::switches::kAshEnableTabletMode,
     ash::switches::kAshForceEnableStylusTools,
     ash::switches::kAshEnablePaletteOnAllDisplays,
     ash::switches::kAshTouchHud,

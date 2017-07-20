@@ -560,18 +560,6 @@ const char kFillOnAccountSelectDescription[] =
     "Filling of passwords when an account is explicitly selected by the user "
     "rather than autofilling credentials on page load.";
 
-const char kForceTabletModeName[] = "Force Tablet Mode";
-const char kForceTabletModeDescription[] =
-    R"*(This flag can be used to force a certain mode on to a chromebook, )*"
-    R"*(despite its current orientation. "TouchView" means that the )*"
-    R"*(chromebook will act as if it were in touch view mode. "Clamshell" )*"
-    R"*(means that the chromebook will act as if it were in clamshell )*"
-    R"*(mode . "Auto" means that the chromebook will alternate between )*"
-    R"*(the two, based on its orientation.)*";
-const char kForceTabletModeTouchview[] = "TouchView";
-const char kForceTabletModeClamshell[] = "Clamshell";
-const char kForceTabletModeAuto[] = "Auto (default)";
-
 const char kForceTextDirectionName[] = "Force text direction";
 const char kForceTextDirectionDescription[] =
     "Explicitly force the per-character directionality of UI text to "
@@ -2565,6 +2553,19 @@ const char kForceEnableStylusToolsName[] = "Force enable stylus features";
 const char kForceEnableStylusToolsDescription[] =
     "Forces display of the stylus tools menu in the shelf and the stylus "
     "section in settings, even if there is no attached stylus device.";
+
+// Force UI Mode
+const char kUiModeName[] = "Force Ui Mode";
+const char kUiModeDescription[] =
+    R"*(This flag can be used to force a certain mode on to a chromebook, )*"
+    R"*(despite its current orientation. "Tablet" means that the )*"
+    R"*(chromebook will act as if it were in tablet mode. "Clamshell" )*"
+    R"*(means that the chromebook will act as if it were in clamshell )*"
+    R"*(mode . "Auto" means that the chromebook will alternate between )*"
+    R"*(the two, based on its orientation.)*";
+const char kUiModeTablet[] = "TouchView";
+const char kUiModeClamshell[] = "Clamshell";
+const char kUiModeAuto[] = "Auto (default)";
 
 const char kEnableLockScreenAppsName[] = "Enable lock screen note taking";
 
