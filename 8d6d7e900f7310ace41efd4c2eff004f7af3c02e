@@ -16,6 +16,24 @@
       "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d5b5c5_fe6872e9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-20T10:57:41Z",
+      "side": 1,
+      "message": "I personally think that exposing only WebTaskRunner is a good idea. However, gab@ is in the best position to make this kind of judgements.\n\nGab, WDYT?",
+      "parentUuid": "29c1358c_910e5940",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
