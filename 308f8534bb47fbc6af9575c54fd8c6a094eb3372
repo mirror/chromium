@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9e54d48_efc70145",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-20T23:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307ea48c_0a8e462a",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 52
+      },
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9c4c7cc_b9d0d84c",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f56e4cd_507c4614",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-20T23:43:53Z",
+      "side": 1,
+      "message": "RequestPermission requires a GURL.  What should I do instead?",
+      "parentUuid": "c9c4c7cc_b9d0d84c",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702aebf3_d5cfdea6",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 15
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "aaf32c8b_02f16049",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-20T23:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "702aebf3_d5cfdea6",
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75608f2a_f0a9a9e7",
         "filename": "device/geolocation/public/interfaces/geolocation.mojom",
         "patchSetId": 15
@@ -79,6 +145,24 @@
       "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844a503b_83f08439",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-20T23:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75608f2a_f0a9a9e7",
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
