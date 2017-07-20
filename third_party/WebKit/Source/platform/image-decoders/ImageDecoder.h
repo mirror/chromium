@@ -263,7 +263,7 @@ class PLATFORM_EXPORT ImageDecoder {
   // and returns true. Otherwise returns false.
   virtual bool HotSpot(IntPoint&) const { return false; }
 
-  void SetMemoryAllocator(SkBitmap::Allocator* allocator) {
+  virtual void SetMemoryAllocator(SkBitmap::Allocator* allocator) {
     // FIXME: this doesn't work for images with multiple frames.
     if (frame_buffer_cache_.IsEmpty()) {
       // Ensure that InitializeNewFrame is called, after parsing if
