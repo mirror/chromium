@@ -16,6 +16,29 @@
       "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c79d28_be64dd71",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T22:47:22Z",
+      "side": 1,
+      "message": "I think this would all be much cleaner if you got rid of the map, and exposed IsIncognito off of native TabAndroid.\nThen you would pass in a tab instead of the web contents here and read the web contents from the tab.",
+      "range": {
+        "startLine": 147,
+        "startChar": 33,
+        "endLine": 147,
+        "endChar": 45
+      },
+      "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
