@@ -56,6 +56,7 @@
 using autofill::PasswordForm;
 using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::SettingsMenuBackButton;
+using chrome_test_util::NavigationBarDoneButton;
 
 namespace {
 
@@ -413,6 +414,39 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [super tearDown];
 }
 
+// Saves an example form in the store.
+- (void)saveExamplePasswordForm {
+  PasswordForm example;
+  example.username_value = base::ASCIIToUTF16("concrete username");
+  example.password_value = base::ASCIIToUTF16("concrete password");
+  example.origin = GURL("https://example.com");
+  example.signon_realm = example.origin.spec();
+  [self savePasswordFormToStore:example];
+}
+
+// Removes all credentials stored.
+- (void)clearPasswordStore {
+  [self passwordStore]->RemoveLoginsCreatedBetween(base::Time(), base::Time(),
+                                                   base::Closure());
+  // Allow the PasswordStore to process this on the DB thread.
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+}
+
+// Opens the passwords page from the NTP. It requires no menus to be open.
+- (void)openPasswordSettings {
+  [ChromeEarlGreyUI openSettingsMenu];
+  [ChromeEarlGreyUI
+      tapSettingsMenuButton:chrome_test_util::SettingsMenuPasswordsButton()];
+}
+
+// Tap Edit in any settings view.
+- (void)tapEdit {
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_NAVIGATION_BAR_EDIT_BUTTON)]
+      performAction:grey_tap()];
+}
+
 // Verifies the UI elements are accessible on the Passwords page.
 // TODO(crbug.com/159166): This differs from testAccessibilityOnPasswords in
 // settings_egtest.mm in that here this tests the new UI (for viewing
@@ -431,7 +465,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   TapEdit();
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
 
   // Inspect "password details" view.
   [GetInteractionForPasswordEntry(@"example.com, concrete username")
@@ -442,7 +477,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy a password provide appropriate feedback,
@@ -489,7 +526,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy a username provide appropriate feedback.
@@ -518,7 +557,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy a site URL provide appropriate feedback.
@@ -547,7 +588,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that deleting a password from password details view goes back to the
@@ -601,7 +644,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that deleting a password from password details can be cancelled.
@@ -649,7 +694,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that if the list view is in edit mode, then the details password view
@@ -676,7 +723,50 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
+}
+
+// Checks that blacklisted credentials only have the Site section.
+- (void)testBlacklisted {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
+
+  PasswordForm blacklisted;
+  blacklisted.origin = GURL("https://example.com");
+  blacklisted.signon_realm = blacklisted.origin.spec();
+  blacklisted.blacklisted_by_user = true;
+  [self savePasswordFormToStore:blacklisted];
+
+  [self openPasswordSettings];
+
+  [GetInteractionForPasswordEntry(@"example.com") performAction:grey_tap()];
+
+  // Check that the Site section is there as well as the Delete button.
+  [[EarlGrey selectElementWithMatcher:SiteHeader()]
+      assertWithMatcher:grey_sufficientlyVisible()];
+  // Not using DeleteButton() matcher here, because that also encodes the
+  // relative position against the password section, which is missing in this
+  // case.
+  [GetInteractionForPasswordDetailItem(ButtonWithAccessibilityLabel(
+      l10n_util::GetNSString(IDS_IOS_SETTINGS_PASSWORD_DELETE_BUTTON)))
+      assertWithMatcher:grey_notNil()];
+
+  // Check that the rest is not present.
+  [[EarlGrey selectElementWithMatcher:UsernameHeader()]
+      assertWithMatcher:grey_nil()];
+  [[EarlGrey selectElementWithMatcher:PasswordHeader()]
+      assertWithMatcher:grey_nil()];
+
+  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy the site via the context menu item provide an
@@ -714,7 +804,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy the username via the context menu item provide
@@ -753,7 +845,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to copy the password via the context menu item provide
@@ -799,7 +893,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that attempts to show and hide the password via the context menu item
@@ -853,7 +949,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks that federated credentials have no password but show the federation.
@@ -897,7 +995,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
-  TapDone();
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  [self clearPasswordStore];
 }
 
 // Checks the order of the elements in the detail view layout for a
