@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b8cb14_3cba75cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:59:23Z",
+      "side": 1,
+      "message": "I think this would read better as either \"Pipe errors\". Or explain where it is being \"piped\" to.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f9d6c1_1f64f4d9",
+        "filename": "components/cast_certificate/cast_cert_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:59:23Z",
+      "side": 1,
+      "message": "FYI: This is subject to change, we will have to re-visit it in the future.\ni.e. PathBuilder really should be returning a partial (failed) path.\n\nI would suggest for now only returning either CERTS_VERIFY_GENERIC or ERR_CERTS_DATE_INVALID. Then we can extract more stuff from the GENERIC bucket as needed.",
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6c54f8_8c9a19ac",
+        "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:59:23Z",
+      "side": 1,
+      "message": "Can you update this comment?",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f811b6_6fa40046",
+        "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:59:23Z",
+      "side": 1,
+      "message": "nit: for consistency with |expected_error| I suggest either renaming this to |error|, or keeping parameter as |expected_result|",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67397e2_1237d799",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T00:59:23Z",
+      "side": 1,
+      "message": "Not sure what \"above\" is referring to.",
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
