@@ -7,6 +7,7 @@
 #include "base/ios/block_types.h"
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #import "base/test/ios/wait_util.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/pref_names.h"
@@ -18,18 +19,27 @@
 #import "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
+#include "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/stack_view_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
+#import "ios/web/public/test/http_server/blank_page_response_provider.h"
+#import "ios/web/public/test/http_server/http_server.h"
+#include "ios/web/public/test/http_server/http_server_util.h"
+#import "ios/web/public/test/js_test_scripts.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
+using web::test::GetScriptForJavaScriptAlert;
+using web::test::HttpServer;
+
 namespace {
+
 // Returns a GREYMatcher that matches |view|.
 // TODO(crbug.com/642619): Evaluate whether this should be shared code.
 id<GREYMatcher> ViewMatchingView(UIView* view) {
@@ -275,6 +285,56 @@ void SelectTabUsingStackView(Tab* tab) {
   ShowDeckWithType(DeckType::NORMAL);
   GREYAssert(![stackViewController isCurrentSetIncognito],
              @"Normal deck not selected.");
+}
+
+// Tests that closing a Tab that has a queued dialog successfully cancels the
+// dialog.
+- (void)testCloseTabWithDialog {
+  // The StackViewController is only used on iPhones.
+  if (IsIPadIdiom())
+    EARL_GREY_TEST_SKIPPED(@"Stack view is not used on iPads.");
+  // Load the blank test page so that JavaScript can be executed.
+  web::test::AddResponseProvider(web::test::CreateBlankPageResponseProvider());
+  const GURL kBlankPageURL = HttpServer::MakeUrl(web::test::kBlankTestPageURL);
+  [ChromeEarlGrey loadURL:kBlankPageURL];
+  web::WebState* webStateToClose = chrome_test_util::GetCurrentWebState();
+  // Enter stack view and show a dialog from the test page.
+  OpenStackView();
+  const std::string kCancelledMessageText("CANCELLED");
+  webStateToClose->ExecuteJavaScript(
+      GetScriptForJavaScriptAlert(kCancelledMessageText));
+  // Close the Tab that is attempting to display a dialog.
+  StackViewController* stackViewController =
+      chrome_test_util::GetStackViewController();
+  Tab* currentTab = chrome_test_util::GetCurrentTab();
+  StackCard* card = [[stackViewController activeCardSet] cardForTab:currentTab];
+  NSString* identifier = card.view.closeButtonId;
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(identifier)]
+      performAction:grey_tap()];
+  // Open a new tab.  This will exit the stack view and will make the non-
+  // incognito BrowserState active.  Attempt to present an alert with
+  // kMessageText to verify that there aren't any alerts still in the queue.
+  OpenNewTabUsingStackView();
+  [ChromeEarlGrey loadURL:kBlankPageURL];
+  const std::string kMessageText("MESSAGE");
+  chrome_test_util::GetCurrentWebState()->ExecuteJavaScript(
+      GetScriptForJavaScriptAlert(kMessageText));
+  // Wait for an alert with kMessageText.  If it is shown, then the dialog using
+  // kCancelledMessageText for the message was properly cancelled when the Tab
+  // was closed.
+  id<GREYMatcher> messageLabel =
+      chrome_test_util::StaticTextWithAccessibilityLabel(
+          base::SysUTF8ToNSString(kMessageText));
+  ConditionBlock condition = ^{
+    NSError* error = nil;
+    [[EarlGrey selectElementWithMatcher:messageLabel]
+        assertWithMatcher:grey_notNil()
+                    error:&error];
+    return !error;
+  };
+  GREYAssert(testing::WaitUntilConditionOrTimeout(
+                 testing::kWaitForUIElementTimeout, condition),
+             @"Alert with message was not found: %s", kMessageText.c_str());
 }
 
 @end
