@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c38eee9_4b388cb6",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T20:01:09Z",
+      "side": 1,
+      "message": "Currently, I don\u0027t see any validation in place for device_id at the IPC interface.\nmcasas@, emircan@ if you could share your thoughts on this?",
+      "parentUuid": "4d87eb49_a3547a49",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20fbeece_d909685d",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "12aab5dc_5bbca4c1",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T20:01:09Z",
+      "side": 1,
+      "message": "Yes, browser does validate this origin. Please see https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/media_stream_dispatcher_host.cc?sq\u003dpackage:chromium\u0026l\u003d159.",
+      "parentUuid": "20fbeece_d909685d",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5ceed9_1253870e",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T18:21:56Z",
       "side": 1,
       "message": "Great explanation, thanks immensely.",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e354262_96bd2c34",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T20:01:09Z",
+      "side": 1,
+      "message": "Didn\u0027t really contribute anything here w.r.t the comments. :)\nMoved this explanation as it is from the IPC header https://chromium-review.googlesource.com/c/575306/5/content/common/media/media_stream_messages.h#b110",
+      "parentUuid": "0f5ceed9_1253870e",
       "range": {
         "startLine": 45,
         "startChar": 3,
