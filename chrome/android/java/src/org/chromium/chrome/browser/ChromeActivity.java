@@ -1921,6 +1921,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             return false;
         } else if (id == R.id.forward_menu_id) {
             if (currentTab.canGoForward()) {
+                if (mToolbarManager != null) {
+                    mToolbarManager.setUrlBarFocus(false);
+                }
                 currentTab.goForward();
                 RecordUserAction.record("MobileMenuForward");
                 RecordUserAction.record("MobileTabClobbered");
