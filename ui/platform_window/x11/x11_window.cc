@@ -84,6 +84,7 @@ bool X11Window::CanDispatchEvent(const PlatformEvent& xev) {
 }
 
 uint32_t X11Window::DispatchEvent(const PlatformEvent& event) {
+  CHECK(false) << "X11Window::DispatchEvent";
   XEvent* xev = event;
   switch (xev->type) {
     case EnterNotify: {

@@ -114,6 +114,11 @@
 #include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #endif
 
+
+
+#include "base/debug/stack_trace.h"
+
+
 using base::Time;
 using base::TimeDelta;
 using base::TimeTicks;
@@ -1222,6 +1227,11 @@ void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
     const std::vector<EditCommand>* commands,
     bool* update_event) {
   TRACE_EVENT0("input", "RenderWidgetHostImpl::ForwardKeyboardEvent");
+
+
+  CHECK(false) << "RenderWidgetHostImpl::ForwardKeyboardEventWithCommands";
+
+
   if (owner_delegate_ &&
       !owner_delegate_->MayRenderWidgetForwardKeyboardEvent(key_event)) {
     return;
