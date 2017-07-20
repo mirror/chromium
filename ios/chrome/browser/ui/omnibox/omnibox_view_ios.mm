@@ -174,7 +174,8 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       ignore_popup_updates_(false),
       attributing_display_string_(nil) {
   DCHECK(field_);
-  popup_view_.reset(new OmniboxPopupViewIOS(this, model(), positioner));
+  popup_view_ = base::MakeUnique<OmniboxPopupViewIOS>(
+      this->browser_state(), this, model(), positioner);
   field_delegate_.reset(
       [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
   [field_ setDelegate:field_delegate_];
@@ -861,4 +862,33 @@ void OmniboxViewIOS::EmphasizeURLComponents() {
   if (!IsEditingOrEmpty())
     SetText(GetText());
 #endif
+}
+
+#pragma mark - OmniboxPopupViewSuggestionsDelegate
+
+void OmniboxViewIOS::TopmostSuggestionImageChanged(int imageId) {
+  this->SetLeftImage(imageId);
+}
+
+void OmniboxViewIOS::ResultsChanged(const AutocompleteResult& result) {
+  this->OnPopupResultsChanged(result);
+}
+
+void OmniboxViewIOS::PopupDidScroll() {
+  if (!IsIPadIdiom()) {
+    this->HideKeyboard();
+  }
+}
+
+void OmniboxViewIOS::DidSelectMatchForAppending(const base::string16& str) {
+  this->SetUserText(str);
+  this->FocusOmnibox();
+}
+
+void OmniboxViewIOS::DidSelectMatchForOpening(AutocompleteMatch match,
+                                              WindowOpenDisposition disposition,
+                                              const GURL& alternate_nav_url,
+                                              const base::string16& pasted_text,
+                                              size_t index) {
+  this->OpenMatch(match, disposition, alternate_nav_url, pasted_text, index);
 }

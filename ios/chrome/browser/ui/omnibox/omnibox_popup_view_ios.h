@@ -14,16 +14,40 @@
 #include "components/omnibox/browser/omnibox_popup_view.h"
 
 struct AutocompleteMatch;
+class AutocompleteResult;
+namespace ios {
+class ChromeBrowserState;
+}  // namespace ios
+class GURL;
 class OmniboxEditModel;
 @class OmniboxPopupMaterialViewController;
 class OmniboxPopupModel;
 @protocol OmniboxPopupPositioner;
-class OmniboxViewIOS;
+enum class WindowOpenDisposition;
+
+class OmniboxPopupViewSuggestionsDelegate {
+ public:
+  // Called whenever the topmost suggestion image has changed.
+  virtual void TopmostSuggestionImageChanged(int imageId) = 0;
+  // Called when results are updated.
+  virtual void ResultsChanged(const AutocompleteResult& result) = 0;
+  // Called whenever the popup is scrolled.
+  virtual void PopupDidScroll() = 0;
+  // Called when the user chose a suggestion from popup via "append" button.
+  virtual void DidSelectMatchForAppending(const base::string16& str) = 0;
+  // Called when a match was chosen for opening.
+  virtual void DidSelectMatchForOpening(AutocompleteMatch match,
+                                        WindowOpenDisposition disposition,
+                                        const GURL& alternate_nav_url,
+                                        const base::string16& pasted_text,
+                                        size_t index) = 0;
+};
 
 // iOS implementation of AutocompletePopupView.
 class OmniboxPopupViewIOS : public OmniboxPopupView {
  public:
-  OmniboxPopupViewIOS(OmniboxViewIOS* edit_view,
+  OmniboxPopupViewIOS(ios::ChromeBrowserState* browser_state,
+                      OmniboxPopupViewSuggestionsDelegate* delegate,
                       OmniboxEditModel* edit_model,
                       id<OmniboxPopupPositioner> positioner);
   ~OmniboxPopupViewIOS() override;
@@ -47,7 +71,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView {
 
  private:
   std::unique_ptr<OmniboxPopupModel> model_;
-  OmniboxViewIOS* edit_view_;  // weak, owns this instance
+  OmniboxPopupViewSuggestionsDelegate* delegate_;  // weak
   __weak id<OmniboxPopupPositioner> positioner_;
   // View that contains the omnibox popup table view and shadow.
   base::scoped_nsobject<UIView> popupView_;

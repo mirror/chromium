@@ -11,6 +11,7 @@
 #include "base/mac/scoped_nsobject.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "components/toolbar/toolbar_model.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 
 struct AutocompleteMatch;
@@ -29,7 +30,8 @@ class ChromeBrowserState;
 
 // iOS implementation of OmniBoxView.  Wraps a UITextField and
 // interfaces with the rest of the autocomplete system.
-class OmniboxViewIOS : public OmniboxView {
+class OmniboxViewIOS : public OmniboxView,
+                       public OmniboxPopupViewSuggestionsDelegate {
  public:
   // Retains |field|.
   OmniboxViewIOS(OmniboxTextFieldIOS* field,
@@ -96,6 +98,23 @@ class OmniboxViewIOS : public OmniboxView {
   bool OnCopy();
   void WillPaste();
   void OnDeleteBackward();
+
+  // OmniboxPopupViewSuggestionsDelegate methods
+
+  // Called whenever the topmost suggestion image has changed.
+  void TopmostSuggestionImageChanged(int imageId) override;
+  // Called when results are updated.
+  void ResultsChanged(const AutocompleteResult& result) override;
+  // Called whenever the popup is scrolled.
+  void PopupDidScroll() override;
+  // Called when the user chose a suggestion from popup via "append" button.
+  void DidSelectMatchForAppending(const base::string16& str) override;
+  // Called when a match was chosen for opening.
+  void DidSelectMatchForOpening(AutocompleteMatch match,
+                                WindowOpenDisposition disposition,
+                                const GURL& alternate_nav_url,
+                                const base::string16& pasted_text,
+                                size_t index) override;
 
   ios::ChromeBrowserState* browser_state() { return browser_state_; }
 
