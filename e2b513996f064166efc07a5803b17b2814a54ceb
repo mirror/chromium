@@ -70,6 +70,24 @@
       "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d4ba3e4_92a3a733",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-20T16:50:40Z",
+      "side": 1,
+      "message": "Yes, it will be fine to add test in another cl. I didn\u0027t see the code removed from HandleAudioDeviceChange. Did you upload the patch?",
+      "parentUuid": "440b6d14_56898120",
+      "revId": "e2b513996f064166efc07a5803b17b2814a54ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
