@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "75367965_66954a3f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:44:40Z",
+      "side": 1,
+      "message": "Also note that constants should start with k.",
+      "parentUuid": "1beffb6b_fa5461da",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67aa268b_74bf2971",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
         "patchSetId": 6
