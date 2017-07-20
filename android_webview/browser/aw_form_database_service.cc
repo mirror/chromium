@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/autofill/core/browser/webdata/autofill_table.h"
 #include "components/webdata/common/webdata_constants.h"
 #include "content/public/browser/browser_thread.h"
@@ -29,16 +30,15 @@ void DatabaseErrorCallback(sql::InitStatus init_status,
 namespace android_webview {
 
 AwFormDatabaseService::AwFormDatabaseService(const base::FilePath path) {
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+  auto ui_thread = base::ThreadTaskRunnerHandle::Get();
   web_database_ = new WebDatabaseService(
-      path.Append(kWebDataFilename),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      path.Append(kWebDataFilename), ui_thread,
       BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
   web_database_->AddTable(base::WrapUnique(new autofill::AutofillTable));
   web_database_->LoadDatabase();
 
   autofill_data_ = new autofill::AutofillWebDataService(
-      web_database_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      web_database_, ui_thread,
       BrowserThread::GetTaskRunnerForThread(BrowserThread::DB),
       base::Bind(&DatabaseErrorCallback));
   autofill_data_->Init();
@@ -49,7 +49,6 @@ AwFormDatabaseService::~AwFormDatabaseService() {
 }
 
 void AwFormDatabaseService::Shutdown() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(result_map_.empty());
   // TODO(sgurun) we don't run into this logic right now,
   // but if we do, then we need to implement cancellation
