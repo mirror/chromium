@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6035afc2_6850a639",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T09:13:10Z",
+      "side": 1,
+      "message": "GetTopInfo comment says: \"Returns info on the first memory region at or after |address|\"\nShouldn\u0027t you check here that |address| before the call \u003d\u003d address after the call?\nIf they are different that seems to suggest that you are querying a larger region than what you expect. (or maybe I am misunderstanding what that GetTopInfo does?)",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 16
+      },
+      "revId": "287337b10e11d108b06e735e0bc60bc1d11abf45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
