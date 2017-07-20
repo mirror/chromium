@@ -1300,6 +1300,19 @@ void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   CSPContext::SetSelf(origin);
 }
 
+void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
+  last_committed_url_ = url;
+  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
+    resource_coordinator::ResourceCoordinatorInterface* interface =
+        GetFrameResourceCoordinator();
+    if (interface) {
+      interface->SetProperty(
+          resource_coordinator::mojom::PropertyType::kURL,
+          base::MakeUnique<base::Value>(last_committed_url_.spec()));
+    }
+  }
+}
+
 void RenderFrameHostImpl::OnDetach() {
   frame_tree_->RemoveFrame(frame_tree_node_);
 }
@@ -3494,13 +3507,17 @@ RenderFrameHostImpl::GetMojoImageDownloader() {
 resource_coordinator::ResourceCoordinatorInterface*
 RenderFrameHostImpl::GetFrameResourceCoordinator() {
   if (!frame_resource_coordinator_) {
-    frame_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
-            resource_coordinator::CoordinationUnitType::kFrame);
-    if (parent_) {
-      parent_->GetFrameResourceCoordinator()->AddChild(
-          *frame_resource_coordinator_);
+    ServiceManagerConnection* connection =
+        ServiceManagerConnection::GetForProcess();
+    if (connection) {
+      frame_resource_coordinator_ =
+          base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
+              connection->GetConnector(),
+              resource_coordinator::CoordinationUnitType::kFrame);
+      if (parent_) {
+        parent_->GetFrameResourceCoordinator()->AddChild(
+            *frame_resource_coordinator_);
+      }
     }
   }
   return frame_resource_coordinator_.get();
