@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9751559f_078b9e06",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-20T18:13:23Z",
+      "side": 1,
+      "message": "Can you just add a comment here of for the test in general? I\u0027m really familiar with the issue right now but a good comment might be helpful later. Something like: \"Make sure that changes done in the editor are not persisted if the user cancels\"",
+      "range": {
+        "startLine": 1138,
+        "startChar": 2,
+        "endLine": 1138,
+        "endChar": 11
+      },
+      "revId": "57b058e914c8aec955949c8d5235b613192c8b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
