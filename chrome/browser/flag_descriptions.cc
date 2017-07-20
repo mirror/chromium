@@ -1375,6 +1375,10 @@ const char kAndroidPaymentAppsName[] = "Android payment apps";
 const char kAndroidPaymentAppsDescription[] =
     "Enable third party Android apps to integrate as payment apps";
 
+const char kAndroidSigninPromosName[] = "Signin promos for Android.";
+const char kAndroidSigninPromosDescription[] =
+    "New signin promos for Android which will be displayed in Settings.";
+
 const char kAutofillAccessoryViewName[] =
     "Autofill suggestions as keyboard accessory view";
 const char kAutofillAccessoryViewDescription[] =
