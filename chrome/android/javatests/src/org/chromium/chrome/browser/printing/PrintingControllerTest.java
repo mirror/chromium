@@ -14,6 +14,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +24,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.TestFileUtil;
@@ -170,13 +170,11 @@ public class PrintingControllerTest {
 
     /**
      * Test for http://crbug.com/528909
-     *
-     * @SmallTest
-     * @Feature({"Printing"})
      */
     @Test
+    @SmallTest
+    @Feature({"Printing"})
     @CommandLineFlags.Add(ContentSwitches.DISABLE_POPUP_BLOCKING)
-    @DisabledTest(message = "crbug.com/532652")
     public void testPrintClosedWindow() throws Throwable {
         if (!ApiCompatibilityUtils.isPrintingSupported()) return;
 
