@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "7fb798b8_142aa3ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T21:03:48Z",
+      "side": 1,
+      "message": "Ok, assert it is.",
+      "parentUuid": "e7f27d04_7488017d",
+      "range": {
+        "startLine": 1298,
+        "startChar": 8,
+        "endLine": 1298,
+        "endChar": 53
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c478c0ef_6afa42f6",
         "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
         "patchSetId": 6
