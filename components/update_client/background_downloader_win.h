@@ -38,8 +38,7 @@ namespace update_client {
 // a sequenced task runner, which handles all client COM interaction with
 // the BITS service.
 class BackgroundDownloader : public CrxDownloader {
- protected:
-  friend class CrxDownloader;
+ public:
   BackgroundDownloader(std::unique_ptr<CrxDownloader> successor,
                        net::URLRequestContextGetter* context_getter);
   ~BackgroundDownloader() override;
