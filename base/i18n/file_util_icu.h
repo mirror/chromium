@@ -39,6 +39,18 @@ BASE_I18N_EXPORT void ReplaceIllegalCharactersInPath(
     FilePath::StringType* file_name,
     char replace_char);
 
+// Replaces illegal characters in |file_name| to |replace_char|, can optionally
+// provide |encoding| to parse the path. |encoding| can be empty string for
+// unknown encoding.
+// On Windows and Mac, the file system encoding is already known, so |encoding|
+// won't be used.
+// On Linux, only UTF-8 will be parsed, other or unknown encoding will be parsed
+// as ASCII.
+BASE_I18N_EXPORT void ReplaceIllegalCharactersWithEncoding(
+    FilePath::StringType* file_name,
+    char replace_char,
+    const std::string& encoding);
+
 // Compares two filenames using the current locale information. This can be
 // used to sort directory listings. It behaves like "operator<" for use in
 // std::sort.

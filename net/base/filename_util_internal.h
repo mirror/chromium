@@ -17,7 +17,9 @@ class GURL;
 namespace net {
 
 using ReplaceIllegalCharactersFunction =
-    void (*)(base::FilePath::StringType* file_name, char replace_char);
+    void (*)(base::FilePath::StringType* file_name,
+             char replace_char,
+             const std::string& encoding);
 
 void SanitizeGeneratedFileName(base::FilePath::StringType* filename,
                                bool replace_trailing);

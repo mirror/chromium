@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "base/files/file_util.h"
+#include "base/i18n/i18n_constants.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -82,7 +83,7 @@ static const struct goodbad_pair {
     {L".    ", L"-   -"}
 };
 
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_POSIX)
 
 TEST_F(FileUtilICUTest, ReplaceIllegalCharactersInPathTest) {
   for (size_t i = 0; i < arraysize(kIllegalCharacterCases); ++i) {
@@ -93,6 +94,10 @@ TEST_F(FileUtilICUTest, ReplaceIllegalCharactersInPathTest) {
 #elif defined(OS_MACOSX)
     std::string bad_name(WideToUTF8(kIllegalCharacterCases[i].bad_name));
     ReplaceIllegalCharactersInPath(&bad_name, '-');
+    EXPECT_EQ(WideToUTF8(kIllegalCharacterCases[i].good_name), bad_name);
+#elif defined(OS_POSIX)
+    std::string bad_name(WideToUTF8(kIllegalCharacterCases[i].bad_name));
+    ReplaceIllegalCharactersWithEncoding(&bad_name, '-', kCodepageUTF8);
     EXPECT_EQ(WideToUTF8(kIllegalCharacterCases[i].good_name), bad_name);
 #endif
   }
