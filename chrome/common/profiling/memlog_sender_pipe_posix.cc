@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 #include "base/logging.h"
-#include "base/posix/unix_domain_socket_linux.h"
+#include "base/posix/unix_domain_socket_posix.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/common/profiling/memlog_stream.h"
 
