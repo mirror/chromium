@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ae0c77ee_ab773ead",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T20:41:09Z",
+      "side": 1,
+      "message": "Good point. Ryan, should we have separate PreviewsType values for Server and Client LoFi?",
+      "parentUuid": "82941185_6c4608d3",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 64
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8dee716_f86b02d6",
         "filename": "components/previews/core/previews_io_data.cc",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I\u0027d prefer to keep this blacklist check near the earlier blacklist check for consistency, plus since e.g. Offline previews is already rolling out, moving the ECT check up before the blacklist checks here could muck up UMA data, and even if that\u0027s totally worth it, seems like something for a separate CL.\n\nI don\u0027t feel strongly about this though, and I don\u0027t mind moving it if you think it\u0027s worth it.",
       "parentUuid": "d8dee716_f86b02d6",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be190b7_f2017483",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T20:41:09Z",
+      "side": 1,
+      "message": "Fundamentally, checking ECT first seems \"better\" to me to more quickly decide are we even in a device state that makes checking any blacklists/whitelists. Potentially, we will end up adding a much larger server-provided blacklist. Making the switch now (and facing some offline pages eligibility reason blip), may be smoother than later wrt UMA - if there is agreement on this ordering. Ryan, what is your guidance here?",
+      "parentUuid": "6a783473_5aacfde3",
       "range": {
         "startLine": 150,
         "startChar": 6,
