@@ -249,6 +249,26 @@ void BlinkAXTreeSource::SetAccessibilityMode(AccessibilityMode new_mode) {
   accessibility_mode_ = new_mode;
 }
 
+bool BlinkAXTreeSource::ShouldLoadInlineTextBoxesForId(int id) const {
+  int32_t focus_id = focus().AxID();
+  WebAXObject ancestor = GetFromId(id);
+  while (!ancestor.IsDetached()) {
+    int ancestor_id = ancestor.AxID();
+    if (load_inline_text_boxes_ids_.find(ancestor_id) !=
+            load_inline_text_boxes_ids_.end() ||
+        (ancestor_id == focus_id && ancestor.IsEditable())) {
+      return true;
+    }
+    ancestor = ancestor.ParentObject();
+  }
+
+  return false;
+}
+
+void BlinkAXTreeSource::SetLoadInlineTextBoxesForId(int id) {
+  load_inline_text_boxes_ids_.insert(id);
+}
+
 bool BlinkAXTreeSource::GetTreeData(AXContentTreeData* tree_data) const {
   CHECK(frozen_);
   tree_data->doctype = "html";
@@ -316,17 +336,9 @@ void BlinkAXTreeSource::GetChildren(
     std::vector<WebAXObject>* out_children) const {
   CHECK(frozen_);
 
-  if (parent.Role() == blink::kWebAXRoleStaticText) {
-    int32_t focus_id = focus().AxID();
-    WebAXObject ancestor = parent;
-    while (!ancestor.IsDetached()) {
-      if (ancestor.AxID() == accessibility_focus_id_ ||
-          (ancestor.AxID() == focus_id && ancestor.IsEditable())) {
-        parent.LoadInlineTextBoxes();
-        break;
-      }
-      ancestor = ancestor.ParentObject();
-    }
+  if (parent.Role() == blink::kWebAXRoleStaticText &&
+      ShouldLoadInlineTextBoxesForId(parent.AxID())) {
+    parent.LoadInlineTextBoxes();
   }
 
   bool is_iframe = false;
