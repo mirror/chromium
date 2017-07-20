@@ -16,6 +16,24 @@
       "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adb3563_6cc52ad7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30439,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-07-20T20:32:06Z",
+      "side": 1,
+      "message": "It does not include those kinds of server rules; this only reflects whether the client thinks that it\u0027s eligible for the preview type.",
+      "parentUuid": "0b4e3a4d_6b8276a5",
+      "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
