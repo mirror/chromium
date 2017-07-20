@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7596e47_7674a42f",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T17:01:14Z",
+      "side": 1,
+      "message": "I just wanted to point out https://crbug.com/722409 which describes a race where some browser/product code (on another thread) tries to check if a feature is enabled (accessing the global FeatureList singleton) and in parallel the test code overwrites the FeatureList singleton.  OTO, maybe the race is rare enough that this shouldn\u0027t be a concern (or maybe the race cannot happen at this point in the test - if no other thread wants to access the features list at this point).",
+      "range": {
+        "startLine": 580,
+        "startChar": 4,
+        "endLine": 580,
+        "endChar": 43
+      },
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
