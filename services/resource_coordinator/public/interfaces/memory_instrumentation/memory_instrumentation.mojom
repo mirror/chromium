@@ -62,6 +62,12 @@ struct PlatformPrivateFootprint {
 
 struct RawOSMemDump {
   uint32 resident_set_kb = 0;
+
+  // MacOS specific values:
+  uint64 private_bytes = 0;
+  uint64 shared_bytes = 0;
+  uint64 locked_bytes = 0;
+
   PlatformPrivateFootprint platform_private_footprint;
 };
 
