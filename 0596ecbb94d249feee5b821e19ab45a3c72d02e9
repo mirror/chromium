@@ -52,6 +52,24 @@
       "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcff747_eb0b0277",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T05:10:25Z",
+      "side": 1,
+      "message": "I am not really fond of mixing improvements of USE_V4L2_CODEC with this VAAPI removal. USE_V4L2_CODEC is used in quite a few places, and if this breaks something we would need to revert this whole change. Do you agree to move this part to another CL? (I can and will make sure USE_VAAPI is never dependent on OS_CHROMEOS though).",
+      "parentUuid": "df3c0e67_16313335",
+      "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
