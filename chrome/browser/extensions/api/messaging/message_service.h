@@ -59,60 +59,6 @@ class MessageService : public BrowserContextKeyedAPI {
   // example).
   struct MessageChannel;
 
-  // One side of the communication handled by extensions::MessageService.
-  class MessagePort {
-   public:
-    virtual ~MessagePort() {}
-
-    // Called right before a channel is created for this MessagePort and |port|.
-    // This allows us to ensure that the ports have no RenderFrameHost instances
-    // in common.
-    virtual void RemoveCommonFrames(const MessagePort& port);
-
-    // Check whether the given RenderFrameHost is associated with this port.
-    virtual bool HasFrame(content::RenderFrameHost* rfh) const;
-
-    // Called right before a port is connected to a channel. If false, the port
-    // is not used and the channel is closed.
-    virtual bool IsValidPort() = 0;
-
-    // Notify the port that the channel has been opened.
-    virtual void DispatchOnConnect(
-        const std::string& channel_name,
-        std::unique_ptr<base::DictionaryValue> source_tab,
-        int source_frame_id,
-        int guest_process_id,
-        int guest_render_frame_routing_id,
-        const std::string& source_extension_id,
-        const std::string& target_extension_id,
-        const GURL& source_url,
-        const std::string& tls_channel_id) {}
-
-    // Notify the port that the channel has been closed. If |error_message| is
-    // non-empty, it indicates an error occurred while opening the connection.
-    virtual void DispatchOnDisconnect(const std::string& error_message) {}
-
-    // Dispatch a message to this end of the communication.
-    virtual void DispatchOnMessage(const Message& message) = 0;
-
-    // Mark the port as opened by the specific frame.
-    virtual void OpenPort(int process_id, int routing_id) {}
-
-    // Close the port for the given frame.
-    virtual void ClosePort(int process_id, int routing_id) {}
-
-    // MessagePorts that target extensions will need to adjust their keepalive
-    // counts for their lazy background page.
-    virtual void IncrementLazyKeepaliveCount() {}
-    virtual void DecrementLazyKeepaliveCount() {}
-
-   protected:
-    MessagePort() {}
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(MessagePort);
-  };
-
   enum PolicyPermission {
     DISALLOW,           // The host is not allowed.
     ALLOW_SYSTEM_ONLY,  // Allowed only when installed on system level.
