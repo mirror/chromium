@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d29aea1_8afe6801",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab51cf0_ae6078a7",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d01b6026_6462627b",
         "filename": "ash/public/cpp/wallpaper_struct_traits.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65772a8_431e742b",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d01b6026_6462627b",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf5b438f_01f25bf2",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88398006_0ed2280d",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0402ddbb_36930fc5",
         "filename": "ash/public/cpp/wallpaper_struct_traits.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5168e4e4_b8013c55",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0402ddbb_36930fc5",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "319233f9_c5c7ed67",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f6faad2_a4425ba3",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1475155f_ab73b25d",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 10
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5c9cbd79_ed4f90f4",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1475155f_ab73b25d",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a70e5e8_1672ca29",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-19T23:29:20Z",
       "side": 1,
       "message": "What happened if a user set a new wallpaper? I didn\u0027t see the codes to remove the old [key, value] pair from the kWallpaperColors pref?",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f383e253_9d110fca",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Please see line 615 of wallpaper_manager.cc. (|RemoveUserWallpaperInfo|)",
+      "parentUuid": "3a70e5e8_1672ca29",
       "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "bc31e9ef_91b31dd0",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec7fb346_90338482",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "777c8969_bc01e1f5",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 10
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "761f2018_4ddf2071",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777c8969_bc01e1f5",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e32c0c5_dd383506",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4836804_2ac0dc80",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e32c0c5_dd383506",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +383,24 @@
       "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e356de1c_b31ea7ab",
+        "filename": "components/wallpaper/wallpaper_manager_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-20T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468d28c8_613c6908",
+      "revId": "536584db56c1b3ed981cf888a9747784ced21a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
