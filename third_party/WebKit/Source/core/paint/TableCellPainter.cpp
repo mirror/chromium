@@ -83,7 +83,9 @@ void TableCellPainter::PaintCollapsedBorders(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
     const CollapsedBorderValue& current_border_value) {
-  if (layout_table_cell_.Style()->Visibility() != EVisibility::kVisible)
+  // Collapsed row spanning cells may take up space, so return for hidden cells
+  // only.
+  if (layout_table_cell_.Style()->Visibility() == EVisibility::kHidden)
     return;
 
   LayoutPoint adjusted_paint_offset =

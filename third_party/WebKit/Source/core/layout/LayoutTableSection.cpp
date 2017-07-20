@@ -36,6 +36,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableSectionPainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/HashSet.h"
 
 namespace blink {
@@ -691,7 +692,6 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
         row_pos_[spanning_cell_end_index] +=
             spanning_rows_height.spanning_cell_height_ignoring_border_spacing +
             BorderSpacingForRow(spanning_cell_end_index - 1);
-
       extra_height_to_propagate =
           row_pos_[spanning_cell_end_index] - original_before_position;
       continue;
@@ -731,7 +731,6 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
     int extra_row_spanning_height =
         spanning_rows_height.spanning_cell_height_ignoring_border_spacing -
         spanning_rows_height.total_rows_height;
-
     if (total_percent < 100 && !total_auto_rows_height &&
         !total_remaining_rows_height) {
       // Distributing whole extra rowspanning height in percent row when only
@@ -757,7 +756,6 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
     extra_height_to_propagate =
         row_pos_[spanning_cell_end_index] - original_before_position;
   }
-
   if (extra_height_to_propagate) {
     // Apply changed height by rowSpan cells to rows present at the end of the
     // table
@@ -765,6 +763,13 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
          row++)
       row_pos_[row] += extra_height_to_propagate;
   }
+}
+
+bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
+  return (RuntimeEnabledFeatures::VisibilityCollapseEnabled() &&
+          ((grid_[row].row &&
+            grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+           Style()->Visibility() == EVisibility::kCollapse));
 }
 
 // Find out the baseline of the cell
@@ -828,9 +833,13 @@ int LayoutTableSection::CalcRowLogicalHeight() {
   // it spans. Otherwise we'd need to refragment afterwards.
   unsigned index_of_first_stretchable_row = 0;
 
+  is_any_row_collapsed_ = false;
+
   for (unsigned r = 0; r < grid_.size(); r++) {
     grid_[r].baseline = -1;
     int baseline_descent = 0;
+
+    is_any_row_collapsed_ |= RowHasVisibilityCollapse(r);
 
     if (state.IsPaginated() && grid_[r].row)
       row_pos_[r] += grid_[r].row->PaginationStrut().Ceil();
@@ -908,6 +917,30 @@ int LayoutTableSection::CalcRowLogicalHeight() {
     DistributeRowSpanHeightToRows(row_span_cells);
 
   DCHECK(!NeedsLayout());
+
+  // Collapsed rows are dealt with after distributing row span height to rows.
+  // This is because the distribution calculations should be as if the row were
+  // not collapsed. First, all rows' collapsed heights are set. After, row
+  // positions are adjusted accordingly.
+  if (is_any_row_collapsed_) {
+    row_collapsed_height_.resize(grid_.size());
+    for (unsigned r = 0; r < grid_.size(); r++) {
+      if (RowHasVisibilityCollapse(r)) {
+        // Update vector that keeps track of collapsed height of each row.
+        row_collapsed_height_[r] = row_pos_[r + 1] - row_pos_[r];
+      } else {
+        // Reset rows that are no longer collapsed.
+        row_collapsed_height_[r] = 0;
+      }
+    }
+
+    int total_collapsed_height = 0;
+    for (unsigned r = 0; r < grid_.size(); r++) {
+      total_collapsed_height += row_collapsed_height_[r];
+      // Adjust row position according to the height collapsed so far.
+      row_pos_[r + 1] -= total_collapsed_height;
+    }
+  }
 
   return row_pos_[grid_.size()];
 }
@@ -1183,7 +1216,18 @@ void LayoutTableSection::LayoutRows() {
         cell_vertical_align = EVerticalAlign::kTop;
       else
         cell_vertical_align = cell->Style()->VerticalAlign();
-      cell->ComputeIntrinsicPadding(r_height, cell_vertical_align, layouter);
+
+      // Calculate total collapsed height affecting one cell.
+      int collapsed_height = 0;
+      if (is_any_row_collapsed_) {
+        unsigned end_row = cell->RowSpan() + r;
+        for (unsigned spanning = r; spanning < end_row; spanning++) {
+          collapsed_height += row_collapsed_height_[spanning];
+        }
+      }
+
+      cell->ComputeIntrinsicPadding(collapsed_height, r_height,
+                                    cell_vertical_align, layouter);
 
       LayoutRect old_cell_rect = cell->FrameRect();
 
