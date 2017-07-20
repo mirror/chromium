@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e7f27d04_7488017d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T20:51:27Z",
+      "side": 1,
+      "message": "I don\u0027t think so, it\u0027s misleading. You can add an assert here if you\u0027re worried about it.",
+      "parentUuid": "6ff12f64_707cddcd",
+      "range": {
+        "startLine": 1298,
+        "startChar": 8,
+        "endLine": 1298,
+        "endChar": 53
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c478c0ef_6afa42f6",
         "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
         "patchSetId": 6

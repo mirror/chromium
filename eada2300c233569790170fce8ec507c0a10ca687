@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b42244_9f767a8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T20:51:27Z",
+      "side": 1,
+      "message": "nit: Move this function below the static methods. Trying to keep all the statics at the top of the file, and all of the non-statics below the constructor.",
+      "range": {
+        "startLine": 396,
+        "startChar": 17,
+        "endLine": 396,
+        "endChar": 40
+      },
+      "revId": "eada2300c233569790170fce8ec507c0a10ca687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
