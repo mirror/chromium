@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d96f173_34dbf0b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T23:46:22Z",
+      "side": 1,
+      "message": "a potential other option would be to expose a constructor that takes a list of tasks.  The list is copied over to an internal list and then add is not exposed.  Then we don\u0027t have to worry about add being called outside of start.\n\nMakes the callers a bit uglier though.",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "4d47bd0d58e0bb992f3b705f905d63866ac62b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce5bd57_e85b2e76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T23:46:22Z",
+      "side": 1,
+      "message": "I would actually get rid of the assert above and throw an IllegalStateException here.  If this gets called, something potentially could be very bad.  I would treat this as a check instead of dcheck.",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "4d47bd0d58e0bb992f3b705f905d63866ac62b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "915545dd_99152f82",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 6
