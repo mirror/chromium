@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "774cd3be_5763d747",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-20T00:26:45Z",
+      "side": 1,
+      "message": "Personally, I would \"throw Exception\" instead of having the try{}/catch{}",
+      "range": {
+        "startLine": 72,
+        "startChar": 68,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "25d08f2b742ed5c046894ac724763073560fc720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6515a383_ccd1be1a",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-20T00:26:45Z",
+      "side": 1,
+      "message": "You can extend EmptyTabModelSelectorObserver to make your implementation slightly shorter :)",
+      "revId": "25d08f2b742ed5c046894ac724763073560fc720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1c3a9a_eabbc7c2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-20T00:26:45Z",
+      "side": 1,
+      "message": "CallbackHelper#waitForCallback() is the usual wait of waiting for a function to be called.",
+      "revId": "25d08f2b742ed5c046894ac724763073560fc720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bf1b3b_cf4a5218",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/ApplicationTestUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-20T00:26:45Z",
+      "side": 1,
+      "message": "Can you switch to using the 1 argument version of pollInstrumentationThread()",
+      "revId": "25d08f2b742ed5c046894ac724763073560fc720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
