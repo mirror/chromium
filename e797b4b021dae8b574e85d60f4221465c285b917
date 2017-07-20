@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff0b22d8_1b7db71a",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T05:27:23Z",
+      "side": 1,
+      "message": "Added a CHECK() that it shouldn\u0027t happen. But agreed this is still confusing.",
+      "parentUuid": "fcedcbd7_27028608",
+      "revId": "e797b4b021dae8b574e85d60f4221465c285b917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34d6ea8b_979e6506",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e797b4b021dae8b574e85d60f4221465c285b917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e14430_fff59c2c",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T05:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d6ea8b_979e6506",
+      "revId": "e797b4b021dae8b574e85d60f4221465c285b917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
