@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f78cd3a_84e891f1",
+        "filename": "extensions/common/api/_api_features.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "sort",
+      "range": {
+        "startLine": 129,
+        "startChar": 3,
+        "endLine": 129,
+        "endChar": 24
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61b5407_b8cf064f",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "remove space before :",
+      "range": {
+        "startLine": 168,
+        "startChar": 13,
+        "endLine": 168,
+        "endChar": 14
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c5a6be_4a3dbab4",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "empty line after namespace, also empty line before closing }",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef65b885_057f0247",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "You probably want to keep this in a common place where you can access this, as we should be restricting dnr code based on this everywhere. Move this to extensions/common/features/feature_util.h.",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a524c39_2d464a88",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Is there a bug for this? Might want to refer to it from here.",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9509c0b_237f4efa",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Can this be moved to anonymous namespace above too?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311404cb_eb1bb0ca",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "If this key is not present, we should set error and not DCHECK fail, right?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbe9056_c4eb3380",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "CHECK?",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84919ff1_abecf46c",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Instead of manually checking for these, use ExtensionResource comment below.",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3bbc83_b4873036",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Should we require the file to have .json extension? We only care about its content being a valid json.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c5f06a_2cf87d1a",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Using ExtensionResource is the right thing to where we need to work with paths inside extension.\n\nYou might want to see content_scripts_handler.cc for pointers. I don\u0027t think we\u0027d need to worry about absolute or not, we always consider the path to be relative and feed it to ExtensionResource.",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52cfa31_050ae987",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Again as above^^^, you probably need to use ExtensionResource::GetFilePath for this.",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c41545_c854c60d",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "One file per extension? I was under the impression that we would have an array of paths... Did we decide to support exactly one?\n\nIf we decide to keep this single value, then there is another limitation: if we later decide to allow multiple paths, then we would have to manually migrate previous pref\u0027s state.",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 11
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1256bd_9453806b",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Saving the entire path probably isn\u0027t a good idea, I think you should keep the relative path.\n\nFirst, it will save some bytes, extension-\u003epath() will always give us the full path. Secondly, it seems fragile.",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98807e38_5182241e",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "Same as above: CHECK?",
+      "range": {
+        "startLine": 114,
+        "startChar": 9,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4bb73b_8b853e60",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "remove ManifestHandler::\n\nA single string key (\"declarative_net_request_rules\") to value (json file path) seems a little less flexible for future expansion. Generally, I can imagine a dictionary to be more flexible:\n\"declarative_net_request\": {\n  \"rule_files\": [ ... ]\n}\nHere you can add more (incremental) options later on without breaking previous stuff. WDYT?",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 24
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f5e7a7_db9e4066",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "This file should go under extensions/common/manifest_handlers/\nand match the manifest name: e.g. declarative_net_request_handler.cc/h",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0968acbf_2317c9e9",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T23:40:31Z",
+      "side": 1,
+      "message": "move the declaration and definition to .cc file under anonymous namespace?",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
