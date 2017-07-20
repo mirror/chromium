@@ -16,6 +16,24 @@
       "revId": "a5418786187f6af3327c9342845db1a32adfbbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7fdbcf_fc89f2e9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-20T15:07:20Z",
+      "side": 1,
+      "message": "Yeah, MutationObserver at least seems passing an empty context.  Thanks for letting us know.  Trying to fix this at https://chromium-review.googlesource.com/c/574509 .",
+      "parentUuid": "8f7a6f39_f226c647",
+      "revId": "a5418786187f6af3327c9342845db1a32adfbbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
