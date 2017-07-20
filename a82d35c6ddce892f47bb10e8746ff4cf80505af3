@@ -22,6 +22,30 @@
       "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80bb66e_fedb5b59",
+        "filename": "gpu/command_buffer/service/feature_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-07-20T17:53:23Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure we properly fetch extension strings from the SwiftShader libraries currently. I\u0027ll have to test this.\n\nAlso, just because the extension is present doesn\u0027t necessarily mean I want to use it. In the SwiftShader for WebGL case, I wouldn\u0027t want to use the hint.",
+      "parentUuid": "a0f95d60_a2aee237",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
