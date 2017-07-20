@@ -1,0 +1,4 @@
+This test starts a dedicated worker that loads insecure data via Fetch API. We should trigger a mixed content callback and block the load.
+
+Result: LOAD FAILED
+
