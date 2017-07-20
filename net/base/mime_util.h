@@ -105,16 +105,6 @@ NET_EXPORT void AddMultipartFinalDelimiterForUpload(
     const std::string& mime_boundary,
     std::string* post_data);
 
-struct MimeInfo {
-  const char* const mime_type;
-  const char* const extensions;  // comma separated list
-};
-
-// Finds mime type of |ext| from |mappings|.
-const char* FindMimeType(const MimeInfo* mappings,
-                         size_t mappings_len,
-                         const std::string& ext);
-
 }  // namespace net
 
 #endif  // NET_BASE_MIME_UTIL_H__

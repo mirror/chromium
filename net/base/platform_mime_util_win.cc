@@ -25,8 +25,9 @@ bool PlatformMimeUtil::GetPlatformMimeTypeFromExtension(
   return false;
 }
 
-bool PlatformMimeUtil::GetPreferredExtensionForMimeType(
-    const std::string& mime_type, base::FilePath::StringType* ext) const {
+bool PlatformMimeUtil::GetPlatformPreferredExtensionForMimeType(
+    const std::string& mime_type,
+    base::FilePath::StringType* ext) const {
   std::wstring key(
       L"MIME\\Database\\Content Type\\" + base::UTF8ToWide(mime_type));
   if (base::win::RegKey(HKEY_CLASSES_ROOT, key.c_str(), KEY_READ).ReadValue(
