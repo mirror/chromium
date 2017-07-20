@@ -487,10 +487,14 @@ void ContentsView::Layout() {
 bool ContentsView::OnKeyPressed(const ui::KeyEvent& event) {
   bool handled = app_list_pages_[GetActivePageIndex()]->OnKeyPressed(event);
 
-  if (!handled) {
-    if (event.key_code() == ui::VKEY_TAB && event.IsShiftDown()) {
+  if (!handled && event.key_code() == ui::VKEY_TAB) {
+    if (is_fullscreen_app_list_enabled_) {
+      GetSearchBoxView()->MoveTabFocus(event.IsShiftDown());
+      return true;
+    }
+    if (event.IsShiftDown()) {
       GetSearchBoxView()->MoveTabFocus(true);
-      handled = true;
+      return true;
     }
   }
 
