@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc77f43_daa5c316",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T05:30:16Z",
+      "side": 1,
+      "message": "my guess is these could be WPT tests. there are some mixed content WPT tests. we also enable the flag for some service worker test:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/resources/testharnessreport.js?l\u003d32\u0026rcl\u003d2f243a6243b8f899103ee5d90b97a0abb3a35211\n\nmkwst would be a great reviewer but i see they\u0027re ooo for now.",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5506fd04_fe50b2bc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-blocked.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T05:30:16Z",
+      "side": 1,
+      "message": "historically layout tests mention a bug number, not sure if we continue that practice:\nhttps://trac.webkit.org/wiki/Writing%20Layout%20Tests%20for%20DumpRenderTree\n\nmaybe also say \"the test passes if the result is \"LOAD FAILED\"?",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f65d6_09905529",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/resources/fetch-on-dedicated-worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T05:30:16Z",
+      "side": 1,
+      "message": "\u0027fetch-on-dedicated-worker.js\u0027 doesn\u0027t really give a clue that it\u0027s doing an insecure fetch.\n\nmaybe this should be named something like \u0027cross-origin-fetch-on-dedicated-worker.js\u0027\n\n?",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
