@@ -54,9 +54,10 @@
 #include "media/video/video_encode_accelerator.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(USE_VAAPI)
 #include "media/gpu/vaapi_wrapper.h"
-#elif defined(OS_WIN)
+#endif
+#if defined(OS_WIN)
 #include "media/gpu/media_foundation_video_encode_accelerator_win.h"
 #endif
 
@@ -2323,7 +2324,7 @@ int main(int argc, char** argv) {
     LOG(FATAL) << "--measure_latency requires --run_at_fps enabled to work.";
   }
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(USE_VAAPI)
   media::VaapiWrapper::PreSandboxInitialization();
 #elif defined(OS_WIN)
   media::MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization();
