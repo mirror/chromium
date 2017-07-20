@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "3db3d4d6_c29e7299",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-07-20T15:02:05Z",
+      "side": 1,
+      "message": "If I marked this function as const, it will require GetCurrentFrameFromCompositor() must be const too. But I can\u0027t modify GetCurrentFrameFromCompositor() to const since it will cause other similar compiler error. So I didn\u0027t declare VisibleRect as const in base class.",
+      "revId": "37a473f09897d0a702a7b801cc925e75c45d98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de543b96_9fbe3c23",
         "filename": "third_party/WebKit/Source/platform/testing/EmptyWebMediaPlayer.h",
         "patchSetId": 5
