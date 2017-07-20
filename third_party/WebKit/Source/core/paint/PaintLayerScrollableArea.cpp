@@ -1923,6 +1923,11 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
   if (layer->size().IsEmpty())
     return false;
 
+  if (Node* node = layer->GetLayoutObject().GetNode()) {
+    if (node->IsElementNode() && ToElement(node)->IsInputElement())
+      return false;
+  }
+
   bool needs_composited_scrolling = true;
 
   // TODO(flackr): Allow integer transforms as long as all of the ancestor
