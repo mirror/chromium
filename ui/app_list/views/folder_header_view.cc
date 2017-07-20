@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/views/app_list_folder_view.h"
@@ -24,10 +25,13 @@ namespace app_list {
 
 namespace {
 
-const int kPreferredWidth = 360;
-const int kPreferredHeight = 48;
-const int kBottomSeparatorHeight = 1;
-const int kMaxFolderNameWidth = 300;
+constexpr int kPreferredWidth = 360;
+constexpr int kPreferredHeight = 48;
+constexpr int kBottomSeparatorHeight = 1;
+constexpr int kMaxFolderNameWidth = 300;
+
+// The left and right side padding of the separator under search box view.
+constexpr int kSeparatorPaddingFullscreen = 28;
 
 }  // namespace
 
@@ -177,7 +181,10 @@ void FolderHeaderView::OnPaint(gfx::Canvas* canvas) {
     return;
 
   // Draw bottom separator line.
-  rect.Inset(kAppsGridPadding, 0);
+  rect.Inset(features::IsFullscreenAppListEnabled()
+                 ? kSeparatorPaddingFullscreen * 2
+                 : kAppsGridPadding,
+             0);
   rect.set_y(rect.bottom() - kBottomSeparatorHeight);
   rect.set_height(kBottomSeparatorHeight);
   canvas->FillRect(rect, kTopSeparatorColor);

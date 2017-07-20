@@ -57,6 +57,11 @@ constexpr int kDragBufferPx = 20;
 // Padding space in pixels between pages.
 constexpr int kPagePadding = 40;
 
+// Padding space in right and left side of each page. The space is used for page
+// switcher on the right side. Left side should have the same space to keep each
+// page horizontally centered.
+constexpr int kPageLeftRightPaddingFullscreen = 28;
+
 // Preferred tile size when showing in fixed layout.
 constexpr int kPreferredTileWidth = 100;
 constexpr int kPreferredTileHeight = 100;
@@ -663,7 +668,9 @@ bool AppsGridView::IsAnimatingView(AppListItemView* view) {
 gfx::Size AppsGridView::CalculatePreferredSize() const {
   const gfx::Insets insets(GetInsets());
   gfx::Size size = GetTileGridSize();
-  if (!is_fullscreen_app_list_enabled_) {
+  if (is_fullscreen_app_list_enabled_) {
+    size.Enlarge(kPageLeftRightPaddingFullscreen * 2, 0);
+  } else {
     // If we are in a folder, ignore the page switcher for height calculations.
     int page_switcher_height =
         folder_delegate_ ? 0 : page_switcher_view_->GetPreferredSize().height();
@@ -2152,6 +2159,8 @@ gfx::Rect AppsGridView::GetExpectedTileBounds(int row, int col) const {
   gfx::Rect tile_bounds(gfx::Point(bounds.x() + col * total_tile_size.width(),
                                    bounds.y() + row * total_tile_size.height()),
                         total_tile_size);
+  if (is_fullscreen_app_list_enabled_)
+    tile_bounds.Offset(kPageLeftRightPaddingFullscreen);
   tile_bounds.Inset(-GetTilePadding());
   return tile_bounds;
 }
