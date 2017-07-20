@@ -48,6 +48,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     this._decorationsElement = this._gutterContainer.createChild('div', 'hidden');
 
     this._elementCloseTag = elementCloseTag;
+    this._flagged = null;
 
     if (this._node.nodeType() === Node.ELEMENT_NODE && !elementCloseTag)
       this._canAddAttributes = true;
@@ -143,6 +144,92 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
    */
   isEditing() {
     return !!this._editing;
+  }
+
+  /**
+   * @return {?string} node
+   */
+  passwordManagerInferredTypeForInput() {
+    var node = this._node;
+    if (node.getAttribute('type') === 'text')
+      return 'username';
+    if (node.getAttribute('type') === 'password')
+      return 'password';
+    return null;
+  }
+
+  flagNode() {
+    if (!Elements.ElementsPanel.instance().element.isAncestor(this._titleElement.firstChild))
+      return;
+
+    if (this._flagged !== null) {
+      // var levels = ['warning', 'error'];
+      // levels.concat(levels.map(level => `descendant-${level}`))
+      //   .forEach(level => this.listItemElement.classList.remove(level));
+      this.listItemElement.classList.remove('error');
+      this.listItemElement.classList.remove('warning');
+      this.listItemElement.classList.remove('has-flagged-children');
+      this._flagged.remove();
+      this._flagged = null;
+    }
+    var node = this._node;
+    var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+    var flags = analysisModel.flags().get(node);
+
+    if (flags !== undefined && flags.length > 0) {
+      var flag = flags[0];
+      this._flagged = this.listItemElement.createChild('div', 'element-flag');
+      analysisModel._appendFlagContentToNode(flag, this._flagged);
+      var icon = UI.Icon.create('smallicon-' + flag.level, 'element-icon force-color');
+      this._flagged.appendChild(icon);
+      this.listItemElement.classList.add(flag.level);
+      if (flags.length > 1) {
+        var toggle = this._flagged.createChild('span', 'element-icon-count');
+        toggle.createTextChild(flags.length);
+        toggle.addEventListener('click', () => toggle.classList.toggle('open'));
+        var additional = this._flagged.createChild('div', 'element-flags-additional');
+        for (var flag of flags.slice(1)) {
+          var line = additional.createChild('div', `element-flag-additional ${flag.level}`);
+          analysisModel._appendFlagContentToNode(flag, line);
+          var icon = UI.Icon.create('smallicon-' + flag.level, 'element-icon force-color');
+          line.appendChild(icon);
+        }
+      }
+      this._createSelection();
+      return;
+    }
+
+    var descendantFlags = analysisModel.getFlagsForDescendants(node);
+    if (descendantFlags.length > 0) {
+      var flag = descendantFlags.find(flag => flag.level === 'error') || descendantFlags[0];
+      this.listItemElement.classList.add('has-flagged-children', flag.level);
+      this._createSelection();
+    }
+  }
+
+  updateFlags() {
+    if (this._node.nodeType() === Node.ELEMENT_NODE && !this.isClosingTag())
+      this.treeOutline._flagNode(this._node);
+  }
+
+  /**
+   * @param {!DOMNode} tagElement
+   */
+  addPlaceholders(tagElement) {
+    var node = this._node;
+    // Autocomplete attributes.
+    if (node.nodeName().toLowerCase() === 'input' && node.getAttribute('autocomplete') === undefined) {
+      var inference = this.passwordManagerInferredTypeForInput();
+      if (inference !== null) {
+        tagElement.createTextChild(' ');
+        var placeholder = tagElement.createChild('span', 'placeholder-attribute');
+        placeholder.createChild('code').createTextChild(`autocomplete="${inference}"`);
+        placeholder.addEventListener('dblclick', () => {
+          node.setAttribute('', `autocomplete="${inference}"`);
+          placeholder.remove();
+        });
+      }
+    }
   }
 
   /**
@@ -451,6 +538,13 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
    */
   _showContextMenu(event) {
     this.treeOutline.showContextMenu(this, event);
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _showSuggestion(event) {
+    this.treeOutline.showSuggestion(this, event);
   }
 
   /**
@@ -914,7 +1008,8 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     }
 
     if ((attributeName.trim() || newText.trim()) && oldText !== newText) {
-      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this));
+      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this))
+          .then(this.updateFlags.bind(this));
       return;
     }
 
@@ -968,7 +1063,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       var newTreeItem = treeOutline.selectNodeAfterEdit(wasExpanded, error, nodeId);
       moveToNextAttributeIfNeeded.call(newTreeItem);
     }
-    this._node.setNodeName(newText, changeTagNameCallback);
+    this._node.setNodeName(newText, changeTagNameCallback).then(this.updateFlags.bind(this));
   }
 
   /**
@@ -1058,6 +1153,12 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       if (this.selected) {
         this._createSelection();
         this._createHint();
+      }
+      if (this._flagged) {
+        this._createSelection();
+        this.listItemElement.appendChild(this._flagged);
+      } else if (this._node.nodeType() === Node.ELEMENT_NODE && !this.isClosingTag()) {
+        this.flagNode();
       }
     }
 
@@ -1378,6 +1479,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
           tagElement.createTextChild(' ');
           this._buildAttributeDOM(tagElement, attr.name, attr.value, updateRecord, false, node);
         }
+        this.addPlaceholders(tagElement);
       }
       if (updateRecord) {
         var hasUpdates = updateRecord.hasRemovedAttributes() || updateRecord.hasRemovedChildren();
