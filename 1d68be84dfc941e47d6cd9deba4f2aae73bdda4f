@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac392d8_73f88540",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:35:35Z",
+      "side": 1,
+      "message": "Is there a way to know if/when the insets in |search_box| changes? (because we should be updating the insets if/when that happens)",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d6cc15_1e81dfc4",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:35:35Z",
+      "side": 1,
+      "message": "Can this be false by default?",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d281173_2d68594b",
+        "filename": "ui/views/bubble/bubble_window_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:35:35Z",
+      "side": 1,
+      "message": "Same q here about updating insets in the targeter if/when insets of the view changes.",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d041205a_eac98c92",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:35:35Z",
+      "side": 1,
+      "message": "Should this now return false?",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767a0ff7_f3c0796e",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:35:35Z",
+      "side": 1,
+      "message": "And should this now be removed?",
+      "revId": "1d68be84dfc941e47d6cd9deba4f2aae73bdda4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
