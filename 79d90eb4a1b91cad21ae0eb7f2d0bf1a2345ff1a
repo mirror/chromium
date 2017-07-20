@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "5db51cdf_56e028ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-20T07:43:20Z",
+      "side": 1,
+      "message": "They\u0027re also toggling internal APIs in order to verify our behavior with non-default settings. I\u0027m fine with this kind of test not being upstreamed.",
+      "parentUuid": "f602202b_99e448c4",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d1af5c_364ceedc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-allowed.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-20T07:43:20Z",
+      "side": 1,
+      "message": "Even though we\u0027re not upstreaming it, I\u0027d still prefer for you to write this (and the other tests) as a `testharness.js` test. Something like:\n\n```\nif (window.testRunner) {\n  testRunner.overridePreference(\"WebKitAllowRunningInsecureContent\", true);\n}\n\nasync_test(t \u003d\u003e {\n  var w \u003d new Worker(\"...\");\n  worker.addEventListener(\"message\", t.step_func_done(e \u003d\u003e {\n    assert_equals(e.data, \"LOADED\");\n  }));\n}, \"Insecure resource loads inside Worker when \u0027AllowRunningInsecureContent\u0027 is set.\");\n```\n\nYou can still generate the `-expected.txt` file to validate the console message, and the test ends up more cleanly asserting a result. WDYT?",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5506fd04_fe50b2bc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-blocked.https.html",
         "patchSetId": 2
@@ -101,6 +136,24 @@
       "side": 1,
       "message": "insecure-fetch-on-dedicated-worker.js looks better.",
       "parentUuid": "0e0f65d6_09905529",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59875967_1b8ab6a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/resources/fetch-on-dedicated-worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-20T07:43:20Z",
+      "side": 1,
+      "message": "I\u0027m fine with that rename (with the tiny nit that I\u0027d use \"in\" rather than \"on\". :)",
+      "parentUuid": "923bc30b_3ebded30",
       "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
