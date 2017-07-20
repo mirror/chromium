@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84d5d44f_3b6c0e85",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-20T14:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd11501_64797b3a",
+      "revId": "da78bd4e78dce8084449d70c4a5ebcbb35a32e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca0eec7_04908b79",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "da78bd4e78dce8084449d70c4a5ebcbb35a32e2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920b55cc_e23c2e7a",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-20T14:57:15Z",
+      "side": 1,
+      "message": "With this and the above change, this is what I now get: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d737271#c29",
+      "parentUuid": "6ca0eec7_04908b79",
+      "range": {
+        "startLine": 290,
+        "startChar": 32,
+        "endLine": 290,
+        "endChar": 55
+      },
+      "revId": "da78bd4e78dce8084449d70c4a5ebcbb35a32e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
