@@ -270,7 +270,7 @@ bool PacketNumberQueue::Empty() const {
 QuicPacketNumber PacketNumberQueue::Min() const {
   DCHECK(!Empty());
   if (use_deque_) {
-    return packet_number_deque_[0].min();
+    return packet_number_deque_.front().min();
   } else {
     return packet_number_intervals_.begin()->min();
   }
@@ -279,7 +279,7 @@ QuicPacketNumber PacketNumberQueue::Min() const {
 QuicPacketNumber PacketNumberQueue::Max() const {
   DCHECK(!Empty());
   if (use_deque_) {
-    return packet_number_deque_[packet_number_deque_.size() - 1].max() - 1;
+    return packet_number_deque_.back().max() - 1;
   } else {
     return packet_number_intervals_.rbegin()->max() - 1;
   }
