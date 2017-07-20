@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d34ed38_3f451b51",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T14:38:49Z",
+      "side": 1,
+      "message": "I wonder if we want to return or CHECK here? Oystein, any idea if we can just CHECK?",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0167e9_950c7239",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T14:38:49Z",
+      "side": 1,
+      "message": "I think this should be nameed as HasAncestor? That is, \"this\" object \"has\" an ancestor \"unit\".",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f503c_be69cc02",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T14:38:49Z",
+      "side": 1,
+      "message": "Similarly, HasDescendant",
+      "range": {
+        "startLine": 240,
+        "startChar": 27,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acfb307_f2b78728",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T14:38:49Z",
+      "side": 1,
+      "message": "Are you going to change the tab-frame relationship in the next CL?",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
