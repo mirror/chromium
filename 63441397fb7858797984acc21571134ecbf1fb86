@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3787e8d9_19ef63ba",
+        "filename": "chrome/browser/vr/elements/linear_layout.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "That\u0027s a cute trick, wish I\u0027d thought of it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11373602_bc8cef94",
         "filename": "chrome/browser/vr/elements/linear_layout.h",
         "patchSetId": 6
@@ -31,6 +54,109 @@
       "side": 1,
       "message": "I appreciate the desire to decouple layout, but I\u0027d prefer not to go this route. What I\u0027m creating here is an analog to android\u0027s linear layout (https://developer.android.com/guide/topics/ui/layout/linear.html). Semantically, I feel that this makes more sense as an object in the entity hierarchy as it is on android.\n\nI\u0027d be happy to chat about this offline, but here\u0027s a bit more of my thinking on the matter.\n\nSince a layout needs to know about all elements it effects, it will need to have some notion of \"children\" or \"laid out elements\". We could accomplish this by having a dummy UiElement to house the children, to hold onto the layout strategy object, and to handle aggregate positioning of the laid out collection of elements (you may want to, eg, slide the linear list of items upward together and fade it away). But at this point, since we need a UiElement and an object to house the specialized layout behavior, I think it makes more sense to provide the specialized behavior via override on a clearly named, dedicated subclass. I think this will also work well if we move to a declarative format for specifying our hierarchy (like Android\u0027s xml specification).\n\nAlso, changing layout modes is rare, and I think we\u0027re unlikely to need this behavior (and even if we did swap layout modes, I imagine we\u0027d accomplish it differently).",
       "parentUuid": "11373602_bc8cef94",
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c20990_b3ec418b",
+        "filename": "chrome/browser/vr/elements/linear_layout.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "LayOutChildren() :)  (a la \"setup\" vs \"set up\")",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ea997d_437920e6",
+        "filename": "chrome/browser/vr/elements/linear_layout_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "Probably don\u0027t need the one-element case again for vertical, but I assume you\u0027re just keeping the two tests near-identical.  In which case, if you had more than 2, you\u0027d probably want to parameterize them, but that seems like overkill here.  tldr: looks good.",
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906b3376_be9421f9",
+        "filename": "chrome/browser/vr/elements/linear_layout_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "The fact that you index like this, and have documented the indexes in ui_element.h, means you should probably have constants for the indexes IMO.",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8caa47f_942c2381",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "Ahh, and there they are.  I think they should be public, even if just for tests.",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e2eb05_354d6f61",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T14:51:52Z",
+      "side": 1,
+      "message": "This is a bit concerning.  From scene manager\u0027s perspective, it should only need to add operations it cares about - it\u0027s the element\u0027s job to understand that it needs 4 operations under the hood.  Would it be better to have a wrapper class that, when instantiated, makes 4 identity operations, and then has setters to override individual components?\n\neg:\n\nvr::ElementTransforms transforms;\ntransforms.SetTranslation(1,2,3);\nelement-\u003eSetTransforms(transforms);",
       "revId": "63441397fb7858797984acc21571134ecbf1fb86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
