@@ -16,6 +16,24 @@
       "revId": "671996d249559e21305fb79b9ee94c26ad612f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23315107_e3ff930e",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523b1d1c_c6a3e895",
+      "revId": "671996d249559e21305fb79b9ee94c26ad612f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
