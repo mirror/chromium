@@ -758,6 +758,8 @@ ${INCLUDES}
 
 // Step 1: forward declarations.
 namespace {
+{STRINGS_PLACEHOLDER}
+
 $CLASS_PATH_DEFINITIONS
 
 }  // namespace
@@ -793,7 +795,8 @@ $REGISTER_NATIVES
     }
     assert ((values['JNI_NATIVE_METHODS'] == '') ==
             (values['REGISTER_NATIVES'] == ''))
-    return WrapOutput(template.substitute(values))
+    ret = template.substitute(values)
+    return WrapOutput(NameStringLiterals(ret, self.fully_qualified_class))
 
   def GetClassPathDefinitionsString(self):
     ret = []
@@ -1268,6 +1271,21 @@ base::android::LazyGetClass(env, k${JAVA_CLASS}ClassPath, \
         'JNI_SIGNATURE': signature,
     }
     return template.substitute(values)
+
+
+def NameStringLiterals(output, fully_qualified_class):
+  all_strings = []
+  # Hash prevents collisions when two headers are included by the same .cc file.
+  name_hash = abs(hash(fully_qualified_class))
+
+  def sub_func(m):
+    name = 'kJniStringLiteral%d' % (name_hash + len(all_strings))
+    all_strings.append((name, m.group()))
+    return name
+
+  ret = re.sub(r'(?<!#include )(?<!\[\] = )(?:".*?"\s*)+', sub_func, output)
+  defs = '\n'.join('const char %s[] = %s;' % x for x in all_strings)
+  return ret.replace('{STRINGS_PLACEHOLDER}', defs)
 
 
 def WrapOutput(output):
