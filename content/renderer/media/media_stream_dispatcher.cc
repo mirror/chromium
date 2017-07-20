@@ -80,9 +80,9 @@ void MediaStreamDispatcher::GenerateStream(
   DVLOG(1) << "MediaStreamDispatcher::GenerateStream(" << request_id << ")";
 
   requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  Send(new MediaStreamHostMsg_GenerateStream(routing_id(), next_ipc_id_++,
-                                             controls, security_origin,
-                                             is_processing_user_gesture));
+  GetMediaStreamDispatcherHost()->GenerateStream(routing_id(), next_ipc_id_++,
+                                                 controls, security_origin,
+                                                 is_processing_user_gesture);
 }
 
 void MediaStreamDispatcher::CancelGenerateStream(
