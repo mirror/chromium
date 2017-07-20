@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff374e1_df8decb6",
+        "filename": "components/exo/data_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-20T13:40:28Z",
+      "side": 1,
+      "message": "Please don\u0027t add any singletons to exo code. Especially not for objects that can be created by clients. Can we use the exo Display instance? For this type of reverse lookup (aura::Window -\u003e client wayland resource) using a mechanism like what we have for pointer and keyboard classes is preferred. See:\nhttps://cs.chromium.org/chromium/src/components/exo/wayland/server.cc?\nl\u003d2957",
+      "revId": "4aa6777941d9ad4bd6eb42a216eb5bb8b19ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c37700_82ddf3e4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-20T13:40:28Z",
+      "side": 1,
+      "message": "fyi, this will be called multiple times. multiple times for the same client is even possible.",
+      "revId": "4aa6777941d9ad4bd6eb42a216eb5bb8b19ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
