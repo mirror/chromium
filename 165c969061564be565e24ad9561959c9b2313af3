@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "317176d6_4f5b21e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "nit: Instead of saying what we \"should\" do, say what we do. Something like:\n\nOn low-end devices, we will now drop the copy here in order to favor reducing peak memory over performance.",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8699c64a_8d7e3408",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "full_size_image is just a (shallow) copy of current_frame-\u003ebitmap(). And it only gets set to it if current_frame is not empty. So you could drop this variable (and the parameter) and just declare it down below, where you first use it (and assign it a copy of current_frame-\u003ebitmap()).",
+      "range": {
+        "startLine": 225,
+        "startChar": 11,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f5f1a9_2a727b84",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "Instead of adding an 8th parameter to Decode, how would you feel about adding a method on ExternalAllocator that reports whether it was used?\n\nYou\u0027d also need to change the |allocator| parameter to be the specific subclass.",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 31
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32ac0cb_83b1f8e0",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "Come to think of it, this will never be true if current_frame is non-NULL, so you don\u0027t even need full_size_image here - you can just check current_frame.\nYou don\u0027t actually need full_size_image until the end of this method. (Before you potentially delete the decoder/clear its cache.)",
+      "range": {
+        "startLine": 241,
+        "startChar": 6,
+        "endLine": 241,
+        "endChar": 30
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85b6b78d_fd795caf",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -30,6 +122,29 @@
       "writtenOn": "2017-07-20T02:24:42Z",
       "side": 1,
       "message": "last",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adc6fcb_38061389",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "Currently we take this branch if all_data_received, since even if the image is not complete we won\u0027t need the decoder to continue decoding.\n\nI think I see what\u0027s happening, though. If all_data_received, using_external_allocator will also be true, so we\u0027ll take the second branch and still remove the decoder. That seems a little fragile, though. (This code relies on the fact that it knows that Decode() would have set using_external_allocator to true if all_data_received.)\n\nIn addition, if Khushal is right and we\u0027re not going to use the external allocator for multi-frame images, this means we won\u0027t call ClearCacheExceptFrame if the final frame is incomplete. That should only happen if there was an error, since we only try to decode frames which have all their data available (except for the first frame). (As an aside, this class only checks for failure if the Frame was Empty, but I wonder if it should in other cases?)\n\nDecode() already calls ClearCacheExceptFrame(index_we_decoded), so the downside to this change is that we\u0027ll hang onto that final frame unnecessarily.",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 64
+      },
       "revId": "165c969061564be565e24ad9561959c9b2313af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +191,70 @@
     },
     {
       "key": {
+        "uuid": "b389b591_43a08555",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "\u003e Could you add a comment to explain what\u0027s happening here? I can see that it wants to decode directly into the output memory for single-frame images, if we can decode the complete image. But the part with |new_decoder| is a bit subtle. IIUC the reason for this is that if the decoder already has a partial frame, then the decode is still completed into it, even if we can decode the whole image now.\n\nThat is correct. I suppose we could instead copy the partially decoded frame into the output memory, and finish the decode in the output memory. That would require some complex changes, though. (cblume@\u0027s planning to move the cache out of ImageDecoder anyway, which will make such a complex change unnecessary. There\u0027s still some work to be done first, so I think the change you\u0027re making in the meantime makes sense.)\n\n\u003e \n\u003e If possible, I\u0027d say add an API to get the ImageFrame without causing a decode and check the FrameStatus to make it obvious. If not, at least having a comment would be great.",
+      "parentUuid": "4ba0633b_ea2d35c0",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb127f7d_6cd9fcdb",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "This comment now seems to be in an arbitrary place, since this variable gets set to true in multiple places.\n\nI\u0027m not sure where it belongs though, or whether it\u0027s needed at all.",
+      "range": {
+        "startLine": 349,
+        "startChar": 7,
+        "endLine": 349,
+        "endChar": 50
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93cbdc1_9f09f9b5",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "This isn\u0027t really related to your change, but this will always be true. (It would only be isNull() if the Status were FrameEmpty, in which case we would have returned above.)",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 32
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e3a5364_5e97fa9f",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
         "patchSetId": 5
@@ -87,6 +266,30 @@
       "writtenOn": "2017-07-20T02:24:42Z",
       "side": 1,
       "message": "Could this be changes to SkBitmap::Allocator\u0026? This should never be null and it will remove some unnecessary checks for it later on.",
+      "range": {
+        "startLine": 141,
+        "startChar": 42,
+        "endLine": 141,
+        "endChar": 60
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68588ecf_d2a32864",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5e3a5364_5e97fa9f",
       "range": {
         "startLine": 141,
         "startChar": 42,
@@ -115,6 +318,29 @@
         "startChar": 34,
         "endLine": 161,
         "endChar": 46
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8c9275_169c8f5b",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-20T15:44:26Z",
+      "side": 1,
+      "message": "Add a comment about what this means? It seems we really want to know whether it\u0027s a device with a small amount of RAM (by some standard). \"LowEnd\" might refer to other properties, but I see that base::SysInfo::IsLowEndDevice (same name) explicitly refers to having \u003c 512 MB memory \"in the current implementation\".",
+      "range": {
+        "startLine": 318,
+        "startChar": 15,
+        "endLine": 318,
+        "endChar": 29
       },
       "revId": "165c969061564be565e24ad9561959c9b2313af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
