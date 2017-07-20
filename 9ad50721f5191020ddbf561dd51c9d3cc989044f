@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e27c3c42_0929456d",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:16:32Z",
+      "side": 1,
+      "message": "Added enum for result and keep using name SetExitVrPromptEnabled as discussed with ymalik@ offline.",
+      "parentUuid": "3f1ea34a_e654c259",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 37
+      },
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5242ea6_f188b234",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 3
@@ -364,6 +388,24 @@
       "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc0c082_3d809b82",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:16:32Z",
+      "side": 1,
+      "message": "Went with the proposed solution.",
+      "parentUuid": "9a6a9a58_1d2165e3",
+      "revId": "9ad50721f5191020ddbf561dd51c9d3cc989044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
