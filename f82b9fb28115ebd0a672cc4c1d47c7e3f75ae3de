@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25aebd48_44354ca9",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T22:00:49Z",
+      "side": 1,
+      "message": "Is it really better to have GetScriptForJavaScriptAlert abstraction? \n\nchrome_test_util::ExecuteJavaScript(@\"alert(\u0027cancelled\u0027)\", nil); looks more readable to me.",
+      "range": {
+        "startLine": 305,
+        "startChar": 6,
+        "endLine": 305,
+        "endChar": 33
+      },
+      "revId": "f82b9fb28115ebd0a672cc4c1d47c7e3f75ae3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089d15d4_e7bfcbf6",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T22:00:49Z",
+      "side": 1,
+      "message": "nit: How about passing URL to this method instead of adding a constant?",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "f82b9fb28115ebd0a672cc4c1d47c7e3f75ae3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812f426f_f9df0945",
+        "filename": "ios/web/public/test/js_test_scripts.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T22:00:49Z",
+      "side": 1,
+      "message": "Is there a value in having this function? Pretty much all tests can show alerts as follows:\n\nExecuteJavaScript(\"alert(\u0027foo\u0027)\"), which is quite readable.",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "f82b9fb28115ebd0a672cc4c1d47c7e3f75ae3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
