@@ -291,11 +291,9 @@ class ServiceManagerTest : public test::ServiceTest,
   void OnServiceCreated(mojom::RunningServiceInfoPtr instance) override {
     instances_.push_back(InstanceInfo(instance->identity));
   }
-  void OnServiceStarted(const service_manager::Identity& identity,
-                        uint32_t pid) override {
+  void OnServiceStarted(const service_manager::Identity& identity) override {
     for (auto& instance : instances_) {
       if (instance.identity == identity) {
-        instance.pid = pid;
         break;
       }
     }

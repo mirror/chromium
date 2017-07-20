@@ -30,8 +30,7 @@ class ServiceManagerListenerImpl
   }
   void OnServiceCreated(
       service_manager::mojom::RunningServiceInfoPtr instance) override {}
-  void OnServiceStarted(const service_manager::Identity& identity,
-                        uint32_t pid) override {}
+  void OnServiceStarted(const service_manager::Identity& identity) override {}
   void OnServiceFailedToStart(
       const service_manager::Identity& identity) override {}
   void OnServicePIDReceived(const service_manager::Identity& identity,
