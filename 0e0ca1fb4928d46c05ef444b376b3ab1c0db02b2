@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8b91a4_abf9ba5e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T22:25:36Z",
+      "side": 0,
+      "message": "This changes the logic. Is it ok?",
+      "range": {
+        "startLine": 419,
+        "startChar": 17,
+        "endLine": 419,
+        "endChar": 36
+      },
+      "revId": "0e0ca1fb4928d46c05ef444b376b3ab1c0db02b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
