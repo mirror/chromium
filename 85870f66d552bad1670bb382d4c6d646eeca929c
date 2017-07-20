@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc6d3ea_715cc480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-20T04:39:18Z",
+      "side": 1,
+      "message": "Maybe update bootstrap.min in this CL as well.",
+      "revId": "85870f66d552bad1670bb382d4c6d646eeca929c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591dc193_8df2ca66",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/LoadBootstrapBlog.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-20T04:39:18Z",
+      "side": 1,
+      "message": "I would delineate that the code below is the test logic so that it\u0027s clear.",
+      "revId": "85870f66d552bad1670bb382d4c6d646eeca929c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb16f742_4123e23c",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/bootstrap.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-20T04:39:18Z",
+      "side": 1,
+      "message": "If we are importing the page is it really needed as a resource.",
+      "revId": "85870f66d552bad1670bb382d4c6d646eeca929c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
