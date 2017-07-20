@@ -140,6 +140,30 @@
       "revId": "1900166fe70284a242a473178c4c66568d04d126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36d38a39_3fe60799",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "Agreed. I do prefer that tests need to be updated when the default configuration changes, and most test coverage should exercise the default configuration.",
+      "parentUuid": "80ae590a_4fcb3d70",
+      "range": {
+        "startLine": 362,
+        "startChar": 55,
+        "endLine": 362,
+        "endChar": 0
+      },
+      "revId": "1900166fe70284a242a473178c4c66568d04d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

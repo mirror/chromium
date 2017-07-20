@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3e358e1_3ad2a3c6",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "Nit: I think Exploration is a bit too specific in this name, since many people will identify the UI surface as Most Visited sites anyway (consistently with the class name), and furthermore while the feature is behind a flag. How about renaming to OnURLsAvailable()? (this also emphasizes that icons are not guaranteed to be available, which I guess was the spirit of the former naming).",
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eee1138_e1dfbb49",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "It predates your patch but this test can crash if the size of the vector is smaller than 4.\n\nI think the better and more concise way to do this would be to remove the ASSERT_THAT and simply check:\nEXPECT_THAT(sections[SectionType::PERSONALIZED], ElementsAre(_, _, _, MatchesTile(...), _));",
+      "range": {
+        "startLine": 614,
+        "startChar": 67,
+        "endLine": 614,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674400fe_8646ba7e",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "Is this Eq needed, meaning, can you not specify the enum value directly? Similar occurrences follow.",
+      "range": {
+        "startLine": 632,
+        "startChar": 40,
+        "endLine": 632,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05ac427_2971e235",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "The second is not needed.",
+      "range": {
+        "startLine": 788,
+        "startChar": 70,
+        "endLine": 788,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610a52db_1747eace",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "Should we add a CHECK here to verify that the size is at least 2? What is the test otherwise testing?",
+      "range": {
+        "startLine": 810,
+        "startChar": 75,
+        "endLine": 810,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf0fc2f_5baa6eee",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "This looks good to me to reduce the diff temporarily, but please add a TODO to follow up with a patch that instead returns the full map here. I don\u0027t think popular_sites{.h,.cc,_unittest.cc} should special-case PERSONALIZED.",
+      "range": {
+        "startLine": 152,
+        "startChar": 69,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97b0ef8_c3eb5b9c",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "I wonder how we\u0027d want to go with these tests when the new feature gets enabled by default.\n\nBased on the test name, I would instead propose:\npopular_sites-\u003esections(), ElementsAre(Pair(SectionType::PERSONALIZED, SizeIs(...)))",
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4162524f_04df07e6",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T08:56:11Z",
+      "side": 1,
+      "message": "How about:\npopular_sites-\u003esections(), ElementsAre(Pair(SectionType::PERSONALIZED, IsEmpty()))",
+      "range": {
+        "startLine": 195,
+        "startChar": 23,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "6c0e2f1513093af033faa83f25b4a3d82f8ee592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
