@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2a7ba26_e99fbbd4",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-20T18:05:37Z",
+      "side": 1,
+      "message": "I guess those compilation errors are there because private members can only be accessed from test class but not TEST_F methods. You can try \"moving dispatcher-\u003edispatcher_host_ \u003d \u0026mock_dispatcher_host\" calls to a method within the class.",
+      "parentUuid": "3225349e_aac8cb53",
+      "range": {
+        "startLine": 102,
+        "startChar": 55,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "02412cedde6856cbf39c34adbe3c5b442bde82db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d6625c_bc40ee7f",
         "filename": "content/renderer/media/media_stream_dispatcher.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T12:09:13Z",
       "side": 1,
       "message": "Shall remove the above 3 in a later CL when we remove MediaStreamDispatcherHost as a subclass of BrowserMessageFilter and BrowserAssociatedInterface. \nEventually, we will have only one field: mojom::MediaStreamDispatcherHostPtr dispatcher_host_;",
+      "range": {
+        "startLine": 135,
+        "startChar": 53,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "02412cedde6856cbf39c34adbe3c5b442bde82db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e297495_a4f3daba",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-20T18:05:37Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "c9d6625c_bc40ee7f",
       "range": {
         "startLine": 135,
         "startChar": 53,
