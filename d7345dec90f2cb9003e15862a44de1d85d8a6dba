@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfd144ee_3dcd1704",
+        "filename": "media/gpu/gpu_video_decode_accelerator_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "I think previously this was only if (OS_CHROMEOS \u0026\u0026 USE_V4L2_CODEC) and now this could also be if (USE_VAAPI \u0026\u0026 USE_V4L2_CODEC)?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cb8cfe_0cdacafb",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "I think we could \u0026\u0026 both if conditions under one if now?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd0c55e_15f70c91",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "Hm, this is behaving differently from GpuJpegDecodeAcceleratorFactoryProvider. Could we please add a TODO to use GpuJpegDecodeAcceleratorFactoryProvider::GetAcceleratorFactories() here and file crbug?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0734792_bd5bcf9d",
+        "filename": "media/gpu/va_stub_header.fragment",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "Should these perhaps be \u0027\u003c\u003e\u0027 instead of \u0027\"\"\u0027 ?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81726522_6a1fdd11",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "va/drm/va_drm.h?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b962be8_37708824",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "I think we would hit this error with USE_VAAPI \u0026\u0026 !OS_CHROMEOS?\n\nPerhaps:\n\nif OS_WIN\n...\nelif OS_CHROMEOS \u0026\u0026 USE_V4L2_CODEC\n...\nelif USE_VAAPI\n...\nelse\nerror\nendif\n?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e79154a_9a790d99",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 1,
+      "message": "We should either keep this as elif, or change elif at l.2329 to endif/if as well.\nHere I would probably prefer the former though.",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

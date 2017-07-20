@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dcf30fa_0713ca5b",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 0,
+      "message": "Nit: I think we should still include va.h from all the vaapi_* files, as we are using structs from these headers (i.e. not rely on the indirect include from vaapi_wrapper.h).",
+      "revId": "7fe1ee469b93e142b7464856e9eda6af6f1ad578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f4a0e7_3a08a11d",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T07:58:10Z",
+      "side": 0,
+      "message": "We should keep the va.h include as we are using definitions from this file here.",
+      "revId": "7fe1ee469b93e142b7464856e9eda6af6f1ad578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
