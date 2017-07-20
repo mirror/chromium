@@ -92,6 +92,25 @@ void TrayDragController::CompleteGestureDrag(const ui::GestureEvent& gesture) {
 
   tray_view_->AnimateToTargetBounds(target_bounds, hide_bubble);
   is_in_drag_ = false;
+
+  UserMetricsRecorder* metrics = Shell::Get()->metrics();
+  if (is_on_bubble_) {
+    if (hide_bubble) {
+      metrics->RecordUserMetricsAction(
+          UMA_STATUS_AREA_TRAY_BUBBLE_SWIPE_TO_CLOSE);
+    } else {
+      metrics->RecordUserMetricsAction(
+          UMA_STATUS_AREA_TRAY_BUBBLE_SWIPE_TO_OPEN);
+    }
+  } else {
+    if (hide_bubble) {
+      metrics->RecordUserMetricsAction(
+          UMA_STATUS_AREA_TRAY_SWIPE_TO_CLOSE_BUBBLE);
+    } else {
+      metrics->RecordUserMetricsAction(
+          UMA_STATUS_AREA_TRAY_SWIPE_TO_OPEN_BUBBLE);
+    }
+  }
 }
 
 void TrayDragController::UpdateBubbleBounds() {

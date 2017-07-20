@@ -422,6 +422,18 @@ void UserMetricsRecorder::RecordUserMetricsAction(UserMetricsAction action) {
     case UMA_STATUS_AREA_SMS_NOTIFICATION_DISMISS_MSG:
       RecordAction(UserMetricsAction("StatusArea_SMS_Notification_DismissMsg"));
       break;
+    case UMA_STATUS_AREA_TRAY_BUBBLE_SWIPE_TO_CLOSE:
+      RecordAction(UserMetricsAction("StatusArea_TrayBubble_SwipeToClose"));
+      break;
+    case UMA_STATUS_AREA_TRAY_BUBBLE_SWIPE_TO_OPEN:
+      RecordAction(UserMetricsAction("StatusArea_TrayBubble_SwipeToOpen"));
+      break;
+    case UMA_STATUS_AREA_TRAY_SWIPE_TO_CLOSE_BUBBLE:
+      RecordAction(UserMetricsAction("StatusArea_Tray_SwipeToClose_Bubble"));
+      break;
+    case UMA_STATUS_AREA_TRAY_SWIPE_TO_OPEN_BUBBLE:
+      RecordAction(UserMetricsAction("StatusArea_Tray_SwipeToOpen_Bubble"));
+      break;
     case UMA_STATUS_AREA_TRACING_DEFAULT_SELECTED:
       RecordAction(UserMetricsAction("StatusArea_Tracing_Default_Selected"));
       break;
