@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "5a087e04_a3a2cad7",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T02:02:48Z",
+      "side": 1,
+      "message": "BTW, since we started talking about GetSystemMemoryInfo(), I can\u0027t help but clean it up a bit. Hope that CL doesn\u0027t conflict too much with this one. https://chromium-review.googlesource.com/c/578789/",
+      "parentUuid": "94f3b839_72f129a1",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
