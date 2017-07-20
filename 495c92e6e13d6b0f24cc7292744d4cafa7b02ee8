@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9095fae_f94c555e",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:34:15Z",
+      "side": 1,
+      "message": "Not sure what \u0027In Title Case:\u0027 refers to?\ns/manufacturer and model/manufacturer or model/",
+      "range": {
+        "startLine": 6233,
+        "startChar": 243,
+        "endLine": 6233,
+        "endChar": 250
+      },
+      "revId": "495c92e6e13d6b0f24cc7292744d4cafa7b02ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718d04e5_7d830cc3",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6241,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:34:15Z",
+      "side": 1,
+      "message": "Add note that we use this where we only know the manufacturer or model.",
+      "revId": "495c92e6e13d6b0f24cc7292744d4cafa7b02ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3bc9ea_6f0c7c63",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6242,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:34:15Z",
+      "side": 1,
+      "message": "PRINTER_MAKE_OR_MODEL, $1",
+      "range": {
+        "startLine": 6242,
+        "startChar": 14,
+        "endLine": 6242,
+        "endChar": 27
+      },
+      "revId": "495c92e6e13d6b0f24cc7292744d4cafa7b02ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
