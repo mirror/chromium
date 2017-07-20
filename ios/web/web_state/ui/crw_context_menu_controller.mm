@@ -7,6 +7,7 @@
 #import <objc/runtime.h>
 #include <stddef.h>
 
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -23,11 +24,16 @@
 
 namespace {
 // The long press detection duration must be shorter than the WKWebView's
-// long click gesture recognizer's minimum duration. That is 0.55s.
-// If our detection duration is shorter, our gesture recognizer will fire
-// first, and if it fails the long click gesture (processed simultaneously)
-// still is able to complete.
-const NSTimeInterval kLongPressDurationSeconds = 0.55 - 0.1;
+// long click gesture recognizer's minimum duration. If our detection duration
+// is shorter, our gesture recognizer will fire first, and if it fails the long
+// click gesture (processed simultaneously) still is able to complete.
+// The duration of WKWebView's long click gesture recognizer (before iOS 11) is
+// 0.55s.
+// TODO(crbug.com/747042): Remove once iOS 10 support is dropped.
+const NSTimeInterval kLongPressDurationSeconds_PreiOS11 = 0.55 - 0.1;
+// Starting in iOS 11 the long press duration needs to be reduced in order to
+// reliably display the custom Context Menu over WKWebView's default.
+const NSTimeInterval kLongPressDurationSeconds = 0.3;
 
 // If there is a movement bigger than |kLongPressMoveDeltaPixels|, the context
 // menu will not be triggered.
@@ -103,7 +109,16 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     _contextMenuRecognizer = [[UILongPressGestureRecognizer alloc]
         initWithTarget:self
                 action:@selector(showContextMenu:)];
-    [_contextMenuRecognizer setMinimumPressDuration:kLongPressDurationSeconds];
+
+    // TODO(crbug.com/747042): Remove once iOS 10 support is dropped.
+    if (base::ios::IsRunningOnIOS11OrLater()) {
+      [_contextMenuRecognizer
+          setMinimumPressDuration:kLongPressDurationSeconds];
+    } else {
+      [_contextMenuRecognizer
+          setMinimumPressDuration:kLongPressDurationSeconds_PreiOS11];
+    }
+
     [_contextMenuRecognizer setAllowableMovement:kLongPressMoveDeltaPixels];
     [_contextMenuRecognizer setDelegate:self];
     [_webView addGestureRecognizer:_contextMenuRecognizer];
