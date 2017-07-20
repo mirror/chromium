@@ -85,7 +85,8 @@ TestOrderablePendingTask::AsValue() const {
 void TestOrderablePendingTask::AsValueInto(
     base::trace_event::TracedValue* state) const {
   state->SetInteger("id", base::saturated_cast<int>(task_id_));
-  state->SetInteger("run_at", GetTimeToRun().ToInternalValue());
+  state->SetInteger("run_at",
+                    (GetTimeToRun() - base::TimeTicks()).InMicroseconds());
   state->SetString("posted_from", location.ToString());
 }
 
@@ -102,8 +103,7 @@ OrderedSimpleTaskRunner::~OrderedSimpleTaskRunner() {}
 
 // static
 base::TimeTicks OrderedSimpleTaskRunner::AbsoluteMaxNow() {
-  return base::TimeTicks::FromInternalValue(
-      std::numeric_limits<int64_t>::max());
+  return base::TimeTicks::Max();
 }
 
 // base::TestSimpleTaskRunner implementation

@@ -19,6 +19,11 @@ using testing::NiceMock;
 namespace cc {
 namespace {
 
+// Returns a fake TimeTicks based on the given microsecond offset.
+base::TimeTicks FakeTimeTicks(int64_t micros) {
+  return base::TimeTicks() + base::TimeDelta::FromMicroseconds(micros);
+}
+
 // BeginFrameSource testing ----------------------------------------------------
 TEST(BeginFrameSourceTest, SourceIdsAreUnique) {
   StubBeginFrameSource source1;
@@ -57,10 +62,10 @@ class BackToBackBeginFrameSourceTest : public ::testing::Test {
 };
 
 const int64_t BackToBackBeginFrameSourceTest::kDeadline =
-    BeginFrameArgs::DefaultInterval().ToInternalValue();
+    BeginFrameArgs::DefaultInterval().InMicroseconds();
 
 const int64_t BackToBackBeginFrameSourceTest::kInterval =
-    BeginFrameArgs::DefaultInterval().ToInternalValue();
+    BeginFrameArgs::DefaultInterval().InMicroseconds();
 
 TEST_F(BackToBackBeginFrameSourceTest, AddObserverSendsBeginFrame) {
   EXPECT_BEGIN_FRAME_SOURCE_PAUSED(*obs_, false);
@@ -362,7 +367,7 @@ TEST_F(DelayBasedBeginFrameSourceTest, AddObserverCallsCausesOnBeginFrame) {
   EXPECT_BEGIN_FRAME_USED_MISSED(*obs_, source_->source_id(), 1, 0, 10000,
                                  10000);
   source_->AddObserver(obs_.get());
-  EXPECT_EQ(10000, task_runner_->NextTaskTime().ToInternalValue());
+  EXPECT_EQ(FakeTimeTicks(10000), task_runner_->NextTaskTime());
 
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 2, 10000, 20000, 10000);
   now_src_->Advance(base::TimeDelta::FromMicroseconds(9010));
@@ -379,11 +384,11 @@ TEST_F(DelayBasedBeginFrameSourceTest, BasicOperation) {
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 2, 10000, 20000, 10000);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 3, 20000, 30000, 10000);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 4, 30000, 40000, 10000);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(30001));
+  task_runner_->RunUntilTime(FakeTimeTicks(30001));
 
   source_->RemoveObserver(obs_.get());
   // No new frames....
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(60000));
+  task_runner_->RunUntilTime(FakeTimeTicks(60000));
 }
 
 TEST_F(DelayBasedBeginFrameSourceTest, VSyncChanges) {
@@ -396,21 +401,21 @@ TEST_F(DelayBasedBeginFrameSourceTest, VSyncChanges) {
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 2, 10000, 20000, 10000);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 3, 20000, 30000, 10000);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 4, 30000, 40000, 10000);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(30001));
+  task_runner_->RunUntilTime(FakeTimeTicks(30001));
 
   // Update the vsync information
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(27500),
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(27500),
                                    base::TimeDelta::FromMicroseconds(10001));
 
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 5, 40000, 47502, 10001);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 6, 47502, 57503, 10001);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 7, 57503, 67504, 10001);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(60000));
+  task_runner_->RunUntilTime(FakeTimeTicks(60000));
 }
 
 TEST_F(DelayBasedBeginFrameSourceTest, AuthoritativeVSyncChanges) {
   task_runner_->SetAutoAdvanceNowToPendingTasks(true);
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(500),
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(500),
                                    base::TimeDelta::FromMicroseconds(10000));
   EXPECT_BEGIN_FRAME_SOURCE_PAUSED(*obs_, false);
   EXPECT_BEGIN_FRAME_USED_MISSED(*obs_, source_->source_id(), 1, 500, 10500,
@@ -419,21 +424,21 @@ TEST_F(DelayBasedBeginFrameSourceTest, AuthoritativeVSyncChanges) {
 
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 2, 10500, 20500, 10000);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 3, 20500, 30500, 10000);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(20501));
+  task_runner_->RunUntilTime(FakeTimeTicks(20501));
 
   // This will keep the same timebase, so 500, 9999
   source_->SetAuthoritativeVSyncInterval(
       base::TimeDelta::FromMicroseconds(9999));
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 4, 30500, 40496, 9999);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 5, 40496, 50495, 9999);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(40497));
+  task_runner_->RunUntilTime(FakeTimeTicks(40497));
 
   // Change the vsync params, but the new interval will be ignored.
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(400),
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(400),
                                    base::TimeDelta::FromMicroseconds(1));
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 6, 50495, 60394, 9999);
   EXPECT_BEGIN_FRAME_USED(*obs_, source_->source_id(), 7, 60394, 70393, 9999);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(60395));
+  task_runner_->RunUntilTime(FakeTimeTicks(60395));
 }
 
 TEST_F(DelayBasedBeginFrameSourceTest, MultipleObservers) {
@@ -467,7 +472,7 @@ TEST_F(DelayBasedBeginFrameSourceTest, MultipleObservers) {
   task_runner_->RunForPeriod(base::TimeDelta::FromMicroseconds(10000));
 
   source_->RemoveObserver(&obs2);
-  task_runner_->RunUntilTime(base::TimeTicks::FromInternalValue(50000));
+  task_runner_->RunUntilTime(FakeTimeTicks(50000));
   EXPECT_FALSE(task_runner_->HasPendingTasks());
 }
 
@@ -478,17 +483,17 @@ TEST_F(DelayBasedBeginFrameSourceTest, DoubleTick) {
   EXPECT_BEGIN_FRAME_USED_MISSED(obs, source_->source_id(), 1, 0, 10000, 10000);
   source_->AddObserver(&obs);
 
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(5000),
-                                   base::TimeDelta::FromInternalValue(10000));
-  now_src_->Advance(base::TimeDelta::FromInternalValue(4000));
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(5000),
+                                   base::TimeDelta::FromMicroseconds(10000));
+  now_src_->Advance(base::TimeDelta::FromMicroseconds(4000));
 
   // No begin frame received.
   task_runner_->RunPendingTasks();
 
   // Begin frame received.
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(10000),
-                                   base::TimeDelta::FromInternalValue(10000));
-  now_src_->Advance(base::TimeDelta::FromInternalValue(5000));
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(10000),
+                                   base::TimeDelta::FromMicroseconds(10000));
+  now_src_->Advance(base::TimeDelta::FromMicroseconds(5000));
   EXPECT_BEGIN_FRAME_USED(obs, source_->source_id(), 2, 10000, 20000, 10000);
   task_runner_->RunPendingTasks();
 }
@@ -501,9 +506,9 @@ TEST_F(DelayBasedBeginFrameSourceTest, DoubleTickMissedFrame) {
   source_->AddObserver(&obs);
   source_->RemoveObserver(&obs);
 
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(5000),
-                                   base::TimeDelta::FromInternalValue(10000));
-  now_src_->Advance(base::TimeDelta::FromInternalValue(4000));
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(5000),
+                                   base::TimeDelta::FromMicroseconds(10000));
+  now_src_->Advance(base::TimeDelta::FromMicroseconds(4000));
 
   // No missed frame received.
   EXPECT_BEGIN_FRAME_SOURCE_PAUSED(obs, false);
@@ -513,9 +518,9 @@ TEST_F(DelayBasedBeginFrameSourceTest, DoubleTickMissedFrame) {
   source_->RemoveObserver(&obs);
 
   // Missed frame received.
-  source_->OnUpdateVSyncParameters(base::TimeTicks::FromInternalValue(10000),
-                                   base::TimeDelta::FromInternalValue(10000));
-  now_src_->Advance(base::TimeDelta::FromInternalValue(5000));
+  source_->OnUpdateVSyncParameters(FakeTimeTicks(10000),
+                                   base::TimeDelta::FromMicroseconds(10000));
+  now_src_->Advance(base::TimeDelta::FromMicroseconds(5000));
   EXPECT_BEGIN_FRAME_SOURCE_PAUSED(obs, false);
   // Sequence number is incremented again, because the missed frame has
   // different time/interval.
@@ -556,8 +561,8 @@ TEST_F(ExternalBeginFrameSourceTest, OnBeginFrameChecksBeginFrameContinuity) {
   EXPECT_CALL((*client_), OnNeedsBeginFrames(true)).Times(1);
   source_->AddObserver(obs_.get());
 
-  BeginFrameArgs args = CreateBeginFrameArgsForTesting(
-      BEGINFRAME_FROM_HERE, 0, 2, base::TimeTicks::FromInternalValue(10000));
+  BeginFrameArgs args = CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0,
+                                                       2, FakeTimeTicks(10000));
   EXPECT_BEGIN_FRAME_ARGS_USED(*obs_, args);
   source_->OnBeginFrame(args);
 
