@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9cd7a08e_b9c8349c",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T09:32:43Z",
+      "side": 1,
+      "message": "Sorry I overlooked that. Builder pattern looks nice too, but might feel a bit overkill?",
+      "parentUuid": "d44fd0a4_9fb60555",
+      "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f461825_814785e0",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 16
