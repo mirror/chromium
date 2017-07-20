@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed26832e_d86f9f0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T08:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a415e2d0_4cec61af",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "95f21e6a2dcc58e3673c57d9c83f07d7143cf835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93aec56e_956e81e1",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "95f21e6a2dcc58e3673c57d9c83f07d7143cf835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef0d79e_12e92785",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T08:35:29Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "93aec56e_956e81e1",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "95f21e6a2dcc58e3673c57d9c83f07d7143cf835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
