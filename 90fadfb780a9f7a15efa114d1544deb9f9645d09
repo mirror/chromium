@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3371f3_53434372",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-20T21:56:27Z",
+      "side": 1,
+      "message": "nit: Remove extra trailing spaces.",
+      "revId": "90fadfb780a9f7a15efa114d1544deb9f9645d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bbd541_c9682132",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-20T21:56:27Z",
+      "side": 1,
+      "message": "Can you do this in TouchHandle::SetEnabled() such that when handle is disabled, it is also hidden?",
+      "revId": "90fadfb780a9f7a15efa114d1544deb9f9645d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d65ab9e_2aa5cf43",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-20T21:56:27Z",
+      "side": 1,
+      "message": "nit 1: Swap the arguments. Normally, constants that you are testing against (\u00270\u0027 here) are passed in as the first argument.\n\nnit 2: For floating points constants it is better to write them using floating point literal notation to avoid unnecessary casts. So, write \u00270.f\u0027 instead of \u00270\u0027 and \u00271.f\u0027 instead of \u00271\u0027.",
+      "revId": "90fadfb780a9f7a15efa114d1544deb9f9645d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
