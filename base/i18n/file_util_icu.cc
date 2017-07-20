@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "base/files/file_path.h"
+#include "base/i18n/encoding_detection.h"
 #include "base/i18n/icu_string_conversions.h"
 #include "base/i18n/string_compare.h"
 #include "base/logging.h"
@@ -106,6 +107,13 @@ bool IsFilenameLegal(const string16& file_name) {
 
 void ReplaceIllegalCharactersInPath(FilePath::StringType* file_name,
                                     char replace_char) {
+  ReplaceIllegalCharactersWithEncoding(file_name, replace_char,
+                                       std::string() /* Unknown encoding. */);
+}
+
+void ReplaceIllegalCharactersWithEncoding(FilePath::StringType* file_name,
+                                          char replace_char,
+                                          const std::string& encoding) {
   IllegalCharacters* illegal = IllegalCharacters::GetInstance();
 
   DCHECK(!(illegal->DisallowedEverywhere(replace_char)));
@@ -124,12 +132,19 @@ void ReplaceIllegalCharactersInPath(FilePath::StringType* file_name,
     U16_NEXT(file_name->data(), cursor, static_cast<int>(file_name->length()),
              code_point);
 #elif defined(OS_POSIX)
-    // Linux doesn't actually define an encoding. It basically allows anything
-    // except for a few special ASCII characters.
-    unsigned char cur_char = static_cast<unsigned char>((*file_name)[cursor++]);
-    if (cur_char >= 0x80)
-      continue;
-    code_point = cur_char;
+    // Linux doesn't actually define file system encoding. Try to parse UTF8 if
+    // |encoding| is specified. Or parse it as ASCII, a few special ASCII
+    // characters are not allowed.
+    if (encoding == kCodepageUTF8) {
+      U8_NEXT(file_name->data(), cursor, static_cast<int>(file_name->length()),
+              code_point);
+    } else {
+      unsigned char cur_char =
+          static_cast<unsigned char>((*file_name)[cursor++]);
+      if (cur_char >= 0x80)
+        continue;
+      code_point = cur_char;
+    }
 #else
     NOTREACHED();
 #endif
