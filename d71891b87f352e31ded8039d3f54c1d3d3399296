@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "377aeac3_021de913",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Think mentioning that is redundant. Also if a.b.com requests a resource from b.com, that will also be considered a first party request right?",
+      "parentUuid": "bff39438_c10f88f3",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597a9c9d_374c7259",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba07efd_fa4cecf6",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597a9c9d_374c7259",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ef6b285c_71f781df",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bfbe543_aae3330b",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c46a4ad_2203b43f",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b83263e_53d0e965",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c46a4ad_2203b43f",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "89f7714f_94d5b969",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Will keep this as is for now. Not calling it urlPattern also makes it slightly easier to understand and document. E.g. urlFilter \u003d \"Left anchor + pattern + Right anchor\".",
+      "parentUuid": "66d0c7e9_02a5e598",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1ee6b7_01422e67",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a19eb7_993ab159",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec1ee6b7_01422e67",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d482e20c_16c35753",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "878ddd58_d418e56d",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2effea5_9bd4e0cf",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "240e7bb4_e5d612a3",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2effea5_9bd4e0cf",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e6e833_c5e6cf6c",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8316f4c6_60dad8fd",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0e6e833_c5e6cf6c",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
