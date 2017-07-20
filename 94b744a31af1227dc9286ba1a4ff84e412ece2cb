@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c9e549_9b0c5ccd",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "Reading thought this made me wonder if we should not rename ENABLE_MIRROR to ENABLE_MIRROR_BY_DEFAULT. But this is out of scope of this CL.",
+      "range": {
+        "startLine": 311,
+        "startChar": 15,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef80716_44a5924d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "I think this should be kAccountConsistencyDiceFixAuthErrors",
+      "range": {
+        "startLine": 322,
+        "startChar": 33,
+        "endLine": 322,
+        "endChar": 59
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d78b9e1_e0f4158f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "s/kAccountConsistencyFeatureMethodDiceFix/kAccountConsistencyFeatureMethodDiceFixAuthErrors",
+      "range": {
+        "startLine": 324,
+        "startChar": 13,
+        "endLine": 324,
+        "endChar": 52
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85b7958_89f9bec3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "Consider adding a comment explaining what nullptr is used for (nullptr /* parameter */).",
+      "range": {
+        "startLine": 329,
+        "startChar": 5,
+        "endLine": 329,
+        "endChar": 12
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85df4148_c586caa0",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "fix auth errors only",
+      "range": {
+        "startLine": 334,
+        "startChar": 12,
+        "endLine": 334,
+        "endChar": 15
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbf2129_661200ac",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "I think it would be great to have this as \nsignin::ScopedAccountConsistencyMirrorForUnitTests (this does not create the field trial)\nsignin::ScopedAccountConsistencyMirrorForBrowserTests (this creates the field trial)",
+      "range": {
+        "startLine": 477,
+        "startChar": 2,
+        "endLine": 477,
+        "endChar": 34
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a505dc8_4dff9141",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "It would also be nice to have this just like signin::ScopedAccountConsistencyDice",
+      "range": {
+        "startLine": 149,
+        "startChar": 10,
+        "endLine": 149,
+        "endChar": 34
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e5b059_4290fc64",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "My understanding was that we always use true for browser tests here. I think I got it wrong.",
+      "range": {
+        "startLine": 286,
+        "startChar": 49,
+        "endLine": 286,
+        "endChar": 54
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce30d13_0d8e4355",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "I suppose scoped_dice_.reset() should be called here.",
+      "range": {
+        "startLine": 291,
+        "startChar": 7,
+        "endLine": 291,
+        "endChar": 27
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ebec79_bde6a13b",
+        "filename": "components/signin/core/browser/about_signin_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "Are these new includes needed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444f7c54_fafdc3e6",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "I think this should be kDiceFixAuthErrors as \"fix\" is too generic.",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0aa1aa_2983fcad",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "Please add a comment explaining why this field trial list is needed as this variable is never used locally.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40f6523_ace65cec",
+        "filename": "components/signin/core/browser/scoped_account_consistency.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "it would be really great to avoid having this boolean here. Could we expose a method in FieldTrialList that we could use to test if we need to create this field trial list?",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b988e989_9796f4e1",
+        "filename": "components/signin/core/browser/scoped_account_consistency.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "disable copy macro.",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea06921a_820511de",
+        "filename": "components/signin/core/browser/scoped_account_consistency.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "Personal preference: I think that we use a lot ScopedAccountConsistency(kAccountConsistencyMirror) and ScopedAccountConsistency(kAccountConsistencyDice). I was just wondering if we could add 2 subsclasses of this ScopedAccountConsistency (one for Mirror and one for Dice) that would be something like ScopedAccountConsistencyMirror and ScopedAccountConsistencyDice. WDYT?",
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1bd1b9_7b3ae6ca",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "dice_fix_auth_errors",
+      "range": {
+        "startLine": 22,
+        "startChar": 56,
+        "endLine": 22,
+        "endChar": 64
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5e55a4_4cb34894",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "kDiceFixAuthErrors",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5188b8a5_e3792410",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T13:22:57Z",
+      "side": 1,
+      "message": "I think returning true in both cases has a risk. This means that that user will be able to enable sync with Dice when on kDiceFixAuthErrors is enabled.",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
