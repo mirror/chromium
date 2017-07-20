@@ -605,6 +605,7 @@ void Dispatcher::DispatchEvent(const std::string& extension_id,
                                const std::string& event_name,
                                const base::ListValue& event_args,
                                const EventFilteringInfo* filtering_info) const {
+  LOG(WARNING) << "Dispatching Event: " << event_name;
   script_context_set_->ForEach(
       extension_id, nullptr,
       base::Bind(&ExtensionBindingsSystem::DispatchEventInContext,

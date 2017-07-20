@@ -4,9 +4,10 @@
 
 // Custom bindings for the notifications API.
 //
-var binding = require('binding').Binding.create('notifications');
+var binding = apiBridge || require('binding').Binding.create('notifications');
 
-var sendRequest = require('sendRequest').sendRequest;
+var sendRequest = bindingUtil ?
+    bindingUtil.sendRequest.bind(bindingUtil) : require('sendRequest').sendRequest;
 var exceptionHandler = require('uncaught_exception_handler');
 var imageUtil = require('imageUtil');
 var lastError = require('lastError');
@@ -118,9 +119,10 @@ function genHandle(name, failure_function) {
     var stack = exceptionHandler.getExtensionStackTrace();
     replaceNotificationOptionURLs(notification_details, function(success) {
       if (success) {
-        sendRequest(that.name,
+        sendRequest(name,
             [id, notification_details, callback],
-            that.definition.parameters, {__proto__: null, stack: stack});
+            apiBridge ? undefined : that.definition.parameters,
+            apiBridge ? undefined : {__proto__: null, stack: stack});
         return;
       }
       lastError.run(name,
@@ -144,4 +146,5 @@ var notificationsCustomHook = function(bindingsAPI, extensionId) {
 
 binding.registerCustomHook(notificationsCustomHook);
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());

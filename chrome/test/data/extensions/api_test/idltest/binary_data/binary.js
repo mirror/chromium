@@ -27,18 +27,21 @@ function makeBuffer() {
 
 var tests = [
   function sendBuffer() {
+    console.warn('Send buffer');
     var view = makeBuffer();
     chrome.idltest.sendArrayBuffer(
         view.buffer, callbackPass(makeCompareCallback(view.buffer)));
   },
 
   function sendBufferView() {
+    console.warn('Send buffer view');
     var view = makeBuffer();
     chrome.idltest.sendArrayBufferView(
         view, callbackPass(makeCompareCallback(view.buffer)));
   },
 
   function sendBufferSlice() {
+    console.warn('Send buffer slice');
     var view = makeBuffer();
     var bufferSlice = view.buffer.slice(64);
     assertEq(64, bufferSlice.byteLength);
@@ -47,6 +50,7 @@ var tests = [
   },
 
   function getBuffer() {
+    console.warn('Get buffer');
     chrome.idltest.getArrayBuffer(callbackPass(function(buffer) {
       assertTrue(buffer.__proto__ == (new ArrayBuffer()).__proto__);
       var view = new Uint8Array(buffer);

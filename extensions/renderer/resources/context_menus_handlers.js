@@ -118,6 +118,8 @@ function createContextMenusHandlers(isWebview) {
     };
     var name = isWebview ?
         'chromeWebViewInternal.contextMenusCreate' : 'contextMenus.create';
+    console.warn('Arguments to create');
+    console.warn(JSON.stringify(Array.from(arguments)));
     sendRequest(name, $Array.from(arguments),
                 bindingUtil ? undefined : this.definition.parameters,
                 optArgs);

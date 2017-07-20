@@ -453,6 +453,7 @@ void APIBinding::DecorateTemplateWithProperties(
     if (dict->GetString("$ref", &ref)) {
       const base::ListValue* property_values = nullptr;
       CHECK(dict->GetList("value", &property_values));
+      LOG(WARNING) << "Adding custom type: " << iter.key();
       auto property_data = base::MakeUnique<CustomPropertyData>(
           ref, iter.key(), property_values, create_custom_type_);
       object_template->SetLazyDataProperty(

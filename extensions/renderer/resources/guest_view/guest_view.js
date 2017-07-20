@@ -234,6 +234,7 @@ GuestViewImpl.prototype.createImpl$ = function(createParams, callback) {
 
 GuestViewImpl.prototype.sendCreateRequest = function(
     createParams, boundCallback) {
+  console.warn('Calling create guest: ' + JSON.stringify(createParams));
   GuestViewInternal.createGuest(this.viewType, createParams, boundCallback);
 };
 

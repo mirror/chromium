@@ -203,6 +203,7 @@ void APIEventHandler::FireEventInContext(const std::string& event_name,
                                          v8::Local<v8::Context> context,
                                          const base::ListValue& args,
                                          const EventFilteringInfo* filter) {
+  LOG(WARNING) << "Firing event: " << event_name;
   APIEventPerContextData* data = GetContextData(context, false);
   if (!data)
     return;
@@ -217,8 +218,12 @@ void APIEventHandler::FireEventInContext(const std::string& event_name,
       &emitter);
   CHECK(emitter);
 
-  if (emitter->GetNumListeners() == 0u)
+  if (emitter->GetNumListeners() == 0u) {
+    LOG(WARNING) << "No listeners";
     return;
+  }
+
+  LOG(WARNING) << "Really firing";
 
   // Note: since we only convert the arguments once, if a listener modifies an
   // object (including an array), other listeners will see that modification.

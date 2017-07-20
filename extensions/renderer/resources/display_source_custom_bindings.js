@@ -4,7 +4,7 @@
 
 // Custom binding for the Display Source API.
 
-var binding = require('binding').Binding.create('displaySource');
+var binding = apiBridge || require('binding').Binding.create('displaySource');
 var chrome = requireNative('chrome').GetChrome();
 var lastError = require('lastError');
 var natives = requireNative('display_source');
@@ -64,6 +64,7 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
       });
 });
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());
 // Called by C++.
 exports.$set('callCompletionCallback', callCompletionCallback);

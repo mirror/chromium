@@ -28,6 +28,7 @@ function WebViewEvents(webViewImpl) {
 var jsEvent;
 function createCustomDeclarativeEvent(name, schema, options, webviewId) {
   if (bindingUtil) {
+    console.warn('\n\nCreating: ' + name + '\n\n');
     return bindingUtil.createCustomDeclarativeEvent(
         name, options.actions, options.conditions, webviewId || 0);
   }
@@ -208,7 +209,9 @@ WebViewEvents.prototype.setupWebRequestEvents = function() {
         var newEvent;
         var eventName =
             'webViewInternal.declarativeWebRequest.' + webRequestEvent.name;
+        console.warn('Creating new event: ' + webRequestEvent.name);
         if (webRequestEvent.name === 'onMessage') {
+          console.warn('Creating on message');
           // The onMessage event gets a special event type because we want the
           // listener to fire only for messages targeted for this particular
           // <webview>.
@@ -217,6 +220,7 @@ WebViewEvents.prototype.setupWebRequestEvents = function() {
                                           webRequestEvent.options,
                                           this.view.viewInstanceId);
         } else {
+          console.warn('Creating declarative');
           newEvent =
               createCustomDeclarativeEvent(eventName,
                                            webRequestEvent.parameters,
