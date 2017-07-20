@@ -46,6 +46,30 @@
       "revId": "fa3fe3917d2458eb591a07f94491552d2dc043ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b53dc06_84e01594",
+        "filename": "services/video_capture/public/uma/video_capture_service_event.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-20T17:00:52Z",
+      "side": 1,
+      "message": "Turns out that we exceed the maximum allowed value, i.e. 2^31-1 milliseconds, when going higher than 24.8 days. I\u0027ll go with 21 days then, to make it 3 weeks.",
+      "parentUuid": "a1828a76_d90d4de6",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "fa3fe3917d2458eb591a07f94491552d2dc043ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
