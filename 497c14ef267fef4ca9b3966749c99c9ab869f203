@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d7c66c3_bcabc44e",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "I added an override in the Mock autocomplete client, which is the parent of some other classes. I _think_ it\u0027ll solve this build error. I\u0027ll try running the CQ bots again. Thanks for the heads up!",
+      "parentUuid": "944c113f_64df231d",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdc61303_28f104af",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46b8951_86a0a745",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc61303_28f104af",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fd243087_0538c126",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "I do remember because this hack was my idea.\n\nBasically for some reason OnePlatform consumes the last slash in urls like http://pitchfork.com/artists/4920-justin-timberlake/ causing them to be http://pitchfork.com/artists/4920-justin-timberlake, which has a different DocID, which in turns causes mismatches for canonicalization and lookups. Because this URL is sent as a query param, we can add an extra \u0026 without a new key-value pair so that the slash is never the last character. The request URL is then sent like \"http://ourendpoint.com/some_method?url\u003dhttp://pitchfork.com/artists/4920-justin-timberlake/\u0026\". The extra empty key-value pair is ignored by the query param parser (as it should).\n\nI added a comment, but I don\u0027t know if it\u0027s too thorough. Let me know if you want me to change it.",
+      "parentUuid": "fc11c8ec_42d273cc",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3bec75_1520503c",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "125a9b4b_cec6b573",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "Yeah, I thought that was more flexible too. I tried using the omnibox_field_trial functions you mentioned earlier, but I couldn\u0027t get it to work, so I\u0027m sticking with Gheorghe\u0027s version which is working fine. I\u0027m hoping the server-side experimental framework is sufficient for our needs.",
+      "parentUuid": "dc3bec75_1520503c",
+      "range": {
+        "startLine": 120,
+        "startChar": 14,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668f63e0_2460dd03",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea3a3af_cba575bf",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "I put it back into its original place. I personally think this section is fishy, it doesn\u0027t seem very clean. Ideally IMHO the check would be performed once, and everything else would basically abide by the decision, without ever modifying it. We probably should refactor this bit later.",
+      "parentUuid": "668f63e0_2460dd03",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -443,6 +563,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0a9cf3_a0b0683c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T05:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106949c2_11bd0fb9",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
