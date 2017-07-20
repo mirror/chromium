@@ -29,6 +29,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/safe_browsing/check_client_download_request.h"
 
 namespace content {
 class DownloadItem;
@@ -50,6 +51,8 @@ class DownloadFeedbackService;
 // client download is malicious or not.
 class DownloadProtectionService {
  public:
+  // TODO: these typedefs should go in a separate file so they can be included
+  // by themselves
   enum DownloadCheckResult {
     UNKNOWN,
     SAFE,
@@ -90,6 +93,7 @@ class DownloadProtectionService {
   // A subscription to a registered PPAPI ClientDownloadRequest callback.
   typedef std::unique_ptr<PPAPIDownloadRequestCallbackList::Subscription>
       PPAPIDownloadRequestSubscription;
+  // TODO ^^ down to here
 
   // Creates a download service.  The service is initially disabled.  You need
   // to call SetEnabled() to start it.  |sb_service| owns this object.
@@ -180,6 +184,7 @@ class DownloadProtectionService {
     return navigation_observer_manager_;
   }
 
+  // this is now only used by CheckClientDownloadRequest...
   static void SetDownloadPingToken(content::DownloadItem* item,
                                    const std::string& token);
 
@@ -226,6 +231,8 @@ class DownloadProtectionService {
   friend class DownloadUrlSBClient;
   friend class DownloadProtectionServiceTest;
   friend class DownloadDangerPromptTest;
+
+  friend class CheckClientDownloadRequest;
 
   FRIEND_TEST_ALL_PREFIXES(DownloadProtectionServiceTest,
                            CheckClientDownloadWhitelistedUrlWithoutSampling);

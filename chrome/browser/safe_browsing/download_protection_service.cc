@@ -1888,6 +1888,7 @@ void DownloadProtectionService::ShowDetailsForDownload(
                              ui::PAGE_TRANSITION_LINK, false));
 }
 
+// this is now only used by CheckClientDownloadRequest...
 void DownloadProtectionService::SetDownloadPingToken(
     content::DownloadItem* item, const std::string& token) {
   if (item) {
