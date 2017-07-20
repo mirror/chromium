@@ -16,6 +16,24 @@
       "revId": "74fcfec0fd36addc3cf68ee2d574824a4e93a471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c7c180_6cbf27db",
+        "filename": "extensions/browser/sandboxed_unpacker_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1232091
+      },
+      "writtenOn": "2017-07-20T03:22:55Z",
+      "side": 1,
+      "message": "Added check for non-empty install error.",
+      "parentUuid": "3807ed00_bfbb04ae",
+      "revId": "74fcfec0fd36addc3cf68ee2d574824a4e93a471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
