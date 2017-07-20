@@ -16,6 +16,24 @@
       "revId": "1dcc056e8d30cf6d0bcfb9dbc175ed9dd254200a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ae1cc1_abd770f6",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T10:07:18Z",
+      "side": 1,
+      "message": "When the end of a run is included, this code tries to compute the right edge overhang/underhang from the width.\n\nBut since bounds is very much smaller than width (like 100px width and 40px bounds.width) that I needed to add \"if (right \u003e\u003d left)\" to pass tests. Now this was really fixed that this hack is no longer necessary.",
+      "parentUuid": "c0a526ff_2214c88a",
+      "revId": "1dcc056e8d30cf6d0bcfb9dbc175ed9dd254200a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
