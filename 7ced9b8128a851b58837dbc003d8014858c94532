@@ -114,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "0ba9f2f0_906344f9",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-20T23:30:00Z",
+      "side": 1,
+      "message": "Done, though I\u0027ll try to further refactor the test per holte@\u0027s comments.",
+      "parentUuid": "263d0151_8120f3dd",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db662b74_57a9e53b",
         "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
         "patchSetId": 1
@@ -125,6 +143,24 @@
       "writtenOn": "2017-07-20T22:36:13Z",
       "side": 1,
       "message": "I\u0027m curious why this CL\u0027s change belongs here, rather than somewhere related to signin?  I don\u0027t have a good sense for whether it\u0027s out of place here, so maybe we can get an owner\u0027s opinion?",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da62ffa_26b1072b",
+        "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-20T23:30:00Z",
+      "side": 1,
+      "message": "Unfortunately, it seems that both chrome/browser/signin/ owners are in a different time zone, so since we still want to try to get this in before branch cut, per our offline chat I\u0027ve added a TODO to move it to a better place.  I\u0027ve already asked msarda@ and will follow up.  FWIW, I did a search and didn\u0027t find a better place -- the majority existing code seems to deal with the inline signin navigations in the \u003cwebview\u003e, or with sign-in process (for this, we don\u0027t care if the user ever signs in, since the process isolation will kick in regardless).",
+      "parentUuid": "db662b74_57a9e53b",
       "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +181,24 @@
       "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5304e4f4_4224ffdf",
+        "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-20T23:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924058e9_e174ae75",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
