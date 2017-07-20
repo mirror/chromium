@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ed2824_127b7d2b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-input-box-gets-focused-after-scroll.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T14:03:32Z",
+      "side": 1,
+      "message": "Nit: \u0027Focus on visible sticky input box\u0027 or similar.",
+      "revId": "f03a66bf566ef13245846952cba410c268be920a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
