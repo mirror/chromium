@@ -16,6 +16,24 @@
       "revId": "63441397fb7858797984acc21571134ecbf1fb86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224e98c7_a9c94bda",
+        "filename": "chrome/browser/vr/elements/linear_layout.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-20T12:44:15Z",
+      "side": 1,
+      "message": "I appreciate the desire to decouple layout, but I\u0027d prefer not to go this route. What I\u0027m creating here is an analog to android\u0027s linear layout (https://developer.android.com/guide/topics/ui/layout/linear.html). Semantically, I feel that this makes more sense as an object in the entity hierarchy as it is on android.\n\nI\u0027d be happy to chat about this offline, but here\u0027s a bit more of my thinking on the matter.\n\nSince a layout needs to know about all elements it effects, it will need to have some notion of \"children\" or \"laid out elements\". We could accomplish this by having a dummy UiElement to house the children, to hold onto the layout strategy object, and to handle aggregate positioning of the laid out collection of elements (you may want to, eg, slide the linear list of items upward together and fade it away). But at this point, since we need a UiElement and an object to house the specialized layout behavior, I think it makes more sense to provide the specialized behavior via override on a clearly named, dedicated subclass. I think this will also work well if we move to a declarative format for specifying our hierarchy (like Android\u0027s xml specification).\n\nAlso, changing layout modes is rare, and I think we\u0027re unlikely to need this behavior (and even if we did swap layout modes, I imagine we\u0027d accomplish it differently).",
+      "parentUuid": "11373602_bc8cef94",
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
