@@ -530,19 +530,6 @@ void BackgroundTracingManagerImpl::OnFinalizeComplete() {
   RecordBackgroundTracingMetric(FINALIZATION_COMPLETE);
 }
 
-void BackgroundTracingManagerImpl::AddCustomMetadata() {
-  base::DictionaryValue metadata_dict;
-
-  std::unique_ptr<base::DictionaryValue> config_dict(
-      new base::DictionaryValue());
-  config_->IntoDict(config_dict.get());
-  metadata_dict.Set("config", std::move(config_dict));
-  if (last_triggered_rule_)
-    metadata_dict.Set("last_triggered_rule", std::move(last_triggered_rule_));
-
-  TracingController::GetInstance()->AddMetadata(metadata_dict);
-}
-
 void BackgroundTracingManagerImpl::BeginFinalizing(
     StartedFinalizingCallback callback) {
   is_gathering_ = true;
@@ -555,19 +542,18 @@ void BackgroundTracingManagerImpl::BeginFinalizing(
                      delegate_->IsAllowedToEndBackgroundScenario(
                          *config_.get(), requires_anonymized_data_));
 
-  scoped_refptr<TracingControllerImpl::TraceDataSink> trace_data_sink;
+  scoped_refptr<TracingControllerImpl::TraceDataEndpoint> trace_data_endpoint;
   if (is_allowed_finalization) {
-    trace_data_sink = TracingControllerImpl::CreateCompressedStringSink(
+    trace_data_endpoint = TracingControllerImpl::CreateCompressedStringEndpoint(
         TracingControllerImpl::CreateCallbackEndpoint(
             base::Bind(&BackgroundTracingManagerImpl::OnFinalizeStarted,
                        base::Unretained(this))));
     RecordBackgroundTracingMetric(FINALIZATION_ALLOWED);
-    AddCustomMetadata();
   } else {
     RecordBackgroundTracingMetric(FINALIZATION_DISALLOWED);
   }
 
-  content::TracingController::GetInstance()->StopTracing(trace_data_sink);
+  content::TracingController::GetInstance()->StopTracing(trace_data_endpoint);
 
   if (!callback.is_null())
     callback.Run(is_allowed_finalization);

@@ -115,6 +115,7 @@
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
+#include "services/resource_coordinator/tracing/coordinator.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "skia/ext/event_tracer_impl.h"
 #include "skia/ext/skia_memory_dump_provider.h"
@@ -704,35 +705,6 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
 
   if (parts_)
     parts_->PostMainMessageLoopStart();
-
-  // Start startup tracing through TracingController's interface. TraceLog has
-  // been enabled in content_main_runner where threads are not available. Now We
-  // need to start tracing for all other tracing agents, which require threads.
-  if (parsed_command_line_.HasSwitch(switches::kTraceStartup)) {
-    base::trace_event::TraceConfig trace_config(
-        parsed_command_line_.GetSwitchValueASCII(switches::kTraceStartup),
-        base::trace_event::RECORD_UNTIL_FULL);
-    TracingController::GetInstance()->StartTracing(
-        trace_config,
-        TracingController::StartTracingDoneCallback());
-  } else if (parsed_command_line_.HasSwitch(switches::kTraceToConsole)) {
-      TracingController::GetInstance()->StartTracing(
-          tracing::GetConfigForTraceToConsole(),
-          TracingController::StartTracingDoneCallback());
-  } else if (tracing::TraceConfigFile::GetInstance()->IsEnabled()) {
-    // This checks kTraceConfigFile switch.
-    TracingController::GetInstance()->StartTracing(
-        tracing::TraceConfigFile::GetInstance()->GetTraceConfig(),
-        TracingController::StartTracingDoneCallback());
-  }
-  // Start tracing to a file for certain duration if needed. Only do this after
-  // starting the main message loop to avoid calling
-  // MessagePumpForUI::ScheduleWork() before MessagePumpForUI::Start() as it
-  // will crash the browser.
-  if (is_tracing_startup_for_duration_) {
-    TRACE_EVENT0("startup", "BrowserMainLoop::InitStartupTracingForDuration");
-    InitStartupTracingForDuration(parsed_command_line_);
-  }
 
 #if defined(OS_ANDROID)
   {
@@ -1382,6 +1354,15 @@ void BrowserMainLoop::InitializeMainThread() {
 int BrowserMainLoop::BrowserThreadsStarted() {
   TRACE_EVENT0("startup", "BrowserMainLoop::BrowserThreadsStarted");
 
+  // Create the tracing coordinator. It makes sense that BrowserMainLoop owns
+  // the service; this way, the service is alive for the lifetime of Mojo. Mojo
+  // is shutdown in BrowserMainLoop::ShutdownThreadsAndCleanupIO.
+  //
+  // tracing::Coordinator should be created before InitializeMojo in which the
+  // tracing coordinator interface is registered.
+  tracing_agent_registry_ = base::MakeUnique<tracing::AgentRegistry>();
+  tracing_coordinator_ = base::MakeUnique<tracing::Coordinator>();
+
   // Bring up Mojo IPC and the embedded Service Manager as early as possible.
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
@@ -1402,6 +1383,34 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       connector, mojom::kBrowserServiceName,
       memory_instrumentation::mojom::ProcessType::BROWSER);
   memory_instrumentation::ClientProcessImpl::CreateInstance(config);
+
+  // Start startup tracing through TracingController's interface. TraceLog has
+  // been enabled in content_main_runner where threads are not available. Now We
+  // need to start tracing for all other tracing agents, which require threads.
+  if (parsed_command_line_.HasSwitch(switches::kTraceStartup)) {
+    base::trace_event::TraceConfig trace_config(
+        parsed_command_line_.GetSwitchValueASCII(switches::kTraceStartup),
+        base::trace_event::RECORD_UNTIL_FULL);
+    TracingController::GetInstance()->StartTracing(
+        trace_config, TracingController::StartTracingDoneCallback());
+  } else if (parsed_command_line_.HasSwitch(switches::kTraceToConsole)) {
+    TracingController::GetInstance()->StartTracing(
+        tracing::GetConfigForTraceToConsole(),
+        TracingController::StartTracingDoneCallback());
+  } else if (tracing::TraceConfigFile::GetInstance()->IsEnabled()) {
+    // This checks kTraceConfigFile switch.
+    TracingController::GetInstance()->StartTracing(
+        tracing::TraceConfigFile::GetInstance()->GetTraceConfig(),
+        TracingController::StartTracingDoneCallback());
+  }
+  // Start tracing to a file for certain duration if needed. Only do this after
+  // starting the main message loop to avoid calling
+  // MessagePumpForUI::ScheduleWork() before MessagePumpForUI::Start() as it
+  // will crash the browser.
+  if (is_tracing_startup_for_duration_) {
+    TRACE_EVENT0("startup", "BrowserMainLoop::InitStartupTracingForDuration");
+    InitStartupTracingForDuration(parsed_command_line_);
+  }
 
 #if defined(USE_AURA)
   if (service_manager::ServiceManagerIsRemote()) {
@@ -1759,7 +1768,7 @@ void BrowserMainLoop::EndStartupTracing() {
 
   is_tracing_startup_for_duration_ = false;
   TracingController::GetInstance()->StopTracing(
-      TracingController::CreateFileSink(
+      TracingController::CreateFileEndpoint(
           startup_trace_file_,
           base::Bind(OnStoppedStartupTracing, startup_trace_file_)));
 }

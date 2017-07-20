@@ -15,19 +15,32 @@
 #include "base/values.h"
 #include "base/win/event_trace_consumer.h"
 #include "base/win/event_trace_controller.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 
 namespace base {
 template <typename Type>
 struct DefaultSingletonTraits;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace content {
 
-class EtwTracingAgent
-    : public base::win::EtwTraceConsumerBase<EtwTracingAgent>,
-      public base::trace_event::TracingAgent {
+using tracing::mojom::Agent;
+
+class EtwTracingAgent : public Agent,
+                        public base::win::EtwTraceConsumerBase<EtwTracingAgent>,
+                        public base::trace_event::TracingAgent {
  public:
+  explicit EtwTracingAgent(service_manager::Connector* connector);
+
   // base::trace_event::TracingAgent implementation.
+  // DEPRECATED: These will be deleted when tracing servicification is complete.
+  // At that point, we will get rid of base::trace_event::TracingAgent and
+  // tracing::mojom::Agent methods will be used, instead.
   std::string GetTracingAgentName() override;
   std::string GetTraceEventLabel() override;
   void StartAgentTracing(const base::trace_event::TraceConfig& trace_config,
@@ -48,6 +61,21 @@ class EtwTracingAgent
 
   void AddSyncEventToBuffer();
   void AppendEventToBuffer(EVENT_TRACE* event);
+
+  // tracing::mojom::Agent. Called by Mojo internals on the UI thread.
+  void StartTracing(const std::string& config,
+                    const Agent::StartTracingCallback& callback) override;
+  void StopAndFlush(tracing::mojom::RecorderPtr recorder) override;
+  void RequestClockSyncMarker(
+      const std::string& sync_id,
+      const Agent::RequestClockSyncMarkerCallback& callback) override;
+  void GetCategories(const Agent::GetCategoriesCallback& callback) override;
+  void RequestBufferStatus(
+      const Agent::RequestBufferStatusCallback& callback) override;
+
+  void RecorderProxy(const std::string& event_name,
+                     const std::string& events_label,
+                     const scoped_refptr<base::RefCountedString>& events);
 
   // Static override of EtwTraceConsumerBase::ProcessEvent.
   // @param event the raw ETW event to process.
@@ -74,6 +102,8 @@ class EtwTracingAgent
   base::Thread thread_;
   TRACEHANDLE session_handle_;
   base::win::EtwTraceProperties properties_;
+
+  mojo::Binding<tracing::mojom::Agent> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(EtwTracingAgent);
 };

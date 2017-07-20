@@ -23,16 +23,13 @@ class BackgroundTracingManager {
   CONTENT_EXPORT static BackgroundTracingManager* GetInstance();
 
   // ReceiveCallback will will be called on the UI thread every time the
-  // BackgroundTracingManager finalizes a trace. The first parameter of
-  // this callback is the trace data. The second is metadata that was
-  // generated and embedded into the trace. The third is a callback to
-  // notify the BackgroundTracingManager that you've finished processing
-  // the trace data.
+  // BackgroundTracingManager finalizes a trace. The first parameter of this
+  // callback is the trace data. The second is a callback to notify the
+  // BackgroundTracingManager that you've finished processing the trace data.
   //
   // Example:
   //
   // void Upload(const scoped_refptr<base::RefCountedString>& data,
-  //             std::unique_ptr<base::DictionaryValue>,
   //             base::Closure done_callback) {
   //   BrowserThread::PostTaskAndReply(
   //       BrowserThread::FILE,

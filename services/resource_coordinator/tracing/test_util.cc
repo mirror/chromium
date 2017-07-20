@@ -24,7 +24,7 @@ mojom::AgentPtr MockAgent::CreateAgentPtr() {
 void MockAgent::StartTracing(const std::string& config,
                              const StartTracingCallback& cb) {
   call_stat_.push_back("StartTracing");
-  cb.Run();
+  cb.Run(true);
 }
 
 void MockAgent::StopAndFlush(mojom::RecorderPtr recorder) {

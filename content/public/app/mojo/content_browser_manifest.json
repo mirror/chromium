@@ -4,12 +4,13 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "app": [
+          "memory_instrumentation::mojom::Coordinator",
+          "tracing::mojom::AgentRegistry"
+        ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
-        ],
-        "memory_instrumentation": [
-          "memory_instrumentation::mojom::Coordinator"
         ],
         "plugin": [
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
@@ -49,15 +50,22 @@
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
         ],
+        "tracing": [
+          "tracing::mojom::Coordinator"
+        ],
         "utility": [
-          "discardable_memory::mojom::DiscardableSharedMemoryManager",
-          "memory_instrumentation::mojom::Coordinator"
+          "discardable_memory::mojom::DiscardableSharedMemoryManager"
         ]
       },
       "requires": {
         "*": [ "app" ],
         // In classic ash, the browser supplies ash interfaces to itself.
-        "content_browser": [ "ash", "display", "memory_instrumentation", "url_keyed_metrics" ],
+        "content_browser": [
+          "ash",
+          "display",
+          "tracing",
+          "url_keyed_metrics"
+        ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
         "content_renderer": [ "browser" ],

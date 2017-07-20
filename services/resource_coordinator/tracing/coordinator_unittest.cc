@@ -88,7 +88,8 @@ class CoordinatorTest : public testing::Test,
 
   void StopAndFlush() {
     mojo::DataPipe data_pipe;
-    coordinator_->StopAndFlush(std::move(data_pipe.producer_handle));
+    coordinator_->StopAndFlush(std::move(data_pipe.producer_handle),
+                               Coordinator::StopAndFlushCallback());
     drainer_.reset(new mojo::common::DataPipeDrainer(
         this, std::move(data_pipe.consumer_handle)));
   }
