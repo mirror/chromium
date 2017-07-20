@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58dc136b_6afba798",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-07-20T18:48:25Z",
+      "side": 1,
+      "message": "... of ...",
+      "revId": "21b5302fa495c844fa7ec1ff6281256eae102857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d39779d_22456373",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-07-20T18:48:25Z",
+      "side": 1,
+      "message": "[translation]s",
+      "revId": "21b5302fa495c844fa7ec1ff6281256eae102857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dbed3aa_832ee1f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-07-20T18:48:25Z",
+      "side": 1,
+      "message": "s/different/for/",
+      "revId": "21b5302fa495c844fa7ec1ff6281256eae102857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f40563aa_8183ab9d",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/composited-scroll-with-fractional-translation.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-07-20T18:48:25Z",
+      "side": 1,
+      "message": "s/regardless/regardless of/",
+      "revId": "21b5302fa495c844fa7ec1ff6281256eae102857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
