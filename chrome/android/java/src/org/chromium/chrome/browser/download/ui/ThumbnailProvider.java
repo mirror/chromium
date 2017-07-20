@@ -13,6 +13,9 @@ public interface ThumbnailProvider {
         /** Local storage path to the file. */
         String getFilePath();
 
+        /** Content ID that uniquely identifies the file. */
+        String getContentId();
+
         /** Called when a thumbnail is ready. */
         void onThumbnailRetrieved(String filePath, Bitmap thumbnail);
 

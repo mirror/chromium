@@ -116,6 +116,11 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     }
 
     @Override
+    public String getContentId() {
+        return mItem == null ? "" : mItem.getId();
+    }
+
+    @Override
     public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
         if (TextUtils.equals(getFilePath(), filePath) && thumbnail != null
                 && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
