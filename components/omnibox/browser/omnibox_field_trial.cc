@@ -772,6 +772,12 @@ const char OmniboxFieldTrial::kPhysicalWebZeroSuggestRule[] =
 const char OmniboxFieldTrial::kPhysicalWebAfterTypingRule[] =
     "PhysicalWebAfterTyping";
 
+const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
+    "ZeroSuggestRedirectToChromeServerAddress";
+const char
+    OmniboxFieldTrial::kZeroSuggestRedirectToChromeAdditionalFieldsParam[] =
+        "ZeroSuggestRedirectToChromeAdditionalFields";
+
 const char OmniboxFieldTrial::kHUPNewScoringEnabledParam[] =
     "HUPExperimentalScoringEnabled";
 const char OmniboxFieldTrial::kHUPNewScoringTypedCountRelevanceCapParam[] =
@@ -808,12 +814,6 @@ const char OmniboxFieldTrial::kPhysicalWebZeroSuggestBaseRelevanceParam[] =
     "PhysicalWebZeroSuggestBaseRelevance";
 const char OmniboxFieldTrial::kPhysicalWebAfterTypingBaseRelevanceParam[] =
     "PhysicalWebAfterTypingBaseRelevanceParam";
-
-const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
-    "ZeroSuggestRedirectToChromeServerAddress";
-const char
-    OmniboxFieldTrial::kZeroSuggestRedirectToChromeAdditionalFieldsParam[] =
-        "ZeroSuggestRedirectToChromeAdditionalFields";
 
 const char OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam[] =
     "UIMaxAutocompleteMatches";

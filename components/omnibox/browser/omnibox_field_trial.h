@@ -426,7 +426,6 @@ class OmniboxFieldTrial {
   // the user has started typing in the omnibox.
   static int GetPhysicalWebAfterTypingBaseRelevance();
 
-  // ---------------------------------------------------------
   // For experiment redirecting zero suggest requests to a service provided by
   // the Chrome team.
 
@@ -445,6 +444,8 @@ class OmniboxFieldTrial {
   // properly escaped. It can be appended to the string representaiton of a
   // request URL.
   static std::string ZeroSuggestRedirectToChromeAdditionalFields();
+
+  // ---------------------------------------------------------
 
   // ---------------------------------------------------------
   // Clipboard URL suggestions:
