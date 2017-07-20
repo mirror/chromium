@@ -145,9 +145,11 @@ void VrShell::SwapContents(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& web_contents,
+    int active_tab_id,
     const JavaParamRef<jobject>& touch_event_synthesizer) {
   content::WebContents* contents =
       content::WebContents::FromJavaWebContents(web_contents);
+  active_tab_id_ = active_tab_id;
   if (contents == web_contents_ &&
       touch_event_synthesizer.obj() == j_motion_event_synthesizer_.obj())
     return;
@@ -182,14 +184,20 @@ void VrShell::SwapContents(
 void VrShell::SetUiState() {
   toolbar_->Update();
 
+  if (active_tab_id_ == -1) {
+    if (web_contents_)
+      ui_->SetIncognito(web_contents_->GetBrowserContext()->IsOffTheRecord());
+    ui_->SetIncognito(false);
+  } else {
+    ui_->SetIncognito(tab_incognito_map_[active_tab_id_]);
+  }
+
   if (!web_contents_) {
     ui_->SetLoading(false);
     ui_->SetFullscreen(false);
-    ui_->SetIncognito(false);
   } else {
     ui_->SetLoading(web_contents_->IsLoading());
     ui_->SetFullscreen(web_contents_->IsFullscreen());
-    ui_->SetIncognito(web_contents_->GetBrowserContext()->IsOffTheRecord());
   }
 }
 
@@ -386,6 +394,7 @@ void VrShell::OnTabListCreated(JNIEnv* env,
   ProcessTabArray(env, tabs, false);
   ProcessTabArray(env, incognito_tabs, true);
   ui_->FlushTabList();
+  SetUiState();
 }
 
 void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
@@ -395,6 +404,7 @@ void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
     TabAndroid* tab =
         TabAndroid::GetNativeTab(env, JavaParamRef<jobject>(env, jtab));
     ui_->AppendToTabList(incognito, tab->GetAndroidId(), tab->GetTitle());
+    tab_incognito_map_[tab->GetAndroidId()] = incognito;
   }
 }
 
@@ -406,6 +416,8 @@ void VrShell::OnTabUpdated(JNIEnv* env,
   std::string title;
   base::android::ConvertJavaStringToUTF8(env, jtitle, &title);
   ui_->UpdateTab(incognito, id, title);
+  tab_incognito_map_[id] = incognito;
+  SetUiState();
 }
 
 void VrShell::OnTabRemoved(JNIEnv* env,
@@ -413,6 +425,8 @@ void VrShell::OnTabRemoved(JNIEnv* env,
                            jboolean incognito,
                            jint id) {
   ui_->RemoveTab(incognito, id);
+  tab_incognito_map_.erase(id);
+  SetUiState();
 }
 
 void VrShell::SetWebVRSecureOrigin(bool secure_origin) {

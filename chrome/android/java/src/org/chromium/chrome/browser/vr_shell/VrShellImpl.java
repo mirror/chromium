@@ -208,6 +208,8 @@ public class VrShellImpl
                             new MotionEventSynthesizer(mRenderToSurfaceLayout, VrShellImpl.this);
                 }
                 setContentCssSize(mLastContentWidth, mLastContentHeight, mLastContentDpr);
+                Tab currentTab = mTabModelSelector.getCurrentTab();
+                int currentTabId = (currentTab != null) ? currentTab.getId() : -1;
                 if (tab.getNativePage() == null && tab.getContentViewCore() != null) {
                     mContentViewCore = tab.getContentViewCore();
                     mContentViewCore.onAttachedToWindow();
@@ -215,9 +217,10 @@ public class VrShellImpl
                     // We need the CVC to think it has Window Focus so it doesn't blur the page,
                     // even though we're drawing VR layouts over top of it.
                     mContentViewCore.onWindowFocusChanged(true);
-                    nativeSwapContents(mNativeVrShell, mContentViewCore.getWebContents(), null);
+                    nativeSwapContents(
+                            mNativeVrShell, mContentViewCore.getWebContents(), currentTabId, null);
                 } else {
-                    nativeSwapContents(mNativeVrShell, null, mMotionEventSynthesizer);
+                    nativeSwapContents(mNativeVrShell, null, currentTabId, mMotionEventSynthesizer);
                 }
                 updateHistoryButtonsVisibility();
             }
@@ -361,8 +364,8 @@ public class VrShellImpl
         setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
 
         reparentAllTabs(mContentVrWindowAndroid);
-        swapToForegroundTab();
         createTabList();
+        swapToForegroundTab();
         mActivity.getTabModelSelector().addObserver(mTabModelSelectorObserver);
         createTabModelSelectorTabObserver();
         updateHistoryButtonsVisibility();
@@ -756,8 +759,8 @@ public class VrShellImpl
             boolean reprojectedRendering);
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
     private native void nativeSetSplashScreenIcon(long nativeVrShell, Bitmap bitmap);
-    private native void nativeSwapContents(
-            long nativeVrShell, WebContents webContents, MotionEventSynthesizer eventSynthesizer);
+    private native void nativeSwapContents(long nativeVrShell, WebContents webContents,
+            int activeTabId, MotionEventSynthesizer eventSynthesizer);
     private native void nativeDestroy(long nativeVrShell);
     private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);

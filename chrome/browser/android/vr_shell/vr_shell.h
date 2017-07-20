@@ -84,6 +84,7 @@ class VrShell : public device::GvrDelegate,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& web_contents,
+      int active_tab_id,
       const base::android::JavaParamRef<jobject>& touch_event_synthesizer);
   void LoadUIContent(JNIEnv* env,
                      const base::android::JavaParamRef<jobject>& obj);
@@ -266,6 +267,9 @@ class VrShell : public device::GvrDelegate,
   device::CardboardGamepadDataFetcher* cardboard_gamepad_data_fetcher_ =
       nullptr;
   int64_t cardboard_gamepad_timer_ = 0;
+
+  std::unordered_map<int, bool> tab_incognito_map_;
+  int active_tab_id_ = -1;
 
   base::WeakPtrFactory<VrShell> weak_ptr_factory_;
 
