@@ -9,7 +9,7 @@
 #include "base/memory/weak_ptr.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/output/renderer_settings.h"
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_client.h"
@@ -51,7 +51,7 @@ class TestLayerTreeFrameSinkClient {
 class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
                                public CompositorFrameSinkSupportClient,
                                public DisplayClient,
-                               public cc::ExternalBeginFrameSourceClient {
+                               public ExternalBeginFrameSourceClient {
  public:
   // Pass true for |force_disable_reclaim_resources| to act like the Display
   // is out-of-process and can't return resources synchronously.
@@ -85,12 +85,12 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   void DetachFromClient() override;
   void SetLocalSurfaceId(const LocalSurfaceId& local_surface_id) override;
   void SubmitCompositorFrame(cc::CompositorFrame frame) override;
-  void DidNotProduceFrame(const cc::BeginFrameAck& ack) override;
+  void DidNotProduceFrame(const BeginFrameAck& ack) override;
 
   // CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void OnBeginFrame(const BeginFrameArgs& args) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
@@ -127,8 +127,8 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   // Uses surface_manager_.
   std::unique_ptr<CompositorFrameSinkSupport> support_;
 
-  std::unique_ptr<cc::SyntheticBeginFrameSource> begin_frame_source_;
-  cc::ExternalBeginFrameSource external_begin_frame_source_;
+  std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source_;
+  ExternalBeginFrameSource external_begin_frame_source_;
 
   // Uses surface_manager_ and begin_frame_source_.
   std::unique_ptr<Display> display_;

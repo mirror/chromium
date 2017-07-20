@@ -12,7 +12,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
-#include "cc/output/begin_frame_args.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/output/software_output_device.h"
@@ -21,10 +20,13 @@
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
+#include "components/viz/common/begin_frame_args.h"
+
+namespace viz {
+class BeginFrameSource;
+}
 
 namespace cc {
-
-class BeginFrameSource;
 
 class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
  public:
@@ -62,7 +64,7 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
 
   // LayerTreeFrameSink implementation.
   void SubmitCompositorFrame(CompositorFrame frame) override;
-  void DidNotProduceFrame(const BeginFrameAck& ack) override;
+  void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   bool BindToClient(LayerTreeFrameSinkClient* client) override;
   void DetachFromClient() override;
 
@@ -95,7 +97,7 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
  private:
   void DidReceiveCompositorFrameAck();
 
-  std::unique_ptr<BeginFrameSource> begin_frame_source_;
+  std::unique_ptr<viz::BeginFrameSource> begin_frame_source_;
   base::WeakPtrFactory<FakeLayerTreeFrameSink> weak_ptr_factory_;
 };
 

@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_TEST_BEGIN_FRAME_SOURCE_TEST_H_
-#define CC_TEST_BEGIN_FRAME_SOURCE_TEST_H_
+#ifndef COMPONENTS_VIZ_TEST_BEGIN_FRAME_SOURCE_TEST_H_
+#define COMPONENTS_VIZ_TEST_BEGIN_FRAME_SOURCE_TEST_H_
 
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/scheduler/begin_frame_source.h"
-#include "cc/test/begin_frame_args_test.h"
+#include "components/viz/common/begin_frame_source.h"
+#include "components/viz/test/begin_frame_args_test.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -50,8 +50,8 @@
       .Times(1)                                               \
       .InSequence((obs).sequence)
 
-// Macros to send BeginFrameArgs on a FakeBeginFrameSink (and verify resulting
-// observer behaviour).
+// Macros to send BeginFrameArgs on a FakeBeginFrameSink (and verify
+// resulting observer behaviour).
 #define SEND_BEGIN_FRAME(args_equal_to, source, sequence_number, frame_time, \
                          deadline, interval)                                 \
   {                                                                          \
@@ -76,7 +76,7 @@
   SEND_BEGIN_FRAME(new_args, source, sequence_number, frame_time, deadline,  \
                    interval);
 
-namespace cc {
+namespace viz {
 
 class MockBeginFrameObserver : public BeginFrameObserver {
  public:
@@ -86,8 +86,8 @@ class MockBeginFrameObserver : public BeginFrameObserver {
 
   virtual void AsValueInto(base::trace_event::TracedValue* dict) const;
 
-  // A value different from the normal default returned by a BeginFrameObserver
-  // so it is easiable traced back here.
+  // A value different from the normal default returned by a
+  // BeginFrameObserver so it is easiable traced back here.
   static const BeginFrameArgs kDefaultBeginFrameArgs;
 
   MockBeginFrameObserver();
@@ -97,6 +97,6 @@ class MockBeginFrameObserver : public BeginFrameObserver {
   ::testing::Sequence sequence;
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_TEST_BEGIN_FRAME_SOURCE_TEST_H_
+#endif  // COMPONENTS_VIZ_TEST_BEGIN_FRAME_SOURCE_TEST_H_

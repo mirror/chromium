@@ -63,7 +63,6 @@
 #include "cc/resources/memory_history.h"
 #include "cc/resources/resource_pool.h"
 #include "cc/resources/ui_resource_bitmap.h"
-#include "cc/scheduler/delay_based_time_source.h"
 #include "cc/tiles/eviction_tile_priority_queue.h"
 #include "cc/tiles/frame_viewer_instrumentation.h"
 #include "cc/tiles/gpu_image_decode_cache.h"
@@ -83,6 +82,7 @@
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
+#include "components/viz/common/delay_based_time_source.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -1751,7 +1751,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     }
   }
 
-  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber,
             frame->begin_frame_ack.sequence_number);
   metadata.begin_frame_ack = frame->begin_frame_ack;
 
@@ -1938,7 +1938,7 @@ void LayerTreeHostImpl::UpdateTreeResourcesForGpuRasterizationIfNeeded() {
   SetRequiresHighResToDraw();
 }
 
-void LayerTreeHostImpl::WillBeginImplFrame(const BeginFrameArgs& args) {
+void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   current_begin_frame_tracker_.Start(args);
 
   if (is_likely_to_require_a_draw_) {
@@ -1965,7 +1965,7 @@ void LayerTreeHostImpl::DidFinishImplFrame() {
   decoded_image_tracker_.NotifyFrameFinished();
 }
 
-void LayerTreeHostImpl::DidNotProduceFrame(const BeginFrameAck& ack) {
+void LayerTreeHostImpl::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
   if (layer_tree_frame_sink_)
     layer_tree_frame_sink_->DidNotProduceFrame(ack);
 }
@@ -2579,7 +2579,7 @@ bool LayerTreeHostImpl::InitializeRenderer(
   return true;
 }
 
-void LayerTreeHostImpl::SetBeginFrameSource(BeginFrameSource* source) {
+void LayerTreeHostImpl::SetBeginFrameSource(viz::BeginFrameSource* source) {
   client_->SetBeginFrameSource(source);
 }
 
@@ -3978,7 +3978,7 @@ TreePriority LayerTreeHostImpl::GetTreePriority() const {
   return global_tile_state_.tree_priority;
 }
 
-BeginFrameArgs LayerTreeHostImpl::CurrentBeginFrameArgs() const {
+viz::BeginFrameArgs LayerTreeHostImpl::CurrentBeginFrameArgs() const {
   // TODO(mithro): Replace call with current_begin_frame_tracker_.Current()
   // once all calls which happens outside impl frames are fixed.
   return current_begin_frame_tracker_.DangerousMethodCurrentOrLast();
