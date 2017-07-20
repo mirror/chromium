@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e16d2d_829c37dd",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-20T18:38:37Z",
+      "side": 1,
+      "message": "Do we know why this call is needed? EarlGrey *should* handle synchronization for UI transitions, but there are a few places where it fails...\n- Is there some server interaction that EG doesn\u0027t know to wait for?\n- Is there some asynchronous communication the UI doesn\u0027t know to handle?\n- Is there some webview communication (EG doesn\u0027t synchronize WKWebView)?\n- If we do some non-UI manipulation, EG doesn\u0027t know to wait for the UI (e.g. delete all bookmarks via code, then EG doesn\u0027t know the UI will update)\n\nFor this case, it looks like it is between two native UI interactions, so I\u0027m not sure why this is needed.",
+      "range": {
+        "startLine": 586,
+        "startChar": 41,
+        "endLine": 586,
+        "endChar": 55
+      },
+      "revId": "cec39d16ba89dcffb09cde58416101614492f079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
