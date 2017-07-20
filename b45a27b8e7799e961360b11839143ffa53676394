@@ -22,6 +22,30 @@
       "revId": "b45a27b8e7799e961360b11839143ffa53676394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f8963c_30857089",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T12:46:23Z",
+      "side": 1,
+      "message": "We could and that would fix the bug, but it seems that when we drop other types of items we do send a \u0027dragleave\u0027 event. e.g. http://output.jsbin.com/vavosubudo/1, open the console and try dragging some piece of text into the window. That is, we send a \u0027dragenter\u0027 today so it seems more correct to also send a \u0027dragleave\u0027 in this case.",
+      "parentUuid": "4ad425a1_c7f60f85",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 54
+      },
+      "revId": "b45a27b8e7799e961360b11839143ffa53676394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
