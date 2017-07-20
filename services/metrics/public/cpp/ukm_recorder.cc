@@ -34,7 +34,17 @@ UkmRecorder* UkmRecorder::Get() {
 // static
 ukm::SourceId UkmRecorder::GetNewSourceID() {
   static base::AtomicSequenceNumber seq;
-  return static_cast<ukm::SourceId>(seq.GetNext());
+  return ConvertSourceId(seq.GetNext() + 1, UkmRecorder::SourceIdType::UKM);
+}
+
+// static
+ukm::SourceId UkmRecorder::ConvertSourceId(int64_t other_id,
+                                           UkmRecorder::SourceIdType id_type) {
+  const int64_t NUM_TYPE_BITS = 2;
+  const int64_t TYPE_MASK = (INT64_C(1) << NUM_TYPE_BITS) - 1;
+  const int64_t type_bits = static_cast<int64_t>(id_type);
+  DCHECK_EQ(type_bits, type_bits & TYPE_MASK);
+  return (other_id << NUM_TYPE_BITS) | type_bits;
 }
 
 std::unique_ptr<UkmEntryBuilder> UkmRecorder::GetEntryBuilder(
