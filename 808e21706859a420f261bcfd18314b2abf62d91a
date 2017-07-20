@@ -22,6 +22,30 @@
       "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e220c88_4c72cd70",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T03:46:39Z",
+      "side": 1,
+      "message": "I check about this (https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Constant_Names).\n\n\"All such variables with static storage duration (i.e. statics and globals, see Storage Duration for details) should be named this way. This convention is optional for variables of other storage classes, e.g. automatic variables, otherwise the usual variable naming rules apply.\"\n\nSo I think it\u0027s OK to use kCamelCase here, and I also check and see a lot of non-global constants are named in this way.",
+      "parentUuid": "690d49bf_62f96fe0",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
