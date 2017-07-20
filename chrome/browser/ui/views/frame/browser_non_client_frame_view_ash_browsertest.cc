@@ -12,13 +12,18 @@
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/command_line.h"
 #include "build/build_config.h"
+#include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/command_updater.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_test.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_commands.h"
+#include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller_test.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
@@ -322,4 +327,126 @@ IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshTest,
   ASSERT_NE(nullptr, min_window_size);
   EXPECT_GT(min_window_size->height(), min_height_no_bookmarks);
   EXPECT_EQ(*min_window_size, frame_view->GetMinimumSize());
+}
+
+namespace {
+
+class ImmersiveModeBrowserViewTest : public InProcessBrowserTest,
+                                     public ImmersiveModeController::Observer {
+ public:
+  ImmersiveModeBrowserViewTest() = default;
+  ~ImmersiveModeBrowserViewTest() override = default;
+
+  BrowserView* browser_view() const {
+    return BrowserView::GetBrowserViewForBrowser(browser());
+  }
+
+  void PreRunTestOnMainThread() override {
+    InProcessBrowserTest::PreRunTestOnMainThread();
+    auto* immersive_mode_controller =
+        browser_view()->immersive_mode_controller();
+    immersive_mode_controller->AddObserver(this);
+    ash::ImmersiveFullscreenControllerTestApi(
+        static_cast<ImmersiveModeControllerAsh*>(immersive_mode_controller)
+            ->controller())
+        .SetupForTest();
+  }
+
+  void PostRunTestOnMainThread() override {
+    if (!controller_destroyed_)
+      browser_view()->immersive_mode_controller()->RemoveObserver(this);
+    InProcessBrowserTest::PostRunTestOnMainThread();
+  }
+
+  void WaitUntilRevealEnds() {
+    if (!reveal_ended_ && !controller_destroyed_) {
+      run_loop_ = base::MakeUnique<base::RunLoop>();
+      run_loop_->Run();
+    }
+
+    run_loop_.reset();
+    reveal_ended_ = false;
+    return;
+  }
+
+  // ImmersiveModeController::Observer:
+  void OnImmersiveRevealEnded() override { MaybeEndWait(); }
+
+  void OnImmersiveModeControllerDestroyed() override {
+    controller_destroyed_ = true;
+    MaybeEndWait();
+  }
+
+ private:
+  void MaybeEndWait() {
+    reveal_ended_ = true;
+    if (run_loop_)
+      run_loop_->QuitClosure().Run();
+  }
+
+  std::unique_ptr<base::RunLoop> run_loop_;
+  bool reveal_ended_ = false;
+  bool controller_destroyed_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(ImmersiveModeBrowserViewTest);
+};
+
+}  // namespace
+
+// Tests IDC_SELECT_TAB_0, IDC_SELECT_NEXT_TAB, IDC_SELECT_PREVIOUS_TAB and
+// IDC_SELECT_LAST_TAB when the browser is in immersive fullscreen mode.
+IN_PROC_BROWSER_TEST_F(ImmersiveModeBrowserViewTest,
+                       TabNavigationAcceleratorsFullscreenBrowser) {
+  // Make sure that the focus is on the webcontents rather than on the omnibox,
+  // because if the focus is on the omnibox, the tab strip will remain revealed
+  // in the immerisve fullscreen mode and will interfere with this test waiting
+  // for the revealer to be dismissed.
+  browser()->tab_strip_model()->GetActiveWebContents()->Focus();
+
+  // Create three more tabs plus the existing one that browser tests start with.
+  const GURL about_blank(url::kAboutBlankURL);
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+  browser()->tab_strip_model()->GetActiveWebContents()->Focus();
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+  browser()->tab_strip_model()->GetActiveWebContents()->Focus();
+  AddTabAtIndex(0, about_blank, ui::PAGE_TRANSITION_TYPED);
+  browser()->tab_strip_model()->GetActiveWebContents()->Focus();
+
+  // Toggle fullscreen mode.
+  chrome::ToggleFullscreenMode(browser());
+  // Wait for the end of the initial reveal which results from adding the new
+  // tabs and changing the focused tab.
+  WaitUntilRevealEnds();
+  EXPECT_TRUE(browser_view()->immersive_mode_controller()->IsEnabled());
+
+  CommandUpdater* updater = browser()->command_controller()->command_updater();
+
+  // Navigate to the last tab using the select last accelerator.
+  updater->ExecuteCommand(IDC_SELECT_LAST_TAB);
+  EXPECT_TRUE(browser_view()->immersive_mode_controller()->IsRevealed());
+  ASSERT_EQ(3, browser()->tab_strip_model()->active_index());
+  WaitUntilRevealEnds();
+  EXPECT_FALSE(browser_view()->immersive_mode_controller()->IsRevealed());
+
+  // Navigate to the first tab using an accelerator.
+  EXPECT_FALSE(browser_view()->immersive_mode_controller()->IsRevealed());
+  updater->ExecuteCommand(IDC_SELECT_TAB_0);
+  EXPECT_TRUE(browser_view()->immersive_mode_controller()->IsRevealed());
+  ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
+  WaitUntilRevealEnds();
+  EXPECT_FALSE(browser_view()->immersive_mode_controller()->IsRevealed());
+
+  // Navigate to the second tab using the next accelerators.
+  updater->ExecuteCommand(IDC_SELECT_NEXT_TAB);
+  EXPECT_TRUE(browser_view()->immersive_mode_controller()->IsRevealed());
+  ASSERT_EQ(1, browser()->tab_strip_model()->active_index());
+  WaitUntilRevealEnds();
+  EXPECT_FALSE(browser_view()->immersive_mode_controller()->IsRevealed());
+
+  // Navigate back to the first tab using the previous accelerators.
+  updater->ExecuteCommand(IDC_SELECT_PREVIOUS_TAB);
+  EXPECT_TRUE(browser_view()->immersive_mode_controller()->IsRevealed());
+  ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
+  WaitUntilRevealEnds();
+  EXPECT_FALSE(browser_view()->immersive_mode_controller()->IsRevealed());
 }
