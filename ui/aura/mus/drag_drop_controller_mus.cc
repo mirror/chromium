@@ -15,7 +15,9 @@
 #include "mojo/public/cpp/bindings/map.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
+#include "ui/aura/client/drag_drop_client_observer.h"
 #include "ui/aura/client/drag_drop_delegate.h"
+#include "ui/aura/env.h"
 #include "ui/aura/mus/drag_drop_controller_host.h"
 #include "ui/aura/mus/mus_types.h"
 #include "ui/aura/mus/os_exchange_data_provider_mus.h"
@@ -35,6 +37,21 @@ static_assert(ui::DragDropTypes::DRAG_LINK == ui::mojom::kDropEffectLink,
               "Drag constants must be the same");
 
 namespace aura {
+namespace {
+void NotifyDragStarted(
+    const base::ObserverList<client::DragDropClientObserver>& observers,
+    const ui::OSExchangeData* data) {
+  for (client::DragDropClientObserver& observer : observers)
+    observer.OnDragStarted(data);
+}
+
+void NotifyDragEnded(
+    const base::ObserverList<client::DragDropClientObserver>& observers,
+    const ui::OSExchangeData* data) {
+  for (client::DragDropClientObserver& observer : observers)
+    observer.OnDragEnded(data);
+}
+}  // namespace
 
 // State related to a drag initiated by this client.
 struct DragDropControllerMus::CurrentDragState {
@@ -59,7 +76,8 @@ DragDropControllerMus::DragDropControllerMus(
     DragDropControllerHost* drag_drop_controller_host,
     ui::mojom::WindowTree* window_tree)
     : drag_drop_controller_host_(drag_drop_controller_host),
-      window_tree_(window_tree) {}
+      window_tree_(window_tree),
+      should_block_during_drag_drop_(true) {}
 
 DragDropControllerMus::~DragDropControllerMus() {}
 
@@ -155,13 +173,19 @@ int DragDropControllerMus::StartDragAndDrop(
   std::map<std::string, std::vector<uint8_t>> drag_data =
       static_cast<const aura::OSExchangeDataProviderMus&>(data.provider())
           .GetData();
+
+  NotifyDragStarted(observers_, &data);
+
   window_tree_->PerformDragDrop(
       change_id, root_window_mus->server_id(), screen_location,
       mojo::MapToUnorderedMap(drag_data),
       *data.provider().GetDragImage().bitmap(),
       data.provider().GetDragImageOffset(), drag_operations, mojo_source);
 
-  run_loop.Run();
+  if (should_block_during_drag_drop_)
+    run_loop.Run();
+
+  NotifyDragEnded(observers_, &data);
 
   return current_drag_state.completed_action;
 }
@@ -174,6 +198,16 @@ void DragDropControllerMus::DragCancel() {
 
 bool DragDropControllerMus::IsDragDropInProgress() {
   return current_drag_state_ != nullptr;
+}
+
+void DragDropControllerMus::AddObserver(
+    client::DragDropClientObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DragDropControllerMus::RemoveObserver(
+    client::DragDropClientObserver* observer) {
+  observers_.RemoveObserver(observer);
 }
 
 uint32_t DragDropControllerMus::HandleDragEnterOrOver(
