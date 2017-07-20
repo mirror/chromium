@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b63bc9a_479d7ded",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T20:08:08Z",
+      "side": 1,
+      "message": "See comment at other call site",
+      "revId": "dd97e6f8ebecace0b80efbe3d8684b1fb396ce0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cd67a4_240f059c",
+        "filename": "components/printing/renderer/print_web_view_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T20:08:08Z",
+      "side": 1,
+      "message": "See comment at other call site",
+      "revId": "dd97e6f8ebecace0b80efbe3d8684b1fb396ce0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cbaa13_28189c62",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T20:08:08Z",
+      "side": 1,
+      "message": "See comment at other call site",
+      "revId": "dd97e6f8ebecace0b80efbe3d8684b1fb396ce0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b827cd_6efbb9f6",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T20:08:08Z",
+      "side": 1,
+      "message": "nit: The style of this comment does not seem correct. Please either add more detail or at least make it a complete sentence with correct capitalization. And offset it an extra line from GetContentSettingsClient().",
+      "revId": "dd97e6f8ebecace0b80efbe3d8684b1fb396ce0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d142b2_977f7809",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T20:08:08Z",
+      "side": 1,
+      "message": "Please do not introduce further usage of Forward(). Instead, just bind to a dead-end pipe:\n\n  service_manager::mojom::InterfaceProviderPtr provider;\n  mojo::MakeRequest(\u0026provider);\n  interface_provider_.Bind(std::move(provider));",
+      "revId": "dd97e6f8ebecace0b80efbe3d8684b1fb396ce0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
