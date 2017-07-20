@@ -16,6 +16,24 @@
       "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9fc94d_de8219c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-20T01:24:48Z",
+      "side": 1,
+      "message": "So Lei and I have talked about this a bit. \n\nWe won\u0027t need a CanCopy() because copy is already implemented, and because text can be copied in regular text areas and in form text areas. \n\nThe reason we need CanCut() and potentially CanPaste() is because Cut() and Paste() require specific conditions to be true, like being in an editable form text area. I still need to look into whether or not we actually need two separate functions - CanCut() and CanPaste() - or if one could be used for both (i.e. CanEditText() or something like that).\n\nI think for now we should leave this as it is, and once I figure out exactly what needs to be done for paste I may come back and edit this.",
+      "parentUuid": "52fe0718_f629de73",
+      "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
