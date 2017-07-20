@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0663646_605206e7",
+        "filename": "components/viz/common/display/renderer_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T17:11:25Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "18e8b2f651334f5a17d434bd4c359bae80c0dd34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
