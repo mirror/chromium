@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "94f3b839_72f129a1",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T01:38:40Z",
+      "side": 1,
+      "message": "1. The original GetSwapInfo() does read values from multiple files, and yes, there is a (small) possibility that something can fail, but at least there\u0027s no conditionals in that portion of the logic, the way there is in the new code.\n\n2. You asked \"Is it OK that I only check the return value of |GetSwapInfo()| in its callers?\" - Yes, of course I would like you to check the return value in its callers. But I see you added code to zero out the results on failure. Is that because you really wanted to avoid changing the callers? If so, that\u0027s ok for now. We can always follow up later and see if want to do more checks.\n\n3. For GetSystemMemoryInfo(), I take my previous statement back and agree it can return partially filled structs. ParseProcVmstat() never returns false, but it may also not fill in some of the struct fields.",
+      "parentUuid": "b6a0dd6e_333f270b",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
