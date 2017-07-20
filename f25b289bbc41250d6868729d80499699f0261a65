@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a14f77a0_7157d80a",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-07-20T19:39:40Z",
+      "side": 1,
+      "message": "To add something to this on Windows (with stylus supporting hover) when stylus is hovering in addition to getting events when buttons are changing we also get move events when it moves around. I assume we should either get both or none.",
+      "parentUuid": "d6cf4d07_3c991cd6",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3f5905_fc28549b",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
         "patchSetId": 1
