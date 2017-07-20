@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -24,6 +25,7 @@
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #include "components/ntp_tiles/popular_sites.h"
+#include "components/ntp_tiles/section_type.h"
 #include "components/ntp_tiles/tile_source.h"
 #include "components/suggestions/proto/suggestions.pb.h"
 #include "components/suggestions/suggestions_service.h"
@@ -85,8 +87,9 @@ class MostVisitedSites : public history::TopSitesObserver,
   // The observer to be notified when the list of most visited sites changes.
   class Observer {
    public:
-    virtual void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) = 0;
     virtual void OnIconMadeAvailable(const GURL& site_url) = 0;
+    virtual void OnURLsAvailable(
+        const std::map<SectionType, NTPTilesVector>& sections) = 0;
 
    protected:
     virtual ~Observer() {}
@@ -194,7 +197,7 @@ class MostVisitedSites : public history::TopSitesObserver,
       size_t num_actual_tiles);
 
   // Creates popular tiles whose hosts weren't used yet.
-  NTPTilesVector CreatePopularSitesTiles(
+  std::map<SectionType, NTPTilesVector> CreatePopularSitesSections(
       const std::set<std::string>& used_hosts,
       size_t num_actual_tiles);
 

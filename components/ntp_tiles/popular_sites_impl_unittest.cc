@@ -33,9 +33,13 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::ElementsAre;
 using testing::Eq;
 using testing::Gt;
 using testing::IsEmpty;
+using testing::Not;
+using testing::Pair;
+using testing::SizeIs;
 
 namespace ntp_tiles {
 namespace {
@@ -148,7 +152,8 @@ class PopularSitesTest : public ::testing::Test {
                                 &save_success, &loop))) {
       loop.Run();
     }
-    *sites = popular_sites->sites();
+    // TODO(fhorschig): Return and verify all sections.
+    *sites = popular_sites->sections().at(SectionType::PERSONALIZED);
     return save_success;
   }
 
@@ -176,8 +181,10 @@ TEST_F(PopularSitesTest, ContainsDefaultTilesRightAfterConstruction) {
           base::ThreadTaskRunnerHandle::Get()));
 
   auto popular_sites = CreatePopularSites(url_request_context.get());
-  EXPECT_THAT(popular_sites->sites().size(),
-              Eq(GetNumberOfDefaultPopularSitesForPlatform()));
+  EXPECT_THAT(
+      popular_sites->sections(),
+      ElementsAre(Pair(SectionType::PERSONALIZED,
+                       SizeIs(GetNumberOfDefaultPopularSitesForPlatform()))));
 }
 
 TEST_F(PopularSitesTest, IsEmptyOnConstructionIfDisabledByTrial) {
@@ -190,7 +197,8 @@ TEST_F(PopularSitesTest, IsEmptyOnConstructionIfDisabledByTrial) {
           base::ThreadTaskRunnerHandle::Get()));
   auto popular_sites = CreatePopularSites(url_request_context.get());
 
-  EXPECT_THAT(popular_sites->sites().size(), Eq(0ul));
+  EXPECT_THAT(popular_sites->sections(),
+              ElementsAre(Pair(SectionType::PERSONALIZED, IsEmpty())));
 }
 
 TEST_F(PopularSitesTest, ShouldSucceedFetching) {
@@ -257,8 +265,10 @@ TEST_F(PopularSitesTest, AddsIconResourcesToDefaultPages) {
       CreatePopularSites(url_request_context.get());
 
 #if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
-  ASSERT_FALSE(popular_sites->sites().empty());
-  for (const auto& site : popular_sites->sites()) {
+  const PopularSites::SitesVector& sites =
+      popular_sites->sections().at(SectionType::PERSONALIZED);
+  ASSERT_FALSE(sites.empty());
+  for (const auto& site : sites) {
     EXPECT_THAT(site.default_icon_resource, Gt(0));
   }
 #endif
@@ -290,14 +300,15 @@ TEST_F(PopularSitesTest, ProvidesDefaultSitesUntilCallbackReturns) {
   // Assert that callback was scheduled so we can wait for its completion.
   ASSERT_TRUE(callback_was_scheduled);
   // There should be 8 default sites as nothing was fetched yet.
-  EXPECT_THAT(popular_sites->sites().size(),
+  EXPECT_THAT(popular_sites->sections().at(SectionType::PERSONALIZED).size(),
               Eq(GetNumberOfDefaultPopularSitesForPlatform()));
 
   loop.Run();  // Wait for the fetch to finish and the callback to return.
 
   EXPECT_TRUE(save_success.value());
   // The 1 fetched site should replace the default sites.
-  EXPECT_THAT(popular_sites->sites().size(), Eq(1ul));
+  EXPECT_THAT(popular_sites->sections(),
+              ElementsAre(Pair(SectionType::PERSONALIZED, SizeIs(1ul))));
 }
 
 TEST_F(PopularSitesTest, UsesCachedJson) {
@@ -445,6 +456,85 @@ TEST_F(PopularSitesTest, ShouldOverrideDirectory) {
               Eq(base::Optional<bool>(true)));
 
   EXPECT_THAT(sites.size(), Eq(1u));
+}
+
+TEST_F(PopularSitesTest, DoesNotFetchExplorationSitesWithoutFeature) {
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndDisableFeature(kSitesExplorationFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  // There should be 0 default social sites as nothing was fetched yet.
+  EXPECT_THAT(ps->sections().find(SectionType::SOCIAL),
+              Eq(ps->sections().end()));
+
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // There should be 0 social sites as the fetch should have been omitted.
+  EXPECT_THAT(ps->sections().find(SectionType::SOCIAL),
+              Eq(ps->sections().end()));
+}
+
+TEST_F(PopularSitesTest, FetchesExplorationSitesWithFeature) {
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndEnableFeature(kSitesExplorationFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // Expect that every section has some sites.
+  const size_t kSectionCount = static_cast<size_t>(SectionType::LAST) + 1;
+  ASSERT_THAT(ps->sections().size(), Eq(kSectionCount));
+  for (const std::pair<SectionType, PopularSites::SitesVector>& section :
+       ps->sections()) {
+    EXPECT_THAT(section.second.size(), Not(Eq(0ul)));
+  }
 }
 
 }  // namespace
