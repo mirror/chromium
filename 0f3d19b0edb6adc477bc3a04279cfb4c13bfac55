@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dfa54e3_f96efb23",
+        "filename": "third_party/WebKit/Source/platform/json/JSONValues.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-20T08:22:00Z",
+      "side": 1,
+      "message": "\u003csad face\u003e\n\nI think this is OK to land as is, but I\u0027m not 100% sure that this #undef is safe: if a system header included after this file uses this identifier, you may see another compile error. I hope this won\u0027t happen, but if it does, you may need to use push_macro/pop_macro pragmas, or change the name of this function, which is sadder either way.",
+      "revId": "0f3d19b0edb6adc477bc3a04279cfb4c13bfac55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
