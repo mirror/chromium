@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b79cef_fa7df319",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 53813,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-20T18:03:56Z",
+      "side": 1,
+      "message": "add unit",
+      "range": {
+        "startLine": 53813,
+        "startChar": 32,
+        "endLine": 53813,
+        "endChar": 38
+      },
+      "revId": "b9d906518ce0336152b094e719166f30d92f9b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3926b0bd_2b16dc0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 53816,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-20T18:03:56Z",
+      "side": 1,
+      "message": "bitfield",
+      "revId": "b9d906518ce0336152b094e719166f30d92f9b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
