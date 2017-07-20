@@ -94,6 +94,30 @@
       "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8de7ce_1bf27e82",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-20T18:22:21Z",
+      "side": 1,
+      "message": "Yup, changing base::LaunchProcess would fail because it is run in contexts where we don\u0027t have CAP_SYS_ADMIN (e.g. for starting the zygote process). base::LaunchProcess also doesn\u0027t need to be changed since we execve a program shortly after any ForkWithFlags calls with no glibc thread calls in between the fork and the execve. The right place to change would be NamespaceSandbox::ForkInNewPidNamespace, which is what the zygote uses to fork off sandboxed processes - the issue in the bug is that the zygote forks a renderer process (with an incorrect cached TID) then immediately starts running renderer code. which ends up doing thread stuff.\n\nRe the zygote entering a user namespace:\n\nThe zygote is launched here:\nhttps://cs.chromium.org/chromium/src/content/browser/zygote_host/zygote_host_impl_linux.cc?q\u003dsandbox::NamespaceSandbox::LaunchProcess\n\nNamespaceSandbox::LaunchProcess internally sets up flags for base::LaunchProcess so that the zygote is launched in new user/pid/net namespaces.",
+      "parentUuid": "f4c0e1f1_4369734e",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
