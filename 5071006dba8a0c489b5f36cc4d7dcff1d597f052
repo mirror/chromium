@@ -22,6 +22,30 @@
       "revId": "5071006dba8a0c489b5f36cc4d7dcff1d597f052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00751485_5cb6e044",
+        "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-20T22:32:01Z",
+      "side": 1,
+      "message": "No, this is an rvalue reference from C++11. My understanding (perhaps incorrect?) is that that\u0027s the preferred type for when we are going to std::move it.\n\nHowever I just saw in https://www.chromium.org/rvalue-references#TOC-Perfect-forwarding and https://google.github.io/styleguide/cppguide.html#Rvalue_references that I should not use it in this case, so I switched to a regular reference + std::move.",
+      "parentUuid": "230ec1c9_538a7348",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "5071006dba8a0c489b5f36cc4d7dcff1d597f052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
