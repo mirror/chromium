@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "c9c4c7cc_b9d0d84c",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T22:34:57Z",
+      "side": 1,
+      "message": "I also missed this in the initial round of reviews. Why convert the origin to GURL? What happens if you have an unique origin, which isn\u0027t translatable to an actual GURL?",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "702aebf3_d5cfdea6",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 15
@@ -36,6 +59,23 @@
       "writtenOn": "2017-07-20T18:41:13Z",
       "side": 1,
       "message": "This does not make an Unretained binding safe. We must guarantee that the permission request is completed or cancelled before this object is destroyed. To do this we should probably make the dispatch context an object which will call CancelPermissionRequest instead of explicitly doing so in the OnConnectionError function so that it happens whatever side of the Mojo pipe is closed first.",
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75608f2a_f0a9a9e7",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T22:34:57Z",
+      "side": 1,
+      "message": "Is it one GeolocationService per process or per document? The more details you include the comment to make life easier for people reading the code, the better.",
       "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

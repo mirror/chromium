@@ -237,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "c60c60f0_b914dd3b",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T22:34:57Z",
+      "side": 1,
+      "message": "Hmm, this feels like a very strange pattern. Isn\u0027t it possible to associate the context with the right value instead of doing it with a dummy value?",
+      "parentUuid": "35341703_789188e4",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089685cd_c22d833d",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 14
@@ -313,6 +331,24 @@
       "side": 1,
       "message": "Precedent:\nhttps://cs.chromium.org/chromium/src/services/device/wake_lock/wake_lock.cc?l\u003d88",
       "parentUuid": "e2eef942_89be9b57",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ad7d270_e52456ba",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T22:34:57Z",
+      "side": 1,
+      "message": "Single usage in the entire codebase doesn\u0027t instill confidence for me. Can we add someone from the mojo team to help review these parts? rockot@?",
+      "parentUuid": "846ad0f7_eb1d58e5",
       "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
