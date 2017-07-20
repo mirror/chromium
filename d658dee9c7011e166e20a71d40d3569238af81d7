@@ -92,6 +92,30 @@
       "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7978bc_5e60862c",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T08:05:48Z",
+      "side": 1,
+      "message": "Sure, we can leave it as is and add a TODO+bug. My suggestion wasn\u0027t \nremoving |dispatcher_host_|, but changing these lines to:\n\nif (!dispatcher_host_.get())\n  get_remote_associated_interface_callback_.Run(\u0026dispatcher_host_);\n\nand let the object constructing MediaStreamDispatcherHost\nto pass to it a (partially) bound base::Callback pointing to\nChildThreadImpl::current()-\u003echannel()-\u003eGetRemoteAssociatedInterface().",
+      "parentUuid": "04d5227f_ee54166c",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 30
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
