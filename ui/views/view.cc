@@ -169,6 +169,7 @@ View::~View() {
     observer.OnViewIsDeleting(this);
 }
 
+// ...
 // Tree operations -------------------------------------------------------------
 
 const Widget* View::GetWidget() const {
