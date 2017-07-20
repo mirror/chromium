@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0c2886e3_ceac2a68",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T00:40:35Z",
+      "side": 1,
+      "message": "But this view has the string label as the child, so it has to be visible no?",
+      "parentUuid": "4856d3d6_3e5fee4d",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50d0740d_757a6786",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 16
@@ -234,6 +258,30 @@
       "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b32f7ce_1f29c638",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T00:40:35Z",
+      "side": 1,
+      "message": "The code doesn\u0027t show the specifier. It shows the string referenced by the specifier.",
+      "parentUuid": "1c3141b1_674016b0",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 73
+      },
+      "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
