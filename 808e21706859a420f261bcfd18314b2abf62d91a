@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "919c1223_5c599264",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-20T18:44:06Z",
+      "side": 1,
+      "message": "nit: Record",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "690d49bf_62f96fe0",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 2
@@ -46,6 +69,98 @@
       "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b46458de_694f5a96",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-20T18:44:06Z",
+      "side": 1,
+      "message": "You should use base::Time",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e748d197_0b74637b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-20T18:44:06Z",
+      "side": 1,
+      "message": "Open ... in the Play Store",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 183,
+        "endChar": 10
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de34c96d_1d7df834",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-20T18:44:06Z",
+      "side": 1,
+      "message": "may be \nArc.Launcher.Search.OpenPlayStore.InstantApps\nArc.Launcher.Search.OpenPlayStore.UninstalledApps",
+      "range": {
+        "startLine": 188,
+        "startChar": 37,
+        "endLine": 188,
+        "endChar": 69
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b53f262_bcd21698",
+        "filename": "chrome/browser/ui/app_list/search/search_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-20T18:44:06Z",
+      "side": 1,
+      "message": "nit: Not very clear descriptions",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
