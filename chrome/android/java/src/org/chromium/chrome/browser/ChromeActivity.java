@@ -1614,6 +1614,13 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     }
 
     /**
+     * Sets the overlay mode.
+     */
+    public void setOverlayMode(boolean useOverlayMode) {
+        mCompositorViewHolder.setOverlayMode(useOverlayMode);
+    }
+
+    /**
      * @return The content offset provider, may be null.
      */
     public ContentOffsetProvider getContentOffsetProvider() {
