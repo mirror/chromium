@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c8b44b_87c569bf",
+        "filename": "chrome/installer/zucchini/io_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "Chromium generally uses // rather than /**/ unless the latter is required (e.g., for a mid-line comment). my personal preference for the sort of comment you have here (which a quick codesearch leads me to believe is fairly common) is:\n\n// LimitedOutputStream::StreamBuf ----------------------------------------------\n\n(with the dashes extending to the end of the line)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 2
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbf9d33_119b337e",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "nit: \" override;\"?",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d62132c_16a29d30",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "s",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab2dd77_1057e030",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "could N be inferred from sizeof(T)? i see that this limits the functionality a bit, but maybe worth doing if the real-world callers don\u0027t need the flexibility.",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078f8665_fdce54d4",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "nit: should be two rather than three spaces",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 8
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c504afa5_78fe4284",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 119,
+        "startChar": 76,
+        "endLine": 119,
+        "endChar": 77
+      },
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b42b37d_a8f72b56",
+        "filename": "chrome/installer/zucchini/io_utils_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-20T13:04:45Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "477a9e34fe0f60fd8bee4389bea8b4e507223d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
