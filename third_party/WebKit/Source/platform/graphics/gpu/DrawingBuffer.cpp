@@ -1170,7 +1170,14 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
       Platform::Current()->GetGpuMemoryBufferManager();
-  if (ShouldUseChromiumImage() && gpu_memory_buffer_manager) {
+  bool can_use_chromium_image =
+      ShouldUseChromiumImage() && gpu_memory_buffer_manager;
+#if defined(ARCH_CPU_X86_FAMILY)
+  // TODO(dshwang): remove this guard when Intel driver supports RGB FBO.
+  // crbug.com/746069
+  can_use_chromium_image &= parameters.allocate_alpha_channel;
+#endif
+  if (can_use_chromium_image) {
     parameters = GpuMemoryBufferColorBufferParameters();
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
