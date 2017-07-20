@@ -46,12 +46,34 @@ def main():
       required=True)
   parser.add_argument(
       '--isolated-script-test-chartjson-output', required=False)
+  parser.add_argument(
+      '--sharding-json-file',
+      help='If telemetry tests are sharded on swarming, they need to know which'
+      ' test each shard is supposed to run. This json file should contain the'
+      ' information needed to tell each shard what to do. The file should be a'
+      ' dictionary mapping test name to a list of shardings.')
+
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
   args, rest_args = parser.parse_known_args()
+  env = os.environ.copy()
+
+  if 'GTEST_SHARD_INDEX' in env:
+    index = int(env['GTEST_SHARD_INDEX'])
+    if not args.sharding_json_file:
+      print 'not using sharding info, as no sharding json file was given'
+    else:
+      test_name = rest_args[1]
+      with open(args.sharding_json_file) as f:
+        sharding_map = json.load(f)
+      sharding = sharding_map[test_name][index]
+      rest_args.append('--experimental-story-shard-begin-index')
+      rest_args.append(str(sharding['begin']))
+      rest_args.append('--experimental-story-shard-end-index')
+      rest_args.append(str(sharding['end']))
+
   xvfb_proc = None
   openbox_proc = None
   xcompmgr_proc = None
-  env = os.environ.copy()
   # Assume we want to set up the sandbox environment variables all the
   # time; doing so is harmless on non-Linux platforms and is needed
   # all the time on Linux.
