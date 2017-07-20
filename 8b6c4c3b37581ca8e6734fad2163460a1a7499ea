@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2a62e6c_3bce3b6c",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-20T00:14:30Z",
+      "side": 1,
+      "message": "You can add MediaStreamDispatcherTest as a friend class rather than adding a public method and the getter. That can replace l.101-105 as well.",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "8b6c4c3b37581ca8e6734fad2163460a1a7499ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
