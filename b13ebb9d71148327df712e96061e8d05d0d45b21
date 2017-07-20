@@ -22,6 +22,30 @@
       "revId": "b13ebb9d71148327df712e96061e8d05d0d45b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82d5f6c_af8c0e39",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "Agreed.  You\u0027re right, I wanted a word here because the actual Expiration isn\u0027t getting logged, but ...ExpirationStatus works just as well.  (Kept the -Metric suffix in certain places in the logging functions because that seems to be the norm.)",
+      "parentUuid": "3571b643_1ed60b24",
+      "range": {
+        "startLine": 519,
+        "startChar": 67,
+        "endLine": 519,
+        "endChar": 73
+      },
+      "revId": "b13ebb9d71148327df712e96061e8d05d0d45b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
