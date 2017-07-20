@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7933543f_ce10f128",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-20T15:42:02Z",
+      "side": 1,
+      "message": "What prevented you from friending the test class?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
