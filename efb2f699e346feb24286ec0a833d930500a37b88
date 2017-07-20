@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f3e2ce53_71881185",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-07-20T22:15:09Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "906419b4_649a2d0e",
+      "range": {
+        "startLine": 63,
+        "startChar": 13,
+        "endLine": 63,
+        "endChar": 29
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ff62fcc_7efffc1e",
         "filename": "components/previews/core/previews_io_data.cc",
         "patchSetId": 1
@@ -191,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "f349e78a_74ee3804",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-07-20T22:15:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6219511_bc412587",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 64
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8dee716_f86b02d6",
         "filename": "components/previews/core/previews_io_data.cc",
         "patchSetId": 1
@@ -283,6 +331,30 @@
       "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b04c08_7876a779",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-07-20T22:15:09Z",
+      "side": 1,
+      "message": "I\u0027ve reordered the checks here to move the server blacklist check after the earlier checks.",
+      "parentUuid": "9b29cac1_013e46c7",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
