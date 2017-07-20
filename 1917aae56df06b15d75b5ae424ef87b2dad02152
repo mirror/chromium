@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc5f3a8_e2c96329",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/resources/module.cgi",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T01:54:19Z",
+      "side": 1,
+      "message": "Is this required?",
+      "revId": "1917aae56df06b15d75b5ae424ef87b2dad02152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75af4473_e80b7bd7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/resources/module.cgi",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T01:54:19Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "1917aae56df06b15d75b5ae424ef87b2dad02152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
