@@ -29,6 +29,8 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/safe_browsing/check_client_download_request.h"
+#include "chrome/browser/safe_browsing/download_enums.h"
 
 namespace content {
 class DownloadItem;
@@ -50,17 +52,9 @@ class DownloadFeedbackService;
 // client download is malicious or not.
 class DownloadProtectionService {
  public:
-  enum DownloadCheckResult {
-    UNKNOWN,
-    SAFE,
-    DANGEROUS,
-    UNCOMMON,
-    DANGEROUS_HOST,
-    POTENTIALLY_UNWANTED
-  };
 
   // Callback type which is invoked once the download request is done.
-  typedef base::Callback<void(DownloadCheckResult)> CheckDownloadCallback;
+  typedef base::Callback<void(DownloadEnums::DownloadCheckResult)> CheckDownloadCallback;
 
   // A type of callback run on the main thread when a ClientDownloadRequest has
   // been formed for a download, or when one has not been formed for a supported
@@ -90,6 +84,7 @@ class DownloadProtectionService {
   // A subscription to a registered PPAPI ClientDownloadRequest callback.
   typedef std::unique_ptr<PPAPIDownloadRequestCallbackList::Subscription>
       PPAPIDownloadRequestSubscription;
+  // TODO ^^ down to here
 
   // Creates a download service.  The service is initially disabled.  You need
   // to call SetEnabled() to start it.  |sb_service| owns this object.
@@ -180,45 +175,11 @@ class DownloadProtectionService {
     return navigation_observer_manager_;
   }
 
+  // this is now only used by CheckClientDownloadRequest...
   static void SetDownloadPingToken(content::DownloadItem* item,
                                    const std::string& token);
 
   static std::string GetDownloadPingToken(const content::DownloadItem* item);
-
- protected:
-  // Enum to keep track why a particular download verdict was chosen.
-  // Used for UMA metrics. Do not reorder.
-  enum DownloadCheckResultReason {
-    REASON_INVALID_URL = 0,
-    REASON_SB_DISABLED = 1,
-    REASON_WHITELISTED_URL = 2,
-    REASON_WHITELISTED_REFERRER = 3,
-    REASON_INVALID_REQUEST_PROTO = 4,
-    REASON_SERVER_PING_FAILED = 5,
-    REASON_INVALID_RESPONSE_PROTO = 6,
-    REASON_NOT_BINARY_FILE = 7,
-    REASON_REQUEST_CANCELED = 8,
-    REASON_DOWNLOAD_DANGEROUS = 9,
-    REASON_DOWNLOAD_SAFE = 10,
-    REASON_EMPTY_URL_CHAIN = 11,
-    DEPRECATED_REASON_HTTPS_URL = 12,
-    REASON_PING_DISABLED = 13,
-    REASON_TRUSTED_EXECUTABLE = 14,
-    REASON_OS_NOT_SUPPORTED = 15,
-    REASON_DOWNLOAD_UNCOMMON = 16,
-    REASON_DOWNLOAD_NOT_SUPPORTED = 17,
-    REASON_INVALID_RESPONSE_VERDICT = 18,
-    REASON_ARCHIVE_WITHOUT_BINARIES = 19,
-    REASON_DOWNLOAD_DANGEROUS_HOST = 20,
-    REASON_DOWNLOAD_POTENTIALLY_UNWANTED = 21,
-    REASON_UNSUPPORTED_URL_SCHEME = 22,
-    REASON_MANUAL_BLACKLIST = 23,
-    REASON_LOCAL_FILE = 24,
-    REASON_REMOTE_FILE = 25,
-    REASON_SAMPLED_UNSUPPORTED_FILE = 26,
-    REASON_VERDICT_UNKNOWN = 27,
-    REASON_MAX  // Always add new values before this one.
-  };
 
  private:
   class CheckClientDownloadRequest;
@@ -226,6 +187,8 @@ class DownloadProtectionService {
   friend class DownloadUrlSBClient;
   friend class DownloadProtectionServiceTest;
   friend class DownloadDangerPromptTest;
+
+  friend class CheckClientDownloadRequest;
 
   FRIEND_TEST_ALL_PREFIXES(DownloadProtectionServiceTest,
                            CheckClientDownloadWhitelistedUrlWithoutSampling);

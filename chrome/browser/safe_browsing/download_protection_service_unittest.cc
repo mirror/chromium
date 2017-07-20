@@ -501,14 +501,14 @@ class DownloadProtectionServiceTest : public testing::Test {
 
   void CheckDoneCallback(
       const base::Closure& quit_closure,
-      DownloadProtectionService::DownloadCheckResult result) {
+      DownloadEnums::DownloadCheckResult result) {
     result_ = result;
     has_result_ = true;
     quit_closure.Run();
   }
 
   void SyncCheckDoneCallback(
-      DownloadProtectionService::DownloadCheckResult result) {
+      DownloadEnums::DownloadCheckResult result) {
     result_ = result;
     has_result_ = true;
   }
@@ -518,7 +518,7 @@ class DownloadProtectionServiceTest : public testing::Test {
   }
 
   testing::AssertionResult IsResult(
-      DownloadProtectionService::DownloadCheckResult expected) {
+      DownloadEnums::DownloadCheckResult expected) {
     if (!has_result_)
       return testing::AssertionFailure() << "No result";
     has_result_ = false;
@@ -542,7 +542,7 @@ class DownloadProtectionServiceTest : public testing::Test {
   scoped_refptr<FakeSafeBrowsingService> sb_service_;
   scoped_refptr<MockBinaryFeatureExtractor> binary_feature_extractor_;
   DownloadProtectionService* download_service_;
-  DownloadProtectionService::DownloadCheckResult result_;
+  DownloadEnums::DownloadCheckResult result_;
   bool has_result_;
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
   content::InProcessUtilityThreadHelper in_process_utility_thread_helper_;
@@ -2261,7 +2261,7 @@ TEST_F(DownloadProtectionServiceTest, PPAPIDownloadRequest_SupportedDefault) {
       .WillRepeatedly(Return(false));
   struct {
     ClientDownloadResponse::Verdict verdict;
-    DownloadProtectionService::DownloadCheckResult expected_result;
+    DownloadEnums::DownloadCheckResult expected_result;
   } kExpectedResults[] = {
       {ClientDownloadResponse::SAFE, DownloadProtectionService::SAFE},
       {ClientDownloadResponse::DANGEROUS, DownloadProtectionService::DANGEROUS},

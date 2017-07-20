@@ -621,7 +621,7 @@ namespace {
 struct SafeBrowsingTestParameters {
   content::DownloadDangerType initial_danger_type;
   DownloadFileType::DangerLevel initial_danger_level;
-  safe_browsing::DownloadProtectionService::DownloadCheckResult verdict;
+  safe_browsing::DownloadEnums::DownloadCheckResult verdict;
   DownloadPrefs::DownloadRestriction download_restriction;
 
   content::DownloadDangerType expected_danger_type;
@@ -638,7 +638,7 @@ class TestDownloadProtectionService
     callback.Run(MockCheckClientDownload());
   }
   MOCK_METHOD0(MockCheckClientDownload,
-               safe_browsing::DownloadProtectionService::DownloadCheckResult());
+               safe_browsing::DownloadEnums::DownloadCheckResult());
 };
 
 class ChromeDownloadManagerDelegateTestWithSafeBrowsing

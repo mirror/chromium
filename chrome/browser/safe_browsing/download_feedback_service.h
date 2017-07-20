@@ -15,6 +15,8 @@
 #include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "content/public/browser/download_danger_type.h"
 
+#include "chrome/browser/safe_browsing/download_enums.h"
+
 namespace base {
 class TaskRunner;
 }
@@ -47,7 +49,7 @@ class DownloadFeedbackService {
   // upload by the server with |upload_requested| if it's needed for better
   // classification.
   static void MaybeStorePingsForDownload(
-      DownloadProtectionService::DownloadCheckResult result,
+      DownloadEnums::DownloadCheckResult result,
       bool upload_requested,
       content::DownloadItem* download,
       const std::string& ping,

@@ -139,9 +139,9 @@ class PPAPIFileChooserTest : public OutOfProcessPPAPITest {};
 
 struct SafeBrowsingTestConfiguration {
   std::map<base::FilePath::StringType,
-           DownloadProtectionService::DownloadCheckResult>
+           DownloadEnums::DownloadCheckResult>
       result_map;
-  DownloadProtectionService::DownloadCheckResult default_result =
+  DownloadEnums::DownloadCheckResult default_result =
       DownloadProtectionService::SAFE;
 };
 

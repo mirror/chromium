@@ -21,6 +21,8 @@
 #include "net/base/directory_lister.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 
+#include "chrome/browser/safe_browsing/download_enums.h"
+
 class Profile;
 
 namespace content {

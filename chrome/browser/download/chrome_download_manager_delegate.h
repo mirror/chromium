@@ -28,6 +28,8 @@
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/features/features.h"
 
+#include "chrome/browser/safe_browsing/download_enums.h"
+
 class DownloadPrefs;
 class Profile;
 
@@ -142,7 +144,7 @@ class ChromeDownloadManagerDelegate
   // Callback function after the DownloadProtectionService completes.
   void CheckClientDownloadDone(
       uint32_t download_id,
-      safe_browsing::DownloadProtectionService::DownloadCheckResult result);
+      safe_browsing::DownloadEnums::DownloadCheckResult result);
 
   // Internal gateways for ShouldCompleteDownload().
   bool IsDownloadReadyForCompletion(

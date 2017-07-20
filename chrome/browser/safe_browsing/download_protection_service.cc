@@ -256,10 +256,10 @@ class DownloadUrlSBClient
   }
 
   void CheckDone(SBThreatType threat_type) {
-    DownloadProtectionService::DownloadCheckResult result =
+    DownloadEnums::DownloadCheckResult result =
         IsDangerous(threat_type) ?
-        DownloadProtectionService::DANGEROUS :
-        DownloadProtectionService::SAFE;
+        DownloadEnums::DANGEROUS :
+        DownloadEnums::SAFE;
     UpdateDownloadCheckStats(total_type_);
     if (threat_type != SB_THREAT_TYPE_SAFE) {
       UpdateDownloadCheckStats(dangerous_type_);
@@ -406,26 +406,26 @@ class DownloadProtectionService::CheckClientDownloadRequest
       is_incognito_ = item_->GetBrowserContext()->IsOffTheRecord();
     }
 
-    DownloadCheckResultReason reason = REASON_MAX;
+    DownloadEnums::DownloadCheckResultReason reason = DownloadEnums::REASON_MAX;
     if (!IsSupportedDownload(
         *item_, item_->GetTargetFilePath(), &reason, &type_)) {
       switch (reason) {
-        case REASON_EMPTY_URL_CHAIN:
-        case REASON_INVALID_URL:
-        case REASON_LOCAL_FILE:
-        case REASON_REMOTE_FILE:
-          PostFinishTask(UNKNOWN, reason);
+        case DownloadEnums::REASON_EMPTY_URL_CHAIN:
+        case DownloadEnums::REASON_INVALID_URL:
+        case DownloadEnums::REASON_LOCAL_FILE:
+        case DownloadEnums::REASON_REMOTE_FILE:
+          PostFinishTask(DownloadEnums::UNKNOWN, reason);
           return;
-        case REASON_UNSUPPORTED_URL_SCHEME:
+        case DownloadEnums::REASON_UNSUPPORTED_URL_SCHEME:
           RecordFileExtensionType(
               base::StringPrintf(
                   "%s.%s", kUnsupportedSchemeUmaPrefix,
                   GetUnsupportedSchemeName(item_->GetUrlChain().back())
                       .c_str()),
               item_->GetTargetFilePath());
-          PostFinishTask(UNKNOWN, reason);
+          PostFinishTask(DownloadEnums::UNKNOWN, reason);
           return;
-        case REASON_NOT_BINARY_FILE:
+        case DownloadEnums::REASON_NOT_BINARY_FILE:
           if (ShouldSampleUnsupportedFile(item_->GetTargetFilePath())) {
             // Send a "light ping" and don't use the verdict.
             type_ = ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE;
@@ -433,7 +433,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
           }
           RecordFileExtensionType(kDownloadExtensionUmaName,
                                   item_->GetTargetFilePath());
-          PostFinishTask(UNKNOWN, reason);
+          PostFinishTask(DownloadEnums::UNKNOWN, reason);
           return;
 
         default:
@@ -533,7 +533,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
     // reference to this object.  We'll eventually wind up in some method on
     // the UI thread that will call FinishRequest() again.  If FinishRequest()
     // is called a second time, it will be a no-op.
-    FinishRequest(UNKNOWN, REASON_REQUEST_CANCELED);
+    FinishRequest(DownloadEnums::UNKNOWN, DownloadEnums::REASON_REQUEST_CANCELED);
     // Calling FinishRequest might delete this object, we may be deleted by
     // this point.
   }
@@ -560,8 +560,8 @@ class DownloadProtectionService::CheckClientDownloadRequest
     UMA_HISTOGRAM_SPARSE_SLOWLY(
         "SBClientDownload.DownloadRequestNetError",
         -source->GetStatus().error());
-    DownloadCheckResultReason reason = REASON_SERVER_PING_FAILED;
-    DownloadCheckResult result = UNKNOWN;
+    DownloadEnums::DownloadCheckResultReason reason = DownloadEnums::REASON_SERVER_PING_FAILED;
+    DownloadEnums::DownloadCheckResult result = DownloadEnums::UNKNOWN;
     std::string token;
     if (source->GetStatus().is_success() &&
         net::HTTP_OK == source->GetResponseCode()) {
@@ -570,47 +570,47 @@ class DownloadProtectionService::CheckClientDownloadRequest
       bool got_data = source->GetResponseAsString(&data);
       DCHECK(got_data);
       if (!response.ParseFromString(data)) {
-        reason = REASON_INVALID_RESPONSE_PROTO;
-        result = UNKNOWN;
+        reason = DownloadEnums::REASON_INVALID_RESPONSE_PROTO;
+        result = DownloadEnums::UNKNOWN;
       } else if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE) {
         // Ignore the verdict because we were just reporting a sampled file.
-        reason = REASON_SAMPLED_UNSUPPORTED_FILE;
-        result = UNKNOWN;
+        reason = DownloadEnums::REASON_SAMPLED_UNSUPPORTED_FILE;
+        result = DownloadEnums::UNKNOWN;
       } else {
         switch (response.verdict()) {
           case ClientDownloadResponse::SAFE:
-            reason = REASON_DOWNLOAD_SAFE;
-            result = SAFE;
+            reason = DownloadEnums::REASON_DOWNLOAD_SAFE;
+            result = DownloadEnums::SAFE;
             break;
           case ClientDownloadResponse::DANGEROUS:
-            reason = REASON_DOWNLOAD_DANGEROUS;
-            result = DANGEROUS;
+            reason = DownloadEnums::REASON_DOWNLOAD_DANGEROUS;
+            result = DownloadEnums::DANGEROUS;
             token = response.token();
             break;
           case ClientDownloadResponse::UNCOMMON:
-            reason = REASON_DOWNLOAD_UNCOMMON;
-            result = UNCOMMON;
+            reason = DownloadEnums::REASON_DOWNLOAD_UNCOMMON;
+            result = DownloadEnums::UNCOMMON;
             token = response.token();
             break;
           case ClientDownloadResponse::DANGEROUS_HOST:
-            reason = REASON_DOWNLOAD_DANGEROUS_HOST;
-            result = DANGEROUS_HOST;
+            reason = DownloadEnums::REASON_DOWNLOAD_DANGEROUS_HOST;
+            result = DownloadEnums::DANGEROUS_HOST;
             token = response.token();
             break;
           case ClientDownloadResponse::POTENTIALLY_UNWANTED:
-            reason = REASON_DOWNLOAD_POTENTIALLY_UNWANTED;
-            result = POTENTIALLY_UNWANTED;
+            reason = DownloadEnums::REASON_DOWNLOAD_POTENTIALLY_UNWANTED;
+            result = DownloadEnums::POTENTIALLY_UNWANTED;
             token = response.token();
             break;
           case ClientDownloadResponse::UNKNOWN:
-            reason = REASON_VERDICT_UNKNOWN;
-            result = UNKNOWN;
+            reason = DownloadEnums::REASON_VERDICT_UNKNOWN;
+            result = DownloadEnums::UNKNOWN;
             break;
           default:
             LOG(DFATAL) << "Unknown download response verdict: "
                         << response.verdict();
-            reason = REASON_INVALID_RESPONSE_VERDICT;
-            result = UNKNOWN;
+            reason = DownloadEnums::REASON_INVALID_RESPONSE_VERDICT;
+            result = DownloadEnums::UNKNOWN;
         }
       }
 
@@ -633,7 +633,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
 
   static bool IsSupportedDownload(const content::DownloadItem& item,
                                   const base::FilePath& target_path,
-                                  DownloadCheckResultReason* reason,
+                                  DownloadEnums::DownloadCheckResultReason* reason,
                                   ClientDownloadRequest::DownloadType* type) {
     if (item.GetUrlChain().empty()) {
       *reason = REASON_EMPTY_URL_CHAIN;
@@ -1176,16 +1176,16 @@ class DownloadProtectionService::CheckClientDownloadRequest
     fetcher_->Start();
   }
 
-  void PostFinishTask(DownloadCheckResult result,
-                      DownloadCheckResultReason reason) {
+  void PostFinishTask(DownloadEnums::DownloadCheckResult result,
+                      DownloadEnums::DownloadCheckResultReason reason) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&CheckClientDownloadRequest::FinishRequest, this, result,
                        reason));
   }
 
-  void FinishRequest(DownloadCheckResult result,
-                     DownloadCheckResultReason reason) {
+  void FinishRequest(DownloadEnums::DownloadCheckResult result,
+                     DownloadEnums::DownloadCheckResultReason reason) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     if (finished_) {
       return;
@@ -1594,7 +1594,7 @@ class DownloadProtectionService::PPAPIDownloadRequest
     Finish(RequestOutcome::TIMEDOUT, UNKNOWN);
   }
 
-  void Finish(RequestOutcome reason, DownloadCheckResult response) {
+  void Finish(RequestOutcome reason, DownloadEnums::DownloadCheckResult response) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DVLOG(2) << __func__ << " response: " << response;
     UMA_HISTOGRAM_SPARSE_SLOWLY(
@@ -1618,7 +1618,7 @@ class DownloadProtectionService::PPAPIDownloadRequest
     // |this| is deleted.
   }
 
-  static DownloadCheckResult DownloadCheckResultFromClientDownloadResponse(
+  static DownloadEnums::DownloadCheckResult DownloadCheckResultFromClientDownloadResponse(
       ClientDownloadResponse::Verdict verdict) {
     switch (verdict) {
       case ClientDownloadResponse::SAFE:
@@ -1799,7 +1799,7 @@ void DownloadProtectionService::CheckDownloadUrl(
 bool DownloadProtectionService::IsSupportedDownload(
     const content::DownloadItem& item,
     const base::FilePath& target_path) const {
-  DownloadCheckResultReason reason = REASON_MAX;
+  DownloadEnums::DownloadCheckResultReason reason = REASON_MAX;
   ClientDownloadRequest::DownloadType type =
       ClientDownloadRequest::WIN_EXECUTABLE;
   // TODO(nparker): Remove the CRX check here once can support
@@ -1888,6 +1888,7 @@ void DownloadProtectionService::ShowDetailsForDownload(
                              ui::PAGE_TRANSITION_LINK, false));
 }
 
+// this is now only used by CheckClientDownloadRequest...
 void DownloadProtectionService::SetDownloadPingToken(
     content::DownloadItem* item, const std::string& token) {
   if (item) {

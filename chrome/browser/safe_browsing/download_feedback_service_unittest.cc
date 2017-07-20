@@ -115,7 +115,7 @@ class FakeDownloadFeedbackFactory : public DownloadFeedbackFactory {
   std::vector<FakeDownloadFeedback*> feedbacks_;
 };
 
-bool WillStorePings(DownloadProtectionService::DownloadCheckResult result,
+bool WillStorePings(DownloadEnums::DownloadCheckResult result,
                     bool upload_requested,
                     int64_t size) {
   content::MockDownloadItem item;
