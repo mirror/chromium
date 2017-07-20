@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15052109_42c8c913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "Fine :p",
+      "parentUuid": "54ae1158_787da068",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 78
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b94a83f_5356e3b6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3ff8e9ad_68de84aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b94a83f_5356e3b6",
+      "range": {
+        "startLine": 380,
+        "startChar": 23,
+        "endLine": 380,
+        "endChar": 38
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabffb6a_dec5bcab",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T18:37:56Z",
       "side": 1,
       "message": "This is unreached, effectively. onExitVrResult(true) will have already fired above.",
+      "range": {
+        "startLine": 1298,
+        "startChar": 8,
+        "endLine": 1298,
+        "endChar": 53
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff12f64_707cddcd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "Should we just keep it as a backup here in case we call this function with mShowingDaydreamDoff \u003d\u003d false?",
+      "parentUuid": "dabffb6a_dec5bcab",
       "range": {
         "startLine": 1298,
         "startChar": 8,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dbe29257_5dffa859",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "This file is not part of this CL :p It only showed up due to the incorrect diff base. ymalik@ already pointed this out. Will post a follow up CL to fix the nits here.",
+      "parentUuid": "c478c0ef_6afa42f6",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e085089_eb964dd8",
         "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3f79da_76030858",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T20:33:50Z",
+      "side": 1,
+      "message": "This is part of scene manager API. The scene manager allows opening another request while a previous one is showing.",
+      "parentUuid": "0e085089_eb964dd8",
+      "range": {
+        "startLine": 12,
+        "startChar": 70,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
