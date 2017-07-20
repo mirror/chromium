@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3763448_c127fe29",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T15:44:13Z",
+      "side": 1,
+      "message": "nit: non-tablet mode",
+      "revId": "1b8ffaa1ad1fc119e83dc7c0b6143c5a2b663a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5b0076_a34762b3",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T15:44:13Z",
+      "side": 1,
+      "message": "Please file a bug for adding these tests, assign it to yourself, and reference the bug number here. Otherwise it\u0027s too easy to forget to do this.\n\nOne way to add these tests might be to manually call the StartGestureDrag/UpdateGestureDrag/CompleteGestureDrag functions yourself instead of using EventGenerator. I would still use EventGenerator here (since it makes more realistic events) but calling the functions yourself might make it easier to change the state mid-drag.",
+      "revId": "1b8ffaa1ad1fc119e83dc7c0b6143c5a2b663a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bd5a75_893f1743",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1483,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T15:44:13Z",
+      "side": 1,
+      "message": "super-nit: \"Updates to\" or \"Updating\". Ditto in the other copy of this comment.",
+      "revId": "1b8ffaa1ad1fc119e83dc7c0b6143c5a2b663a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
