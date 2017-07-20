@@ -6,8 +6,13 @@
 
 #include "base/bind.h"
 #include "base/values.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/signin_view_controller.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
+#include "components/web_modal/web_contents_modal_dialog_host.h"
+#include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/web_contents.h"
 
 namespace {
@@ -21,10 +26,15 @@ content::WebContents* GetAuthFrameWebContents(
 
 SigninViewControllerDelegate::SigninViewControllerDelegate(
     SigninViewController* signin_view_controller,
-    content::WebContents* web_contents)
+    content::WebContents* web_contents,
+    Browser* browser)
     : signin_view_controller_(signin_view_controller),
-      web_contents_(web_contents) {
+      web_contents_(web_contents),
+      browser_(browser) {
   DCHECK(web_contents_);
+  DCHECK(browser_);
+  DCHECK(browser_->tab_strip_model()->GetActiveWebContents())
+      << "A tab must be active to present the sign-in modal dialog.";
   web_contents_->SetDelegate(this);
 }
 
@@ -71,4 +81,16 @@ bool SigninViewControllerDelegate::CanGoBack(
     content::WebContents* web_ui_web_contents) const {
   auto* auth_web_contents = GetAuthFrameWebContents(web_ui_web_contents);
   return auth_web_contents && auth_web_contents->GetController().CanGoBack();
+}
+
+void SigninViewControllerDelegate::AttachDialogManager() {
+  web_modal::WebContentsModalDialogManager::CreateForWebContents(web_contents_);
+  web_modal::WebContentsModalDialogManager* manager =
+      web_modal::WebContentsModalDialogManager::FromWebContents(web_contents_);
+  manager->SetDelegate(this);
+}
+
+web_modal::WebContentsModalDialogHost*
+SigninViewControllerDelegate::GetWebContentsModalDialogHost() {
+  return browser()->window()->GetWebContentsModalDialogHost();
 }
