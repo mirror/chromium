@@ -133,6 +133,187 @@ Snippets.Snippet = class extends Common.Object {
     this._id = id;
     this._name = name || storage.namePrefix + id;
     this._content = content || '';
+    this._registeredInterceptor = this._onInterceptRequest.bind(this);
+    /** @type {?Promise<?SDK.RemoteObject>} */
+    this._remoteHandlerPromise = null;
+    /** @type {?SDK.ExecutionContext} */
+    this._lastContext = null;
+    this._registerInterceptor();
+  }
+
+  _registerInterceptor() {
+    if (this._registeredInterceptor)
+      RequestInterceptor.requestInterceptor.unregisterInterceptor(this._registeredInterceptor);
+    RequestInterceptor.requestInterceptor.registerInterceptor(this._name, this._registeredInterceptor);
+    RequestInterceptor.requestInterceptor.setEnabled(true);
+  }
+
+  /**
+   * @return {!SDK.ExecutionContext}
+   */
+  _executionContext() {
+    var target = SDK.targetManager.mainTarget();
+    if (!target)
+      return;
+    var runtimeModel = target.model(SDK.RuntimeModel);
+    if (!runtimeModel)
+      return;
+    return runtimeModel.defaultExecutionContext();
+  }
+
+  /**
+   * @param {!SDK.ExecutionContext} executionContext
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  _handlerRemoteObject(executionContext) {
+    if (this._remoteHandlerPromise && executionContext === this._lastContext)
+      return this._remoteHandlerPromise;
+    this._lastContext = executionContext;
+    this._remoteHandlerPromise = new Promise(resolve => {
+      executionContext.evaluate(
+          `(${this.content})`, 'request_interceptor', false, true, false, false, false, (remoteObject, exceptionDetails) => {
+            if (exceptionDetails) {
+              if (remoteObject)
+                remoteObject.release();
+              console.error(remoteObject, exceptionDetails);
+              remoteObject = null;
+            }
+            resolve(remoteObject);
+          });
+    });
+    return this._remoteHandlerPromise;
+  }
+
+  async _releaseHandlerRemoteObjectIfNeeded() {
+    if (!this._remoteHandlerPromise)
+      return;
+    var remoteObject = await this._remoteHandlerPromise;
+    if (!remoteObject)
+      return;
+    remoteObject.release();
+  }
+
+  /**
+   * @param {!RequestInterceptor.SharedInterceptionResponse} interceptionResponse
+   * @return {!Promise}
+   */
+  async _onInterceptRequest(interceptionResponse) {
+    if (interceptionResponse.headers['x-devtools-bypass-intercept'] === '1') {
+      //interceptionResponse.originUrl = 'http://yahoo.com';
+      //console.log(interceptionResponse.url, interceptionResponse);
+      return;
+    }
+    //console.log(interceptionResponse.url, interceptionResponse);
+    var requestHeaders = interceptionResponse.headers['Access-Control-Request-Headers'];
+    if (interceptionResponse.method === 'OPTIONS' && requestHeaders) {
+      var headerKeys = new Set(requestHeaders.split(/\*,\s*/));
+      if (headerKeys.has('x-devtools-bypass-intercept')) {
+        var responseHeaders = ['HTTP/1.1 200 OK'];
+        responseHeaders.push('Date: ' + ((new Date()).toUTCString()));
+        responseHeaders.push('Access-Control-Allow-Origin: *');
+        responseHeaders.push('Access-Control-Allow-Methods: *');
+        responseHeaders.push('Access-Control-Allow-Headers: x-devtools-bypass-intercept');
+        responseHeaders.push('Access-Control-Max-Age: 86400');
+        responseHeaders.push('Content-Length: 0');
+        responseHeaders.push('Connection: closed');
+        responseHeaders.push('Content-Type: text/plain');
+        responseHeaders.push('');
+        responseHeaders.push('');
+        interceptionResponse.rawResponse = responseHeaders.join('\r\n').toBase64();
+        //console.log([responseHeaders.join('\r\n')]);
+        return;
+      }
+    }
+    var activeExecutionContext = this._executionContext();
+    if (!activeExecutionContext)
+      return;
+    var remoteObject = await this._handlerRemoteObject(activeExecutionContext);
+    if (!remoteObject)
+      return;
+
+    var requestRemoteObject = await this._requestRemoteObject(activeExecutionContext, interceptionResponse);
+    if (!requestRemoteObject)
+      return;
+    var result = await remoteObject.callFunctionJSONPromise(
+        /**
+         * @param {!Request} request
+         * @return {!Promise<?{url: string, rawResponse: string}|string>}
+         */
+        async function (request) {
+          try {
+            var response = await this.call(null, innerFetch, request);
+          } catch (e) {
+            console.log(request, e, 'FAILED');
+            return 'Failed';
+          }
+          if (!response)
+            return null;
+          if (typeof response === 'string')
+            return response;
+          if (!response instanceof Response) {
+            console.error("result of request interception script must be an instance of Request");
+            return null;
+          }
+          var body = ['HTTP/1.1 ' + response.status + ' ' + response.statusText];
+          for (var [key, value] of response.headers.entries()) {
+            // TODO(allada) This is not safe for new line and such characters.
+            body.push(key + ': ' + value);
+          }
+          body.push('');
+          body.push(await response.text() || '');
+          //console.log(request, response, [body]);
+          return {
+            url: response.url,
+            rawResponse: body.join("\r\n")
+          };
+
+          function innerFetch(input, init) {
+            init = init || {};
+            init.headers = new Headers(init.headers);
+            init.headers.append('x-devtools-bypass-intercept', '1');
+            init.mode = 'cors';
+            return fetch(input, init);
+          }
+        }, [SDK.RemoteObject.toCallArgument(requestRemoteObject)], true);
+
+    //console.log(result);
+    if (result === null)
+      return;
+    if (typeof result === 'string')
+      interceptionResponse.errorReason = result;
+    if (result.url !== undefined)
+      interceptionResponse.url = result.url;
+    if (result.rawResponse)
+      interceptionResponse.rawResponse = result.rawResponse.toBase64();
+
+    // console.log(interceptionResponse);
+    // console.log(this.content);
+  }
+
+  /**
+   * @param {!SDK.ExecutionContext} executionContext
+   * @param {!RequestInterceptor.SharedInterceptionResponse} iResponse
+   * @return {!Promise<?SDK.RemoteObject}>}
+   */
+  _requestRemoteObject(executionContext, iResponse) {
+    var code = `(new Request('${iResponse.url}', {
+        method: '${iResponse.method}',
+        headers: new Headers(${JSON.stringify(iResponse.headers)}),
+    ` +
+        (iResponse.postData ? `    body: new Blob([${JSON.stringify(iResponse.postData)}])\n` : '') + 
+    `}))`;
+    return new Promise(resolve => {
+      executionContext.evaluate(code, 'request_interceptor', false, true, false, false, false, (remoteObject, exceptionDetails) => {
+        if (exceptionDetails) {
+          console.log(code);
+          if (remoteObject)
+            remoteObject.release();
+          console.error(remoteObject, exceptionDetails);
+          remoteObject = null;
+        }
+        resolve(remoteObject);
+      });
+    });
   }
 
   /**
@@ -167,6 +348,7 @@ Snippets.Snippet = class extends Common.Object {
 
     this._name = name;
     this._storage._saveSettings();
+    this._registerInterceptor();
   }
 
   /**
@@ -182,7 +364,7 @@ Snippets.Snippet = class extends Common.Object {
   set content(content) {
     if (this._content === content)
       return;
-
+    this._releaseHandlerRemoteObjectIfNeeded();
     this._content = content;
     this._storage._saveSettings();
   }

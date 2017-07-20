@@ -97,7 +97,7 @@
             "type": "view",
             "location": "drawer-view",
             "id": "network.blocked-urls",
-            "title": "Request blocking",
+            "title": "Request interception",
             "persistence": "closeable",
             "order": 60,
             "className": "Network.BlockedURLsPane"

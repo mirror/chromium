@@ -886,6 +886,7 @@ void NetworkHandler::ContinueInterceptedRequest(
     Maybe<std::string> post_data,
     Maybe<protocol::Network::Headers> headers,
     Maybe<protocol::Network::AuthChallengeResponse> auth_challenge_response,
+    Maybe<std::string> origin_url,
     std::unique_ptr<ContinueInterceptedRequestCallback> callback) {
   DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
       DevToolsURLRequestInterceptor::FromBrowserContext(
@@ -914,7 +915,7 @@ void NetworkHandler::ContinueInterceptedRequest(
       base::MakeUnique<DevToolsURLRequestInterceptor::Modifications>(
           std::move(error), std::move(raw_response), std::move(url),
           std::move(method), std::move(post_data), std::move(headers),
-          std::move(auth_challenge_response)),
+          std::move(auth_challenge_response), std::move(origin_url)),
       std::move(callback));
 }
 

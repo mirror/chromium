@@ -460,7 +460,8 @@ void DevToolsURLInterceptorRequestJob::StopIntercepting() {
           base::nullopt, base::nullopt, protocol::Maybe<std::string>(),
           protocol::Maybe<std::string>(), protocol::Maybe<std::string>(),
           protocol::Maybe<protocol::Network::Headers>(),
-          protocol::Maybe<protocol::Network::AuthChallengeResponse>()));
+          protocol::Maybe<protocol::Network::AuthChallengeResponse>(),
+          protocol::Maybe<std::string>()));
 }
 
 void DevToolsURLInterceptorRequestJob::ContinueInterceptedRequest(
@@ -534,6 +535,11 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
     NotifyStartError(net::URLRequestStatus(net::URLRequestStatus::FAILED,
                                            *modifications->error_reason));
     return;
+  }
+
+  if (modifications->origin_url.isJust()) {
+    //request()->response_headers()->AddHeader("Access-Control-Allow-Origin: *");
+    //request()->set_initiator(url::Origin(GURL(modifications->origin_url.fromJust())));
   }
 
   if (modifications->raw_response) {

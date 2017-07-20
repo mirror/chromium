@@ -80,6 +80,7 @@ class NetworkHandler : public DevToolsDomainHandler,
       Maybe<std::string> post_data,
       Maybe<protocol::Network::Headers> headers,
       Maybe<protocol::Network::AuthChallengeResponse> auth_challenge_response,
+      Maybe<std::string> origin_url,
       std::unique_ptr<ContinueInterceptedRequestCallback> callback) override;
 
   void NavigationPreloadRequestSent(int worker_version_id,

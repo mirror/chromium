@@ -341,9 +341,10 @@ SDK.RemoteObject = class {
   /**
    * @param {function(this:Object, ...)} functionDeclaration
    * @param {!Array<!Protocol.Runtime.CallArgument>=} args
+   * @param {boolean=} awaitPromise
    * @return {!Promise<!SDK.CallFunctionResult>}
    */
-  callFunctionPromise(functionDeclaration, args) {
+  callFunctionPromise(functionDeclaration, args, awaitPromise) {
     return new Promise(promiseConstructor.bind(this));
 
     /**
@@ -351,7 +352,7 @@ SDK.RemoteObject = class {
      * @this {SDK.RemoteObject}
      */
     function promiseConstructor(success) {
-      this.callFunction(functionDeclaration, args, callFunctionCallback.bind(null, success));
+      this.callFunction(functionDeclaration, args, callFunctionCallback.bind(null, success), awaitPromise);
     }
 
     /**
@@ -369,19 +370,21 @@ SDK.RemoteObject = class {
    * @param {function(this:Object, ...):T} functionDeclaration
    * @param {!Array<!Protocol.Runtime.CallArgument>|undefined} args
    * @param {function(T)} callback
+   * @param {boolean=} awaitPromise
    */
-  callFunctionJSON(functionDeclaration, args, callback) {
+  callFunctionJSON(functionDeclaration, args, callback, awaitPromise) {
     throw 'Not implemented';
   }
 
   /**
    * @param {function(this:Object, ...):T} functionDeclaration
    * @param {!Array<!Protocol.Runtime.CallArgument>|undefined} args
+   * @param {boolean=} awaitPromise
    * @return {!Promise<T>}
    * @template T
    */
-  callFunctionJSONPromise(functionDeclaration, args) {
-    return new Promise(success => this.callFunctionJSON(functionDeclaration, args, success));
+  callFunctionJSONPromise(functionDeclaration, args, awaitPromise) {
+    return new Promise(success => this.callFunctionJSON(functionDeclaration, args, success, awaitPromise));
   }
 
   release() {
@@ -701,14 +704,17 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {function(this:Object, ...)} functionDeclaration
    * @param {!Array.<!Protocol.Runtime.CallArgument>=} args
    * @param {function(?SDK.RemoteObject, boolean=)=} callback
+   * @param {boolean=} awaitPromise
    */
-  callFunction(functionDeclaration, args, callback) {
+  callFunction(functionDeclaration, args, callback, awaitPromise) {
     this._runtimeAgent
         .invoke_callFunctionOn({
           objectId: this._objectId,
           functionDeclaration: functionDeclaration.toString(),
           arguments: args,
-          silent: true
+          silent: true,
+          userGesture: true,
+          awaitPromise: awaitPromise
         })
         .then(response => {
           if (!callback)
@@ -725,15 +731,18 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {function(this:Object)} functionDeclaration
    * @param {!Array.<!Protocol.Runtime.CallArgument>|undefined} args
    * @param {function(*)} callback
+   * @param {boolean=} awaitPromise
    */
-  callFunctionJSON(functionDeclaration, args, callback) {
+  callFunctionJSON(functionDeclaration, args, callback, awaitPromise) {
     this._runtimeAgent
         .invoke_callFunctionOn({
           objectId: this._objectId,
           functionDeclaration: functionDeclaration.toString(),
           arguments: args,
           silent: true,
-          returnByValue: true
+          returnByValue: true,
+          userGesture: true,
+          awaitPromise: awaitPromise
         })
         .then(
             response => callback(response[Protocol.Error] || response.exceptionDetails ? null : response.result.value));

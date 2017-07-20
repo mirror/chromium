@@ -128,6 +128,16 @@ SDK.NetworkManager = class extends SDK.SDKModel {
   }
 
   /**
+   * @param {!SDK.NetworkManager.RequestInterceptionResponse} interceptionResponse
+   */
+  continueInterceptedRequest(interceptionResponse) {
+    this._networkAgent.continueInterceptedRequest(
+        interceptionResponse.interceptionId, interceptionResponse.errorReason, interceptionResponse.rawResponse,
+        interceptionResponse.url, interceptionResponse.method, interceptionResponse.postData,
+        interceptionResponse.headers, interceptionResponse.authChallengeResponse, interceptionResponse.originUrl);
+  }
+
+  /**
    * @param {string} url
    * @return {!SDK.NetworkRequest}
    */
@@ -156,6 +166,43 @@ SDK.NetworkManager = class extends SDK.SDKModel {
 };
 
 SDK.SDKModel.register(SDK.NetworkManager, SDK.Target.Capability.Network, true);
+
+SDK.NetworkManager.RequestInterception = class {
+  /**
+   * @param {!SDK.NetworkManager} manager
+   * @param {!Protocol.Network.InterceptionId} interceptionId
+   * @param {!Protocol.Network.Request} request
+   * @param {string} resourceType
+   * @param {!Protocol.Network.Headers=} redirectHeaders
+   * @param {number=} redirectStatusCode
+   * @param {string=} redirectUrl
+   * @param {!Protocol.Network.AuthChallenge=} authChallenge
+   */
+  constructor(manager, interceptionId, request, resourceType, redirectHeaders, redirectStatusCode, redirectUrl, authChallenge) {
+    this.manager = manager;
+    this.interceptionId = interceptionId;
+    this.request = request;
+    this.resourceType = resourceType;
+    this.redirectHeaders = redirectHeaders;
+    this.redirectStatusCode = redirectStatusCode;
+    this.redirectUrl = redirectUrl;
+    this.authChallenge = authChallenge;
+  }
+};
+
+/**
+ * @typedef {!{
+ *   interceptionId: !Protocol.Network.InterceptionId,
+ *   errorReason: (!Protocol.Network.ErrorReason|undefined),
+ *   rawResponse: (string|undefined),
+ *   url: (string|undefined),
+ *   method: (string|undefined),
+ *   postData: (string|undefined),
+ *   headers: (!Protocol.Network.Headers|undefined),
+ *   authChallengeResponse: (!Protocol.Network.AuthChallengeResponse|undefined)
+ * }}
+ */
+SDK.NetworkManager.RequestInterceptionResponse;
 
 /** @enum {symbol} */
 SDK.NetworkManager.Events = {
@@ -652,15 +699,20 @@ SDK.NetworkDispatcher = class {
 
   /**
    * @override
-   * @param {!Protocol.Network.RequestId} requestId
+   * @param {!Protocol.Network.InterceptionId} interceptionId
    * @param {!Protocol.Network.Request} request
    * @param {string} resourceType
    * @param {!Protocol.Network.Headers=} redirectHeaders
    * @param {number=} redirectStatusCode
    * @param {string=} redirectUrl
+   * @param {!Protocol.Network.AuthChallenge=} authChallenge
    */
-  requestIntercepted(requestId, request, resourceType, redirectHeaders, redirectStatusCode, redirectUrl) {
-    // Stub implementation.  Event not currently used by the frontend.
+  requestIntercepted(interceptionId, request, resourceType, redirectHeaders, redirectStatusCode, redirectUrl, authChallenge) {
+    var requestInterception = new SDK.NetworkManager.RequestInterception(
+        this._manager, interceptionId, request, resourceType, redirectHeaders, redirectStatusCode, redirectUrl,
+        authChallenge);
+    SDK.multitargetNetworkManager.dispatchEventToListeners(
+        SDK.MultitargetNetworkManager.Events.RequestIntercepted, requestInterception);
   }
 
   /**
@@ -756,6 +808,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
 
     this._blockingEnabledSetting = Common.moduleSetting('requestBlockingEnabled');
     this._blockedPatternsSetting = Common.settings.createSetting('networkBlockedPatterns', []);
+    this._requestInterceptionEnabled = false;
     this._effectiveBlockedURLs = [];
     this._updateBlockedPatterns();
 
@@ -787,6 +840,8 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
       networkAgent.setUserAgentOverride(this._currentUserAgent());
     if (this._effectiveBlockedURLs.length)
       networkAgent.setBlockedURLs(this._effectiveBlockedURLs);
+    if (this._requestInterceptionEnabled)
+      networkAgent.setRequestInterceptionEnabled(true);
     this._agents.add(networkAgent);
     if (this.isThrottling())
       this._updateNetworkConditions(networkAgent);
@@ -896,6 +951,22 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   }
 
   /**
+   * @param {boolean} enabled
+   */
+  setRequestInterceptionEnabled(enabled) {
+    this._requestInterceptionEnabled = enabled;
+    for (var agent of this._agents)
+      agent.setRequestInterceptionEnabled(enabled);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  requestInterceptionEnabled() {
+    return this._requestInterceptionEnabled;
+  }
+
+  /**
    * @return {!Array<!SDK.NetworkManager.BlockedPattern>}
    */
   blockedPatterns() {
@@ -993,7 +1064,8 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
 SDK.MultitargetNetworkManager.Events = {
   BlockedPatternsChanged: Symbol('BlockedPatternsChanged'),
   ConditionsChanged: Symbol('ConditionsChanged'),
-  UserAgentChanged: Symbol('UserAgentChanged')
+  UserAgentChanged: Symbol('UserAgentChanged'),
+  RequestIntercepted: Symbol('RequestIntercepted')
 };
 
 /**

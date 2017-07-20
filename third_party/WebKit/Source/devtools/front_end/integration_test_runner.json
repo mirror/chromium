@@ -43,6 +43,7 @@
     { "name": "settings" },
     { "name": "layers", "condition": "!v8only" },
     { "name": "layer_viewer", "condition": "!v8only" },
+    { "name": "request_interceptor", "condition": "!v8only" },
     { "name": "snippets" },
     { "name": "diff" },
     { "name": "terminal", "type": "remote" },

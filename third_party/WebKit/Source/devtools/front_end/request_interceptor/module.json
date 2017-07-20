@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "sdk"
+    ],
+    "scripts": [
+        "RequestInterceptor.js",
+        "Response.js"
+    ]
+}

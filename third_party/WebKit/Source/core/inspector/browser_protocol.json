@@ -1598,7 +1598,8 @@
                     { "name": "method", "type": "string", "optional": true, "description": "If set this allows the request method to be overridden. Must not be set in response to an authChallenge."},
                     { "name": "postData", "type": "string", "optional": true, "description": "If set this allows postData to be set. Must not be set in response to an authChallenge."},
                     { "name": "headers", "$ref": "Headers", "optional": true, "description": "If set this allows the request headers to be changed. Must not be set in response to an authChallenge."},
-                    { "name": "authChallengeResponse", "$ref": "AuthChallengeResponse", "optional": true, "description": "Response to a requestIntercepted with an authChallenge. Must not be set otherwise." }
+                    { "name": "authChallengeResponse", "$ref": "AuthChallengeResponse", "optional": true, "description": "Response to a requestIntercepted with an authChallenge. Must not be set otherwise." },
+                    { "name": "origin_url", "type": "string", "optional": true, "description": "" }
                 ],
                 "experimental": true
             }

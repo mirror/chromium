@@ -340,6 +340,7 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
 
 CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
                                                StringBuilder& error_msg) const {
+  return CORSStatus::kSuccessful;
   // Service workers handle CORS separately.
   if (response.WasFetchedViaServiceWorker()) {
     switch (response.ServiceWorkerResponseType()) {

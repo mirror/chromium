@@ -134,6 +134,7 @@ Snippets.ScriptSnippetModel = class extends Common.Object {
    */
   _addScriptSnippet(snippet) {
     var uiSourceCode = this._project.addSnippet(snippet.name, new Snippets.SnippetContentProvider(snippet));
+
     uiSourceCode.addEventListener(Workspace.UISourceCode.Events.WorkingCopyChanged, this._workingCopyChanged, this);
     this._snippetIdForUISourceCode.set(uiSourceCode, snippet.id);
     var breakpointLocations = this._removeBreakpoints(uiSourceCode);
@@ -502,7 +503,7 @@ Snippets.SnippetContentProvider = class {
    * @return {string}
    */
   contentURL() {
-    return '';
+    return 'test';
   }
 
   /**
