@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99b570df_e7681cdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c510a4_32874611",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be078cf_b6fd5046",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881add48_6d73b247",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be078cf_b6fd5046",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 28
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d702e20a_db5caa50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9577c2_e5f606f6",
+      "range": {
+        "startLine": 1197,
+        "startChar": 19,
+        "endLine": 1197,
+        "endChar": 30
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b32df81_329937bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ce983231_322a4db5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b32df81_329937bf",
+      "range": {
+        "startLine": 1309,
+        "startChar": 4,
+        "endLine": 1309,
+        "endChar": 10
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb95af7_29e4cbdd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 3
@@ -137,6 +233,30 @@
       "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b4dabf_4f8444d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T02:50:06Z",
+      "side": 1,
+      "message": "It needs to be public since it is the implementation of an interface method. Added @Override.",
+      "parentUuid": "8bb95af7_29e4cbdd",
+      "range": {
+        "startLine": 664,
+        "startChar": 4,
+        "endLine": 664,
+        "endChar": 10
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
