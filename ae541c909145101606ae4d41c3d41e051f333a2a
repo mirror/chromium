@@ -46,6 +46,30 @@
       "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d5926d_0bd5476a",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-20T17:29:54Z",
+      "side": 1,
+      "message": "I would expect unshare(CLONE_NEWPID); fork() to work for the same reason that this call works: https://cs.chromium.org/chromium/src/sandbox/linux/services/namespace_sandbox.cc?q\u003dbase::ForkWithFlags - the zygote process has CAP_SYS_ADMIN in its user namespace (which is separate from the init user namespace).\n\nI haven\u0027t tried this out though, so testing might prove me wrong :-)",
+      "parentUuid": "66b2aacf_0f9f6b9a",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
