@@ -1080,9 +1080,10 @@ void RenderWidgetCompositor::UpdateBrowserControlsState(
       ConvertBrowserControlsState(current), animate);
 }
 
-void RenderWidgetCompositor::SetBrowserControlsHeight(float height,
+void RenderWidgetCompositor::SetBrowserControlsHeight(float top_height,
+                                                      float bottom_height,
                                                       bool shrink) {
-  layer_tree_host_->SetBrowserControlsHeight(height, shrink);
+  layer_tree_host_->SetBrowserControlsHeight(top_height, bottom_height, shrink);
 }
 
 void RenderWidgetCompositor::SetBrowserControlsShownRatio(float ratio) {
