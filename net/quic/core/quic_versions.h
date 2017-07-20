@@ -34,6 +34,7 @@ enum QuicVersion {
                          // WINDOW_UPDATE every 20 sent packets which do not
                          // contain retransmittable frames.
   QUIC_VERSION_40 = 40,  // RST_STREAM frame matches IETF format.
+  QUIC_VERSION_41 = 41,  // Use IETF header format.
 
   // IMPORTANT: if you are adding to this list, follow the instructions at
   // http://sites/quic/adding-and-removing-versions
@@ -47,7 +48,7 @@ enum QuicVersion {
 // IMPORTANT: if you are adding to this list, follow the instructions at
 // http://sites/quic/adding-and-removing-versions
 static const QuicVersion kSupportedQuicVersions[] = {
-    QUIC_VERSION_40, QUIC_VERSION_39, QUIC_VERSION_38,
+    QUIC_VERSION_41, QUIC_VERSION_40, QUIC_VERSION_39, QUIC_VERSION_38,
     QUIC_VERSION_37, QUIC_VERSION_36, QUIC_VERSION_35};
 
 typedef std::vector<QuicVersion> QuicVersionVector;

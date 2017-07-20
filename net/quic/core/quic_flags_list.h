@@ -205,3 +205,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_to_backend_multi_version, true)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_clear_packet_before_handed_over,
           false)
+
+// If true, enable QUIC v41.
+QUIC_FLAG(bool, FLAGS_quic_enable_version_41, false)
