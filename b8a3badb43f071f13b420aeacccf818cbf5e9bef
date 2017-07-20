@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a2bf07_de3d8ae8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-07-20T22:49:48Z",
+      "side": 0,
+      "message": "I believe we don\u0027t need this condition.  Two exceptions with the exact same parameters should be treated as equal, if their parameters are primitive values or errors (which ConsoleViewMessage._formatParameterAsError() always formats as a string).\n\n_exceptionId was renamed from _messageId: https://codereview.chromium.org/2116563003\n_messageId was introduced here: https://codereview.chromium.org/1103053002\n\nAt the introduction of this id, two similar sequential revoked errors would not be collapsed as a \u00272x\u0027 repeat.  After this CL, they will be.",
+      "revId": "b8a3badb43f071f13b420aeacccf818cbf5e9bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
