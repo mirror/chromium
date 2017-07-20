@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "581e3dbe_a513138b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T20:48:25Z",
+      "side": 1,
+      "message": "This is renderer process code (and to be more precise, blink code). So no BrowserThread. The file thread is what RenderThreadImpl::GetFileThreadTaskRunner() returns.",
+      "parentUuid": "6349a781_bcccf534",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fba5f51_9150aa73",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0307e37_d985f76e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fba5f51_9150aa73",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "a91abf1a_6d163cdc",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T20:48:25Z",
+      "side": 1,
+      "message": "Happy to make whatever changes are necesary. I agree that exposing threads and/or SingleThreadTaskRunners is a bad idea. I\u0027m just not really sure what the best way to do so would be. What code would be creating the thread and/or task runner? What code would own the thread and/or task runner? What API exposes it to blink, and what API exposes it to content?\n\nI\u0027m not sure how to interpret both the suggestion that BlinkPlatformImpl (a class in content) should be the access point to this task runner, but it should be created within blink. How does BlinkPlatformImpl then get access to it?\n\nShould blink::RendererScheduler have a new CreateFileTaskRunner method that returns a WebTaskRunner, which RenderThreadImpl then gets here and owns, passing it to BlinkPlatformImpl to expose it back to blink?\n\nAnd under the hood CreateFileTaskRunner of course still has to somehow create a base::SingleThreadTaskRunner to back the WebTaskRunner.\n\nOf course WebTaskRunner still has the problem that it explicitly exposes a single thread task runner, so you\u0027re not saving any of the migration pains if you later want to move the anything other than a single thread. I\u0027m not even sure if blink has an API to expose a SequencedTaskRunner (is there an overview of blink task scheduling APIs somewhere?)",
+      "parentUuid": "eb1faa58_0aa9fe33",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f3bb2f5_490c5f80",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 5
@@ -112,6 +178,24 @@
       "writtenOn": "2017-07-20T20:23:07Z",
       "side": 1,
       "message": "Don\u0027t expose threads if you can help it.",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0b87e0_32dab7a2",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T20:48:25Z",
+      "side": 1,
+      "message": "Happy not to, but so far nobody has suggested a concrete way not to do so (not even sure if there currently exists some public blink task runner like API that doesn\u0027t explicitly map to a single thread).",
+      "parentUuid": "9f3bb2f5_490c5f80",
       "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
