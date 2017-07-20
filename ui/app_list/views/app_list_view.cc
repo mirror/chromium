@@ -880,12 +880,16 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
 void AppListView::SetState(AppListState new_state) {
   AppListState new_state_override = new_state;
   if (is_side_shelf_ || is_tablet_mode_) {
-    // If side shelf or tablet mode are active, all transitions should be
-    // made to the tablet mode/side shelf friendly versions.
-    if (new_state == PEEKING)
-      new_state_override = FULLSCREEN_ALL_APPS;
-    else if (new_state == HALF)
+    // If side shelf or maximize mode are active, all transitions should be
+    // made to the maximize mode/side shelf friendly versions.
+    if (new_state == HALF)
       new_state_override = FULLSCREEN_SEARCH;
+    // If the old state was already FULLSCREEN_ALL_APPS, then we should close.
+    else if (new_state == PEEKING && app_list_state_ == FULLSCREEN_ALL_APPS)
+      new_state_override = CLOSED;
+    // If the old state was not FULLSCREEN_ALL_APPS, we should make it so.
+    else if (new_state == PEEKING && app_list_state_ != FULLSCREEN_ALL_APPS)
+      new_state_override = FULLSCREEN_ALL_APPS;
   }
 
   gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
