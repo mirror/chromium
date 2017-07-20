@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "2481b162_efc021fc",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-20T08:18:18Z",
+      "side": 1,
+      "message": "Ah okay. I guess the alternative is to have a function in the anonymous namespace that does this, but it\u0027s not a big deal. Thanks for the cleanup!",
+      "parentUuid": "74b331dc_a8292c14",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 34
+      },
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5982ca02_956ca9bb",
         "filename": "chrome/browser/ui/webui/site_settings_helper.h",
         "patchSetId": 10

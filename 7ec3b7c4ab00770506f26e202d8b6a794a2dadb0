@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "003f5905_05935340",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-20T08:18:18Z",
+      "side": 1,
+      "message": "Can you remove this too?",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec58857_909a2048",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-20T08:18:18Z",
+      "side": 1,
+      "message": "This is a bit misleading? I would expect something named this to convert a SiteSettingSource to a string. But I guess this is a decent description of what this does..\n\nMaybe CalculateSiteSettingSourceString? Up to you.",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593f1c26_ab1e1969",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-20T08:18:18Z",
+      "side": 1,
+      "message": "Should be SHOUTY_CASE according to https://chromium-cpp.appspot.com/",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
