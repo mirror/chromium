@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/blockfile/backend_impl.h"
@@ -179,6 +180,29 @@ int CreateCacheBackend(
       new CacheCreator(path, force, max_bytes, type, backend_type, kNone,
                        thread, net_log, backend, callback);
   return creator->Run();
+}
+
+int CreateCacheBackend(net::CacheType type,
+                       net::BackendType backend_type,
+                       const base::FilePath& path,
+                       int max_bytes,
+                       bool force,
+                       net::NetLog* net_log,
+                       std::unique_ptr<Backend>* backend,
+                       const net::CompletionCallback& callback) {
+  return CreateCacheBackend(
+      type, backend_type, path, max_bytes, force,
+      scoped_refptr<base::SingleThreadTaskRunner>(nullptr), net_log, backend,
+      callback);
+}
+
+void FlushCacheThreadForTesting() {
+  // For simple backend.
+  SimpleBackendImpl::FlushWorkerPoolForTesting();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+
+  // Block backend.
+  BackendImpl::FlushForTesting();
 }
 
 int Backend::CalculateSizeOfEntriesBetween(base::Time initial_time,
