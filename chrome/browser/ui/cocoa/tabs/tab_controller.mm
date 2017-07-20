@@ -13,14 +13,26 @@
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
+#include "chrome/browser/ui/cocoa/spinner_view.h"
 #import "chrome/browser/ui/cocoa/sprite_view.h"
 #import "chrome/browser/ui/cocoa/tabs/alert_indicator_button_cocoa.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller_target.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
+#include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #import "extensions/common/extension.h"
 #import "ui/base/cocoa/menu_controller.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/resources/grit/ui_resources.h"
+
+@interface TabController(Private)
+// Setting |animate| to YES will animate away the old image before animating
+// the new image back to position.
+- (void)setIconImage:(NSImage*)image withToastAnimation:(BOOL)animate;
+@end
 
 @implementation TabController
 
@@ -337,11 +349,35 @@ static const CGFloat kTabElementYOrigin = 6;
       [self iconCapacity], [self pinned], [self active]);
 }
 
-- (void)setIconImage:(NSImage*)image {
-  [self setIconImage:image withToastAnimation:NO];
+- (void)setIconImage:(NSImage*)image forLoadingState:(TabLoadingState)newLoadingState
+         showIcon:(BOOL)showIcon {
+  TabLoadingState oldLoadingState = loadingState_;
+  loadingState_ = newLoadingState;
+
+  static NSImage* blankImage = [[NSImage alloc] initWithSize:NSMakeSize(16, 16)];
+  BOOL hasIconView = [self iconView] != nil;
+
+  // Update the image if no image, or state has changed, or the iconView is not
+  // present.
+  // Always update the icon if called and done loading.
+  if (newLoadingState == kTabDone || image == nil || oldLoadingState != newLoadingState ||
+      hasIconView != showIcon) {
+    [self setIconImage:blankImage withToastAnimation:NO];
+    if (!tabSpinnerIconView_.get()) {
+      tabSpinnerIconView_.reset([[TabSpinnerIconView alloc] initWithFrame:[iconView_ bounds]]);
+    }
+    if (newLoadingState == kTabDone) {
+      [tabSpinnerIconView_ setTabDoneIcon:image];
+    } else {
+      [tabSpinnerIconView_ setTabLoadingState:newLoadingState];
+    }
+    [tabSpinnerIconView_ setFrame:[iconView_ bounds]];
+    [iconView_ addSubview:tabSpinnerIconView_];
+  }
 }
 
 - (void)setIconImage:(NSImage*)image withToastAnimation:(BOOL)animate {
+  [tabSpinnerIconView_ removeFromSuperview];
   if (image == nil) {
     [self setIconView:nil];
   } else {

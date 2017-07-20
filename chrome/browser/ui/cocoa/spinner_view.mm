@@ -6,8 +6,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#include "base/mac/sdk_forward_declarations.h"
 #include "base/mac/scoped_cftyperef.h"
+#import "chrome/browser/themes/theme_properties.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "ui/base/theme_provider.h"
 #include "ui/native_theme/native_theme.h"
@@ -30,16 +30,11 @@ NSString* const kSpinnerAnimationName  = @"SpinnerAnimationName";
 NSString* const kRotationAnimationName = @"RotationAnimationName";
 }
 
-@interface SpinnerView () <CALayerDelegate> {
-  base::scoped_nsobject<CAAnimationGroup> spinnerAnimation_;
-  base::scoped_nsobject<CABasicAnimation> rotationAnimation_;
-  CAShapeLayer* shapeLayer_;  // Weak.
-  CALayer* rotationLayer_;  // Weak.
-}
-@end
-
-
 @implementation SpinnerView
+
++ (CGFloat)rotationTime {
+  return kRotationTime;
+}
 
 - (instancetype)initWithFrame:(NSRect)frame {
   if (self = [super initWithFrame:frame]) {
@@ -89,7 +84,17 @@ NSString* const kRotationAnimationName = @"RotationAnimationName";
 }
 
 - (BOOL)isAnimating {
-  return [shapeLayer_ animationForKey:kSpinnerAnimationName] != nil;
+  return [shapeLayer_ animationForKey:kSpinnerAnimationName] != nil ||
+      [rotationLayer_ animationForKey:kRotationAnimationName] != nil;
+}
+
+- (void)updateShapeLayerStrokeColor {
+  SkColor skStrokeColor =
+      ui::NativeTheme::GetInstanceForNativeUi()->GetSystemColor(
+          ui::NativeTheme::kColorId_ThrobberSpinningColor);
+  base::ScopedCFTypeRef<CGColorRef> strokeColor(
+      skia::CGColorCreateFromSkColor(skStrokeColor));
+  [shapeLayer_ setStrokeColor:strokeColor];
 }
 
 // Overridden to return a custom CALayer for the view (called from
@@ -116,12 +121,7 @@ NSString* const kRotationAnimationName = @"RotationAnimationName";
   [shapeLayer_ setLineCap:kCALineCapRound];
   [shapeLayer_ setLineDashPattern:@[ @(kArcLength * scaleFactor) ]];
   [shapeLayer_ setFillColor:NULL];
-  SkColor throbberBlueColor =
-      ui::NativeTheme::GetInstanceForNativeUi()->GetSystemColor(
-          ui::NativeTheme::kColorId_ThrobberSpinningColor);
-  CGColorRef blueColor = skia::CGColorCreateFromSkColor(throbberBlueColor);
-  [shapeLayer_ setStrokeColor:blueColor];
-  CGColorRelease(blueColor);
+  [self updateShapeLayerStrokeColor];
 
   // Create the arc that, when stroked, creates the spinner.
   base::ScopedCFTypeRef<CGMutablePathRef> shapePath(CGPathCreateMutable());
@@ -296,6 +296,224 @@ NSString* const kRotationAnimationName = @"RotationAnimationName";
     [shapeLayer_ removeAllAnimations];
     [rotationLayer_ removeAllAnimations];
   }
+}
+
+@end
+
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
+#include "ui/base/resource/resource_bundle.h"
+
+namespace {
+const CGFloat kReverseArcLength        = 39.25;
+const CGFloat kReverseArcStartAngle    = kDegrees270;
+const CGFloat kReverseArcEndAngle      = (kReverseArcStartAngle + kDegrees180);
+const CGFloat kWaitingStrokeAlpha      = 0.5;
+const CGFloat kSadTabAnimationTime     = 0.5;
+}  // namespace
+
+@implementation TabSpinnerIconView : SpinnerView
+
+@synthesize tabLoadingState = tabLoadingState_;
+
+- (void)viewDidMoveToWindow {
+  if ([self window]) {
+    [self updateShapeLayerStrokeColor];
+  }
+  [super viewDidMoveToWindow];
+}
+
+- (BOOL)showingAnIcon {
+  return tabLoadingState_ == kTabCrashed || tabLoadingState_ == kTabDone;
+}
+
+- (void)updateShapeLayerStrokeColor {
+  if ([self showingAnIcon]) {
+    [shapeLayer_ setStrokeColor:[NSColor clearColor].CGColor];
+    return;
+  }
+
+  BOOL hasDarkTheme =
+      [[self window] respondsToSelector:@selector(hasDarkTheme)] &&
+      [[self window] hasDarkTheme];
+  const ui::ThemeProvider* theme = nullptr;
+  if ([[self window] respondsToSelector:@selector(themeProvider)]) {
+    theme = [[self window] themeProvider];
+  }
+
+  if (tabLoadingState_ == kTabWaiting) {
+    if (hasDarkTheme) {
+      [shapeLayer_ setStrokeColor:
+          [[NSColor whiteColor] colorWithAlphaComponent:kWaitingStrokeAlpha].CGColor];
+    } else {
+      if (theme) {
+        [shapeLayer_ setStrokeColor:
+            theme->GetNSColor(ThemeProperties::COLOR_TAB_THROBBER_WAITING).CGColor];
+      } else {
+        SkColor skWaitingColor =
+            ui::NativeTheme::GetInstanceForNativeUi()->GetSystemColor(
+                ui::NativeTheme::kColorId_ThrobberWaitingColor);
+        base::ScopedCFTypeRef<CGColorRef> waitingColor(
+            skia::CGColorCreateFromSkColor(skWaitingColor));
+        [shapeLayer_ setStrokeColor:waitingColor];
+      }
+    }
+    return;
+  }
+
+  if (hasDarkTheme) {
+    [shapeLayer_ setStrokeColor:[NSColor whiteColor].CGColor];
+  } else {
+    CGColorRef spinningColor = [NSColor redColor].CGColor;
+    if (theme) {
+      spinningColor =
+          theme->GetNSColor(ThemeProperties::COLOR_TAB_THROBBER_SPINNING).CGColor;
+    } else {
+      [super updateShapeLayerStrokeColor];
+    }
+  }
+}
+
+- (void)initializeToastAnimation {
+  const CGFloat offset = [self bounds].size.height;
+
+  CABasicAnimation* rotationAnimation = [CABasicAnimation animation];
+  rotationAnimation.keyPath = @"transform.translation.y";
+  [rotationAnimation setFromValue:@(-offset)];
+  [rotationAnimation setToValue:@(0)];
+  [rotationAnimation setDuration:kSadTabAnimationTime];
+  [rotationAnimation setRemovedOnCompletion:NO];
+  [rotationAnimation setFillMode:kCAFillModeForwards];
+  [rotationAnimation setRepeatCount:0];
+
+  rotationAnimation_.reset([rotationAnimation retain]);
+}
+
+- (void)initializeAnimation {
+  if (tabLoadingState_ == kTabLoading) {
+    return [super initializeAnimation];
+  } else if (tabLoadingState_ == kTabCrashed) {
+    return [self initializeToastAnimation];
+  } else if (tabLoadingState_ != kTabWaiting) {
+    return;
+  }
+
+  CGRect bounds = [self bounds];
+  CGFloat scaleFactor = bounds.size.width / kDesignWidth;
+
+  // Make sure |shapeLayer_|'s content scale factor matches the window's
+  // backing depth (e.g. it's 2.0 on Retina Macs). Don't worry about adjusting
+  // any other layers because |shapeLayer_| is the only one displaying content.
+  CGFloat backingScaleFactor = [[self window] backingScaleFactor];
+  [shapeLayer_ setContentsScale:backingScaleFactor];
+  const CGFloat reverseArcAnimationTime = [SpinnerView rotationTime] / 2.0;
+
+  // Create the arc animation, where it grows from a short block to its full
+  // length.
+  base::scoped_nsobject<CAKeyframeAnimation> arcAnimation(
+      [[CAKeyframeAnimation alloc] init]);
+  [arcAnimation setTimingFunction:
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+  [arcAnimation setKeyPath:@"lineDashPhase"];
+  NSArray* animationValues = @[ @(-kReverseArcLength * scaleFactor), @(0.0) ];
+  [arcAnimation setValues:animationValues];
+  NSArray* keyTimes = @[ @(0.0), @(1.0) ];
+  [arcAnimation setKeyTimes:keyTimes];
+  [arcAnimation setDuration:reverseArcAnimationTime];
+  [arcAnimation setRemovedOnCompletion:NO];
+  [arcAnimation setFillMode:kCAFillModeForwards];
+
+  CAAnimationGroup* group = [CAAnimationGroup animation];
+  [group setDuration:reverseArcAnimationTime];
+  [group setFillMode:kCAFillModeForwards];
+  [group setRemovedOnCompletion:NO];
+  [group setAnimations:@[arcAnimation]];
+  spinnerAnimation_.reset([group retain]);
+
+  // Finally, create an animation that rotates the entire spinner layer.
+  CABasicAnimation* rotationAnimation = [CABasicAnimation animation];
+  rotationAnimation.keyPath = @"transform.rotation";
+  [rotationAnimation setFromValue:@0];
+  [rotationAnimation setToValue:@(kDegrees360)];
+  // Start the rotation once the stroke animation has completed.
+  [rotationAnimation setBeginTime:CACurrentMediaTime() + reverseArcAnimationTime];
+  [rotationAnimation setDuration:kRotationTime];
+  [rotationAnimation setRemovedOnCompletion:NO];
+  [rotationAnimation setFillMode:kCAFillModeForwards];
+  [rotationAnimation setRepeatCount:HUGE_VALF];
+  
+  rotationAnimation_.reset([rotationAnimation retain]);
+}
+
+- (void)setTabLoadingState:(TabLoadingState)loadingState icon:(NSImage*)icon {
+  tabLoadingState_ = loadingState;
+  [shapeLayer_ setContents:nil];
+
+  CGRect bounds = [self bounds];
+  CGFloat scaleFactor = bounds.size.width / kDesignWidth;
+  base::ScopedCFTypeRef<CGMutablePathRef> shapePath(CGPathCreateMutable());
+  if (tabLoadingState_ == kTabWaiting) {
+    [shapeLayer_ setLineDashPattern:@[ @(kReverseArcLength * scaleFactor) ]];
+    CGPathAddArc(shapePath, NULL, bounds.size.width / 2.0,
+                 bounds.size.height / 2.0, kArcRadius * scaleFactor,
+                 kReverseArcStartAngle, kReverseArcEndAngle, 1);
+    [shapeLayer_ setPath:shapePath];
+  } else if (tabLoadingState_ == kTabLoading) {
+    [shapeLayer_ setLineDashPattern:@[ @(kArcLength * scaleFactor) ]];
+    CGPathAddArc(shapePath, NULL, bounds.size.width / 2.0,
+                 bounds.size.height / 2.0, kArcRadius * scaleFactor,
+                 kArcStartAngle, kArcEndAngle, 0);
+    [shapeLayer_ setPath:shapePath];
+  } else {
+    [shapeLayer_ setPath:nullptr];
+    [shapeLayer_ setContents:icon];
+  }
+  spinnerAnimation_.reset();
+  rotationAnimation_.reset();
+  [shapeLayer_ removeAllAnimations];
+  [rotationLayer_ removeAllAnimations];
+
+  [self updateShapeLayerStrokeColor];
+  [self updateAnimation:nil];
+}
+
+- (void)setTabLoadingState:(TabLoadingState)newLoadingState {
+  if (tabLoadingState_ == newLoadingState) {
+    return;
+  }
+
+  NSImage* tabIcon = nil;
+  if (newLoadingState == kTabCrashed) {
+    static NSImage* sadTabIcon =
+        ResourceBundle::GetSharedInstance()
+        .GetNativeImageNamed(IDR_CRASH_SAD_FAVICON)
+        .CopyNSImage();
+    tabIcon = sadTabIcon;
+  }
+
+  [self setTabLoadingState:newLoadingState icon:tabIcon];
+}
+
+- (void)setTabDoneIcon:(NSImage*)anImage {
+  [self setTabLoadingState:kTabDone icon:anImage];
+}
+
+- (void)updateAnimation:(NSNotification*)notification {
+  if (tabLoadingState_ == kTabDone) {
+    [shapeLayer_ removeAllAnimations];
+    [rotationLayer_ removeAllAnimations];
+  } else {
+    [super updateAnimation:notification];
+  }
+}
+
+// ThemedWindowDrawing implementation.
+
+- (void)windowDidChangeTheme {
+  [self updateShapeLayerStrokeColor];
+}
+
+- (void)windowDidChangeActive {
 }
 
 @end
