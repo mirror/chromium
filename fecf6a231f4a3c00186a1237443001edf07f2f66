@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f755ca_a440ae94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T12:24:36Z",
+      "side": 1,
+      "message": "I would maybe move this further up now that it\u0027s final, and make |mAccountManagerFacade| final too?",
+      "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
