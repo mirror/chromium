@@ -8,6 +8,7 @@
 #include "ash/test/ash_test_base.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/base/l10n/l10n_util.h"
 
 namespace ash {
 
@@ -65,6 +66,14 @@ class TrayInfoLabelTest : public AshTestBase {
     EXPECT_EQ(expect_click_was_handled, click_was_handled);
   }
 
+  void VerifyLabel(int expected_label_id) {
+    base::string16 expected_label_text =
+        l10n_util::GetStringUTF16(expected_label_id);
+
+    EXPECT_EQ(expected_label_text, label_->label_->text());
+    EXPECT_EQ(expected_label_text, label_->accessible_name());
+  }
+
   void VerifyClickability(bool expected_clickable) {
     EXPECT_EQ(expected_clickable, label_->IsClickable());
 
@@ -95,12 +104,15 @@ class TrayInfoLabelTest : public AshTestBase {
 
 TEST_F(TrayInfoLabelTest, NoDelegate) {
   CreateLabel(false /* use_delegate */, IDS_ASH_STATUS_TRAY_BLUETOOTH_ENABLED);
+  VerifyLabel(IDS_ASH_STATUS_TRAY_BLUETOOTH_ENABLED);
   VerifyClickability(false /* expected_clickable */);
 
   label_->Update(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISABLED);
+  VerifyLabel(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISABLED);
   VerifyClickability(false /* expected_clickable */);
 
   label_->Update(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISCOVERING);
+  VerifyLabel(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISCOVERING);
   VerifyClickability(false /* expected_clickable */);
 }
 
@@ -114,6 +126,7 @@ TEST_F(TrayInfoLabelTest, PerformAction) {
   delegate_->AddClickableMessageId(kClickableMessageId2);
   VerifyNoClicks();
 
+  VerifyLabel(kClickableMessageId1);
   VerifyClickability(true /* expected_clickable */);
   ClickOnLabel(true /* expect_click_was_handled */);
   VerifyClicks(std::vector<int>{kClickableMessageId1});
@@ -122,11 +135,13 @@ TEST_F(TrayInfoLabelTest, PerformAction) {
   VerifyClicks(std::vector<int>{kClickableMessageId1, kClickableMessageId1});
 
   label_->Update(kNonClickableMessageId);
+  VerifyLabel(kNonClickableMessageId);
   VerifyClickability(false /* expected_clickable */);
   ClickOnLabel(false /* expect_click_was_handled */);
   VerifyClicks(std::vector<int>{kClickableMessageId1, kClickableMessageId1});
 
   label_->Update(kClickableMessageId2);
+  VerifyLabel(kClickableMessageId2);
   VerifyClickability(true /* expected_clickable */);
   ClickOnLabel(true /* expect_click_was_handled */);
   VerifyClicks(std::vector<int>{kClickableMessageId1, kClickableMessageId1,
