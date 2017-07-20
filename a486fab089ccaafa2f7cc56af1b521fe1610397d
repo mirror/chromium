@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "316e1cdc_52111863",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-20T07:28:12Z",
+      "side": 1,
+      "message": "Could you update description to \"Move FrameSelection::VerticalDirection to SelectionModifier.h::SelectionModifyVerticalDirection\" ?",
+      "revId": "a486fab089ccaafa2f7cc56af1b521fe1610397d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
