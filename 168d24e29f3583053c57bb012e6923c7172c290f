@@ -34,6 +34,24 @@
       "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2ef1e6_f7a13f33",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-20T01:28:37Z",
+      "side": 1,
+      "message": "Right, so this is tied to the fact that granting permission creates the Mojo pipe to the renderer, and that pipe is then reused if the page makes another geolocation-related call later on?",
+      "parentUuid": "a53319d4_2858fd54",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
