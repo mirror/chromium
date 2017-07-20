@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6c433b_44c5b5eb",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T03:43:24Z",
+      "side": 1,
+      "message": "Nice. Much easier to read with the comments.",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcab3f21_405b37bf",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T03:43:24Z",
+      "side": 1,
+      "message": "super-nit: How about CanStartFullscreenAppListDrag() since the other method is called CompleteAppListDrag?",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366f263b_acc2747b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T03:43:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand. Is the reason you need screen coordinates because you are *setting* the bounds of the app list using raw data from the event? Or because you need to compare the raw data from the event with something that\u0027s in screen coords?",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

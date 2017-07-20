@@ -299,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c8ed51a6_5bbc4763",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T03:43:24Z",
+      "side": 1,
+      "message": "You need to have SetYPosition() because it is pure virtual. But you don\u0027t need to keep track of the count, since you never read the data, and you don\u0027t need this method.  (Unless you add test coverage that reads it. It might be reasonable to check that at least one y position update happens during the drag.)",
+      "parentUuid": "ea234ca3_a9d4e94d",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d7478b_114c84d7",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 22
