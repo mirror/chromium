@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85b6b78d_fd795caf",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "external",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a48726_a90090a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "last",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87572aa8_938d0203",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "I\u0027m guessing you didn\u0027t mean to do this for multi-frame images? Its not set up to work for them: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/image-decoders/ImageDecoder.h?l\u003d266.\n\nCould you re-structure this so the cache disabling is only done for single-frame images.\n\nif (!is_multi_frame_) {\n  ...\n} else if (lowenddevice) {\n  ...\n} else if (all_data_received \u0026\u0026 new_decoder) {\n  ...\n}",
+      "range": {
+        "startLine": 342,
+        "startChar": 4,
+        "endLine": 342,
+        "endChar": 28
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba0633b_ea2d35c0",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "Could you add a comment to explain what\u0027s happening here? I can see that it wants to decode directly into the output memory for single-frame images, if we can decode the complete image. But the part with |new_decoder| is a bit subtle. IIUC the reason for this is that if the decoder already has a partial frame, then the decode is still completed into it, even if we can decode the whole image now.\n\nIf possible, I\u0027d say add an API to get the ImageFrame without causing a decode and check the FrameStatus to make it obvious. If not, at least having a comment would be great.",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3a5364_5e97fa9f",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "Could this be changes to SkBitmap::Allocator\u0026? This should never be null and it will remove some unnecessary checks for it later on.",
+      "range": {
+        "startLine": 141,
+        "startChar": 42,
+        "endLine": 141,
+        "endChar": 60
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef59cb2_fe4b9054",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-20T02:24:42Z",
+      "side": 1,
+      "message": "|has_alpha_|.",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
