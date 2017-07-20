@@ -45,6 +45,30 @@
       "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f79d999_f7a0d839",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T12:45:21Z",
+      "side": 1,
+      "message": "I agree that it would be better to make this part of the Request interface than inferring it from the class (which means that this class would have to know about its clients, which is a circular dependency). I would be tempted to keep the current caching strategy, if only because download suggestions are going to go away with CH anyway.",
+      "parentUuid": "bda3c4ce_ca655fab",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
