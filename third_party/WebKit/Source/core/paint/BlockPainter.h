@@ -46,6 +46,8 @@ class BlockPainter {
                            const LayoutPoint& adjusted_paint_offset) const;
 
  private:
+  // TODO(pdr): Document this.
+  void PaintScrollHitTest(const PaintInfo&);
   void PaintCarets(const PaintInfo&, const LayoutPoint&);
 
   const LayoutBlock& layout_block_;
