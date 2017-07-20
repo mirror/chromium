@@ -47,6 +47,7 @@ void TransienceManager::StartTimer() {
 
 void TransienceManager::OnTimeout() {
   element_->set_visible(false);
+  element_->SetOpacity(0);
 }
 
 }  // namespace vr
