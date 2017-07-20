@@ -34,6 +34,24 @@
       "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d41353_fbd67f64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T12:48:09Z",
+      "side": 1,
+      "message": "Might make sense, yeah. I wasn\u0027t sure whether maybe it makes a difference when AccountManagerFacade.get() is called...",
+      "parentUuid": "fce3d0f0_ede0b326",
+      "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
