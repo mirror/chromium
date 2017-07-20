@@ -118,6 +118,23 @@
     },
     {
       "key": {
+        "uuid": "804713a9_3f7c4107",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T17:20:37Z",
+      "side": 1,
+      "message": "Looking at the comment on dispatch_context(), it says that AddBinding should be used to associate a context with a specific binding (https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding_set.h?rcl\u003d4bb431665413502ae0330a95bea7da2607997e55\u0026l\u003d135). Shouldn\u0027t that be used?",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "089685cd_c22d833d",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 14
@@ -141,6 +158,46 @@
     },
     {
       "key": {
+        "uuid": "e2eef942_89be9b57",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T17:20:37Z",
+      "side": 1,
+      "message": "I don\u0027t see any code directly manipulating dispatch_context(). Are you sure this is a safe operation?",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c05645e_e29d0474",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T17:20:37Z",
+      "side": 1,
+      "message": "If the PermissionManager is a BrowserContext object, do we really need to go through a delegate interface from RenderFrameHost to here? It seems to me that we can just make this call within RenderFrameHost itself.",
+      "range": {
+        "startLine": 1178,
+        "startChar": 9,
+        "endLine": 1178,
+        "endChar": 53
+      },
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae47abb0_7fdade25",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 14
@@ -152,6 +209,23 @@
       "writtenOn": "2017-07-20T14:36:06Z",
       "side": 1,
       "message": "this is in the wrong section, it\u0027s not a webcontents override",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2034106d_b810238b",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T17:20:37Z",
+      "side": 1,
+      "message": "Can you add some comments on the relationship between the two classes? Are they 1:1 or 1:many?",
       "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
