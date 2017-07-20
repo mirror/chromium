@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed283a23_a15b6487",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-20T06:05:28Z",
+      "side": 1,
+      "message": "Optional nit: Is |channel \u003d\u003d null| easier to read?",
+      "range": {
+        "startLine": 161,
+        "startChar": 23,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32288ec4_13fc3509",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-20T06:05:28Z",
+      "side": 1,
+      "message": "Do we want to do a test with the timestamp not being 0?",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea39e22_9769fcd3",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-20T06:05:28Z",
+      "side": 1,
+      "message": "In Java these members are final. Could id, origin and timestamp be const?",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3e1cf2_ac317e3c",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-20T06:05:28Z",
+      "side": 1,
+      "message": "Could you document this? When is this set? Is the value ever changed after that? What is this used for?",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfd921d_e7db8377",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-20T06:05:28Z",
+      "side": 1,
+      "message": "Nit: The constant is typically the left param",
+      "revId": "062660fbb1421eb4dccfd1caba5e3d7c4eb5b733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
