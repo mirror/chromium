@@ -18,7 +18,7 @@
 <iframe src="resources/subframe-observing-longtask.html" id="child-iframe-id" name="child-iframe-name"></iframe>
 
 <script>
-  setTimeout(function(){
+  set_timeout(function(){
     var begin = window.performance.now();
     while (window.performance.now() < begin + 51);
   }, 50);
