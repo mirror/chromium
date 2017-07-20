@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "df0c3323_26363ad8",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "nit: maybe add {} here?",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca61787e_86e24f96",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "wdyt about:\n\nstd::unique_ptr\u003cbase::DictionaryValue\u003e source_tab \u003d\n    MessagingDelegate::MaybeGetTabInfo(source_contents);\n\nif (source_tab) {\n  DCHECK(source_render_frame_host);\n  source_frame_id \u003d ExtensionApiFrameIdMap::GetFrameId(source_render_frame_host);\n} else {\n  ...\n}\n\n(this might not be the same if ExtensionTabUtil::CreateTabObject can return nullptr, but judging by the old code, that is not expected; and even if it happened the else branch would detect the source is not a webview).",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8677e6f_7521e049",
         "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.cc",
         "patchSetId": 1
@@ -13,6 +47,40 @@
       "writtenOn": "2017-07-19T23:00:49Z",
       "side": 1,
       "message": "All the implementations here are adapted from message_service.cc, but gerrit won\u0027t show it as a \"A+\" with diffs.",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5db4755_834bbbbc",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "nit: add \"Otherwise, returns nullptr.\" or something similar",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3fdaa2_94de4153",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "suggestion (correct me if I misunderstood the meaning of the method):\n\nRuns |callback| with true if |url| is allowed to connect to |extension| in incognito mode, false otherwise.\nThe user will be prompted for the answer if the answer cannot be determined.",
       "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

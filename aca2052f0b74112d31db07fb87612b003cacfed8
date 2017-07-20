@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44131b99_b4cd2a84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "can you fix the line length so it\u0027s not akwardly broken in gerrit UI",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218ccc74_687576ec",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "should this be added to the delegate, too (or do you plan to leave it here/do it in another cl)?",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372333ff_f9ec28ae",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T02:17:12Z",
+      "side": 1,
+      "message": "enum class?",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
