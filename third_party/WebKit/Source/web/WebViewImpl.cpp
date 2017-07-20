@@ -218,8 +218,6 @@ const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
 
-static bool g_should_use_external_popup_menus = false;
-
 namespace {
 
 class EmptyEventListener final : public EventListener {
@@ -269,14 +267,6 @@ WebViewBase* WebViewImpl::Create(WebViewClient* client,
                                  WebPageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
-}
-
-const WebInputEvent* WebViewBase::CurrentInputEvent() {
-  return WebViewImpl::CurrentInputEvent();
-}
-
-void WebView::SetUseExternalPopupMenus(bool use_external_popup_menus) {
-  g_should_use_external_popup_menus = use_external_popup_menus;
 }
 
 void WebView::UpdateVisitedLinkState(unsigned long long link_hash) {
@@ -3642,14 +3632,6 @@ void WebViewImpl::PageScaleFactorChanged() {
 
 void WebViewImpl::MainFrameScrollOffsetChanged() {
   dev_tools_emulator_->MainFrameScrollOrScaleChanged();
-}
-
-bool WebViewBase::UseExternalPopupMenus() {
-  return WebViewImpl::UseExternalPopupMenus();
-}
-
-bool WebViewImpl::UseExternalPopupMenus() {
-  return g_should_use_external_popup_menus;
 }
 
 void WebViewImpl::SetBackgroundColorOverride(WebColor color) {
