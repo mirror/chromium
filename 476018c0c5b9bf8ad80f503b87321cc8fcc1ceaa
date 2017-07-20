@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c285e248_fe9eaec2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T17:46:24Z",
+      "side": 1,
+      "message": "Are we sure which path is failing above?  Is it the convert \u003d\u003d null case or the else?\n\nIn general, I see nothing in the code that could make this happen.  Can we just try changing the name of context_text to something else?\n\nI would actually change this to throw an IllegalStateException in the inflation code if viewHolder.mText \u003d\u003d null.  We should figure out if the context id can\u0027t be found, conflicts with something on the device or something crazy that would cause this.\n\nWe should try to figure out where this is failing first, since this is pretty scary.\n\nI would do\n\nif (convertView \u003d\u003d null) {\n   ..\n   ..\n   if (viewHolder.mText \u003d\u003d null) {\n       throw new IllegalStateException(\"Context text not found in new view inflation\");\n   }\n   ...\n} else {\n   viewHolder \u003d (ViewHolderItem) convertView.getTag();\n   if (viewHolder.mText \u003d\u003d null) {\n       throw new IllegalStateException(\"Context text not found in view resuse\");\n   }\n}\n\nI didn\u0027t realize this was for the tabular context menu UI, which I don\u0027t believe will go in 61 stable, so let\u0027s add some more debugging to get to the root of this.",
+      "revId": "476018c0c5b9bf8ad80f503b87321cc8fcc1ceaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
