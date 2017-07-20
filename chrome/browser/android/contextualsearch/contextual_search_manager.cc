@@ -26,6 +26,7 @@
 #include "jni/ContextualSearchManager_jni.h"
 #include "net/url_request/url_fetcher_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 using base::android::JavaParamRef;
 using base::android::JavaRef;
@@ -43,9 +44,9 @@ class ContextualSearchObserver : public content::WebContentsObserver {
       content::WebContents* contents,
       contextual_search::ContextualSearchJsApiHandler* api_handler) {
     // Clobber any prior registered observer.
-    auto observer =
-        base::MakeUnique<ContextualSearchObserver>(contents, api_handler);
-    contents->SetUserData(kContextualSearchObserverKey, observer);
+    contents->SetUserData(
+        kContextualSearchObserverKey,
+        base::MakeUnique<ContextualSearchObserver>(contents, api_handler));
   }
 
  private:
