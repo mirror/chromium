@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 
 namespace safe_browsing {
@@ -198,6 +199,8 @@ class V4Store {
   // store using |base_metric| as prefix and the filename as suffix.
   int64_t RecordAndReturnFileSize(const std::string& base_metric);
 
+  ApplyUpdateResult apply_update_status;
+
   std::string DebugString() const;
 
   // Reads the store file from disk and populates the in-memory representation
@@ -214,6 +217,10 @@ class V4Store {
   // so it is performed outside of the hotpath of loading SafeBrowsing database,
   // which blocks resource loads.
   bool VerifyChecksum();
+
+  // Populates the DatabaseInfo message of the safe_browsing_page proto.
+  void SetStoreFields(DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info,
+                      const std::string& base_metric);
 
  protected:
   HashPrefixMap hash_prefix_map_;
