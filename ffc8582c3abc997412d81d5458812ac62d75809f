@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bcdaa12_e0087109",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T06:36:55Z",
+      "side": 1,
+      "message": "No, I was just being kinda paranoid. I\u0027ll take it out (Closure doesn\u0027t complain either way) :D",
+      "parentUuid": "29f67c34_c5db049e",
+      "range": {
+        "startLine": 102,
+        "startChar": 14,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1941f47e_07e99a5c",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cc2153_d9f95075",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T06:36:55Z",
+      "side": 1,
+      "message": ":^D",
+      "parentUuid": "1941f47e_07e99a5c",
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "74b331dc_a8292c14",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T06:36:55Z",
+      "side": 1,
+      "message": "I think it\u0027s better not to use non-compile time evaluated constants (according to tapted@), because they\u0027ll gets evaluated every time the binary starts. So I think if we moved |kNotifications| to an anon namespace, it would get re-evaluated every time someone wanted to run unit_tests? Which is probably bad. I\u0027ll leave it as-is?\n\nI updated all the const things in the files I touched in this patchset to constexpr as well btw.",
+      "parentUuid": "91f8203f_5fd674b1",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 34
+      },
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5982ca02_956ca9bb",
         "filename": "chrome/browser/ui/webui/site_settings_helper.h",
         "patchSetId": 10
@@ -79,6 +145,24 @@
       "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328444fc_ae31065f",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T06:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5982ca02_956ca9bb",
+      "revId": "ffc8582c3abc997412d81d5458812ac62d75809f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
