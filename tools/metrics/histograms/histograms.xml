@@ -80230,6 +80230,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ThumbnailGradient.ImageDetectionTime" units="ms">
+  <owner>peconn@chromium.org</owner>
+  <summary>
+    The time it takes to detect whether a thumbnail requires a gradient overlay.
+  </summary>
+</histogram>
+
+<histogram name="ThumbnailGradient.ImageRequiresGradient" enum="Boolean">
+  <owner>peconn@chromium.org</owner>
+  <summary>
+    Whether a thumbnail used for a suggestions image requires a gradient to be
+    overlaid to not fade into the background.
+  </summary>
+</histogram>
+
 <histogram name="Thumbnails.AddedToTopSites" enum="ThumbnailTopSitesEvent">
   <owner>treib@chromium.org</owner>
   <summary>
