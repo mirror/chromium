@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bb1647_a7da94f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T02:16:01Z",
+      "side": 1,
+      "message": "Not sure I understand this statement. Please make clear\nwhat is the current behaviour in what is the intended \nbehaviour that this CL achieves. Same below (is). A usual\npattern is to start like \"This CL enables/addresses/...\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "263a4f86fe74bcb48054d8478e59ebde16002f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
