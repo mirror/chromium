@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a372a8b_3e07cc2b",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-20T16:08:30Z",
+      "side": 1,
+      "message": "What would be the cleanest way to propagate enable-hardware-h264 to this class?",
+      "revId": "1e0a14f882c6e51dc0ca500f9143d9866953f4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
