@@ -496,7 +496,6 @@ TEST_F(RenderWidgetPopupUnittest, EmulatingPopupRect) {
   emulation_params.screen_position = blink::WebDeviceEmulationParams::kMobile;
   emulation_params.view_size = emulated_window_rect.size();
   emulation_params.view_position = blink::WebPoint(150, 160);
-  emulation_params.fit_to_view = true;
 
   gfx::Rect parent_window_rect = gfx::Rect(0, 0, 800, 600);
 

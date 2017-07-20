@@ -355,8 +355,7 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   web_view->UpdateAllLifecyclePhases();
 
   web_view->SetPageScaleFactor(2);
-  web_view->MainFrameImpl()->SetInputEventsTransformForEmulation(
-      IntSize(10, 20), 1.5);
+  web_view->MainFrameImpl()->SetInputEventsScaleForEmulation(1.5);
 
   LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
