@@ -19,8 +19,6 @@
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/messaging/extension_message_port.h"
 #include "chrome/browser/extensions/api/messaging/messaging_delegate.h"
-#include "chrome/browser/extensions/api/messaging/native_message_port.h"
-#include "chrome/browser/extensions/extension_tab_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
@@ -372,22 +370,21 @@ void MessageService::OpenChannelToNativeApp(
     return;
   channel->opener->OpenPort(source_process_id, source_routing_id);
 
-  // Get handle of the native view and pass it to the native messaging host.
-  gfx::NativeView native_view = source ? source->GetNativeView() : nullptr;
-
   std::string error = kReceivingEndDoesntExistError;
-  std::unique_ptr<NativeMessageHost> native_host = NativeMessageHost::Create(
-      native_view, extension->id(), native_app_name,
-      policy_permission == MessagingDelegate::PolicyPermission::ALLOW_ALL,
-      &error);
+  std::unique_ptr<MessagePort> receiver(
+      MessagingDelegate::CreateReceiverForNativeApp(
+          weak_factory_.GetWeakPtr(), source, receiver_port_id, extension->id(),
+          native_app_name,
+          policy_permission == MessagingDelegate::PolicyPermission::ALLOW_ALL,
+          &error));
 
-  // Abandon the channel.
-  if (!native_host.get()) {
+  if (!receiver.get()) {
+    // Abandon the channel.
     DispatchOnDisconnect(source, receiver_port_id, error);
     return;
   }
-  channel->receiver.reset(new NativeMessagePort(
-      weak_factory_.GetWeakPtr(), receiver_port_id, std::move(native_host)));
+
+  channel->receiver = std::move(receiver);
 
   // Keep the opener alive until the channel is closed.
   channel->opener->IncrementLazyKeepaliveCount();
@@ -419,34 +416,20 @@ void MessageService::OpenChannelToTab(int source_process_id,
   content::BrowserContext* browser_context =
       source->GetProcess()->GetBrowserContext();
 
-  WebContents* contents = NULL;
-  std::unique_ptr<MessagePort> receiver;
   PortId receiver_port_id(source_port_id.context_id, source_port_id.port_number,
                           false);
-  if (!ExtensionTabUtil::GetTabById(tab_id, browser_context, true, NULL, NULL,
-                                    &contents, NULL) ||
-      contents->GetController().NeedsReload()) {
-    // The tab isn't loaded yet. Don't attempt to connect.
-    DispatchOnDisconnect(
-        source, receiver_port_id, kReceivingEndDoesntExistError);
-    return;
-  }
 
-  // Frame ID -1 is every frame in the tab.
-  bool include_child_frames = frame_id == -1;
-  content::RenderFrameHost* receiver_rfh =
-      include_child_frames
-          ? contents->GetMainFrame()
-          : ExtensionApiFrameIdMap::GetRenderFrameHostById(contents, frame_id);
-  if (!receiver_rfh) {
+  // May differ from |browser_context|, e.g. a message to an incognito tab.
+  content::BrowserContext* receiver_browser_context;
+  std::unique_ptr<MessagePort> receiver =
+      MessagingDelegate::CreateReceiverForTab(
+          weak_factory_.GetWeakPtr(), browser_context, source, receiver_port_id,
+          tab_id, frame_id, extension_id, &receiver_browser_context);
+  if (!receiver.get()) {
     DispatchOnDisconnect(
         source, receiver_port_id, kReceivingEndDoesntExistError);
     return;
   }
-  receiver.reset(
-      new ExtensionMessagePort(weak_factory_.GetWeakPtr(),
-                               receiver_port_id, extension_id, receiver_rfh,
-                               include_child_frames));
 
   const Extension* extension = nullptr;
   if (!extension_id.empty()) {
@@ -469,7 +452,7 @@ void MessageService::OpenChannelToTab(int source_process_id,
       channel_name,
       false,    // Connections to tabs don't get TLS channel IDs.
       false));  // Connections to tabs aren't webview guests.
-  OpenChannelImpl(contents->GetBrowserContext(), std::move(params), extension,
+  OpenChannelImpl(receiver_browser_context, std::move(params), extension,
                   false /* did_enqueue */);
 }
 
