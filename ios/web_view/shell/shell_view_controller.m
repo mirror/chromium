@@ -4,6 +4,7 @@
 
 #import "ios/web_view/shell/shell_view_controller.h"
 
+#import <CronetChromeWebView/Cronet.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "ios/web_view/shell/shell_translation_delegate.h"
@@ -54,6 +55,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  [Cronet start];
 
   CGRect bounds = self.view.bounds;
 
