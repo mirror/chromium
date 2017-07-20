@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "677e48ca_1acfa111",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-20T00:31:11Z",
+      "side": 1,
+      "message": "Nit: normally for same line comments, we leave two spaces after the semicolon. See here for an example of CSS with many kinds of comments: https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_shared_css.html?q\u003dsettings_shared.css\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "revId": "c821b60ebf9668d53b8399036f690e8615bdc91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
