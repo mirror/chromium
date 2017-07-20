@@ -1869,11 +1869,9 @@ TEST(ValuesTest, GetWithNullOutValue) {
   EXPECT_TRUE(main_list.GetList(6, NULL));
   EXPECT_FALSE(main_list.GetList(7, NULL));
 }
-
 TEST(ValuesTest, SelfSwap) {
   base::Value test(1);
   std::swap(test, test);
   EXPECT_TRUE(test.GetInt() == 1);
 }
-
 }  // namespace base
