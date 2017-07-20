@@ -199,3 +199,9 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque, false)
 
 // If true, server supported versions is updated before SelectMutualVersion.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_to_backend_multi_version, true)
+
+// If true, QUIC packet creator passes a stack allocated SerializedPacket to the
+// connection.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_clear_packet_before_handed_over,
+          false)
