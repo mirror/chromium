@@ -109,25 +109,44 @@ The basic idea below is to generate git branches to work with:
 At this point, squashing sqlite_${VERSION}_patched to master gives exactly a CL
 suitable for committing.
 
-# Everything based in sqlite subdir.
+# The steps below are easier if done in the SQLite directory.
 cd third_party/sqlite
 
-BASE=3070603
-VERSION=3080704
+export OLD=3170000
+export NEW=3190300
+export GNU_SED=sed  # OSX: "brew install gnu-sed", then use "gsed" here.
+
+#### Download and unpack the new SQLite release.
+
+git new-branch sqlite-new-upstream
+# URL from "Alternative Source Code Formats" at http://sqlite.org/download.html
+curl http://sqlite.org/2017/sqlite-src-3190300.zip > upstream.zip
+mkdir sqlite-src-$NEW
+unzip ./upstream.zip -d sqlite-src-$NEW
+rm ./upstream.zip
+mv sqlite-src-$NEW/SQLite-*/* sqlite-src-$NEW/
+xdg-open sqlite-src-$NEW  # Make sure everything looks right.
+git clean -i -d -x sqlite-src-$NEW  # Make sure no file is git-ignored.
+
+git add sqlite-src-$NEW  # Committing the code as downloaded, on purpose.
+git commit -m "sqlite: Add code for release 3.19"
+git cl upload  # Have the new code in a separate (impossible to review) CL.
 
 #### Create current-SQLite reference branch.
-git checkout -b sqlite_${BASE} master
+git new-branch --upstream-current sqlite-old-base
 git rm -rf src
-cp -a sqlite-src-${BASE} src
-# -f includes ignored files, of which there are a couple.
-git add -f src/
-git commit -m "Reset to sqlite-src-${BASE}"
-# This branch is unlikely to build.
+cp -r sqlite-src-${OLD}/ src
+# Clean up trailing whitespace and CRLF so any patches look clean.
+find src/ -type f -not -iname "*.db" -not -iname "*.eps" -not -iname "*.ico" \
+    -not -iname "*.jpg" -not -iname "*.tiff" -not -iname "*.vsix" -exec \
+    $GNU_SED --in-place 's/[[:space:]]\+$//' {} \+
+git add src/
+git commit -m "WiP: Reset SQLite src/ to sqlite-src-${BASE}."
+# This branch will not build. It will be used for rebasing, then deleted.
 
-#### Convert patches into CLs.
-git checkout -b sqlite_${BASE}_patched master
-git rebase sqlite_${BASE}
-git am --keep-non-patch patches/*.patch
+#### Convert patches into git commits.
+git new-branch --upstream-current sqlite-old
+git am --keep-non-patch --ignore-space-change patches/*.patch
 git diff master
 # This branch should be identical to master.
 
