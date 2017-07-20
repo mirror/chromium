@@ -36,6 +36,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "platform/heap/Handle.h"
+#include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
@@ -70,8 +71,11 @@ class CORE_EXPORT WorkerReportingProxy {
   // Invoked when the worker's main script is loaded on
   // WorkerThread::InitializeOnWorkerThread. Only invoked when the script was
   // loaded on the worker thread, i.e., via InstalledScriptsManager rather than
-  // via ResourceLoader.
-  virtual void DidLoadInstalledScript() {}
+  // via ResourceLoader. ContentSecurityPolicy and ReferrerPolicy are read from
+  // the response header of the main script.
+  virtual void DidLoadInstalledScript(
+      const ContentSecurityPolicyResponseHeaders&,
+      const String& referrer_policy_on_worker_thread) {}
 
   // Invoked when the worker script is about to be evaluated on
   // WorkerThread::InitializeOnWorkerThread.

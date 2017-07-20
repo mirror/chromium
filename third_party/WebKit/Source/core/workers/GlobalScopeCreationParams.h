@@ -13,9 +13,11 @@
 #include "core/workers/WorkerSettings.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
+#include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebAddressSpace.h"
 
@@ -52,7 +54,11 @@ struct CORE_EXPORT GlobalScopeCreationParams final {
   String source_code;
   std::unique_ptr<Vector<char>> cached_meta_data;
   WorkerThreadStartMode start_mode;
+  // |content_security_policy_headers| and
+  // |content_security_policy_response_headers| are set exclusively.
   std::unique_ptr<Vector<CSPHeaderAndType>> content_security_policy_headers;
+  WTF::Optional<ContentSecurityPolicyResponseHeaders>
+      content_security_policy_response_headers;
   String referrer_policy;
   std::unique_ptr<Vector<String>> origin_trial_tokens;
 
