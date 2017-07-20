@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb5258dd_298be684",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "nit: either name all (GetRuleIterator, GetWebsiteSettingLastModified) arguments or none (SetWebsiteSetting, ClearAllContentSettingsRules).",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 33
+      },
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cec7da7_8b8f51a9",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "nit: up to you, but I personally feel like some of those `auto` usages are erring towards being too obscure. In many of the uses the actual type fits on the same line w/o wrapping.",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bad521_e3e5291e",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "s/ProviderInterface/UserModifiableProvider/",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b35c6b1_80884151",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "Personally I\u0027d join the override blocks. From the perspective of this class it inherits UserModifiableProvider -- it doesn\u0027t matter where in the inheritance chain the method is defined.",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6841f1_fd77a62f",
+        "filename": "components/content_settings/core/browser/content_settings_pref_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "nit: you can remove this include now",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d57cb14_959c6ecd",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 3
@@ -31,6 +122,23 @@
       "side": 1,
       "message": "Looking at the implementation of base/time.h I think you\u0027re right and I could use base::Time() instead of base::Time::Min(), since base::Time() wraps a zero-timestamp, it should be comparable to and less than any real timestamps. However, given I had to look at the implementation to determine that, this seems more correct ? I don\u0027t feel strongly though, and your way is a bit neater..",
       "parentUuid": "7d57cb14_959c6ecd",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0bb857_6b5cfbde",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-20T18:00:13Z",
+      "side": 1,
+      "message": "nit: detail that the instances are owned by the map above.",
       "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
