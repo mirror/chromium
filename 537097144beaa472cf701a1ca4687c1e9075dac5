@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d21d698_783193a0",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "Use base::File instead.",
+      "range": {
+        "startLine": 833,
+        "startChar": 7,
+        "endLine": 833,
+        "endChar": 15
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b25da15_e7c256b8",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: formatting.\n\n(put whole comment on single line and use git cl format).",
+      "range": {
+        "startLine": 863,
+        "startChar": 53,
+        "endLine": 863,
+        "endChar": 58
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db9acff_8325bec4",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 872,
+        "startChar": 32,
+        "endLine": 872,
+        "endChar": 33
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977213bb_c3727fb1",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: trailing dot.",
+      "range": {
+        "startLine": 84,
+        "startChar": 36,
+        "endLine": 84,
+        "endChar": 50
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8f7687_1a5278d9",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: phrasing\n\nMaybe something like \"Returns a dictionary with the values of all set policies.",
+      "range": {
+        "startLine": 107,
+        "startChar": 33,
+        "endLine": 107,
+        "endChar": 41
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d7e5b6_6121f1a7",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: more descriptive name.\n\nSuggestion: save_policies_select_file_dialog_",
+      "range": {
+        "startLine": 124,
+        "startChar": 38,
+        "endLine": 124,
+        "endChar": 57
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98fa7b7f_9477dfec",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-07-20T15:24:45Z",
+      "side": 1,
+      "message": "nit: trailing dot.",
+      "range": {
+        "startLine": 237,
+        "startChar": 102,
+        "endLine": 237,
+        "endChar": 103
+      },
+      "revId": "537097144beaa472cf701a1ca4687c1e9075dac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
