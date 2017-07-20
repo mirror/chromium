@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db4a7b55_728fa765",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T03:43:43Z",
+      "side": 1,
+      "message": "This makes sense to me.",
+      "parentUuid": "b7f5e6df_afcc32b6",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4895f6e2_f0dba760",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "55628915_4140e9c4",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T03:43:43Z",
+      "side": 1,
+      "message": "Logically in real world kMaxResults is \u003e\u003d results.size().\nHere I\u0027m creating fake data and results.size() is always equal to kMaxResults.",
+      "parentUuid": "9742d1a0_5ef73e14",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c713e46_b35945bd",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 5
@@ -110,6 +158,24 @@
       "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e481de_ee421fd4",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T03:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c713e46_b35945bd",
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
