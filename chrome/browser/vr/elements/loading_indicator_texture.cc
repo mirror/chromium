@@ -12,8 +12,8 @@ namespace vr {
 
 namespace {
 
-static constexpr float kWidth = 0.24;
-static constexpr float kHeight = 0.008;
+static constexpr float kWidth = 0.24f;
+static constexpr float kHeight = 0.008f;
 
 }  // namespace
 

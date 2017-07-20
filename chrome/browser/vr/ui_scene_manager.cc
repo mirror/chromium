@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _USE_MATH_DEFINES  // For M_PI in MSVC.
+
 #include "chrome/browser/vr/ui_scene_manager.h"
 
 #include "base/callback.h"
@@ -35,85 +37,87 @@ namespace vr {
 namespace {
 
 static constexpr int kWarningTimeoutSeconds = 30;
-static constexpr float kWarningDistance = 0.7;
-static constexpr float kWarningAngleRadians = 16.3 * M_PI / 180.0;
+static constexpr float kWarningDistance = 0.7f;
+static constexpr float kWarningAngleRadians =
+    16.3f * static_cast<float>(M_PI) / 180.0f;
 static constexpr float kPermanentWarningHeight = 0.070f;
 static constexpr float kPermanentWarningWidth = 0.224f;
-static constexpr float kTransientWarningHeight = 0.160;
-static constexpr float kTransientWarningWidth = 0.512;
+static constexpr float kTransientWarningHeight = 0.160f;
+static constexpr float kTransientWarningWidth = 0.512f;
 
-static constexpr float kExitWarningDistance = 0.6;
-static constexpr float kExitWarningHeight = 0.160;
-static constexpr float kExitWarningWidth = 0.512;
+static constexpr float kExitWarningDistance = 0.6f;
+static constexpr float kExitWarningHeight = 0.160f;
+static constexpr float kExitWarningWidth = 0.512f;
 
-static constexpr float kContentDistance = 2.5;
-static constexpr float kContentWidth = 0.96 * kContentDistance;
-static constexpr float kContentHeight = 0.64 * kContentDistance;
-static constexpr float kContentVerticalOffset = -0.1 * kContentDistance;
-static constexpr float kContentCornerRadius = 0.005 * kContentWidth;
-static constexpr float kBackplaneSize = 1000.0;
-static constexpr float kBackgroundDistanceMultiplier = 1.414;
+static constexpr float kContentDistance = 2.5f;
+static constexpr float kContentWidth = 0.96f * kContentDistance;
+static constexpr float kContentHeight = 0.64f * kContentDistance;
+static constexpr float kContentVerticalOffset = -0.1f * kContentDistance;
+static constexpr float kContentCornerRadius = 0.005f * kContentWidth;
+static constexpr float kBackplaneSize = 1000.0f;
+static constexpr float kBackgroundDistanceMultiplier = 1.414f;
 
-static constexpr float kFullscreenDistance = 3;
-static constexpr float kFullscreenHeight = 0.64 * kFullscreenDistance;
-static constexpr float kFullscreenWidth = 1.138 * kFullscreenDistance;
-static constexpr float kFullscreenVerticalOffset = -0.1 * kFullscreenDistance;
+static constexpr float kFullscreenDistance = 3.0f;
+static constexpr float kFullscreenHeight = 0.64f * kFullscreenDistance;
+static constexpr float kFullscreenWidth = 1.138f * kFullscreenDistance;
+static constexpr float kFullscreenVerticalOffset = -0.1f * kFullscreenDistance;
 
-static constexpr float kExitPromptWidth = 0.672 * kContentDistance;
-static constexpr float kExitPromptHeight = 0.2 * kContentDistance;
-static constexpr float kExitPromptVerticalOffset = -0.09 * kContentDistance;
-static constexpr float kExitPromptBackplaneSize = 1000.0;
+static constexpr float kExitPromptWidth = 0.672f * kContentDistance;
+static constexpr float kExitPromptHeight = 0.2f * kContentDistance;
+static constexpr float kExitPromptVerticalOffset = -0.09f * kContentDistance;
+static constexpr float kExitPromptBackplaneSize = 1000.0f;
 
 // Distance-independent milimeter size of the URL bar.
-static constexpr float kUrlBarWidthDMM = 0.672;
-static constexpr float kUrlBarHeightDMM = 0.088;
-static constexpr float kUrlBarDistance = 2.4;
+static constexpr float kUrlBarWidthDMM = 0.672f;
+static constexpr float kUrlBarHeightDMM = 0.088f;
+static constexpr float kUrlBarDistance = 2.4f;
 static constexpr float kUrlBarWidth = kUrlBarWidthDMM * kUrlBarDistance;
 static constexpr float kUrlBarHeight = kUrlBarHeightDMM * kUrlBarDistance;
-static constexpr float kUrlBarVerticalOffset = -0.516 * kUrlBarDistance;
-static constexpr float kUrlBarRotationRad = -0.175;
+static constexpr float kUrlBarVerticalOffset = -0.516f * kUrlBarDistance;
+static constexpr float kUrlBarRotationRad = -0.175f;
 
-static constexpr float kIndicatorHeight = 0.08;
-static constexpr float kIndicatorGap = 0.05;
-static constexpr float kIndicatorVerticalOffset = 0.1;
-static constexpr float kIndicatorDistanceOffset = 0.1;
+static constexpr float kIndicatorHeight = 0.08f;
+static constexpr float kIndicatorGap = 0.05f;
+static constexpr float kIndicatorVerticalOffset = 0.1f;
+static constexpr float kIndicatorDistanceOffset = 0.1f;
 
-static constexpr float kTransientUrlBarDistance = 1.4;
+static constexpr float kTransientUrlBarDistance = 1.4f;
 static constexpr float kTransientUrlBarWidth =
     kUrlBarWidthDMM * kTransientUrlBarDistance;
 static constexpr float kTransientUrlBarHeight =
     kUrlBarHeightDMM * kTransientUrlBarDistance;
 static constexpr float kTransientUrlBarVerticalOffset =
-    -0.2 * kTransientUrlBarDistance;
+    -0.2f * kTransientUrlBarDistance;
 static constexpr int kTransientUrlBarTimeoutSeconds = 6;
 
-static constexpr float kWebVrToastDistance = 1.0;
+static constexpr float kWebVrToastDistance = 1.0f;
 static constexpr float kFullscreenToastDistance = kFullscreenDistance;
-static constexpr float kToastWidthDMM = 0.512;
-static constexpr float kToastHeightDMM = 0.064;
-static constexpr float kToastOffsetDMM = 0.004;
+static constexpr float kToastWidthDMM = 0.512f;
+static constexpr float kToastHeightDMM = 0.064f;
+static constexpr float kToastOffsetDMM = 0.004f;
 // When changing the value here, make sure it doesn't collide with
 // kWarningAngleRadians.
-static constexpr float kWebVrAngleRadians = 9.88 * M_PI / 180.0;
+static constexpr float kWebVrAngleRadians =
+    9.88f * static_cast<float>(M_PI) / 180.0f;
 static constexpr int kToastTimeoutSeconds = kTransientUrlBarTimeoutSeconds;
 
-static constexpr float kSplashScreenDistance = 2.5;
-static constexpr float kSplashScreenIconSize = 0.405;
-static constexpr float kSplashScreenIconVerticalOffset = -0.18;
+static constexpr float kSplashScreenDistance = 2.5f;
+static constexpr float kSplashScreenIconSize = 0.405f;
+static constexpr float kSplashScreenIconVerticalOffset = -0.18f;
 
-static constexpr float kCloseButtonDistance = 2.4;
+static constexpr float kCloseButtonDistance = 2.4f;
 static constexpr float kCloseButtonHeight =
     kUrlBarHeightDMM * kCloseButtonDistance;
 static constexpr float kCloseButtonWidth =
     kUrlBarHeightDMM * kCloseButtonDistance;
-static constexpr float kCloseButtonFullscreenDistance = 2.9;
+static constexpr float kCloseButtonFullscreenDistance = 2.9f;
 static constexpr float kCloseButtonFullscreenHeight =
     kUrlBarHeightDMM * kCloseButtonFullscreenDistance;
 static constexpr float kCloseButtonFullscreenWidth =
     kUrlBarHeightDMM * kCloseButtonFullscreenDistance;
 
-static constexpr float kLoadingIndicatorWidth = 0.24 * kUrlBarDistance;
-static constexpr float kLoadingIndicatorHeight = 0.008 * kUrlBarDistance;
+static constexpr float kLoadingIndicatorWidth = 0.24f * kUrlBarDistance;
+static constexpr float kLoadingIndicatorHeight = 0.008f * kUrlBarDistance;
 static constexpr float kLoadingIndicatorVerticalOffset =
     (-kUrlBarVerticalOffset + kContentVerticalOffset - kContentHeight / 2 -
      kUrlBarHeight / 2) /
@@ -121,12 +125,12 @@ static constexpr float kLoadingIndicatorVerticalOffset =
 static constexpr float kLoadingIndicatorDepthOffset =
     (kUrlBarDistance - kContentDistance) / 2;
 
-static constexpr float kSceneSize = 25.0;
-static constexpr float kSceneHeight = 4.0;
+static constexpr float kSceneSize = 25.0f;
+static constexpr float kSceneHeight = 4.0f;
 static constexpr int kFloorGridlineCount = 40;
 
 // Tiny distance to offset textures that should appear in the same plane.
-static constexpr float kTextureOffset = 0.01;
+static constexpr float kTextureOffset = 0.01f;
 
 }  // namespace
 
@@ -315,7 +319,7 @@ void UiSceneManager::CreateBackground() {
   element->set_id(AllocateId());
   element->SetSize(kSceneSize, kSceneSize);
   element->SetTranslate(0.0, -kSceneHeight / 2, 0.0);
-  element->SetRotate(1, 0, 0, -M_PI_2);
+  element->SetRotate(1, 0, 0, -static_cast<float>(M_PI_2));
   element->set_fill(vr::Fill::GRID_GRADIENT);
   element->set_draw_phase(0);
   element->set_gridline_count(kFloorGridlineCount);
@@ -329,7 +333,7 @@ void UiSceneManager::CreateBackground() {
   element->set_id(AllocateId());
   element->SetSize(kSceneSize, kSceneSize);
   element->SetTranslate(0.0, kSceneHeight / 2, 0.0);
-  element->SetRotate(1, 0, 0, M_PI_2);
+  element->SetRotate(1, 0, 0, static_cast<float>(M_PI_2));
   element->set_fill(vr::Fill::OPAQUE_GRADIENT);
   element->set_draw_phase(0);
   ceiling_ = element.get();
@@ -393,7 +397,7 @@ void UiSceneManager::CreateCloseButton() {
   element->set_debug_id(kCloseButton);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
+  element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3f,
                         -kCloseButtonDistance);
   element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
   close_button_ = element.get();
@@ -529,7 +533,7 @@ void UiSceneManager::ConfigureScene() {
                                 -kFullscreenDistance);
     main_content_->SetSize(kFullscreenWidth, kFullscreenHeight);
     close_button_->SetTranslate(
-        0, kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35,
+        0, kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35f,
         -kCloseButtonFullscreenDistance);
     close_button_->SetSize(kCloseButtonFullscreenWidth,
                            kCloseButtonFullscreenHeight);
@@ -538,7 +542,7 @@ void UiSceneManager::ConfigureScene() {
     main_content_->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
     main_content_->SetSize(kContentWidth, kContentHeight);
     close_button_->SetTranslate(
-        0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
+        0, kContentVerticalOffset - (kContentHeight / 2) - 0.3f,
         -kCloseButtonDistance);
     close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
   }

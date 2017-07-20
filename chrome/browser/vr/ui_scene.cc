@@ -30,6 +30,7 @@ void ApplyAnchoring(const UiElement& parent,
       x_offset = 0.5f * parent.size().width();
       break;
     case XNONE:
+    default:
       x_offset = 0.0f;
       break;
   }
@@ -42,6 +43,7 @@ void ApplyAnchoring(const UiElement& parent,
       y_offset = -0.5f * parent.size().height();
       break;
     case YNONE:
+    default:
       y_offset = 0.0f;
       break;
   }

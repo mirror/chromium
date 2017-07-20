@@ -48,7 +48,7 @@ class CachedFont {
     uint16_t glyph_id;
     paint_.textToGlyphs(&character, sizeof(UChar32), &glyph_id);
     supported = glyph_id ? KNOWN : UNKNOWN;
-    return glyph_id;
+    return supported == KNOWN;
   }
   std::string GetFontName() { return name_; }
 
@@ -126,6 +126,9 @@ base::LazyInstance<CachedFontSet>::Leaky g_cached_font_set =
     LAZY_INSTANCE_INITIALIZER;
 
 bool FontSupportsChar(const gfx::Font& font, UChar32 c) {
+#if defined(OS_WIN)
+  return true;  // TODO: make sure this is actually implemented for Windows.
+#else
   sk_sp<SkTypeface> typeface =
       static_cast<gfx::PlatformFontLinux*>(font.platform_font())->typeface();
   std::unique_ptr<CachedFont>& cached_font =
@@ -133,6 +136,7 @@ bool FontSupportsChar(const gfx::Font& font, UChar32 c) {
   if (!cached_font)
     cached_font = CachedFont::CreateForTypeface(std::move(typeface));
   return cached_font->HasGlyphForCharacter(c);
+#endif
 }
 
 }  // namespace

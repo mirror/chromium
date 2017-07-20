@@ -14,7 +14,7 @@
 namespace vr {
 
 TexturedElement::TexturedElement(int maximum_width)
-    : texture_handle_(-1), maximum_width_(maximum_width) {}
+    : texture_handle_(unsigned(-1)), maximum_width_(maximum_width) {}
 
 TexturedElement::~TexturedElement() = default;
 
