@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4031eeb3_df66e1ff",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T10:23:17Z",
+      "side": 1,
+      "message": "It does make me a little sad that we need to go and manually fill out all these non-optional struct fields manually... kind of seems like the default ctor should do that.\n\nEspecially since the mojo generator already knows that these are non-optional. But maybe it\u0027s too complicated to do that...\n\n(Obviously out of scope of this CL)",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 73
+      },
+      "revId": "460f48043d0884de01da0bf549bf098bd6bd6c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a6eac7_e5654078",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 9
