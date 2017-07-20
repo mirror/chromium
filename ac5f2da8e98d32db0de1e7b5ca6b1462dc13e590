@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ba6955_f822be45",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:20:43Z",
+      "side": 1,
+      "message": "null or nullptr",
+      "revId": "ac5f2da8e98d32db0de1e7b5ca6b1462dc13e590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a56087_29094e56",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:20:43Z",
+      "side": 1,
+      "message": "Deprecated and will become non-overridable.",
+      "revId": "ac5f2da8e98d32db0de1e7b5ca6b1462dc13e590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1393aab_1938ad46",
+        "filename": "ui/wm/core/easy_resize_window_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-20T02:20:43Z",
+      "side": 1,
+      "message": "Making it private does not prevent subclasses from overriding, I think. You need to mark it as final (i.e. use the \u0027final\u0027 keyword instead of \u0027override\u0027 here).",
+      "revId": "ac5f2da8e98d32db0de1e7b5ca6b1462dc13e590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
