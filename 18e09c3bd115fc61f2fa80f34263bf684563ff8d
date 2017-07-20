@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7f001b4_b39a0da9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T16:42:57Z",
+      "side": 1,
+      "message": "nit: What prevents?",
+      "range": {
+        "startLine": 11,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "18e09c3bd115fc61f2fa80f34263bf684563ff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c449f67_6bffdfd4",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T16:42:57Z",
+      "side": 1,
+      "message": "I asked Charles and he said yes, we can remove it.",
+      "revId": "18e09c3bd115fc61f2fa80f34263bf684563ff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80557d91_9a223078",
         "filename": "net/dns/host_resolver_impl.cc",
         "patchSetId": 2
@@ -22,6 +62,30 @@
       "revId": "18e09c3bd115fc61f2fa80f34263bf684563ff8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabc1cd0_1e51b945",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T16:42:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80557d91_9a223078",
+      "range": {
+        "startLine": 1972,
+        "startChar": 17,
+        "endLine": 1972,
+        "endChar": 0
+      },
+      "revId": "18e09c3bd115fc61f2fa80f34263bf684563ff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
