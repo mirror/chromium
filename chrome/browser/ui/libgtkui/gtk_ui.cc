@@ -384,6 +384,7 @@ SkColor GetToolbarTopSeparatorColor(SkColor header_fg,
 
 }  // namespace
 
+__attribute__((no_sanitize("cfi-icall")))
 GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
 #if GTK_MAJOR_VERSION > 2
   // Force Gtk to use Xwayland if it would have used wayland.  libgtkui assumes

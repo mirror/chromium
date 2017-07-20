@@ -13,9 +13,9 @@ void RefcountedBrowserContextKeyedServiceFactory::SetTestingFactory(
     content::BrowserContext* context,
     TestingFactoryFunction testing_factory) {
   RefcountedKeyedServiceFactory::SetTestingFactory(
-      context,
-      reinterpret_cast<RefcountedKeyedServiceFactory::TestingFactoryFunction>(
-          testing_factory));
+      context, [=](base::SupportsUserData* context) {
+        return testing_factory(static_cast<content::BrowserContext*>(context));
+      });
 }
 
 scoped_refptr<RefcountedKeyedService>
@@ -23,9 +23,9 @@ RefcountedBrowserContextKeyedServiceFactory::SetTestingFactoryAndUse(
     content::BrowserContext* context,
     TestingFactoryFunction testing_factory) {
   return RefcountedKeyedServiceFactory::SetTestingFactoryAndUse(
-      context,
-      reinterpret_cast<RefcountedKeyedServiceFactory::TestingFactoryFunction>(
-          testing_factory));
+      context, [=](base::SupportsUserData* context) {
+        return testing_factory(static_cast<content::BrowserContext*>(context));
+      });
 }
 
 RefcountedBrowserContextKeyedServiceFactory::

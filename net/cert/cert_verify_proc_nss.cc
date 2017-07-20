@@ -762,6 +762,7 @@ bool CertVerifyProcNSS::SupportsOCSPStapling() const {
   return cache_ocsp_response_from_side_channel_;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 int CertVerifyProcNSS::VerifyInternalImpl(
     X509Certificate* cert,
     const std::string& hostname,

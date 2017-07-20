@@ -1,0 +1,411 @@
+diff --git a/crypto/asn1/a_d2i_fp.c b/crypto/asn1/a_d2i_fp.c
+index 3da6df9b..a7ad01b1 100644
+--- a/crypto/asn1/a_d2i_fp.c
++++ b/crypto/asn1/a_d2i_fp.c
+@@ -83,6 +83,7 @@ void *ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
+ }
+ # endif
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ void *ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
+ {
+     BUF_MEM *b = NULL;
+diff --git a/crypto/asn1/a_i2d_fp.c b/crypto/asn1/a_i2d_fp.c
+index 486207ed..1f887448 100644
+--- a/crypto/asn1/a_i2d_fp.c
++++ b/crypto/asn1/a_i2d_fp.c
+@@ -74,6 +74,7 @@ int ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x)
+     return (ret);
+ }
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ int ASN1_i2d_bio(i2d_of_void *i2d, BIO *out, void *x)
+ {
+     char *b;
+diff --git a/crypto/bio/bio.c b/crypto/bio/bio.c
+index 5cab843b..881eb3eb 100644
+--- a/crypto/bio/bio.c
++++ b/crypto/bio/bio.c
+@@ -127,22 +127,9 @@ void BIO_free_all(BIO *bio) {
+   BIO_free(bio);
+ }
+ 
+-static int bio_io(BIO *bio, void *buf, int len, size_t method_offset,
+-                  int callback_flags, size_t *num) {
++static int bio_io(BIO *bio, void *buf, int len, int callback_flags,
++                  size_t *num) {
+   int i;
+-  typedef int (*io_func_t)(BIO *, char *, int);
+-  io_func_t io_func = NULL;
+-
+-  if (bio != NULL && bio->method != NULL) {
+-    io_func =
+-        *((const io_func_t *)(((const uint8_t *)bio->method) + method_offset));
+-  }
+-
+-  if (io_func == NULL) {
+-    OPENSSL_PUT_ERROR(BIO, BIO_R_UNSUPPORTED_METHOD);
+-    return -2;
+-  }
+-
+   if (bio->callback != NULL) {
+     i = (int) bio->callback(bio, callback_flags, buf, len, 0L, 1L);
+     if (i <= 0) {
+@@ -157,7 +144,17 @@ static int bio_io(BIO *bio, void *buf, int len, size_t method_offset,
+ 
+   i = 0;
+   if (buf != NULL && len > 0) {
+-    i = io_func(bio, buf, len);
++    switch (callback_flags) {
++      case BIO_CB_READ:
++        i = bio->method->bread(bio, buf, len);
++        break;
++      case BIO_CB_WRITE:
++        i = bio->method->bwrite(bio, buf, len);
++        break;
++      case BIO_CB_GETS:
++        i = bio->method->bgets(bio, buf, len);
++        break;
++    }
+   }
+ 
+   if (i > 0) {
+@@ -173,18 +170,27 @@ static int bio_io(BIO *bio, void *buf, int len, size_t method_offset,
+ }
+ 
+ int BIO_read(BIO *bio, void *buf, int len) {
+-  return bio_io(bio, buf, len, offsetof(BIO_METHOD, bread), BIO_CB_READ,
+-                &bio->num_read);
++  if (bio == NULL || bio->method == NULL || bio->method->bread == NULL) {
++    OPENSSL_PUT_ERROR(BIO, BIO_R_UNSUPPORTED_METHOD);
++    return -2;
++  }
++  return bio_io(bio, buf, len, BIO_CB_READ, &bio->num_read);
+ }
+ 
+ int BIO_gets(BIO *bio, char *buf, int len) {
+-  return bio_io(bio, buf, len, offsetof(BIO_METHOD, bgets), BIO_CB_GETS,
+-                &bio->num_read);
++  if (bio == NULL || bio->method == NULL || bio->method->bgets == NULL) {
++    OPENSSL_PUT_ERROR(BIO, BIO_R_UNSUPPORTED_METHOD);
++    return -2;
++  }
++  return bio_io(bio, buf, len, BIO_CB_GETS, &bio->num_read);
+ }
+ 
+ int BIO_write(BIO *bio, const void *in, int inl) {
+-  return bio_io(bio, (char *)in, inl, offsetof(BIO_METHOD, bwrite),
+-                BIO_CB_WRITE, &bio->num_write);
++  if (bio == NULL || bio->method == NULL || bio->method->bwrite == NULL) {
++    OPENSSL_PUT_ERROR(BIO, BIO_R_UNSUPPORTED_METHOD);
++    return -2;
++  }
++  return bio_io(bio, (char *)in, inl, BIO_CB_WRITE, &bio->num_write);
+ }
+ 
+ int BIO_puts(BIO *bio, const char *in) {
+diff --git a/crypto/cipher_extra/tls_cbc.c b/crypto/cipher_extra/tls_cbc.c
+index 2372c5c0..399b7784 100644
+--- a/crypto/cipher_extra/tls_cbc.c
++++ b/crypto/cipher_extra/tls_cbc.c
+@@ -262,6 +262,7 @@ int EVP_tls_cbc_record_digest_supported(const EVP_MD *md) {
+   }
+ }
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ int EVP_tls_cbc_digest_record(const EVP_MD *md, uint8_t *md_out,
+                               size_t *md_out_size, const uint8_t header[13],
+                               const uint8_t *data, size_t data_plus_mac_size,
+diff --git a/crypto/fipsmodule/aes/mode_wrappers.c b/crypto/fipsmodule/aes/mode_wrappers.c
+index 4929920f..0f8c6faf 100644
+--- a/crypto/fipsmodule/aes/mode_wrappers.c
++++ b/crypto/fipsmodule/aes/mode_wrappers.c
+@@ -57,7 +57,7 @@ void AES_ctr128_encrypt(const uint8_t *in, uint8_t *out, size_t len,
+                         const AES_KEY *key, uint8_t ivec[AES_BLOCK_SIZE],
+                         uint8_t ecount_buf[AES_BLOCK_SIZE], unsigned int *num) {
+   CRYPTO_ctr128_encrypt(in, out, len, key, ivec, ecount_buf, num,
+-                        (block128_f)AES_encrypt);
++                        AES_encrypt);
+ }
+ 
+ void AES_ecb_encrypt(const uint8_t *in, uint8_t *out, const AES_KEY *key,
+@@ -78,9 +78,9 @@ void AES_cbc_encrypt(const uint8_t *in, uint8_t *out, size_t len,
+                      const AES_KEY *key, uint8_t *ivec, const int enc) {
+ 
+   if (enc) {
+-    CRYPTO_cbc128_encrypt(in, out, len, key, ivec, (block128_f)AES_encrypt);
++    CRYPTO_cbc128_encrypt(in, out, len, key, ivec, AES_encrypt);
+   } else {
+-    CRYPTO_cbc128_decrypt(in, out, len, key, ivec, (block128_f)AES_decrypt);
++    CRYPTO_cbc128_decrypt(in, out, len, key, ivec, AES_decrypt);
+   }
+ }
+ #else
+@@ -98,7 +98,7 @@ void AES_ofb128_encrypt(const uint8_t *in, uint8_t *out, size_t length,
+                         const AES_KEY *key, uint8_t *ivec, int *num) {
+   unsigned num_u = (unsigned)(*num);
+   CRYPTO_ofb128_encrypt(in, out, length, key, ivec, &num_u,
+-                        (block128_f)AES_encrypt);
++                        AES_encrypt);
+   *num = (int)num_u;
+ }
+ 
+@@ -107,6 +107,6 @@ void AES_cfb128_encrypt(const uint8_t *in, uint8_t *out, size_t length,
+                         int enc) {
+   unsigned num_u = (unsigned)(*num);
+   CRYPTO_cfb128_encrypt(in, out, length, key, ivec, &num_u, enc,
+-                        (block128_f)AES_encrypt);
++                        AES_encrypt);
+   *num = (int)num_u;
+ }
+diff --git a/crypto/fipsmodule/cipher/e_aes.c b/crypto/fipsmodule/cipher/e_aes.c
+index 7c7521b4..58161bbf 100644
+--- a/crypto/fipsmodule/cipher/e_aes.c
++++ b/crypto/fipsmodule/cipher/e_aes.c
+@@ -229,29 +229,29 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const uint8_t *key,
+   if ((mode == EVP_CIPH_ECB_MODE || mode == EVP_CIPH_CBC_MODE) && !enc) {
+     if (hwaes_capable()) {
+       ret = aes_hw_set_decrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-      dat->block = (block128_f)aes_hw_decrypt;
++      dat->block = aes_hw_decrypt;
+       dat->stream.cbc = NULL;
+       if (mode == EVP_CIPH_CBC_MODE) {
+         dat->stream.cbc = (cbc128_f)aes_hw_cbc_encrypt;
+       }
+     } else if (bsaes_capable() && mode == EVP_CIPH_CBC_MODE) {
+       ret = AES_set_decrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-      dat->block = (block128_f)AES_decrypt;
++      dat->block = AES_decrypt;
+       dat->stream.cbc = (cbc128_f)bsaes_cbc_encrypt;
+     } else if (vpaes_capable()) {
+       ret = vpaes_set_decrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-      dat->block = (block128_f)vpaes_decrypt;
++      dat->block = vpaes_decrypt;
+       dat->stream.cbc =
+           mode == EVP_CIPH_CBC_MODE ? (cbc128_f)vpaes_cbc_encrypt : NULL;
+     } else {
+       ret = AES_set_decrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-      dat->block = (block128_f)AES_decrypt;
++      dat->block = AES_decrypt;
+       dat->stream.cbc =
+           mode == EVP_CIPH_CBC_MODE ? (cbc128_f)AES_cbc_encrypt : NULL;
+     }
+   } else if (hwaes_capable()) {
+     ret = aes_hw_set_encrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-    dat->block = (block128_f)aes_hw_encrypt;
++    dat->block = aes_hw_encrypt;
+     dat->stream.cbc = NULL;
+     if (mode == EVP_CIPH_CBC_MODE) {
+       dat->stream.cbc = (cbc128_f)aes_hw_cbc_encrypt;
+@@ -260,16 +260,16 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const uint8_t *key,
+     }
+   } else if (bsaes_capable() && mode == EVP_CIPH_CTR_MODE) {
+     ret = AES_set_encrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-    dat->block = (block128_f)AES_encrypt;
++    dat->block = AES_encrypt;
+     dat->stream.ctr = (ctr128_f)bsaes_ctr32_encrypt_blocks;
+   } else if (vpaes_capable()) {
+     ret = vpaes_set_encrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-    dat->block = (block128_f)vpaes_encrypt;
++    dat->block = vpaes_encrypt;
+     dat->stream.cbc =
+         mode == EVP_CIPH_CBC_MODE ? (cbc128_f)vpaes_cbc_encrypt : NULL;
+   } else {
+     ret = AES_set_encrypt_key(key, ctx->key_len * 8, &dat->ks.ks);
+-    dat->block = (block128_f)AES_encrypt;
++    dat->block = AES_encrypt;
+     dat->stream.cbc =
+         mode == EVP_CIPH_CBC_MODE ? (cbc128_f)AES_cbc_encrypt : NULL;
+   }
+@@ -308,7 +308,7 @@ static int aes_ecb_cipher(EVP_CIPHER_CTX *ctx, uint8_t *out, const uint8_t *in,
+ 
+   len -= bl;
+   for (size_t i = 0; i <= len; i += bl) {
+-    (*dat->block)(in + i, out + i, &dat->ks);
++    (*dat->block)(in + i, out + i, &dat->ks.ks);
+   }
+ 
+   return 1;
+@@ -344,10 +344,10 @@ ctr128_f aes_ctr_set_key(AES_KEY *aes_key, GCM128_CONTEXT *gcm_ctx,
+   if (aesni_capable()) {
+     aesni_set_encrypt_key(key, key_bytes * 8, aes_key);
+     if (gcm_ctx != NULL) {
+-      CRYPTO_gcm128_init(gcm_ctx, aes_key, (block128_f)aesni_encrypt, 1);
++      CRYPTO_gcm128_init(gcm_ctx, aes_key, aesni_encrypt, 1);
+     }
+     if (out_block) {
+-      *out_block = (block128_f) aesni_encrypt;
++      *out_block = aesni_encrypt;
+     }
+     return (ctr128_f)aesni_ctr32_encrypt_blocks;
+   }
+@@ -355,10 +355,10 @@ ctr128_f aes_ctr_set_key(AES_KEY *aes_key, GCM128_CONTEXT *gcm_ctx,
+   if (hwaes_capable()) {
+     aes_hw_set_encrypt_key(key, key_bytes * 8, aes_key);
+     if (gcm_ctx != NULL) {
+-      CRYPTO_gcm128_init(gcm_ctx, aes_key, (block128_f)aes_hw_encrypt, 0);
++      CRYPTO_gcm128_init(gcm_ctx, aes_key, aes_hw_encrypt, 0);
+     }
+     if (out_block) {
+-      *out_block = (block128_f) aes_hw_encrypt;
++      *out_block = aes_hw_encrypt;
+     }
+     return (ctr128_f)aes_hw_ctr32_encrypt_blocks;
+   }
+@@ -366,10 +366,10 @@ ctr128_f aes_ctr_set_key(AES_KEY *aes_key, GCM128_CONTEXT *gcm_ctx,
+   if (bsaes_capable()) {
+     AES_set_encrypt_key(key, key_bytes * 8, aes_key);
+     if (gcm_ctx != NULL) {
+-      CRYPTO_gcm128_init(gcm_ctx, aes_key, (block128_f)AES_encrypt, 0);
++      CRYPTO_gcm128_init(gcm_ctx, aes_key, AES_encrypt, 0);
+     }
+     if (out_block) {
+-      *out_block = (block128_f) AES_encrypt;
++      *out_block = AES_encrypt;
+     }
+     return (ctr128_f)bsaes_ctr32_encrypt_blocks;
+   }
+@@ -377,20 +377,20 @@ ctr128_f aes_ctr_set_key(AES_KEY *aes_key, GCM128_CONTEXT *gcm_ctx,
+   if (vpaes_capable()) {
+     vpaes_set_encrypt_key(key, key_bytes * 8, aes_key);
+     if (out_block) {
+-      *out_block = (block128_f) vpaes_encrypt;
++      *out_block = vpaes_encrypt;
+     }
+     if (gcm_ctx != NULL) {
+-      CRYPTO_gcm128_init(gcm_ctx, aes_key, (block128_f)vpaes_encrypt, 0);
++      CRYPTO_gcm128_init(gcm_ctx, aes_key, vpaes_encrypt, 0);
+     }
+     return NULL;
+   }
+ 
+   AES_set_encrypt_key(key, key_bytes * 8, aes_key);
+   if (gcm_ctx != NULL) {
+-    CRYPTO_gcm128_init(gcm_ctx, aes_key, (block128_f)AES_encrypt, 0);
++    CRYPTO_gcm128_init(gcm_ctx, aes_key, AES_encrypt, 0);
+   }
+   if (out_block) {
+-    *out_block = (block128_f) AES_encrypt;
++    *out_block = AES_encrypt;
+   }
+   return NULL;
+ }
+@@ -827,12 +827,12 @@ static int aesni_init_key(EVP_CIPHER_CTX *ctx, const uint8_t *key,
+   mode = ctx->cipher->flags & EVP_CIPH_MODE_MASK;
+   if ((mode == EVP_CIPH_ECB_MODE || mode == EVP_CIPH_CBC_MODE) && !enc) {
+     ret = aesni_set_decrypt_key(key, ctx->key_len * 8, ctx->cipher_data);
+-    dat->block = (block128_f)aesni_decrypt;
++    dat->block = aesni_decrypt;
+     dat->stream.cbc =
+         mode == EVP_CIPH_CBC_MODE ? (cbc128_f)aesni_cbc_encrypt : NULL;
+   } else {
+     ret = aesni_set_encrypt_key(key, ctx->key_len * 8, ctx->cipher_data);
+-    dat->block = (block128_f)aesni_encrypt;
++    dat->block = aesni_encrypt;
+     if (mode == EVP_CIPH_CBC_MODE) {
+       dat->stream.cbc = (cbc128_f)aesni_cbc_encrypt;
+     } else if (mode == EVP_CIPH_CTR_MODE) {
+@@ -878,7 +878,7 @@ static int aesni_gcm_init_key(EVP_CIPHER_CTX *ctx, const uint8_t *key,
+   }
+   if (key) {
+     aesni_set_encrypt_key(key, ctx->key_len * 8, &gctx->ks.ks);
+-    CRYPTO_gcm128_init(&gctx->gcm, &gctx->ks, (block128_f)aesni_encrypt, 1);
++    CRYPTO_gcm128_init(&gctx->gcm, &gctx->ks, aesni_encrypt, 1);
+     gctx->ctr = (ctr128_f)aesni_ctr32_encrypt_blocks;
+     /* If we have an iv can set it directly, otherwise use
+      * saved IV. */
+diff --git a/crypto/fipsmodule/modes/gcm_test.cc b/crypto/fipsmodule/modes/gcm_test.cc
+index bfd42759..0d46f32f 100644
+--- a/crypto/fipsmodule/modes/gcm_test.cc
++++ b/crypto/fipsmodule/modes/gcm_test.cc
+@@ -87,7 +87,7 @@ TEST(GCMTest, TestVectors) {
+     ASSERT_EQ(0, AES_set_encrypt_key(key.data(), key.size() * 8, &aes_key));
+ 
+     GCM128_CONTEXT ctx;
+-    CRYPTO_gcm128_init(&ctx, &aes_key, (block128_f)AES_encrypt, 0);
++    CRYPTO_gcm128_init(&ctx, &aes_key, AES_encrypt, 0);
+     CRYPTO_gcm128_setiv(&ctx, &aes_key, nonce.data(), nonce.size());
+     if (!additional_data.empty()) {
+       CRYPTO_gcm128_aad(&ctx, additional_data.data(), additional_data.size());
+diff --git a/crypto/fipsmodule/modes/internal.h b/crypto/fipsmodule/modes/internal.h
+index 227f704b..0575f336 100644
+--- a/crypto/fipsmodule/modes/internal.h
++++ b/crypto/fipsmodule/modes/internal.h
+@@ -110,8 +110,9 @@ static inline void PUTU32(void *out, uint32_t v) {
+ }
+ 
+ /* block128_f is the type of a 128-bit, block cipher. */
++struct aes_key_st;
+ typedef void (*block128_f)(const uint8_t in[16], uint8_t out[16],
+-                           const void *key);
++                           const struct aes_key_st *key);
+ 
+ /* GCM definitions */
+ typedef struct { uint64_t hi,lo; } u128;
+diff --git a/crypto/lhash/lhash.c b/crypto/lhash/lhash.c
+index 27960d98..80faa5a1 100644
+--- a/crypto/lhash/lhash.c
++++ b/crypto/lhash/lhash.c
+@@ -119,6 +119,7 @@ size_t lh_num_items(const _LHASH *lh) { return lh->num_items; }
+  * element of the previous item in the chain. If an element equal to |data| is
+  * not found, it returns a pointer that points to a NULL pointer. If |out_hash|
+  * is not NULL, then it also puts the hash value of |data| in |*out_hash|. */
++__attribute__((no_sanitize("cfi-icall")))
+ static LHASH_ITEM **get_next_ptr_and_hash(const _LHASH *lh, uint32_t *out_hash,
+                                           const void *data) {
+   const uint32_t hash = lh->hash(data);
+diff --git a/crypto/pem/pem_lib.c b/crypto/pem/pem_lib.c
+index 8b7932e4..6eacfc60 100644
+--- a/crypto/pem/pem_lib.c
++++ b/crypto/pem/pem_lib.c
+@@ -251,6 +251,7 @@ int PEM_ASN1_write(i2d_of_void *i2d, const char *name, FILE *fp,
+ }
+ #endif
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ int PEM_ASN1_write_bio(i2d_of_void *i2d, const char *name, BIO *bp,
+                        void *x, const EVP_CIPHER *enc, unsigned char *kstr,
+                        int klen, pem_password_cb *callback, void *u)
+diff --git a/crypto/stack/stack.c b/crypto/stack/stack.c
+index f78209d5..8a7258f5 100644
+--- a/crypto/stack/stack.c
++++ b/crypto/stack/stack.c
+@@ -133,6 +133,7 @@ void sk_free(_STACK *sk) {
+   OPENSSL_free(sk);
+ }
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ void sk_pop_free(_STACK *sk, void (*func)(void *)) {
+   if (sk == NULL) {
+     return;
+@@ -353,6 +354,7 @@ stack_cmp_func sk_set_cmp_func(_STACK *sk, stack_cmp_func comp) {
+   return old;
+ }
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ _STACK *sk_deep_copy(const _STACK *sk, void *(*copy_func)(void *),
+                      void (*free_func)(void *)) {
+   _STACK *ret = sk_dup(sk);
+diff --git a/decrepit/xts/xts.c b/decrepit/xts/xts.c
+index b0eb5720..5c1b3460 100644
+--- a/decrepit/xts/xts.c
++++ b/decrepit/xts/xts.c
+@@ -186,15 +186,15 @@ static int aes_xts_init_key(EVP_CIPHER_CTX *ctx, const uint8_t *key,
+     /* key_len is two AES keys */
+     if (enc) {
+       AES_set_encrypt_key(key, ctx->key_len * 4, &xctx->ks1.ks);
+-      xctx->xts.block1 = (block128_f) AES_encrypt;
++      xctx->xts.block1 = AES_encrypt;
+     } else {
+       AES_set_decrypt_key(key, ctx->key_len * 4, &xctx->ks1.ks);
+-      xctx->xts.block1 = (block128_f) AES_decrypt;
++      xctx->xts.block1 = AES_decrypt;
+     }
+ 
+     AES_set_encrypt_key(key + ctx->key_len / 2,
+                         ctx->key_len * 4, &xctx->ks2.ks);
+-    xctx->xts.block2 = (block128_f) AES_encrypt;
++    xctx->xts.block2 = AES_encrypt;
+     xctx->xts.key1 = &xctx->ks1;
+   }
+ 

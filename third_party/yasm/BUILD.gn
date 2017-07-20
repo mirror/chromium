@@ -234,6 +234,7 @@ if (current_toolchain == host_toolchain) {
       cflags = [
         # reg3264type in x86expr.c is unused.
         "-Wno-unused-local-typedef",
+        "-fno-sanitize=cfi-icall",
       ]
     } else if (is_linux) {
       cflags = [

@@ -41,7 +41,7 @@ PPP_Instance_Private_Proxy::PPP_Instance_Private_Proxy(Dispatcher* dispatcher)
       ppp_instance_private_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_instance_private_impl_ = static_cast<const PPP_Instance_Private*>(
-        dispatcher->local_get_interface()(PPP_INSTANCE_PRIVATE_INTERFACE));
+        dispatcher->local_get_interface(PPP_INSTANCE_PRIVATE_INTERFACE));
   }
 }
 

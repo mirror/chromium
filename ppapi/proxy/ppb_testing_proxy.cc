@@ -177,7 +177,7 @@ PPB_Testing_Proxy::PPB_Testing_Proxy(Dispatcher* dispatcher)
       ppb_testing_impl_(NULL) {
   if (!dispatcher->IsPlugin()) {
     ppb_testing_impl_ = static_cast<const PPB_Testing_Private*>(
-        dispatcher->local_get_interface()(PPB_TESTING_PRIVATE_INTERFACE));
+        dispatcher->local_get_interface(PPB_TESTING_PRIVATE_INTERFACE));
   }
 }
 

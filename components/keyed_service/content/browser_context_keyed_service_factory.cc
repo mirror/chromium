@@ -16,18 +16,18 @@ void BrowserContextKeyedServiceFactory::SetTestingFactory(
     content::BrowserContext* context,
     TestingFactoryFunction testing_factory) {
   KeyedServiceFactory::SetTestingFactory(
-      context,
-      reinterpret_cast<KeyedServiceFactory::TestingFactoryFunction>(
-          testing_factory));
+      context, [=](base::SupportsUserData* context) {
+        return testing_factory(static_cast<content::BrowserContext*>(context));
+      });
 }
 
 KeyedService* BrowserContextKeyedServiceFactory::SetTestingFactoryAndUse(
     content::BrowserContext* context,
     TestingFactoryFunction testing_factory) {
   return KeyedServiceFactory::SetTestingFactoryAndUse(
-      context,
-      reinterpret_cast<KeyedServiceFactory::TestingFactoryFunction>(
-          testing_factory));
+      context, [=](base::SupportsUserData* context) {
+        return testing_factory(static_cast<content::BrowserContext*>(context));
+      });
 }
 
 BrowserContextKeyedServiceFactory::BrowserContextKeyedServiceFactory(

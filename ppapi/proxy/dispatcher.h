@@ -70,8 +70,9 @@ class PPAPI_PROXY_EXPORT Dispatcher : public ProxyChannel {
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
 
-  PP_GetInterface_Func local_get_interface() const {
-    return local_get_interface_;
+  NO_SANITIZE("cfi-icall")
+  const void *local_get_interface(const char *interface_name) const {
+    return local_get_interface_(interface_name);
   }
 
   const PpapiPermissions& permissions() const { return permissions_; }

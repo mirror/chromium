@@ -219,10 +219,10 @@ static void InitLibcLocaltimeFunctions() {
 // references to localtime() will resolve to this function. Notice that we need
 // to set visibility attribute to "default" to export the symbol, as it is set
 // to "hidden" by default in chrome per build/common.gypi.
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime_override(const time_t* timep) __asm__ ("localtime");
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime_override(const time_t* timep) {
   if (g_am_zygote_or_renderer) {
     static struct tm time_struct;
@@ -243,10 +243,10 @@ struct tm* localtime_override(const time_t* timep) {
 }
 
 // Use same trick to override localtime64(), localtime_r() and localtime64_r().
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime64_override(const time_t* timep) __asm__ ("localtime64");
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime64_override(const time_t* timep) {
   if (g_am_zygote_or_renderer) {
     static struct tm time_struct;
@@ -266,11 +266,11 @@ struct tm* localtime64_override(const time_t* timep) {
   return res;
 }
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime_r_override(const time_t* timep,
                                 struct tm* result) __asm__ ("localtime_r");
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime_r_override(const time_t* timep, struct tm* result) {
   if (g_am_zygote_or_renderer) {
     ProxyLocaltimeCallToBrowser(*timep, result, NULL, 0);
@@ -287,11 +287,11 @@ struct tm* localtime_r_override(const time_t* timep, struct tm* result) {
   return res;
 }
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime64_r_override(const time_t* timep,
                                   struct tm* result) __asm__ ("localtime64_r");
 
-__attribute__ ((__visibility__("default")))
+__attribute__ ((__visibility__("default"), no_sanitize("cfi-icall")))
 struct tm* localtime64_r_override(const time_t* timep, struct tm* result) {
   if (g_am_zygote_or_renderer) {
     ProxyLocaltimeCallToBrowser(*timep, result, NULL, 0);

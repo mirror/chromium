@@ -61,7 +61,7 @@ PPP_Messaging_Proxy::PPP_Messaging_Proxy(Dispatcher* dispatcher)
       ppp_messaging_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_messaging_impl_ = static_cast<const PPP_Messaging*>(
-        dispatcher->local_get_interface()(PPP_MESSAGING_INTERFACE));
+        dispatcher->local_get_interface(PPP_MESSAGING_INTERFACE));
   }
 }
 
