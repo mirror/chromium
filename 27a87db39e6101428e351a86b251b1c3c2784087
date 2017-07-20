@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe26d50_736cf364",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T21:22:21Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment above this line explaining that the keyboard should be hidden when the sheet is closed in case it was showing due to focus any elements in the content.",
+      "range": {
+        "startLine": 110,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 75
+      },
+      "revId": "27a87db39e6101428e351a86b251b1c3c2784087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
