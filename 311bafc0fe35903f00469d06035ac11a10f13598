@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e30caed6_533eb207",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-20T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c80d319_8161fd61",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "311bafc0fe35903f00469d06035ac11a10f13598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "366729b0_b22fb242",
         "filename": "third_party/WebKit/Source/modules/webusb/README.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "311bafc0fe35903f00469d06035ac11a10f13598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8199ca_0a305287",
+        "filename": "third_party/WebKit/Source/modules/webusb/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-20T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "366729b0_b22fb242",
+      "range": {
+        "startLine": 4,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "311bafc0fe35903f00469d06035ac11a10f13598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
