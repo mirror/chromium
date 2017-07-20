@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d59ebf7_5407dc6b",
+        "filename": "ios/chrome/browser/signin/gaia_auth_fetcher_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T10:57:25Z",
+      "side": 1,
+      "message": "I expect that this function will never be called on iOS 11. Consider adding a dcheck here:\nDCHECK(!base::ios::IsRunningOnIOS11OrLater())",
+      "range": {
+        "startLine": 123,
+        "startChar": 19,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "f408cb659478d3de65e3c256d6e4f5462bbdf62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
