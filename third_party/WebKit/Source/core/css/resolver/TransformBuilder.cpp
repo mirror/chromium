@@ -103,24 +103,29 @@ static TransformOperation::OperationType GetTransformOperationType(
 bool TransformBuilder::HasRelativeLengths(const CSSValueList& value_list) {
   for (auto& value : value_list) {
     const CSSFunctionValue* transform_value = ToCSSFunctionValue(value.Get());
+    HasRelativeLengths(*transform_value);
+  }
+  return false;
+}
 
-    for (const CSSValue* item : *transform_value) {
-      const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(*item);
+bool TransformBuilder::HasRelativeLengths(
+    const CSSFunctionValue& function_value) {
+  for (const CSSValue* item : function_value) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(*item);
 
-      if (primitive_value.IsCalculated()) {
-        CSSCalcValue* css_calc_value = primitive_value.CssCalcValue();
-        CSSPrimitiveValue::UnitType resolved_type =
-            css_calc_value->ExpressionNode()->TypeWithCalcResolved();
-        if (CSSPrimitiveValue::IsRelativeUnit(resolved_type) ||
-            resolved_type == CSSPrimitiveValue::UnitType::kUnknown) {
-          return true;
-        }
-      }
-
-      if (CSSPrimitiveValue::IsRelativeUnit(
-              primitive_value.TypeWithCalcResolved())) {
+    if (primitive_value.IsCalculated()) {
+      CSSCalcValue* css_calc_value = primitive_value.CssCalcValue();
+      CSSPrimitiveValue::UnitType resolved_type =
+          css_calc_value->ExpressionNode()->TypeWithCalcResolved();
+      if (CSSPrimitiveValue::IsRelativeUnit(resolved_type) ||
+          resolved_type == CSSPrimitiveValue::UnitType::kUnknown) {
         return true;
       }
+    }
+
+    if (CSSPrimitiveValue::IsRelativeUnit(
+            primitive_value.TypeWithCalcResolved())) {
+      return true;
     }
   }
   return false;
