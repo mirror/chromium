@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "1c4dfd7f_7c194470",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-20T15:25:03Z",
+      "side": 1,
+      "message": "I would use DCHECK here, if I\u0027m understanding the code correctly. DCHECK means \"it should be impossible that this condition is false\": it\u0027s a way of documenting API contracts in code and catching programmer errors. In this case, if I\u0027m reading the code correctly, it\u0027s  impossible that |factory| is null here, so DCHECK would be documenting that fact, since it might not be obvious from reading the code.\n\nIn other words, if were to put a CHECK here, I don\u0027t see why we wouldn\u0027t logically extend that to putting a CHECK before every pointer dereference. I think of CHECKs as for, say, handling unexpected input from the renderer (though it\u0027s preferred to kill the renderer in that case, if possible).",
+      "parentUuid": "0f0c725f_e8dc0284",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc3c54cf_61692241",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
         "patchSetId": 6
