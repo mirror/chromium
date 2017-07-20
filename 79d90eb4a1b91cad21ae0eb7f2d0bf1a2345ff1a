@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f602202b_99e448c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-20T06:48:00Z",
+      "side": 1,
+      "message": "These tests are checking the output of CONSOLE ERROR(WARNING) messages.\nI think these kind of tests shouldn\u0027t be in WPT tests.\n\n\nI\u0027m not in a hurry. I can wait mkwst@\u0027s review.",
+      "parentUuid": "bdc77f43_daa5c316",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5506fd04_fe50b2bc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-blocked.https.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "617182c7_8f8233ad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-blocked.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-20T06:48:00Z",
+      "side": 1,
+      "message": "\u003e historically layout tests mention a bug number, not sure if we continue that practice:\n\nI think the tests under http/tests/security/mixedContent/ don\u0027t have bug numbers.\n\n\u003e maybe also say \"the test passes if the result is \"LOAD FAILED\"?\n\nDone",
+      "parentUuid": "5506fd04_fe50b2bc",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0f65d6_09905529",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/resources/fetch-on-dedicated-worker.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923bc30b_3ebded30",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/resources/fetch-on-dedicated-worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-20T06:48:00Z",
+      "side": 1,
+      "message": "insecure-fetch-on-dedicated-worker.js looks better.",
+      "parentUuid": "0e0f65d6_09905529",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
