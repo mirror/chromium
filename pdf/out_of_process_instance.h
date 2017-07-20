@@ -78,6 +78,7 @@ class OutOfProcessInstance : public pp::Instance,
   void GetPrintPresetOptionsFromDocument(PP_PdfPrintPresetOptions_Dev* options);
   void EnableAccessibility();
   bool CanCut();
+  void DeleteSelectedText();
 
   void FlushCallback(int32_t result);
   void DidOpen(int32_t result);

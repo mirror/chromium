@@ -375,6 +375,11 @@ void WebPluginContainerImpl::Copy() {
       web_plugin_->SelectionAsText(), false);
 }
 
+void WebPluginContainerImpl::Cut() {
+  Copy();
+  web_plugin_->DeleteSelectedText();
+}
+
 bool WebPluginContainerImpl::ExecuteEditCommand(const WebString& name) {
   if (web_plugin_->ExecuteEditCommand(name))
     return true;
@@ -820,7 +825,8 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
   if (web_event.GetType() == WebInputEvent::kUndefined)
     return;
 
-  if (web_event.GetType() == WebInputEvent::kKeyDown) {
+  if (web_event.GetType() == WebInputEvent::kKeyDown ||
+      web_event.GetType() == WebInputEvent::kChar) {
 #if defined(OS_MACOSX)
     if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
             WebInputEvent::kMetaKey
@@ -828,13 +834,22 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
     if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
             WebInputEvent::kControlKey
 #endif
-        && (web_event.windows_key_code == VKEY_C ||
-            web_event.windows_key_code == VKEY_INSERT)
-        // Only copy if there's a selection, so that we only ever do this
-        // for Pepper plugins that support copying.  Windowless NPAPI
+        // Only copy/cut if there's a selection, so that we only ever do
+        // this for Pepper plugins that support copying.  Windowless NPAPI
         // plugins will get the event as before.
         && web_plugin_->HasSelection()) {
-      Copy();
+
+      if (web_event.windows_key_code == VKEY_C ||
+          web_event.windows_key_code == VKEY_INSERT) {
+        Copy();
+      }
+
+      // Cutting is only possible within a form text field or user-editable form
+      // combobox text field.
+      else if (web_event.windows_key_code == VKEY_X && web_plugin_->CanCut()) {
+        Cut();
+      }
+
       event->SetDefaultHandled();
       return;
     }
