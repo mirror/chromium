@@ -14,8 +14,10 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/search_box_model.h"
 #include "ui/app_list/test/app_list_test_model.h"
@@ -88,7 +90,7 @@ class AppListViewTest : public views::ViewsTestBase {
   AppListViewTest() = default;
   ~AppListViewTest() override = default;
 
-  // testing::Test overrides:
+  // testing::Test
   void SetUp() override {
     views::ViewsTestBase::SetUp();
 
@@ -98,11 +100,10 @@ class AppListViewTest : public views::ViewsTestBase {
 
     view_->Initialize(parent, 0, false, false);
     // Initialize around a point that ensures the window is wholly shown.
-    gfx::Size size = view_->bounds().size();
+    const gfx::Size size = view_->bounds().size();
     view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   }
 
-  // testing::Test overrides:
   void TearDown() override {
     view_->GetWidget()->Close();
     views::ViewsTestBase::TearDown();
@@ -170,7 +171,199 @@ class AppListViewTest : public views::ViewsTestBase {
   DISALLOW_COPY_AND_ASSIGN(AppListViewTest);
 };
 
+class AppListViewFullscreenTest : public views::ViewsTestBase {
+ public:
+  AppListViewFullscreenTest() = default;
+  ~AppListViewFullscreenTest() override = default;
+
+  // testing::Test
+  void SetUp() override {
+    views::ViewsTestBase::SetUp();
+    scoped_feature_list_.InitAndEnableFeature(
+        features::kEnableFullscreenAppList);
+  }
+
+  void TearDown() override {
+    view_->GetWidget()->Close();
+    views::ViewsTestBase::TearDown();
+  }
+
+ protected:
+  void Show() { view_->GetWidget()->Show(); }
+
+  void Initialize(int initial_apps_page,
+                  bool is_tablet_mode,
+                  bool is_side_shelf) {
+    gfx::NativeView parent = GetContext();
+    delegate_.reset(new AppListTestViewDelegate);
+    view_ = new AppListView(delegate_.get());
+
+    view_->Initialize(parent, initial_apps_page, is_tablet_mode, is_side_shelf);
+    // Initialize around a point that ensures the window is wholly shown.
+    const gfx::Size size = view_->bounds().size();
+    view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
+    EXPECT_FALSE(view_->GetWidget()->IsVisible());
+  }
+
+  AppListView* view_ = nullptr;  // Owned by native widget.
+  std::unique_ptr<AppListTestViewDelegate> delegate_;
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+  DISALLOW_COPY_AND_ASSIGN(AppListViewFullscreenTest);
+};
+
 }  // namespace
+
+// Tests that opening the app list opens in peeking mode by default.
+TEST_F(AppListViewFullscreenTest, ShowPeekingByDefault) {
+  Initialize(0, false, false);
+
+  Show();
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::PEEKING);
+}
+
+// Tests that in side shelf mode, the app list opens in fullscreen by default.
+TEST_F(AppListViewFullscreenTest, ShowFullscreenWhenInSideShelfMode) {
+  Initialize(0, false, true);
+
+  Show();
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
+
+// Tests that in tablet mode, the app list opens in fullscreen by default.
+TEST_F(AppListViewFullscreenTest, ShowFullscreenWhenInTabletMode) {
+  Initialize(0, true, false);
+
+  Show();
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
+
+// Tests that setting empty text in the search box does not change the state.
+TEST_F(AppListViewFullscreenTest, EmptySearchTextStillPeeking) {
+  Initialize(0, false, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nice");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::PEEKING);
+}
+
+// Tests that typing text after opening transitions from peeking to half.
+TEST_F(AppListViewFullscreenTest, TypingPeekingToHalf) {
+  Initialize(0, false, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nice");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::HALF);
+}
+
+// Tests that typing when in fullscreen changes the state to fullscreen search.
+TEST_F(AppListViewFullscreenTest, TypingFullscreenToFullscreenSearch) {
+  Initialize(0, false, false);
+  view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text =
+      base::UTF8ToUTF16("https://youtu.be/dQw4w9WgXcQ");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_SEARCH);
+}
+
+// Tests that pressing escape when in peeking closes the app list.
+TEST_F(AppListViewFullscreenTest, EscapeKeyPeekingToClosed) {
+  Initialize(0, false, false);
+
+  Show();
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
+}
+
+// Tests that pressing escape when in half screen changes the state to peeking.
+TEST_F(AppListViewFullscreenTest, EscapeKeyHalfToPeeking) {
+  Initialize(0, false, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("doggie");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::PEEKING);
+}
+
+// Tests that pressing escape when in fullscreen changes the state to closed.
+TEST_F(AppListViewFullscreenTest, EscapeKeyFullscreenToClosed) {
+  Initialize(0, false, false);
+  view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+
+  Show();
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
+}
+
+// Tests that pressing escape when in fullscreen side-shelf closes the app list.
+TEST_F(AppListViewFullscreenTest, EscapeKeySideShelfFullscreenToClosed) {
+  // Put into fullscreen by using side-shelf.
+  Initialize(0, false, true);
+
+  Show();
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
+}
+
+// Tests that pressing escape when in fullscreen search changes to fullscreen.
+TEST_F(AppListViewFullscreenTest, EscapeKeyFullscreenSearchToFullscreen) {
+  Initialize(0, false, false);
+  view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text =
+      base::UTF8ToUTF16("https://youtu.be/dQw4w9WgXcQ");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
+
+// Tests that pressing escape when in sideshelf search changes to fullscreen.
+TEST_F(AppListViewFullscreenTest, EscapeKeySideShelfSearchToFullscreen) {
+  // Put into fullscreen using side-shelf.
+  Initialize(0, false, true);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  base::string16 new_search_text = base::UTF8ToUTF16("kitty");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
 
 // Tests displaying the app list and performs a standard set of checks on its
 // top level views. Then closes the window.
