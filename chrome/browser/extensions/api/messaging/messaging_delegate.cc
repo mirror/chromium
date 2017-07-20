@@ -6,19 +6,26 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/api/messaging/extension_message_port.h"
 #include "chrome/browser/extensions/api/messaging/incognito_connectability.h"
+#include "chrome/browser/extensions/api/messaging/native_message_port.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "extensions/browser/event_router.h"
+#include "extensions/browser/api/messaging/message_port.h"
+#include "extensions/browser/api/messaging/native_message_host.h"
 #include "extensions/browser/extension_api_frame_id_map.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/pref_names.h"
+#include "extensions/common/api/messaging/port_id.h"
 #include "extensions/common/extension.h"
+#include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
 
 namespace extensions {
@@ -79,6 +86,62 @@ std::unique_ptr<base::DictionaryValue> MessagingDelegate::MaybeGetTabInfo(
     return ExtensionTabUtil::CreateTabObject(web_contents)->ToValue();
   }
   return nullptr;
+}
+
+// static
+std::unique_ptr<MessagePort> MessagingDelegate::CreateReceiverForTab(
+    base::WeakPtr<MessageService> message_service,
+    content::BrowserContext* browser_context,
+    content::RenderFrameHost* source,
+    const PortId& receiver_port_id,
+    int tab_id,
+    int frame_id,
+    const std::string& extension_id,
+    content::BrowserContext** receiver_browser_context_out) {
+  content::WebContents* contents = nullptr;
+
+  if (!ExtensionTabUtil::GetTabById(tab_id, browser_context,
+                                    /*incognito_enabled=*/true, nullptr,
+                                    nullptr, &contents, nullptr) ||
+      contents->GetController().NeedsReload()) {
+    // The tab isn't loaded yet. Don't attempt to connect.
+    return nullptr;
+  }
+
+  // Frame ID -1 is every frame in the tab.
+  bool include_child_frames = frame_id == -1;
+  content::RenderFrameHost* receiver_rfh =
+      include_child_frames
+          ? contents->GetMainFrame()
+          : ExtensionApiFrameIdMap::GetRenderFrameHostById(contents, frame_id);
+  if (!receiver_rfh)
+    return nullptr;
+
+  if (receiver_browser_context_out)
+    *receiver_browser_context_out = contents->GetBrowserContext();
+
+  return base::MakeUnique<ExtensionMessagePort>(
+      message_service, receiver_port_id, extension_id, receiver_rfh,
+      include_child_frames);
+}
+
+// static
+std::unique_ptr<MessagePort> MessagingDelegate::CreateReceiverForNativeApp(
+    base::WeakPtr<MessageService> message_service,
+    content::RenderFrameHost* source,
+    const PortId& receiver_port_id,
+    const std::string& extension_id,
+    const std::string& native_app_name,
+    bool allow_user_level,
+    std::string* error_out) {
+  DCHECK(error_out);
+  gfx::NativeView native_view = source ? source->GetNativeView() : nullptr;
+  std::unique_ptr<NativeMessageHost> native_host = NativeMessageHost::Create(
+      native_view, extension_id, native_app_name, allow_user_level, error_out);
+  if (!native_host.get())
+    return nullptr;
+  return base::MakeUnique<NativeMessagePort>(message_service, receiver_port_id,
+                                             std::move(native_host));
 }
 
 // static

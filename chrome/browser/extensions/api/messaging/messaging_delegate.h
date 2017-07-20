@@ -10,6 +10,7 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 
 class GURL;
 
@@ -19,11 +20,15 @@ class DictionaryValue;
 
 namespace content {
 class BrowserContext;
+class RenderFrameHost;
 class WebContents;
 }  // namespace content
 
 namespace extensions {
 class Extension;
+class MessagePort;
+class MessageService;
+struct PortId;
 
 // Helper class for Chrome-specific features of the extension messaging API.
 // TODO(michaelpg): Make this an actual delegate and move the declaration to a
@@ -45,6 +50,30 @@ class MessagingDelegate {
   // Otherwise returns nullptr.
   static std::unique_ptr<base::DictionaryValue> MaybeGetTabInfo(
       content::WebContents* web_contents);
+
+  // Creates a MessagePort for the tab with the given ID and populates
+  // |receiver_browser_context| with the tab's BrowserContext. Returns nullptr
+  // if the tab is not available.
+  static std::unique_ptr<MessagePort> CreateReceiverForTab(
+      base::WeakPtr<MessageService> message_service,
+      content::BrowserContext* browser_context,
+      content::RenderFrameHost* source,
+      const PortId& receiver_port_id,
+      int tab_id,
+      int frame_id,
+      const std::string& extension_id,
+      content::BrowserContext** receiver_browser_context_out);
+
+  // Creates a MessagePort for a native app. If the port cannot be created,
+  // returns nullptr and may populate |error_out|.
+  static std::unique_ptr<MessagePort> CreateReceiverForNativeApp(
+      base::WeakPtr<MessageService> message_service,
+      content::RenderFrameHost* source,
+      const PortId& receiver_port_id,
+      const std::string& extension_id,
+      const std::string& native_app_name,
+      bool allow_user_level,
+      std::string* error_out);
 
   // Runs |callback| with true if |url| is allowed to connect to |extension|
   // from incognito mode, false otherwise. If the URL's origin has not been
