@@ -1009,6 +1009,11 @@ void ChromeClientImpl::ShowUnhandledTapUIIfNeeded(
 }
 
 void ChromeClientImpl::OnMouseDown(Node& mouse_down_node) {
+  if (!mouse_down_node.GetDocument().GetFrame()) {
+    // We can get here when frame is nullptr. See https://crbug.com/739199.
+    return;
+  }
+
   if (auto* fill_client =
           WebLocalFrameImpl::FromFrame(mouse_down_node.GetDocument().GetFrame())
               ->AutofillClient()) {
