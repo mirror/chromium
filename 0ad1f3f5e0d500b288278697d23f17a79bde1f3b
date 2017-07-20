@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de83257c_ac0475e1",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T18:49:45Z",
+      "side": 1,
+      "message": "Maybe adding a comment after, something like:\n\nDCHECK(false) \u003c\u003c \"Cyclic reference in the coordination unit graph is detected!\";",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "0ad1f3f5e0d500b288278697d23f17a79bde1f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f6c266_990a0632",
+        "filename": "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T18:49:45Z",
+      "side": 1,
+      "message": "The cc file also needs to be changed to have:\ntab-\u003eAddChild(child_frame)",
+      "revId": "0ad1f3f5e0d500b288278697d23f17a79bde1f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf60531_954a526d",
+        "filename": "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T18:49:45Z",
+      "side": 1,
+      "message": "Similarly, the cc file part for this one also needs to be updated.",
+      "revId": "0ad1f3f5e0d500b288278697d23f17a79bde1f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

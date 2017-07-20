@@ -102,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "c6e31ec0_3726ecc8",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T18:49:45Z",
+      "side": 1,
+      "message": "Technically, both are fine, because your usage here will use both IsAncestor and IsDescendant at the same time.\n\nBut think about a later CL which only uses IsAncestor. If the understanding of who is an ancestor of whom is reversed, it would cause problems.\n\nI think normally when people see an API, the \"subject\" is this class. So applying that to the situation here:\n- IsAncestor(unit) means: this object (subject) is ancestor of unit.\n- HasAncestor(unit) means: this object (subject) has ancestor of unit.\n\nYou can also find other example in chromium:\nhttps://cs.chromium.org/chromium/src/cc/layers/layer.h?type\u003dcs\u0026q\u003dhasance\u0026sq\u003dpackage:chromium\u0026l\u003d87",
+      "parentUuid": "c71f5313_75739e30",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9f503c_be69cc02",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
         "patchSetId": 2
@@ -181,6 +205,24 @@
       "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989d1696_5d776567",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T18:49:45Z",
+      "side": 1,
+      "message": "Oh, right.",
+      "parentUuid": "b5dfc46f_47b26f20",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
