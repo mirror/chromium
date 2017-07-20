@@ -16,6 +16,24 @@
       "revId": "940b7fb6e19c4003e83c7f7f7055001caac28125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb0470d_f020d499",
+        "filename": "chrome/browser/ui/hung_plugin_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-20T01:39:39Z",
+      "side": 1,
+      "message": "Thanks :-), but there will too many changes in .cc file, do you think it\u0027s ok? I just refer to https://codereview.chromium.org/2705193004/.",
+      "parentUuid": "68274db0_510098d9",
+      "revId": "940b7fb6e19c4003e83c7f7f7055001caac28125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
