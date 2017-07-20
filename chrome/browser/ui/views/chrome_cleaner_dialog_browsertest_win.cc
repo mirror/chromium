@@ -30,6 +30,7 @@ class MockChromeCleanerDialogController
   MOCK_METHOD1(Accept, void(bool));
   MOCK_METHOD0(Cancel, void());
   MOCK_METHOD0(Close, void());
+  MOCK_METHOD0(ClosedWithoutUserInteraction, void());
   MOCK_METHOD1(DetailsButtonClicked, void(bool));
   MOCK_METHOD1(SetLogsEnabled, void(bool));
   MOCK_METHOD0(LogsEnabled, bool());

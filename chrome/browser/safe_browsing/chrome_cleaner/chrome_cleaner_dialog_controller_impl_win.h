@@ -30,6 +30,7 @@ class ChromeCleanerDialogControllerImpl
   void Accept(bool logs_enabled) override;
   void Cancel() override;
   void Close() override;
+  void ClosedWithoutUserInteraction() override;
   void DetailsButtonClicked(bool logs_enabled) override;
   void SetLogsEnabled(bool logs_enabled) override;
   bool LogsEnabled() override;
