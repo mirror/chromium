@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4970b9d_a2743b2f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T06:58:59Z",
+      "side": 1,
+      "message": "How about creating ReachedUrlSet in the caller side, that is, ModulatorImpl::FetchTree()? Also, if this is the top-level module fetch, |ancestor_list_with_url| would be empty.",
+      "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceb60b8_8beb3b41",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ReachedUrlSet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T06:58:59Z",
+      "side": 1,
+      "message": "How about renaming this to ModuleTreeReachedUrlSet or something more specific name?\n\nAlso, can you add a class-level comment?",
+      "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33612582_d8a32819",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ReachedUrlSet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T06:58:59Z",
+      "side": 1,
+      "message": "// ReachedUrlSet_h",
+      "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
