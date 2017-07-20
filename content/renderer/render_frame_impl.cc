@@ -6476,7 +6476,14 @@ void RenderFrameImpl::MaybeEnableMojoBindings() {
                 ((enabled_bindings_ & kAllBindingsTypes) - 1),
             0);
 
-  DCHECK_EQ(RenderProcess::current()->GetEnabledBindings(), enabled_bindings_);
+#if DCHECK_IS_ON()
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  if (!command_line.HasSwitch(switches::kSingleProcess)) {
+    DCHECK_EQ(RenderProcess::current()->GetEnabledBindings(),
+              enabled_bindings_);
+  }
+#endif
 
   // If an MojoBindingsController already exists for this RenderFrameImpl, avoid
   // creating another one. It is not kept as a member, as it deletes itself when
