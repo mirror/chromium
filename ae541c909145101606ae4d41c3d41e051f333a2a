@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd3cbf6_ed8b33ee",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-20T06:09:25Z",
+      "side": 1,
+      "message": "Was this tested to work on an affected glibc (perhaps https://sourceware.org/glibc/wiki/Testing/Builds#Compile_normally.2C_run_under_new_glibc might be a way to try)? I\u0027m not sure that this has the intended effect. If you look at glibc\u0027s fork implementation: https://sourceware.org/git/?p\u003dglibc.git;a\u003dblob;f\u003dsysdeps/unix/sysv/linux/x86_64/arch-fork.h, the cached TID is only updated in the child process, so you\u0027d need to do something like:\n\nIn zygote:\n\n// So that the double-forked child gets reparented to the zygote - see below for why\nprctl(PR_SET_CHILD_SUBREAPER, 1);\n\nIn ForkWithFlags:\n\nif (setjmp(env) \u003d\u003d 0) {\n  pid_t fork_pid \u003d CloneAndLongjmpInChild(flags, ptid, ctid, \u0026env);\n  if (fork_pid \u003c 0) {\n    return fork_pid;\n  }\n  // obtain and return the double-forked pid\n}\n\npid_t double_fork_pid \u003d fork();\nif (double_fork_pid !\u003d 0) {\n  // cached TID is still wrong in this process\n  // send double_fork_pid back to the parent via e.g. a unix socket\n  ...\n  // exit so that the child is reparented to the zygote\n  _exit(0);\n}\n// this process should have a fixed cached TID\n\nAlso, I would probably make this change to NamespaceSandbox::ForkInNewPidNamespace instead of ForkWithFlags. Most calls to ForkWithFlags are actually fine, since we either execve very soon afterwards (as in LaunchProcess) or we are careful not to use any thread functions in the resulting child process - the one case where we don\u0027t is ForkInNewPidNamespace. We can probably just update ForkInNewPidNamespace\u0027s documentation to mention that we cannot use any glibc thread functions in the child (unless we fork again first).\n\nOne last thing I neglected to bring up with the double-forking approach - the zygote needs to be able to reap the children that it spawns - this is how we report the cause of death (e.g. whether a renderer segfaulted as opposed to exiting cleanly). Normally, when the parent of a double-forked process dies, the process gets reparented to init, which in this case would be the zygote init process, not the zygote process. To get around this, we make the zygote process a subreaper above - now, when the double-forked processes\u0027s parent dies, it gets reparented properly.\n\nIf you haven\u0027t already though, the unshare(CLONE_NEWPID); fork(); in NamespaceSandbox::ForkInNewPidNamespace idea might be worth trying in lieu of this - if it works, it might be cheaper and simpler than this.",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
