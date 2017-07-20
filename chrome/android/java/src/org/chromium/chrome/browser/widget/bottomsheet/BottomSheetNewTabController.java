@@ -10,6 +10,7 @@ import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 
@@ -168,7 +169,8 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         return mIsShowingNewTabUi
                 && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
                 && !mTabModelSelector.isIncognitoSelected()
-                && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle();
+                && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()
+                && !SuggestionsConfig.useModern();
     }
 
     @Override
