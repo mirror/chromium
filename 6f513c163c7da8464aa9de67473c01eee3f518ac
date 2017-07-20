@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa605f2f_0d4b28eb",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentInit.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T16:22:15Z",
+      "side": 1,
+      "message": "Can you document how this Create() method and WithFoo methods can be combined to create a new DocumentInit, maybe with a typical example?",
+      "revId": "6f513c163c7da8464aa9de67473c01eee3f518ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
