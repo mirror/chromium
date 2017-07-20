@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7310fa53_cb55df12",
+        "filename": "chrome/browser/media/router/create_presentation_connection_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "Ack. The plan is to remove this class in a future patch.",
+      "parentUuid": "a48ebc8b_4e55b6fa",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d987f822_fcea2d43",
         "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T20:29:10Z",
       "side": 1,
       "message": "Can PresentationRequest just implement the equality operator instead?",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a585b6d_472365f4",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "I am planning to remove equality checking for PresentationRequest in the next patch. I am not a fan of this function, because it considers 2 unique origins as equal, whereas GURL considers a unique origin not equal to itself.",
+      "parentUuid": "d987f822_fcea2d43",
       "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ff89e49_abe96e8a",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "Yes, because this is nullptr when defaultRequest is not set. Alternatively we could use a PR with dummy values, but I thought nullptr is slightly more clear.",
+      "parentUuid": "55f0c8d0_12190c69",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1789edf_ba043b75",
         "filename": "chrome/browser/media/router/presentation_service_delegate_impl_unittest.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-20T20:29:10Z",
       "side": 1,
       "message": "Thanks for upgrading these :)",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26e0141e_3f2cb54d",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1789edf_ba043b75",
       "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6175a8b8_52d669b8",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "No, but we do need to fill in the render_frame_host_id field with real IDs, which aren\u0027t available until SetUp(). This will be non-null when the test body runs though.",
+      "parentUuid": "b2502f6d_20a692ea",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f3581e2_b6025449",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-20T20:29:10Z",
       "side": 1,
       "message": "Same here",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d064910f_d32c1c7c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "Ditto. The UI may or may not have a presentation request associated with it, and can change over the lifetime of MediaRouterUI.",
+      "parentUuid": "4f3581e2_b6025449",
       "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e64a9bb_586a94c8",
+        "filename": "content/public/browser/presentation_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T21:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb15cc3_a09c1dcf",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
