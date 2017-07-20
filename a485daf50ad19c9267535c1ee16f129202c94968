@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "177e7d4c_d647d3c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-20T18:30:30Z",
+      "side": 1,
+      "message": "N/A with the new approach.",
+      "parentUuid": "f26216cd_536569a4",
+      "range": {
+        "startLine": 174,
+        "startChar": 20,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f954cd2e_e98ecaae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee7d6d4_b120a58a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-20T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f954cd2e_e98ecaae",
+      "range": {
+        "startLine": 848,
+        "startChar": 24,
+        "endLine": 848,
+        "endChar": 33
+      },
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "8ee773d3_0d99d460",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-20T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe3c90b_9b90ae6d",
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687c4674_f0e5d646",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
         "patchSetId": 3
@@ -103,6 +169,30 @@
       "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d1a309_e02c125b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-20T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687c4674_f0e5d646",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
