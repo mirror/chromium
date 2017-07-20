@@ -30,4 +30,18 @@ class PermissionInfoBar : public ConfirmInfoBar {
   DISALLOW_COPY_AND_ASSIGN(PermissionInfoBar);
 };
 
+base::android::ScopedJavaLocalRef<jobject> CreateRenderInfoBarHelper(
+    JNIEnv* env,
+    int enumerated_icon_id,
+    const base::android::ScopedJavaLocalRef<jobject>& tab,
+    const base::android::ScopedJavaLocalRef<jobject>& icon_bitmap,
+    const base::android::ScopedJavaLocalRef<jstring>& message_text,
+    const base::android::ScopedJavaLocalRef<jstring>& link_text,
+    const base::android::ScopedJavaLocalRef<jstring>& ok_button_text,
+    const base::android::ScopedJavaLocalRef<jstring>& cancel_button_text,
+    std::vector<int>& content_settings,
+    bool show_persistence_toggle);
+
+bool IsSwitchOn(JNIEnv* env, jobject info_bar_obj);
+
 #endif  // CHROME_BROWSER_UI_ANDROID_INFOBARS_PERMISSION_INFOBAR_H_

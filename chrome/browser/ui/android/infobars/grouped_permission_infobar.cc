@@ -10,7 +10,7 @@
 #include "chrome/browser/android/resource_mapper.h"
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/permissions/grouped_permission_infobar_delegate_android.h"
-#include "jni/PermissionInfoBar_jni.h"
+#include "chrome/browser/ui/android/infobars/permission_infobar.h"
 
 GroupedPermissionInfoBar::GroupedPermissionInfoBar(
     std::unique_ptr<GroupedPermissionInfoBarDelegate> delegate)
@@ -24,8 +24,8 @@ void GroupedPermissionInfoBar::ProcessButton(int action) {
   // inform it of the toggle state.
   GroupedPermissionInfoBarDelegate* delegate = GetDelegate();
   if (delegate->ShouldShowPersistenceToggle()) {
-    delegate->set_persist(Java_PermissionInfoBar_isPersistSwitchOn(
-        base::android::AttachCurrentThread(), GetJavaInfoBar()));
+    delegate->set_persist(
+        IsSwitchOn(base::android::AttachCurrentThread(), GetJavaInfoBar()));
   }
 
   ConfirmInfoBar::ProcessButton(action);
@@ -55,10 +55,9 @@ GroupedPermissionInfoBar::CreateRenderInfoBar(JNIEnv* env) {
     content_settings_types.push_back(delegate->GetContentSettingType(i));
   }
 
-  return Java_PermissionInfoBar_create(
-      env, GetTab()->GetJavaObject(), permission_icon, nullptr, message_text,
-      link_text, ok_button_text, cancel_button_text,
-      base::android::ToJavaIntArray(env, content_settings_types),
+  return CreateRenderInfoBarHelper(
+      env, permission_icon, GetTab()->GetJavaObject(), nullptr, message_text,
+      link_text, ok_button_text, cancel_button_text, content_settings_types,
       delegate->ShouldShowPersistenceToggle());
 }
 
