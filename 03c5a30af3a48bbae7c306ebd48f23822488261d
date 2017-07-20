@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97ec93f_926c2ad6",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T18:19:24Z",
+      "side": 1,
+      "message": "meters (here and below)",
+      "range": {
+        "startLine": 55,
+        "startChar": 58,
+        "endLine": 55,
+        "endChar": 63
+      },
+      "revId": "03c5a30af3a48bbae7c306ebd48f23822488261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
