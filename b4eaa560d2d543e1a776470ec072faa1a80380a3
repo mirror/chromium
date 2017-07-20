@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97c2d082_a9c9ff72",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6479,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-20T18:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9e7e09_df595070",
+      "range": {
+        "startLine": 6479,
+        "startChar": 4,
+        "endLine": 6479,
+        "endChar": 16
+      },
+      "revId": "b4eaa560d2d543e1a776470ec072faa1a80380a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53aace94_fbacc16d",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "b4eaa560d2d543e1a776470ec072faa1a80380a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f65324e_8beb0199",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6486,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-20T18:23:46Z",
+      "side": 1,
+      "message": "I think this is working as expected. The WebUI RenderFrame and the interstitial RenderFrame share a RenderProcess, so the process has the union on both frames\u0027 bindings (both BINDINGS_POLICY_WEB_UI and BINDINGS_POLICY_DOM_AUTOMATION).\n\nI updated the comment for clarity.",
+      "parentUuid": "53aace94_fbacc16d",
+      "revId": "b4eaa560d2d543e1a776470ec072faa1a80380a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
