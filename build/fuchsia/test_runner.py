@@ -199,7 +199,7 @@ def SymbolizeEntry(entry):
   # that to align it properly after the frame index.
   addr2line_filtered = addr2line_output.strip().replace(
       '(inlined', ' ' * len(prefix) + '(inlined')
-  return '#%s: %s' % (prefix, addr2line_filtered)
+  return '%s%s' % (prefix, addr2line_filtered)
 
 
 def ParallelSymbolizeBacktrace(backtrace):
@@ -302,9 +302,12 @@ def main():
     print 'Run:', qemu_command
   else:
     prefix = r'^.*> '
-    bt_with_offset_re = re.compile(prefix +
-        'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
     bt_end_re = re.compile(prefix + 'bt#(\d+): end')
+
+    # 'sp' is optional because it is not emitted by the in-process backtrace.
+    bt_with_offset_re = re.compile(
+        prefix + 'bt#(\d+): pc 0x[0-9a-f]+ (sp (0x[0-9a-f]+) )' +
+                 '?\((\S+),(0x[0-9a-f]+)\)$')
 
     # We pass a separate stdin stream to qemu. Sharing stdin across processes
     # leads to flakiness due to the OS prematurely killing the stream and the
@@ -338,7 +341,7 @@ def main():
       else:
         m = bt_with_offset_re.match(line.strip())
         if m:
-          bt_entries.append((m.group(1), args.test_name, m.group(4)))
+          bt_entries.append((m.group(1), args.test_name, m.group(5)))
     qemu_popen.wait()
 
     return 0 if success else 1
