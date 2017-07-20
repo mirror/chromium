@@ -4,15 +4,15 @@
 
 #include "media/gpu/d3d11_h264_accelerator.h"
 
+#include <windows.h>
 #include <d3d11.h>
 #include <dxva.h>
-#include <windows.h>
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/win/scoped_comptr.h"
-#include "media/gpu/h264_decoder.h"
-#include "media/gpu/h264_dpb.h"
+#include "media/gpu/vaapi/h264_decoder.h"
+#include "media/gpu/vaapi/h264_dpb.h"
 #include "third_party/angle/include/EGL/egl.h"
 #include "third_party/angle/include/EGL/eglext.h"
 #include "ui/gfx/color_space.h"

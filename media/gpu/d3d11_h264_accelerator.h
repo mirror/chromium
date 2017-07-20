@@ -12,8 +12,8 @@
 #include <vector>
 
 #include "base/win/scoped_comptr.h"
-#include "media/gpu/h264_decoder.h"
-#include "media/gpu/h264_dpb.h"
+#include "media/gpu/vaapi/h264_decoder.h"
+#include "media/gpu/vaapi/h264_dpb.h"
 #include "media/video/picture.h"
 #include "third_party/angle/include/EGL/egl.h"
 #include "third_party/angle/include/EGL/eglext.h"
