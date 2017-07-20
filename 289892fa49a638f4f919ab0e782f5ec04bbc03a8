@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "3839b87c_135631fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "final for all the members here",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea57bd28_28fbf559",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "ThumbnailStorage is better",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c284fcf_eb2322cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "use executeOnExecutor(SERIAL_EXECUTOR), so that all the asynctask in this class won\u0027t interfere each other",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8acad9f_226713e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "executeOnExecutor(SERIAL_EXECUTOR)",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a930782_0ebd5020",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "executeOnExecutor(SERIAL_EXECUTOR)",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8c8385_57643a1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "Synchronizing a function is bad, only synchronize the block that you need to protect against simultaneous access.\nadd is a bad name, use addEntriesToDisk() is better",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d594ca_1462b5a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6a2701_ecd6ac4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "This can also happen as an async task, right?",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a6ebfd_6ff998d7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 3
@@ -66,6 +202,57 @@
         "endLine": 126,
         "endChar": 33
       },
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032d076e_c8d3229d",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "why we need this file?",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f6db25_e2ae6ad1",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "use \"\" instead of \u003c\u003e",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b931bd_3d270d2b",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider_generator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T17:34:25Z",
+      "side": 1,
+      "message": "I think ThumbnailGenerator is more proper name",
       "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
