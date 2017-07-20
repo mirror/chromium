@@ -57,6 +57,7 @@ public class WebappInfo {
     private String mId;
     private Icon mIcon;
     private Uri mUri;
+    private boolean mForceNavigation;
     private Uri mScopeUri;
     private String mName;
     private String mShortName;
@@ -124,18 +125,22 @@ public class WebappInfo {
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING);
         boolean isIconGenerated = IntentUtils.safeGetBooleanExtra(intent,
                 ShortcutHelper.EXTRA_IS_ICON_GENERATED, false);
+        boolean forceNavigation = IntentUtils.safeGetBooleanExtra(
+                intent, ShortcutHelper.EXTRA_FORCE_NAVIGATION, false);
 
         String name = nameFromIntent(intent);
         String shortName = shortNameFromIntent(intent);
 
-        return create(id, url, scope, new Icon(icon), name, shortName, displayMode,
-                orientation, source, themeColor, backgroundColor, isIconGenerated);
+        return create(id, url, scope, new Icon(icon), name, shortName, displayMode, orientation,
+                source, themeColor, backgroundColor, isIconGenerated, forceNavigation);
     }
 
     /**
      * Construct a WebappInfo.
      * @param id              ID for the webapp.
      * @param url             URL for the webapp.
+     * @param forceNavigation Whether the webapp should navigate to {@link url} if the
+     *                        webapp is already open.
      * @param scope           Scope for the webapp.
      * @param icon            Icon to show for the webapp.
      * @param name            Name of the webapp.
@@ -149,19 +154,19 @@ public class WebappInfo {
      */
     public static WebappInfo create(String id, String url, String scope, Icon icon, String name,
             String shortName, int displayMode, int orientation, int source, long themeColor,
-            long backgroundColor, boolean isIconGenerated) {
+            long backgroundColor, boolean isIconGenerated, boolean forceNavigation) {
         if (id == null || url == null) {
             Log.e(TAG, "Incomplete data provided: " + id + ", " + url);
             return null;
         }
 
-        return new WebappInfo(id, url, scope, icon, name, shortName, displayMode, orientation,
-                source, themeColor, backgroundColor, isIconGenerated);
+        return new WebappInfo(id, url, scope, icon, name, shortName, displayMode,
+                orientation, source, themeColor, backgroundColor, isIconGenerated, forceNavigation);
     }
 
     protected WebappInfo(String id, String url, String scope, Icon icon, String name,
             String shortName, int displayMode, int orientation, int source, long themeColor,
-            long backgroundColor, boolean isIconGenerated) {
+            long backgroundColor, boolean isIconGenerated, boolean forceNavigation) {
         Uri uri = Uri.parse(url);
         if (TextUtils.isEmpty(scope)) {
             scope = ShortcutHelper.getScopeFromUrl(url);
@@ -180,6 +185,7 @@ public class WebappInfo {
         mThemeColor = themeColor;
         mBackgroundColor = backgroundColor;
         mIsIconGenerated = isIconGenerated;
+        mForceNavigation = forceNavigation;
         mIsInitialized = mUri != null;
     }
 
@@ -203,7 +209,7 @@ public class WebappInfo {
      * Chrome receives a ACTION_START_WEBAPP intent.
      */
     public boolean shouldForceNavigation() {
-        return false;
+        return mForceNavigation;
     }
 
     public Uri scopeUri() {
@@ -303,6 +309,7 @@ public class WebappInfo {
     public void setWebappIntentExtras(Intent intent) {
         intent.putExtra(ShortcutHelper.EXTRA_ID, id());
         intent.putExtra(ShortcutHelper.EXTRA_URL, uri().toString());
+        intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, shouldForceNavigation());
         intent.putExtra(ShortcutHelper.EXTRA_SCOPE, scopeUri().toString());
         intent.putExtra(ShortcutHelper.EXTRA_ICON, encodedIcon());
         intent.putExtra(ShortcutHelper.EXTRA_VERSION, ShortcutHelper.WEBAPP_SHORTCUT_VERSION);
