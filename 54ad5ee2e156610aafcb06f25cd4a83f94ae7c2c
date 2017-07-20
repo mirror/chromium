@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef2f197_5288ff10",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Can you wrap these in \"#if UNIT_TEST\" ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c47d46e_6646a940",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Rename \u0027TestInSeparateProcess()\u0027 or similar?  The EvaluateCapability* names are a bit repetitive.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6462697b_d409ef01",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "We should DCHECK on this IMO, the caller should check the output in case there is a message to log (or success string to parse).",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666d2fe5_0d2f2028",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Can this method be moved to the anonymous namespace and just return the host_binary path?  That would simplify the logic for calling into the actual test function (and wouldn\u0027t require any params in this method (except perhaps a FilePath*).",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed37ca0d_6c85165b",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Since this is always false, you can use this instead:\n#error \"GetHostBinaryFilePath is not defined for current platform.\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 78
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eff6507_3759aedb",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Wrap in \u0027#if UNIT_TEST\u0027 ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4de4ea4_abf2ed0f",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "I\u0027d remove the specifics from this line, the function uses remoting_host.exe but it can technically use whatever it wants (i.e. we could introduce a \u0027cap_test_shell.exe\u0027 program to do this work in the future for instance).",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93ab7cf_e263262c",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "You could move this block and into \u0027EvaluateCapabilityForkedly()\u0027 and use it in the unit test.  The Forkedly method already calls into this method for Windows so you can get rid of this extra test-only static method.",
+      "range": {
+        "startLine": 12,
+        "startChar": 22,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1c9bcf_6eaaa1a7",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "I\u0027m thinking that you can combine these methods and then decide internally whether to fork or not based on the CommandLine args (whether it contains the evaluate switch or not).\n\nThe reason I think this would work better is that we should only call this method for capabilities we believe are not safe to call/check in the current process.  Therefore the API can be the same but the method itself can determine whether to spawn a new process or not.",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70668a86_ce399182",
+        "filename": "remoting/host/evaluate_capability_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:20:50Z",
+      "side": 1,
+      "message": "Is newline useful here?  You could just use simpler output for testing.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
