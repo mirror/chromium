@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9dad9928_5efb6c16",
+        "filename": "ui/touch_selection/touch_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-20T00:01:31Z",
+      "side": 1,
+      "message": "I\u0027m still not convinced how this is not breaking animation. For example if someone calls TouchHandle::SetVisible(false, ANIMATION_SMOOTH), |is_visible_| is set to false and this function is called on each frame to fade the handle out. However, with your change the alpha is set to 0 in the first call to this function, suddenly hiding the handle. Am I missing something?",
+      "parentUuid": "cc18a712_5c52d6d7",
+      "revId": "f616edbfb62f6a7a519d37dad3c1cc7659837532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e84426a5_42614183",
         "filename": "ui/touch_selection/touch_handle.h",
         "patchSetId": 1
