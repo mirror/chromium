@@ -302,6 +302,30 @@
       "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0242356f_0ac23dee",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T02:18:48Z",
+      "side": 1,
+      "message": "BTW: In this comment I probably should also be mentioning variations::testing::VariationsParamsManager which theoretically already provides the functionality for enabling features and setting field trial params from tests.  I said theoretically, because of one problem I\u0027ve run into when trying to do this from //chrome-layer tests - see my 1st reply at https://codereview.chromium.org/2946113002/diff/200001/content/public/test/test_utils.cc#newcode213 for more details (about a DCHECK(!global_) I\u0027ve been hitting in base::FieldTrialList::FieldTrialList).",
+      "parentUuid": "ee1c9237_9c0a9b63",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
