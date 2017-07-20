@@ -143,6 +143,16 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
+  // Store the content scroll position.
+  CGFloat contentPosition =
+      [[self primaryView] contentPositionInPortraitOrientation];
+  // If we have the cached position, use it instead.
+  if (self.cachedContentPosition) {
+    contentPosition = [self.cachedContentPosition floatValue];
+    self.cachedContentPosition = nil;
+  }
+
   if (![self primaryView] && ![self primaryMenuItem] &&
       self.bookmarks->loaded()) {
     BookmarkMenuItem* item = nil;
@@ -175,6 +185,14 @@ const CGFloat kNavigationBarTopMargin = 8.0;
   [self updateNavigationBarWithDuration:0 orientation:orient];
   if (![self shouldPresentMenuInSlideInPanel])
     [self updateMenuViewLayout];
+
+  // Restore the content scroll position if it was reset to zero. This could
+  // happen when primaryView is newly created (restore from cached); its frame
+  // height has changed; or it was re-attached to the view hierarchy.
+  if (contentPosition > 0 &&
+      [[self primaryView] contentPositionInPortraitOrientation] == 0) {
+    [[self primaryView] applyContentPosition:contentPosition];
+  }
 }
 
 #pragma mark - private methods

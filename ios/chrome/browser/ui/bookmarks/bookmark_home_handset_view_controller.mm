@@ -664,15 +664,20 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
   [super viewWillAppear:animated];
   UIInterfaceOrientation orient = GetInterfaceOrientation();
   [self updateUIForInterfaceOrientation:orient duration:0];
-  if (self.cachedContentPosition) {
-    [[self primaryView]
-        applyContentPosition:[self.cachedContentPosition floatValue]];
-    self.cachedContentPosition = nil;
-  }
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
+  // Store the content scroll position.
+  CGFloat contentPosition =
+      [[self primaryView] contentPositionInPortraitOrientation];
+  // If we have the cached position, use it instead.
+  if (self.cachedContentPosition) {
+    contentPosition = [self.cachedContentPosition floatValue];
+    self.cachedContentPosition = nil;
+  }
+
   // Invalidate the layout of the collection view, as its frame might have
   // changed. Normally, this can be done automatically when the collection view
   // layout returns YES to -shouldInvalidateLayoutForBoundsChange:.
@@ -685,6 +690,14 @@ defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
   self.navigationBar.frame = [self navigationBarFrame];
   self.editingBar.frame = [self navigationBarFrame];
   [self.panelView setFrame:[self frameForPrimaryView]];
+
+  // Restore the content scroll position if it was reset to zero. This could
+  // happen when primaryView is newly created (restore from cached) or its frame
+  // height has changed.
+  if (contentPosition > 0 &&
+      [[self primaryView] contentPositionInPortraitOrientation] == 0) {
+    [[self primaryView] applyContentPosition:contentPosition];
+  }
 }
 
 #pragma mark - Internal non-UI Methods
