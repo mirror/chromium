@@ -22,6 +22,30 @@
       "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b2aacf_0f9f6b9a",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-07-20T13:40:12Z",
+      "side": 1,
+      "message": "Hey Ricky, maybe you have a better insight, but the problem with your described approach is that unshare(CLONE_NEWPID) requires root, so in order to do that we need:\n\nunshare(CLONE_NEWUSER);\nunshare(CLONE_NEWPID);\nfork();\n\nBut if we do that, then we\u0027re putting the parent process (browser process probably) in a new user namespace, which is not technically what we want.\n\nWe could\n\nfork();\nunshare(CLONE_NEWUSER);\nunshare(CLONE_NEWPID);\nfork();\n\nbut we do end up with an extra process.\n\nThoughts?",
+      "parentUuid": "5dd3cbf6_ed8b33ee",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
