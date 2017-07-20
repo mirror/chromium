@@ -320,18 +320,31 @@ bool SameObject(HANDLE handle, const wchar_t* full_path) {
 }
 
 // Paths like \Device\HarddiskVolume0\some\foo\bar are assumed to be already
-// expanded.
+// expanded. WRONG. SAD!  Device paths can be in 8.3 alias form.
+// - NOTE: GetLongPathName():
+//   It is possible to have access to a file or directory but not have
+//   access to some of the parent directories of that file or directory.
+//   As a result, GetLongPathName may fail when it is unable to query the parent
+//   directory of a path component to determine the long name for that
+//   component. This check can be skipped for directory components that have
+//   file extensions longer than 3 characters, or total lengths longer than 12
+//   characters.
 bool ConvertToLongPath(base::string16* path) {
   if (IsPipe(*path))
     return true;
 
-  base::string16 temp_path;
-  if (IsDevicePath(*path, &temp_path))
-    return false;
-
-  bool is_nt_path = IsNTPath(temp_path, &temp_path);
+  bool is_device_path = false;
+  bool is_nt_path = false;
   bool added_implied_device = false;
-  if (!StartsWithDriveLetter(temp_path) && is_nt_path) {
+  base::string16 temp_path;
+
+  // |temp_path| will be set regardless of return values here.
+  if (IsDevicePath(*path, &temp_path))
+    is_device_path = true;
+  else if (IsNTPath(temp_path, &temp_path))
+    is_nt_path = true;
+
+  if (!StartsWithDriveLetter(temp_path) && (is_nt_path || is_device_path)) {
     temp_path = base::string16(kNTDotPrefix) + temp_path;
     added_implied_device = true;
   }
@@ -369,12 +382,16 @@ bool ConvertToLongPath(base::string16* path) {
     temp_path = long_path_buf.get();
   }
 
+  // If successful, re-apply original namespace prefix before returning.
   if (return_value != 0) {
     if (added_implied_device)
       RemoveImpliedDevice(&temp_path);
 
     if (is_nt_path) {
       *path = kNTPrefix;
+      *path += temp_path;
+    } else if (is_device_path) {
+      *path = kNTDevicePrefix;
       *path += temp_path;
     } else {
       *path = temp_path;
@@ -471,6 +488,8 @@ void* GetProcessBaseAddress(HANDLE process) {
 
   if (!GetProcessPath(process, &process_path))
     return nullptr;
+  // Native file paths can be in short/8.3 form, depending on filesystem.
+  ConvertToLongPath(&process_path);
 
   // Walk the virtual memory mappings trying to find image sections.
   // VirtualQueryEx will return false if it encounters a location outside of
@@ -478,9 +497,12 @@ void* GetProcessBaseAddress(HANDLE process) {
   while (::VirtualQueryEx(process, current, &mem_info, sizeof(mem_info))) {
     base::string16 image_path;
     if (mem_info.Type == MEM_IMAGE &&
-        GetImageFilePath(process, mem_info.BaseAddress, &image_path) &&
-        EqualPath(process_path, image_path)) {
-      return mem_info.BaseAddress;
+        GetImageFilePath(process, mem_info.BaseAddress, &image_path)) {
+      // Native file paths can be in short/8.3 form, depending on filesystem.
+      ConvertToLongPath(&image_path);
+      if (EqualPath(process_path, image_path)) {
+        return mem_info.BaseAddress;
+      }
     }
     // VirtualQueryEx should fail before overflow, but just in case we'll check
     // to prevent an infinite loop.
