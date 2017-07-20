@@ -1694,6 +1694,14 @@ void WebMediaPlayerImpl::OnPause() {
   client_->PlaybackStateChanged();
 }
 
+void WebMediaPlayerImpl::OnSeekForward(double seconds) {
+  client_->RequestSeek(CurrentTime() + seconds);
+}
+
+void WebMediaPlayerImpl::OnSeekBackward(double seconds) {
+  client_->RequestSeek(CurrentTime() - seconds);
+}
+
 void WebMediaPlayerImpl::OnVolumeMultiplierUpdate(double multiplier) {
   volume_multiplier_ = multiplier;
   SetVolume(volume_);

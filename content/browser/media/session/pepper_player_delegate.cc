@@ -50,6 +50,14 @@ void PepperPlayerDelegate::OnResume(int player_id) {
   SetVolume(player_id, 1.0f);
 }
 
+void PepperPlayerDelegate::OnSeekForward(int player_id, double seconds) {
+  // Cannot seek pepper player. Do nothing.
+}
+
+void PepperPlayerDelegate::OnSeekBackward(int player_id, double seconds) {
+  // Cannot seek pepper player. Do nothing.
+}
+
 void PepperPlayerDelegate::OnSetVolumeMultiplier(int player_id,
                                                  double volume_multiplier) {
   if (!ShouldDuckFlash())
