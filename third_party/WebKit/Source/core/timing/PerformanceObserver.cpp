@@ -16,6 +16,8 @@
 #include "core/timing/PerformanceEntry.h"
 #include "core/timing/PerformanceObserverEntryList.h"
 #include "core/timing/PerformanceObserverInit.h"
+#include "core/timing/WorkerGlobalScopePerformance.h"
+#include "core/workers/WorkerGlobalScope.h"
 #include "platform/Timer.h"
 
 namespace blink {
@@ -23,17 +25,24 @@ namespace blink {
 PerformanceObserver* PerformanceObserver::Create(
     ScriptState* script_state,
     PerformanceObserverCallback* callback) {
-  DCHECK(IsMainThread());
   LocalDOMWindow* window = ToLocalDOMWindow(script_state->GetContext());
-  if (!window) {
-    V8ThrowException::ThrowTypeError(
-        script_state->GetIsolate(),
-        ExceptionMessages::FailedToConstruct(
-            "PerformanceObserver", "No 'window' in current context."));
-    return nullptr;
+  if (window) {
+    return new PerformanceObserver(
+        script_state, DOMWindowPerformance::performance(*window), callback);
   }
-  return new PerformanceObserver(
-      script_state, DOMWindowPerformance::performance(*window), callback);
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (context->IsWorkerGlobalScope()) {
+    return new PerformanceObserver(script_state,
+                                   WorkerGlobalScopePerformance::performance(
+                                       *ToWorkerGlobalScope(context)),
+                                   callback);
+  }
+  V8ThrowException::ThrowTypeError(
+      script_state->GetIsolate(),
+      ExceptionMessages::FailedToConstruct(
+          "PerformanceObserver",
+          "No 'worker' or 'window' in current context."));
+  return nullptr;
 }
 
 PerformanceObserver::PerformanceObserver(ScriptState* script_state,
@@ -84,7 +93,6 @@ void PerformanceObserver::disconnect() {
 }
 
 void PerformanceObserver::EnqueuePerformanceEntry(PerformanceEntry& entry) {
-  DCHECK(IsMainThread());
   performance_entries_.push_back(&entry);
   if (performance_)
     performance_->ActivateObserver(*this);
