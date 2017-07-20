@@ -130,7 +130,7 @@ TEST_F(ArcFileSystemOperationRunnerTest, DeferAndDiscard) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1, counter);
 
-  arc_service_manager_.reset();
+  runner_.reset();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1, counter);
 }
