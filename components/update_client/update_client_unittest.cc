@@ -245,7 +245,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -268,8 +268,6 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-
-      return true;
     }
   };
 
@@ -358,7 +356,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -430,7 +428,6 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -570,7 +567,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -664,7 +661,6 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -840,7 +836,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -931,7 +927,6 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -1111,7 +1106,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -1218,7 +1213,6 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -1440,7 +1434,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -1489,7 +1483,6 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -1628,7 +1621,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -1737,7 +1730,6 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -1934,7 +1926,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -1957,7 +1949,6 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -2047,7 +2038,7 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -2102,7 +2093,6 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -2240,7 +2230,7 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -2264,7 +2254,6 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -2346,14 +2335,12 @@ TEST_F(UpdateClientTest, EmptyIdList) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
         bool enabled_component_updates,
-        const UpdateCheckCallback& update_check_callback) override {
-      return false;
-    }
+        const UpdateCheckCallback& update_check_callback) override {}
   };
 
   class FakeCrxDownloader : public CrxDownloader {
@@ -2398,14 +2385,12 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
       return nullptr;
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
         bool enabled_component_updates,
-        const UpdateCheckCallback& update_check_callback) override {
-      return false;
-    }
+        const UpdateCheckCallback& update_check_callback) override {}
   };
 
   class FakeCrxDownloader : public CrxDownloader {
@@ -2499,7 +2484,7 @@ TEST_F(UpdateClientTest, RetryAfter) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -2530,7 +2515,6 @@ TEST_F(UpdateClientTest, RetryAfter) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, retry_after_sec));
-      return true;
     }
   };
 
@@ -2673,7 +2657,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -2769,7 +2753,6 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -2921,7 +2904,7 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -2935,8 +2918,6 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, -1, 0));
-
-      return true;
     }
   };
 
@@ -3004,7 +2985,7 @@ TEST_F(UpdateClientTest, ActionRun_Install) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -3059,7 +3040,6 @@ TEST_F(UpdateClientTest, ActionRun_Install) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-      return true;
     }
   };
 
@@ -3164,7 +3144,7 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
       return base::MakeUnique<FakeUpdateChecker>();
     }
 
-    bool CheckForUpdates(
+    void CheckForUpdates(
         const std::vector<std::string>& ids_to_check,
         const IdToComponentPtrMap& components,
         const std::string& additional_attributes,
@@ -3200,8 +3180,6 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
 
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback, 0, 0));
-
-      return true;
     }
   };
 
@@ -3242,8 +3220,7 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
 
     scoped_refptr<ComponentUnpacker> component_unpacker = new ComponentUnpacker(
         std::vector<uint8_t>(std::begin(gjpm_hash), std::end(gjpm_hash)),
-        TestFilePath("runaction_test_win.crx3"), nullptr, nullptr,
-        config()->GetSequencedTaskRunner());
+        TestFilePath("runaction_test_win.crx3"), nullptr, nullptr);
 
     component_unpacker->Unpack(base::Bind(
         [](base::FilePath* unpack_path, const base::Closure& quit_closure,

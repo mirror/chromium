@@ -59,9 +59,7 @@ ComponentInfo::~ComponentInfo() {}
 CrxUpdateService::CrxUpdateService(
     const scoped_refptr<Configurator>& config,
     const scoped_refptr<UpdateClient>& update_client)
-    : config_(config),
-      update_client_(update_client),
-      blocking_task_runner_(config->GetSequencedTaskRunner()) {
+    : config_(config), update_client_(update_client) {
   AddObserver(this);
 }
 
@@ -323,12 +321,6 @@ bool CrxUpdateService::CheckForUpdates() {
   }
 
   return true;
-}
-
-scoped_refptr<base::SequencedTaskRunner>
-CrxUpdateService::GetSequencedTaskRunner() {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  return blocking_task_runner_;
 }
 
 bool CrxUpdateService::GetComponentDetails(const std::string& id,

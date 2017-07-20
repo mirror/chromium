@@ -39,7 +39,6 @@ UpdateContext::UpdateContext(
       crx_data_callback(crx_data_callback),
       notify_observers_callback(notify_observers_callback),
       callback(callback),
-      blocking_task_runner(config->GetSequencedTaskRunner()),
       crx_downloader_factory(crx_downloader_factory) {
   for (const auto& id : ids)
     components.insert(
