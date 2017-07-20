@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca859b5f_ab5ee265",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Yes, more or less.\n\nThe warmup() API in Custom Tabs currently posts a single long task, that can take 1.5s to complete when Chrome is in the background. If an application calls warmup() shortly before an intent is sent to Chrome, the intent processng is queued after all the rest of warmup().\n\nThe solution is to stop processing everything at once, and stop all warmup() tasks when we get the intent. I will try to add a perf test in a forthcoming CL to track that, but it\u0027s non-trivial unfortunately.\n\nIn the case where warmup() has enough time, this should not impact the overall time taken by warmup() beyong the overhead of posting a few tasks, which is negligible compared to 1.5s of CPU. Beyond that, no impact on startup time.\n\nCreating a bug to make that more explicit, and to keep the discussion around.\ncrbug.com/746936",
+      "parentUuid": "c21af33f_12ddb1f2",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44ca81a9_cbe40be2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a1bb5d6e_08aba681",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ca81a9_cbe40be2",
+      "range": {
+        "startLine": 319,
+        "startChar": 38,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f1d69a_490dced5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T00:23:30Z",
       "side": 1,
       "message": "this used to be set at the end and now it is set early, is that an issue?",
+      "range": {
+        "startLine": 322,
+        "startChar": 20,
+        "endLine": 322,
+        "endChar": 42
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6b96b0_abea404b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "No, because it\u0027s only used to report a histogram, and this location suits the intended meaning.",
+      "parentUuid": "31f1d69a_490dced5",
       "range": {
         "startLine": 322,
         "startChar": 20,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "b56caf44_7a65ebb5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "That\u0027s right, thanks.\nDone.",
+      "parentUuid": "181c6811_917962a2",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5561fe45_b027adfe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 4
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "bda57b1c_5277a6c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5561fe45_b027adfe",
+      "range": {
+        "startLine": 354,
+        "startChar": 25,
+        "endLine": 354,
+        "endChar": 26
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8cb0a4_62cb5478",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 4
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-20T08:12:02Z",
       "side": 1,
       "message": "Does it make sense to split (3) and (4) into two Runnables? I honestly don\u0027t know. With trace events, it should be possible to do some profiling.",
+      "range": {
+        "startLine": 358,
+        "startChar": 23,
+        "endLine": 358,
+        "endChar": 26
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62440d05_f34784da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "No, they are really short, only posting tasks. Confirmed with tracing.",
+      "parentUuid": "6b8cb0a4_62cb5478",
       "range": {
         "startLine": 358,
         "startChar": 23,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "608946f8_b095af6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Changed all comments to say \"Stuff and things\".\n\nDone",
+      "parentUuid": "2eee6bf5_dace2356",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b112b28_730e1357",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 4
@@ -162,6 +318,24 @@
       "writtenOn": "2017-07-20T00:23:30Z",
       "side": 1,
       "message": "private?",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4894ba99_9d3f5f4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Oops... Too much C++.\n\nDone.",
+      "parentUuid": "6b112b28_730e1357",
       "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -182,6 +356,24 @@
       "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d747310c_816b3b6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01521fcc_22877e4c",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +423,54 @@
     },
     {
       "key": {
+        "uuid": "78a4f712_a3de7076",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "No need for now, so I didn\u0027t want to add unnecessary synchronization.",
+      "parentUuid": "28bc0eb7_e707b0b9",
+      "range": {
+        "startLine": 32,
+        "startChar": 46,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7898c3_f80040bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Thanks!\n\nDone.",
+      "parentUuid": "176964be_c54dcec7",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbd30ab4_0024b83d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 4
@@ -242,6 +482,24 @@
       "writtenOn": "2017-07-20T00:23:30Z",
       "side": 1,
       "message": "is there a malicious case where you could call start, then cancel, then add?\n\nThe first start would add mRunAndPost to the handler queue, cancel would clear the tasks and mark it as not running, then add would add something to the queue.  At this point, mRunAndPost would be in the handler queue and would execute the task when it ran.\n\nI see two possible solutions.\n\n1.) Check mIsRunning in mRunAndPost\n2.) Add a method to ThreadUtils that is removeCallback, that would allow you to remove mRunAndPost from the handler queue.\n\nI\u0027d personally like #2 only because I had a temp patch that added something like it but I hadn\u0027t sent it for review, so you\u0027d be doing work for me :-P.",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ec6645_cbc40078",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "I have a third solution :-)\n\nTo avoid adding dead code, what about restricting this class to be one-shot? Create the tasks, start, and maybe cancel. Once it has been started, you cannot start again.\n\nI can do the removeCallback() later as well though.",
+      "parentUuid": "cbd30ab4_0024b83d",
       "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -271,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "e8965313_7f6516f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25fa53ab_5005d8d2",
+      "range": {
+        "startLine": 52,
+        "startChar": 70,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d29fad17_eed2e31c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 4
@@ -282,6 +564,30 @@
       "writtenOn": "2017-07-20T00:23:30Z",
       "side": 1,
       "message": "should this runOnUiThreadBlocking?",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb625dc3_105e3d9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Actually, the intent was to not block the thread, unless we already are on the UI thread.\nThe parameter name is a bit misleading though in this context, perhaps coalesceTasks would be better?\n\nRight now this is not used, but I was planning to use that to remove a thread hop in Custom Tabs.",
+      "parentUuid": "d29fad17_eed2e31c",
       "range": {
         "startLine": 58,
         "startChar": 24,
@@ -334,6 +640,30 @@
     },
     {
       "key": {
+        "uuid": "8a2ee9a8_4ef038a2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Yes, because now warmUpAndWait() waits long enough to wait longer than the throttling limit.\nAdded a comment.\n\nDone.",
+      "parentUuid": "cc777c54_1602b832",
+      "range": {
+        "startLine": 516,
+        "startChar": 8,
+        "endLine": 516,
+        "endChar": 98
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1321d2e_40078e73",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
         "patchSetId": 4
@@ -345,6 +675,30 @@
       "writtenOn": "2017-07-20T08:12:02Z",
       "side": 1,
       "message": "ditto. I don\u0027t understand why this change is necessary.",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 99
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce55c762_29543edb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Same. I didn\u0027t add a comment here because the code is also clearer this way.",
+      "parentUuid": "a1321d2e_40078e73",
       "range": {
         "startLine": 548,
         "startChar": 8,
@@ -403,6 +757,30 @@
     },
     {
       "key": {
+        "uuid": "2650a139_d804c85b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/init/ChainedTasksTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1843d554_92f3f21d",
+      "range": {
+        "startLine": 83,
+        "startChar": 46,
+        "endLine": 83,
+        "endChar": 50
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf5a2cb_27048d00",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/init/ChainedTasksTest.java",
         "patchSetId": 4
@@ -414,6 +792,30 @@
       "writtenOn": "2017-07-20T08:12:02Z",
       "side": 1,
       "message": "Should we use a |finished| semaphore in this test? Otherwise this function might return prematurely.",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61af9985_4a93cb07",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/init/ChainedTasksTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 1,
+      "message": "This test is only about threading restrictions, there is testCanCancel() above that checks that cancel() works. That\u0027s why the tasks are not checked.",
+      "parentUuid": "bdf5a2cb_27048d00",
       "range": {
         "startLine": 160,
         "startChar": 16,

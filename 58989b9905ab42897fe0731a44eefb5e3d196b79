@@ -22,6 +22,30 @@
       "revId": "58989b9905ab42897fe0731a44eefb5e3d196b79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b69cfa_1bd0f587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T16:46:52Z",
+      "side": 0,
+      "message": "Updated the comment.\n\nDone",
+      "parentUuid": "4a06d3d3_9922bb2c",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 323,
+        "endChar": 81
+      },
+      "revId": "58989b9905ab42897fe0731a44eefb5e3d196b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
