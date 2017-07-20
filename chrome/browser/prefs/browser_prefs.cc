@@ -261,6 +261,10 @@
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_util.h"
 #endif
 
+#if defined(OS_LINUX) || defined(OS_WIN)
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#endif
+
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/startup/default_browser_prompt.h"
 #endif
@@ -579,6 +583,10 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
   default_apps::RegisterProfilePrefs(registry);
+#endif
+
+#if defined(OS_LINUX) || defined(OS_WIN)
+  feature_engagement_tracker::NewTabTracker::RegisterProfilePrefs(registry);
 #endif
 
 #if defined(OS_CHROMEOS)
