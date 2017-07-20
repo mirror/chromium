@@ -11,6 +11,8 @@ viz_component("common") {
   defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
 
   sources = [
+    "begin_frame_args.cc",
+    "begin_frame_args.h",
     "gl_helper.cc",
     "gl_helper.h",
     "gl_helper_readback_support.cc",
@@ -82,6 +84,7 @@ viz_component("common") {
 viz_source_set("unit_tests") {
   testonly = true
   sources = [
+    "begin_frame_args_unittest.cc",
     "gl_helper_unittest.cc",
     "resources/buffer_to_texture_target_map_unittest.cc",
     "resources/platform_color_unittest.cc",
