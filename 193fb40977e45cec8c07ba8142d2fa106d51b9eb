@@ -22,6 +22,30 @@
       "revId": "193fb40977e45cec8c07ba8142d2fa106d51b9eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad04088_9e61f0c6",
+        "filename": "chrome/browser/android/vr_shell/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-20T18:05:07Z",
+      "side": 1,
+      "message": "Yeah, might want to add comments in here to say who\u0027s the best contact for certain topics. Something like this:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/OWNERS?q\u003dfile:core+OWNERS\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d1",
+      "parentUuid": "af3ae297_b39b1e63",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "193fb40977e45cec8c07ba8142d2fa106d51b9eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
