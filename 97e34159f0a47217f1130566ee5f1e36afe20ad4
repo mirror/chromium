@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bd019c_d39e1be4",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-20T06:52:02Z",
+      "side": 1,
+      "message": "Since you\u0027re removing |services_|, the class comment is mostly irrelevant now. Can you at least rephrase it?",
+      "revId": "97e34159f0a47217f1130566ee5f1e36afe20ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8609a54e_4445415c",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-20T06:52:02Z",
+      "side": 1,
+      "message": "Also, if you have a plan to rename or delete (to merge the remaining small features to another class) the class, please add a TODO.",
+      "revId": "97e34159f0a47217f1130566ee5f1e36afe20ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
