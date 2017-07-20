@@ -244,6 +244,9 @@ bool OSMetrics::FillOSMemoryDump(base::ProcessId pid,
   dump->platform_private_footprint.internal_bytes = info.internal;
   dump->platform_private_footprint.compressed_bytes = info.compressed;
   dump->resident_set_kb = resident_bytes / 1024;
+  dump->private_bytes = private_bytes;
+  dump->shared_bytes = shared_bytes;
+  dump->locked_bytes = locked_bytes;
   return true;
 }
 
