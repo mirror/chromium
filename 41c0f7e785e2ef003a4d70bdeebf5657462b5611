@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afeb90da_14e7c228",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "Hmmm... I thought that this would be caught by the _CheckNoProductionCodeUsingTestOnlyFunctions presubmit check...  Oh, well...\n\nI guess in theory you could open a bug against _CheckNoProductionCodeUsingTestOnlyFunctions to track this.  OTOH, this presubmit check already documents itself as \"best effort\".",
+      "range": {
+        "startLine": 787,
+        "startChar": 2,
+        "endLine": 787,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37e53b84_98a559de",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "If the function returns true, then I feel that *both* the out parameters should be assigned to - otherwise we have to (awkardly IMO) ask the caller to always zero-out |new_replacement| before calling AdjustLegacyNameForMaxSize.",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 17
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c576e782_6e4142f5",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "I wish we had better code coverage tools in Chromium :-(  Would it be possible to (temporarily / on local machine only) annotate each if/else branch in the new code with a LOG.ERROR and test this way if all the branches have unit tests coverage?",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 8
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174db0f0_8c55e80f",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 157,
+        "startChar": 44,
+        "endLine": 157,
+        "endChar": 56
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5377f7_0a4652c4",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "Maybe add a comment that this function verifies that we get equivalent names via:\n1) encoding legacy unique names as version 24 and upgrading to new names while reading\n2) encoding new names",
+      "range": {
+        "startLine": 150,
+        "startChar": 5,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14674ff_36e23b41",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T16:52:30Z",
+      "side": 1,
+      "message": "FWIW, this looks good to me - I like the test coverage very much and dealing with format drift can be done later (i.e. once the tests break because just overriding/stamping version to 24 is not sufficient for simulating version 24).\n\nOTOH, maybe a comment warning about the future breakage might be helpful here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
