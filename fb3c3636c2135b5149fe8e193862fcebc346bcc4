@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb18663f_01e62ff1",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-20T23:35:20Z",
+      "side": 1,
+      "message": "From chat with xhwang@, similar isn\u0027t needed either for VORBIS case because of the lack of inclusion of any flac (or vorbis) mimetype in cdm_message_filter_android.cc. (See also https://codereview.chromium.org/2866473004 where EME+Vorbis support on android was disabled.)\n\nHowever, it may make it clearer for reviewers/maintenance if we copied that expectation (for VORBIS, too) here: if codec is either FLAC or VORBIS, and is_encrypted is true, return false from this method. WDYT, xhwang@ and dalecurtis@?",
+      "parentUuid": "735f4e54_020f1278",
+      "revId": "fb3c3636c2135b5149fe8e193862fcebc346bcc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ad12bc7_f84be696",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T23:24:46Z",
       "side": 1,
       "message": "Maybe extract this hash as kSfxLosslessHash and use it here and with the .wav test cases so we can be sure this decode is always working properly?",
+      "revId": "fb3c3636c2135b5149fe8e193862fcebc346bcc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66f76a4_4d14f31a",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-20T23:35:20Z",
+      "side": 1,
+      "message": "SGTM. (Ditto for FlacPlaybackHashed.) I\u0027ll update once I hear back about the other comment reply.",
+      "parentUuid": "5ad12bc7_f84be696",
       "revId": "fb3c3636c2135b5149fe8e193862fcebc346bcc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
