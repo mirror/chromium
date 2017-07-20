@@ -22,6 +22,30 @@
       "revId": "7f67901265428fff6e42e2fc89ced9df7408e1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6de73e7_f468ea7e",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:58:05Z",
+      "side": 1,
+      "message": "Good catch. This is not necessary anymore. Removed.",
+      "parentUuid": "7258f202_3c44a07b",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 72
+      },
+      "revId": "7f67901265428fff6e42e2fc89ced9df7408e1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
