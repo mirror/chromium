@@ -56,6 +56,7 @@
 #include "core/inspector/V8InspectorString.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/ScheduledNavigation.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "core/page/Page.h"
@@ -112,6 +113,24 @@ String DialogTypeToProtocol(ChromeClient::DialogType dialog_type) {
       NOTREACHED();
   }
   return protocol::Page::DialogTypeEnum::Alert;
+}
+
+String ScheduledNavigationTypeToProtocol(ScheduledNavigation::Type type) {
+  switch (type) {
+    case ScheduledNavigation::Type::kFormSubmission:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::FormSubmission;
+    case ScheduledNavigation::Type::kHttpHeaderRefresh:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::
+          HttpHeaderRefresh;
+    case ScheduledNavigation::Type::kLocationChange:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::LocationChange;
+    case ScheduledNavigation::Type::kMetaTagRefresh:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::MetaTagRefresh;
+    case ScheduledNavigation::Type::kPageBlock:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::PageBlock;
+    case ScheduledNavigation::Type::kReload:
+      return protocol::Page::FrameScheduledNavigation::TypeEnum::Reload;
+  }
 }
 
 }  // namespace
@@ -747,9 +766,12 @@ void InspectorPageAgent::FrameStoppedLoading(LocalFrame* frame) {
   GetFrontend()->frameStoppedLoading(FrameId(frame));
 }
 
-void InspectorPageAgent::FrameScheduledNavigation(LocalFrame* frame,
-                                                  double delay) {
-  GetFrontend()->frameScheduledNavigation(FrameId(frame), delay);
+void InspectorPageAgent::FrameScheduledNavigation(
+    LocalFrame* frame,
+    ScheduledNavigation* scheduled_navigation) {
+  GetFrontend()->frameScheduledNavigation(
+      FrameId(frame), scheduled_navigation->Delay(),
+      ScheduledNavigationTypeToProtocol(scheduled_navigation->GetType()));
 }
 
 void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {
