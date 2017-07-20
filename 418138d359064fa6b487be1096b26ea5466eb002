@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "535fa01b_c6889878",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T16:38:46Z",
+      "side": 1,
+      "message": "This should be fine as an unsorted vector, since it\u0027s only used for checking the most recent time a setting was modified (in which case we iterate through all of the UMPs and the most recent timestamp \u0027wins), and for clearing recent settings in these providers - again we iterate through *all* the members of the list - ordering has no effect.\n\nNote all the members of this list are also members of the pre-existing content_settings_providers_ map; this is just a subset of the values.",
+      "parentUuid": "48b95972_98504552",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31a792ca_ae0bab3f",
         "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
         "patchSetId": 2

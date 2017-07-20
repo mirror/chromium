@@ -16,6 +16,24 @@
       "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc19552_8a40feb7",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T16:38:46Z",
+      "side": 1,
+      "message": "Looking at the implementation of base/time.h I think you\u0027re right and I could use base::Time() instead of base::Time::Min(), since base::Time() wraps a zero-timestamp, it should be comparable to and less than any real timestamps. However, given I had to look at the implementation to determine that, this seems more correct ? I don\u0027t feel strongly though, and your way is a bit neater..",
+      "parentUuid": "7d57cb14_959c6ecd",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
