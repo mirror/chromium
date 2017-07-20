@@ -355,6 +355,29 @@
     },
     {
       "key": {
+        "uuid": "5eff7976_a606b497",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-20T20:35:37Z",
+      "side": 1,
+      "message": "I think this histogram alone may not give enough information. It does not tell us the percentage times when delaying a delayable request would help.\n\nOne possible option: At the beginning of each non-delayable request, we may want to record the count of delayable requests in-flight. Then, if in that histogram most of the samples are in bucket 0, it implies that further delaying the delayable requests would help a very small percentage of non-delayable requests, and so may not be worthwhile pursuing.",
+      "range": {
+        "startLine": 443,
+        "startChar": 17,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a0013a8_c6e441bb",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
