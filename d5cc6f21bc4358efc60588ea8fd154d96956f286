@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e428d27b_ec0fe7c6",
+        "filename": "components/viz/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-20T21:15:13Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "d5cc6f21bc4358efc60588ea8fd154d96956f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c203850_d514d43d",
+        "filename": "components/viz/test/begin_frame_args_test.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-20T21:15:13Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "d5cc6f21bc4358efc60588ea8fd154d96956f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e80472_409b7955",
+        "filename": "components/viz/test/begin_frame_args_test.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-20T21:15:13Z",
+      "side": 1,
+      "message": "nit: adding whitespace breaks what the comment is anchored to.",
+      "revId": "d5cc6f21bc4358efc60588ea8fd154d96956f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855a1071_0003dc16",
+        "filename": "components/viz/test/begin_frame_args_test.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-20T21:15:13Z",
+      "side": 1,
+      "message": "same",
+      "revId": "d5cc6f21bc4358efc60588ea8fd154d96956f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
