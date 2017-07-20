@@ -399,6 +399,18 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                             font:[MDCTypography subheadFont]
                                        textColor:textColor
                                        tintColor:tintColor];
+
+// Disable drop interactions on the omnibox.
+// TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
+// the iOS 11 SDK.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+  SEL setInteractionsSelector = NSSelectorFromString(@"setInteractions:");
+  if ([_omniBox respondsToSelector:setInteractionsSelector]) {
+    [_omniBox performSelector:setInteractionsSelector withObject:@[]];
+  }
+#pragma clang diagnostic pop
+
   if (_incognito) {
     [_omniBox setIncognito:YES];
     [_omniBox
