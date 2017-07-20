@@ -52,6 +52,7 @@ void RegisterContentSchemes(bool lock_schemes) {
     url::AddReferrerScheme(scheme.c_str(), url::SCHEME_WITHOUT_PORT);
 
   schemes.secure_schemes.push_back(kChromeUIScheme);
+  schemes.secure_schemes.push_back(kErrorScheme);
   for (auto& scheme : schemes.secure_schemes)
     url::AddSecureScheme(scheme.c_str());
 
