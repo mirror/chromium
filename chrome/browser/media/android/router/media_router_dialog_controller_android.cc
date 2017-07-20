@@ -12,11 +12,11 @@
 #include "chrome/browser/media/android/router/media_router_android.h"
 #include "chrome/browser/media/router/media_router.h"
 #include "chrome/browser/media/router/media_router_factory.h"
-#include "chrome/browser/media/router/presentation_request.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/presentation_request.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "device/vr/features/features.h"
@@ -52,7 +52,7 @@ void MediaRouterDialogControllerAndroid::OnSinkSelected(
   if (!create_connection_request)
     return;
 
-  const PresentationRequest& presentation_request =
+  const auto& presentation_request =
       create_connection_request->presentation_request();
 
   const MediaSource::Id source_id = ConvertJavaStringToUTF8(env, jsource_id);
@@ -153,8 +153,8 @@ void MediaRouterDialogControllerAndroid::CreateMediaRouterDialog() {
 
   JNIEnv* env = base::android::AttachCurrentThread();
 
-  const std::vector<MediaSource> sources =
-      create_connection_request()->presentation_request().GetMediaSources();
+  auto sources = MediaSourcesForPresentationUrls(
+      create_connection_request()->presentation_request().presentation_urls());
 
   // If it's a single route with the same source, show the controller dialog
   // instead of the device picker.
