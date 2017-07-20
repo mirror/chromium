@@ -12,6 +12,7 @@
 #include "device/base/synchronization/shared_memory_seqlock_buffer.h"
 #include "services/device/generic_sensor/generic_sensor_consts.h"
 #include "services/device/generic_sensor/platform_sensor_provider_mac.h"
+#include "services/device/generic_sensor/sensor_traits.h"
 
 namespace {
 
@@ -71,7 +72,8 @@ bool PlatformSensorAmbientLightMac::CheckSensorConfiguration(
 PlatformSensorConfiguration
 PlatformSensorAmbientLightMac::GetDefaultConfiguration() {
   PlatformSensorConfiguration default_configuration;
-  default_configuration.set_frequency(kDefaultAmbientLightFrequencyHz);
+  default_configuration.set_frequency(
+      SensorTraits<mojom::SensorType::AMBIENT_LIGHT>::kDefaultFrequency);
   return default_configuration;
 }
 
