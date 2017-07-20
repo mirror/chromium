@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d12959_5613af84",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-20T22:01:46Z",
+      "side": 1,
+      "message": "s/\\/\\//\\//\n(remove extra forward slash)",
+      "range": {
+        "startLine": 494,
+        "startChar": 42,
+        "endLine": 494,
+        "endChar": 43
+      },
+      "revId": "c0a83ae4d1321662de647da5586d4b3535c58eb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
