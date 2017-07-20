@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c5970002_faf88b68",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:26:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d6495a9_fdb5f849",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c515eba_544bbfdd",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 1

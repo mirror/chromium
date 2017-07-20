@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6b9f73_385fb3c1",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:26:35Z",
+      "side": 1,
+      "message": "FWIW that\u0027s a lot of explanation that could probably be simplified and combined above a single combined if statement. I\u0027m not super particular about this thing, but we generally prefer to try to let the code speak for itself as much as possible, which I believe it does here.",
+      "revId": "16bc9502da9483fe5e3de18f4544464b57b088ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fd3a81_26fe544f",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T21:26:35Z",
+      "side": 1,
+      "message": "That\u0027s kind of a strange requirement and seems fragile to me. What if we introduce some other reason for the state to be uninitialized? It seems simpler/safer just to test for this and early exit.",
+      "revId": "16bc9502da9483fe5e3de18f4544464b57b088ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
