@@ -218,4 +218,27 @@ suite('SiteDetails', function() {
           });
     });
   });
+
+  test('show confirmation dialog on reset settings', function() {
+    browserProxy.setPrefs(prefs);
+    testElement.origin = 'https://foo.com:443';
+
+    // Check both cancelling and accepting the dialog closes it.
+    ['cancel-button', 'action-button'].forEach(buttonType => {
+      testElement.$.clearAndReset.dispatchEvent(new CustomEvent('tap'));
+      assertTrue(testElement.$.confirmDeleteDialog.open);
+      var actionButtonList =
+          testElement.$.confirmDeleteDialog.getElementsByClassName(buttonType);
+      assertEquals(1, actionButtonList.length);
+      actionButtonList[0].dispatchEvent(new CustomEvent('tap'));
+      assertFalse(testElement.$.confirmDeleteDialog.open);
+    });
+
+    // Accepting the dialog will make a call to setOriginPermissions.
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
+      assertEquals(testElement.origin, args[0]);
+      assertDeepEquals(testElement.getCategoryList_(), args[1]);
+      assertEquals(settings.ContentSetting.DEFAULT, args[2]);
+    })
+  });
 });
