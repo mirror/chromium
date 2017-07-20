@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15361b4e_273a1dda",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T23:15:16Z",
+      "side": 1,
+      "message": "In addition to Ojan\u0027s comment, it would be good to understand why the existing call to UpdateStyleAndLayoutIgnorePendingStylesheets isn\u0027t sufficient.",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 51
+      },
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
