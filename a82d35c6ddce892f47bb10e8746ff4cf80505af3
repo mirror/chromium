@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f95d60_a2aee237",
+        "filename": "gpu/command_buffer/service/feature_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-20T17:50:03Z",
+      "side": 1,
+      "message": "Instead of checking for switftshader, check if the extension string is present and apply the hint based on that.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
