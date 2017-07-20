@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb5f1ea_8df331d6",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T01:49:14Z",
+      "side": 1,
+      "message": "Does GetWidget()-\u003eGetRootView()-\u003elayer() give us something we can use in a cross-platform way?  (maybe after a SetPaintToLayer call).",
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30eccf9_88a9331f",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T01:49:14Z",
+      "side": 1,
+      "message": "does anything call this? Seems it is always 0..",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a47ec5a_8a9df6ff",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T01:49:14Z",
+      "side": 1,
+      "message": "Can we use GetWidget()-\u003enon_client_view()-\u003eGetWindowMask() ?",
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
