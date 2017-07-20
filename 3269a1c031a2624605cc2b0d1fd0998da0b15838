@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "e523c34c_60e8be4d",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:32:33Z",
+      "side": 1,
+      "message": "It feels awkward to have two ways to convey presumably the same information and have separate but similar code paths. My preference would be to use one and do a conversion, unless there is a concern about performance or something? Or would it be possible to just have a ContentSecurityPolicy* directly here?\n\nThe names are also eerily the same and it\u0027s not clear why you\u0027d use one over the other.",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5565d61_2653db56",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:32:33Z",
+      "side": 1,
+      "message": "\"...FromHeaders\" would be consistent with the parameter type",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f328df0c_d12ba6ab",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:32:33Z",
+      "side": 1,
+      "message": "Just to confirm, in the ResourceLoader path also, only the main script\u0027s CSP and referrer policy matter?",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045ac069_11cca81c",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:32:33Z",
+      "side": 1,
+      "message": "my preference would be to call this something like SetContentSecurityAndReferrerPolicy, seems clearer what it\u0027s doing",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e099a6c_d321fcd3",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:32:33Z",
+      "side": 1,
+      "message": "\"set on |document|\" or \"applied to |document|\"?\n\nmove \"at ReportInstalledMainScriptInfo\" to after \"|document|\", otherwise it looks like the main script is evaluated at ReportInstalledMainScriptInfo.",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b6b785_9541fb2a",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
         "patchSetId": 2
