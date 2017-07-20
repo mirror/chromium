@@ -69,6 +69,29 @@
       "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5ee22c_f10f5994",
+        "filename": "media/gpu/args.gni",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-20T15:41:16Z",
+      "side": 1,
+      "message": "Could you expand the documentation a little bit, for example: \"...to be used; in particular, on x86-based ChromeOS devices\"?",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
