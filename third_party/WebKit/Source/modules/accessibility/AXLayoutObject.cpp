@@ -1915,6 +1915,14 @@ AXLayoutObject* AXLayoutObject::GetUnignoredObjectFromNode(Node& node) const {
 
 // Convert from an accessible object and offset to a VisiblePosition.
 static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
+  if (!obj || offset < 0)
+    return VisiblePosition();
+
+  // Some objects don't have an associated node, e.g. |LayoutListMarker|.
+  if (obj->GetLayoutObject() && !obj->GetNode() && obj->ParentObject()) {
+    return ToVisiblePosition(obj->ParentObject(), obj->IndexInParent());
+  }
+
   if (!obj->GetNode())
     return VisiblePosition();
 
@@ -1922,7 +1930,7 @@ static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
   if (!node->IsTextNode()) {
     int child_count = obj->Children().size();
 
-    // Place position immediately before the container node, if there was no
+    // Place position immediately before the container node, if there were no
     // children.
     if (child_count == 0) {
       if (!obj->ParentObject())
@@ -1943,7 +1951,7 @@ static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
     AXObject* child_obj = obj->Children()[clamped_offset];
     Node* child_node = child_obj->GetNode();
     if (!child_node || !child_node->parentNode())
-      return VisiblePosition();
+      return ToVisiblePosition(obj->ParentObject(), obj->IndexInParent());
 
     // The index in parent.
     int adjusted_offset = child_node->NodeIndex();
@@ -2002,7 +2010,7 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
   }
 
   LocalFrame* frame = GetLayoutObject()->GetFrame();
-  if (!frame)
+  if (!frame || !frame->Selection().IsAvailable())
     return;
 
   // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -2020,6 +2028,7 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
   if (anchor_visible_position.IsNull() || focus_visible_position.IsNull())
     return;
 
+  LOG(ERROR) << anchor_visible_position << '\n' << focus_visible_position;
   frame->Selection().SetSelection(
       SelectionInDOMTree::Builder()
           .Collapse(anchor_visible_position.ToPositionWithAffinity())

@@ -2905,40 +2905,18 @@ void BrowserAccessibilityComWin::ComputeStylesIfNeeded() {
 
 // |offset| could either be a text character or a child index in case of
 // non-text objects.
-// TODO(nektar): Remove this function once selection bugs are fixed in Blink.
+// Currently we convert to text leaf equivalents to be safe.
+// TODO(nektar): Remove this function once selection fixes in Blink are
+// thoroughly tested.
 AXPlatformPosition::AXPositionInstance
 BrowserAccessibilityComWin::CreatePositionForSelectionAt(int offset) const {
-  if (!owner()->IsNativeTextControl() && !owner()->IsTextOnlyObject()) {
-    auto* manager = Manager();
-    DCHECK(manager);
-    const BrowserAccessibilityComWin* child = this;
-    // TODO(nektar): Make parents of text-only objects not include the text of
-    // children in their hypertext.
-    for (size_t i = 0; i < owner()->InternalChildCount(); ++i) {
-      int new_offset = offset;
-      child = ToBrowserAccessibilityComWin(owner()->InternalGetChild(i));
-      DCHECK(child);
-      if (child->owner()->IsTextOnlyObject()) {
-        new_offset -= child->owner()->GetText().length();
-      } else {
-        new_offset -= 1;
-      }
-      if (new_offset <= 0)
-        break;
-      offset = new_offset;
-    }
-    AXPlatformPositionInstance position =
-        AXPlatformPosition::CreateTextPosition(manager->ax_tree_id(),
-                                               child->owner()->GetId(), offset,
-                                               ui::AX_TEXT_AFFINITY_DOWNSTREAM)
-            ->AsLeafTextPosition();
-    if (position->GetAnchor() &&
-        position->GetAnchor()->GetRole() == ui::AX_ROLE_INLINE_TEXT_BOX) {
-      return position->CreateParentPosition();
+  AXPlatformPositionInstance position =
+      owner()->CreatePositionAt(offset)->AsLeafTextPosition();
+  if (position->GetAnchor() &&
+      position->GetAnchor()->GetRole() == ui::AX_ROLE_INLINE_TEXT_BOX) {
+    return position->CreateParentPosition();
     }
     return position;
-  }
-  return owner()->CreatePositionAt(offset);
 }
 
 //

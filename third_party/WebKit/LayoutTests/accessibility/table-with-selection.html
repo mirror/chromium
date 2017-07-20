@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<table id="table">
+  <tr><th>Header1</th><th>Header2</th></tr>
+  <tr><td>Cell1</td><td>Cell2</td></tr>
+  <tr><td>Cell3</td><td>Cell4</td></tr>
+</table>
+
+<script>
+  test(function() {
+    if (!window.accessibilityController)
+      return;
+
+    let axTable = accessibilityController.accessibleElementById('table');
+    assert_not_equals(axTable, undefined);
+
+    // Select all items in the table.
+    axTable.setSelectedTextRange(0, 2);
+    // |selectionStart| and |selectionEnd| are character-based.
+    let selectionText = 'Header1\tHeader2\nCell1\tCell2\nCell3\tCell4';
+    assert_equals(axTable.selectionStart, 0);
+    assert_equals(axTable.selectionEnd, selectionText.length);
+
+    let selection = window.getSelection();
+    assert_equals(selection.toString(), selectionText);
+
+    if (window.testRunner)
+      document.getElementById('table').style.display = "none";;
+      }, 'Setting the selection on an entire HTML table through the accessibility APIs should work.');
+</script>
