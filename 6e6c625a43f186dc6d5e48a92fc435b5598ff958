@@ -22,6 +22,30 @@
       "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed5ec7d_8fb28b8f",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-20T21:06:30Z",
+      "side": 1,
+      "message": "This can fail when the calling sequence is like the following:\nDeviceMotionEventPump::SendStartMessage()\nDeviceMotionEventPump::SendStopMessage()\nDeviceMotionEventPump::SendStartMessage()\n\nThe first call of DeviceMotionEventPump::SendStartMessage() makes three calls of DeviceMotionEventPump::GetSensor(), the |sensor_entry-\u003esensor| pointer is initialized, and it enters the SensorEntry::OnSensorCreated() callback, the |shared_buffer| is not initialized until the following code runs:\nshared_buffer \u003d shared_buffer_handle-\u003eMapAtOffset(kReadBufferSize, params-\u003ebuffer_offset);\nNow DeviceMotionEventPump::SendStopMessage() is called and all the sensors are suspended. And suppose DeviceMotionEventPump::SendStartMessage() is called again before the |shared_buffer| is initialized, and this time it will go to the else branch and call the DeviceMotionEventPump::CanStart(). DeviceMotionEventPump::CanStart() finds that one of the |sensor_entry-\u003esensor| is initialized but its shared_buffer it not, so it returns false, and prevents accessing the shared_buffer which is a nullptr.\n\nI think there is not much difference of suspending/not suspending the sensor here, since when DeviceMotionEventPump::SendStartMessage() is called, it will call the Resume() anyway.",
+      "parentUuid": "3d7e435a_9475c63c",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
