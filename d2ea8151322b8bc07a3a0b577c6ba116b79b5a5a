@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8c6a12_030fcb36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "crrev.com/[git ref]",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1e6412_1469ea82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "Are these still applicable?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7589ad86_1f712374",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "This describes the what, which can be derived from code.\n\nWhat\u0027s more interesting is the why. Why do we need to record this before calling NewTab()?",
+      "range": {
+        "startLine": 355,
+        "startChar": 6,
+        "endLine": 357,
+        "endChar": 43
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd42786_c5f2c4a7",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "Nice comment!",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 30
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c43df64a_d23beaad",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "Forward declare GURL in this file.\n\nAside: Why was this change necessary? Cleanup?",
+      "range": {
+        "startLine": 39,
+        "startChar": 26,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe1fd63_6e3de407",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "Same here as with the new tab comment in an earlier file.",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 912,
+        "endChar": 76
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d348107_5b3330be",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T17:36:01Z",
+      "side": 1,
+      "message": "See previous comment with regards to NewTab.",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 62
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
