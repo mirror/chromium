@@ -8,18 +8,6 @@
 
 namespace content {
 
-bool LayoutTestContentClient::CanSendWhileSwappedOut(
-    const IPC::Message* message) {
-  switch (message->type()) {
-    // Used in layout tests; handled in BlinkTestController.
-    case ShellViewHostMsg_PrintMessage::ID:
-      return true;
-
-    default:
-      return false;
-  }
-}
-
 bool LayoutTestContentClient::IsSupplementarySiteIsolationModeEnabled() {
 #if defined(OS_ANDROID)
   return false;
