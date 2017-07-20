@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e1d674_c7a2c603",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "The description is great in terms of explaining \"what\" is happening, I\u0027d just add some extra comment to make a bit more explicit \"why\".\nSomething like: historically each process dumped OS stats on their own... however this got very weird because of the Linux sandbox (See crbug.com/461788) ... and we got into the state where multiple places know about this workaround. This CL moves to a world where the knowledge about the sandbox workarounds is only in the service and the rest of the code just does what asked by the service.",
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18cf1b4_5fc13bd3",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "as we discussed offline this block requires some comment. I would say something like:\n|response| accumulates the replies received by each client process. Depending on the OS each Client process might return 1 chrome + 1 OS dump each or, in the case of Linux, only 1 chrome dump each % the browser process which will provide all the OS dumps. \nIn the former case (!OS_LINUX) we expect client processes to have exactly one OS dump in their |response|, % the case when they unexpectedly disconnect in the middle of a dump (e.g. because they crash).\nIn the latter case (OS_LINUX) we epxect the full map to come from the browser process response.",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 21
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88152d1a_b884d603",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "I think you can factor out this outside the #if block and use in both cases?",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 60
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20426593_b45dac3b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "add a comment saying: this can be empty if the client process disconnected before providing both dumps. See UnregisterClientProcess()",
+      "range": {
+        "startLine": 421,
+        "startChar": 3,
+        "endLine": 421,
+        "endChar": 38
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2517df93_5379fc1d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "just checking, do we heave any test covering this case?",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 436,
+        "endChar": 15
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e584043_a6da5cef",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "nit: I think you need a block with braces if the statement doesn\u0027t fit in one line.\nOptional otherwise (I tend to prefer no braces in that case, but that\u0027s not the case here)\n\nAlso, just discussed this offline, this \"if\" seems unnecessary and somewhat contraddicts the \"continue\" above in line 436. Shoudln\u0027t be a problem to add dumps to the traces even if incomplete.",
+      "range": {
+        "startLine": 443,
+        "startChar": 22,
+        "endLine": 443,
+        "endChar": 23
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee6a2a6_71d9d18d",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "not a huge fan of if(true) code. I know you are going to change in some next CL, but maybe introduce the if and the variable there?",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 25
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c465cb_6b321725",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "just |callback|? or |on_added_to_trace_callback|?",
+      "range": {
+        "startLine": 134,
+        "startChar": 39,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cbfabf_00f62c2f",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "can this be a function only defined in the anonymous namespace up here?",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a497642a_3f48e340",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "uh?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 3
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648bbb3a_1dbc13b9",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "nit, remove |args| for consistency with the above (the type is descriptive enough)",
+      "range": {
+        "startLine": 44,
+        "startChar": 53,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d786a630_37df0f82",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:34:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 46,
+        "startChar": 60,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
