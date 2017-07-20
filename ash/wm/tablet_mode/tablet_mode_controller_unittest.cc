@@ -38,12 +38,13 @@ namespace ash {
 
 namespace {
 
-const float kDegreesToRadians = 3.1415926f / 180.0f;
-const float kMeanGravity = 9.8066f;
+constexpr float kDegreesToRadians = 3.1415926f / 180.0f;
+constexpr float kMeanGravity = 9.8066f;
 
-const char kTouchViewInitiallyDisabled[] = "Touchview_Initially_Disabled";
-const char kTouchViewEnabled[] = "Touchview_Enabled";
-const char kTouchViewDisabled[] = "Touchview_Disabled";
+// The strings are "Touchview" as they're already used in metrics.
+constexpr char kTabletModeInitiallyDisabled[] = "Touchview_Initially_Disabled";
+constexpr char kTabletModeEnabled[] = "Touchview_Enabled";
+constexpr char kTabletModeDisabled[] = "Touchview_Disabled";
 
 }  // namespace
 
@@ -77,7 +78,7 @@ class TabletModeControllerTest : public AshTestBase {
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshEnableTouchView);
+        switches::kAshEnableTabletMode);
     AshTestBase::SetUp();
     chromeos::AccelerometerReader::GetInstance()->RemoveObserver(
         tablet_mode_controller());
@@ -179,8 +180,8 @@ class TabletModeControllerTest : public AshTestBase {
     return !!tablet_mode_controller()->event_blocker_.get();
   }
 
-  TabletModeController::ForceTabletMode forced_tablet_mode() {
-    return tablet_mode_controller()->force_tablet_mode_;
+  TabletModeController::ForceUiMode forced_ui_mode() {
+    return tablet_mode_controller()->force_ui_mode_;
   }
 
   base::UserActionTester* user_action_tester() { return &user_action_tester_; }
@@ -194,28 +195,28 @@ class TabletModeControllerTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(TabletModeControllerTest);
 };
 
-// Verify TouchView enabled/disabled user action metrics are recorded.
-TEST_F(TabletModeControllerTest, VerifyTouchViewEnabledDisabledCounts) {
+// Verify TabletMode enabled/disabled user action metrics are recorded.
+TEST_F(TabletModeControllerTest, VerifyTabletModeEnabledDisabledCounts) {
   ASSERT_EQ(1,
-            user_action_tester()->GetActionCount(kTouchViewInitiallyDisabled));
-  ASSERT_EQ(0, user_action_tester()->GetActionCount(kTouchViewEnabled));
-  ASSERT_EQ(0, user_action_tester()->GetActionCount(kTouchViewDisabled));
+            user_action_tester()->GetActionCount(kTabletModeInitiallyDisabled));
+  ASSERT_EQ(0, user_action_tester()->GetActionCount(kTabletModeEnabled));
+  ASSERT_EQ(0, user_action_tester()->GetActionCount(kTabletModeDisabled));
 
   user_action_tester()->ResetCounts();
   tablet_mode_controller()->EnableTabletModeWindowManager(true);
-  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTouchViewEnabled));
-  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTouchViewDisabled));
+  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTabletModeEnabled));
+  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTabletModeDisabled));
   tablet_mode_controller()->EnableTabletModeWindowManager(true);
-  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTouchViewEnabled));
-  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTouchViewDisabled));
+  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTabletModeEnabled));
+  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTabletModeDisabled));
 
   user_action_tester()->ResetCounts();
   tablet_mode_controller()->EnableTabletModeWindowManager(false);
-  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTouchViewEnabled));
-  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTouchViewDisabled));
+  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTabletModeEnabled));
+  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTabletModeDisabled));
   tablet_mode_controller()->EnableTabletModeWindowManager(false);
-  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTouchViewEnabled));
-  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTouchViewDisabled));
+  EXPECT_EQ(0, user_action_tester()->GetActionCount(kTabletModeEnabled));
+  EXPECT_EQ(1, user_action_tester()->GetActionCount(kTabletModeDisabled));
 }
 
 // Verify that closing the lid will exit tablet mode.
@@ -609,10 +610,9 @@ TEST_F(TabletModeControllerTest, InitializedWhileTabletModeSwitchOn) {
 // 180 degrees or setting tablet mode to true will no turn on tablet mode.
 TEST_F(TabletModeControllerTest, ForceClamshellModeTest) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kAshForceTabletMode, switches::kAshForceTabletModeClamshell);
+      switches::kAshForceUiMode, switches::kAshForceUiModeClamshell);
   tablet_mode_controller()->OnShellInitialized();
-  EXPECT_EQ(TabletModeController::ForceTabletMode::CLAMSHELL,
-            forced_tablet_mode());
+  EXPECT_EQ(TabletModeController::ForceUiMode::CLAMSHELL, forced_ui_mode());
   EXPECT_FALSE(IsTabletModeStarted());
 
   OpenLidToAngle(300.0f);
@@ -629,10 +629,9 @@ TEST_F(TabletModeControllerTest, ForceClamshellModeTest) {
 // to off will not turn off tablet mode.
 TEST_F(TabletModeControllerTest, ForceTouchViewModeTest) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kAshForceTabletMode, switches::kAshForceTabletModeTouchView);
+      switches::kAshForceUiMode, switches::kAshForceUiModeTabletMode);
   tablet_mode_controller()->OnShellInitialized();
-  EXPECT_EQ(TabletModeController::ForceTabletMode::TOUCHVIEW,
-            forced_tablet_mode());
+  EXPECT_EQ(TabletModeController::ForceUiMode::TABLETMODE, forced_ui_mode());
   EXPECT_TRUE(IsTabletModeStarted());
   EXPECT_TRUE(AreEventsBlocked());
 
