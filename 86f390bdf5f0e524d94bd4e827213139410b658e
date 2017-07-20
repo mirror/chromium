@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "7998f2ed_d86d5208",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-20T17:54:00Z",
+      "side": 1,
+      "message": "I\u0027m going to save this interface change for a different CL because it will touch a lot of different files!",
+      "parentUuid": "d48b9b53_9ad97eef",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fed3b0_b708dfc1",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
@@ -298,6 +316,24 @@
       "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e9c4e6_75421376",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-20T17:54:00Z",
+      "side": 1,
+      "message": "I just did it here, implementing the original OnDownloadSucceeded/Failed from the previous version. Customers can just leave the client_ field as a nullptr if they don\u0027t want to run through these processes. Let me know if this doesn\u0027t make sense :)",
+      "parentUuid": "9f95c9ef_ab73eb27",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
