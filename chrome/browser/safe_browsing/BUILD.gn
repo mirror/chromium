@@ -141,6 +141,8 @@ static_library("safe_browsing") {
         "download_feedback_service.h",
         "download_protection_service.cc",
         "download_protection_service.h",
+        "check_client_download_request.cc",
+        "check_client_download_request.h",
         "incident_reporting/binary_integrity_analyzer.cc",
         "incident_reporting/binary_integrity_analyzer.h",
         "incident_reporting/binary_integrity_analyzer_mac.cc",
