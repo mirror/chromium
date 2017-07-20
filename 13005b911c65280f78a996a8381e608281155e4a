@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72059265_acc37d64",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "Thanks for catching that.\n The lines containing:\nEXPECT_TRUE(immersive_controller-\u003eIsEnabled());\n\nShould be switched to:\nEXPECT_TRUE(immersive_controller-\u003eIsRevealed());\n\nI also added waiters to wait until the revealer is dismissed.",
+      "parentUuid": "f3696772_6dbab220",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f40ffb2_ae75caf4",
         "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "13005b911c65280f78a996a8381e608281155e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0132f3b0_8b78960e",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "This behavior seems to be Ash-specific only, so I moved the test to browser_non_client_frame_view_ash_browsertest.cc.",
+      "parentUuid": "5f40ffb2_ae75caf4",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f9e01b48_99f120f7",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b403ff88_d7211bf1",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca59aeab_901e22fe",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "13005b911c65280f78a996a8381e608281155e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d172acae_a32e7cfe",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "Yes, I just wanted to be explicit.\nDone. Removed.",
+      "parentUuid": "ca59aeab_901e22fe",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0a85bff8_0e88f249",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c318abdc_1c7d452e",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e17986c_b3009e80",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "13005b911c65280f78a996a8381e608281155e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ecc2f7_5bd47b7e",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-20T18:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e17986c_b3009e80",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
