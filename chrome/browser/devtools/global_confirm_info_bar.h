@@ -27,6 +27,11 @@ class GlobalConfirmInfoBar : public TabStripModelObserver,
  public:
   static base::WeakPtr<GlobalConfirmInfoBar> Show(
       std::unique_ptr<ConfirmInfoBarDelegate> delegate);
+
+  // Starts tracking all the browser tabs.
+  void Initialize();
+
+  // Closes the global infobar.
   void Close();
 
   // infobars::InfoBarManager::Observer:
