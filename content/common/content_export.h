@@ -5,6 +5,14 @@
 #ifndef CONTENT_COMMON_CONTENT_EXPORT_H_
 #define CONTENT_COMMON_CONTENT_EXPORT_H_
 
+// Used to export helper functions in  content/browser/renderer_host/input/
+// synthetic_gesture_target_android.h for VR usage.
+#if defined(COMPONENT_BUILD)
+#define CONTENT_HELPER_EXPORT __attribute__((visibility("default")))
+#else
+#define CONTENT_HELPER_EXPORT
+#endif
+
 #if defined(COMPONENT_BUILD) && !defined(COMPILE_CONTENT_STATICALLY)
 #if defined(WIN32)
 

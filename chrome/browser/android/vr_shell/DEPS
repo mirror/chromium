@@ -4,3 +4,9 @@ include_rules = [
   "+device/vr",
   "+third_party/gvr-android-sdk/src",
 ]
+
+specific_include_rules = {
+  "android_ui_gesture_target.cc": [
+    "+content/browser/renderer_host/input/synthetic_gesture_target_android.h"
+  ],
+}

@@ -162,7 +162,7 @@ void VrShell::SwapContents(
 
   if (!web_contents_) {
     android_ui_gesture_target_ = base::MakeUnique<AndroidUiGestureTarget>(
-        j_motion_event_synthesizer_.obj(),
+        j_motion_event_synthesizer_,
         Java_VrShellImpl_getNativePageScrollRatio(env, j_vr_shell_.obj()));
     input_manager_ = nullptr;
     vr_web_contents_observer_ = nullptr;
