@@ -639,17 +639,14 @@ const FeatureEntry::Choice kNtpSwitchToExistingTabChoices[] = {
 #endif  // OS_ANDROID
 
 #if defined(OS_CHROMEOS)
-const FeatureEntry::Choice kAshForceTabletModeChoices[] = {
+const FeatureEntry::Choice kAshForceUiModeChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kForceTabletModeTouchview,
-     ash::switches::kAshForceTabletMode,
-     ash::switches::kAshForceTabletModeTouchView},
-    {flag_descriptions::kForceTabletModeClamshell,
-     ash::switches::kAshForceTabletMode,
-     ash::switches::kAshForceTabletModeClamshell},
-    {flag_descriptions::kForceTabletModeAuto,
-     ash::switches::kAshForceTabletMode,
-     ash::switches::kAshForceTabletModeAuto},
+    {flag_descriptions::kForceUiModeTabletMode, ash::switches::kAshForceUiMode,
+     ash::switches::kAshForceUiModeTabletMode},
+    {flag_descriptions::kForceUiModeClamshell, ash::switches::kAshForceUiMode,
+     ash::switches::kAshForceUiModeClamshell},
+    {flag_descriptions::kForceUiModeAuto, ash::switches::kAshForceUiMode,
+     ash::switches::kAshForceUiModeAuto},
 };
 #endif  // OS_CHROMEOS
 
@@ -2952,9 +2949,9 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kFetchKeepaliveTimeoutSetting)},
 
 #if defined(OS_CHROMEOS)
-    {"force-tablet-mode", flag_descriptions::kForceTabletModeName,
-     flag_descriptions::kForceTabletModeDescription, kOsCrOS,
-     MULTI_VALUE_TYPE(kAshForceTabletModeChoices)},
+    {"force-tablet-mode", flag_descriptions::kForceUiModeName,
+     flag_descriptions::kForceUiModeDescription, kOsCrOS,
+     MULTI_VALUE_TYPE(kAshForceUiModeChoices)},
 #endif  // OS_CHROMEOS
 
     {"memory-ablation", flag_descriptions::kMemoryAblationName,

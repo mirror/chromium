@@ -59,20 +59,20 @@ class TouchEventHandler : public ui::EventHandler {
 
 class TouchEventsViewTest : public ViewEventTestBase {
  public:
-  TouchEventsViewTest() : ViewEventTestBase(), touch_view_(nullptr) {}
+  TouchEventsViewTest() : ViewEventTestBase(), tablet_mode_(nullptr) {}
 
   // ViewEventTestBase:
   void SetUp() override {
-    touch_view_ = new views::View();
+    tablet_mode_ = new views::View();
     ViewEventTestBase::SetUp();
   }
 
   void TearDown() override {
-    touch_view_ = nullptr;
+    tablet_mode_ = nullptr;
     ViewEventTestBase::TearDown();
   }
 
-  views::View* CreateContentsView() override { return touch_view_; }
+  views::View* CreateContentsView() override { return tablet_mode_; }
 
   gfx::Size GetPreferredSizeForContents() const override {
     return gfx::Size(600, 600);
@@ -90,8 +90,9 @@ class TouchEventsViewTest : public ViewEventTestBase {
     TouchEventHandler touch_event_handler;
     GetWidget()->GetNativeWindow()->GetHost()->window()->AddPreTargetHandler(
         &touch_event_handler);
-    gfx::Point in_content(touch_view_->width() / 2, touch_view_->height() / 2);
-    views::View::ConvertPointToScreen(touch_view_, &in_content);
+    gfx::Point in_content(tablet_mode_->width() / 2,
+                          tablet_mode_->height() / 2);
+    views::View::ConvertPointToScreen(tablet_mode_, &in_content);
 
     ASSERT_TRUE(ui_controls::SendTouchEvents(ui_controls::PRESS,
                                              touch_pointer_count,
@@ -106,7 +107,7 @@ class TouchEventsViewTest : public ViewEventTestBase {
   }
 
  private:
-  views::View* touch_view_ = nullptr;
+  views::View* tablet_mode_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(TouchEventsViewTest);
 };
