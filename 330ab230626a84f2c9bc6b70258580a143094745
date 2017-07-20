@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c165577_8ff47c8c",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-20T00:33:11Z",
+      "side": 1,
+      "message": "Clearly I screwed up the non-mechanical change. 😊",
+      "parentUuid": "992b4f87_f250726b",
+      "revId": "330ab230626a84f2c9bc6b70258580a143094745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5f8729_9c73c74f",
         "filename": "ui/gfx/geometry/rect.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "330ab230626a84f2c9bc6b70258580a143094745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7d9954_cf9ce7e3",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-20T00:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5f8729_9c73c74f",
+      "revId": "330ab230626a84f2c9bc6b70258580a143094745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
