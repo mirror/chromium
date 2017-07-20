@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d25f4e2f_3a84b73a",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T20:33:29Z",
+      "side": 1,
+      "message": "This has landed right? Please rebase?",
+      "range": {
+        "startLine": 114,
+        "startChar": 20,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "224fb789703c3aa5fab01bd5e443bead47a471e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
