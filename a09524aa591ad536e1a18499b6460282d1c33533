@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4bd8f00f_f8f9b5d0",
+        "filename": "chrome/browser/chromeos/login/reauth_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T21:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a792bc_60b3bce9",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 68
+      },
+      "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392ea446_c3125683",
         "filename": "components/signin/core/browser/signin_metrics.h",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653a4c84_0975f305",
+        "filename": "components/signin/core/browser/signin_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T21:52:17Z",
+      "side": 1,
+      "message": "Renamed as AccessPointAction.\n\nDone",
+      "parentUuid": "392ea446_c3125683",
+      "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
