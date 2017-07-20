@@ -22,6 +22,30 @@
       "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e9fae5_3b76140f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T23:56:09Z",
+      "side": 1,
+      "message": "Necessary information for position:sticky[0] elements is computed during compositing inputs update in LayoutBoxModelObject::UpdateStickyPositionConstraints. Since sticky can shift rects, compositing inputs must be clean before asking any location-based questions of position:sticky rects or anything contained by them.\n\nEnsurePaintLocationDataValidForNode checks if a given node is either sticky or in a sticky subtree, and if so it makes sure that compositing inputs are clean. Normally we would just replace the original call to UpdateStyleAndLayoutIgnorePendingStylesheets at line 944, but EnsurePaintLocationDataValidForNode needs to have a Node* to operate on to do the sticky subtree check (just blindly doing compositing inputs clean on any text input would be too expensive.) \n\nWe\u0027re not familiar with this \u0027VisibleSelection\u0027 concept, so for now we are attempting to use the start.AnchorNode() which seems to work for basic tests. If there is a better Node (or set of Nodes) to check please let us know :).\n\n[0]: https://developer.mozilla.org/en/docs/Web/CSS/position#Sticky_positioning",
+      "parentUuid": "15361b4e_273a1dda",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 51
+      },
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
