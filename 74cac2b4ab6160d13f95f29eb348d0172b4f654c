@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6e1516_495628f3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "Can you add a comment like about what this class does?\n\nSender sends a single script to the renderer and calls SWIsntalledScriptsSender::OnFinishSendingScript() when done.",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457ef8a2_583ccf19",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "To aid code reading, can you add a comment pointing to where the work continues from here? Or are we just totally done? Looking for a comment like:\n\n// All scripts have been sent to the renderer. ServiceWorkerInstalledScriptsSender\u0027s work is done now.",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8100b5b_8848863d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "What happens in this case until the TODO is addressed? Does the renderer know an error occurred and falls back to the normal ResourceLoader path?\n\nIf the error is just silently dropped now, I want to make sure we don\u0027t flip the flag until this is handled. Should this just CHECK() or do nothing instead of calling OnFinishSendingScript()?",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f77df0_f2a78e2f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "streaming -\u003e sending?",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539ae1cf_a8119ab6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "rm all the LOG(ERROR) from this file",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd559c2e_1cf10dbd",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "++next_url_\nhttps://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a2057e_5b0269bd",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "; \u003d\u003e .",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502921e1_6c8f6a6a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "should this say \"I\u0027m the script body!\" instead?",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bde50e3_62e6c77a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "something like i\u0027m imported script 1 etc",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee86baec_40a6a5b0",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "somethinfg like meta data for imported script 1 etc",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16689f0_2cbde88d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311deeb2_16c76f4a",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T02:41:00Z",
+      "side": 1,
+      "message": "\"could be\" \u003d\u003e \"is\"\n\ncan you explain why the scripts might need to be served by net layer. \"the worker is not installed, or pause on download was true\" or something?",
+      "revId": "74cac2b4ab6160d13f95f29eb348d0172b4f654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
