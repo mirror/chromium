@@ -118,6 +118,30 @@
       "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d649a8de_f360f19b",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-07-20T18:28:01Z",
+      "side": 1,
+      "message": "Alright, looks like the path forward is to give unshare()+fork() a shot in ForkInNewPidNamespace, not everywhere we fork.",
+      "parentUuid": "ba8de7ce_1bf27e82",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
