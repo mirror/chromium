@@ -413,6 +413,12 @@ const DecodedBufferExpectations kBearOpusExpectations[] = {
     {14000, 10000, "0.10,0.24,0.23,0.04,-0.14,-0.23,"},
 };
 
+const DecodedBufferExpectations kSfxFlacExpectations[] = {
+    {0, 104489, "-2.42,-1.12,0.71,1.70,1.09,-0.68,"},
+    {104489, 104489, "-1.99,-0.67,1.18,2.19,1.60,-0.16,"},
+    {208979, 79433, "2.84,2.70,3.23,4.06,4.59,4.44,"},
+};
+
 // Test params to test decoder reinitialization. Choose opus because it is
 // supported on all platforms we test on.
 const TestParams kReinitializeTestParams = {
@@ -437,6 +443,8 @@ const DecodedBufferExpectations kHeAacMcExpectations[] = {
 const TestParams kMediaCodecTestParams[] = {
     {kCodecOpus, "bear-opus.ogg", kBearOpusExpectations, 24, 48000,
      CHANNEL_LAYOUT_STEREO},
+    {kCodecFLAC, "sfx.flac", kSfxFlacExpectations, 0, 44100,
+     CHANNEL_LAYOUT_MONO},
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
     {kCodecAAC, "sfx.adts", kSfxAdtsMcExpectations, 0, 44100,
      CHANNEL_LAYOUT_MONO},
@@ -460,12 +468,6 @@ const DecodedBufferExpectations kSfxAdtsExpectations[] = {
     {46439, 23219, "1.42,1.69,2.95,4.23,4.02,2.36,"},
 };
 #endif
-
-const DecodedBufferExpectations kSfxFlacExpectations[] = {
-    {0, 104489, "-2.42,-1.12,0.71,1.70,1.09,-0.68,"},
-    {104489, 104489, "-1.99,-0.67,1.18,2.19,1.60,-0.16,"},
-    {208979, 79433, "2.84,2.70,3.23,4.06,4.59,4.44,"},
-};
 
 const DecodedBufferExpectations kSfxWaveExpectations[] = {
     {0, 23219, "-1.23,-0.87,0.47,1.85,1.88,0.29,"},

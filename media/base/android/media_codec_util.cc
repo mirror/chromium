@@ -39,6 +39,7 @@ const char kMp3MimeType[] = "audio/mpeg";
 const char kAacMimeType[] = "audio/mp4a-latm";
 const char kOpusMimeType[] = "audio/opus";
 const char kVorbisMimeType[] = "audio/vorbis";
+const char kFlacMimeType[] = "audio/flac";
 const char kAc3MimeType[] = "audio/ac3";
 const char kEac3MimeType[] = "audio/eac3";
 const char kBitstreamAudioMimeType[] = "audio/raw";
@@ -62,8 +63,8 @@ static CodecProfileLevel MediaCodecProfileLevelToChromiumProfileLevel(
 
 static bool IsSupportedAndroidMimeType(const std::string& mime_type) {
   std::vector<std::string> supported{
-      kMp3MimeType, kAacMimeType,  kOpusMimeType, kVorbisMimeType,
-      kAvcMimeType, kHevcMimeType, kVp8MimeType,  kVp9MimeType};
+      kMp3MimeType,  kAacMimeType, kOpusMimeType, kVorbisMimeType, kAvcMimeType,
+      kHevcMimeType, kVp8MimeType, kVp9MimeType,  kFlacMimeType};
   return std::find(supported.begin(), supported.end(), mime_type) !=
          supported.end();
 }
@@ -107,6 +108,8 @@ std::string MediaCodecUtil::CodecToAndroidMimeType(AudioCodec codec) {
       return kMp3MimeType;
     case kCodecVorbis:
       return kVorbisMimeType;
+    case kCodecFLAC:
+      return kFlacMimeType;
     case kCodecOpus:
       return kOpusMimeType;
     case kCodecAAC:

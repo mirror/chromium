@@ -187,18 +187,26 @@ std::unique_ptr<MediaCodecBridge> MediaCodecBridgeImpl::CreateAudioDecoder(
   DVLOG(2) << __func__ << ": " << config.AsHumanReadableString()
            << " media_crypto:" << media_crypto;
 
+  DVLOG(1) << "BIG TODO REMOVE THIS 1";
+
   if (!MediaCodecUtil::IsMediaCodecAvailable())
     return nullptr;
+
+  DVLOG(1) << "BIG TODO REMOVE THIS 2";
 
   const std::string mime =
       MediaCodecUtil::CodecToAndroidMimeType(config.codec());
   if (mime.empty())
     return nullptr;
 
+  DVLOG(1) << "BIG TODO REMOVE THIS 3";
+
   auto bridge = base::WrapUnique(new MediaCodecBridgeImpl(
       mime, CodecType::kAny, MediaCodecDirection::DECODER));
   if (bridge->j_bridge_.is_null())
     return nullptr;
+
+  DVLOG(1) << "BIG TODO REMOVE THIS 4";
 
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jstring> j_mime = ConvertUTF8ToJavaString(env, mime);
@@ -222,10 +230,14 @@ std::unique_ptr<MediaCodecBridge> MediaCodecBridgeImpl::CreateAudioDecoder(
     return nullptr;
   }
 
+  DVLOG(1) << "BIG TODO REMOVE THIS 5";
+
   if (!Java_MediaCodecBridge_configureAudio(env, bridge->j_bridge_, j_format,
                                             media_crypto, 0)) {
     return nullptr;
   }
+
+  DVLOG(1) << "BIG TODO REMOVE THIS 6";
 
   return bridge->Start() ? std::move(bridge) : nullptr;
 }
