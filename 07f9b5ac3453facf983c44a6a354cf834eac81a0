@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "865e900f_72d3c748",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:36:09Z",
+      "side": 1,
+      "message": "please add comment why we need * 2.",
+      "range": {
+        "startLine": 667,
+        "startChar": 17,
+        "endLine": 667,
+        "endChar": 52
+      },
+      "revId": "07f9b5ac3453facf983c44a6a354cf834eac81a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
