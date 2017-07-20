@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a48ebc8b_4e55b6fa",
+        "filename": "chrome/browser/media/router/create_presentation_connection_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "It would make more sense for this to take a content::PresentationInfo (as a const ref).  But I believe the goal is to eliminate this class entirely, so optional to fix.",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d987f822_fcea2d43",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "Can PresentationRequest just implement the equality operator instead?",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f0c8d0_12190c69",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "Does this still need to be a unique_ptr?",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1789edf_ba043b75",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "Thanks for upgrading these :)",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2502f6d_20a692ea",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "Must it be unique_ptr?",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3581e2_b6025449",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb15cc3_a09c1dcf",
+        "filename": "content/public/browser/presentation_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T20:29:10Z",
+      "side": 1,
+      "message": "I think this can be removed.",
+      "revId": "d382e2f23e8f6dde14e437a96e494250d3d6f813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
