@@ -58,8 +58,10 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   void SendScriptInfoToRenderer(
       std::string encoding,
       std::unordered_map<std::string, std::string> headers,
+      mojo::ScopedDataPipeConsumerHandle body_handle,
+      size_t body_size,
       mojo::ScopedDataPipeConsumerHandle meta_data_handle,
-      mojo::ScopedDataPipeConsumerHandle body_handle);
+      size_t meta_data_size);
   void OnHttpInfoRead(scoped_refptr<HttpResponseInfoIOBuffer> http_info);
   void OnFinishSendingScript();
   void OnAbortSendingScript(Status status);

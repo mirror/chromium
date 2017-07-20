@@ -135,6 +135,8 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     scoped_refptr<net::HttpResponseHeaders> headers =
         http_info->http_info->headers;
     DCHECK(headers);
+    size_t body_size = headers->GetContentLength();
+    size_t meta_data_size = http_info->http_info->metadata->size();
 
     std::string charset;
     headers->GetCharset(&charset);
@@ -153,9 +155,9 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       }
     }
 
-    owner_->SendScriptInfoToRenderer(charset, std::move(header_strings),
-                                     std::move(meta_data_consumer),
-                                     std::move(body_consumer));
+    owner_->SendScriptInfoToRenderer(
+        charset, std::move(header_strings), std::move(body_consumer), body_size,
+        std::move(meta_data_consumer), meta_data_size);
     owner_->OnHttpInfoRead(http_info);
   }
 
@@ -188,6 +190,8 @@ class ServiceWorkerInstalledScriptsSender::Sender {
 
   void OnResponseDataRead(int read_bytes) {
     if (read_bytes < 0) {
+      watcher_.Cancel();
+      body_handle_.reset();
       CompleteSendIfNeeded(Status::kResponseReaderError);
       return;
     }
@@ -313,8 +317,10 @@ void ServiceWorkerInstalledScriptsSender::StartSendingScript(
 void ServiceWorkerInstalledScriptsSender::SendScriptInfoToRenderer(
     std::string encoding,
     std::unordered_map<std::string, std::string> headers,
+    mojo::ScopedDataPipeConsumerHandle body_handle,
+    size_t body_size,
     mojo::ScopedDataPipeConsumerHandle meta_data_handle,
-    mojo::ScopedDataPipeConsumerHandle body_handle) {
+    size_t meta_data_size) {
   DCHECK(running_sender_);
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
@@ -325,7 +331,9 @@ void ServiceWorkerInstalledScriptsSender::SendScriptInfoToRenderer(
   script_info->headers = std::move(headers);
   script_info->encoding = std::move(encoding);
   script_info->body = std::move(body_handle);
+  script_info->body_size = body_size;
   script_info->meta_data = std::move(meta_data_handle);
+  script_info->meta_data_size = meta_data_size;
   manager_->TransferInstalledScript(std::move(script_info));
 }
 
@@ -369,8 +377,9 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(Status status) {
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
   DCHECK_NE(Status::kSuccess, status);
-  // TODO(shimazu): Report the error to ServiceWorkerVersion and record its
-  // metrics.
+
+  // Notify the error by resetting the Mojo pipe.
+  manager_.reset();
 }
 
 const GURL& ServiceWorkerInstalledScriptsSender::CurrentSendingURL() {
