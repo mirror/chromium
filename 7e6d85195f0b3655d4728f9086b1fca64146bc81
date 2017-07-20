@@ -52,6 +52,24 @@
       "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e215e22f_a7433ead",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T01:19:34Z",
+      "side": 1,
+      "message": "\u003e Is there a problem with making vprintf_stderr_common external-linkage?\n\nIt\u0027s ok for now.  However, we\u0027d like to remove it because it\u0027s inconsistent with logging code in base/logging.cc.\nAt this moment, only ScopedLogger and WTFLogAlways() use it, and WTFLogAlways() is about to be removed.",
+      "parentUuid": "9d66a5b5_2e86cca1",
+      "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
