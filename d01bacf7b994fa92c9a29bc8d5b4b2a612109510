@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd4e14b_8dececd3",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-20T20:07:27Z",
+      "side": 1,
+      "message": "Can you make this a class instead? We also need this padding for the login setting.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "d01bacf7b994fa92c9a29bc8d5b4b2a612109510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
