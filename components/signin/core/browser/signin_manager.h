@@ -208,6 +208,9 @@ class SigninManager : public SigninManagerBase,
   void OnSigninAllowedPrefChanged();
   void OnGoogleServicesUsernamePatternChanged();
 
+  // Send all observers |GoogleSigninSucceeded| notifications.
+  void FireGoogleSigninSucceeded();
+
   std::string possibly_invalid_account_id_;
   std::string possibly_invalid_gaia_id_;
   std::string possibly_invalid_email_;
