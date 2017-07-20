@@ -917,6 +917,12 @@
       settable_from_internals: true,
       status: "experimental",
     },
+    // Serialize and restore scroll anchors.
+    {
+      name: "ScrollAnchorSerialization",
+      settable_from_internals: true,
+      status: "experimental",
+    },
     {
       name: "ScrollCustomization",
     },
