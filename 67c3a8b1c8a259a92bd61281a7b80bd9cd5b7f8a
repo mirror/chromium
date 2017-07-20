@@ -46,6 +46,30 @@
       "revId": "67c3a8b1c8a259a92bd61281a7b80bd9cd5b7f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdc23a6_15cceefa",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-20T15:24:37Z",
+      "side": 1,
+      "message": "As discussed, no change from what you have in this CL now, but we\u0027ll consider options for the future.",
+      "parentUuid": "95199ccd_d9442078",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "67c3a8b1c8a259a92bd61281a7b80bd9cd5b7f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
