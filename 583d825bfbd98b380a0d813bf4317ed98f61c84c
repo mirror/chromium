@@ -34,6 +34,24 @@
       "revId": "583d825bfbd98b380a0d813bf4317ed98f61c84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d8eb80_29b6eccb",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-20T20:57:12Z",
+      "side": 1,
+      "message": "Sorry I was going to say we have to hide if it\u0027s already shown.",
+      "parentUuid": "762694e9_8118fe3b",
+      "revId": "583d825bfbd98b380a0d813bf4317ed98f61c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
