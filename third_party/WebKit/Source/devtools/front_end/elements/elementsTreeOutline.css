@@ -67,12 +67,56 @@
     z-index: -1;
 }
 
-.elements-disclosure li.hovered:not(.selected) .selection {
+.elements-disclosure li.hovered:not(.selected) .selection,
+.elements-disclosure li.expanded.has-flagged-children.hovered:not(.selected) .selection {
     display: block;
     left: 3px;
     right: 3px;
     background-color: rgba(56, 121, 217, 0.1);
+    opacity: 1;
     border-radius: 5px;
+}
+
+.elements-disclosure li.expanded.has-flagged-children:not(.selected) .selection {
+  display: none;
+}
+
+.elements-disclosure li.has-flagged-children:not(.selected) .selection {
+  opacity: 0.5;
+}
+
+.elements-disclosure li.warning:not(.selected) .selection {
+  display: block;
+  background-color: hsl(50, 100%, 95%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 25%);
+}
+
+.elements-disclosure li.hovered.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 85%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.hovered.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 28%);
+}
+
+.elements-disclosure li.error:not(.selected) .selection {
+  display: block;
+  background-color: hsl(0, 100%, 97%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 24%);
+}
+
+.elements-disclosure li.hovered.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 92%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.hovered.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 27%);
 }
 
 .elements-disclosure li.parent.expanded::before {
@@ -121,7 +165,7 @@
 }
 
 .elements-disclosure ol li.selected:focus * {
-    color: inherit;
+    /* color: inherit; */
 }
 
 .elements-disclosure ol li.selected:focus .selection {
@@ -222,6 +266,105 @@ button, input, select {
 
 .elements-gutter-decoration.elements-has-decorated-children {
     opacity: 0.5;
+}
+
+.element-flag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-left: 20px;
+  padding-right: 4px;
+  padding-top: 1px;
+  bottom: 0;
+  color: #222;
+  font-family: sans-serif;
+  z-index: 1;
+}
+
+.warning .element-flag, .element-flag-additional.warning {
+  background-color: hsl(50, 100%, 85%);
+}
+
+.error .element-flag, .element-flag-additional.error {
+  background-color: hsl(0, 100%, 92%);
+}
+
+.element-flag::before {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 100%;
+  border: 7px solid transparent;
+  margin-top: -1px;
+  border-left: none;
+}
+
+.warning .element-flag::before {
+  border-right-color: hsl(50, 100%, 85%);
+}
+
+.error .element-flag::before {
+  border-right-color: hsl(0, 100%, 92%);
+}
+
+.element-flag .element-icon {
+  position: absolute;
+  top: 1.5px;
+  left: 4px;
+}
+
+.element-flag-additional .element-icon {
+  top: 2.5px;
+}
+
+.element-flag .element-icon-count {
+  padding: 0 6px;
+  position: relative;
+  margin-left: 6px;
+  background-color: hsla(0, 0%, 0%, 0.3);
+  cursor: pointer;
+  color: #fff;
+  border-radius: 14px;
+}
+
+.element-flag .element-icon-count:hover {
+  background-color: hsla(0, 0%, 0%, 0.4);
+}
+
+.element-flag .element-icon-count.open {
+  color: transparent;
+}
+.element-flag .element-icon-count.open::before {
+  position: absolute;
+  display: block;
+  content: "\25B2";
+  color: #fff;
+  font-size: 9px;
+  width: 100%;
+  line-height: 12px;
+  top: 0;
+  left: 0;
+  text-align: center;
+}
+
+.element-flag .element-flags-additional {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-radius: 0 0 0 4px;
+    overflow: hidden;
+}
+
+.element-flag .element-icon-count.open + .element-flags-additional {
+  height: auto;
+}
+
+.element-flag .element-flags-additional .element-flag-additional {
+  position: relative;
+  padding: 2px 4px;
+  text-indent: 16px;
 }
 
 .add-attribute {
@@ -328,6 +471,17 @@ ol li.selected:focus .webkit-html-attribute-name {
 
 .elements-disclosure li.selected .gutter-container:not(.has-decorations) .gutter-menu-icon {
     display: block;
+}
+
+.placeholder-attribute {
+    position: relative;
+    top: 0.5px;
+    background-color: hsla(205, 75%, 90%, 1);
+    border: 1px solid hsla(205, 75%, 80%, 1);
+    border-radius: 4px;
+    font-family: sans-serif;
+    color: #222;
+    padding: 0 4px;
 }
 
 /** Guide line */

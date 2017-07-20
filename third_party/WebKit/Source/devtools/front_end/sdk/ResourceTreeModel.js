@@ -757,6 +757,7 @@ SDK.PageDispatcher = class {
    * @param {number} time
    */
   domContentEventFired(time) {
+    console.log("event fired (dcl)", time);
     this._resourceTreeModel.dispatchEventToListeners(SDK.ResourceTreeModel.Events.DOMContentLoaded, time);
   }
 

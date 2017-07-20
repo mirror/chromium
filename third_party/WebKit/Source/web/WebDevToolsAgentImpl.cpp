@@ -59,6 +59,7 @@
 #include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorOverlayAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
+#include "core/inspector/InspectorPasswordManagerAgent.h"
 #include "core/inspector/InspectorResourceContainer.h"
 #include "core/inspector/InspectorResourceContentLoader.h"
 #include "core/inspector/InspectorTaskRunner.h"
@@ -363,6 +364,10 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
       session->V8Session());
   page_agents_.Set(session_id, page_agent);
   session->Append(page_agent);
+
+  InspectorPasswordManagerAgent* password_manager_agent =
+      new InspectorPasswordManagerAgent();
+  session->Append(password_manager_agent);
 
   session->Append(new InspectorLogAgent(
       &inspected_frames_->Root()->GetPage()->GetConsoleMessageStorage(),
