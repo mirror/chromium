@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72917bdd_cbe064b0",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "Network status code for the last update request sent to SafeBrowsing.",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfed9dff_5212627a",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "network. Also consider re-wording similar to network_status_code.",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93a817d_7cbc78e9",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "Comment not useful. This message has already been described above so this comment can be dropped.",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a9c0a8_f79aff27",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "re-word: Was the last update applied successfully?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93221585_7288e0ba",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "d",
+      "range": {
+        "startLine": 38,
+        "startChar": 68,
+        "endLine": 38,
+        "endChar": 69
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c67cad_9f99174e",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "\u003cdrop this part\u003e",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1864f8_dab7f9a8",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "specify units. bytes? KBs?",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a15313_17029d37",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "Corresponds",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc15a3b9_78fa4b20",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T22:09:02Z",
+      "side": 1,
+      "message": "Information about each of the stores managed by the database.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "7504e3e8d7f8d4bda9e5574006d63312bdb099e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
