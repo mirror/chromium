@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7419589_63ac71b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:13:54Z",
+      "side": 1,
+      "message": "No need for a new function for this, this should be part of shutdown() as it\u0027s set up in creation.",
+      "range": {
+        "startLine": 553,
+        "startChar": 16,
+        "endLine": 553,
+        "endChar": 32
+      },
+      "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
