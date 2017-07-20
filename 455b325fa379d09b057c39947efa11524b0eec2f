@@ -34,6 +34,24 @@
       "revId": "455b325fa379d09b057c39947efa11524b0eec2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a413b5c6_cd4e864d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T10:17:25Z",
+      "side": 0,
+      "message": "If you\u0027re interested in seeing how this should work in vertical flow, WIP is available at:\nhttps://chromium-review.googlesource.com/c/577492/\n\nI started one CL for all 3 problems (actually started with one, got the same question as you did for vertical flow, then CL grew) but then it affects too many SVG tests that I wanted to split it out to each CL. I didn\u0027t know SVG uses glyph_boudning_box_ to layout.",
+      "parentUuid": "7a193624_54a08d8b",
+      "revId": "455b325fa379d09b057c39947efa11524b0eec2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
