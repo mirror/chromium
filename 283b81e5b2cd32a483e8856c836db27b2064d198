@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac526e6_40e3f66b",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-20T12:49:11Z",
+      "side": 1,
+      "message": "I thought this was just for MacOSX and not for devices?",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "283b81e5b2cd32a483e8856c836db27b2064d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
