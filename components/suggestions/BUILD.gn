@@ -18,6 +18,8 @@ static_library("suggestions") {
     "suggestions_service_impl.h",
     "suggestions_store.cc",
     "suggestions_store.h",
+    "suggestions_ui_internals.cc",
+    "suggestions_ui_internals.h",
   ]
 
   public_deps = [
