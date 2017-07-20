@@ -4,6 +4,7 @@
 
 #include "chromeos/network/certificate_helper.h"
 
+#include <cert.h>
 #include <certdb.h>
 #include <pk11pub.h>
 #include <secport.h>
@@ -29,7 +30,7 @@ std::string Stringize(char* nss_text, const std::string& alternative_text) {
   return !s.empty() ? s : alternative_text;
 }
 
-std::string GetNickname(net::X509Certificate::OSCertHandle cert_handle) {
+std::string GetNickname(CERTCertificate* cert_handle) {
   if (!cert_handle->nickname)
     return std::string();
   std::string name = cert_handle->nickname;
@@ -41,9 +42,42 @@ std::string GetNickname(net::X509Certificate::OSCertHandle cert_handle) {
   return name;
 }
 
+std::string DecodeAVAValue(CERTAVA* ava) {
+  SECItem* decode_item = CERT_DecodeAVAValue(&ava->value);
+  if (!decode_item)
+    return std::string();
+  std::string value(reinterpret_cast<char*>(decode_item->data),
+                    decode_item->len);
+  SECITEM_FreeItem(decode_item, PR_TRUE);
+  return value;
+}
+
+std::string GetDisplayName(CERTName* name) {
+  std::string result = Stringize(CERT_GetCommonName(name), "");
+  if (!result.empty())
+    return result;
+
+  CERTAVA* ou_ava = nullptr;
+
+  CERTRDN** rdns = name->rdns;
+  for (size_t rdn = 0; rdns[rdn]; ++rdn) {
+    CERTAVA** avas = rdns[rdn]->avas;
+    for (size_t pair = 0; avas[pair] != 0; ++pair) {
+      SECOidTag tag = CERT_GetAVATag(avas[pair]);
+      if (tag == SEC_OID_AVA_ORGANIZATION_NAME)
+        return DecodeAVAValue(avas[pair]);
+      if (tag == SEC_OID_AVA_ORGANIZATIONAL_UNIT_NAME && !ou_ava)
+        ou_ava = avas[pair];
+    }
+  }
+  if (ou_ava)
+    return DecodeAVAValue(ou_ava);
+  return std::string();
+}
+
 }  // namespace
 
-net::CertType GetCertType(net::X509Certificate::OSCertHandle cert_handle) {
+net::CertType GetCertType(CERTCertificate* cert_handle) {
   CERTCertTrust trust = {0};
   CERT_GetCertTrust(cert_handle, &trust);
 
@@ -63,28 +97,25 @@ net::CertType GetCertType(net::X509Certificate::OSCertHandle cert_handle) {
   return net::OTHER_CERT;
 }
 
-std::string GetCertTokenName(net::X509Certificate::OSCertHandle cert_handle) {
+std::string GetCertTokenName(CERTCertificate* cert_handle) {
   std::string token;
   if (cert_handle->slot)
     token = PK11_GetTokenName(cert_handle->slot);
   return token;
 }
 
-std::string GetIssuerCommonName(net::X509Certificate::OSCertHandle cert_handle,
-                                const std::string& alternative_text) {
-  return Stringize(CERT_GetCommonName(&cert_handle->issuer), alternative_text);
+std::string GetIssuerDisplayName(CERTCertificate* cert_handle) {
+  return GetDisplayName(&cert_handle->issuer);
 }
 
-std::string GetCertNameOrNickname(
-    net::X509Certificate::OSCertHandle cert_handle) {
+std::string GetCertNameOrNickname(CERTCertificate* cert_handle) {
   std::string name = GetCertAsciiNameOrNickname(cert_handle);
   if (!name.empty())
     name = base::UTF16ToUTF8(url_formatter::IDNToUnicode(name));
   return name;
 }
 
-std::string GetCertAsciiNameOrNickname(
-    net::X509Certificate::OSCertHandle cert_handle) {
+std::string GetCertAsciiNameOrNickname(CERTCertificate* cert_handle) {
   std::string alternative_text = GetNickname(cert_handle);
   return Stringize(CERT_GetCommonName(&cert_handle->subject), alternative_text);
 }

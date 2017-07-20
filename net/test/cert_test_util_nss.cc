@@ -13,6 +13,7 @@
 #include "crypto/nss_util.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/cert/cert_type.h"
+#include "net/cert/x509_util_nss.h"
 
 namespace net {
 
@@ -42,9 +43,14 @@ bool ImportSensitiveKeyFromFile(const base::FilePath& dir,
 
 bool ImportClientCertToSlot(const scoped_refptr<X509Certificate>& cert,
                             PK11SlotInfo* slot) {
-  std::string nickname = cert->GetDefaultNickname(USER_CERT);
-  SECStatus rv = PK11_ImportCert(slot, cert->os_cert_handle(),
-                                 CK_INVALID_HANDLE, nickname.c_str(), PR_FALSE);
+  ScopedCERTCertificate nss_cert =
+      x509_util::CreateCERTCertificateFromX509Certificate(cert.get());
+  if (!nss_cert)
+    return false;
+  std::string nickname =
+      x509_util::GetDefaultUniqueNickname(nss_cert.get(), USER_CERT, slot);
+  SECStatus rv = PK11_ImportCert(slot, nss_cert.get(), CK_INVALID_HANDLE,
+                                 nickname.c_str(), PR_FALSE);
   if (rv != SECSuccess) {
     LOG(ERROR) << "Could not import cert";
     return false;
@@ -76,6 +82,30 @@ scoped_refptr<X509Certificate> ImportClientCertAndKeyFromFile(
   // import to |slot|. However this should not make a difference as NSS handles
   // state globally.
   return cert;
+}
+
+ScopedCERTCertificate ImportCERTCertificateFromFile(
+    const base::FilePath& certs_dir,
+    const std::string& cert_file) {
+  scoped_refptr<X509Certificate> cert =
+      ImportCertFromFile(certs_dir, cert_file);
+  if (!cert)
+    return ScopedCERTCertificate();
+  return x509_util::CreateCERTCertificateFromX509Certificate(cert.get());
+}
+
+ScopedCERTCertificateVector CreateCERTCertificateListFromFile(
+    const base::FilePath& certs_dir,
+    const std::string& cert_file,
+    int format) {
+  CertificateList certs =
+      CreateCertificateListFromFile(certs_dir, cert_file, format);
+  ScopedCERTCertificateVector nss_certs;
+  for (const auto& cert : certs) {
+    nss_certs.push_back(
+        x509_util::CreateCERTCertificateFromX509Certificate(cert.get()));
+  }
+  return nss_certs;
 }
 
 }  // namespace net

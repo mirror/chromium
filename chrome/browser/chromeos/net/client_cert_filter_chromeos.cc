@@ -57,7 +57,7 @@ bool ClientCertFilterChromeOS::Init(const base::Closure& callback) {
 
 bool ClientCertFilterChromeOS::IsCertAllowed(
     const scoped_refptr<net::X509Certificate>& cert) const {
-  return nss_profile_filter_.IsCertAllowed(cert->os_cert_handle());
+  return nss_profile_filter_.IsCertAllowed(cert.get());
 }
 
 void ClientCertFilterChromeOS::GotSystemSlot(

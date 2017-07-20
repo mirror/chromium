@@ -214,7 +214,7 @@ class NetInternalsMessageHandler
   void OnCertificatesImported(
       const std::string& previous_error,
       bool success,
-      const net::CertificateList& onc_trusted_certificates);
+      net::ScopedCERTCertificateVector onc_trusted_certificates);
 #endif
 
  private:
@@ -876,7 +876,7 @@ void NetInternalsMessageHandler::ImportONCFileToNSSDB(
 void NetInternalsMessageHandler::OnCertificatesImported(
     const std::string& previous_error,
     bool success,
-    const net::CertificateList& /* unused onc_trusted_certificates */) {
+    net::ScopedCERTCertificateVector /* unused onc_trusted_certificates */) {
   std::string error = previous_error;
   if (!success)
     error += "Some certificates couldn't be imported. ";
