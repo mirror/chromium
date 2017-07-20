@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb9396ab_eb746344",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-20T22:10:40Z",
+      "side": 1,
+      "message": "This can\u0027t be const, right?",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
